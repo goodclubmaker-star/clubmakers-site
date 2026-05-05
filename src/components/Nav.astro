@@ -1,0 +1,117 @@
+---
+// 현재 페이지 경로를 받아 nav 활성 표시
+const currentPath = Astro.url.pathname;
+
+const menuItems = [
+  { href: '/about', label: '공작소장' },
+  { href: '/why-fitting', label: '일하는 방식' },
+  { href: '/system', label: '19년의 회고' },
+  { href: '/book', label: '책' },
+  { href: '/workshop', label: '공작소' },
+  { href: '/products', label: '제품' },
+];
+---
+
+<nav class="nav">
+  <a href="/" class="logo">
+    CLUBMAKERS
+    <small>SINCE 1985 · 골프채공작소</small>
+  </a>
+  <ul class="nav-menu">
+    {menuItems.map((item) => (
+      <li>
+        <a
+          href={item.href}
+          class={currentPath.startsWith(item.href) ? 'active' : ''}
+        >
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+  <a href="/contact" class="nav-cta">예약하기</a>
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 56px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .logo {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    background: var(--green);
+    border-radius: 50%;
+  }
+  .logo small {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--grey-2);
+    letter-spacing: 0.08em;
+    margin-left: 6px;
+    padding-left: 8px;
+    border-left: 1px solid var(--line);
+  }
+  .nav-menu {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-menu a {
+    color: var(--ink-2);
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .nav-menu a:hover { border-bottom-color: var(--green); }
+  .nav-menu a.active {
+    border-bottom-color: var(--green);
+    color: var(--green);
+  }
+  .nav-cta {
+    background: var(--green);
+    color: var(--cream);
+    padding: 11px 22px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 100px;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-2); }
+
+  /* 모바일 — 햄버거 메뉴는 Phase 3에서 구현 */
+  @media (max-width: 968px) {
+    .nav {
+      padding: 16px 24px;
+    }
+    .nav-menu {
+      display: none;
+    }
+    .logo small {
+      display: none;
+    }
+  }
+</style>

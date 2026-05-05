@@ -1,0 +1,102 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  schemaType?: 'WebSite' | 'AboutPage' | 'Article' | 'FAQPage' | 'CollectionPage';
+}
+
+const {
+  title,
+  description = '클럽메이커스 — 24년의 골프채 공작소. 더 나은 피팅을 하고 싶었습니다. 친근한 골프채공작소를 지향합니다.',
+  ogImage = '/og-default.jpg',
+  schemaType = 'WebSite',
+} = Astro.props;
+
+const fullTitle = title === '클럽메이커스'
+  ? '클럽메이커스 | 친근한 골프채공작소'
+  : `${title} | 클럽메이커스`;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="클럽메이커스" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+    <!-- AI 검색 최적화 (GEO/AEO) -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
+    <!-- schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": schemaType,
+      "name": fullTitle,
+      "description": description,
+      "url": canonicalUrl,
+      "publisher": {
+        "@type": "LocalBusiness",
+        "name": "클럽메이커스",
+        "alternateName": ["골프채공작소", "Clubmakers Korea"],
+        "founder": {
+          "@type": "Person",
+          "name": "채기웅",
+          "jobTitle": "공작소장"
+        },
+        "foundingDate": "1985",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "동산로2길 50, 가보빌딩 지하층",
+          "addressLocality": "서초구",
+          "addressRegion": "서울",
+          "addressCountry": "KR"
+        },
+        "telephone": "+82-10-4363-5555",
+        "email": "clubmakers@naver.com",
+        "url": "https://myclubmakers.com"
+      }
+    })} />
+  </head>
+
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    min-height: 60vh;
+  }
+</style>

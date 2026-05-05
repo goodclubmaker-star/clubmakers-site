@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# AI 검색 봇 (GEO/AEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# 사이트맵
+Sitemap: https://myclubmakers.com/sitemap-index.xml
