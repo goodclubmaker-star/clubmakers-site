@@ -1,0 +1,609 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Content as GlossaryContent } from '../content/glossary/index.md';
+
+// AI 검색용 DefinedTermSet schema
+const glossarySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  '@id': 'https://myclubmakers.com/glossary#glossary',
+  name: '클럽메이커스 골프 피팅 용어사전',
+  alternateName: 'Clubmakers Glossary',
+  description: '24년 클럽피팅·클럽메이킹 현장에서 정리한 117개 용어. 클럽 구조, 스펙·측정값, 임팩트·볼 비행, 신체·스윙, 피팅 판단, 론치모니터 데이터, 최신 트렌드, 현장 작업까지 8개 카테고리.',
+  inLanguage: 'ko-KR',
+  numberOfItems: 117,
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+    url: 'https://myclubmakers.com',
+  },
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    jobTitle: '클럽메이커스 공작소장',
+    url: 'https://myclubmakers.com/about',
+  },
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: '골프 클럽피팅 용어사전 — 117개 핵심 용어',
+  description: '라이각, MOI, CPM, 트랙맨 31개 데이터, 키네마틱 시퀀스, 제로토크 퍼터까지. 24년 공작소가 정리한 117개 골프 피팅 용어 정의.',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: { '@type': 'Organization', name: '클럽메이커스' },
+  inLanguage: 'ko-KR',
+};
+---
+
+<BaseLayout
+  title="용어사전 (117개)"
+  description="클럽메이커스 골프 피팅 용어사전 117개. 라이각·MOI·CPM·트랙맨 31개 데이터·키네마틱 시퀀스·제로토크 퍼터까지. 24년 공작소가 정리한 클럽피팅·클럽메이킹 용어 정의."
+  schemaType="CollectionPage"
+  keywords="클럽피팅 용어, 골프 용어사전, 라이각, MOI, CPM, 토크, 스윙웨이트, 페이스앵글, 클럽패스, D-Plane, 트랙맨, kinematic sequence, club fitting glossary, 키네마틱 시퀀스, TPI, WTF, 제로토크 퍼터, LS 드라이버, FLO"
+  extraSchema={[glossarySchema, articleSchema]}
+>
+
+  <!-- 6-1. 히어로 -->
+  <section class="page-hero glossary-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">GLOSSARY · 용어사전</div>
+      <h1>117개 핵심 용어</h1>
+      <p class="page-hero-subtitle">
+        클럽메이커스 24년 현장에서 정리한 클럽피팅·클럽메이킹 용어사전입니다.<br/>
+        <strong>골퍼와 피팅 전문가 양쪽이 모두 읽을 수 있도록</strong> — 첫 한 줄은 누구나 이해할 수 있게,
+        다음 단락은 깊이 있게 정리했습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 6-2. 검색 + 카테고리 필터 -->
+  <section class="filter-section">
+    <div class="filter-bar">
+      <input
+        type="search"
+        id="glossary-search"
+        class="search-input"
+        placeholder="용어 검색 (예: 라이각, MOI, 트랙맨, 키네마틱)"
+        aria-label="용어 검색"
+      />
+      <div class="filter-tags" id="filter-tags">
+        <button class="filter-tag active" data-filter="all">전체 117</button>
+        <button class="filter-tag" data-filter="structure">🏌️ 클럽 구조</button>
+        <button class="filter-tag" data-filter="spec">📐 스펙·측정값</button>
+        <button class="filter-tag" data-filter="impact">🎯 임팩트·볼 비행</button>
+        <button class="filter-tag" data-filter="body">🧍 신체·스윙</button>
+        <button class="filter-tag" data-filter="judgment">🔧 피팅 판단</button>
+        <button class="filter-tag" data-filter="trackman">📊 트랙맨 31개</button>
+        <button class="filter-tag" data-filter="trend">🆕 최신 트렌드</button>
+        <button class="filter-tag" data-filter="work">🛠️ 현장 작업</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6-3. 본문 — markdown 렌더링 -->
+  <section class="glossary-content-section">
+    <div class="glossary-prose">
+      <GlossaryContent />
+    </div>
+  </section>
+
+  <!-- 6-4. CTA -->
+  <section class="section section-bg-green glossary-cta">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">FROM THE BOOK · 책에서 더 자세히</p>
+      <h2 class="cta-h2">『실제적인 클럽피팅』<br>부록 D · 용어 · 수치 참조표</h2>
+      <p class="cta-body">
+        이 사이트의 117개 용어는 시작점입니다. 책에는 부록 D <strong>「용어 · 수치 참조표 (Glossary)」</strong>가
+        별도로 있어, 각 용어와 함께 현장 판단의 수치 기준이 정리되어 있습니다.
+      </p>
+      <div class="cta-actions">
+        <a href="/book" class="cta-btn cta-btn-primary">책 자세히 →</a>
+        <a href="/contact" class="cta-btn">예약·문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .glossary-hero {
+    background: var(--bg-cream);
+    border-bottom: none;
+  }
+
+  /* ===== 검색·필터 ===== */
+  .filter-section {
+    position: sticky;
+    top: 60px;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 20px 80px;
+  }
+  .filter-bar {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .search-input {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 15px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    color: var(--ink);
+    margin-bottom: 14px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .search-input:focus {
+    outline: none;
+    border-color: var(--green);
+    background: white;
+  }
+  .filter-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-tag {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--ink-2);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-sans);
+  }
+  .filter-tag:hover {
+    border-color: var(--green);
+    background: var(--bg-soft);
+  }
+  .filter-tag.active {
+    background: var(--green);
+    color: var(--cream);
+    border-color: var(--green);
+    font-weight: 600;
+  }
+
+  /* ===== Markdown prose 스타일 ===== */
+  .glossary-content-section {
+    padding: 60px 80px 100px;
+    background: var(--bg);
+  }
+  .glossary-prose {
+    max-width: 820px;
+    margin: 0 auto;
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: var(--ink-2);
+  }
+
+  /* H1 — 페이지 최상단 ("# 클럽메이커스 용어사전 — 통합본") 숨김 (히어로에 이미 있음) */
+  .glossary-prose :global(h1) {
+    display: none;
+  }
+
+  /* 도입 인용문 ("> 이 사전이 다른 사전과 다른 이유") */
+  .glossary-prose :global(blockquote) {
+    background: var(--bg-cream);
+    border-left: 3px solid var(--gold);
+    padding: 24px 30px;
+    margin: 24px 0;
+    font-family: var(--font-serif);
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+  .glossary-prose :global(blockquote strong) {
+    color: var(--green);
+    font-weight: 700;
+  }
+  .glossary-prose :global(blockquote em) {
+    color: var(--green);
+    font-style: italic;
+  }
+
+  /* 메타데이터 코드 블록은 숨김 (개발자 참조용이라 사용자 페이지에는 불필요) */
+  .glossary-prose :global(pre) {
+    display: none;
+  }
+
+  /* H2 — 가나다 분류 (## ㄱ, ## ㄴ ...) */
+  .glossary-prose :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+    margin: 80px 0 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--line);
+    line-height: 1;
+  }
+
+  /* "카테고리별 색인" 같은 큰 H1 헤더 처리 — 카테고리 안내 영역 */
+  .glossary-prose :global(h1 + p),
+  .glossary-prose :global(h1 + h3) {
+    /* 부수 처리 안 함 */
+  }
+
+  /* H3 — 개별 용어 헤더 */
+  .glossary-prose :global(h3) {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    margin: 36px 0 8px;
+    line-height: 1.35;
+    scroll-margin-top: 200px;
+  }
+  .glossary-prose :global(.term-anchor) {
+    display: block;
+    transition: color 0.2s;
+  }
+
+  /* 영문 이탤릭 (*Englsih name*) */
+  .glossary-prose :global(p em:only-child) {
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  /* 한 줄 정의 (>) */
+  .glossary-prose :global(h3 + p + blockquote),
+  .glossary-prose :global(h3 ~ blockquote) {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--green);
+    padding: 18px 24px;
+    margin: 12px 0 18px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  /* 일반 단락 */
+  .glossary-prose :global(p) {
+    margin: 12px 0;
+    color: var(--ink-2);
+  }
+  .glossary-prose :global(p strong) {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  /* 리스트 */
+  .glossary-prose :global(ul), .glossary-prose :global(ol) {
+    margin: 12px 0;
+    padding-left: 22px;
+  }
+  .glossary-prose :global(li) {
+    margin: 6px 0;
+    line-height: 1.65;
+  }
+
+  /* 링크 */
+  .glossary-prose :global(a) {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    padding-bottom: 1px;
+    transition: opacity 0.2s;
+  }
+  .glossary-prose :global(a:hover) {
+    opacity: 0.7;
+  }
+
+  /* 가로선 (---) — 용어 사이 구분선 */
+  .glossary-prose :global(hr) {
+    border: none;
+    border-top: 1px solid var(--line-soft);
+    margin: 32px 0;
+  }
+
+  /* 코드 (인라인) */
+  .glossary-prose :global(code) {
+    background: var(--bg-soft);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.92em;
+    color: var(--green);
+  }
+
+  /* 표 */
+  .glossary-prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .glossary-prose :global(table th),
+  .glossary-prose :global(table td) {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+  .glossary-prose :global(table th) {
+    background: var(--bg-soft);
+    font-weight: 700;
+  }
+
+  /* H1 "카테고리별 색인" 등 큰 헤더 — 페이지 내부 메타 */
+  .glossary-prose :global(h1#카테고리별-색인),
+  .glossary-prose :global(h1#가나다순-117개-항목) {
+    /* 자체 페이지 H1과 충돌 안 하도록 작게 */
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 60px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ===== CTA ===== */
+  .glossary-cta {
+    text-align: center;
+  }
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .cta-h2 {
+    color: var(--cream);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .cta-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--grey-3);
+    max-width: 580px;
+    margin: 0 auto 32px;
+  }
+  .cta-body strong { color: var(--gold-soft); font-weight: 700; }
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cta-btn {
+    background: rgba(212, 184, 136, 0.1);
+    border: 1px solid rgba(212, 184, 136, 0.3);
+    color: var(--cream);
+    padding: 14px 26px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .cta-btn:hover { background: rgba(212, 184, 136, 0.2); }
+  .cta-btn-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+    border-color: var(--gold);
+  }
+  .cta-btn-primary:hover { background: var(--gold-soft); }
+
+  /* ===== 검색·필터 동작 시 숨김/표시 ===== */
+  .glossary-prose :global(.term-hidden) {
+    display: none !important;
+  }
+  .glossary-prose :global(.term-hidden + p),
+  .glossary-prose :global(.term-hidden ~ blockquote),
+  .glossary-prose :global(.term-hidden ~ p) {
+    /* 빈 스타일 - JS가 처리 */
+  }
+
+  /* ===== 모바일 ===== */
+  @media (max-width: 968px) {
+    .filter-section {
+      padding: 14px 16px;
+    }
+    .search-input {
+      padding: 11px 14px;
+      font-size: 14px;
+    }
+    .filter-tag {
+      padding: 7px 12px;
+      font-size: 12px;
+    }
+    .glossary-content-section {
+      padding: 40px 24px 80px;
+    }
+    .glossary-prose {
+      font-size: 14.5px;
+    }
+    .glossary-prose :global(h2) {
+      font-size: 40px;
+      margin: 50px 0 24px;
+    }
+    .glossary-prose :global(h3) {
+      font-size: 19px;
+    }
+    .glossary-prose :global(blockquote) {
+      padding: 18px 20px;
+      font-size: 14px;
+    }
+    .cta-actions { flex-direction: column; }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    'use strict';
+
+    // 페이지 로드 후 동작
+    document.addEventListener('DOMContentLoaded', function() {
+      const proseEl = document.querySelector('.glossary-prose');
+      if (!proseEl) return;
+
+      // === 1. 카테고리별 색인 영역 (가나다순 시작 전) 추출 ===
+      // markdown에 있는 "🏌️ 클럽 구조 (16)" 같은 H3 안의 텍스트로 카테고리별 매핑
+      const allH3s = Array.from(proseEl.querySelectorAll('h3'));
+
+      // === 2. 카테고리 매핑 — 색인 섹션을 파싱해서 각 용어의 카테고리 자동 결정 ===
+      // markdown 구조: "### 🏌️ 클럽 구조 (16)" 다음에 "헤드 / 샤프트 / 그립 / ..." 단락
+      const categoryMap = {};
+
+      const indexH3s = allH3s.filter(h3 => /\([0-9]+\)/.test(h3.textContent));
+      indexH3s.forEach(h3 => {
+        const text = h3.textContent;
+        // 이모지로 카테고리 식별
+        let catId = 'judgment';
+        if (text.includes('🏌️')) catId = 'structure';
+        else if (text.includes('📐')) catId = 'spec';
+        else if (text.includes('🎯')) catId = 'impact';
+        else if (text.includes('🧍')) catId = 'body';
+        else if (text.includes('🔧')) catId = 'judgment';
+        else if (text.includes('📊')) catId = 'trackman';
+        else if (text.includes('🆕')) catId = 'trend';
+        else if (text.includes('🛠️')) catId = 'work';
+
+        // 다음 P 태그 안의 용어들 (예: "헤드 / 샤프트 / 그립 / ...")
+        let next = h3.nextElementSibling;
+        while (next && next.tagName !== 'H3' && next.tagName !== 'H2') {
+          if (next.tagName === 'P') {
+            // 모든 텍스트에서 "/" 또는 ":" 기준으로 용어 추출
+            const text = next.textContent
+              .replace(/\*\*[^*]+\*\*/g, '') // **Club 13개:** 같은 헤더 제거
+              .replace(/\([^)]+\)/g, ''); // (16) 같은 괄호 제거
+            const terms = text.split(/[\/]/);
+            terms.forEach(t => {
+              const cleaned = t.trim();
+              if (cleaned && cleaned.length < 50 && cleaned.length > 0) {
+                categoryMap[cleaned.toLowerCase()] = catId;
+              }
+            });
+          }
+          next = next.nextElementSibling;
+        }
+      });
+
+      // === 3. 가나다순 영역의 ### 용어들에 카테고리 클래스 부여 ===
+      // 색인 영역의 H3은 모두 (개수)를 포함. 그 외는 실제 용어 헤더
+      const termH3s = allH3s.filter(h3 => !/\([0-9]+\)/.test(h3.textContent));
+
+      termH3s.forEach(h3 => {
+        // h3.id가 자동 생성됨. 그것을 anchor로 사용
+        h3.classList.add('term-header');
+
+        // 카테고리 매핑
+        const name = h3.textContent.trim().toLowerCase();
+        let cat = categoryMap[name] || null;
+
+        // 매칭 안 되면 일부 패턴 추가 시도
+        if (!cat) {
+          // "페룰(페럴)" 같은 케이스
+          for (const key in categoryMap) {
+            if (name.includes(key) || key.includes(name)) {
+              cat = categoryMap[key];
+              break;
+            }
+          }
+        }
+        if (!cat) cat = 'judgment'; // fallback
+
+        h3.dataset.category = cat;
+
+        // h3 다음의 hr까지를 한 묶음(term-block)으로 표시
+        let nextEl = h3.nextElementSibling;
+        const block = [h3];
+        while (nextEl && nextEl.tagName !== 'HR' && nextEl.tagName !== 'H3' && nextEl.tagName !== 'H2') {
+          block.push(nextEl);
+          nextEl = nextEl.nextElementSibling;
+        }
+        // 모든 요소에 동일 카테고리 데이터셋
+        block.forEach(el => {
+          el.classList.add('term-element');
+          el.dataset.category = cat;
+        });
+      });
+
+      // === 4. 카테고리 필터 ===
+      const filterTags = document.querySelectorAll('.filter-tag');
+      let activeFilter = 'all';
+
+      filterTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+          filterTags.forEach(t => t.classList.remove('active'));
+          tag.classList.add('active');
+          activeFilter = tag.dataset.filter;
+          applyFilters();
+        });
+      });
+
+      // === 5. 검색 ===
+      const searchInput = document.getElementById('glossary-search');
+      let searchQuery = '';
+
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim().toLowerCase();
+        applyFilters();
+      });
+
+      function applyFilters() {
+        const allTermElements = document.querySelectorAll('.term-element, hr');
+
+        // 모든 용어 헤더 순회
+        const headers = document.querySelectorAll('h3.term-header');
+
+        headers.forEach(h3 => {
+          const cat = h3.dataset.category;
+          const text = h3.textContent.toLowerCase();
+
+          let visible = true;
+          // 카테고리 필터
+          if (activeFilter !== 'all' && cat !== activeFilter) {
+            visible = false;
+          }
+          // 검색 필터
+          if (searchQuery && !text.includes(searchQuery)) {
+            visible = false;
+          }
+
+          // h3 다음 hr까지 블록 표시/숨김
+          let el = h3;
+          while (el && el.nextElementSibling) {
+            el.style.display = visible ? '' : 'none';
+            const next = el.nextElementSibling;
+            if (next.tagName === 'HR') {
+              next.style.display = visible ? '' : 'none';
+              break;
+            }
+            if (next.tagName === 'H3' || next.tagName === 'H2') break;
+            el = next;
+          }
+        });
+
+        // ## 가나다 헤더는 그 아래에 보이는 H3가 하나라도 있으면 보이게
+        document.querySelectorAll('.glossary-prose h2').forEach(h2 => {
+          let next = h2.nextElementSibling;
+          let hasVisible = false;
+          while (next && next.tagName !== 'H2') {
+            if (next.tagName === 'H3' && next.classList.contains('term-header') && next.style.display !== 'none') {
+              hasVisible = true;
+              break;
+            }
+            next = next.nextElementSibling;
+          }
+          h2.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  })();
+</script>

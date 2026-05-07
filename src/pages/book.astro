@@ -1,0 +1,697 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 책 PART 구조 — v11 원고에서 확인된 정확한 구조
+const bookParts = [
+  { no: 'PART 1',  title: '인터뷰 — 피팅이 시작되는 곳' },
+  { no: 'PART 2',  title: '판단 구조 시스템 — 결과에서 원인으로' },
+  { no: 'PART 3',  title: '골퍼 구조 해석 시스템' },
+  { no: 'PART 4',  title: '볼 비행 구조 — D-Plane과 V-Plane' },
+  { no: 'PART 5',  title: '타점 · CG · 기어이펙트' },
+  { no: 'PART 6',  title: '헤드 기하 구조' },
+  { no: 'PART 7',  title: 'MOI · 관성 구조' },
+  { no: 'PART 8',  title: '무게 · 총무게 · 스윙웨이트' },
+  { no: 'PART 9',  title: '샤프트 구조와 피팅 판단' },
+  { no: 'PART 10', title: '론치모니터 해석 시스템' },
+  { no: 'PART 11', title: '통합 결정과 문제 해결 시스템' },
+  { no: 'PART 12', title: '숏게임 클럽 — 웨지와 퍼터' },
+  { no: 'PART 13', title: '통합 케이스 스터디 — 실전 피팅 사례' },
+  { no: 'PART 14', title: '특수군 피팅 — 시니어·여성·주니어' },
+  { no: 'PART 15', title: '24년의 기록' },
+];
+
+const bookAppendix = [
+  '부록 A · 피팅 실행 도구 — 의사결정 트리와 워크시트',
+  '부록 B · 키네마틱 체인 분석 (심화)',
+  '부록 C · EI 프로파일 매칭 가이드 (심화)',
+  '부록 D · 용어 · 수치 참조표 (Glossary)',
+];
+
+// Book schema (AI 검색에서 가장 강력)
+const bookSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  '@id': 'https://myclubmakers.com/book#book',
+  name: '실제적인 클럽피팅',
+  alternateName: 'The Practical Club Fitting',
+  bookFormat: 'https://schema.org/Hardcover',
+  inLanguage: 'ko-KR',
+  numberOfPages: 600,
+  author: [
+    { '@type': 'Person', name: '채기웅', jobTitle: '클럽메이커스 공작소장', url: 'https://myclubmakers.com/about' },
+    { '@type': 'Person', name: '한평구', jobTitle: '한스클럽하우스 대표' },
+  ],
+  publisher: {
+    '@type': 'Organization',
+    name: 'Clubmakers Korea',
+    url: 'https://myclubmakers.com',
+  },
+  datePublished: '2026',
+  about: [
+    { '@type': 'Thing', name: '클럽피팅 (Club Fitting)' },
+    { '@type': 'Thing', name: '클럽메이킹 (Club Making)' },
+    { '@type': 'Thing', name: '키네마틱 시퀀스' },
+    { '@type': 'Thing', name: '론치모니터 해석' },
+    { '@type': 'Thing', name: 'D-Plane' },
+    { '@type': 'Thing', name: 'MOI 매칭' },
+  ],
+  description: '한국 클럽피팅 분야 최초의 체계적 단행본. 본문 15 PART, 부록 4, 현장작업표준서 12종. 24년 현장의 인터뷰부터 론치모니터까지 피팅 판단의 모든 기준.',
+  url: 'https://myclubmakers.com/book',
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: '책 『실제적인 클럽피팅』 — 24년 현장이 책으로',
+  description: '클럽메이커스 공작소장 채기웅 · 한스클럽하우스 한평구 공저. 한국 클럽피팅 분야 최초의 체계적 단행본. 본문 15 PART · 부록 4 · 현장작업표준서 12종.',
+  mainEntity: { '@id': 'https://myclubmakers.com/book#book' },
+  inLanguage: 'ko-KR',
+};
+---
+
+<BaseLayout
+  title="책 『실제적인 클럽피팅』"
+  description="채기웅 · 한평구 공저 『실제적인 클럽피팅』 — 한국 클럽피팅 분야 최초의 체계적 단행본. 24년 현장의 인터뷰부터 론치모니터까지. 본문 15 PART · 부록 4 · 현장작업표준서 12종. 2026년 출간."
+  schemaType="Book"
+  keywords="실제적인 클럽피팅, 채기웅, 한평구, 클럽피팅 책, 클럽메이킹 책, 한국 클럽피팅 도서, 골프 피팅 교재, club fitting book, practical club fitting, kinematic sequence, D-Plane, 클럽피팅 입문, 클럽피터 양성"
+  extraSchema={[bookSchema, articleSchema]}
+>
+
+  <article>
+  <!-- 5-1. 히어로 -->
+  <section class="page-hero book-hero">
+    <div class="page-hero-content book-hero-content">
+      <div class="book-cover-display">
+        <div class="book-cover-eyebrow">CLUBMAKERS KOREA · 2026</div>
+        <div class="book-cover-title">실제적인<br>클럽피팅</div>
+        <div class="book-cover-en">The Practical Club Fitting</div>
+        <div class="book-cover-author">채기웅 · 한평구</div>
+      </div>
+      <div class="book-hero-info">
+        <div class="page-hero-eyebrow">BOOK · 24년의 현장이 책으로</div>
+        <h1>『실제적인<br>클럽피팅』</h1>
+        <p class="book-subtitle">
+          — 인터뷰에서 론치모니터까지,<br>피팅 판단의 모든 기준
+        </p>
+        <p class="book-byline">
+          <strong>채기웅</strong> 클럽메이커스 공작소장 · <strong>한평구</strong> 한스클럽하우스 대표<br>
+          <span class="book-byline-light">Clubmakers Korea · 2026년 출간</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5-2. 첫 인용 — 책의 도입 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <div class="callout callout-cite intro-cite">
+        <p class="cite-text">
+          "여러분은 좋은 피팅을 하고 있다고 생각하는가?<br /><br />
+          나는 우선 이 책을 펼쳤다는 것만으로도, 여러분이 계속해서 공부하고 좋은 피팅을 하고 있으며 앞으로 <strong>더 나은 피팅을 하고자 노력</strong>한다는 것을 잘 안다."
+        </p>
+        <p class="cite-source">
+          — <cite>『실제적인 클럽피팅』</cite> 서문 첫 문장
+        </p>
+      </div>
+      <p class="book-intro">
+        이 책은 <strong>현장의 피터를 위한 책</strong>입니다.
+        24년 동안 인터뷰하고, 처방하고, 수정하면서 쌓인 판단의 기준을
+        한 권에 정리했습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5-3. 이 책에 대하여 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">ABOUT THIS BOOK · 이 책에 대하여</p>
+      <h2>한국 클럽피팅 분야 최초의<br>체계적 단행본</h2>
+
+      <div class="section-body book-about">
+        <p>
+          국내에는 클럽피팅에 관한 단편적인 자료는 있어도, <strong>현장 피터의 손에 닿는
+          체계적인 단행본은 그동안 없었습니다.</strong> 미국·일본의 자료를 번역하거나
+          제조사 매뉴얼에 기대는 일이 많았습니다.
+        </p>
+        <p>
+          『실제적인 클럽피팅』은 <strong>인터뷰부터 통합 결정까지</strong> —
+          한 명의 골퍼가 공작소에 들어와서 피팅을 마치고 나가기까지의 전 과정을,
+          현장의 언어로 다시 정리한 책입니다.
+        </p>
+        <p>
+          공저자 <strong>한평구 한스클럽하우스 대표</strong>와 함께,
+          서로 다른 현장에서 누적된 케이스를 한 책으로 통합했습니다.
+          이론과 실전, 일반 골퍼와 투어 선수, 한국 시장과 글로벌 표준 — 그 사이의
+          간극을 메우는 것이 이 책의 목표입니다.
+        </p>
+      </div>
+
+      <table class="table book-meta">
+        <tbody>
+          <tr><th>제목</th><td>실제적인 클럽피팅 <span class="meta-en">(The Practical Club Fitting)</span></td></tr>
+          <tr><th>부제</th><td>고전 피팅 이론의 현장 보완과 체계 — 인터뷰에서 론치모니터까지, 피팅 판단의 모든 기준</td></tr>
+          <tr><th>저자</th><td>채기웅 (클럽메이커스 공작소장) · 한평구 (한스클럽하우스 대표)</td></tr>
+          <tr><th>구성</th><td>본문 <strong>15 PART</strong> · 부록 <strong>4</strong> · 현장작업표준서 <strong>12종</strong> · 색인</td></tr>
+          <tr><th>발행</th><td>Clubmakers Korea · 2026</td></tr>
+          <tr><th>분량</th><td>약 600페이지</td></tr>
+          <tr><th>대상</th><td>현장 클럽피터 · 클럽메이커 · 본격 클럽피팅을 공부하는 골퍼</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5-4. 본문 구성 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">CONTENTS · 본문 구성</p>
+      <h2>본문 15 PART · 부록 4</h2>
+      <p class="section-lead">
+        한 명의 골퍼가 공작소에 들어와서 피팅을 마치고 나가기까지의 흐름이 책의 PART 순서입니다.
+      </p>
+
+      <div class="parts-list">
+        {bookParts.map((p) => (
+          <div class="part-item">
+            <div class="part-no">{p.no}</div>
+            <div class="part-title">{p.title}</div>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="appendix-title">부록</h3>
+      <ul class="appendix-list">
+        {bookAppendix.map((a) => (
+          <li>{a}</li>
+        ))}
+      </ul>
+
+      <p class="appendix-extra">
+        <strong>현장작업표준서 12종(WI 01~12)</strong> — 라이·로프트 조정, 그립 교체, 샤프트 교체,
+        FLO 정렬, 길이 조정 등 12가지 현장 작업의 표준 절차서.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5-5. 책에서 — 핵심 인용 4개 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">EXCERPTS · 책에서</p>
+      <h2>책의 네 가지 핵심 메시지</h2>
+      <p class="section-lead">
+        클럽메이커스 사이트의 모든 원칙은 이 책에 그 근거가 있습니다.
+        실제 본문에서 가져온 네 가지 인용입니다.
+      </p>
+
+      <div class="excerpts-stack">
+        <blockquote class="excerpt-block" cite="https://myclubmakers.com/book">
+          <div class="excerpt-num">EXCERPT 01</div>
+          <p class="excerpt-text">
+            "결국 우리가 조정하는 것은 여섯 가지뿐이다 —
+            <strong>길이 · 총무게 · 밸런스 · 강도 · 라이각 · 로프트각</strong>.
+            모든 변수는 결국 이 여섯 가지 안에서 움직인다.
+            반대로 말하면, 이 여섯 가지의 의미와 상호작용을 정확히 이해하면 피팅의 대부분이 풀린다."
+          </p>
+          <cite class="excerpt-source">— 서문, "결국 우리가 조정하는 것은 여섯 가지뿐이다"</cite>
+        </blockquote>
+
+        <blockquote class="excerpt-block" cite="https://myclubmakers.com/book">
+          <div class="excerpt-num">EXCERPT 02</div>
+          <p class="excerpt-text">
+            "이 책의 모든 장은 변수를 다룬다. 길이, 라이각, 무게, 스윙웨이트, CPM, EI 분포 — 변수의 이해는 깊이 들어갈수록 정교해진다.
+            그러나 모든 장의 마지막에는 같은 질문이 남는다.<br/><br/>
+            <strong>이 변수가 이 골퍼에게 얼마나 중요한가.</strong>"
+          </p>
+          <cite class="excerpt-source">— 서문, "이 책의 모든 장에 흐르는 질문"</cite>
+        </blockquote>
+
+        <blockquote class="excerpt-block" cite="https://myclubmakers.com/book">
+          <div class="excerpt-num">EXCERPT 03</div>
+          <p class="excerpt-text">
+            "실제적인 피팅의 판단 순서 (기본 원칙)<br /><br />
+            <strong>인터뷰 → 관찰 → 데이터 → 장비</strong><br /><br />
+            이 순서를 거꾸로 하면, 이후의 모든 판단이 연쇄적으로 흔들립니다."
+          </p>
+          <cite class="excerpt-source">— PART 1 1절, "피팅은 데이터가 아니라 인터뷰에서 시작됩니다"</cite>
+        </blockquote>
+
+        <blockquote class="excerpt-block" cite="https://myclubmakers.com/book">
+          <div class="excerpt-num">EXCERPT 04</div>
+          <p class="excerpt-text">
+            "피팅의 진짜 질문<br /><br />
+            '이 세팅이 더 좋은 결과를 만드는가?'가 아닙니다.<br /><br />
+            <strong>'이 세팅은 스윙이 무너질 때 결과를 어디까지 제한하는가?'</strong>입니다."
+          </p>
+          <cite class="excerpt-source">— PART 2 3절, "평균이 아니라 최악을 기준으로 판단합니다"</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5-6. 누구에게 권하는가 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FOR WHOM · 어떤 분께 권하는가</p>
+      <h2>이 책은 이런 분을 위해 썼습니다</h2>
+
+      <div class="audience-grid">
+        <div class="audience-card">
+          <div class="audience-icon">🔧</div>
+          <h3>현장 클럽피터</h3>
+          <p>
+            매장에서 피팅을 진행하는 분. 표준 가이드만으로 풀리지 않는 케이스에 답을 찾는 분.
+            인터뷰부터 처방까지 일관된 시스템이 필요한 분.
+          </p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">⚙️</div>
+          <h3>클럽메이커</h3>
+          <p>
+            샤프트·헤드·그립 작업을 직접 하는 분. 라이·로프트 조정과 MOI 매칭을 표준화하고 싶은 분.
+            12종 작업표준서가 도움이 됩니다.
+          </p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">📚</div>
+          <h3>본격 공부하는 골퍼</h3>
+          <p>
+            "내 클럽이 왜 안 맞는지" 물리 구조부터 이해하고 싶은 분.
+            론치모니터 데이터를 직접 해석하고 싶은 분.
+          </p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">🎓</div>
+          <h3>전문가 과정 수강생</h3>
+          <p>
+            클럽메이커스 전문가 과정의 교재로 사용됩니다.
+            과정 수강 시 1권 증정. 과정 전 미리 한 번 읽으면 학습 효율이 훨씬 좋아집니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5-7. 구매·문의 -->
+  <section class="section section-bg-green book-cta">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">PURCHASE · 구매·문의</p>
+      <h2 class="book-cta-h2">책 구매 안내</h2>
+      <p class="book-cta-body">
+        2026년 출간. 정식 발매 전까지는 클럽메이커스 공작소에서 직접 구매하실 수 있습니다.
+        가격·발매일·구매 방법은 문의 주시면 안내드립니다.
+      </p>
+
+      <div class="book-cta-channels">
+        <a href="tel:01043635555" class="book-cta-channel">📞 010-4363-5555</a>
+        <a href="mailto:clubmakers@naver.com?subject=책%20문의" class="book-cta-channel">
+          ✉️ 이메일 문의
+        </a>
+        <a href="/contact" class="book-cta-channel book-cta-primary">
+          예약·문의 페이지 →
+        </a>
+      </div>
+
+      <p class="book-cta-note">
+        * 전문가 과정 수강 시 책 1권이 포함됩니다 (88만원). <a href="/education">교육 안내 →</a>
+      </p>
+    </div>
+  </section>
+  </article>
+
+</BaseLayout>
+
+<style>
+  .book-hero {
+    background: var(--bg-cream);
+    border-bottom: none;
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+  .book-hero-content {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 920px;
+  }
+
+  /* ===== 책 표지 ===== */
+  .book-cover-display {
+    width: 280px;
+    height: 380px;
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-deep) 100%);
+    border-radius: 4px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 30px;
+    color: var(--cream);
+    position: relative;
+  }
+  .book-cover-display::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--gold-soft);
+  }
+  .book-cover-eyebrow {
+    font-family: var(--font-serif);
+    font-size: 11px;
+    color: var(--gold-soft);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .book-cover-title {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+  .book-cover-en {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    color: var(--gold-soft);
+    font-style: italic;
+    margin-top: 10px;
+  }
+  .book-cover-author {
+    font-size: 13px;
+    color: var(--gold-soft);
+    letter-spacing: 0.1em;
+  }
+
+  .book-hero-info h1 {
+    margin-bottom: 18px;
+  }
+  .book-subtitle {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    color: var(--grey);
+    font-style: italic;
+    margin-bottom: 24px;
+    line-height: 1.55;
+  }
+  .book-byline {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    padding-top: 18px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+  .book-byline strong { color: var(--ink); font-weight: 700; }
+  .book-byline-light { color: var(--grey); font-size: 12.5px; }
+
+  /* ===== 인용 박스 ===== */
+  .callout-cite {
+    background: var(--ink);
+    color: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding: 36px 40px;
+    margin: 0 0 32px;
+  }
+  .intro-cite { margin-top: 0; }
+  .cite-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.85;
+    color: var(--cream);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .cite-text strong { color: var(--gold-soft); font-weight: 700; }
+  .cite-source {
+    font-size: 13px;
+    color: var(--gold-soft);
+    border-top: 1px solid rgba(212, 184, 136, 0.2);
+    padding-top: 14px;
+  }
+  .cite-source cite { font-style: italic; }
+
+  .book-intro {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.85;
+    color: var(--ink);
+    text-align: center;
+    font-style: italic;
+  }
+  .book-intro strong { color: var(--green); font-weight: 700; }
+
+  /* ===== 책 메타 ===== */
+  .book-about p {
+    font-size: 17px;
+    line-height: 1.95;
+    color: var(--ink-2);
+    margin-bottom: 22px;
+  }
+  .book-about strong { color: var(--ink); font-weight: 700; }
+  .book-meta {
+    margin-top: 36px;
+  }
+  .book-meta th {
+    width: 100px;
+    background: var(--bg-soft);
+  }
+  .book-meta td strong {
+    color: var(--green);
+    font-family: var(--font-serif);
+    font-weight: 700;
+  }
+  .meta-en {
+    color: var(--grey);
+    font-style: italic;
+    font-size: 13px;
+  }
+
+  /* ===== PART 리스트 ===== */
+  .section-lead {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--grey);
+    margin-bottom: 32px;
+  }
+  .parts-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .part-item {
+    background: white;
+    padding: 18px 22px;
+    border-left: 3px solid var(--gold);
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .part-no {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    min-width: 60px;
+  }
+  .part-title {
+    font-size: 14.5px;
+    color: var(--ink);
+    font-weight: 600;
+    line-height: 1.55;
+  }
+
+  .appendix-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    font-weight: 700;
+  }
+  .appendix-list {
+    list-style: none;
+    padding: 0;
+  }
+  .appendix-list li {
+    padding: 10px 0 10px 18px;
+    position: relative;
+    font-size: 14.5px;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line);
+    line-height: 1.55;
+  }
+  .appendix-list li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    color: var(--gold);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .appendix-extra {
+    margin-top: 24px;
+    padding: 22px 26px;
+    background: white;
+    border-left: 3px solid var(--green);
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+  .appendix-extra strong { color: var(--ink); font-weight: 700; }
+
+  /* ===== EXCERPTS ===== */
+  .excerpts-stack {
+    margin-top: 36px;
+  }
+  .excerpt-block {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--green);
+    border-radius: 4px;
+    padding: 36px 40px;
+    margin-bottom: 18px;
+  }
+  .excerpt-num {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .excerpt-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .excerpt-text strong {
+    color: var(--green);
+    font-weight: 700;
+    font-style: normal;
+  }
+  .excerpt-source {
+    display: block;
+    font-size: 13px;
+    color: var(--grey);
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    font-style: italic;
+  }
+
+  /* ===== 대상 ===== */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .audience-card {
+    background: white;
+    padding: 32px 30px;
+    border-top: 3px solid var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .audience-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+  }
+  .audience-icon {
+    font-size: 36px;
+    margin-bottom: 14px;
+  }
+  .audience-card h3 {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .audience-card p {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--grey);
+  }
+
+  /* ===== 구매 CTA ===== */
+  .book-cta { text-align: center; }
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .book-cta-h2 {
+    color: var(--cream);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .book-cta-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--grey-3);
+    max-width: 580px;
+    margin: 0 auto 32px;
+  }
+  .book-cta-channels {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .book-cta-channel {
+    background: rgba(212, 184, 136, 0.1);
+    border: 1px solid rgba(212, 184, 136, 0.3);
+    color: var(--cream);
+    padding: 14px 26px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .book-cta-channel:hover {
+    background: rgba(212, 184, 136, 0.2);
+  }
+  .book-cta-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+    border-color: var(--gold);
+  }
+  .book-cta-primary:hover { background: var(--gold-soft); }
+  .book-cta-note {
+    font-size: 13px;
+    color: var(--gold-soft);
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(212, 184, 136, 0.2);
+  }
+  .book-cta-note a {
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+
+  /* ===== 모바일 ===== */
+  @media (max-width: 968px) {
+    .book-hero { padding-top: 60px; padding-bottom: 60px; }
+    .book-hero-content {
+      grid-template-columns: 1fr;
+      gap: 36px;
+      text-align: center;
+    }
+    .book-cover-display {
+      margin: 0 auto;
+      width: 220px;
+      height: 320px;
+    }
+    .book-cover-title { font-size: 24px; }
+    .callout-cite { padding: 24px 24px; }
+    .cite-text { font-size: 16px; }
+    .book-about p { font-size: 15px; }
+    .parts-list { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .excerpt-block { padding: 24px 24px; }
+    .excerpt-text { font-size: 16px; }
+    .book-cta-channels { flex-direction: column; }
+  }
+</style>

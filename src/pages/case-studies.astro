@@ -1,0 +1,631 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// PART 1 6절의 6가지 실패 사례 (책 v11 본문에서 정확히 추출)
+const case1Series = [
+  {
+    no: 'CASE 1',
+    title: '슬라이스 — 헤드 교체 전에 샤프트를 봐야 했습니다',
+    interview: '슬라이스가 납니다. 론치모니터에서 페이스 오픈으로 측정됨.',
+    wrong: { label: '인터뷰 없이', body: '드로우 바이어스 헤드 교체. 오프셋 증가.' },
+    real: {
+      label: '인터뷰 후 발견',
+      body: '최근 가벼운 샤프트로 교체 후 시작됨. 경량 샤프트 → 릴리즈 가속 → ROC 과다 → 페이스 조기 닫힘이 오히려 슬라이스처럼 보임.',
+      prescription: '헤드 교체 아님. 샤프트 무게 원복 또는 MOI 상향.',
+    },
+    lesson: '같은 슬라이스도 원인이 다르면 처방이 다릅니다. 페이스 오픈 데이터만 보고 헤드를 바꾸면 진짜 원인은 그대로 남습니다.',
+  },
+  {
+    no: 'CASE 2',
+    title: '거리 부족 — 장비 교체 전에 타점부터',
+    interview: '거리가 안 납니다. 헤드스피드 90mph인데 230야드 정도.',
+    wrong: { label: '인터뷰 없이', body: '가벼운 샤프트·고반발 헤드 업그레이드.' },
+    real: {
+      label: '인터뷰 후 발견',
+      body: '타점이 항상 토우 하단에 집중. 스매시 팩터 1.38 → 에너지 전달 효율 문제. 장비 교체 전 타점 안정화가 선행되어야 함.',
+      prescription: '길이 0.5인치 단축 후 스매시 개선 확인. 그 후에야 장비 검토.',
+    },
+    lesson: '거리 문제의 원인은 헤드스피드보다 타점 일관성과 스매시 팩터인 경우가 더 많습니다.',
+  },
+  {
+    no: 'CASE 3',
+    title: '높은 탄도 — 로프트 변경 전에 후반 패턴 확인',
+    interview: '탄도가 너무 높습니다. 스핀 3,200rpm.',
+    wrong: { label: '인터뷰 없이', body: '로프트 낮춤 (10.5° → 9°). 저스핀(LS) 헤드 교체.' },
+    real: {
+      label: '인터뷰 후 발견',
+      body: '"후반에 탄도가 더 높아진다"는 인터뷰 답변. 총무게 과다 → 피로 → 릴리즈 지연 → Attack Angle 변화 → Dynamic Loft 증가의 연쇄.',
+      prescription: '로프트 교체 아님. 총무게 감소 우선 시도.',
+    },
+    lesson: '데이터 한 시점이 아니라 라운드 전체의 패턴을 봐야 합니다. 후반 변화는 무게 문제의 신호입니다.',
+  },
+  {
+    no: 'CASE 4',
+    title: '아이언만 슬라이스 — 세트 흐름 단절',
+    interview: '아이언 슬라이스. 드라이버는 괜찮음.',
+    wrong: { label: '인터뷰 없이', body: '아이언 샤프트 CPM 상향. 스틸 교체.' },
+    real: {
+      label: '인터뷰 후 발견',
+      body: '드라이버는 정품 60g, 아이언 리샤프트 시 65g으로 경량화됨. FM 흐름 단절 → 아이언 릴리즈 가속 → 슬라이스.',
+      prescription: '아이언 샤프트 무게 재검토. 드라이버-아이언 무게 흐름 복원.',
+    },
+    lesson: '클럽별 미스가 다르다면 단일 클럽 문제가 아니라 세트 전체의 흐름 문제일 가능성이 높습니다.',
+  },
+  {
+    no: 'CASE 5',
+    title: '어프로치 짧음 — 그립 교체가 만든 거리 손실',
+    interview: '어프로치 항상 짧음. 거리 감 없음.',
+    wrong: { label: '인터뷰 없이', body: '웨지 로프트 조정. 낮은 바운스로 교체.' },
+    real: {
+      label: '인터뷰 후 발견',
+      body: '손목 통증으로 최근 그립을 두껍게 교체함. 두꺼운 그립 → 손목 회전 제한 → 릴리즈 둔화 → Dynamic Loft 감소 → 거리 손실.',
+      prescription: '웨지 교체 아님. 그립 두께 재검토.',
+    },
+    lesson: '그립 사이즈는 모든 변수보다 우선할 수 있습니다. 손이 클럽을 제대로 잡지 못하면 다른 변수는 의미를 잃습니다.',
+  },
+  {
+    no: 'CASE 6',
+    title: '롱아이언만 어려움 — FM 흐름이 끊긴 케이스',
+    interview: '7번 아이언은 편한데 4·5번이 항상 어렵습니다.',
+    wrong: { label: '인터뷰 없이', body: '롱아이언 제거. 유틸/하이브리드 교체.' },
+    real: {
+      label: '인터뷰 후 발견',
+      body: '기준 클럽(7번) CPM 측정: 110cpm. 4번 아이언: 95cpm. FM 흐름 단절 → 롱아이언 타이밍 전환 실패.',
+      prescription: '하이브리드 교체 전 FM 흐름 복원 시도. 4~5번 샤프트 교체로 해결 가능.',
+    },
+    lesson: '"잘 안 맞는 클럽"을 빼는 것이 답이 아닐 수 있습니다. 세트 안에서 그 클럽만 흐름이 끊긴 경우가 많습니다.',
+  },
+];
+
+// PART 2 9절의 판단 오류 3가지 패턴
+const part2Cases = [
+  {
+    no: 'PATTERN A',
+    title: '데이터 순서를 지키지 않은 우측 미스 진단',
+    observed: '우측 미스 반복. 론치모니터에서 페이스 오픈 수치 확인.',
+    wrong: '드로우 바이어스 헤드 교체. 오프셋 증가.',
+    real: '타점 확인 시 힐 쪽 반복 집중. 힐 타점 → 기어이펙트에 의한 페이스 오픈 반응이 본질.',
+    prescription: '장비 교체 아님. 길이 단축 후 타점 안정화 우선.',
+  },
+  {
+    no: 'PATTERN B',
+    title: '타점을 보지 않은 스핀·탄도 진단',
+    observed: '스핀 3,200rpm. 탄도가 너무 높음.',
+    wrong: '로프트 낮춤. 저스핀(LS) 헤드 교체.',
+    real: '타점이 상하로 크게 분산된 상태. 하단 타점 반복 → Dynamic Loft 증가 → 스핀 상승.',
+    prescription: '로프트 조정 전 타점 안정화 우선 시도.',
+  },
+  {
+    no: 'PATTERN C',
+    title: '헤드스피드만 보고 진행한 거리 부족 진단',
+    observed: '거리 부족. 헤드스피드 90mph 대비 볼스피드 낮음.',
+    wrong: '가벼운 샤프트·고반발 헤드 교체.',
+    real: '스매시 팩터 1.38. 타점 패턴 확인 시 토우 하단 반복. 에너지 전달 효율 손실이 원인.',
+    prescription: '길이 0.5인치 단축 후 타점 개선 확인.',
+  },
+];
+
+// AI 검색용 schema (Article + 6개 CASE를 ItemList로)
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: '인터뷰 없이 판단했을 때 — 클럽피팅 실패 사례 모음',
+  description: '24년 클럽피팅 현장에서 반복적으로 관찰된 9가지 판단 실패 패턴. 슬라이스, 거리 부족, 높은 탄도, 세트 흐름 단절 등. 같은 증상도 원인이 다르면 처방이 다릅니다.',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    jobTitle: '클럽메이커스 공작소장',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: { '@type': 'Organization', name: '클럽메이커스' },
+  inLanguage: 'ko-KR',
+  about: [
+    { '@type': 'Thing', name: '클럽피팅 케이스 스터디' },
+    { '@type': 'Thing', name: '클럽피팅 실패 사례' },
+    { '@type': 'Thing', name: 'Club Fitting Case Studies' },
+  ],
+  isPartOf: {
+    '@type': 'Book',
+    name: '실제적인 클럽피팅',
+    '@id': 'https://myclubmakers.com/book#book',
+  },
+};
+---
+
+<BaseLayout
+  title="케이스 스터디"
+  description="클럽피팅 현장에서 반복되는 판단 실패 9가지 패턴. 슬라이스가 헤드 문제가 아닌 경우, 거리 부족이 타점 문제인 경우, 후반 무너짐의 진짜 원인. 책 『실제적인 클럽피팅』 PART 1·2에서."
+  schemaType="Article"
+  keywords="클럽피팅 케이스, 클럽피팅 사례, 슬라이스 원인, 클럽피팅 실패, 클럽피팅 사례 분석, club fitting case study, 슬라이스 처방, 거리 부족 원인, 후반 무너짐, 클럽피팅 오판, 인터뷰 클럽피팅"
+  extraSchema={articleSchema}
+>
+
+  <article>
+  <!-- 7-1. 히어로 -->
+  <section class="page-hero case-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">CASE STUDIES · 케이스 스터디</div>
+      <h1>같은 증상도<br>원인이 다르면<br>처방이 다릅니다</h1>
+      <p class="page-hero-subtitle">
+        24년 현장에서 반복적으로 관찰된 <strong>9가지 판단 실패 패턴</strong>입니다.<br/>
+        모두 인터뷰 없이 데이터나 증상만 보고 결론을 내린 결과였습니다.<br/>
+        <span class="hero-sub-light">— 책 『실제적인 클럽피팅』 PART 1 6절 · PART 2 9절에서.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 7-2. 도입 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <div class="callout callout-cite">
+        <p class="cite-text">
+          "아래 6개 케이스는 실제 피팅 현장에서 반복적으로 발생하는 판단 실패 패턴입니다.
+          공통점은 하나입니다. <strong>인터뷰 없이 데이터나 증상만 보고 결론을 내렸다</strong>는 것입니다."
+        </p>
+        <p class="cite-source">
+          — <cite>『실제적인 클럽피팅』</cite> PART 1 6절
+        </p>
+      </div>
+      <p class="case-intro">
+        실제 특정 케이스를 지칭하는 것이 아니라, 24년 동안 반복적으로 관찰된 패턴을 유형화한 것입니다.
+        이 페이지의 목적은 어떤 진단이 잘못이고 어떤 진단이 맞는지를 보여주는 것이 아니라,
+        <strong>같은 증상이라도 인터뷰 한 번에 처방이 완전히 달라진다</strong>는 사실을 보여드리는 것입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7-3. PART 1 6가지 케이스 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">PART 1 · 6절 · 인터뷰 없이 판단했을 때</p>
+      <h2>6가지 실패 사례</h2>
+      <p class="section-lead">
+        모두 가벼운 인터뷰 한 번에 처방이 완전히 바뀐 케이스입니다.
+        같은 슬라이스, 같은 거리 부족, 같은 높은 탄도라도 — 원인은 사람마다 다릅니다.
+      </p>
+
+      <div class="cases-stack">
+        {case1Series.map((c) => (
+          <article class="case-card">
+            <header class="case-card-header">
+              <div class="case-no">{c.no}</div>
+              <h3 class="case-title">{c.title}</h3>
+            </header>
+
+            <div class="case-interview">
+              <span class="case-label">고객님 말씀 / 측정값</span>
+              <p>{c.interview}</p>
+            </div>
+
+            <div class="case-versus">
+              <div class="case-wrong">
+                <div class="case-versus-tag tag-wrong">{c.wrong.label}</div>
+                <p class="case-versus-body"><strong>잘못된 판단:</strong> {c.wrong.body}</p>
+              </div>
+
+              <div class="case-arrow">▾</div>
+
+              <div class="case-right">
+                <div class="case-versus-tag tag-right">{c.real.label}</div>
+                <p class="case-versus-body case-real-body">{c.real.body}</p>
+                <div class="case-prescription">
+                  <span class="prescription-label">처방</span>
+                  <p>{c.real.prescription}</p>
+                </div>
+              </div>
+            </div>
+
+            <footer class="case-lesson">
+              <span class="lesson-label">교훈</span>
+              <p>{c.lesson}</p>
+            </footer>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7-4. PART 2 — 데이터 순서 오판 3가지 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">PART 2 · 9절 · 데이터 순서를 지키지 않을 때</p>
+      <h2>판단 오류 3가지 패턴</h2>
+      <p class="section-lead">
+        앞의 6가지가 "인터뷰가 없었다"의 사례라면, 이 3가지는 <strong>데이터 해석 순서가 어긋난</strong> 사례입니다.
+        타점 → 에너지 전달 → 방향 → 볼 비행. 이 순서가 무너지면 결과만 보고 원인을 거꾸로 추정하게 됩니다.
+      </p>
+
+      <div class="pattern-stack">
+        {part2Cases.map((c) => (
+          <article class="pattern-card">
+            <div class="pattern-no">{c.no}</div>
+            <h3 class="pattern-title">{c.title}</h3>
+
+            <dl class="pattern-list">
+              <dt>관찰</dt>
+              <dd>{c.observed}</dd>
+              <dt>잘못된 판단</dt>
+              <dd class="dd-wrong">{c.wrong}</dd>
+              <dt>실제 원인</dt>
+              <dd>{c.real}</dd>
+              <dt>올바른 처방</dt>
+              <dd class="dd-right">{c.prescription}</dd>
+            </dl>
+          </article>
+        ))}
+      </div>
+
+      <div class="callout callout-cite">
+        <p class="cite-text">
+          "판단 순서 (변경 불가)<br/><br/>
+          <strong>타점 → 에너지 전달 → 방향 (Face/Path) → 볼 비행</strong><br/><br/>
+          상위 단계가 불안정하면 하위 단계의 수치는 아직 의미가 없습니다."
+        </p>
+        <p class="cite-source">
+          — <cite>『실제적인 클럽피팅』</cite> PART 2 2절
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7-5. 마침표 -->
+  <section class="section closing-section">
+    <div class="section-content-narrow">
+      <p class="closing-quote">
+        "좋은 피팅은 데이터의 양이 아니라<br/>
+        <em>골퍼를 읽는 깊이</em>에서 갈립니다."
+      </p>
+      <p class="closing-meta">— <cite>『실제적인 클럽피팅』</cite> 서문</p>
+
+      <div class="closing-actions">
+        <a href="/why-fitting" class="btn-primary">공작소의 철학 →</a>
+        <a href="/system" class="btn-ghost">공작소의 시스템 →</a>
+        <a href="/contact" class="btn-ghost">예약·문의 →</a>
+      </div>
+    </div>
+  </section>
+  </article>
+
+</BaseLayout>
+
+<style>
+  .case-hero {
+    background: var(--bg-cream);
+    border-bottom: none;
+  }
+  .hero-sub-light { color: var(--grey); font-size: 14px; }
+
+  /* ===== 인용 박스 (재사용) ===== */
+  .callout-cite {
+    background: var(--ink);
+    color: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding: 32px 36px;
+    margin: 0 0 28px;
+  }
+  .cite-text {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--cream);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .cite-text strong { color: var(--gold-soft); font-weight: 700; }
+  .cite-source {
+    font-size: 13px;
+    color: var(--gold-soft);
+    border-top: 1px solid rgba(212, 184, 136, 0.2);
+    padding-top: 12px;
+  }
+  .cite-source cite { font-style: italic; }
+
+  .case-intro {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+  }
+  .case-intro strong { color: var(--green); font-weight: 700; }
+
+  .section-lead {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--grey);
+    margin-bottom: 36px;
+    max-width: 700px;
+  }
+  .section-lead strong { color: var(--ink); font-weight: 700; }
+
+  /* ===== CASE 카드 ===== */
+  .cases-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .case-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 32px 36px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .case-card:hover {
+    border-color: var(--green);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+  }
+  .case-card-header {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .case-no {
+    display: inline-block;
+    background: var(--green);
+    color: var(--cream);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin-bottom: 10px;
+  }
+  .case-title {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    margin-bottom: 0;
+  }
+
+  /* 인터뷰 박스 */
+  .case-interview {
+    margin-bottom: 24px;
+  }
+  .case-label {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .case-interview p {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink);
+    font-style: italic;
+    padding: 16px 20px;
+    background: var(--bg-cream);
+    border-left: 3px solid var(--gold-soft);
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* 잘못된 판단 vs 올바른 처방 */
+  .case-versus {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .case-wrong, .case-right {
+    padding: 22px 24px;
+    border-radius: 6px;
+  }
+  .case-wrong {
+    background: rgba(180, 60, 60, 0.04);
+    border: 1px solid rgba(180, 60, 60, 0.15);
+  }
+  .case-right {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+  }
+  .case-versus-tag {
+    display: inline-block;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .tag-wrong {
+    background: rgba(180, 60, 60, 0.12);
+    color: rgb(140, 50, 50);
+  }
+  .tag-right {
+    background: var(--green);
+    color: var(--cream);
+  }
+  .case-versus-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .case-versus-body strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .case-real-body { color: var(--ink); }
+  .case-arrow {
+    text-align: center;
+    color: var(--gold);
+    font-size: 18px;
+    margin: 4px 0;
+  }
+
+  /* 처방 */
+  .case-prescription {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+  }
+  .prescription-label {
+    display: inline-block;
+    font-size: 10.5px;
+    color: var(--green);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .case-prescription p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* 교훈 */
+  .case-lesson {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .lesson-label {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .case-lesson p {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* ===== PATTERN 카드 (PART 2) ===== */
+  .pattern-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .pattern-card {
+    background: white;
+    padding: 28px 32px;
+    border-top: 3px solid var(--ink);
+    border-radius: 0 0 4px 4px;
+  }
+  .pattern-no {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .pattern-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 18px;
+    letter-spacing: -0.015em;
+  }
+  .pattern-list {
+    margin: 0;
+  }
+  .pattern-list dt {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 14px;
+    margin-bottom: 4px;
+  }
+  .pattern-list dt:first-child { margin-top: 0; }
+  .pattern-list dd {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .pattern-list dd:last-child { border-bottom: none; }
+  .dd-wrong {
+    color: rgb(140, 50, 50) !important;
+    font-style: italic;
+  }
+  .dd-right {
+    color: var(--ink) !important;
+    font-weight: 600;
+  }
+
+  /* ===== 마침표 ===== */
+  .closing-section {
+    text-align: center;
+    background: var(--green);
+    color: var(--cream);
+  }
+  .closing-quote {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    line-height: 1.5;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .closing-quote em {
+    color: var(--gold-soft);
+    font-style: italic;
+  }
+  .closing-meta {
+    font-size: 13px;
+    color: var(--gold-soft);
+    margin-bottom: 36px;
+    letter-spacing: 0.03em;
+  }
+  .closing-meta cite { font-style: italic; }
+  .closing-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .closing-section .btn-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+  }
+  .closing-section .btn-primary:hover { background: var(--gold-soft); }
+  .closing-section .btn-ghost {
+    color: var(--cream);
+    border-color: var(--cream);
+  }
+  .closing-section .btn-ghost:hover {
+    background: var(--cream);
+    color: var(--green);
+  }
+
+  /* ===== 모바일 ===== */
+  @media (max-width: 968px) {
+    .case-card { padding: 24px 22px; }
+    .case-title { font-size: 19px; }
+    .case-interview p { font-size: 14.5px; padding: 14px 16px; }
+    .case-wrong, .case-right { padding: 18px 18px; }
+    .case-versus-body { font-size: 13.5px; }
+    .pattern-card { padding: 22px 22px; }
+    .pattern-title { font-size: 17px; }
+    .closing-quote { font-size: 22px; }
+    .callout-cite { padding: 24px 22px; }
+    .cite-text { font-size: 15.5px; }
+    .closing-actions { flex-direction: column; }
+    .closing-actions a { text-align: center; }
+  }
+</style>

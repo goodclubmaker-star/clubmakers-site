@@ -1,0 +1,415 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// v8 페이지 11의 4카테고리 18문항
+const faqCategories = [
+  {
+    id: 'A',
+    title: '예약·가격·진행 (4)',
+    icon: '📅',
+    items: [
+      {
+        q: '분석 비용은 얼마인가요? 시간은 얼마나 걸리나요?',
+        a: '<strong>60,000원입니다.</strong> 평일 낮시간(10시~14시) 방문 시 <strong>45,000원</strong>으로 진행됩니다. 시간은 약 40~60분 — 인터뷰 10~15분, 신체·스윙 측정 15~20분, 클럽 측정·시타 15~20분, 처방 상담 10분 정도입니다. 분석비는 이후 클럽 작업이나 구매 시 차감되지 않습니다 — 분석은 그 자체로 완결된 시간입니다.',
+      },
+      {
+        q: '예약은 어떻게 하나요?',
+        a: '<a href="https://naver.me/GfrbfXtX" target="_blank" rel="noopener"><strong>네이버 예약</strong></a>이 가장 빠릅니다. 전화(<a href="tel:01043635555">010-4363-5555</a>) 또는 <a href="mailto:clubmakers@naver.com">이메일</a>로도 가능합니다. 영업시간은 평일 10:00~20:00, 토요일 10:00~17:00, 일요일·공휴일은 탄력적으로 운영합니다.',
+      },
+      {
+        q: '처음 가는데 무엇을 준비해야 하나요?',
+        a: '현재 사용 중인 클럽 세트를 가져오시면 됩니다(드라이버·페어웨이우드·아이언·웨지·퍼터). 가장 편한 클럽이 무엇인지 미리 생각해두시면 인터뷰가 수월합니다. <strong>"시험 보는 기분으로 오시지 않으셨으면 합니다"</strong> — 채점받는 자리가 아니라 함께 들여다보는 자리입니다. 편한 옷차림이면 됩니다.',
+      },
+      {
+        q: '어디에 있나요? 주차는 가능한가요?',
+        a: '서울 서초구 동산로2길 50, 가보빌딩 지하층입니다. 양재IC에서 가까워 차량 접근이 좋고, 지하철 신분당선 양재시민의숲역 또는 3호선 매봉역에서도 닿을 수 있습니다. 주차는 건물 주차장을 이용 가능합니다 — 자세한 안내는 예약 시 문자로 보내드립니다.',
+      },
+    ],
+  },
+  {
+    id: 'B',
+    title: '피팅·분석에 대한 질문 (4)',
+    icon: '🔍',
+    items: [
+      {
+        q: '저는 초보입니다. 피팅을 받을 단계가 아닐까요?',
+        a: '오히려 초보일 때가 좋은 시점입니다. <strong>몸에 맞지 않는 클럽으로 잘못된 스윙 습관을 만드는 것이 더 위험</strong>합니다. 클럽이 사람에 맞으면 자세도 자연스러워집니다. 초보·중상급·시니어·여성 고객님이 모두 오시며, 같은 자세로 인터뷰를 시작합니다.',
+      },
+      {
+        q: '피팅을 받으면 비거리가 늘어나나요?',
+        a: '경우에 따라 다릅니다. 헤드스피드가 잠재력 대비 낮게 활용되고 있다면 늘 수 있습니다. 그러나 클럽메이커스가 약속하는 것은 비거리가 아니라 <strong>일관성</strong>입니다 — 평균을 끌어올리는 것보다, 최악의 샷이 허용 범위를 벗어나지 않게 만드는 것이 본질입니다. 잘 맞은 한 샷이 길어지는 것보다 18홀 내내 흔들리지 않는 것이 더 큰 가치입니다.',
+      },
+      {
+        q: '아직 클럽이 새것입니다. 그래도 피팅이 의미 있나요?',
+        a: '네. 새 클럽이라도 그 클럽이 <strong>고객님께 맞는지</strong>는 별개의 문제입니다. 라이각·로프트 미세 조정, 그립 사이즈 변경, 길이 조정만으로도 같은 클럽이 완전히 다르게 반응할 수 있습니다. "이 클럽은 그대로 가도 됩니다"라는 결과가 나오면 그 자체로도 가치가 있습니다 — 그래야 안심하고 사용할 수 있으니까요.',
+      },
+      {
+        q: '저는 라운드를 1~2번밖에 안 다녀요. 피팅이 너무 사치 아닌가요?',
+        a: '그래서 더더욱 한 번의 라운드가 만족스러워야 합니다. 분석비는 60,000원입니다. 새 클럽 한 자루 가격의 일부만으로 가방 안 클럽 전체의 이상적 흐름을 점검할 수 있습니다. <strong>"이 정도 일로 와도 될까"</strong> 망설이지 않으셔도 됩니다.',
+      },
+    ],
+  },
+  {
+    id: 'C',
+    title: '클럽 작업·외부 클럽 (7)',
+    icon: '🔧',
+    items: [
+      {
+        q: '제 클럽이 다른 매장 제품인데 작업 받을 수 있나요?',
+        a: '네, 가능합니다. <strong>클럽메이커스 제품이 아니어도 모든 외부 클럽 작업을 받습니다.</strong> 라이·로프트 조정, 그립 교체, 샤프트 교체, 길이 조정, MOI 매칭, 카운터밸런싱, 스파인·FLO 정렬 등 모든 작업이 가능합니다. 24년 동안 다양한 브랜드의 클럽을 다뤄왔습니다.',
+      },
+      {
+        q: '벤딩(라이·로프트 조정)은 가능한가요? 가격은?',
+        a: '네, 가장 많이 진행하는 작업입니다. 단조 헤드는 대부분 가능하고, 주조 헤드는 한도가 있습니다. 본당 1만~1만 5천원 정도 — 정확한 가격은 작업 목록에 따라 달라지므로 <a href="/workshop">공임표 페이지</a>에서 확인 가능합니다.',
+      },
+      {
+        q: '리샤프트(샤프트 교체)는 어떻게 진행되나요?',
+        a: '먼저 분석으로 어떤 샤프트가 적합한지 결정한 뒤, 보유 중인 샤프트 또는 추천 샤프트로 작업합니다. <strong>샤프트는 클럽 성격을 통째로 바꾸는 부품</strong>이라 충분한 인터뷰와 시타 검증을 거친 뒤 결정합니다. 작업비는 본당 4만~6만원 (샤프트 가격 별도).',
+      },
+      {
+        q: '풀피팅과 분석은 어떻게 다른가요?',
+        a: '<strong>분석(60,000원)</strong>은 인터뷰·측정·진단까지 — 처방 상담을 받고 가는 것까지가 한 단위입니다. <strong>풀피팅</strong>은 분석 결과를 바탕으로 실제 클럽을 만들거나 조정하는 작업까지 포함하는 패키지입니다. 가격은 작업 범위에 따라 달라지므로 분석 후 안내드립니다.',
+      },
+      {
+        q: '드라이버만 분석받고 싶어요. 가능한가요?',
+        a: '네, 가능합니다. 다만 한 가지 안내드리면 — 가방 안의 클럽들은 서로 영향을 줍니다. 드라이버 하나만 바꾸면 아이언과의 흐름이 끊길 수 있습니다. 드라이버만 분석하더라도 <strong>전체 세트 흐름을 함께 살펴드립니다</strong>. 그래야 진짜 도움이 되는 처방이 나옵니다.',
+      },
+      {
+        q: '작업이 끝나면 바로 가져갈 수 있나요?',
+        a: '간단한 그립 교체나 라이·로프트 조정은 당일 진행이 많습니다. 리샤프트·길이 조정·MOI 매칭처럼 시간이 필요한 작업은 보통 2~3일 정도 소요됩니다. 작업 일정은 작업 시작 전에 정확히 안내드립니다.',
+      },
+      {
+        q: '클럽메이킹 교육도 받을 수 있나요?',
+        a: '네. <strong>클럽피팅·클럽메이킹 전문가 과정</strong>을 운영합니다. 2일·정원 2인·88만원 (책 1권 포함). 매장 운영 피터, 클럽메이커 입문자, 본격 공부하고 싶으신 골퍼를 대상으로 합니다. <a href="/education">전문가 과정 안내 →</a>',
+      },
+    ],
+  },
+  {
+    id: 'D',
+    title: '제품·기타 (3)',
+    icon: '🎁',
+    items: [
+      {
+        q: '클럽메이커스 자체 제품(VERSUS·KRZ·DEFINE)은 무엇인가요?',
+        a: '24년의 현장 데이터를 바탕으로 자체 R&D를 통해 만든 제품 라인입니다. <strong>VERSUS</strong>는 맞춤 드라이버(650,000원), <strong>KRZ 203H</strong>는 하이브리드, <strong>DEFINE</strong>은 자체 설계 샤프트입니다. KIPO 등록 특허 3종을 기반으로 합니다. <a href="/products">제품 라인 →</a>',
+      },
+      {
+        q: '뽀로로 헤드커버는 무엇인가요?',
+        a: '2010년대 KLPGA·LPGA 투어 시절, 박희영 선수와 함께 등장했던 <strong>멘탈 파트너</strong>입니다. 우승의 순간 함께한 헤드커버로 알려졌습니다. 라이선스 표기는 하지 않으며, 잔여 재고만 보유하고 있습니다.',
+      },
+      {
+        q: '책 『실제적인 클럽피팅』은 어디서 살 수 있나요?',
+        a: '2026년 출간된 책입니다. 정식 발매 전까지는 클럽메이커스 공작소에서 직접 구매하실 수 있습니다. 가격·발매일은 문의 주시면 안내드립니다. 전문가 과정 수강 시 1권이 포함됩니다 (88만원). <a href="/book">책 자세히 →</a>',
+      },
+    ],
+  },
+];
+
+// FAQPage schema 생성 — AI 검색에서 가장 강력
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': 'https://myclubmakers.com/faq#faq',
+  mainEntity: faqCategories.flatMap((cat) =>
+    cat.items.map((it) => ({
+      '@type': 'Question',
+      name: it.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        // HTML 태그 제거해서 plain text로 (스키마 권장)
+        text: it.a.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(),
+      },
+    }))
+  ),
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: '클럽메이커스 자주 묻는 질문 (FAQ)',
+  description: '클럽피팅 분석 가격, 예약 방법, 외부 클럽 작업, 풀피팅 vs 분석, 라이·로프트 조정, 리샤프트, 전문가 과정 등 18가지 자주 묻는 질문.',
+  author: { '@type': 'Person', name: '채기웅', url: 'https://myclubmakers.com/about' },
+  publisher: { '@type': 'Organization', name: '클럽메이커스' },
+  inLanguage: 'ko-KR',
+};
+---
+
+<BaseLayout
+  title="자주 묻는 질문 (FAQ)"
+  description="클럽메이커스 클럽피팅 자주 묻는 질문 18가지. 분석 가격, 예약 방법, 외부 클럽 작업, 풀피팅과 분석의 차이, 라이·로프트 조정, 리샤프트, 전문가 과정 등."
+  schemaType="FAQPage"
+  keywords="클럽메이커스 FAQ, 클럽피팅 가격, 클럽피팅 예약, 외부 클럽 작업, 라이각 조정, 로프트 조정, 리샤프트, 풀피팅, 클럽피팅 후기, 클럽피팅 비용, 한국 클럽피팅 가격"
+  extraSchema={[faqSchema, articleSchema]}
+>
+
+  <article>
+  <!-- 8-1. 히어로 -->
+  <section class="page-hero faq-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">FAQ · 자주 묻는 질문</div>
+      <h1>자주 묻는 질문</h1>
+      <p class="page-hero-subtitle">
+        클럽메이커스를 찾으시는 분들께 가장 자주 받는 18가지 질문입니다.<br/>
+        여기에서 답을 못 찾으시면 <a href="/contact" class="hero-link">문의 페이지</a>나
+        <a href="tel:01043635555" class="hero-link">전화(010-4363-5555)</a>로 연락 주세요.
+      </p>
+    </div>
+  </section>
+
+  <!-- 8-2. 카테고리 점프 -->
+  <section class="jump-section">
+    <div class="jump-bar">
+      {faqCategories.map((cat) => (
+        <a href={`#cat-${cat.id}`} class="jump-link">
+          <span class="jump-icon">{cat.icon}</span>
+          <span class="jump-text">{cat.title}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 8-3. FAQ 본문 -->
+  {faqCategories.map((cat) => (
+    <section class="section faq-section" id={`cat-${cat.id}`}>
+      <div class="section-content-narrow">
+        <p class="section-eyebrow">CATEGORY {cat.id}</p>
+        <h2 class="faq-cat-title">
+          <span class="cat-icon">{cat.icon}</span>
+          {cat.title}
+        </h2>
+
+        <div class="faq-list">
+          {cat.items.map((item, idx) => (
+            <details class="faq-item">
+              <summary>
+                <span class="q-num">Q{idx + 1}</span>
+                <span class="q-text">{item.q}</span>
+              </summary>
+              <div class="faq-answer" set:html={item.a}></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- 8-4. 추가 문의 -->
+  <section class="section section-bg-green more-section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">STILL WONDERING?</p>
+      <h2 class="more-h2">여기에 답이 없는<br>질문이라면</h2>
+      <p class="more-body">
+        18가지 질문에 다 담지 못한 것들이 있을 수 있습니다.
+        편하게 연락 주세요. <strong>"이 정도 일로 물어봐도 될까"</strong> 망설이지 않으셔도 됩니다.
+      </p>
+      <div class="more-channels">
+        <a href="tel:01043635555" class="more-channel">📞 010-4363-5555</a>
+        <a href="mailto:clubmakers@naver.com?subject=문의" class="more-channel">✉️ 이메일</a>
+        <a href="https://naver.me/GfrbfXtX" target="_blank" rel="noopener" class="more-channel more-channel-primary">
+          📅 네이버 예약 →
+        </a>
+      </div>
+    </div>
+  </section>
+  </article>
+
+</BaseLayout>
+
+<style>
+  .faq-hero {
+    background: var(--bg-cream);
+    border-bottom: none;
+  }
+  .hero-link {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    padding-bottom: 1px;
+  }
+
+  /* ===== 카테고리 점프 ===== */
+  .jump-section {
+    background: white;
+    border-bottom: 1px solid var(--line);
+    padding: 24px 80px;
+    position: sticky;
+    top: 60px;
+    z-index: 30;
+  }
+  .jump-bar {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .jump-link {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    color: var(--ink);
+  }
+  .jump-link:hover {
+    background: white;
+    border-color: var(--green);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.04);
+  }
+  .jump-icon { font-size: 22px; }
+  .jump-text {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  /* ===== FAQ 카테고리 섹션 ===== */
+  .faq-section {
+    scroll-margin-top: 200px;
+  }
+  .faq-cat-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .cat-icon { font-size: 36px; }
+
+  /* ===== FAQ details ===== */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .faq-item {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .faq-item[open] {
+    border-color: var(--green);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+  }
+  .faq-item summary {
+    padding: 22px 28px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    position: relative;
+    padding-right: 60px;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 24px;
+    top: 22px;
+    font-size: 26px;
+    color: var(--gold);
+    transition: transform 0.2s;
+    line-height: 1;
+    font-weight: 400;
+  }
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .q-num {
+    flex-shrink: 0;
+    background: var(--green);
+    color: var(--cream);
+    padding: 3px 9px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+  .q-text { flex: 1; }
+
+  .faq-answer {
+    padding: 0 28px 24px 71px;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-2);
+  }
+  .faq-answer :global(strong) {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .faq-answer :global(a) {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    padding-bottom: 1px;
+  }
+
+  /* ===== 추가 문의 ===== */
+  .more-section { text-align: center; }
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .more-h2 {
+    color: var(--cream);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .more-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--grey-3);
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+  .more-body strong { color: var(--gold-soft); font-weight: 700; }
+  .more-channels {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .more-channel {
+    background: rgba(212, 184, 136, 0.1);
+    border: 1px solid rgba(212, 184, 136, 0.3);
+    color: var(--cream);
+    padding: 14px 26px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .more-channel:hover { background: rgba(212, 184, 136, 0.2); }
+  .more-channel-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+    border-color: var(--gold);
+  }
+  .more-channel-primary:hover { background: var(--gold-soft); }
+
+  /* ===== 모바일 ===== */
+  @media (max-width: 968px) {
+    .jump-section { padding: 16px 16px; }
+    .jump-bar { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .jump-link { padding: 12px 14px; }
+    .jump-text { font-size: 12px; }
+    .faq-cat-title { font-size: 24px; }
+    .cat-icon { font-size: 26px; }
+    .faq-item summary { padding: 18px 22px; padding-right: 52px; font-size: 14.5px; gap: 12px; }
+    .faq-item summary::after { right: 20px; top: 18px; font-size: 22px; }
+    .faq-answer { padding: 0 22px 20px 56px; font-size: 14px; }
+    .q-num { font-size: 10px; padding: 2px 7px; }
+    .more-channels { flex-direction: column; }
+    .more-channel { text-align: center; }
+  }
+</style>
