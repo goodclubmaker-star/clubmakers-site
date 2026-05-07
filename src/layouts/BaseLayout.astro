@@ -7,7 +7,11 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
-  schemaType?: 'WebSite' | 'AboutPage' | 'Article' | 'FAQPage' | 'CollectionPage';
+  schemaType?: 'WebSite' | 'AboutPage' | 'Article' | 'FAQPage' | 'CollectionPage' | 'Course' | 'Person' | 'Book' | 'Service';
+  /** 페이지별 추가 JSON-LD를 BaseLayout이 함께 출력하도록 객체나 배열로 전달 */
+  extraSchema?: Record<string, unknown> | Record<string, unknown>[];
+  /** 키워드 (영문/한글 혼용 가능, 콤마 구분) */
+  keywords?: string;
 }
 
 const {
@@ -15,6 +19,8 @@ const {
   description = '클럽메이커스 — 24년의 골프채 공작소. 더 나은 피팅을 하고 싶었습니다. 친근한 골프채공작소를 지향합니다.',
   ogImage = '/og-default.jpg',
   schemaType = 'WebSite',
+  extraSchema,
+  keywords,
 } = Astro.props;
 
 const fullTitle = title === '클럽메이커스'
@@ -54,6 +60,13 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
     <!-- AI 검색 최적화 (GEO/AEO) -->
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <meta name="author" content="채기웅 (클럽메이커스 공작소장)" />
+    <meta name="article:author" content="채기웅" />
+    <meta name="geo.region" content="KR-11" />
+    <meta name="geo.placename" content="서울 서초구 양재동" />
+    <meta name="geo.position" content="37.4707;127.0388" />
+    <meta name="ICBM" content="37.4707, 127.0388" />
 
     <!-- schema.org JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -99,6 +112,11 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
         ]
       }
     })} />
+
+    {/* 페이지별 추가 JSON-LD */}
+    {extraSchema && (Array.isArray(extraSchema) ? extraSchema : [extraSchema]).map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
   </head>
   <body>
     <Nav />
