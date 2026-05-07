@@ -141,8 +141,94 @@ button {
   max-width: 660px;
 }
 
+/* ========== 공통 섹션 ========== */
+.section {
+  padding: 110px 80px;
+}
+.section-bg-soft { background: var(--bg-soft); }
+.section-bg-cream { background: var(--bg-cream); }
+.section-bg-green {
+  background: var(--green);
+  color: var(--cream);
+}
+.section-content {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.section-content-narrow {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+.section h2 {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 36px;
+}
+.section-bg-green h2 { color: var(--cream); }
+
+.section-body {
+  font-size: 17px;
+  line-height: 1.95;
+  color: var(--ink-2);
+}
+.section-body p { margin-bottom: 20px; }
+.section-body strong { color: var(--ink); font-weight: 700; }
+.section-bg-green .section-body { color: var(--grey-3); }
+.section-bg-green .section-body strong { color: var(--gold-soft); }
+
+/* ========== 공통 표 ========== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 28px 0;
+  font-size: 14.5px;
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.table th {
+  background: var(--bg-soft);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.table tr:last-child td { border-bottom: none; }
+
+/* ========== 공통 인용 박스 ========== */
+.callout {
+  background: var(--bg-soft);
+  border-left: 3px solid var(--gold);
+  padding: 28px 32px;
+  margin: 32px 0;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--ink);
+}
+.callout-green {
+  background: var(--green);
+  color: var(--cream);
+  border-left-color: var(--gold-soft);
+}
+
 /* ========== 모바일 반응형 ========== */
-@media (max-width: 768px) {
+@media (max-width: 968px) {
   .page-hero {
     padding: 80px 24px 60px;
   }
@@ -152,10 +238,26 @@ button {
   .page-hero-subtitle {
     font-size: 16px;
   }
+  .section {
+    padding: 70px 24px;
+  }
+  .section h2 {
+    font-size: 30px;
+  }
+  .section-body {
+    font-size: 15.5px;
+  }
   .btn-primary,
   .btn-ghost {
     padding: 14px 24px;
     font-size: 13px;
+  }
+  .table {
+    font-size: 13px;
+  }
+  .table th,
+  .table td {
+    padding: 10px 12px;
   }
 }
 
