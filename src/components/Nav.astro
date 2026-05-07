@@ -2,58 +2,145 @@
 // 현재 페이지 경로를 받아 nav 활성 표시
 const currentPath = Astro.url.pathname;
 
-const menuItems = [
-  { href: '/about', label: '공작소장' },
-  { href: '/why-fitting', label: '일하는 방식' },
-  { href: '/system', label: '19년의 회고' },
-  { href: '/book', label: '책' },
-  { href: '/workshop', label: '공작소' },
-  { href: '/products', label: '제품' },
+// 5개 메뉴 + 드롭다운 구조
+// (홈은 로고 클릭 / 예약·문의는 우측 CTA)
+const menuGroups = [
+  {
+    label: '공작소 소개',
+    paths: ['/about', '/why-fitting', '/system'],
+    items: [
+      { href: '/about',       label: '공작소장 소개' },
+      { href: '/why-fitting', label: '공작소의 철학' },
+      { href: '/system',      label: '공작소의 시스템' },
+    ],
+  },
+  {
+    label: '공작소가 하는 일',
+    paths: ['/workshop', '/case-studies', '/education'],
+    items: [
+      { href: '/workshop',     label: '공작소의 작업' },
+      { href: '/case-studies', label: '케이스 스터디' },
+      { href: '/education',    label: '전문가 과정' },
+    ],
+  },
+  {
+    label: '공작소의 제품들',
+    paths: ['/products'],
+    href: '/products',
+  },
+  {
+    label: '공작소의 자료들',
+    paths: ['/book', '/glossary', '/faq'],
+    items: [
+      { href: '/book',     label: '책 『실제적인 클럽피팅』' },
+      { href: '/glossary', label: '용어사전 (117개)' },
+      { href: '/faq',      label: '자주 묻는 질문' },
+    ],
+  },
 ];
+
+const isActive = (paths: string[]) =>
+  paths.some((p) => currentPath === p || currentPath.startsWith(p + '/'));
 ---
 
 <nav class="nav">
-  <a href="/" class="logo">
+  <a href="/" class="logo" aria-label="클럽메이커스 홈">
     CLUBMAKERS
     <small>SINCE 1985 · 골프채공작소</small>
   </a>
+
   <ul class="nav-menu">
-    {menuItems.map((item) => (
-      <li>
-        <a
-          href={item.href}
-          class={currentPath.startsWith(item.href) ? 'active' : ''}
-        >
-          {item.label}
-        </a>
+    {menuGroups.map((group) => (
+      <li class={'nav-item' + (group.items ? ' has-dropdown' : '')}>
+        {group.items ? (
+          <>
+            <button
+              type="button"
+              class={'nav-link' + (isActive(group.paths) ? ' active' : '')}
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              {group.label}
+              <span class="caret" aria-hidden="true">▾</span>
+            </button>
+            <ul class="nav-dropdown">
+              {group.items.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class={currentPath === item.href ? 'active' : ''}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <a
+            href={group.href}
+            class={'nav-link' + (isActive(group.paths) ? ' active' : '')}
+          >
+            {group.label}
+          </a>
+        )}
       </li>
     ))}
   </ul>
-  <a href="/contact" class="nav-cta">예약하기</a>
+
+  <a
+    href="/contact"
+    class={'nav-cta' + (currentPath === '/contact' ? ' active' : '')}
+  >
+    예약·문의
+  </a>
+
+  <button type="button" class="nav-mobile-toggle" aria-label="메뉴 열기" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- 모바일 메뉴 (오버레이) -->
+<div class="nav-mobile-panel" aria-hidden="true">
+  <ul>
+    {menuGroups.flatMap((group) =>
+      group.items
+        ? [
+            <li class="nav-mobile-group">{group.label}</li>,
+            ...group.items.map((item) => (
+              <li><a href={item.href}>{item.label}</a></li>
+            )),
+          ]
+        : [<li><a href={group.href}>{group.label}</a></li>]
+    )}
+    <li class="nav-mobile-cta"><a href="/contact">예약·문의</a></li>
+  </ul>
+</div>
 
 <style>
   .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 22px 56px;
+    padding: 18px 56px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
     position: sticky;
     top: 0;
     z-index: 50;
+    gap: 24px;
   }
   .logo {
     font-family: var(--font-serif);
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--ink);
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
   }
   .logo::before {
     content: '';
@@ -72,46 +159,181 @@ const menuItems = [
     padding-left: 8px;
     border-left: 1px solid var(--line);
   }
+
   .nav-menu {
     display: flex;
-    gap: 32px;
+    gap: 4px;
     list-style: none;
     font-size: 14px;
     font-weight: 500;
+    margin: 0 auto;
   }
-  .nav-menu a {
+  .nav-item {
+    position: relative;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     color: var(--ink-2);
-    padding: 6px 0;
+    padding: 10px 14px;
+    border-radius: 4px;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.2s, color 0.2s;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+    font: inherit;
+    cursor: pointer;
   }
-  .nav-menu a:hover { border-bottom-color: var(--green); }
-  .nav-menu a.active {
-    border-bottom-color: var(--green);
+  .nav-link:hover {
     color: var(--green);
+    background: var(--bg-soft);
   }
+  .nav-link.active {
+    color: var(--green);
+    border-bottom-color: var(--green);
+    border-radius: 4px 4px 0 0;
+  }
+  .caret {
+    font-size: 9px;
+    margin-top: 1px;
+    color: var(--grey-2);
+    transition: transform 0.2s;
+  }
+  .has-dropdown:hover .caret,
+  .has-dropdown:focus-within .caret { transform: rotate(180deg); }
+
+  .nav-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    min-width: 220px;
+    list-style: none;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 14px 32px rgba(15, 41, 34, 0.12);
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+  }
+  .has-dropdown:hover .nav-dropdown,
+  .has-dropdown:focus-within .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown li { display: block; }
+  .nav-dropdown a {
+    display: block;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    border-radius: 4px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-dropdown a:hover { background: var(--bg-soft); color: var(--green); }
+  .nav-dropdown a.active { color: var(--green); font-weight: 600; }
+
   .nav-cta {
     background: var(--green);
     color: var(--cream);
-    padding: 11px 22px;
+    padding: 10px 22px;
     font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
     border-radius: 100px;
     transition: background 0.2s;
+    flex-shrink: 0;
   }
   .nav-cta:hover { background: var(--green-2); }
+  .nav-cta.active { background: var(--green-deep); }
 
-  /* 모바일 — 햄버거 메뉴는 Phase 3에서 구현 */
+  /* 모바일 토글 (햄버거) */
+  .nav-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+  }
+  .nav-mobile-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--ink);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .nav-mobile-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .nav-mobile-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-mobile-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* 모바일 패널 */
+  .nav-mobile-panel {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: white;
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    z-index: 49;
+    padding: 16px 0;
+  }
+  .nav-mobile-panel[aria-hidden="false"] { display: block; }
+  .nav-mobile-panel ul { list-style: none; }
+  .nav-mobile-panel li { display: block; }
+  .nav-mobile-panel a {
+    display: block;
+    padding: 14px 24px;
+    font-size: 15px;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav-mobile-panel a:active { background: var(--bg-soft); }
+  .nav-mobile-group {
+    padding: 16px 24px 6px;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .nav-mobile-cta a {
+    color: var(--green);
+    font-weight: 700;
+  }
+
   @media (max-width: 968px) {
     .nav {
-      padding: 16px 24px;
+      padding: 14px 24px;
     }
-    .nav-menu {
-      display: none;
-    }
-    .logo small {
-      display: none;
-    }
+    .nav-menu { display: none; }
+    .nav-cta { display: none; }
+    .logo small { display: none; }
+    .logo { font-size: 18px; }
+    .nav-mobile-toggle { display: flex; }
   }
 </style>
+
+<script is:inline>
+  // 모바일 햄버거 토글
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('.nav-mobile-toggle');
+    const panel = document.querySelector('.nav-mobile-panel');
+    if (!toggle || !panel) return;
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      panel.setAttribute('aria-hidden', String(open));
+    });
+  });
+</script>

@@ -1,5 +1,4 @@
 ---
-// 푸터는 모든 페이지에 동일하게 들어감
 const currentYear = new Date().getFullYear();
 ---
 
@@ -12,42 +11,49 @@ const currentYear = new Date().getFullYear();
         <p><strong>공작소</strong>서울 서초구 동산로2길 50, 가보빌딩 지하층</p>
         <p><strong>전화</strong><a href="tel:01043635555">010-4363-5555</a></p>
         <p><strong>이메일</strong><a href="mailto:clubmakers@naver.com">clubmakers@naver.com</a></p>
+        <p><strong>예약</strong><a href="https://naver.me/GfrbfXtX" target="_blank" rel="noopener">네이버 예약 →</a></p>
+      </div>
+      <div class="footer-hours">
+        <p><strong>평일</strong> 오전 10시 ~ 오후 8시</p>
+        <p><strong>토요일</strong> 오전 10시 ~ 오후 5시</p>
+        <p><strong>일·공휴일</strong> 탄력 근무</p>
       </div>
     </div>
 
     <div class="footer-col">
-      <div class="footer-col-title">CLUBMAKERS</div>
+      <div class="footer-col-title">공작소 소개</div>
       <ul>
-        <li><a href="/about">공작소장</a></li>
-        <li><a href="/why-fitting">우리가 일하는 방식</a></li>
-        <li><a href="/system">19년의 회고</a></li>
-        <li><a href="/faq">자주 묻는 질문</a></li>
+        <li><a href="/about">공작소장 소개</a></li>
+        <li><a href="/why-fitting">공작소의 철학</a></li>
+        <li><a href="/system">공작소의 시스템</a></li>
       </ul>
     </div>
 
     <div class="footer-col">
-      <div class="footer-col-title">RESOURCES</div>
+      <div class="footer-col-title">공작소가 하는 일</div>
       <ul>
+        <li><a href="/workshop">공작소의 작업</a></li>
+        <li><a href="/case-studies">케이스 스터디</a></li>
+        <li><a href="/education">전문가 과정</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">제품 · 자료</div>
+      <ul>
+        <li><a href="/products">공작소의 제품들</a></li>
         <li><a href="/book">책 『실제적인 클럽피팅』</a></li>
         <li><a href="/glossary">용어사전 (117개)</a></li>
-        <li><a href="/case-studies">케이스 스터디 5선</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <div class="footer-col-title">SERVICES</div>
-      <ul>
-        <li><a href="/workshop">공작소 · 피팅 예약</a></li>
-        <li><a href="/education">전문가 과정</a></li>
-        <li><a href="/products">자체 제품</a></li>
-        <li><a href="/contact">예약 · 문의</a></li>
+        <li><a href="/faq">자주 묻는 질문</a></li>
+        <li><a href="/contact">예약·문의</a></li>
       </ul>
     </div>
 
     <div class="footer-channels">
       <h4 class="footer-channels-title">다른 채널에서도 만납니다</h4>
       <p class="footer-channels-body">
-        네이버 카페와 블로그에서도 클럽메이커스를 만나실 수 있습니다. 카페에서는 골퍼님들의 후기와 일상이, 블로그에서는 공작소의 작업 기록이 쌓이고 있습니다.
+        네이버 카페와 블로그에서도 클럽메이커스를 만나실 수 있습니다.
+        카페에서는 고객님들의 후기와 일상이, 블로그에서는 공작소의 작업 기록이 쌓이고 있습니다.
       </p>
       <div class="footer-channels-links">
         <a href="https://naver.me/GiyUpXkH" target="_blank" rel="noopener">
@@ -56,12 +62,18 @@ const currentYear = new Date().getFullYear();
         <a href="https://blog.naver.com/clubmakers" target="_blank" rel="noopener">
           네이버 블로그 「clubmakers」 →
         </a>
+        <a href="https://naver.me/GfrbfXtX" target="_blank" rel="noopener">
+          네이버 예약 →
+        </a>
       </div>
     </div>
   </div>
 
   <div class="footer-bottom">
-    <span>㈜클럽메이커스 코리아 · 사업자등록번호 ___-__-_____ · Copyright © {currentYear}</span>
+    <span>
+      클럽메이커스 · 대표자 채기웅 · 사업자등록번호 813-01-03827 ·
+      Copyright © {currentYear} Clubmakers Korea
+    </span>
     <span class="footer-since">SINCE 1985</span>
   </div>
 </footer>
@@ -76,7 +88,7 @@ const currentYear = new Date().getFullYear();
     max-width: var(--container-max);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
     gap: 60px;
     margin-bottom: 60px;
   }
@@ -91,13 +103,14 @@ const currentYear = new Date().getFullYear();
   .footer-tagline {
     font-size: 13px;
     color: var(--gold-soft);
-    margin-bottom: 28px;
+    margin-bottom: 22px;
     letter-spacing: 0.05em;
   }
   .footer-info {
     font-size: 13px;
     line-height: 1.9;
     color: var(--grey-3);
+    margin-bottom: 18px;
   }
   .footer-info strong {
     color: var(--cream);
@@ -112,6 +125,21 @@ const currentYear = new Date().getFullYear();
     transition: border-color 0.2s;
   }
   .footer-info a:hover { border-bottom-color: var(--gold-soft); }
+
+  .footer-hours {
+    font-size: 12.5px;
+    line-height: 1.85;
+    color: var(--grey-3);
+    padding-top: 16px;
+    border-top: 1px solid rgba(212, 184, 136, 0.15);
+  }
+  .footer-hours strong {
+    color: var(--cream);
+    font-weight: 600;
+    display: inline-block;
+    width: 70px;
+  }
+
   .footer-col-title {
     font-size: 11px;
     color: var(--gold-soft);
@@ -182,13 +210,16 @@ const currentYear = new Date().getFullYear();
     justify-content: space-between;
     font-size: 11px;
     color: var(--grey);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
+    gap: 20px;
+    flex-wrap: wrap;
   }
   .footer-since {
     font-family: var(--font-serif);
     color: var(--gold-soft);
     letter-spacing: 0.3em;
     font-weight: 700;
+    flex-shrink: 0;
   }
 
   @media (max-width: 968px) {
