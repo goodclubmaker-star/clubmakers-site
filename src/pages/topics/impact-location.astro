@@ -1,0 +1,244 @@
+---
+// /src/pages/topics/impact-location.astro
+// 증상별 SEO 페이지 — 타점 문제
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "골프 타점 문제 — 힐·토우·상하 타점이 만드는 미스";
+const pageDescription = "타점이 페이스 중심에서 벗어나면 방향·탄도·스핀이 모두 한꺼번에 흔들립니다. 24년 클럽피팅 현장에서 정리한 타점 진단 트리. 슬라이스·거리부족·스핀 과다의 1차 원인.";
+const pageKeywords = "타점, 힐 타점, 토우 타점, 임팩트 위치, 페이스 중심, 스매시 팩터, 골프 타점 안 맞음, 클럽피팅, 클럽메이커스, 채기웅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <section class="topic-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/topics">증상별 진단</a>
+        <span>·</span>
+        <span class="crumb-current">타점 문제</span>
+      </div>
+
+      <p class="eyebrow">SYMPTOM · 타점 문제 — 페이스 중심에서 벗어날 때</p>
+
+      <h1 class="topic-title">
+        타점 문제 <br /><em>모든 문제 해결의 출발점</em>
+      </h1>
+
+      <p class="topic-lead">타점이 페이스 중심에서 벗어나면 <strong>방향·탄도·스핀이 동시에 흔들립니다.</strong> 다른 모든 문제 해결에 앞서 타점부터 안정시켜야 합니다.</p>
+    </div>
+  </section>
+
+  <section class="quick-answer">
+    <div class="container narrow">
+      <div class="qa-card">
+        <p class="qa-eyebrow">Quick Answer · 가장 흔한 원인 3가지</p>
+        <ol class="qa-list">
+          <li><strong>힐 타점</strong> → 기어이펙트로 페이스가 열린 듯 작용. 슬라이스 또는 좌측 출발(드라이버 기준 가능).</li>
+          <li><strong>토 타점</strong> → 기어이펙트로 페이스가 닫힌 듯 작용. 훅 또는 거리 손실. 스매시 팩터 저하.</li>
+          <li><strong>상단·하단 타점</strong> → Dynamic Loft 변동으로 탄도와 스핀이 흔들림. 같은 클럽 거리 편차가 큼.</li>
+        </ol>
+        <p class="qa-foot">→ <strong>진단 순서:</strong> 임팩트 테이프로 타점 확인 → 길이 점검 → 라이각 → 그립 두께. 8~12구를 쳐서 패턴이 반복되는지 확인.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="topic-section">
+    <div class="container narrow">
+      <p class="eyebrow">DIAGNOSIS · 책에서 발췌한 진단 트리</p>
+      <h2 class="section-title">타점 문제 해결 트리</h2>
+
+      <div class="prose">
+        <p>타점은 모든 문제 해결의 출발점입니다. 타점이 불안정하면 방향, 탄도, 스핀, 감각을 정확하게 해석하기 어렵습니다.</p>
+        <h3 class="subhead">4-1. 힐 타점</h3>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>결과</th><th>원인 추정</th><th>확인 항목</th><th>개입</th></tr></thead><tbody><tr><td>좌측 출발 경향</td><td>길이 과다</td><td>반복 힐 타점 패턴</td><td>길이 -0.25인치</td></tr><tr><td>스핀 증가 경향</td><td>라이각 업라이트 과다</td><td>힐 쏠림 + 좌출발 동반</td><td>라이각 Flat 0.5~1°</td></tr><tr><td>볼스피드 저하</td><td>템포 급함</td><td>타점 분산 동반</td><td>무게 상향 검토</td></tr><tr><td>타감 불안정</td><td>헤드 도달 지연</td><td>우측 미스 동반</td><td>CPM -5 또는 Tip Soft</td></tr></tbody></table></div>
+        <h3 class="subhead">4-2. 토 타점</h3>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>결과</th><th>원인 추정</th><th>확인 항목</th><th>개입</th></tr></thead><tbody><tr><td>우측 출발 경향</td><td>길이 부족</td><td>반복 토 타점 패턴</td><td>길이 +0.25인치</td></tr><tr><td>스핀 감소 경향</td><td>라이각 플랫 과다</td><td>토 쏠림 + 우출발 동반</td><td>라이각 Upright 0.5~1°</td></tr><tr><td>거리 손실</td><td>전환 과도</td><td>토 편중 + 분산 큼</td><td>무게 상향 검토</td></tr><tr><td>타감 딱딱함 증가</td><td>타이밍 앞섬</td><td>좌/우 랜덤 미스</td><td>CPM +5</td></tr></tbody></table></div>
+        <h3 class="subhead">4-3. 상단 / 하단 타점</h3>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>타점</th><th>결과</th><th>원인 추정</th><th>개입</th></tr></thead><tbody><tr><td>상단 타점</td><td>Launch 증가 / Spin 감소</td><td>공 위치 앞쪽. 티 높음. 업블로</td><td>티 높이 조정. 볼 위치 재확인</td></tr><tr><td>하단 타점</td><td>Launch 감소 / Spin 증가</td><td>어택앵글 다운블로. 볼 위치 뒤쪽</td><td>어택앵글 개선. 로프트 +0.5° 검토</td></tr></tbody></table></div>
+        <aside class="info-box"><p class="info-label">상하 타점 주의사항</p><ul><li>상하 타점 문제는 길이보다 셋업·볼 위치·어택앵글의 영향이 더 큰 경우가 많습니다.</li><li>길이 문제로 바로 연결하지 말고 먼저 셋업과 임팩트 깊이를 확인합니다.</li></ul></aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-book">
+    <div class="container narrow">
+      <p class="eyebrow">DEEPER · 책으로 더 깊이</p>
+      <h2 class="section-title">『실제적인 클럽피팅』의 <em>관련 PART</em></h2>
+
+      <p class="prose">
+        이 페이지는 책 PART 11 2부의 진단 트리를 검색자 관점에서 재구성한 것입니다.
+        깊이 있는 이론과 다른 PART와의 연계는 책 본문에서 다룹니다.
+      </p>
+
+      <div class="related-grid">
+        <a href="/book/part-5" class="related-card"><p class="related-num">PART 5</p><p class="related-title">타점 / CG / 기어이펙트</p><p class="related-desc">타점이 만드는 왜곡의 물리 원리</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-6" class="related-card"><p class="related-num">PART 6</p><p class="related-title">헤드 기하 구조</p><p class="related-desc">Bulge &amp; Roll로 기어이펙트를 보상하는 설계</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-7" class="related-card"><p class="related-num">PART 7</p><p class="related-title">MOI / 관성 구조</p><p class="related-desc">타점 편차를 줄이는 설계 원리</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-11" class="related-card"><p class="related-num">PART 11</p><p class="related-title">통합 결정과 문제 해결 시스템</p><p class="related-desc">타점 진단 트리</p><span class="related-arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container narrow">
+      <p class="eyebrow">NEXT STEP · 직접 진단받기</p>
+      <h2 class="section-title">
+        같은 증상도 <br /><em>당신의 원인</em>은 다를 수 있습니다
+      </h2>
+
+      <p class="cta-lead">
+        이 페이지는 가능한 원인의 분류를 보여줍니다. 실제 처방은 타점·데이터·샤프트 거동을
+        직접 측정해야 결정할 수 있습니다. 24년의 클럽피팅 경험을 바탕으로
+        <strong>구조 진단부터 시작합니다.</strong>
+      </p>
+
+      <div class="cta-buttons">
+        <a href="/contact" class="btn-primary">
+          <span class="btn-label">피팅 문의하기</span>
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="/system" class="btn-secondary">피팅 진행 과정 보기</a>
+      </div>
+
+      <div class="topics-nav">
+        <p class="topics-nav-label">다른 증상별 진단</p>
+        <div class="topics-nav-grid">
+          <a href="/topics/direction">방향 문제 →</a>
+          <a href="/topics/slice-hook">슬라이스 · 훅 →</a>
+          <a href="/topics/launch-spin">탄도 · 스핀 →</a>
+          <a href="/topics/rhythm-timing">리듬 · 타이밍 →</a>
+          <a href="/topics/swing-weight-moi">SW · MOI →</a>
+          <a href="/topics">전체 보기 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; }
+
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+  .subhead { font-family: var(--serif); font-size: 1.375rem; font-weight: 600; color: var(--text); margin: 3rem 0 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+
+  .topic-hero { background: var(--bg); padding: 80px 0 56px; border-bottom: 1px solid var(--rule); }
+  .topic-title { font-family: var(--serif); font-size: clamp(2rem, 5.5vw, 3.5rem); font-weight: 500; line-height: 1.15; color: var(--text); margin: 0 0 1.5rem; letter-spacing: -.02em; }
+  .topic-title em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .topic-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 660px; margin: 0; }
+  .topic-lead strong { color: var(--text); font-weight: 600; }
+
+  .quick-answer { background: var(--bg); padding: 32px 0 64px; }
+  .qa-card { background: var(--text); color: var(--bg); padding: 36px 36px 32px; border-radius: 4px; border-left: 4px solid var(--accent-2); }
+  .qa-eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .qa-list { margin: 0 0 1.5rem; padding-left: 0; list-style: none; counter-reset: qa; }
+  .qa-list li { counter-increment: qa; padding: .9rem 0 .9rem 3rem; position: relative; font-family: var(--sans); font-size: 1.0625rem; line-height: 1.75; color: rgba(255,255,255,.9); border-bottom: 1px solid rgba(255,255,255,.08); }
+  .qa-list li:last-child { border-bottom: none; }
+  .qa-list li:before { content: counter(qa); position: absolute; left: 0; top: 1rem; font-family: var(--serif); font-size: 1.5rem; color: var(--accent-2); font-weight: 500; line-height: 1; }
+  .qa-list strong { color: white; font-weight: 600; }
+  .qa-foot { font-family: var(--sans); font-size: .9375rem; line-height: 1.7; color: rgba(255,255,255,.7); margin: 0; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,.12); }
+  .qa-foot strong { color: var(--accent-2); font-weight: 600; }
+
+  .topic-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .topic-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4.2vw, 2.5rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .info-box { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 22px 26px; margin: 1.75em 0; border-radius: 2px; font-family: var(--sans); }
+  .info-box .info-label { font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin: 0 0 .75rem; text-transform: uppercase; }
+  .info-box p { font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin: 0; }
+  .info-box ul { margin: 0; padding-left: 1.4em; }
+  .info-box li { font-family: var(--sans); font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin-bottom: .35rem; }
+
+  .metric-table { margin: 2rem 0; background: var(--bg-elev); border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
+  .metric-table table { width: 100%; border-collapse: collapse; font-family: var(--sans); }
+  .metric-table thead th { font-size: .75rem; font-weight: 700; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; text-align: left; padding: 12px 24px; border-bottom: 1px solid var(--rule); background: var(--bg); }
+  .metric-table tbody td { padding: 14px 24px; border-bottom: 1px solid var(--rule); font-size: .9375rem; color: var(--text-2); vertical-align: middle; line-height: 1.6; }
+  .metric-table tbody tr:last-child td { border-bottom: none; }
+
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 480px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+
+  .cause-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin: 1.5rem 0; }
+  @media (min-width: 720px) { .cause-grid { grid-template-columns: 1fr 1fr; } }
+  .cause-card { background: var(--bg-elev); border: 1px solid var(--rule); border-top: 3px solid var(--accent); padding: 26px 26px; border-radius: 2px; display: flex; flex-direction: column; }
+  .cause-num { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; margin: 0 0 .5rem; }
+  .cause-title { font-family: var(--serif); font-size: 1.125rem; font-weight: 500; color: var(--text); margin: 0 0 .75rem; line-height: 1.4; }
+  .cause-desc { font-family: var(--sans); font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin: 0 0 1.25rem; flex: 1; }
+  .cause-desc em { font-style: normal; font-weight: 600; color: var(--accent); }
+  .cause-action { background: var(--bg-soft); padding: 14px 18px; border-left: 2px solid var(--accent-2); margin-top: auto; }
+  .action-label { font-family: var(--sans); font-size: .6875rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 .25rem; }
+  .action-body { font-family: var(--sans); font-size: .875rem; line-height: 1.65; color: var(--text-2); margin: 0; }
+  .action-body strong { color: var(--text); font-weight: 600; }
+
+  .related-book { padding: 80px 0; background: var(--bg); border-top: 1px solid var(--rule); }
+  .related-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+  @media (min-width: 720px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+  .related-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 24px 26px; border-radius: 2px; text-decoration: none; color: var(--text); transition: transform .2s, border-color .2s, background .2s; display: block; position: relative; padding-right: 50px; }
+  .related-card:hover { transform: translateX(2px); border-color: var(--accent); background: var(--accent-soft); }
+  .related-card:hover .related-arrow { color: var(--accent); transform: translate(4px, -50%); }
+  .related-num { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .2em; margin: 0 0 .35rem; }
+  .related-title { font-family: var(--serif); font-size: 1.125rem; font-weight: 600; color: var(--text); margin: 0 0 .35rem; line-height: 1.4; }
+  .related-desc { font-family: var(--sans); font-size: .875rem; color: var(--text-2); margin: 0; line-height: 1.55; }
+  .related-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.25rem; color: var(--accent-2); transition: color .2s, transform .2s; }
+
+  .cta-section { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .cta-section .eyebrow { color: var(--accent-2); }
+  .cta-section .section-title { color: var(--bg); }
+  .cta-section .section-title em { color: var(--accent-2); }
+  .cta-lead { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.85); margin: 0 0 2.5rem; }
+  .cta-lead strong { color: white; font-weight: 600; }
+  .cta-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 4rem; }
+  .btn-primary, .btn-secondary { font-family: var(--sans); font-size: 1rem; font-weight: 600; padding: 16px 28px; border-radius: 2px; text-decoration: none; transition: transform .2s, background .2s; display: inline-flex; align-items: center; gap: .75rem; }
+  .btn-primary { background: var(--accent); color: white; border: 1px solid var(--accent); }
+  .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); transform: translateX(2px); }
+  .btn-secondary { background: transparent; color: var(--accent-2); border: 1px solid rgba(255,255,255,.25); }
+  .btn-secondary:hover { background: rgba(255,255,255,.06); color: white; border-color: rgba(255,255,255,.4); }
+  .topics-nav { margin-top: 2rem; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,.12); }
+  .topics-nav-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.25rem; }
+  .topics-nav-grid { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
+  .topics-nav-grid a { font-family: var(--sans); font-size: .9375rem; color: rgba(255,255,255,.75); text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,.15); transition: color .2s, border-color .2s; }
+  .topics-nav-grid a:hover { color: var(--accent-2); border-color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .topic-hero { padding: 56px 0 40px; }
+    .topic-section { padding: 56px 0; }
+    .related-book { padding: 56px 0; }
+    .cta-section { padding: 64px 0; }
+    .qa-card { padding: 26px 22px; }
+    .cause-card { padding: 22px 20px; }
+    .related-card { padding: 20px 22px; padding-right: 44px; }
+    .info-box { padding: 18px 20px; }
+    .qa-list li { padding-left: 2.5rem; }
+    .metric-table thead th, .metric-table tbody td { padding: 10px 16px; }
+  }
+</style>
+

@@ -1,0 +1,238 @@
+---
+// /src/pages/topics/forbidden-rules.astro
+// 증상별 SEO 페이지 — 절대 금지
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "골프 클럽 피팅 — 절대 금지 규칙 5가지와 흔한 오판";
+const pageDescription = "현장에서 반복적으로 일어나는 피팅 오류 5가지. 타점 문제를 EI/토크로 해결하려는 시도, 방향 문제를 무게로만 해결하려는 시도 등. 알면 피할 수 있는 오판 패턴.";
+const pageKeywords = "피팅 오류, 잘못된 클럽 피팅, 슬라이스 잘못된 처방, 헤드 교체 실수, 피팅 실패, 클럽피팅, 클럽메이커스, 채기웅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <section class="topic-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/topics">증상별 진단</a>
+        <span>·</span>
+        <span class="crumb-current">절대 금지</span>
+      </div>
+
+      <p class="eyebrow">SYMPTOM · 절대 금지 규칙 — 흔한 오판 패턴</p>
+
+      <h1 class="topic-title">
+        절대 금지 규칙 <br /><em>피해야 할 흔한 오판</em>
+      </h1>
+
+      <p class="topic-lead">현장에서 반복적으로 일어나는 <strong>피팅 오류 5가지</strong>. 알면 피할 수 있고, 모르면 같은 실수를 반복합니다.</p>
+    </div>
+  </section>
+
+  <section class="quick-answer">
+    <div class="container narrow">
+      <div class="qa-card">
+        <p class="qa-eyebrow">Quick Answer · 가장 흔한 원인 3가지</p>
+        <ol class="qa-list">
+          <li><strong>타점 문제를 EI/토크로 해결 금지</strong> — 타점이 분산되는 원인이 길이·라이각·그립일 수 있습니다.</li>
+          <li><strong>방향 문제를 무게로만 해결 금지</strong> — Face Angle·F2P·릴리즈 구조를 먼저 분리해서 봐야 합니다.</li>
+          <li><strong>한 번에 여러 변수 동시 변경 금지</strong> — 무엇이 효과를 만들었는지 알 수 없게 됩니다.</li>
+        </ol>
+        <p class="qa-foot">→ <strong>핵심:</strong> 모든 피팅에는 순서가 있습니다. 진단 없이 처방하지 않고, 한 번에 한 변수만 바꿉니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="topic-section">
+    <div class="container narrow">
+      <p class="eyebrow">DIAGNOSIS · 책에서 발췌한 진단 트리</p>
+      <h2 class="section-title">절대 금지 규칙</h2>
+
+      <div class="prose">
+        <aside class="info-box"><p class="info-label">다음 오류는 반드시 피합니다</p><ul><li>① 타점 문제를 EI나 토크로 해결하려고 하지 않습니다</li><li>② 방향 문제를 무게만으로 해결하려고 하지 않습니다</li><li>③ 타이밍 문제를 라이각으로 해결하려고 하지 않습니다</li><li>④ 세트 일관성 문제를 개별 클럽 감각만으로 설명하지 않습니다</li><li>⑤ 한 번에 여러 변수를 동시에 바꾸지 않습니다</li><li>이 규칙을 어기면 결과는 바뀌어도 원인은 해결되지 않고 다른 형태로 이동합니다.</li></ul></aside>
+        <p>특히 흔한 오판 유형: Club Speed는 정상인데 Ball Speed가 낮다 → 힘 문제가 아니라 타점 또는 Smash Factor 문제입니다. 탄도가 낮다 → 로프트를 올리기 전에 Dynamic Loft와 타점을 먼저 확인합니다. 방향이 불안정하다 → 토크/ROC보다 먼저 길이와 무게 구조를 봅니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-book">
+    <div class="container narrow">
+      <p class="eyebrow">DEEPER · 책으로 더 깊이</p>
+      <h2 class="section-title">『실제적인 클럽피팅』의 <em>관련 PART</em></h2>
+
+      <p class="prose">
+        이 페이지는 책 PART 11 2부의 진단 트리를 검색자 관점에서 재구성한 것입니다.
+        깊이 있는 이론과 다른 PART와의 연계는 책 본문에서 다룹니다.
+      </p>
+
+      <div class="related-grid">
+        <a href="/book/part-2" class="related-card"><p class="related-num">PART 2</p><p class="related-title">판단 구조 시스템</p><p class="related-desc">결과 중심 vs 원인 중심 해석의 차이</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-10" class="related-card"><p class="related-num">PART 10</p><p class="related-title">론치모니터 해석 시스템</p><p class="related-desc">데이터 해석에서 자주 하는 오판</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-11" class="related-card"><p class="related-num">PART 11</p><p class="related-title">통합 결정과 문제 해결 시스템</p><p class="related-desc">절대 금지 규칙 5가지의 상세</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-13" class="related-card"><p class="related-num">PART 13</p><p class="related-title">통합 케이스 스터디</p><p class="related-desc">실제 오판이 일어난 사례 8개</p><span class="related-arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container narrow">
+      <p class="eyebrow">NEXT STEP · 직접 진단받기</p>
+      <h2 class="section-title">
+        같은 증상도 <br /><em>당신의 원인</em>은 다를 수 있습니다
+      </h2>
+
+      <p class="cta-lead">
+        이 페이지는 가능한 원인의 분류를 보여줍니다. 실제 처방은 타점·데이터·샤프트 거동을
+        직접 측정해야 결정할 수 있습니다. 24년의 클럽피팅 경험을 바탕으로
+        <strong>구조 진단부터 시작합니다.</strong>
+      </p>
+
+      <div class="cta-buttons">
+        <a href="/contact" class="btn-primary">
+          <span class="btn-label">피팅 문의하기</span>
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="/system" class="btn-secondary">피팅 진행 과정 보기</a>
+      </div>
+
+      <div class="topics-nav">
+        <p class="topics-nav-label">다른 증상별 진단</p>
+        <div class="topics-nav-grid">
+          <a href="/topics/direction">방향 문제 →</a>
+          <a href="/topics/slice-hook">슬라이스 · 훅 →</a>
+          <a href="/topics/impact-location">타점 문제 →</a>
+          <a href="/topics/launch-spin">탄도 · 스핀 →</a>
+          <a href="/topics/rhythm-timing">리듬 · 타이밍 →</a>
+          <a href="/topics">전체 보기 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; }
+
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+  .subhead { font-family: var(--serif); font-size: 1.375rem; font-weight: 600; color: var(--text); margin: 3rem 0 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+
+  .topic-hero { background: var(--bg); padding: 80px 0 56px; border-bottom: 1px solid var(--rule); }
+  .topic-title { font-family: var(--serif); font-size: clamp(2rem, 5.5vw, 3.5rem); font-weight: 500; line-height: 1.15; color: var(--text); margin: 0 0 1.5rem; letter-spacing: -.02em; }
+  .topic-title em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .topic-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 660px; margin: 0; }
+  .topic-lead strong { color: var(--text); font-weight: 600; }
+
+  .quick-answer { background: var(--bg); padding: 32px 0 64px; }
+  .qa-card { background: var(--text); color: var(--bg); padding: 36px 36px 32px; border-radius: 4px; border-left: 4px solid var(--accent-2); }
+  .qa-eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .qa-list { margin: 0 0 1.5rem; padding-left: 0; list-style: none; counter-reset: qa; }
+  .qa-list li { counter-increment: qa; padding: .9rem 0 .9rem 3rem; position: relative; font-family: var(--sans); font-size: 1.0625rem; line-height: 1.75; color: rgba(255,255,255,.9); border-bottom: 1px solid rgba(255,255,255,.08); }
+  .qa-list li:last-child { border-bottom: none; }
+  .qa-list li:before { content: counter(qa); position: absolute; left: 0; top: 1rem; font-family: var(--serif); font-size: 1.5rem; color: var(--accent-2); font-weight: 500; line-height: 1; }
+  .qa-list strong { color: white; font-weight: 600; }
+  .qa-foot { font-family: var(--sans); font-size: .9375rem; line-height: 1.7; color: rgba(255,255,255,.7); margin: 0; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,.12); }
+  .qa-foot strong { color: var(--accent-2); font-weight: 600; }
+
+  .topic-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .topic-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4.2vw, 2.5rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .info-box { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 22px 26px; margin: 1.75em 0; border-radius: 2px; font-family: var(--sans); }
+  .info-box .info-label { font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin: 0 0 .75rem; text-transform: uppercase; }
+  .info-box p { font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin: 0; }
+  .info-box ul { margin: 0; padding-left: 1.4em; }
+  .info-box li { font-family: var(--sans); font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin-bottom: .35rem; }
+
+  .metric-table { margin: 2rem 0; background: var(--bg-elev); border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
+  .metric-table table { width: 100%; border-collapse: collapse; font-family: var(--sans); }
+  .metric-table thead th { font-size: .75rem; font-weight: 700; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; text-align: left; padding: 12px 24px; border-bottom: 1px solid var(--rule); background: var(--bg); }
+  .metric-table tbody td { padding: 14px 24px; border-bottom: 1px solid var(--rule); font-size: .9375rem; color: var(--text-2); vertical-align: middle; line-height: 1.6; }
+  .metric-table tbody tr:last-child td { border-bottom: none; }
+
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 480px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+
+  .cause-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin: 1.5rem 0; }
+  @media (min-width: 720px) { .cause-grid { grid-template-columns: 1fr 1fr; } }
+  .cause-card { background: var(--bg-elev); border: 1px solid var(--rule); border-top: 3px solid var(--accent); padding: 26px 26px; border-radius: 2px; display: flex; flex-direction: column; }
+  .cause-num { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; margin: 0 0 .5rem; }
+  .cause-title { font-family: var(--serif); font-size: 1.125rem; font-weight: 500; color: var(--text); margin: 0 0 .75rem; line-height: 1.4; }
+  .cause-desc { font-family: var(--sans); font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin: 0 0 1.25rem; flex: 1; }
+  .cause-desc em { font-style: normal; font-weight: 600; color: var(--accent); }
+  .cause-action { background: var(--bg-soft); padding: 14px 18px; border-left: 2px solid var(--accent-2); margin-top: auto; }
+  .action-label { font-family: var(--sans); font-size: .6875rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 .25rem; }
+  .action-body { font-family: var(--sans); font-size: .875rem; line-height: 1.65; color: var(--text-2); margin: 0; }
+  .action-body strong { color: var(--text); font-weight: 600; }
+
+  .related-book { padding: 80px 0; background: var(--bg); border-top: 1px solid var(--rule); }
+  .related-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+  @media (min-width: 720px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+  .related-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 24px 26px; border-radius: 2px; text-decoration: none; color: var(--text); transition: transform .2s, border-color .2s, background .2s; display: block; position: relative; padding-right: 50px; }
+  .related-card:hover { transform: translateX(2px); border-color: var(--accent); background: var(--accent-soft); }
+  .related-card:hover .related-arrow { color: var(--accent); transform: translate(4px, -50%); }
+  .related-num { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .2em; margin: 0 0 .35rem; }
+  .related-title { font-family: var(--serif); font-size: 1.125rem; font-weight: 600; color: var(--text); margin: 0 0 .35rem; line-height: 1.4; }
+  .related-desc { font-family: var(--sans); font-size: .875rem; color: var(--text-2); margin: 0; line-height: 1.55; }
+  .related-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.25rem; color: var(--accent-2); transition: color .2s, transform .2s; }
+
+  .cta-section { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .cta-section .eyebrow { color: var(--accent-2); }
+  .cta-section .section-title { color: var(--bg); }
+  .cta-section .section-title em { color: var(--accent-2); }
+  .cta-lead { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.85); margin: 0 0 2.5rem; }
+  .cta-lead strong { color: white; font-weight: 600; }
+  .cta-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 4rem; }
+  .btn-primary, .btn-secondary { font-family: var(--sans); font-size: 1rem; font-weight: 600; padding: 16px 28px; border-radius: 2px; text-decoration: none; transition: transform .2s, background .2s; display: inline-flex; align-items: center; gap: .75rem; }
+  .btn-primary { background: var(--accent); color: white; border: 1px solid var(--accent); }
+  .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); transform: translateX(2px); }
+  .btn-secondary { background: transparent; color: var(--accent-2); border: 1px solid rgba(255,255,255,.25); }
+  .btn-secondary:hover { background: rgba(255,255,255,.06); color: white; border-color: rgba(255,255,255,.4); }
+  .topics-nav { margin-top: 2rem; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,.12); }
+  .topics-nav-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.25rem; }
+  .topics-nav-grid { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
+  .topics-nav-grid a { font-family: var(--sans); font-size: .9375rem; color: rgba(255,255,255,.75); text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,.15); transition: color .2s, border-color .2s; }
+  .topics-nav-grid a:hover { color: var(--accent-2); border-color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .topic-hero { padding: 56px 0 40px; }
+    .topic-section { padding: 56px 0; }
+    .related-book { padding: 56px 0; }
+    .cta-section { padding: 64px 0; }
+    .qa-card { padding: 26px 22px; }
+    .cause-card { padding: 22px 20px; }
+    .related-card { padding: 20px 22px; padding-right: 44px; }
+    .info-box { padding: 18px 20px; }
+    .qa-list li { padding-left: 2.5rem; }
+    .metric-table thead th, .metric-table tbody td { padding: 10px 16px; }
+  }
+</style>
+

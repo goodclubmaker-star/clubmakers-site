@@ -1,0 +1,252 @@
+---
+// /src/pages/topics/complex-problems.astro
+// 증상별 SEO 페이지 — 복합 문제
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "골프 복합 문제 해결 — 두 가지 이상 증상이 동시에 나타날 때";
+const pageDescription = "슬라이스와 거리 부족이 함께 오는 경우, 훅과 높은 스핀이 같이 나타나는 경우 — 증상을 분해해서 가장 근본 원인부터 해결하는 6가지 케이스 진단.";
+const pageKeywords = "슬라이스 거리 부족, 훅 스핀 과다, 세트 일관성 없음, 여러 미스 동시, 복합 진단, 클럽피팅, 클럽메이커스, 채기웅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <section class="topic-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/topics">증상별 진단</a>
+        <span>·</span>
+        <span class="crumb-current">복합 문제</span>
+      </div>
+
+      <p class="eyebrow">SYMPTOM · 복합 문제 — 여러 증상이 동시에</p>
+
+      <h1 class="topic-title">
+        복합 문제 해결 <br /><em>여러 증상이 동시에 나타날 때</em>
+      </h1>
+
+      <p class="topic-lead">슬라이스와 거리 부족이 함께 오는 경우, 훅과 높은 스핀이 같이 나타나는 경우 — <strong>증상을 분해해서 가장 근본 원인</strong>부터 해결합니다.</p>
+    </div>
+  </section>
+
+  <section class="quick-answer">
+    <div class="container narrow">
+      <div class="qa-card">
+        <p class="qa-eyebrow">Quick Answer · 가장 흔한 원인 3가지</p>
+        <ol class="qa-list">
+          <li><strong>여러 증상이 동시에 나오면</strong> 분해가 먼저. 어떤 증상이 다른 증상의 원인인지를 추적.</li>
+          <li><strong>'타점 → 방향 → 탄도'</strong> 순서를 지킬 것. 타점이 안정되면 방향과 탄도가 자연히 변하는 경우가 많음.</li>
+          <li><strong>한 번에 여러 변수 변경 금지</strong>. 가장 근본 원인 하나만 바꾸고 재측정.</li>
+        </ol>
+        <p class="qa-foot">→ <strong>진단 순서:</strong> 증상을 분해 → 우선순위 결정 (타점 → 에너지 → 방향 → 볼비행) → 가장 근본 원인 1개만 개입 → 재측정 후 다음 변수 검토.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="topic-section">
+    <div class="container narrow">
+      <p class="eyebrow">DIAGNOSIS · 책에서 발췌한 진단 트리</p>
+      <h2 class="section-title">복합 문제 해결 트리</h2>
+
+      <div class="prose">
+        <p>현장에서 대부분의 문제는 단일 원인이 아니라 여러 변수의 결합입니다. 복합 문제는 반드시 우선순위를 정하고 상위 구조부터 순차적으로 개입합니다.</p>
+        <aside class="info-box"><p class="info-label">복합 문제 분해 원칙</p><ul><li>① 타점 분리 → ② 출발 방향 분리 → ③ 휘어짐 분리 → ④ 탄도/스핀 분리 → ⑤ 리듬/타이밍 분리</li><li>각 요소를 독립적으로 확인한 후 가장 상위 원인부터 해결합니다. 여러 변수를 동시에 바꾸지 않습니다.</li></ul></aside>
+        <p>CASE 1 — 슬라이스 + 낮은 탄도</p>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>단계</th><th>확인/개입</th><th>주의</th></tr></thead><tbody><tr><td>1단계</td><td>타점 상향 (티 높이 / 임팩트 위치 확인)</td><td>방향보다 탄도를 먼저 해결하면 슬라이스가 더 커질 수 있음</td></tr><tr><td>2단계</td><td>로프트 +0.5~1°</td><td></td></tr><tr><td>3단계</td><td>EI Tip Soft 검토</td><td></td></tr><tr><td>4단계</td><td>CPM -5 검토</td><td></td></tr></tbody></table></div>
+        <p>CASE 2 — 훅 + 높은 스핀</p>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>단계</th><th>확인/개입</th><th>비고</th></tr></thead><tbody><tr><td>1단계</td><td>타점 중앙화 (길이/라이각 확인)</td><td>힐 타점 동반 여부 먼저</td></tr><tr><td>2단계</td><td>EI Tip Stiff</td></tr><tr><td>3단계</td><td>CPM +5</td></tr><tr><td>4단계</td><td>Forward CG 헤드 검토</td><td>스핀 감소 목적</td></tr></tbody></table></div>
+        <p>CASE 3 — 방향 불안정 + 타점 분산 (랜덤 미스)</p>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>단계</th><th>확인/개입</th></tr></thead><tbody><tr><td>1단계</td><td>길이 재확정 (WTF 기반으로 돌아가서)</td></tr><tr><td>2단계</td><td>무게 ±1 등급 조정</td></tr><tr><td>3단계</td><td>SW 조정</td></tr><tr><td>4단계</td><td>MOI 매칭 검토 (세트 일관성 문제이면)</td></tr></tbody></table></div>
+        <p>CASE 4 — 거리 편차 + 탄도 불안정</p>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>단계</th><th>확인/개입</th></tr></thead><tbody><tr><td>1단계</td><td>타점 안정화 먼저 (타점 분산 측정)</td></tr><tr><td>2단계</td><td>무게 조정</td></tr><tr><td>3단계</td><td>CPM ±5</td></tr><tr><td>4단계</td><td>EI 미세 조정</td></tr></tbody></table></div>
+        <p>CASE 5 — 드라이버는 좋은데 아이언만 문제</p>
+        <p>드라이버와 아이언의 샤프트 소재·무게·CPM 구조가 다를 때 발생합니다. 아이언 탄도/스핀 구조를 별도로 설정합니다.</p>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>단계</th><th>확인/개입</th></tr></thead><tbody><tr><td>1단계</td><td>아이언 Landing Angle / Spin 재설정</td></tr><tr><td>2단계</td><td>아이언 샤프트 무게 흐름 점검 (드라이버→웨지 연속성)</td></tr><tr><td>3단계</td><td>아이언 CPM 흐름 점검 (FM 확인)</td></tr><tr><td>4단계</td><td>아이언 라이각 독립 확인</td></tr></tbody></table></div>
+        <p>CASE 6 — 전체적으로 일관성 부족 (세트 전반)</p>
+        <p>클럽마다 결과가 다르고 타이밍이 일치하지 않는 경우입니다. 개별 클럽 감각보다 세트 구조 전체를 봅니다.</p>
+        <div class="data-table-wrap"><table class="data-table"><thead><tr><th>단계</th><th>확인/개입</th></tr></thead><tbody><tr><td>1단계</td><td>SW 세트 일관성 확인 (드라이버→웨지 흐름)</td></tr><tr><td>2단계</td><td>MOI 매칭 검토</td></tr><tr><td>3단계</td><td>전체 무게 흐름 재설정 (PART 11 3절 7단계 재적용)</td></tr></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-book">
+    <div class="container narrow">
+      <p class="eyebrow">DEEPER · 책으로 더 깊이</p>
+      <h2 class="section-title">『실제적인 클럽피팅』의 <em>관련 PART</em></h2>
+
+      <p class="prose">
+        이 페이지는 책 PART 11 2부의 진단 트리를 검색자 관점에서 재구성한 것입니다.
+        깊이 있는 이론과 다른 PART와의 연계는 책 본문에서 다룹니다.
+      </p>
+
+      <div class="related-grid">
+        <a href="/book/part-2" class="related-card"><p class="related-num">PART 2</p><p class="related-title">판단 구조 시스템</p><p class="related-desc">결과에서 원인으로 거슬러 올라가는 4단계</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-11" class="related-card"><p class="related-num">PART 11</p><p class="related-title">통합 결정과 문제 해결 시스템</p><p class="related-desc">복합 문제 진단 트리 — 6가지 케이스</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-13" class="related-card"><p class="related-num">PART 13</p><p class="related-title">통합 케이스 스터디</p><p class="related-desc">복합 증상의 실제 8개 사례</p><span class="related-arrow">→</span></a>
+        <a href="/book/part-10" class="related-card"><p class="related-num">PART 10</p><p class="related-title">론치모니터 해석 시스템</p><p class="related-desc">데이터 우선순위 결정</p><span class="related-arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container narrow">
+      <p class="eyebrow">NEXT STEP · 직접 진단받기</p>
+      <h2 class="section-title">
+        같은 증상도 <br /><em>당신의 원인</em>은 다를 수 있습니다
+      </h2>
+
+      <p class="cta-lead">
+        이 페이지는 가능한 원인의 분류를 보여줍니다. 실제 처방은 타점·데이터·샤프트 거동을
+        직접 측정해야 결정할 수 있습니다. 24년의 클럽피팅 경험을 바탕으로
+        <strong>구조 진단부터 시작합니다.</strong>
+      </p>
+
+      <div class="cta-buttons">
+        <a href="/contact" class="btn-primary">
+          <span class="btn-label">피팅 문의하기</span>
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="/system" class="btn-secondary">피팅 진행 과정 보기</a>
+      </div>
+
+      <div class="topics-nav">
+        <p class="topics-nav-label">다른 증상별 진단</p>
+        <div class="topics-nav-grid">
+          <a href="/topics/direction">방향 문제 →</a>
+          <a href="/topics/slice-hook">슬라이스 · 훅 →</a>
+          <a href="/topics/impact-location">타점 문제 →</a>
+          <a href="/topics/launch-spin">탄도 · 스핀 →</a>
+          <a href="/topics/rhythm-timing">리듬 · 타이밍 →</a>
+          <a href="/topics">전체 보기 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; }
+
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+  .subhead { font-family: var(--serif); font-size: 1.375rem; font-weight: 600; color: var(--text); margin: 3rem 0 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+
+  .topic-hero { background: var(--bg); padding: 80px 0 56px; border-bottom: 1px solid var(--rule); }
+  .topic-title { font-family: var(--serif); font-size: clamp(2rem, 5.5vw, 3.5rem); font-weight: 500; line-height: 1.15; color: var(--text); margin: 0 0 1.5rem; letter-spacing: -.02em; }
+  .topic-title em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .topic-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 660px; margin: 0; }
+  .topic-lead strong { color: var(--text); font-weight: 600; }
+
+  .quick-answer { background: var(--bg); padding: 32px 0 64px; }
+  .qa-card { background: var(--text); color: var(--bg); padding: 36px 36px 32px; border-radius: 4px; border-left: 4px solid var(--accent-2); }
+  .qa-eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .qa-list { margin: 0 0 1.5rem; padding-left: 0; list-style: none; counter-reset: qa; }
+  .qa-list li { counter-increment: qa; padding: .9rem 0 .9rem 3rem; position: relative; font-family: var(--sans); font-size: 1.0625rem; line-height: 1.75; color: rgba(255,255,255,.9); border-bottom: 1px solid rgba(255,255,255,.08); }
+  .qa-list li:last-child { border-bottom: none; }
+  .qa-list li:before { content: counter(qa); position: absolute; left: 0; top: 1rem; font-family: var(--serif); font-size: 1.5rem; color: var(--accent-2); font-weight: 500; line-height: 1; }
+  .qa-list strong { color: white; font-weight: 600; }
+  .qa-foot { font-family: var(--sans); font-size: .9375rem; line-height: 1.7; color: rgba(255,255,255,.7); margin: 0; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,.12); }
+  .qa-foot strong { color: var(--accent-2); font-weight: 600; }
+
+  .topic-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .topic-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4.2vw, 2.5rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .info-box { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 22px 26px; margin: 1.75em 0; border-radius: 2px; font-family: var(--sans); }
+  .info-box .info-label { font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin: 0 0 .75rem; text-transform: uppercase; }
+  .info-box p { font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin: 0; }
+  .info-box ul { margin: 0; padding-left: 1.4em; }
+  .info-box li { font-family: var(--sans); font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin-bottom: .35rem; }
+
+  .metric-table { margin: 2rem 0; background: var(--bg-elev); border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
+  .metric-table table { width: 100%; border-collapse: collapse; font-family: var(--sans); }
+  .metric-table thead th { font-size: .75rem; font-weight: 700; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; text-align: left; padding: 12px 24px; border-bottom: 1px solid var(--rule); background: var(--bg); }
+  .metric-table tbody td { padding: 14px 24px; border-bottom: 1px solid var(--rule); font-size: .9375rem; color: var(--text-2); vertical-align: middle; line-height: 1.6; }
+  .metric-table tbody tr:last-child td { border-bottom: none; }
+
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 480px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+
+  .cause-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin: 1.5rem 0; }
+  @media (min-width: 720px) { .cause-grid { grid-template-columns: 1fr 1fr; } }
+  .cause-card { background: var(--bg-elev); border: 1px solid var(--rule); border-top: 3px solid var(--accent); padding: 26px 26px; border-radius: 2px; display: flex; flex-direction: column; }
+  .cause-num { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; margin: 0 0 .5rem; }
+  .cause-title { font-family: var(--serif); font-size: 1.125rem; font-weight: 500; color: var(--text); margin: 0 0 .75rem; line-height: 1.4; }
+  .cause-desc { font-family: var(--sans); font-size: .9375rem; line-height: 1.75; color: var(--text-2); margin: 0 0 1.25rem; flex: 1; }
+  .cause-desc em { font-style: normal; font-weight: 600; color: var(--accent); }
+  .cause-action { background: var(--bg-soft); padding: 14px 18px; border-left: 2px solid var(--accent-2); margin-top: auto; }
+  .action-label { font-family: var(--sans); font-size: .6875rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 .25rem; }
+  .action-body { font-family: var(--sans); font-size: .875rem; line-height: 1.65; color: var(--text-2); margin: 0; }
+  .action-body strong { color: var(--text); font-weight: 600; }
+
+  .related-book { padding: 80px 0; background: var(--bg); border-top: 1px solid var(--rule); }
+  .related-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+  @media (min-width: 720px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+  .related-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 24px 26px; border-radius: 2px; text-decoration: none; color: var(--text); transition: transform .2s, border-color .2s, background .2s; display: block; position: relative; padding-right: 50px; }
+  .related-card:hover { transform: translateX(2px); border-color: var(--accent); background: var(--accent-soft); }
+  .related-card:hover .related-arrow { color: var(--accent); transform: translate(4px, -50%); }
+  .related-num { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .2em; margin: 0 0 .35rem; }
+  .related-title { font-family: var(--serif); font-size: 1.125rem; font-weight: 600; color: var(--text); margin: 0 0 .35rem; line-height: 1.4; }
+  .related-desc { font-family: var(--sans); font-size: .875rem; color: var(--text-2); margin: 0; line-height: 1.55; }
+  .related-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.25rem; color: var(--accent-2); transition: color .2s, transform .2s; }
+
+  .cta-section { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .cta-section .eyebrow { color: var(--accent-2); }
+  .cta-section .section-title { color: var(--bg); }
+  .cta-section .section-title em { color: var(--accent-2); }
+  .cta-lead { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.85); margin: 0 0 2.5rem; }
+  .cta-lead strong { color: white; font-weight: 600; }
+  .cta-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 4rem; }
+  .btn-primary, .btn-secondary { font-family: var(--sans); font-size: 1rem; font-weight: 600; padding: 16px 28px; border-radius: 2px; text-decoration: none; transition: transform .2s, background .2s; display: inline-flex; align-items: center; gap: .75rem; }
+  .btn-primary { background: var(--accent); color: white; border: 1px solid var(--accent); }
+  .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); transform: translateX(2px); }
+  .btn-secondary { background: transparent; color: var(--accent-2); border: 1px solid rgba(255,255,255,.25); }
+  .btn-secondary:hover { background: rgba(255,255,255,.06); color: white; border-color: rgba(255,255,255,.4); }
+  .topics-nav { margin-top: 2rem; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,.12); }
+  .topics-nav-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.25rem; }
+  .topics-nav-grid { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
+  .topics-nav-grid a { font-family: var(--sans); font-size: .9375rem; color: rgba(255,255,255,.75); text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,.15); transition: color .2s, border-color .2s; }
+  .topics-nav-grid a:hover { color: var(--accent-2); border-color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .topic-hero { padding: 56px 0 40px; }
+    .topic-section { padding: 56px 0; }
+    .related-book { padding: 56px 0; }
+    .cta-section { padding: 64px 0; }
+    .qa-card { padding: 26px 22px; }
+    .cause-card { padding: 22px 20px; }
+    .related-card { padding: 20px 22px; padding-right: 44px; }
+    .info-box { padding: 18px 20px; }
+    .qa-list li { padding-left: 2.5rem; }
+    .metric-table thead th, .metric-table tbody td { padding: 10px 16px; }
+  }
+</style>
+
