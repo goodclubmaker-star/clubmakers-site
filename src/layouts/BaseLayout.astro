@@ -72,6 +72,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
           "jobTitle": "공작소장"
         },
         "foundingDate": "1985",
+        "taxID": "813-01-03827",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "동산로2길 50, 가보빌딩 지하층",
@@ -81,11 +82,24 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
         },
         "telephone": "+82-10-4363-5555",
         "email": "clubmakers@naver.com",
-        "url": "https://myclubmakers.com"
+        "url": "https://myclubmakers.com",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "10:00",
+            "closes": "20:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "10:00",
+            "closes": "17:00"
+          }
+        ]
       }
     })} />
   </head>
-
   <body>
     <Nav />
     <main>
