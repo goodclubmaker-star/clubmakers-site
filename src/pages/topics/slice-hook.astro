@@ -1,1 +1,960 @@
+---
+// /src/pages/topics/slice-hook.astro
+// 증상별 SEO 페이지 — 슬라이스 / 훅
 
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "골프 슬라이스 · 훅 — 휘는 원인은 페이스가 아닙니다";
+const pageDescription = "슬라이스가 난다고 페이스만 닫으려 하면 원인을 놓칩니다. 휘어짐은 페이스와 패스의 차이(F2P)와 타점에서 만들어집니다. 24년 클럽피팅 현장에서 정리한 슬라이스/훅 진단 트리.";
+const pageKeywords = "슬라이스 원인, 슬라이스 고치는 법, 훅 원인, 골프 휘어짐, F2P, Face to Path, 페이드, 드로우, 클럽피팅, 클럽메이커스, 채기웅";
+
+const relatedParts = [
+  { num: 1,  title: "인터뷰 — 피팅이 시작되는 곳",         desc: "슬라이스를 호소하는 골퍼의 말을 어떻게 변수로 변환하는가",  href: "/book/part-1" },
+  { num: 5,  title: "타점 / CG / 기어이펙트",              desc: "힐·토 타점이 만드는 휘어짐의 물리적 원리",                  href: "/book/part-5" },
+  { num: 6,  title: "헤드 기하 구조",                       desc: "라이각·로프트·페이스 앵글이 슬라이스에 미치는 영향",        href: "/book/part-6" },
+  { num: 11, title: "통합 결정과 문제 해결 시스템",         desc: "휘어짐 진단 트리 — 책에서 가장 깊이 다룬 섹션",              href: "/book/part-11" },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="topic-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/topics">증상별 진단</a>
+        <span>·</span>
+        <span class="crumb-current">슬라이스 · 훅</span>
+      </div>
+
+      <p class="eyebrow">SYMPTOM · 휘어짐 문제</p>
+
+      <h1 class="topic-title">
+        슬라이스 · 훅 <br />
+        <em>공이 휘는 진짜 이유</em>
+      </h1>
+
+      <p class="topic-lead">
+        슬라이스가 난다고 페이스만 닫으려 하면 원인을 놓칩니다.
+        휘어짐은 <strong>페이스와 패스의 차이(F2P)</strong>와 <strong>타점 위치</strong>에서
+        만들어집니다. 같은 슬라이스라도 처방은 완전히 다릅니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== QUICK ANSWER ==================== -->
+  <section class="quick-answer">
+    <div class="container narrow">
+      <div class="qa-card">
+        <p class="qa-eyebrow">Quick Answer · 가장 흔한 원인 3가지</p>
+        <ol class="qa-list">
+          <li>
+            <strong>F2P (Face to Path)가 음수</strong> — 페이스가 스윙 패스보다 열려 있을 때.
+            가장 일반적인 슬라이스 원인입니다.
+          </li>
+          <li>
+            <strong>힐 / 토 타점 (기어이펙트)</strong> — 임팩트 위치가 페이스 중심에서 벗어나면
+            페이스 앵글과 무관하게 휘어집니다. 슬라이스는 토 타점, 훅은 힐 타점에서.
+          </li>
+          <li>
+            <strong>샤프트 EI · 릴리즈 타이밍</strong> — Tip Soft가 과도하면 헤드 회전(ROC)이
+            과다해서 훅, Tip Stiff가 과도하면 헤드 회전이 부족해서 슬라이스.
+          </li>
+        </ol>
+        <p class="qa-foot">
+          → <strong>진단 순서:</strong> 타점 확인 → F2P 측정 → 샤프트 EI 검토. 헤드를 먼저
+          바꾸는 것은 가장 마지막 단계입니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 1 — 출발 vs 휘어짐 ==================== -->
+  <section class="topic-section">
+    <div class="container narrow">
+      <p class="eyebrow">PRINCIPLE 01 · 원칙</p>
+      <h2 class="section-title">
+        출발 방향과 <em>휘어짐</em>은 다른 문제입니다
+      </h2>
+
+      <div class="prose">
+        <p>
+          공이 우측으로 빠진다는 한 마디 안에 사실은 두 가지 다른 문제가 섞여 있습니다.
+          공이 처음부터 우측으로 출발했는지, 아니면 직진했다가 비행 중 우측으로 휘어진 것인지.
+          <strong>둘은 원인도 처방도 다릅니다.</strong>
+        </p>
+        <p>
+          이 페이지에서 다루는 것은 <em>비행 중 휘어짐</em>입니다.
+          출발 방향 자체가 한쪽으로 치우치는 경우는 별도 페이지에서 다룹니다.
+        </p>
+      </div>
+
+      <aside class="principle-card">
+        <p class="principle-label">볼 비행의 두 인과 (D-Plane)</p>
+        <p class="principle-flow">
+          <span>Face Angle</span>
+          <span class="arrow">→</span>
+          <span>출발 방향</span>
+          <span class="muted">(약 85%)</span>
+        </p>
+        <p class="principle-flow" style="margin-top:1rem">
+          <span>F2P = Face − Path</span>
+          <span class="arrow">→</span>
+          <span>곡률 (휘어짐)</span>
+        </p>
+        <p class="principle-foot">
+          페이스가 출발 방향을 결정하고, 페이스와 패스의 <em>차이</em>가 곡률을 결정합니다.
+          이 두 인과를 분리해서 보지 않으면 원인을 잘못 짚습니다.
+        </p>
+      </aside>
+
+      <div class="cta-inline">
+        <a href="/topics/direction" class="cta-text">출발 방향이 한쪽으로 빠지는 문제는 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 — 슬라이스 ==================== -->
+  <section class="topic-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">DIAGNOSIS · 슬라이스</p>
+      <h2 class="section-title">
+        우측 휘어짐 — <em>슬라이스</em> · 페이드
+      </h2>
+
+      <p class="prose">
+        출발 방향에 큰 문제가 없는데 비행 중 공이 우측으로 휘는 경우입니다.
+        Face to Path, 타점, 스핀 축을 함께 봅니다.
+      </p>
+
+      <!-- F2P 수치 가이드 -->
+      <div class="metric-table">
+        <p class="metric-label">F2P 수치별 해석</p>
+        <table>
+          <thead>
+            <tr><th>Face to Path</th><th>Spin Axis</th><th>해석</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="num-cell">−1° 이내</span></td>
+              <td>0 ~ ±5°</td>
+              <td>경미한 페이드 또는 정상 범위</td>
+            </tr>
+            <tr>
+              <td><span class="num-cell warn">−2° 이하</span></td>
+              <td>−5° 이하</td>
+              <td>슬라이스성 회전 시작</td>
+            </tr>
+            <tr>
+              <td><span class="num-cell bad">−3° 이하</span></td>
+              <td>명확한 페이드 / 슬라이스 구조</td>
+              <td>페이스가 패스보다 많이 열림</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 4가지 원인 진단 카드 -->
+      <h3 class="subhead">슬라이스의 4가지 원인 — 어느 쪽인지부터 분리</h3>
+
+      <div class="cause-grid">
+        <article class="cause-card">
+          <p class="cause-num">CAUSE 1</p>
+          <h4 class="cause-title">토 타점이 동반된 경우</h4>
+          <p class="cause-desc">
+            우측 휘어짐 + 토 타점이 함께 나타나면 <em>기어이펙트</em>가 1차 원인입니다.
+            아무리 페이스를 닫아도 토 타점이 반복되는 한 슬라이스는 사라지지 않습니다.
+          </p>
+          <div class="cause-action">
+            <p class="action-label">개입</p>
+            <p class="action-body">
+              <strong>길이 −0.25인치</strong> 단축으로 타점을 페이스 중심으로 이동.
+              타점 안정 후 F2P 재측정.
+            </p>
+          </div>
+        </article>
+
+        <article class="cause-card">
+          <p class="cause-num">CAUSE 2</p>
+          <h4 class="cause-title">타점은 정상인데 F2P가 음수</h4>
+          <p class="cause-desc">
+            타점이 페이스 중심에서 벗어나지 않는데도 F2P가 −2° 이하라면,
+            <em>패스와 페이스의 구조적 불일치</em>가 원인입니다. 기술 개입 영역과
+            장비 영역을 분리해서 판단합니다.
+          </p>
+          <div class="cause-action">
+            <p class="action-label">개입</p>
+            <p class="action-body">
+              구조적 슬라이스. 헤드 페이스 앵글 보정 또는 라이각 검토 전에
+              <strong>패스 자체를 평가</strong>해야 합니다.
+            </p>
+          </div>
+        </article>
+
+        <article class="cause-card">
+          <p class="cause-num">CAUSE 3</p>
+          <h4 class="cause-title">릴리즈가 늦은 경우</h4>
+          <p class="cause-desc">
+            손목이 풀리는 타이밍이 늦어서 임팩트 순간 페이스가 열려 있는 패턴.
+            샤프트가 너무 단단하거나(Tip Stiff 과다) 무거우면 이 현상이 강해집니다.
+          </p>
+          <div class="cause-action">
+            <p class="action-label">개입</p>
+            <p class="action-body">
+              <strong>CPM −5</strong> 또는 <strong>Tip Soft 방향</strong>으로 조정.
+              샤프트가 골퍼의 릴리즈 타이밍을 받쳐주도록.
+            </p>
+          </div>
+        </article>
+
+        <article class="cause-card">
+          <p class="cause-num">CAUSE 4</p>
+          <h4 class="cause-title">타점 정상 + F2P 정상인데 우측 미스가 지속</h4>
+          <p class="cause-desc">
+            진단 결과가 모두 정상 범위인데도 슬라이스가 반복되는 경우. 이때만
+            <em>장비 보조</em>로 들어갑니다. 진단 없이 처음부터 헤드를 바꾸는 것은
+            CAUSE 1~3을 놓치는 흔한 실수입니다.
+          </p>
+          <div class="cause-action">
+            <p class="action-label">개입</p>
+            <p class="action-body">
+              <strong>드로우 바이어스 헤드</strong> 또는 <strong>힐쪽 납테이프</strong>.
+              구조 진단 이후의 마지막 단계.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 — 훅 ==================== -->
+  <section class="topic-section">
+    <div class="container narrow">
+      <p class="eyebrow">DIAGNOSIS · 훅</p>
+      <h2 class="section-title">
+        좌측 휘어짐 — <em>훅</em> · 드로우
+      </h2>
+
+      <p class="prose">
+        좌측 휘어짐은 슬라이스의 거울상이지만, 동반되는 타점이 다르고 샤프트 처방이
+        반대 방향입니다. <strong>훅을 슬라이스의 반대 처방으로 단순 적용하면 또 다른 미스를
+        만듭니다.</strong>
+      </p>
+
+      <div class="metric-table">
+        <p class="metric-label">F2P 수치별 해석</p>
+        <table>
+          <thead>
+            <tr><th>Face to Path</th><th>Spin Axis</th><th>해석</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="num-cell">+1° 이내</span></td>
+              <td>0 ~ ±5°</td>
+              <td>경미한 드로우 또는 정상 범위</td>
+            </tr>
+            <tr>
+              <td><span class="num-cell warn">+2° 이상</span></td>
+              <td>+5° 이상</td>
+              <td>훅성 회전 시작</td>
+            </tr>
+            <tr>
+              <td><span class="num-cell bad">+3° 이상</span></td>
+              <td>명확한 드로우 / 훅 구조</td>
+              <td>페이스가 패스보다 많이 닫힘</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="subhead">훅의 4가지 원인</h3>
+
+      <div class="cause-grid">
+        <article class="cause-card">
+          <p class="cause-num">CAUSE 1</p>
+          <h4 class="cause-title">힐 타점이 동반된 경우</h4>
+          <p class="cause-desc">
+            좌측 휘어짐 + 힐 타점은 슬라이스의 토 타점과 같은 원리. <em>기어이펙트</em>가
+            1차 원인. 길이가 너무 길거나 라이각이 부적절할 때 자주 발생합니다.
+          </p>
+          <div class="cause-action">
+            <p class="action-label">개입</p>
+            <p class="action-body">
+              <strong>길이 / 라이각</strong>을 먼저 점검. 그립 두께가 너무 얇아도 힐 타점이
+              유발될 수 있습니다.
+            </p>
+          </div>
+        </article>
+
+        <article class="cause-card">
+          <p class="cause-num">CAUSE 2</p>
+          <h4 class="cause-title">타점은 정상인데 F2P가 양수</h4>
+          <p class="cause-desc">
+            타점이 정상이고 패스도 정상인데 페이스만 닫힌 채로 임팩트되는 경우.
+            <em>릴리즈가 너무 빠른</em> 패턴. 샤프트가 너무 부드러우면 강해집니다.
+          </p>
+          <div class="cause-action">
+            <p class="action-label">개입</p>
+            <p class="action-body">
+              <strong>CPM +5</strong> 방향으로 강도 상향. 릴리즈가 늦게 일어나도록 샤프트가
+              제어해 주는 구조.
+            </p>
+          </div>
+        </article>
+
+        <article class="cause-card">
+          <p class="cause-num">CAUSE 3</p>
+          <h4 class="cause-title">EI Tip Soft 과다</h4>
+          <p class="cause-desc">
+            샤프트 팁 부분이 너무 부드러우면 헤드의 회전 속도(ROC)가 과해집니다.
+            <em>헤드가 골퍼의 의도보다 빨리 닫히는</em> 패턴.
+          </p>
+          <div class="cause-action">
+            <p class="action-label">개입</p>
+            <p class="action-body">
+              <strong>Tip Stiff 방향</strong>으로 EI 프로파일 조정. 또는 팁 트림으로 강성 보정.
+            </p>
+          </div>
+        </article>
+
+        <article class="cause-card">
+          <p class="cause-num">CAUSE 4</p>
+          <h4 class="cause-title">드로우 바이어스 헤드 + ROC 과다</h4>
+          <p class="cause-desc">
+            드로우 바이어스 헤드를 사용 중인데 샤프트 ROC도 과다한 경우.
+            <em>장비 두 가지가 같은 방향으로 보정</em>하면서 과보정이 발생합니다.
+          </p>
+          <div class="cause-action">
+            <p class="action-label">개입</p>
+            <p class="action-body">
+              <strong>표준 헤드</strong>로 교체 또는 <strong>토우쪽 납테이프</strong>로 균형 보정.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 — 흔한 오판 ==================== -->
+  <section class="topic-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">PITFALLS · 흔한 오판</p>
+      <h2 class="section-title">
+        피해야 할 <em>3가지 오판</em>
+      </h2>
+
+      <div class="pitfall-list">
+        <div class="pitfall-row">
+          <p class="pitfall-bad">
+            <span class="badge bad">자주 하는 실수</span>
+            슬라이스 → 즉시 드로우 바이어스 헤드 교체
+          </p>
+          <p class="pitfall-good">
+            <span class="badge good">올바른 순서</span>
+            타점 확인 → F2P 측정 → 샤프트 EI 검토 → <em>그 다음에야</em> 헤드 교체 검토
+          </p>
+        </div>
+
+        <div class="pitfall-row">
+          <p class="pitfall-bad">
+            <span class="badge bad">자주 하는 실수</span>
+            훅 → 즉시 토크 낮은 샤프트로 교체
+          </p>
+          <p class="pitfall-good">
+            <span class="badge good">올바른 순서</span>
+            힐 타점 여부 확인 → 길이 · 라이각 점검 → 릴리즈 타이밍과 EI Tip 영역 검토
+          </p>
+        </div>
+
+        <div class="pitfall-row">
+          <p class="pitfall-bad">
+            <span class="badge bad">자주 하는 실수</span>
+            우측 미스를 모두 슬라이스로 진단 (출발 방향과 휘어짐 혼동)
+          </p>
+          <p class="pitfall-good">
+            <span class="badge good">올바른 순서</span>
+            출발이 우측인가, 비행 중 휘어진 것인가를 먼저 분리. 페이스 문제와 F2P 문제는 다름.
+          </p>
+        </div>
+      </div>
+
+      <p class="prose" style="margin-top:2.5rem">
+        이 세 가지는 슬라이스 · 훅 호소 시 가장 자주 일어나는 오판입니다.
+        장비를 바꾸기 전에 <strong>구조 진단을 먼저 하는 것</strong>이 결과적으로
+        가장 빠른 해결입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== 책으로 더 깊이 ==================== -->
+  <section class="related-book">
+    <div class="container narrow">
+      <p class="eyebrow">DEEPER · 책으로 더 깊이</p>
+      <h2 class="section-title">
+        『실제적인 클럽피팅』의 <em>관련 PART</em>
+      </h2>
+
+      <p class="prose">
+        이 페이지는 책 PART 11 2부의 휘어짐 진단 트리를 검색자 관점에서 재구성한 것입니다.
+        깊이 있는 이론과 다른 PART의 연계는 책 본문에서 다룹니다.
+      </p>
+
+      <div class="related-grid">
+        {relatedParts.map((p) => (
+          <a href={p.href} class="related-card">
+            <p class="related-num">PART {p.num}</p>
+            <p class="related-title">{p.title}</p>
+            <p class="related-desc">{p.desc}</p>
+            <span class="related-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="cta-section">
+    <div class="container narrow">
+      <p class="eyebrow">NEXT STEP · 직접 진단받기</p>
+      <h2 class="section-title">
+        같은 슬라이스도 <br /><em>당신의 원인</em>은 다를 수 있습니다
+      </h2>
+
+      <p class="cta-lead">
+        이 페이지는 가능한 원인의 분류를 보여줍니다. 실제 처방은 타점, F2P, 샤프트 거동을
+        직접 측정해야 결정할 수 있습니다. 24년의 클럽피팅 경험을 바탕으로
+        <strong>구조 진단부터 시작합니다.</strong>
+      </p>
+
+      <div class="cta-buttons">
+        <a href="/contact" class="btn-primary">
+          <span class="btn-label">피팅 문의하기</span>
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="/system" class="btn-secondary">
+          피팅 진행 과정 보기
+        </a>
+      </div>
+
+      <div class="topics-nav">
+        <p class="topics-nav-label">다른 증상별 진단</p>
+        <div class="topics-nav-grid">
+          <a href="/topics/direction">방향 문제 →</a>
+          <a href="/topics/impact-location">타점 문제 →</a>
+          <a href="/topics/launch-spin">탄도 · 스핀 →</a>
+          <a href="/topics/rhythm-timing">리듬 · 타이밍 →</a>
+          <a href="/topics">전체 보기 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; }
+
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+  .subhead { font-family: var(--serif); font-size: 1.375rem; font-weight: 600; color: var(--text); margin: 3rem 0 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+
+  /* HERO */
+  .topic-hero { background: var(--bg); padding: 80px 0 56px; border-bottom: 1px solid var(--rule); }
+  .topic-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--text);
+    margin: 0 0 1.5rem;
+    letter-spacing: -.02em;
+  }
+  .topic-title em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .topic-lead {
+    font-family: var(--sans);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-2);
+    max-width: 660px;
+    margin: 0;
+  }
+  .topic-lead strong { color: var(--text); font-weight: 600; }
+
+  /* QUICK ANSWER — Featured Snippet 노출용 */
+  .quick-answer { background: var(--bg); padding: 32px 0 64px; }
+  .qa-card {
+    background: var(--text);
+    color: var(--bg);
+    padding: 36px 36px 32px;
+    border-radius: 4px;
+    border-left: 4px solid var(--accent-2);
+  }
+  .qa-eyebrow {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent-2);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
+  }
+  .qa-list {
+    margin: 0 0 1.5rem;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: qa;
+  }
+  .qa-list li {
+    counter-increment: qa;
+    padding: .9rem 0 .9rem 3rem;
+    position: relative;
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,.9);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .qa-list li:last-child { border-bottom: none; }
+  .qa-list li:before {
+    content: counter(qa);
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--accent-2);
+    font-weight: 500;
+    line-height: 1;
+  }
+  .qa-list strong { color: white; font-weight: 600; }
+  .qa-foot {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,.7);
+    margin: 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,.12);
+  }
+  .qa-foot strong { color: var(--accent-2); font-weight: 600; }
+
+  /* SECTIONS */
+  .topic-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .topic-section.alt { background: var(--bg); }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 4.2vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -.015em;
+    color: var(--text);
+    margin: 0 0 2rem;
+  }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  /* PRINCIPLE CARD */
+  .principle-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    margin: 2.5rem 0;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .principle-label {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
+  }
+  .principle-flow {
+    font-family: var(--serif);
+    font-size: clamp(1.0625rem, 2.4vw, 1.375rem);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: .75rem 1.25rem;
+  }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-flow .muted { color: var(--muted); font-size: .8125rem; font-weight: 400; }
+  .principle-foot {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 1.5rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    max-width: 540px;
+    margin-inline: auto;
+  }
+  .principle-foot em { font-style: normal; font-weight: 600; color: var(--accent); }
+
+  /* INLINE CTA */
+  .cta-inline {
+    margin-top: 1.5rem;
+    text-align: right;
+  }
+  .cta-text {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-2);
+    padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .cta-text:hover { color: var(--text); border-color: var(--text); }
+
+  /* METRIC TABLE */
+  .metric-table {
+    margin: 2rem 0;
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .metric-table .metric-label {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg-soft);
+  }
+  .metric-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sans);
+  }
+  .metric-table thead th {
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg);
+  }
+  .metric-table tbody td {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--rule);
+    font-size: .9375rem;
+    color: var(--text-2);
+    vertical-align: middle;
+    line-height: 1.6;
+  }
+  .metric-table tbody tr:last-child td { border-bottom: none; }
+  .num-cell {
+    display: inline-block;
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    padding: 4px 10px;
+    background: var(--bg-soft);
+    border-radius: 2px;
+  }
+  .num-cell.warn { background: var(--warn-soft); color: var(--warn); }
+  .num-cell.bad { background: var(--warn); color: white; }
+
+  /* CAUSE GRID */
+  .cause-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+  @media (min-width: 720px) { .cause-grid { grid-template-columns: 1fr 1fr; } }
+  .cause-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent);
+    padding: 26px 26px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+  }
+  .cause-num {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    margin: 0 0 .5rem;
+  }
+  .cause-title {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 .75rem;
+    line-height: 1.4;
+  }
+  .cause-desc {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.75;
+    color: var(--text-2);
+    margin: 0 0 1.25rem;
+    flex: 1;
+  }
+  .cause-desc em { font-style: normal; font-weight: 600; color: var(--accent); }
+  .cause-action {
+    background: var(--bg-soft);
+    padding: 14px 18px;
+    border-left: 2px solid var(--accent-2);
+    margin-top: auto;
+  }
+  .action-label {
+    font-family: var(--sans);
+    font-size: .6875rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 .25rem;
+  }
+  .action-body {
+    font-family: var(--sans);
+    font-size: .875rem;
+    line-height: 1.65;
+    color: var(--text-2);
+    margin: 0;
+  }
+  .action-body strong { color: var(--text); font-weight: 600; }
+
+  /* PITFALL LIST */
+  .pitfall-list {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0 0;
+  }
+  .pitfall-row {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 22px 26px;
+    border-radius: 2px;
+    display: grid;
+    gap: .75rem;
+  }
+  .pitfall-bad, .pitfall-good {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0;
+  }
+  .pitfall-good em { font-style: normal; font-weight: 600; color: var(--accent); }
+  .badge {
+    display: inline-block;
+    padding: .15rem .55rem;
+    border-radius: 2px;
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    margin-right: .5rem;
+    text-transform: uppercase;
+  }
+  .badge.bad  { background: var(--warn-soft); color: var(--warn); }
+  .badge.good { background: var(--good-soft); color: var(--good); }
+
+  /* RELATED BOOK */
+  .related-book {
+    padding: 80px 0;
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 720px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+  .related-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 24px 26px;
+    border-radius: 2px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform .2s, border-color .2s, background .2s;
+    display: block;
+    position: relative;
+    padding-right: 50px;
+  }
+  .related-card:hover {
+    transform: translateX(2px);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .related-card:hover .related-arrow { color: var(--accent); transform: translate(4px, -50%); }
+  .related-num {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0 0 .35rem;
+  }
+  .related-title {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 .35rem;
+    line-height: 1.4;
+  }
+  .related-desc {
+    font-family: var(--sans);
+    font-size: .875rem;
+    color: var(--text-2);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .related-arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: var(--accent-2);
+    transition: color .2s, transform .2s;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--text);
+    color: var(--bg);
+    padding: 96px 0;
+  }
+  .cta-section .eyebrow { color: var(--accent-2); }
+  .cta-section .section-title { color: var(--bg); }
+  .cta-section .section-title em { color: var(--accent-2); }
+  .cta-lead {
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,.85);
+    margin: 0 0 2.5rem;
+  }
+  .cta-lead strong { color: white; font-weight: 600; }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+  .btn-primary, .btn-secondary {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 16px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: transform .2s, background .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border: 1px solid var(--accent);
+  }
+  .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); transform: translateX(2px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--accent-2);
+    border: 1px solid rgba(255,255,255,.25);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,.06); color: white; border-color: rgba(255,255,255,.4); }
+
+  .topics-nav {
+    margin-top: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,.12);
+  }
+  .topics-nav-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent-2);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+  }
+  .topics-nav-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem 1.5rem;
+  }
+  .topics-nav-grid a {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: rgba(255,255,255,.75);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(255,255,255,.15);
+    transition: color .2s, border-color .2s;
+  }
+  .topics-nav-grid a:hover { color: var(--accent-2); border-color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .topic-hero { padding: 56px 0 40px; }
+    .topic-section { padding: 56px 0; }
+    .related-book { padding: 56px 0; }
+    .cta-section { padding: 64px 0; }
+    .qa-card { padding: 26px 22px; }
+    .cause-card { padding: 22px 20px; }
+    .pitfall-row { padding: 20px 22px; }
+    .related-card { padding: 20px 22px; padding-right: 44px; }
+    .principle-card { padding: 24px 20px; }
+    .metric-table thead th, .metric-table tbody td { padding: 10px 16px; }
+    .qa-list li { padding-left: 2.5rem; }
+  }
+</style>
