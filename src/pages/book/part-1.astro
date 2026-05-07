@@ -2,9 +2,10 @@
 // /src/pages/book/part-1.astro
 // 『실제적인 클럽피팅』 PART 1 — 인터뷰: 피팅이 시작되는 곳
 
-import Layout from '../../layouts/Layout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const pageTitle = "PART 1. 인터뷰 — 피팅이 시작되는 곳 | 『실제적인 클럽피팅』 | 클럽메이커스";
+const pageTitle = "PART 1. 인터뷰 — 피팅이 시작되는 곳 | 『실제적인 클럽피팅』";
+const pageKeywords = "클럽피팅, 인터뷰, 피팅 프로세스, FM 매칭, 슬라이스 원인, MOI, 총무게, 채기웅, 실제적인 클럽피팅";
 const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 1. 피팅은 데이터가 아니라 인터뷰에서 시작됩니다. Level 1·2·3 인터뷰 구조, 34문항 7영역 기준표, 6가지 실패 사례. 같은 슬라이스도 원인이 다르면 처방이 다릅니다.";
 
 const sections = [
@@ -17,7 +18,12 @@ const sections = [
 ];
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
 
   <!-- ==================== HERO ==================== -->
   <section class="part-hero">
@@ -735,7 +741,7 @@ const sections = [
     </div>
   </nav>
 
-</Layout>
+</BaseLayout>
 
 <!-- ============================================================
      SCOPED STYLES — /book/part-1
