@@ -1,0 +1,1964 @@
+---
+// /src/pages/book/part-2.astro
+// 『실제적인 클럽피팅』 PART 2 — 판단 구조 시스템: 결과 중심 해석에서 원인 중심 해석으로
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "PART 2. 판단 구조 시스템 — 결과에서 원인으로 | 『실제적인 클럽피팅』";
+const pageKeywords = "클럽피팅, 판단 구조, 데이터 해석, F2P, 페이스 패스, 스매시 팩터, 표준 판단 루틴, 채기웅, 실제적인 클럽피팅";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 2. 결과 중심 해석의 한계와 원인 중심 해석. 판단 순서(타점 → 에너지 → 방향 → 볼 비행), 평균이 아니라 최악, 표준 판단 루틴 5단계, 3가지 오판 패턴.";
+
+const sections = [
+  { id: "sec-1", num: "01", ko: "결과에서 시작하면 원인을 놓칩니다" },
+  { id: "sec-2", num: "02", ko: "판단 순서는 고정되어야 합니다" },
+  { id: "sec-3", num: "03", ko: "평균이 아니라 최악을 기준으로 판단합니다" },
+  { id: "sec-4", num: "04", ko: "모든 샷이 같은 기준값을 가지지는 않습니다" },
+  { id: "sec-5", num: "05", ko: "해석을 보류해야 하는 시점이 있습니다" },
+  { id: "sec-6", num: "06", ko: "스매시 팩터의 구조적 해석" },
+  { id: "sec-7", num: "07", ko: "현장 데이터 우선순위" },
+  { id: "sec-8", num: "08", ko: "표준 판단 루틴 (5단계)" },
+  { id: "sec-9", num: "09", ko: "판단 오류 사례 — 3가지 패턴" },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 2</span>
+      </div>
+
+      <p class="eyebrow">PART 02 · 본문 14 PART 중 두 번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 2</span>
+        <span class="part-name">판단 구조 시스템</span>
+        <span class="part-sub">결과 중심 해석에서 원인 중심 해석으로</span>
+      </h1>
+
+      <p class="part-en">The Judgment Architecture — From Result to Cause</p>
+
+      <p class="part-lead">
+        론치모니터에 표시되는 볼스피드·방향·스핀율·탄도는 이미 여러 조건이 결합된 뒤에
+        산출되는 출력값입니다. <strong>데이터는 원인이 아니라 결과입니다.</strong>
+        같은 결과가 전혀 다른 원인에서 나올 수 있다면, 결과 중심 해석은 구조적으로
+        오판을 만듭니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== LEARNING OBJECTIVES ==================== -->
+  <section class="objectives">
+    <div class="container narrow">
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 2 판단구조를 마치면</p>
+        <ol class="callout-list">
+          <li>결과 중심 해석과 원인 중심 해석의 차이를 구분할 수 있다.</li>
+          <li>론치모니터 데이터의 해석 우선순위를 결정할 수 있다.</li>
+          <li>표준 판단 루틴 5단계를 현장 사례에 적용할 수 있다.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        {sections.map((s) => (
+          <li>
+            <a href={`#${s.id}`}>
+              <span class="toc-num">{s.num}</span>
+              <span class="toc-text">{s.ko}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro">
+    <div class="container narrow prose">
+      <p>
+        PART 2는 결과 중심 해석이 만드는 혼란을 줄이기 위한 판단 구조를 정리합니다.
+        해석의 순서를 일관되게 두고, 데이터의 우선순위를 설정하며, 현장에서 오판이
+        자주 발생하는 지점을 짚어 예방하는 틀을 제공합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">
+        결과에서 시작하면 <br />
+        <em>원인</em>을 놓칩니다
+      </h2>
+
+      <div class="prose">
+        <p>
+          볼 비행은 여러 임팩트 조건이 복합적으로 결합된 최종 결과입니다.
+          공이 우측으로 휘어나간 것, 탄도가 낮게 나온 것, 거리가 짧은 것은 모두
+          <strong>0.5초 이내의 임팩트 순간 이후에 나타나는 현상</strong>입니다.
+        </p>
+        <p>
+          결과만 보고 원인을 역추적하면 구조적으로 오판이 발생합니다. 같은 결과가
+          전혀 다른 원인에서 만들어질 수 있기 때문입니다.
+        </p>
+      </div>
+
+      <aside class="callout callout-example">
+        <p class="callout-label">같은 우측 미스라도 원인은 다릅니다</p>
+        <ul class="callout-bullets">
+          <li>타점이 힐 쪽에 반복적으로 맞아 <em>기어이펙트</em>로 발생한 우측 미스</li>
+          <li>릴리즈 타이밍이 늦어 임팩트 순간 <em>페이스가 열린 채</em>로 발생한 우측 미스</li>
+          <li><em>MOI가 스윙 리듬과 맞지 않아</em> 회전 응답이 늦어져 발생한 우측 미스</li>
+        </ul>
+        <p class="callout-foot">
+          세 경우 모두 겉으로는 동일한 우측 미스입니다.
+          그러나 <strong>처방은 완전히 다릅니다.</strong>
+        </p>
+      </aside>
+
+      <div class="prose">
+        <p>
+          피팅에서는 결과를 확인한 다음, 그 결과를 만든 임팩트 조건을
+          먼저 추적해야 합니다. 임팩트에서 릴리즈로, 릴리즈에서 장비 조건으로
+          단계별로 거슬러 올라가는 것이 <em>원인 중심 해석</em>입니다.
+        </p>
+      </div>
+
+      <aside class="principle-card">
+        <p class="principle-label">피팅 해석의 방향 (기본 원칙)</p>
+        <p class="principle-flow">
+          <span>결과</span>
+          <span class="arrow">→</span>
+          <span>임팩트 조건</span>
+          <span class="arrow">→</span>
+          <span>타이밍</span>
+          <span class="arrow">→</span>
+          <span>장비 변수</span>
+        </p>
+        <p class="principle-foot">
+          이 방향을 거꾸로 하면, 이후의 모든 판단이 연쇄적으로 흔들립니다.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">
+        판단 순서는 <em>고정</em>되어야 합니다
+      </h2>
+
+      <p class="prose">
+        데이터 해석에는 고정된 순서가 필요합니다. 이것은 편의상의 규칙이 아니라
+        <strong>물리적 인과관계를 반영한 원칙</strong>입니다.
+      </p>
+
+      <aside class="principle-card principle-major">
+        <p class="principle-label">판단 순서 (변경 불가)</p>
+        <p class="principle-flow principle-flow-major">
+          <span>타점</span>
+          <span class="arrow">→</span>
+          <span>에너지 전달</span>
+          <span class="arrow">→</span>
+          <span>방향<span class="sub">(Face/Path)</span></span>
+          <span class="arrow">→</span>
+          <span>볼 비행</span>
+        </p>
+        <p class="principle-foot">
+          상위 단계가 불안정하면 하위 단계의 수치는 아직 의미가 없습니다.
+        </p>
+      </aside>
+
+      <!-- Step 1: 타점 -->
+      <article class="step-card">
+        <p class="step-num">STEP 01</p>
+        <h3 class="step-title">타점이 가장 먼저인 이유</h3>
+        <div class="prose">
+          <p>
+            타점은 클럽과 공이 실제로 만나는 <em>유일한 접촉점</em>입니다. 이 지점에서
+            에너지 전달, 회전, 방향 구조가 동시에 결정됩니다. 타점이 중심에서 1센티미터만
+            벗어나도 스매시 팩터, 스핀 방향, 출발 방향이 동시에 변합니다.
+          </p>
+          <p>
+            현장에서 먼저 확인해야 할 것은 좋은 샷 한 번이 아닙니다.
+            <strong>8~12구를 쳤을 때 타점이 어느 방향으로 퍼지는지</strong>,
+            힐·토·상단·하단 중 반복 패턴이 있는지를 먼저 봐야 합니다.
+          </p>
+        </div>
+
+        <div class="impact-grid">
+          <div class="impact-card impact-heel">
+            <p class="impact-label">힐 타점</p>
+            <p class="impact-body">헤드 열림 반응 → 우측 미스 경향 강화</p>
+            <p class="impact-tag">기어이펙트</p>
+          </div>
+          <div class="impact-card impact-toe">
+            <p class="impact-label">토 타점</p>
+            <p class="impact-body">헤드 닫힘 반응 → 좌측 미스 경향 강화</p>
+            <p class="impact-tag">기어이펙트</p>
+          </div>
+          <div class="impact-card impact-high">
+            <p class="impact-label">상단 타점</p>
+            <p class="impact-body">Dynamic Loft 감소 → 탄도 낮음 / 스핀 감소</p>
+            <p class="impact-tag">V-Plane</p>
+          </div>
+          <div class="impact-card impact-low">
+            <p class="impact-label">하단 타점</p>
+            <p class="impact-body">Dynamic Loft 증가 → 탄도 높음 / 스핀 증가</p>
+            <p class="impact-tag">V-Plane</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Step 2: 에너지 전달 -->
+      <article class="step-card">
+        <p class="step-num">STEP 02</p>
+        <h3 class="step-title">에너지 전달이 두 번째인 이유</h3>
+        <div class="prose">
+          <p>
+            스매시 팩터와 볼스피드는 <strong>타점과 강하게 연동</strong>됩니다.
+            스매시가 낮다고 곧바로 장비 매칭 문제로 판단하면 오진이 됩니다.
+            타점이 안정된 이후에도 스매시가 낮은 경우에만 장비 변수를 검토합니다.
+          </p>
+        </div>
+
+        <div class="check-flow">
+          <p class="check-flow-label">낮은 스매시 확인 순서</p>
+          <p class="check-flow-body">
+            <span>타점 분산 여부</span>
+            <span class="arrow">→</span>
+            <span>길이 적합성</span>
+            <span class="arrow">→</span>
+            <span>MOI 매칭</span>
+            <span class="arrow">→</span>
+            <span>타이밍 일관성</span>
+          </p>
+        </div>
+      </article>
+
+      <!-- Step 3: 방향 -->
+      <article class="step-card">
+        <p class="step-num">STEP 03</p>
+        <h3 class="step-title">방향이 세 번째인 이유</h3>
+        <div class="prose">
+          <p>
+            방향성은 가장 눈에 띄지만 <strong>가장 복합적인 결과</strong>입니다.
+            페이스 앵글, 스윙 패스, 타점 위치, 타이밍이 모두 결합되어 나타납니다.
+            <em>페이스는 출발 방향에 약 85%의 영향</em>을 줍니다. 우측 미스가 반복된다고
+            해서 곧바로 아웃-인 패스를 원인으로 지목하면 오판입니다.
+          </p>
+          <p>
+            볼 비행 패턴은 페이스와 패스의 관계로 설명됩니다. 페이스 방향이 출발 방향을
+            결정하고(약 85%), <em>페이스와 패스의 차이(F2P = Face − Path)</em>가
+            곡률을 결정합니다. 이 두 인과를 분리해 보면 구질의 원리가 분명해집니다.
+          </p>
+        </div>
+
+        <!-- F2P 9-cell matrix -->
+        <div class="f2p-matrix">
+          <p class="matrix-label">FACE × PATH 9가지 구질 조합</p>
+
+          <div class="f2p-grid">
+            <div class="f2p-cell f2p-straight">
+              <p class="f2p-shot">스트레이트</p>
+              <p class="f2p-detail">Face 0° / Path 0°</p>
+              <p class="f2p-flow">직진 · 직선</p>
+            </div>
+            <div class="f2p-cell">
+              <p class="f2p-shot">푸시 페이드</p>
+              <p class="f2p-detail">Face +3° / Path 0°</p>
+              <p class="f2p-flow">우측 출발 · 우측 휨</p>
+            </div>
+            <div class="f2p-cell">
+              <p class="f2p-shot">풀 드로우</p>
+              <p class="f2p-detail">Face −3° / Path 0°</p>
+              <p class="f2p-flow">좌측 출발 · 좌측 휨</p>
+            </div>
+            <div class="f2p-cell">
+              <p class="f2p-shot">드로우</p>
+              <p class="f2p-detail">Face 0° / Path +3°</p>
+              <p class="f2p-flow">거의 직진 · 좌측 휨</p>
+            </div>
+            <div class="f2p-cell">
+              <p class="f2p-shot">페이드</p>
+              <p class="f2p-detail">Face 0° / Path −3°</p>
+              <p class="f2p-flow">거의 직진 · 우측 휨</p>
+            </div>
+            <div class="f2p-cell">
+              <p class="f2p-shot">푸시</p>
+              <p class="f2p-detail">Face +3° / Path +3°</p>
+              <p class="f2p-flow">우측 출발 · 직선</p>
+            </div>
+            <div class="f2p-cell">
+              <p class="f2p-shot">풀</p>
+              <p class="f2p-detail">Face −3° / Path −3°</p>
+              <p class="f2p-flow">좌측 출발 · 직선</p>
+            </div>
+            <div class="f2p-cell f2p-warn">
+              <p class="f2p-shot">푸시 슬라이스</p>
+              <p class="f2p-detail">Face +5° / Path +2°</p>
+              <p class="f2p-flow">강한 우측 · 우측 휨</p>
+            </div>
+            <div class="f2p-cell f2p-warn">
+              <p class="f2p-shot">풀 훅</p>
+              <p class="f2p-detail">Face −5° / Path −2°</p>
+              <p class="f2p-flow">강한 좌측 · 좌측 휨</p>
+            </div>
+          </div>
+
+          <div class="matrix-rules">
+            <p><strong>출발 방향</strong>은 <em>페이스</em>가 결정합니다 <span class="muted">(약 85%)</span></p>
+            <p><strong>곡률</strong>은 <em>F2P (Face − Path)</em>가 결정합니다</p>
+          </div>
+        </div>
+
+        <aside class="callout callout-info">
+          <p class="callout-label">V-Plane에서도 같은 원리</p>
+          <p class="callout-foot" style="border:none;padding:0;">
+            수평(H-Plane)에서 "페이스 → 출발 / F2P → 곡률"이 성립하듯,
+            수직(V-Plane)에서도 같은 구조가 작동합니다.
+            <strong>Dynamic Loft</strong>가 탄도각을 결정하고,
+            <strong>Spin Loft (Dynamic Loft − Attack Angle)</strong>가 백스핀량을 결정합니다.
+            상세는 PART 4 6절에서 다룹니다.
+          </p>
+        </aside>
+      </article>
+
+      <!-- Step 4: 볼 비행 -->
+      <article class="step-card">
+        <p class="step-num">STEP 04</p>
+        <h3 class="step-title">볼 비행이 마지막인 이유</h3>
+        <div class="prose">
+          <p>
+            론치각, 스핀율, 볼스피드로 표현되는 볼 비행 데이터는
+            <strong>앞선 세 조건이 모두 결합된 최종 출력</strong>입니다.
+            탄도가 낮다고 로프트를 먼저 바꾸는 것은 타점, 타이밍, Dynamic Loft 변동
+            가능성을 모두 건너뛴 판단입니다. <em>볼 비행 데이터는 앞선 세 단계가
+            안정된 이후에만 의미 있는 해석이 가능합니다.</em>
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">
+        평균이 아니라 <em>최악</em>을 기준으로
+      </h2>
+
+      <div class="prose">
+        <p>
+          피팅 현장에서 자주 사용하는 판단 기준은 평균값입니다. 평균 캐리, 평균
+          볼스피드, 평균 탄도각은 직관적이고 비교하기 쉽습니다. 그러나
+          <strong>평균은 분포를 숨깁니다.</strong>
+        </p>
+        <p>
+          좋은 샷이 15야드 늘었지만 나쁜 샷이 10야드 줄었을 때 평균은 개선처럼 보입니다.
+          타이밍이 조금만 흔들려도 좌측 미스가 두 배로 커지지만 평균에는 반영되지
+          않습니다.
+        </p>
+      </div>
+
+      <aside class="quote-block">
+        <p class="quote-eyebrow">피팅의 진짜 질문</p>
+        <p class="quote-strike">"이 세팅이 더 좋은 결과를 만드는가?"</p>
+        <p class="quote-strike-foot">— 가 아닙니다.</p>
+        <p class="quote-real">
+          "이 세팅은 스윙이 무너질 때 <em>결과를 어디까지 제한</em>하는가?"
+        </p>
+      </aside>
+
+      <div class="prose">
+        <p>
+          실제 라운드에서 점수에 영향을 주는 것은 완벽한 샷이 아닙니다. 경사진 라이,
+          바람, 긴장, 18홀의 피로 속에서 <strong>스윙 조건이 흔들렸을 때 결과가
+          어디까지 벗어나는지</strong>가 스코어를 결정합니다. 따라서 피팅에서는
+          평균이 아니라 <em>분포의 폭</em>을 봐야 합니다.
+        </p>
+      </div>
+
+      <div class="criteria-grid">
+        <div class="criteria-card">
+          <p class="criteria-name">평균 비거리</p>
+          <p class="criteria-desc">전체 샷의 중간값. <em>분포 구조를 숨김.</em></p>
+        </div>
+        <div class="criteria-card">
+          <p class="criteria-name">편차 (표준편차)</p>
+          <p class="criteria-desc">결과가 얼마나 흩어지는지. <em>안정성 지표.</em></p>
+        </div>
+        <div class="criteria-card criteria-key">
+          <p class="criteria-name">최악의 샷</p>
+          <p class="criteria-desc">조건이 무너졌을 때의 결과. <em>실제 경기 영향에 직결.</em></p>
+        </div>
+        <div class="criteria-card criteria-key">
+          <p class="criteria-name">허용 범위</p>
+          <p class="criteria-desc">최악의 샷이 벗어나는 최대 범위. <em>피팅의 핵심 설계 기준.</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">
+        모든 샷이 <em>같은 기준값</em>을 <br />가지지는 않습니다
+      </h2>
+
+      <div class="prose">
+        <p>
+          같은 골퍼가 친 샷이라도 <strong>해석의 가치가 다릅니다.</strong>
+          모든 샷을 동일하게 취급하면 수치가 좋아 보인다는 이유만으로 잘못된 샷을
+          기준값으로 삼는 실수가 발생합니다.
+        </p>
+      </div>
+
+      <div class="level-grid">
+        <article class="level-card">
+          <p class="level-label">GROUP A</p>
+          <h3 class="level-title">기준값 샷</h3>
+          <p class="level-tag">장비 판단의 기준 데이터</p>
+          <p class="level-body">
+            반복 가능한 리듬, 일정한 타점 범위, 골퍼가 의도한 범위 내에서 만들어진 샷.
+            이 샷들이 장비 변수 결정의 기준 데이터가 됩니다.
+          </p>
+        </article>
+
+        <article class="level-card">
+          <p class="level-label">GROUP B</p>
+          <h3 class="level-title">구조 분석 샷</h3>
+          <p class="level-tag">약점·경향 분석에 활용</p>
+          <p class="level-body">
+            빗맞았거나 타이밍이 무너진 샷이지만 <em>반복 패턴이 있는</em> 샷.
+            기준값으로는 부적합하지만, 골퍼의 약점과 경향을 보여주는
+            중요한 정보입니다.
+          </p>
+        </article>
+
+        <article class="level-card">
+          <p class="level-label">GROUP C</p>
+          <h3 class="level-title">제외 샷</h3>
+          <p class="level-tag">해석에서 제외</p>
+          <p class="level-body">
+            명백한 실수, 또는 우연히 완벽하게 맞은 예외적 샷.
+            특히 <em>우연히 완벽하게 맞은 샷</em>은 가장 위험한 함정입니다.
+            그 샷을 기준으로 장비를 선택하면 필드에서 재현되지 않습니다.
+          </p>
+        </article>
+      </div>
+
+      <div class="prose">
+        <p>
+          반대로 빗맞은 샷을 무조건 제외하는 것도 잘못입니다. 10구 중 2구가 반복적으로
+          힐에 맞으며 우측으로 크게 빠진다면, 이것은 단순한 실수가 아니라
+          <em>구조적 경향을 보여주는 중요한 정보</em>입니다.
+        </p>
+        <p>
+          <strong>기준은 좋고 나쁨이 아닙니다.</strong>
+          해당 샷이 반복 구조를 설명하는가, 아니면 예외적 결과인가에 따라 판단합니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">
+        해석을 <em>보류</em>해야 하는 시점이 있습니다
+      </h2>
+
+      <div class="prose">
+        <p>
+          데이터가 눈앞에 있다고 해서 모두 지금 해석해야 하는 것은 아닙니다.
+          <strong>조건이 안정되지 않은 상태의 데이터는 보류해야 합니다.</strong>
+        </p>
+        <p>
+          타점이 상하로 크게 흩어진 상태에서 론치각 9도가 나왔다면 이 수치는 아직
+          의미가 없습니다. 타점에 따라 Dynamic Loft가 계속 달라지고 있기 때문입니다.
+          이 상태에서 로프트를 조정하는 것은 <em>타점이 안정된 뒤에 자연히 해소될
+          문제에 섣불리 개입하는 것</em>입니다.
+        </p>
+      </div>
+
+      <div class="hold-list">
+        <div class="hold-row">
+          <p class="hold-signal">타점 분산이 큼</p>
+          <p class="hold-reason">에너지 전달, 방향, 볼 비행 수치 모두 왜곡됨</p>
+        </div>
+        <div class="hold-row">
+          <p class="hold-signal">샷 간 편차가 과도함</p>
+          <p class="hold-reason">아직 일관된 임팩트 구조가 형성되지 않은 상태</p>
+        </div>
+        <div class="hold-row">
+          <p class="hold-signal">골퍼가 리듬을 찾지 못한 상태</p>
+          <p class="hold-reason">평소 구조가 드러나지 않는 상태</p>
+        </div>
+        <div class="hold-row">
+          <p class="hold-signal">장비 변경 직후</p>
+          <p class="hold-reason">새 무게·밸런스에 적응 중인 과도기</p>
+        </div>
+      </div>
+
+      <p class="prose">
+        이런 상황에서 성급하게 수치를 해석하고 장비를 조정하면 여러 번의 재수정이
+        필요한 상황으로 이어집니다. <strong>조건이 안정될 때까지 기다리는 것이
+        가장 효율적인 접근입니다.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">
+        <em>스매시 팩터</em>의 구조적 해석
+      </h2>
+
+      <div class="prose">
+        <p>
+          스매시 팩터는 볼스피드를 헤드스피드로 나눈 값으로, <em>충돌 효율</em>을
+          나타냅니다. 그러나 이 값은 타점, 임팩트 각도, 타이밍, 장비 매칭의 복합적
+          결과입니다. <strong>스매시 팩터를 단독으로 장비 성능 지표로 판단하면
+          오진이 됩니다.</strong>
+        </p>
+      </div>
+
+      <!-- 3-step check -->
+      <div class="smash-stages">
+        <div class="smash-stage">
+          <p class="smash-num">1</p>
+          <p class="smash-action">낮은 스매시 샷들의 <strong>타점 위치 확인</strong></p>
+          <p class="smash-criteria">→ 타점이 힐·토에 치우치면 <em>타점 문제 우선</em></p>
+        </div>
+        <div class="smash-stage">
+          <p class="smash-num">2</p>
+          <p class="smash-action">타점이 좋은 샷들에서의 <strong>스매시 일관성 확인</strong></p>
+          <p class="smash-criteria">→ 타점 좋은데도 스매시 낮으면 <em>구조 문제 의심</em></p>
+        </div>
+        <div class="smash-stage">
+          <p class="smash-num">3</p>
+          <p class="smash-action"><strong>길이 / 라이각 / 무게 / EI</strong> 차례로 확인</p>
+          <p class="smash-criteria">→ 타점·타이밍 안정 후에도 낮은 경우 <em>장비 매칭 점검</em></p>
+        </div>
+      </div>
+
+      <p class="prose">현장에서 자주 나타나는 3가지 패턴입니다.</p>
+
+      <div class="pattern-grid">
+        <article class="pattern-card">
+          <p class="pattern-num">PATTERN 1</p>
+          <h3 class="pattern-title">타점이 산재하면서<br />스매시가 낮음</h3>
+          <p class="pattern-body">
+            <strong>장비보다 컨트롤 문제</strong>일 가능성이 높습니다.
+            길이 조정 또는 그립 변경으로 <em>타점을 먼저 안정</em>시킵니다.
+          </p>
+        </article>
+        <article class="pattern-card">
+          <p class="pattern-num">PATTERN 2</p>
+          <h3 class="pattern-title">타점은 좋은데<br />스매시가 낮음</h3>
+          <p class="pattern-body">
+            <strong>장비 매칭을 검토</strong>합니다. 샤프트 EI, 토크,
+            헤드 CG 위치를 순서대로 확인합니다.
+          </p>
+        </article>
+        <article class="pattern-card">
+          <p class="pattern-num">PATTERN 3</p>
+          <h3 class="pattern-title">스매시 편차가 큼<br /><span class="pattern-meta">(예: 1.48 ↔ 1.35)</span></h3>
+          <p class="pattern-body">
+            <strong>타이밍 일관성</strong>을 먼저 확인합니다.
+            <em>샤프트 무게 분배 조정</em>이 도움이 될 수 있습니다.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">
+        현장 데이터 <em>우선순위</em>
+      </h2>
+
+      <div class="priority-matrix">
+
+        <div class="priority-tier">
+          <p class="tier-label"><span class="prio prio-1">1순위</span> 안정성 확인</p>
+          <div class="priority-rows">
+            <div class="priority-row">
+              <p class="pr-name">타점 분포</p>
+              <p class="pr-check">힐/토 경향, 상하 편차, 전체 분산</p>
+              <p class="pr-criteria">8~12구 기준 70% 이상이 일정 범위에 모이는가</p>
+            </div>
+            <div class="priority-row">
+              <p class="pr-name">임팩트 일관성</p>
+              <p class="pr-check">스매시 팩터 편차, 볼스피드 편차</p>
+              <p class="pr-criteria">CV값(표준편차/평균) 5% 이하</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="priority-tier">
+          <p class="tier-label"><span class="prio prio-2">2순위</span> 패턴 확인</p>
+          <div class="priority-rows">
+            <div class="priority-row">
+              <p class="pr-name">방향성 패턴</p>
+              <p class="pr-check">페이스-투-패스 관계, 시작 방향·곡률 일관성</p>
+              <p class="pr-criteria">좌우 분산이 일정 패턴을 보이는가</p>
+            </div>
+            <div class="priority-row">
+              <p class="pr-name">에너지 전달 효율</p>
+              <p class="pr-check">평균 스매시 팩터, 볼스피드 범위</p>
+              <p class="pr-criteria">해당 클럽 기대 스매시 대비 90% 이상</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="priority-tier">
+          <p class="tier-label"><span class="prio prio-3">3순위</span> 최적화 검토</p>
+          <div class="priority-rows">
+            <div class="priority-row">
+              <p class="pr-name">볼 비행 특성</p>
+              <p class="pr-check">론치각, 스핀율, 캐리/런 비율</p>
+              <p class="pr-criteria">목표 비행 특성과 부합하는가</p>
+            </div>
+            <div class="priority-row">
+              <p class="pr-name">최적화 수치</p>
+              <p class="pr-check">최대 거리 잠재력, 낙하각, 랜딩 효율</p>
+              <p class="pr-criteria">개선 여지와 안정성 사이의 균형</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="principle-card">
+        <p class="principle-label">원칙</p>
+        <p class="principle-flow">
+          <span>상위 순위 불안정</span>
+          <span class="arrow">→</span>
+          <span>하위 순위 무효</span>
+        </p>
+        <p class="principle-foot">
+          타점이 불안정한 상태에서 론치각과 스핀율을 논하는 것은 의미가 없습니다.
+          타점이 안정되면 론치각과 스핀은 자연히 달라지기 때문입니다.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 8 ==================== -->
+  <section id="sec-8" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 08 · 8절</p>
+      <h2 class="section-title">
+        표준 판단 루틴 <em>5단계</em>
+      </h2>
+
+      <p class="prose">
+        경험과 직감만으로는 일관된 피팅 품질을 보장할 수 없습니다.
+        다음 5단계 루틴을 표준으로 사용합니다.
+      </p>
+
+      <ol class="routine-list">
+        <li class="routine-stage">
+          <div class="routine-head">
+            <p class="routine-num">STAGE 01</p>
+            <p class="routine-shots">5~8구</p>
+          </div>
+          <h3 class="routine-purpose">기초 안정성 확인</h3>
+          <p class="routine-check">타점 분산, 비거리/방향 패턴, 골퍼 편안함</p>
+          <p class="routine-criteria">→ 심각한 부적응 신호가 없는가</p>
+          <p class="routine-warn">초기의 좋은 결과에 현혹되어 바로 결론내리지 않습니다. 반드시 패턴이 확인되어야 합니다.</p>
+        </li>
+
+        <li class="routine-stage">
+          <div class="routine-head">
+            <p class="routine-num">STAGE 02</p>
+            <p class="routine-shots">8~12구</p>
+          </div>
+          <h3 class="routine-purpose">패턴 확인</h3>
+          <p class="routine-check">타점 집중 영역, 방향 일관성, 스매시 안정성</p>
+          <p class="routine-criteria">→ 70% 이상이 일정 패턴을 보이는가</p>
+          <p class="routine-warn">패턴 확인 단계입니다. 이 단계까지는 여전히 결론을 내리지 않습니다.</p>
+        </li>
+
+        <li class="routine-stage">
+          <div class="routine-head">
+            <p class="routine-num">STAGE 03</p>
+            <p class="routine-shots">5~8구</p>
+          </div>
+          <h3 class="routine-purpose">스트레스 테스트</h3>
+          <p class="routine-check">리듬 변화 시 반응, 연속 샷 안정성</p>
+          <p class="routine-criteria">→ 최악의 결과가 허용 범위를 벗어나지 않는가</p>
+          <p class="routine-warn"><strong>절대 건너뛰지 않습니다.</strong> 스트레스 테스트 없이는 필드 안정성을 보장할 수 없습니다.</p>
+        </li>
+
+        <li class="routine-stage">
+          <div class="routine-head">
+            <p class="routine-num">STAGE 04</p>
+            <p class="routine-shots">비교</p>
+          </div>
+          <h3 class="routine-purpose">비교 검증 (필요 시)</h3>
+          <p class="routine-check">동일 조건에서 옵션 비교, 안정성·성능 트레이드오프</p>
+          <p class="routine-criteria">→ 안정성이 희생되지 않았는가</p>
+          <p class="routine-warn">골퍼나 피터의 주관적 선호가 객관적 데이터를 가리지 않도록 주의합니다.</p>
+        </li>
+
+        <li class="routine-stage">
+          <div class="routine-head">
+            <p class="routine-num">STAGE 05</p>
+            <p class="routine-shots">3~5구</p>
+          </div>
+          <h3 class="routine-purpose">최종 확인</h3>
+          <p class="routine-check">선택 옵션 적응도, 일관성 재현</p>
+          <p class="routine-criteria">→ 필드에서도 재현 가능한가</p>
+          <p class="routine-warn">예상치 못한 결과가 나오면 <strong>앞 단계로 돌아가는 것을 주저하지 않습니다.</strong></p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 9 ==================== -->
+  <section id="sec-9" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 09 · 9절</p>
+      <h2 class="section-title">
+        판단 오류 사례 <br /><em>3가지 패턴</em>
+      </h2>
+
+      <p class="prose">
+        실제 피팅 현장에서 반복적으로 발생하는 오판 패턴입니다. 공통점은 하나입니다.
+        <strong>데이터의 순서를 지키지 않고 결과만 보고 결론을 내렸다</strong>는 것입니다.
+      </p>
+
+      <div class="case-grid">
+        <article class="case-card">
+          <p class="case-num">CASE 1</p>
+          <h3 class="case-title">우측 미스 — 페이스 오픈이 아니라 타점이었습니다</h3>
+          <div class="case-meta">
+            <p class="case-said">우측 미스 반복. 론치모니터에서 페이스 오픈 수치 확인.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            드로우 바이어스 헤드 교체. 오프셋 증가.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            타점 확인 시 힐 쪽 반복 집중. <em>힐 타점 → 기어이펙트에 의한 페이스 오픈 반응.</em>
+          </p>
+          <p class="case-rx">→ 처방. 장비 교체 아님. <strong>길이 단축 후 타점 안정화</strong> 우선.</p>
+        </article>
+
+        <article class="case-card">
+          <p class="case-num">CASE 2</p>
+          <h3 class="case-title">스핀 과다 — 로프트가 아니라 타점이 문제</h3>
+          <div class="case-meta">
+            <p class="case-said">스핀 3,200rpm. 탄도가 너무 높음.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            로프트 낮춤. 저스핀(LS) 헤드 교체.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            타점이 상하로 크게 분산. <em>하단 타점 반복 → Dynamic Loft 증가 → 스핀 상승.</em>
+          </p>
+          <p class="case-rx">→ 처방. 로프트 조정 전 <strong>타점 안정화 우선</strong> 시도.</p>
+        </article>
+
+        <article class="case-card">
+          <p class="case-num">CASE 3</p>
+          <h3 class="case-title">거리 부족 — 헤드 교체 전에 길이부터</h3>
+          <div class="case-meta">
+            <p class="case-said">거리 부족. 헤드스피드 90mph 대비 볼스피드 낮음.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            가벼운 샤프트 · 고반발 헤드 교체.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            스매시 팩터 1.38. 타점 패턴 확인 시 <em>토우 하단 반복.
+            에너지 전달 효율 손실</em>이 원인.
+          </p>
+          <p class="case-rx">→ 처방. <strong>길이 0.5인치 단축</strong> 후 타점 개선 확인.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CLOSING ==================== -->
+  <section class="closing">
+    <div class="container narrow">
+      <p class="eyebrow">CLOSING · PART 2 마무리</p>
+      <h2 class="section-title">피터가 기억해야 할 <em>5가지</em></h2>
+
+      <ol class="closing-list">
+        <li>
+          <p class="closing-num">FIRST</p>
+          <p class="closing-text">
+            <strong>판단 순서를 고정합니다.</strong>
+            타점 → 에너지 전달 → 방향 → 볼 비행. 순서를 바꾸면 원인과 결과가 뒤섞입니다.
+            이 순서는 <em>물리적 인과관계를 반영한 것</em>으로 협상의 여지가 없습니다.
+          </p>
+        </li>
+        <li>
+          <p class="closing-num">SECOND</p>
+          <p class="closing-text">
+            <strong>평균이 아니라 최악을 봅니다.</strong>
+            평균 데이터가 개선되었더라도 최악의 샷이 더 나빠졌다면 실제 경기력은
+            하락한 것입니다. <em>허용 범위를 설계하는 것</em>이 피팅의 핵심 목표입니다.
+          </p>
+        </li>
+        <li>
+          <p class="closing-num">THIRD</p>
+          <p class="closing-text">
+            <strong>샷을 차등적으로 해석합니다.</strong>
+            기준값 샷, 구조 분석 샷, 제외 샷을 구분합니다. <em>우연히 잘 맞은 샷을
+            기준으로 장비를 결정하지 않습니다.</em>
+          </p>
+        </li>
+        <li>
+          <p class="closing-num">FOURTH</p>
+          <p class="closing-text">
+            <strong>보류해야 할 시점을 압니다.</strong>
+            타점이 불안정한 상태, 적응 과도기, 리듬이 무너진 상태에서는 수치 해석을
+            보류하고 <em>조건이 안정될 때까지 기다립니다.</em>
+          </p>
+        </li>
+        <li>
+          <p class="closing-num">FIFTH</p>
+          <p class="closing-text">
+            <strong>구조가 확인될 때까지 결론을 미룹니다.</strong>
+            좋은 결과가 나왔을 때 반복성 · 조건 변화 대응 · 최악 상황 관리
+            세 가지를 <em>순차적으로 확인한 이후에</em> 결정합니다.
+          </p>
+        </li>
+      </ol>
+
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 2</p>
+        <ol class="check-list">
+          <li>결과 중심 해석의 가장 큰 한계는 무엇이며, 원인 중심 해석은 이를 어떻게 보완합니까?</li>
+          <li>슬라이스가 나는 두 골퍼 A와 B가 있습니다. 같은 증상을 보이지만 개입 처방이 달라질 수 있습니다. 그 이유를 설명하십시오.</li>
+          <li>표준 판단 루틴 5단계에서 '데이터의 우선순위 설정' 단계가 필요한 이유는 무엇입니까?</li>
+        </ol>
+        <p class="check-foot">해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book/part-1" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">PART 1 · 인터뷰</span>
+      </a>
+      <a href="/book/part-3" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 3 · 골퍼 구조 해석 시스템</span>
+        <span class="pg-sub">인터뷰 결과를 피팅 변수로 변환하기</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</BaseLayout>
+
+
+<!-- ============================================================
+     SCOPED STYLES — /book/part-2
+     PART 1과 동일 토큰. 일부 PART 2 전용 컴포넌트만 추가.
+============================================================ -->
+<style>
+  :root {
+    --bg:        #F8F5EE;
+    --bg-elev:  #FFFFFF;
+    --bg-soft:  #F1ECE0;
+    --text:     #1F1B16;
+    --text-2:   #3A332A;
+    --muted:    #6B6358;
+    --rule:     #E2DACA;
+    --rule-2:   #D2C9B5;
+    --accent:   #2C5F4F;
+    --accent-2: #87A99B;
+    --accent-soft: #E6EDE7;
+    --warn:     #B5462E;
+    --warn-soft:#F6E8E1;
+    --good:     #2C5F4F;
+    --good-soft:#E6EDE7;
+    --serif:    "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:     "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em     { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+
+  /* ---------- ATOMS (PART 1과 동일) ---------- */
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+  }
+  .crumb {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  /* ---------- HERO ---------- */
+  .part-hero {
+    background: var(--bg);
+    padding: 72px 0 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .part-title {
+    font-family: var(--serif);
+    margin: 0 0 1rem;
+    line-height: 1.1;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .part-num {
+    display: block;
+    font-family: var(--sans);
+    font-size: .875rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    color: var(--muted);
+    margin-bottom: .75rem;
+  }
+  .part-name {
+    display: block;
+    font-size: clamp(2.5rem, 6.5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -.02em;
+  }
+  .part-sub {
+    display: block;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 300;
+    color: var(--text-2);
+    margin-top: .25em;
+  }
+  .part-en {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--muted);
+    letter-spacing: .02em;
+    margin: 1.5rem 0 2rem;
+    font-style: italic;
+  }
+  .part-lead {
+    font-family: var(--sans);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-2);
+    max-width: 640px;
+    margin: 0;
+  }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  /* ---------- OBJECTIVES ---------- */
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    border-radius: 2px;
+  }
+  .callout-label {
+    font-family: var(--sans);
+    font-size: .875rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 .75rem;
+    letter-spacing: .04em;
+  }
+  .callout-list {
+    margin: 0;
+    padding-left: 1.4em;
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-2);
+  }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-2);
+  }
+  .callout-bullets li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: .35rem;
+  }
+  .callout-bullets li:before {
+    content: "·";
+    position: absolute;
+    left: .25rem;
+    top: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .callout-bullets em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--accent-soft);
+    padding: 0 .25em;
+  }
+  .callout-foot {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--text-2);
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    line-height: 1.7;
+  }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+  .callout-info { background: var(--accent-soft); border-color: var(--accent-2); border-left-color: var(--accent); margin-top: 1.5rem; }
+
+  /* ---------- TOC ---------- */
+  .part-toc { background: var(--bg); padding: 16px 0 64px; }
+  .toc-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+  }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 0;
+    text-decoration: none;
+    color: var(--text);
+    font-family: var(--sans);
+    transition: color .2s, padding .2s;
+  }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 2.5rem;
+  }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  /* ---------- INTRO ---------- */
+  .intro { padding: 56px 0; }
+
+  /* ---------- SECTION ---------- */
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 4vw, 2.625rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -.015em;
+    color: var(--text);
+    margin: 0 0 2rem;
+  }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  /* ---------- PRINCIPLE CARD ---------- */
+  .principle-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    margin: 2.5rem 0;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .principle-major {
+    background: var(--text);
+    border-color: var(--text);
+  }
+  .principle-major .principle-label { color: var(--accent-2); }
+  .principle-major .principle-flow,
+  .principle-major .principle-flow .arrow {
+    color: var(--bg);
+  }
+  .principle-major .principle-flow .arrow { color: var(--accent-2); }
+  .principle-major .principle-foot {
+    color: rgba(255,255,255,.7);
+    border-top-color: rgba(255,255,255,.15);
+  }
+  .principle-label {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
+  }
+  .principle-flow {
+    font-family: var(--serif);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: .75rem 1.25rem;
+  }
+  .principle-flow-major { font-size: clamp(1.25rem, 3vw, 1.875rem); }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-flow .sub {
+    display: block;
+    font-size: .65em;
+    color: inherit;
+    opacity: .7;
+    font-weight: 400;
+    margin-top: .15em;
+  }
+  .principle-foot {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    max-width: 520px;
+    margin-inline: auto;
+  }
+
+  /* ---------- STEP CARD ---------- */
+  .step-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 36px 32px;
+    margin: 1.5rem 0;
+    border-radius: 2px;
+    border-top: 3px solid var(--accent-2);
+  }
+  .step-num {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0 0 .5rem;
+  }
+  .step-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---------- IMPACT GRID (Section 2 - 타점) ---------- */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .75rem;
+    margin-top: 1.5rem;
+  }
+  @media (min-width: 600px) {
+    .impact-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .impact-card {
+    padding: 18px 20px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent-2);
+    border-radius: 2px;
+    font-family: var(--sans);
+  }
+  .impact-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 .25rem;
+  }
+  .impact-body {
+    font-size: .9375rem;
+    line-height: 1.6;
+    color: var(--text-2);
+    margin: 0 0 .5rem;
+  }
+  .impact-tag {
+    font-size: .75rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: .05em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  /* ---------- CHECK FLOW (Section 2 step 2) ---------- */
+  .check-flow {
+    margin: 1.5rem 0 0;
+    padding: 20px 24px;
+    background: var(--bg-soft);
+    border: 1px solid var(--rule-2);
+    border-radius: 2px;
+    text-align: center;
+  }
+  .check-flow-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    margin: 0 0 .75rem;
+    text-transform: uppercase;
+  }
+  .check-flow-body {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem 1rem;
+    font-weight: 600;
+  }
+  .check-flow-body .arrow { color: var(--accent-2); font-weight: 300; }
+
+  /* ---------- F2P MATRIX (Section 2 step 3) ---------- */
+  .f2p-matrix {
+    margin: 1.5rem 0;
+    padding: 28px 24px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  .matrix-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    margin: 0 0 1.25rem;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .f2p-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .5rem;
+  }
+  @media (min-width: 600px) { .f2p-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 900px) { .f2p-grid { grid-template-columns: repeat(3, 1fr); } }
+  .f2p-cell {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 14px 16px;
+    border-radius: 2px;
+    font-family: var(--sans);
+  }
+  .f2p-cell.f2p-straight { background: var(--accent-soft); border-color: var(--accent); }
+  .f2p-cell.f2p-warn { background: var(--warn-soft); border-color: var(--warn); }
+  .f2p-shot {
+    font-size: .9375rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 .15rem;
+  }
+  .f2p-detail {
+    font-size: .75rem;
+    color: var(--muted);
+    margin: 0 0 .35rem;
+    letter-spacing: .02em;
+  }
+  .f2p-flow {
+    font-size: .8125rem;
+    color: var(--text-2);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .matrix-rules {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--text-2);
+    text-align: center;
+    line-height: 1.8;
+  }
+  .matrix-rules p { margin: 0; }
+  .matrix-rules em { font-style: normal; font-weight: 600; color: var(--accent); background: none; padding: 0; }
+  .matrix-rules .muted { color: var(--muted); font-size: .8125rem; }
+
+  /* ---------- QUOTE BLOCK (Section 3) ---------- */
+  .quote-block {
+    margin: 2rem 0;
+    padding: 36px 32px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    text-align: center;
+  }
+  .quote-eyebrow {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
+  }
+  .quote-strike {
+    font-family: var(--serif);
+    font-size: clamp(1.0625rem, 2.4vw, 1.25rem);
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--warn);
+    text-decoration-thickness: 2px;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .quote-strike-foot {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--muted);
+    margin: .5rem 0 1.5rem;
+  }
+  .quote-real {
+    font-family: var(--serif);
+    font-size: clamp(1.125rem, 2.6vw, 1.375rem);
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 500;
+  }
+  .quote-real em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 600;
+    background: none;
+    padding: 0;
+  }
+
+  /* ---------- CRITERIA GRID (Section 3) ---------- */
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .75rem;
+    margin-top: 1.5rem;
+  }
+  @media (min-width: 600px) { .criteria-grid { grid-template-columns: 1fr 1fr; } }
+  .criteria-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+    border-radius: 2px;
+  }
+  .criteria-card.criteria-key { border-left: 3px solid var(--accent); }
+  .criteria-name {
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 .4rem;
+  }
+  .criteria-desc {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.65;
+    color: var(--text-2);
+    margin: 0;
+  }
+  .criteria-desc em { font-style: normal; font-weight: 600; color: var(--accent); }
+
+  /* ---------- LEVEL CARDS (Section 4 — group A/B/C) ---------- */
+  .level-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+  @media (min-width: 920px) { .level-grid { grid-template-columns: repeat(3, 1fr); } }
+  .level-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 28px 26px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+  }
+  .level-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0 0 .5rem;
+  }
+  .level-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 .25rem;
+  }
+  .level-tag {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--muted);
+    margin: 0 0 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .level-body {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.75;
+    color: var(--text-2);
+    margin: 0;
+    flex: 1;
+  }
+  .level-body em { font-style: normal; font-weight: 600; color: var(--text); }
+
+  /* ---------- HOLD LIST (Section 5) ---------- */
+  .hold-list {
+    margin: 1.5rem 0;
+    display: grid;
+    gap: .5rem;
+  }
+  .hold-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .25rem;
+    padding: 18px 22px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--warn);
+    border-radius: 2px;
+    font-family: var(--sans);
+  }
+  @media (min-width: 600px) {
+    .hold-row { grid-template-columns: 1fr 1.5fr; gap: 1.5rem; align-items: center; }
+  }
+  .hold-signal {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+  }
+  .hold-reason {
+    font-size: .9375rem;
+    color: var(--text-2);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ---------- SMASH STAGES (Section 6) ---------- */
+  .smash-stages {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .75rem;
+    margin: 1.5rem 0;
+  }
+  @media (min-width: 720px) { .smash-stages { grid-template-columns: repeat(3, 1fr); } }
+  .smash-stage {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 24px 22px;
+    border-radius: 2px;
+    font-family: var(--sans);
+  }
+  .smash-num {
+    font-family: var(--serif);
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--accent);
+    margin: 0 0 .5rem;
+    font-weight: 500;
+  }
+  .smash-action {
+    font-size: .9375rem;
+    color: var(--text);
+    margin: 0 0 .5rem;
+    line-height: 1.5;
+  }
+  .smash-action strong { font-weight: 600; }
+  .smash-criteria {
+    font-size: .875rem;
+    color: var(--text-2);
+    margin: 0;
+    line-height: 1.5;
+    padding-top: .5rem;
+    border-top: 1px dashed var(--rule);
+  }
+  .smash-criteria em { font-style: normal; font-weight: 600; color: var(--accent); }
+
+  /* ---------- PATTERN GRID (Section 6) ---------- */
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  @media (min-width: 720px) { .pattern-grid { grid-template-columns: repeat(3, 1fr); } }
+  .pattern-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 26px 24px;
+    border-radius: 2px;
+    border-top: 3px solid var(--accent);
+  }
+  .pattern-num {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    margin: 0 0 .5rem;
+  }
+  .pattern-title {
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 1rem;
+    line-height: 1.4;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pattern-meta {
+    display: block;
+    font-size: .75rem;
+    color: var(--muted);
+    font-family: var(--sans);
+    font-weight: 400;
+    margin-top: .25rem;
+  }
+  .pattern-body {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.75;
+    color: var(--text-2);
+    margin: 0;
+  }
+  .pattern-body em { font-style: normal; font-weight: 600; color: var(--accent); }
+
+  /* ---------- PRIORITY MATRIX (Section 7) ---------- */
+  .priority-matrix {
+    margin: 1.5rem 0;
+  }
+  .priority-tier {
+    margin-bottom: 1.5rem;
+  }
+  .tier-label {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 .75rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+  .prio {
+    display: inline-block;
+    padding: .25rem .65rem;
+    border-radius: 2px;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+  }
+  .prio-1 { background: var(--accent); color: white; }
+  .prio-2 { background: var(--accent-2); color: white; }
+  .prio-3 { background: var(--bg-soft); color: var(--text-2); border: 1px solid var(--rule-2); }
+  .priority-rows { display: grid; gap: .5rem; }
+  .priority-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .35rem;
+    padding: 16px 20px;
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    font-family: var(--sans);
+  }
+  @media (min-width: 720px) {
+    .priority-row { grid-template-columns: 1fr 1.5fr 1.5fr; gap: 1rem; align-items: center; }
+  }
+  .pr-name {
+    font-size: .9375rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+  }
+  .pr-check, .pr-criteria {
+    font-size: .875rem;
+    color: var(--text-2);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .pr-criteria { color: var(--muted); }
+
+  /* ---------- ROUTINE LIST (Section 8) ---------- */
+  .routine-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .routine-stage {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 24px 26px;
+    border-radius: 2px;
+    border-left: 3px solid var(--accent);
+  }
+  .routine-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: .75rem;
+  }
+  .routine-num {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0;
+  }
+  .routine-shots {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--muted);
+    margin: 0;
+    background: var(--bg-soft);
+    padding: .25rem .65rem;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .routine-purpose {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 .75rem;
+  }
+  .routine-check, .routine-criteria, .routine-warn {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0 0 .35rem;
+  }
+  .routine-criteria { color: var(--accent); font-weight: 600; }
+  .routine-warn {
+    margin-top: .75rem;
+    padding-top: .75rem;
+    border-top: 1px dashed var(--rule);
+    font-size: .875rem;
+    color: var(--muted);
+  }
+  .routine-warn strong { color: var(--text); font-weight: 600; }
+
+  /* ---------- CASE GRID (Section 9) ---------- */
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 760px) { .case-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  @media (max-width: 760px) { .case-grid { grid-template-columns: 1fr; } }
+  .case-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 28px 26px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+  .case-num {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0;
+  }
+  .case-title {
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .case-meta {
+    padding: .75rem 1rem;
+    background: var(--bg-soft);
+    border-left: 2px solid var(--rule-2);
+    font-family: var(--sans);
+    margin-top: .25rem;
+  }
+  .case-said {
+    font-size: .875rem;
+    color: var(--text-2);
+    margin: 0;
+    font-style: italic;
+    line-height: 1.55;
+  }
+  .case-bad, .case-good {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0;
+  }
+  .case-good em { font-style: normal; font-weight: 600; color: var(--text); }
+  .case-rx {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--text);
+    margin: .25rem 0 0;
+    padding-top: .75rem;
+    border-top: 1px solid var(--rule);
+    line-height: 1.7;
+  }
+  .badge {
+    display: inline-block;
+    padding: .15rem .55rem;
+    border-radius: 2px;
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    margin-right: .5rem;
+    text-transform: uppercase;
+  }
+  .badge.bad  { background: var(--warn-soft); color: var(--warn); }
+  .badge.good { background: var(--good-soft); color: var(--good); }
+
+  /* ---------- CLOSING ---------- */
+  .closing {
+    background: var(--text);
+    color: var(--bg);
+    padding: 96px 0;
+  }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+
+  .closing-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 3rem;
+  }
+  .closing-list li {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .75rem;
+  }
+  @media (min-width: 720px) {
+    .closing-list li { grid-template-columns: 120px 1fr; gap: 2rem; }
+  }
+  .closing-num {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent-2);
+    letter-spacing: .15em;
+    margin: 0;
+  }
+  .closing-text {
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,.9);
+    margin: 0;
+  }
+  .closing-text strong { color: white; font-weight: 600; }
+  .closing-text em { font-style: normal; color: var(--accent-2); font-weight: 600; background: none; padding: 0; }
+
+  .check-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.12);
+    padding: 28px 32px;
+    border-radius: 2px;
+  }
+  .check-label {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--accent-2);
+    font-weight: 700;
+    letter-spacing: .1em;
+    margin: 0 0 1rem;
+  }
+  .check-list {
+    margin: 0 0 1rem;
+    padding-left: 1.25em;
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,.85);
+  }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: rgba(255,255,255,.5);
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+  /* ---------- PAGINATION ---------- */
+  .part-pagination {
+    background: var(--bg);
+    padding: 56px 0 80px;
+    border-top: 1px solid var(--rule);
+  }
+  .part-pagination .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 760px) {
+    .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; }
+  }
+  .pg-back, .pg-next {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: var(--sans);
+    transition: transform .25s, background .25s;
+    border: 1px solid var(--rule);
+    padding: 20px 24px;
+    background: var(--bg-elev);
+    border-radius: 2px;
+    color: var(--text);
+  }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+
+  .pg-next {
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: .15rem;
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+    position: relative;
+    padding-right: 60px;
+  }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta {
+    font-size: .75rem;
+    color: var(--accent-2);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .pg-next .pg-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: .15rem;
+  }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: var(--accent-2);
+  }
+
+  /* ---------- RESPONSIVE TUNE ---------- */
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .step-card { padding: 28px 22px; }
+    .level-card, .case-card, .pattern-card { padding: 22px 20px; }
+    .principle-card { padding: 24px 20px; }
+    .callout, .quote-block { padding: 22px 20px; }
+    .f2p-matrix { padding: 22px 18px; }
+  }
+</style>
