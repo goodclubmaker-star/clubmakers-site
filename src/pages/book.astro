@@ -1,23 +1,179 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// 책 PART 구조 — v11 원고에서 확인된 정확한 구조
+// 책 PART 15 + 발췌 콘텐츠 — accordion으로 펼쳐짐
 const bookParts = [
-  { no: 'PART 1',  title: '인터뷰 — 피팅이 시작되는 곳' },
-  { no: 'PART 2',  title: '판단 구조 시스템 — 결과에서 원인으로' },
-  { no: 'PART 3',  title: '골퍼 구조 해석 시스템' },
-  { no: 'PART 4',  title: '볼 비행 구조 — D-Plane과 V-Plane' },
-  { no: 'PART 5',  title: '타점 · CG · 기어이펙트' },
-  { no: 'PART 6',  title: '헤드 기하 구조' },
-  { no: 'PART 7',  title: 'MOI · 관성 구조' },
-  { no: 'PART 8',  title: '무게 · 총무게 · 스윙웨이트' },
-  { no: 'PART 9',  title: '샤프트 구조와 피팅 판단' },
-  { no: 'PART 10', title: '론치모니터 해석 시스템' },
-  { no: 'PART 11', title: '통합 결정과 문제 해결 시스템' },
-  { no: 'PART 12', title: '숏게임 클럽 — 웨지와 퍼터' },
-  { no: 'PART 13', title: '통합 케이스 스터디 — 실전 피팅 사례' },
-  { no: 'PART 14', title: '특수군 피팅 — 시니어·여성·주니어' },
-  { no: 'PART 15', title: '24년의 기록' },
+  {
+    no: 'PART 1',
+    title: '인터뷰 — 피팅이 시작되는 곳',
+    summary: '피팅은 클럽이 아니라 사람에서 시작됩니다. 어떻게 인터뷰를 설계하고, 골퍼의 말을 피팅 변수로 변환할 것인가. Level 1·2·3 단계 인터뷰 구조와 34문항 7영역 기준표.',
+    points: [
+      '인터뷰 → 관찰 → 데이터 → 장비 — 판단 순서',
+      '같은 슬라이스도 원인이 다르면 처방이 다릅니다',
+      '6가지 인터뷰 실패 사례 (CASE 1~6)',
+      '진짜 답은 고객님의 이야기 속에',
+    ],
+    quote: '실제적인 피팅의 판단 순서 (기본 원칙): 인터뷰 → 관찰 → 데이터 → 장비. 이 순서를 거꾸로 하면, 이후의 모든 판단이 연쇄적으로 흔들립니다.',
+    quoteSource: 'PART 1 1절',
+  },
+  {
+    no: 'PART 2',
+    title: '판단 구조 시스템 — 결과에서 원인으로',
+    summary: '평균이 아니라 최악의 샷을 본다. 데이터를 해석하는 4단계 구조 — 타점 → 에너지 전달 → 방향 → 볼 비행. 이 순서를 지키지 않을 때 발생하는 3가지 판단 오류 패턴.',
+    points: [
+      '판단 순서 (변경 불가): 타점 → 에너지 전달 → 방향 (Face/Path) → 볼 비행',
+      '평균이 아니라 최악을 막는다',
+      '3가지 데이터 해석 오류 패턴 (PATTERN A·B·C)',
+      '허용 범위(Tolerance)의 설계',
+    ],
+    quote: "피팅의 진짜 질문 — '이 세팅이 더 좋은 결과를 만드는가?'가 아닙니다. '이 세팅은 스윙이 무너질 때 결과를 어디까지 제한하는가?'입니다.",
+    quoteSource: 'PART 2 3절',
+  },
+  {
+    no: 'PART 3',
+    title: '골퍼 구조 해석 시스템',
+    summary: '클럽 변수보다 먼저 봐야 할 것은 골퍼의 11가지 변수입니다. 신체·근력·피로·헤드스피드·템포·전환 강도·릴리즈 타이밍·타점 경향·구질 경향·의도/보상·반복성. 그리고 TPI Big12 신체 평가.',
+    points: [
+      '골퍼의 11가지 조건 — 신체부터 의도까지',
+      'TPI Big12 — 12가지 신체 평가',
+      'WTF · 손 크기 · 악력 — 정적 측정',
+      '키네마틱 시퀀스 — 다운스윙의 4가지 패턴',
+    ],
+  },
+  {
+    no: 'PART 4',
+    title: '볼 비행 구조 — D-Plane과 V-Plane',
+    summary: '볼은 페이스가 가리키는 곳으로 출발하고, 페이스와 패스의 차이로 휘어집니다. D-Plane 이론과 그것의 실전 응용. Face/Path 비율로 구질을 설계하는 법.',
+    points: [
+      'D-Plane 이론 — 볼이 출발하고 휘는 원리',
+      'Face Angle vs Club Path — Face to Path 비율',
+      '발사각 · 스핀율 · 곡률(Curvature)',
+      'Spin Loft — Dynamic Loft - Attack Angle',
+    ],
+  },
+  {
+    no: 'PART 5',
+    title: '타점 · CG · 기어이펙트',
+    summary: '같은 페이스 각도라도 타점이 다르면 결과가 다릅니다. 헤드의 무게중심(CG)에서 벗어난 타점이 만드는 기어이펙트(Gear Effect)로 인해 페이스가 회전하는 현상. 거리 손실의 진짜 원인.',
+    points: [
+      '타점이 결과를 만든다 — 스매시 팩터',
+      'CG(무게중심)와 임팩트의 거리',
+      '기어이펙트(Gear Effect) — 토우/힐 타점이 만드는 페이스 회전',
+      'Vertical Gear Effect — 상하 타점과 스핀',
+    ],
+  },
+  {
+    no: 'PART 6',
+    title: '헤드 기하 구조',
+    summary: '라이각·로프트각·페이스 앵글·오프셋·페이스 프로그레션. 헤드의 기본 기하 변수가 골퍼의 결과에 어떻게 영향을 주는가. 단조 vs 주조 헤드의 조정 가능 범위.',
+    points: [
+      '라이각(Lie Angle) — 가장 작지만 가장 결정적',
+      '로프트(Loft)와 Dynamic Loft의 차이',
+      'Face Angle · Offset · Face Progression',
+      '벌지(Bulge) · 페이스 롤(Face Roll) — 우드/드라이버 헤드',
+    ],
+  },
+  {
+    no: 'PART 7',
+    title: 'MOI · 관성 구조',
+    summary: '관성모멘트(MOI)는 두 가지가 있습니다 — 헤드 MOI(관용성)와 클럽 MOI(스윙 안정성). 두 MOI의 매칭이 세트 일관성을 결정합니다. SW 매칭과 MOI 매칭의 차이.',
+    points: [
+      '헤드 MOI vs 클럽 MOI — 두 가지 관성',
+      'MOI 매칭 — 세트 안에서의 일관성',
+      'SW 매칭 vs MOI 매칭 — 무엇을 선택할 것인가',
+      '카운터밸런싱(Counterbalancing) — 그립 끝의 무게',
+    ],
+  },
+  {
+    no: 'PART 8',
+    title: '무게 · 총무게 · 스윙웨이트',
+    summary: '6가지 핵심 변수 중 무게 관련 3가지. 총무게는 후반의 컨디션을 결정하고, 스윙웨이트는 휘두르는 느낌을 결정합니다. 골퍼별 적절한 무게 영역의 설정.',
+    points: [
+      '총무게 — 라운드 후반의 일관성',
+      '스윙웨이트(SW) — 휘두를 때의 느낌',
+      'A·B·C·D·E 단위와 골퍼별 적정 영역',
+      '클럽별 무게 흐름 (Frequency Matching)',
+    ],
+    quote: '결국 우리가 조정하는 것은 여섯 가지뿐이다 — 길이·총무게·밸런스·강도·라이각·로프트각. 모든 변수는 결국 이 여섯 가지 안에서 움직인다.',
+    quoteSource: '서문',
+  },
+  {
+    no: 'PART 9',
+    title: '샤프트 구조와 피팅 판단',
+    summary: '샤프트는 단순한 강도(R/S/X)로 결정되지 않습니다. CPM·EI 프로파일·토크·킥포인트의 조합. 4가지 트랜지션 유형과 맞는 샤프트 매칭. 스파인 정렬과 FLO.',
+    points: [
+      'CPM(Cycles Per Minute) — 강도의 객관적 측정',
+      'EI 프로파일 — 샤프트 길이별 강성 분포',
+      '토크와 킥포인트 — 골퍼의 감각',
+      '스파인 정렬 · FLO(Flat Line Oscillation)',
+    ],
+  },
+  {
+    no: 'PART 10',
+    title: '론치모니터 해석 시스템',
+    summary: '트랙맨·플라이트스코프·GC쿼드 — 31개 데이터 항목을 어떤 순서로 읽을 것인가. 측정 환경의 함정과 보정 방법. 한 시점의 데이터가 아니라 패턴을 본다.',
+    points: [
+      '트랙맨 31개 데이터 — Club / Launch / Flight',
+      '4단계 해석 순서 — Smash → D-Plane → 분포 → 변동성',
+      '측정 환경 보정 — 타석/볼/날씨',
+      '평균이 아니라 분포(Distribution)를 본다',
+    ],
+  },
+  {
+    no: 'PART 11',
+    title: '통합 결정과 문제 해결 시스템',
+    summary: '한 골퍼에게 11가지 변수가 충돌할 때 무엇을 먼저 결정하는가. 6단계 처방 흐름과 우선순위. 총무게 → MOI → SW의 결정 순서. 클럽 사이의 갈등 해결.',
+    points: [
+      '처방 결정 순서 — 총무게 → MOI → SW',
+      '변수 충돌 시 우선순위',
+      '"먼저 가져올 변수"와 "마지막에 미세 조정할 변수"',
+      '드라이버 vs 아이언 — 세트 일관성 설계',
+    ],
+  },
+  {
+    no: 'PART 12',
+    title: '숏게임 클럽 — 웨지와 퍼터',
+    summary: '드라이버·아이언과 다른 논리로 결정되는 두 클럽. 웨지의 바운스·그라인드 선택과 거리 갭 설계. 퍼터의 라이앵글 밸런스드(LAB)·제로토크·길이.',
+    points: [
+      '웨지 — 바운스(Bounce) · 그라인드(Grind)',
+      '거리 갭 설계 — 4도 vs 6도 로프트 갭',
+      '퍼터 — 라이앵글 밸런스드(LAB) 토우 행',
+      '제로토크 퍼터 — 최신 트렌드와 적용 기준',
+    ],
+  },
+  {
+    no: 'PART 13',
+    title: '통합 케이스 스터디 — 실전 피팅 사례',
+    summary: '24년 동안 누적된 실제 케이스 모음. 인터뷰부터 처방, 작업, 검증까지의 전 과정. 책 PART 1~12에서 다룬 모든 변수가 실제 한 명의 골퍼 위에서 어떻게 충돌하고 해결되는가.',
+    points: [
+      'CASE — 50대 남성 시니어, 후반 무너짐',
+      'CASE — 여성 중급자, 거리 vs 일관성',
+      'CASE — KLPGA 투어 선수, 미세 조정',
+      'CASE — 주니어, 성장기 클럽 설계',
+    ],
+  },
+  {
+    no: 'PART 14',
+    title: '특수군 피팅 — 시니어·여성·주니어',
+    summary: '평균 성인 남성 골퍼와 다른 변수가 결정적인 그룹들. 시니어(헤드스피드 감소·관절 부담)·여성(체격 다양성·악력)·주니어(성장에 따른 재피팅). 각 그룹별 우선순위.',
+    points: [
+      '시니어 — 헤드스피드 감소와 총무게 재조정',
+      '여성 — 체격 다양성과 그립 사이즈',
+      '주니어 — 성장기 재피팅 주기',
+      '특수 신체 조건 — 부상·관절 제한',
+    ],
+  },
+  {
+    no: 'PART 15',
+    title: '24년의 기록',
+    summary: '2002년 클럽메이커스 시작부터 2026년 책 출간까지. 한국 클럽피팅 현장에서 쌓아온 24년의 데이터·케이스·통찰. 그리고 다음 24년을 위한 기록.',
+    points: [
+      '클럽메이커스 24년 누적 케이스',
+      '한국 클럽피팅의 변천 — 2002~2026',
+      '운동역학(2008) 도입 후 17년의 진화',
+      '책 이후의 클럽메이커스',
+    ],
+  },
 ];
 
 const bookAppendix = [
@@ -27,7 +183,6 @@ const bookAppendix = [
   '부록 D · 용어 · 수치 참조표 (Glossary)',
 ];
 
-// Book schema (AI 검색에서 가장 강력)
 const bookSchema = {
   '@context': 'https://schema.org',
   '@type': 'Book',
@@ -37,10 +192,12 @@ const bookSchema = {
   bookFormat: 'https://schema.org/Hardcover',
   inLanguage: 'ko-KR',
   numberOfPages: 600,
-  author: [
-    { '@type': 'Person', name: '채기웅', jobTitle: '클럽메이커스 공작소장', url: 'https://myclubmakers.com/about' },
-    { '@type': 'Person', name: '한평구', jobTitle: '한스클럽하우스 대표' },
-  ],
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    jobTitle: '클럽메이커스 공작소장',
+    url: 'https://myclubmakers.com/about',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'Clubmakers Korea',
@@ -57,13 +214,18 @@ const bookSchema = {
   ],
   description: '한국 클럽피팅 분야 최초의 체계적 단행본. 본문 15 PART, 부록 4, 현장작업표준서 12종. 24년 현장의 인터뷰부터 론치모니터까지 피팅 판단의 모든 기준.',
   url: 'https://myclubmakers.com/book',
+  hasPart: bookParts.map((p) => ({
+    '@type': 'Chapter',
+    name: `${p.no} — ${p.title}`,
+    description: p.summary,
+  })),
 };
 
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
   name: '책 『실제적인 클럽피팅』 — 24년 현장이 책으로',
-  description: '클럽메이커스 공작소장 채기웅 · 한스클럽하우스 한평구 공저. 한국 클럽피팅 분야 최초의 체계적 단행본. 본문 15 PART · 부록 4 · 현장작업표준서 12종.',
+  description: '클럽메이커스 공작소장 채기웅의 24년 현장 노하우 단행본. 본문 15 PART · 부록 4 · 현장작업표준서 12종. 인터뷰부터 론치모니터까지 피팅 판단의 모든 기준.',
   mainEntity: { '@id': 'https://myclubmakers.com/book#book' },
   inLanguage: 'ko-KR',
 };
@@ -71,9 +233,9 @@ const articleSchema = {
 
 <BaseLayout
   title="책 『실제적인 클럽피팅』"
-  description="채기웅 · 한평구 공저 『실제적인 클럽피팅』 — 한국 클럽피팅 분야 최초의 체계적 단행본. 24년 현장의 인터뷰부터 론치모니터까지. 본문 15 PART · 부록 4 · 현장작업표준서 12종. 2026년 출간."
+  description="채기웅 저 『실제적인 클럽피팅』 — 한국 클럽피팅 분야 최초의 체계적 단행본. 24년 현장의 인터뷰부터 론치모니터까지. 본문 15 PART · 부록 4 · 현장작업표준서 12종. 2026년 출간."
   schemaType="Book"
-  keywords="실제적인 클럽피팅, 채기웅, 한평구, 클럽피팅 책, 클럽메이킹 책, 한국 클럽피팅 도서, 골프 피팅 교재, club fitting book, practical club fitting, kinematic sequence, D-Plane, 클럽피팅 입문, 클럽피터 양성"
+  keywords="실제적인 클럽피팅, 채기웅, 클럽피팅 책, 클럽메이킹 책, 한국 클럽피팅 도서, 골프 피팅 교재, club fitting book, practical club fitting, kinematic sequence, D-Plane, 클럽피팅 입문, 클럽피터 양성"
   extraSchema={[bookSchema, articleSchema]}
 >
 
@@ -85,7 +247,7 @@ const articleSchema = {
         <div class="book-cover-eyebrow">CLUBMAKERS KOREA · 2026</div>
         <div class="book-cover-title">실제적인<br>클럽피팅</div>
         <div class="book-cover-en">The Practical Club Fitting</div>
-        <div class="book-cover-author">채기웅 · 한평구</div>
+        <div class="book-cover-author">채기웅</div>
       </div>
       <div class="book-hero-info">
         <div class="page-hero-eyebrow">BOOK · 24년의 현장이 책으로</div>
@@ -94,7 +256,7 @@ const articleSchema = {
           — 인터뷰에서 론치모니터까지,<br>피팅 판단의 모든 기준
         </p>
         <p class="book-byline">
-          <strong>채기웅</strong> 클럽메이커스 공작소장 · <strong>한평구</strong> 한스클럽하우스 대표<br>
+          <strong>채기웅</strong> 클럽메이커스 공작소장<br>
           <span class="book-byline-light">Clubmakers Korea · 2026년 출간</span>
         </p>
       </div>
@@ -139,8 +301,6 @@ const articleSchema = {
           현장의 언어로 다시 정리한 책입니다.
         </p>
         <p>
-          공저자 <strong>한평구 한스클럽하우스 대표</strong>와 함께,
-          서로 다른 현장에서 누적된 케이스를 한 책으로 통합했습니다.
           이론과 실전, 일반 골퍼와 투어 선수, 한국 시장과 글로벌 표준 — 그 사이의
           간극을 메우는 것이 이 책의 목표입니다.
         </p>
@@ -150,7 +310,7 @@ const articleSchema = {
         <tbody>
           <tr><th>제목</th><td>실제적인 클럽피팅 <span class="meta-en">(The Practical Club Fitting)</span></td></tr>
           <tr><th>부제</th><td>고전 피팅 이론의 현장 보완과 체계 — 인터뷰에서 론치모니터까지, 피팅 판단의 모든 기준</td></tr>
-          <tr><th>저자</th><td>채기웅 (클럽메이커스 공작소장) · 한평구 (한스클럽하우스 대표)</td></tr>
+          <tr><th>저자</th><td>채기웅 (클럽메이커스 공작소장)</td></tr>
           <tr><th>구성</th><td>본문 <strong>15 PART</strong> · 부록 <strong>4</strong> · 현장작업표준서 <strong>12종</strong> · 색인</td></tr>
           <tr><th>발행</th><td>Clubmakers Korea · 2026</td></tr>
           <tr><th>분량</th><td>약 600페이지</td></tr>
@@ -160,21 +320,48 @@ const articleSchema = {
     </div>
   </section>
 
-  <!-- 5-4. 본문 구성 -->
+  <!-- 5-4. 본문 구성 — Accordion -->
   <section class="section section-bg-soft">
     <div class="section-content-narrow">
-      <p class="section-eyebrow">CONTENTS · 본문 구성</p>
-      <h2>본문 15 PART · 부록 4</h2>
+      <p class="section-eyebrow">CONTENTS · 본문 구성 (15 PART)</p>
+      <h2>각 PART를 펼쳐보세요</h2>
       <p class="section-lead">
         한 명의 골퍼가 공작소에 들어와서 피팅을 마치고 나가기까지의 흐름이 책의 PART 순서입니다.
+        각 PART를 클릭하면 다루는 내용을 미리 보실 수 있습니다.
       </p>
 
-      <div class="parts-list">
+      <div class="parts-accordion">
         {bookParts.map((p) => (
-          <div class="part-item">
-            <div class="part-no">{p.no}</div>
-            <div class="part-title">{p.title}</div>
-          </div>
+          <details class="part-detail">
+            <summary class="part-summary">
+              <div class="part-summary-inner">
+                <span class="part-no">{p.no}</span>
+                <span class="part-title">{p.title}</span>
+              </div>
+              <span class="part-toggle" aria-hidden="true">+</span>
+            </summary>
+            <div class="part-body">
+              <p class="part-summary-text">{p.summary}</p>
+
+              <h4 class="part-points-title">이 PART에서 다루는 것</h4>
+              <ul class="part-points">
+                {p.points.map((pt) => (
+                  <li>{pt}</li>
+                ))}
+              </ul>
+
+              {p.quote && (
+                <blockquote class="part-quote">
+                  <p class="part-quote-text">"{p.quote}"</p>
+                  <cite class="part-quote-source">— <cite>『실제적인 클럽피팅』</cite> {p.quoteSource}</cite>
+                </blockquote>
+              )}
+
+              <p class="part-more">
+                <span class="part-more-label">→ 더 자세히는 책에서</span>
+              </p>
+            </div>
+          </details>
         ))}
       </div>
 
@@ -192,14 +379,13 @@ const articleSchema = {
     </div>
   </section>
 
-  <!-- 5-5. 책에서 — 핵심 인용 4개 -->
+  <!-- 5-5. 핵심 인용 4개 -->
   <section class="section">
     <div class="section-content-narrow">
       <p class="section-eyebrow">EXCERPTS · 책에서</p>
       <h2>책의 네 가지 핵심 메시지</h2>
       <p class="section-lead">
         클럽메이커스 사이트의 모든 원칙은 이 책에 그 근거가 있습니다.
-        실제 본문에서 가져온 네 가지 인용입니다.
       </p>
 
       <div class="excerpts-stack">
@@ -467,47 +653,180 @@ const articleSchema = {
     font-size: 13px;
   }
 
-  /* ===== PART 리스트 ===== */
+  /* ===== Accordion ===== */
   .section-lead {
     font-size: 16px;
     line-height: 1.85;
     color: var(--grey);
     margin-bottom: 32px;
+    max-width: 660px;
   }
-  .parts-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+
+  .parts-accordion {
     margin-top: 24px;
-  }
-  .part-item {
-    background: white;
-    padding: 18px 22px;
-    border-left: 3px solid var(--gold);
     display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .part-detail {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .part-detail[open] {
+    border-color: var(--green);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+  }
+
+  .part-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 16px;
+    transition: background 0.15s;
+  }
+  .part-summary::-webkit-details-marker { display: none; }
+  .part-summary:hover {
+    background: var(--bg-soft);
+  }
+  .part-detail[open] .part-summary {
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .part-summary-inner {
+    display: flex;
     align-items: baseline;
+    gap: 18px;
+    flex: 1;
+    min-width: 0;
   }
   .part-no {
     font-family: var(--font-serif);
     font-size: 12px;
     color: var(--gold);
     font-weight: 700;
-    letter-spacing: 0.1em;
-    min-width: 60px;
+    letter-spacing: 0.12em;
+    min-width: 64px;
+    flex-shrink: 0;
   }
   .part-title {
-    font-size: 14.5px;
+    font-family: var(--font-serif);
+    font-size: 16.5px;
     color: var(--ink);
     font-weight: 600;
-    line-height: 1.55;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
   }
 
+  .part-toggle {
+    font-size: 22px;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    font-weight: 300;
+  }
+  .part-detail[open] .part-toggle {
+    transform: rotate(45deg);
+  }
+
+  .part-body {
+    padding: 28px 32px 32px;
+  }
+
+  .part-summary-text {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  .part-points-title {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 12px;
+    margin-top: 0;
+  }
+  .part-points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+  .part-points li {
+    padding: 8px 0 8px 22px;
+    position: relative;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .part-points li:last-child { border-bottom: none; }
+  .part-points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .part-quote {
+    background: var(--ink);
+    border-left: 3px solid var(--gold);
+    padding: 22px 26px;
+    margin: 0 0 18px;
+    border-radius: 0 4px 4px 0;
+  }
+  .part-quote-text {
+    font-family: var(--font-serif);
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: var(--cream);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .part-quote-source {
+    display: block;
+    font-size: 12px;
+    color: var(--gold-soft);
+    padding-top: 10px;
+    border-top: 1px solid rgba(212, 184, 136, 0.2);
+    font-style: normal;
+  }
+  .part-quote-source cite { font-style: italic; }
+
+  .part-more {
+    text-align: right;
+    margin: 8px 0 0;
+  }
+  .part-more-label {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    padding: 6px 14px;
+    background: var(--bg-cream);
+    border-radius: 100px;
+  }
+
+  /* ===== 부록 ===== */
   .appendix-title {
     font-family: var(--font-serif);
     font-size: 22px;
     color: var(--ink);
-    margin: 36px 0 16px;
+    margin: 56px 0 16px;
     font-weight: 700;
   }
   .appendix-list {
@@ -688,10 +1007,32 @@ const articleSchema = {
     .callout-cite { padding: 24px 24px; }
     .cite-text { font-size: 16px; }
     .book-about p { font-size: 15px; }
-    .parts-list { grid-template-columns: 1fr; }
     .audience-grid { grid-template-columns: 1fr; }
     .excerpt-block { padding: 24px 24px; }
     .excerpt-text { font-size: 16px; }
     .book-cta-channels { flex-direction: column; }
+
+    .part-summary {
+      padding: 16px 18px;
+      gap: 12px;
+    }
+    .part-summary-inner {
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .part-no {
+      min-width: auto;
+      font-size: 11px;
+    }
+    .part-title {
+      font-size: 14.5px;
+      width: 100%;
+    }
+    .part-body {
+      padding: 22px 22px 26px;
+    }
+    .part-summary-text { font-size: 14.5px; }
+    .part-quote { padding: 18px 18px; }
+    .part-quote-text { font-size: 14px; }
   }
 </style>
