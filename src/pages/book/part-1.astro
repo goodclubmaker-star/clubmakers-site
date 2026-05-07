@@ -1,1 +1,1517 @@
+---
+// /src/pages/book/part-1.astro
+// 『실제적인 클럽피팅』 PART 1 — 인터뷰: 피팅이 시작되는 곳
 
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = "PART 1. 인터뷰 — 피팅이 시작되는 곳 | 『실제적인 클럽피팅』 | 클럽메이커스";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 1. 피팅은 데이터가 아니라 인터뷰에서 시작됩니다. Level 1·2·3 인터뷰 구조, 34문항 7영역 기준표, 6가지 실패 사례. 같은 슬라이스도 원인이 다르면 처방이 다릅니다.";
+
+const sections = [
+  { id: "sec-1", num: "01", ko: "피팅은 데이터가 아니라 인터뷰에서 시작됩니다" },
+  { id: "sec-2", num: "02", ko: "인터뷰는 절차가 아니라 시스템입니다" },
+  { id: "sec-3", num: "03", ko: "인터뷰의 3단계 구조" },
+  { id: "sec-4", num: "04", ko: "인터뷰 질문 전체 기준표" },
+  { id: "sec-5", num: "05", ko: "골퍼의 말 → 피팅 변수 매핑" },
+  { id: "sec-6", num: "06", ko: "인터뷰 없이 판단했을 때 — 6가지 실패 사례" },
+];
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 1</span>
+      </div>
+
+      <p class="eyebrow">PART 01 · 본문 15 PART 중 첫 번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 1</span>
+        <span class="part-name">인터뷰</span>
+        <span class="part-sub">피팅이 시작되는 곳</span>
+      </h1>
+
+      <p class="part-en">The Interview — Where Fitting Begins</p>
+
+      <p class="part-lead">
+        피팅은 흔히 장비를 교체하는 작업으로 이해되곤 합니다. 그러나 현장에서 성과를
+        좌우하는 것은 장비 선택 이전 단계인 경우가 많습니다.
+        <strong>어떤 순서로 정보를 수집하고, 어떤 질문을 먼저 던지는가에 따라
+        피팅의 결론이 달라집니다.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== LEARNING OBJECTIVES ==================== -->
+  <section class="objectives">
+    <div class="container narrow">
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 1 인터뷰를 마치면</p>
+        <ol class="callout-list">
+          <li>인터뷰가 데이터 수집에 선행해야 하는 이유를 설명할 수 있다.</li>
+          <li>Level 1~3 인터뷰 질문 체계를 상황에 맞게 구성할 수 있다.</li>
+          <li>인터뷰에서 얻은 정보를 피팅 변수(길이·그립·무게 방향)로 전환하는 절차를 수행할 수 있다.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== IN-PAGE TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        {sections.map((s) => (
+          <li>
+            <a href={`#${s.id}`}>
+              <span class="toc-num">{s.num}</span>
+              <span class="toc-text">{s.ko}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro">
+    <div class="container narrow prose">
+      <p>
+        PART 1은 피팅 프로세스 전체의 순서를 다룹니다. 인터뷰는 데이터보다 먼저,
+        골퍼의 이야기는 장비 사양보다 먼저 놓입니다. 이 순서가 뒤섞이면 아무리
+        정밀한 론치모니터 데이터가 있어도 어디서 문제를 찾아야 할지 방향을
+        잡기 어렵습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">
+        피팅은 데이터가 아니라 <br />
+        <em>인터뷰</em>에서 시작됩니다
+      </h2>
+
+      <div class="prose">
+        <p>
+          많은 피팅이 론치모니터 앞에서 시작됩니다. 골퍼가 들어오면 바로 클럽을
+          쥐어 주고, 몇 구를 치게 한 다음, 수치를 보면서 판단을 내리는 방식입니다.
+          이 흐름이 빠르고 객관적으로 보이기 때문에 많은 현장에서 당연하게 받아들여지고
+          있습니다.
+        </p>
+
+        <p>
+          그러나 이 방식에는 구조적인 문제가 있습니다. <strong>데이터는 결과입니다.</strong>
+          론치모니터에서 읽는 볼 스피드, 탄도각, 스핀율은 이미 여러 조건이 결합된
+          이후의 출력값입니다. 이 수치를 기준으로 장비를 바꾸는 것은, 원인을 모르는
+          상태에서 결과만 고치려는 시도입니다.
+        </p>
+      </div>
+
+      <aside class="callout callout-example">
+        <p class="callout-label">같은 슬라이스라도 원인은 전혀 다를 수 있습니다</p>
+        <ul class="callout-bullets">
+          <li>타점이 힐 쪽에 반복적으로 맞아서 <em>기어이펙트</em>로 발생한 슬라이스</li>
+          <li>페이스가 <em>열린 채로</em> 임팩트되는 슬라이스</li>
+          <li>릴리즈가 <em>늦어져서</em> 발생하는 슬라이스</li>
+        </ul>
+        <p class="callout-foot">
+          세 가지는 겉으로 보면 동일한 "우측 미스"입니다.
+          그러나 <strong>처방은 완전히 다릅니다.</strong>
+        </p>
+      </aside>
+
+      <div class="prose">
+        <p>
+          데이터가 먼저 주어지면, 판단은 그 데이터 안에서만 이루어집니다.
+          그 데이터가 어떤 조건에서 만들어졌는지를 모르면, 정확한 원인을 찾을 수 없습니다.
+        </p>
+        <p>
+          반면 인터뷰는 그 조건을 먼저 파악하는 과정입니다. 골퍼가 어떤 상황에서
+          미스를 반복하는지, 후반으로 갈수록 패턴이 달라지는지, 어떤 클럽에서 편안함을
+          느끼는지. <strong>이 정보들은 론치모니터가 알려주지 않습니다. 골퍼 본인만이
+          알고 있습니다.</strong>
+        </p>
+      </div>
+
+      <aside class="principle-card">
+        <p class="principle-label">실제적인 피팅의 판단 순서 (기본 원칙)</p>
+        <p class="principle-flow">
+          <span>인터뷰</span>
+          <span class="arrow">→</span>
+          <span>관찰</span>
+          <span class="arrow">→</span>
+          <span>데이터</span>
+          <span class="arrow">→</span>
+          <span>장비</span>
+        </p>
+        <p class="principle-foot">
+          이 순서를 거꾸로 하면, 이후의 모든 판단이 연쇄적으로 흔들립니다.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">
+        인터뷰는 <em>절차</em>가 아니라 <br />
+        <em>시스템</em>입니다
+      </h2>
+
+      <div class="prose">
+        <p>
+          인터뷰를 형식적인 절차로 접근하면, 질문지를 채우는 수준으로 끝납니다.
+          골퍼가 "슬라이스가 납니다"라고 하면 받아 적고, "드라이버가 불편합니다"라고
+          하면 체크하는 방식입니다.
+        </p>
+        <p>
+          이런 인터뷰는 정보를 수집하지만, <strong>구조를 파악하지는 못합니다.</strong>
+          마스터 레벨의 피팅에서 인터뷰는 다른 목적을 가집니다.
+          <em>골퍼의 말을 패턴으로, 패턴을 피팅 변수로 변환</em>하는 것입니다.
+        </p>
+      </div>
+
+      <div class="quote-pair">
+        <figure class="quote-card">
+          <blockquote>
+            "후반에 가면 공이 오른쪽으로 밀립니다."
+          </blockquote>
+          <figcaption>
+            <p>단순한 방향 정보가 아닙니다. 피로가 쌓일수록 릴리즈 타이밍이
+            지연되거나, 클럽이 무거워서 스윙 후반에 제어력을 잃는 구조일 수 있습니다.</p>
+            <p class="caption-tag">→ 총무게 또는 MOI를 먼저 검토</p>
+          </figcaption>
+        </figure>
+
+        <figure class="quote-card">
+          <blockquote>
+            "7번 아이언은 잘 맞는데 드라이버는 항상 어렵습니다."
+          </blockquote>
+          <figcaption>
+            <p>두 클럽 사이에 어떤 변수가 다른지를 추적하면, 길이·샤프트 무게·CPM
+            흐름의 차이에서 원인이 드러나는 경우가 많습니다.</p>
+            <p class="caption-tag">→ FM(Frequency Matching) 흐름 검토</p>
+          </figcaption>
+        </figure>
+      </div>
+
+      <aside class="principle-card">
+        <p class="principle-label">인터뷰의 핵심 목적</p>
+        <p class="principle-flow">
+          <span>골퍼가 말하는 언어</span>
+          <span class="arrow">→</span>
+          <span>장비 변수로 번역</span>
+        </p>
+        <p class="principle-foot">
+          이 번역이 정확할수록 이후의 데이터 측정과 장비 판단이 더 빠르고 정확해집니다.
+          이 번역이 없으면, 아무리 좋은 론치모니터 데이터도 방향을 잡아주지 못합니다.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">
+        인터뷰의 <em>3단계</em> 구조
+      </h2>
+
+      <p class="prose">
+        인터뷰는 한 번에 모든 것을 파악하려 하지 않습니다.
+        <strong>질문의 깊이를 단계적으로 가져갑니다.</strong>
+      </p>
+
+      <div class="level-grid">
+        <article class="level-card">
+          <p class="level-label">LEVEL 1</p>
+          <h3 class="level-title">표면 파악</h3>
+          <p class="level-tag">모든 피팅에서 반드시 확인</p>
+          <p class="level-body">
+            골퍼가 현재 느끼는 가장 큰 문제와 목표를 파악합니다. 골퍼가 편하게 말할 수
+            있도록 대화 형식으로 진행합니다. 가장 불편한 클럽이나 상황, 어떤 방향의
+            미스가 반복되는지, 피팅을 통해 무엇을 원하는지를 듣습니다.
+          </p>
+          <p class="level-warning">
+            <strong>주의.</strong> 이 단계의 답변을 그대로 믿지 않습니다.
+            "저는 거의 직구입니다"라고 말하지만 실제로는 일관된 페이드 성향을 가진
+            골퍼를 자주 만납니다. Level 1의 답변은 <em>대화의 시작점</em>으로 활용하고,
+            이후 단계에서 검증합니다.
+          </p>
+        </article>
+
+        <article class="level-card">
+          <p class="level-label">LEVEL 2</p>
+          <h3 class="level-title">조건 파악</h3>
+          <p class="level-tag">대부분의 피팅에서 확인</p>
+          <p class="level-body">
+            미스가 발생하는 <em>조건</em>을 파악합니다. 문제 자체보다 어떤 상황에서
+            그 문제가 나타나는지가 더 중요한 정보를 담고 있습니다. 후반 라운드에서
+            패턴이 달라지는지, 최근 장비를 바꿨는지, 통증이나 신체 제한이 있는지를
+            확인합니다.
+          </p>
+          <p class="level-warning">
+            "후반에 무너진다" → <strong>총무게</strong>와 직접 연결.
+            "최근 샤프트를 바꾼 이후부터 이상해졌다" → 변화의 원인을 찾는 핵심 단서.
+          </p>
+        </article>
+
+        <article class="level-card">
+          <p class="level-label">LEVEL 3</p>
+          <h3 class="level-title">구조 파악</h3>
+          <p class="level-tag">필요 시 적용 — 심층 질문</p>
+          <p class="level-body">
+            미스가 어떤 <em>구조</em>에서 발생하는지를 확인합니다. 클럽별로 미스
+            방향이 다른지, 의도하는 구질과 실제 구질이 일치하는지, 가장 편한 클럽이
+            무엇인지를 파악합니다.
+          </p>
+          <p class="level-warning">
+            <strong>가장 편한 클럽 = 기준 클럽.</strong> 이 클럽의 무게·길이·샤프트
+            성향이 이 골퍼에게 맞는 기준값을 담고 있을 가능성이 높습니다. 이후 모든
+            조정은 <em>이 기준 클럽과의 차이</em>를 기반으로 설계합니다.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section alt">
+    <div class="container">
+      <div class="narrow-wrap">
+        <p class="eyebrow">SECTION 04 · 4절</p>
+        <h2 class="section-title">
+          인터뷰 질문 전체 기준표 <br />
+          <span class="title-meta">34문항 · 7영역</span>
+        </h2>
+
+        <p class="prose">
+          모든 질문을 순서대로 물을 필요는 없습니다. 골퍼의 반응에 따라 깊이를
+          조절하면서 자연스럽게 이어갑니다. 각 질문의 "연결 피팅 변수"는 이 답변이
+          어느 PART의 변수 판단으로 이어지는지를 나타냅니다.
+        </p>
+
+        <div class="legend">
+          <span class="legend-item"><span class="dot core"></span> 필수(Core) — 모든 피팅에서 반드시 확인</span>
+          <span class="legend-item"><span class="dot add"></span> 권장(Add) — 상황에 따라 추가 확인</span>
+          <span class="legend-item"><span class="dot deep"></span> 심화(Deep) — 대화 중 자연스럽게 파악</span>
+        </div>
+      </div>
+
+      <!-- 7개 영역 카드 -->
+      <div class="area-grid">
+
+        <article class="area-card">
+          <p class="area-letter">A</p>
+          <h3 class="area-title">기본 신체 정보</h3>
+          <ul class="qa-list">
+            <li><span class="dot core"></span><div><b>왼손/오른손, 스윙 방향</b><span class="qa-link">→ 세트 방향</span></div></li>
+            <li><span class="dot core"></span><div><b>신장(키)</b><span class="qa-link">→ 클럽 길이 1차 지표</span></div></li>
+            <li><span class="dot core"></span><div><b>WTF (손목~바닥)</b><span class="qa-link">→ 길이 정밀 산출</span></div></li>
+            <li><span class="dot core"></span><div><b>손 길이·가장 긴 손가락</b><span class="qa-link">→ 그립 사이즈</span></div></li>
+            <li><span class="dot add"></span><div>체격 표현 (보통/마른/다부진/큰)<span class="qa-link">→ 길이·총무게 보정</span></div></li>
+            <li><span class="dot add"></span><div>현재 통증·신체 제한 (손목·팔꿈치·어깨·허리)<span class="qa-link">→ 그립·길이·샤프트</span></div></li>
+          </ul>
+        </article>
+
+        <article class="area-card">
+          <p class="area-letter">B</p>
+          <h3 class="area-title">게임 현황</h3>
+          <ul class="qa-list">
+            <li><span class="dot core"></span><div><b>평균/최고/최저 스코어 (1년)</b><span class="qa-link">→ 피팅 우선순위</span></div></li>
+            <li><span class="dot core"></span><div><b>라운드 빈도 (월)</b><span class="qa-link">→ 데이터 신뢰도</span></div></li>
+            <li><span class="dot core"></span><div><b>연습 빈도·방식</b><span class="qa-link">→ 피팅 환경 기준</span></div></li>
+            <li><span class="dot add"></span><div>주요 코스(잔디·바람)<span class="qa-link">→ 탄도/스핀 설계</span></div></li>
+            <li><span class="dot add"></span><div>라운드당 퍼트 수<span class="qa-link">→ 집중 영역</span></div></li>
+            <li><span class="dot add"></span><div>현재 레슨 여부<span class="qa-link">→ 피팅 기준 시점</span></div></li>
+            <li><span class="dot add"></span><div>이전 피팅 경험<span class="qa-link">→ 기준값 출발점</span></div></li>
+          </ul>
+        </article>
+
+        <article class="area-card">
+          <p class="area-letter">C</p>
+          <h3 class="area-title">현재 장비 현황</h3>
+          <ul class="qa-list">
+            <li><span class="dot core"></span><div><b>현재 클럽 세트 구성</b><span class="qa-link">→ 기준 클럽 선정</span></div></li>
+            <li><span class="dot core"></span><div><b>가장 편한/불편한 클럽</b><span class="qa-link">→ 기준 클럽 확정 / MOI</span></div></li>
+            <li><span class="dot core"></span><div><b>그룹별 만족도 (DR/FW/유틸/아이언/웨지/퍼터)</b><span class="qa-link">→ 세트 일관성·갭</span></div></li>
+            <li><span class="dot add"></span><div>최근 6개월~1년 장비 교체 이력<span class="qa-link">→ 변화 전후 비교</span></div></li>
+            <li><span class="dot add"></span><div>현 클럽 불만·교체 동기<span class="qa-link">→ 피팅 목표</span></div></li>
+            <li><span class="dot deep"></span><div>외형 선호(헤드 형상·오프셋·색상)<span class="qa-link">→ 헤드 선택 보정</span></div></li>
+          </ul>
+        </article>
+
+        <article class="area-card">
+          <p class="area-letter">D</p>
+          <h3 class="area-title">비거리 및 스윙 특성</h3>
+          <ul class="qa-list">
+            <li><span class="dot core"></span><div><b>드라이버 평균 비거리</b><span class="qa-link">→ 샤프트 무게·강도</span></div></li>
+            <li><span class="dot core"></span><div><b>6번/7번 아이언 비거리</b><span class="qa-link">→ CPM·샤프트 무게</span></div></li>
+            <li><span class="dot add"></span><div>스윙 리듬 (빠름/중간/느림)<span class="qa-link">→ EI·CPM</span></div></li>
+            <li><span class="dot add"></span><div>스윙 크기 (3/4·풀·오버)<span class="qa-link">→ 총무게·MOI</span></div></li>
+            <li><span class="dot deep"></span><div>임팩트 시 손/헤드 느낌<span class="qa-link">→ EI 팁 강성·토크</span></div></li>
+          </ul>
+        </article>
+
+        <article class="area-card">
+          <p class="area-letter">E</p>
+          <h3 class="area-title">구질 및 미스 패턴</h3>
+          <ul class="qa-list">
+            <li><span class="dot core"></span><div><b>주 미스 방향 (좌/우/양쪽/직구)</b><span class="qa-link">→ Face/Path 해석</span></div></li>
+            <li><span class="dot core"></span><div><b>클럽별 미스 방향 차이</b><span class="qa-link">→ 세트 일관성·MOI</span></div></li>
+            <li><span class="dot core"></span><div><b>탄도 높이 인식</b><span class="qa-link">→ 로프트·CG·EI 팁</span></div></li>
+            <li><span class="dot add"></span><div>잘 맞는 날·아닌 날 편차<span class="qa-link">→ MOI·총무게</span></div></li>
+            <li><span class="dot add"></span><div>미스 발생 상황 (긴 홀·긴장·바람)<span class="qa-link">→ 피팅 목표 세분화</span></div></li>
+            <li><span class="dot add"></span><div>어프로치 짧음/긴 경향<span class="qa-link">→ 로프트·릴리즈</span></div></li>
+            <li><span class="dot deep"></span><div>의도 구질 (드로우/페이드/직구)<span class="qa-link">→ Face Angle·오프셋</span></div></li>
+            <li><span class="dot deep"></span><div>타점 인식 (중앙/힐/토우/상하)<span class="qa-link">→ 길이·MOI·헤드 MOI</span></div></li>
+          </ul>
+        </article>
+
+        <article class="area-card">
+          <p class="area-letter">F</p>
+          <h3 class="area-title">피로 및 라운드 후반 패턴</h3>
+          <ul class="qa-list">
+            <li><span class="dot core"></span><div><b>후반(13~18홀) 변화</b><span class="qa-link">→ 총무게·MOI 핵심 지표</span></div></li>
+            <li><span class="dot add"></span><div>후반 미스 방향 변화<span class="qa-link">→ 총무게·EI·토크</span></div></li>
+            <li><span class="dot add"></span><div>18홀 후 피로 부위 (팔/어깨/허리)<span class="qa-link">→ 총무게·길이·그립</span></div></li>
+            <li><span class="dot deep"></span><div>연속 라운드 둘째 날 변화<span class="qa-link">→ 보수적 총무게</span></div></li>
+          </ul>
+        </article>
+
+        <article class="area-card">
+          <p class="area-letter">G</p>
+          <h3 class="area-title">목표 및 우선순위</h3>
+          <ul class="qa-list">
+            <li><span class="dot core"></span><div><b>이번 피팅에서 가장 원하는 것</b><span class="qa-link">→ 피팅 우선순위 결정</span></div></li>
+            <li><span class="dot core"></span><div><b>가장 자신 없는 클럽·상황</b><span class="qa-link">→ 집중 클럽</span></div></li>
+            <li><span class="dot add"></span><div>새 클럽 기대치<span class="qa-link">→ 기준 설정</span></div></li>
+            <li><span class="dot add"></span><div>예산 범위·교체 범위<span class="qa-link">→ 피팅 범위</span></div></li>
+            <li><span class="dot deep"></span><div>피팅 후 검증 계획<span class="qa-link">→ 처방 보수성</span></div></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">
+        골퍼의 말 → <em>피팅 변수</em> 매핑
+      </h2>
+
+      <p class="prose">
+        골퍼의 말을 들었을 때 어떤 변수를 먼저 검토해야 하는지를 정리한 기준표입니다.
+        같은 증상이라도 원인이 다를 수 있으므로, 이 표는 <em>"먼저 검토할 방향"</em>을
+        제시할 뿐 — 최종 처방은 반드시 데이터와 함께 검증합니다.
+      </p>
+
+      <!-- 무게·MOI·밸런스 -->
+      <div class="map-group">
+        <h3 class="map-group-title">무게 · MOI · 밸런스</h3>
+        <div class="map-rows">
+          <div class="map-row">
+            <p class="said">"후반 9홀부터 공이 밀립니다."</p>
+            <p class="parse">피로 → 릴리즈 지연. 총무게 초과 가능성</p>
+            <p class="action"><span class="prio prio-1">1순위</span> 총무게 감소</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"가벼운 클럽이 오히려 더 흔들립니다."</p>
+            <p class="parse">가벼움 → 릴리즈 가속 → 타이밍 불안. 가벼움 ≠ 쉬움</p>
+            <p class="action"><span class="prio prio-1">1순위</span> 총무게 / MOI 상향</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"헤드가 느껴지지 않아 타이밍을 못 잡겠습니다."</p>
+            <p class="parse">SW 부족. 헤드 체감이 릴리즈 기준점</p>
+            <p class="action"><span class="prio prio-2">2순위</span> SW 상향</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"드라이버·아이언 무게감 차이가 너무 큽니다."</p>
+            <p class="parse">세트 총무게 흐름 불일치. 리듬 전환 실패</p>
+            <p class="action"><span class="prio prio-1">1순위</span> 세트 총무게 / MOI 매칭</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 길이 -->
+      <div class="map-group">
+        <h3 class="map-group-title">길이</h3>
+        <div class="map-rows">
+          <div class="map-row">
+            <p class="said">"공이 항상 토우 쪽에 맞습니다."</p>
+            <p class="parse">길이 과다 → 어드레스 시 페이스가 멀어짐</p>
+            <p class="action"><span class="prio prio-1">1순위</span> 길이 단축</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"공이 항상 힐 쪽에 맞습니다."</p>
+            <p class="parse">길이 부족 또는 어드레스 자세 문제</p>
+            <p class="action"><span class="prio prio-1">1순위</span> 길이 연장 / 라이각</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"짧은 아이언은 잘 맞고 긴 아이언이 어렵습니다."</p>
+            <p class="parse">롱아이언 길이 과다 또는 MOI 불일치</p>
+            <p class="action"><span class="prio prio-2">2순위</span> 길이 / MOI 매칭</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 샤프트 -->
+      <div class="map-group">
+        <h3 class="map-group-title">샤프트 EI · CPM</h3>
+        <div class="map-rows">
+          <div class="map-row">
+            <p class="said">"샤프트가 너무 많이 휘는 느낌입니다."</p>
+            <p class="parse">강도 부족 또는 팁 과유연. 릴리즈 빠름</p>
+            <p class="action"><span class="prio prio-1">1순위</span> CPM 상향 / 팁 강성</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"샤프트 단단해서 공이 낮게 날아갑니다."</p>
+            <p class="parse">CPM 과다 → 복원 지연 → Dynamic Loft 부족</p>
+            <p class="action"><span class="prio prio-1">1순위</span> CPM 하향 / 팁 유연화</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"드라이버·아이언 타이밍이 달라 한 쪽이 항상 어렵습니다."</p>
+            <p class="parse">FM 불일치. CPM 흐름이 끊겨 있음</p>
+            <p class="action"><span class="prio prio-1">1순위</span> FM 흐름 점검</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"새 샤프트로 바꾼 후 방향이 흔들립니다."</p>
+            <p class="parse">샤프트 변경이 ROC 구조를 바꿨을 가능성</p>
+            <p class="action"><span class="prio prio-1">1순위</span> EI / 토크 비교</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 방향성 -->
+      <div class="map-group">
+        <h3 class="map-group-title">방향성 · 구질</h3>
+        <div class="map-rows">
+          <div class="map-row">
+            <p class="said">"공이 항상 오른쪽으로 출발합니다."</p>
+            <p class="parse">페이스 오픈이 주 원인. 타점·라이각·ROC 순 추적</p>
+            <p class="action"><span class="prio prio-1">1순위</span> Face Angle / 라이각 / ROC</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"공이 오른쪽으로 휘어갑니다 (슬라이스)."</p>
+            <p class="parse">Face-to-Path 오픈. 단, 힐 타점 기어이펙트도 배제 불가</p>
+            <p class="action"><span class="prio prio-1">1순위</span> 타점 → Face / Path</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"드라이버 훅 + 아이언 슬라이스."</p>
+            <p class="parse">클럽 간 타이밍 구조 차이. CPM·MOI 불일치</p>
+            <p class="action"><span class="prio prio-1">1순위</span> FM / MOI 매칭 · 길이 비율</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"잘 맞을 때와 아닐 때 방향 편차가 큽니다."</p>
+            <p class="parse">재현성 부족. 타점 분산 또는 릴리즈 변동</p>
+            <p class="action"><span class="prio prio-1">1순위</span> MOI / 총무게 / 타점 확인</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 탄도/스핀 -->
+      <div class="map-group">
+        <h3 class="map-group-title">탄도 · 스핀</h3>
+        <div class="map-rows">
+          <div class="map-row">
+            <p class="said">"공이 너무 높이 뜨고 바람에 흔들립니다."</p>
+            <p class="parse">Dynamic Loft 과다 또는 스핀 과다</p>
+            <p class="action"><span class="prio prio-1">1순위</span> Dynamic Loft / 타점 / CG</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"드라이버 스핀 과다로 거리가 안 납니다."</p>
+            <p class="parse">Spin Loft 과다. CG 후방/상단 또는 타점 하단</p>
+            <p class="action"><span class="prio prio-1">1순위</span> CG 위치 / 타점 / 로프트</p>
+          </div>
+          <div class="map-row">
+            <p class="said">"같은 번호인데 거리가 들쑥날쑥합니다."</p>
+            <p class="parse">타점 분산 → Dynamic Loft 변동</p>
+            <p class="action"><span class="prio prio-1">1순위</span> 타점 → MOI → 길이</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">
+        인터뷰 없이 판단했을 때 <br />
+        <em>6가지 실패 사례</em>
+      </h2>
+
+      <p class="prose">
+        실제 피팅 현장에서 반복적으로 발생하는 판단 실패 패턴입니다. 공통점은 하나입니다.
+        <strong>인터뷰 없이 데이터나 증상만 보고 결론을 내렸다</strong>는 것입니다.
+        실패 사례는 특정 사례를 지칭하는 것이 아니라, 반복적으로 관찰되는 패턴을 유형화한
+        것입니다.
+      </p>
+
+      <div class="case-grid">
+        <article class="case-card">
+          <p class="case-num">CASE 1</p>
+          <h3 class="case-title">슬라이스 — 헤드 교체 전에 샤프트를 봐야 했습니다</h3>
+          <div class="case-meta">
+            <p class="case-said">슬라이스. 론치모니터에서 페이스 오픈.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            드로우 바이어스 헤드 교체. 오프셋 증가.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            최근 가벼운 샤프트로 교체 후 시작. 경량 샤프트 → 릴리즈 가속 → ROC 과다 →
+            페이스 조기 닫힘이 오히려 슬라이스처럼 보임.
+          </p>
+          <p class="case-rx">→ 처방. 헤드 교체 아님. <strong>샤프트 무게 원복 또는 MOI 상향.</strong></p>
+        </article>
+
+        <article class="case-card">
+          <p class="case-num">CASE 2</p>
+          <h3 class="case-title">거리 부족 — 장비 교체 전에 타점부터</h3>
+          <div class="case-meta">
+            <p class="case-said">거리 부족. 헤드스피드 90mph인데 230야드.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            가벼운 샤프트 · 고반발 헤드 업그레이드.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            타점이 항상 토우 하단. 스매시 팩터 1.38 → 에너지 전달 효율 문제. 장비 교체
+            전 타점 안정화가 선행되어야 함.
+          </p>
+          <p class="case-rx">→ 처방. <strong>길이 0.5인치 단축</strong> 후 스매시 개선 확인.</p>
+        </article>
+
+        <article class="case-card">
+          <p class="case-num">CASE 3</p>
+          <h3 class="case-title">높은 탄도 — 로프트 변경 전에 후반 패턴 확인</h3>
+          <div class="case-meta">
+            <p class="case-said">탄도 너무 높음. 스핀 3,200rpm.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            로프트 낮춤 (10.5° → 9°). 저스핀(LS) 헤드 교체.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            "후반에 탄도가 더 높아진다"는 인터뷰 확인. 총무게 과다 → 피로 → 릴리즈
+            지연 → Attack Angle 변화 → Dynamic Loft 증가.
+          </p>
+          <p class="case-rx">→ 처방. 로프트 교체 아님. <strong>총무게 감소</strong> 우선 시도.</p>
+        </article>
+
+        <article class="case-card">
+          <p class="case-num">CASE 4</p>
+          <h3 class="case-title">아이언만 슬라이스 — 세트 흐름 단절</h3>
+          <div class="case-meta">
+            <p class="case-said">아이언 슬라이스. 드라이버는 괜찮음.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            아이언 샤프트 CPM 상향. 스틸 교체.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            드라이버는 정품 60g, 아이언 리샤프트 시 65g으로 경량화됨.
+            FM 흐름 단절 → 아이언 릴리즈 가속 → 슬라이스.
+          </p>
+          <p class="case-rx">→ 처방. <strong>아이언 샤프트 무게 재검토.</strong> 드라이버-아이언 무게 흐름 복원.</p>
+        </article>
+
+        <article class="case-card">
+          <p class="case-num">CASE 5</p>
+          <h3 class="case-title">어프로치 짧음 — 그립 교체가 만든 거리 손실</h3>
+          <div class="case-meta">
+            <p class="case-said">어프로치 항상 짧음. 거리 감 없음.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            웨지 로프트 조정. 낮은 바운스로 교체.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            손목 통증으로 최근 그립을 두껍게 교체. 두꺼운 그립 → 손목 회전 제한 →
+            릴리즈 둔화 → Dynamic Loft 감소 → 거리 손실.
+          </p>
+          <p class="case-rx">→ 처방. 웨지 교체 아님. <strong>그립 두께 재검토.</strong></p>
+        </article>
+
+        <article class="case-card">
+          <p class="case-num">CASE 6</p>
+          <h3 class="case-title">롱아이언만 어려움 — FM 흐름이 끊긴 케이스</h3>
+          <div class="case-meta">
+            <p class="case-said">7번 아이언은 편한데 4·5번이 항상 어렵습니다.</p>
+          </div>
+          <p class="case-bad">
+            <span class="badge bad">잘못된 판단</span>
+            롱아이언 제거. 유틸 / 하이브리드 교체.
+          </p>
+          <p class="case-good">
+            <span class="badge good">실제 원인</span>
+            기준 클럽(7번) 110cpm. 4번 아이언 95cpm. FM 흐름 단절 →
+            롱아이언 타이밍 전환 실패.
+          </p>
+          <p class="case-rx">→ 처방. 하이브리드 교체 전 <strong>FM 흐름 복원</strong>. 4~5번 샤프트 교체로 해결 가능.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CLOSING ==================== -->
+  <section class="closing">
+    <div class="container narrow">
+      <p class="eyebrow">CLOSING · PART 1 마무리</p>
+      <h2 class="section-title">피터가 기억해야 할 <em>3가지</em></h2>
+
+      <ol class="closing-list">
+        <li>
+          <p class="closing-num">FIRST</p>
+          <p class="closing-text">
+            <strong>인터뷰는 정보를 모으는 과정이 아닙니다.</strong>
+            골퍼의 말을 구조로 변환하는 과정입니다. 같은 말이라도 다른 구조를 가질 수
+            있습니다. <em>번역이 틀리면 처방이 틀립니다.</em>
+          </p>
+        </li>
+        <li>
+          <p class="closing-num">SECOND</p>
+          <p class="closing-text">
+            <strong>인터뷰 후에도 판단을 서두르지 않습니다.</strong>
+            인터뷰가 끝나면 "무엇을 먼저 확인할 것인가"의 순서만 정합니다.
+            최종 처방은 데이터 검증 이후에 내립니다.
+          </p>
+        </li>
+        <li>
+          <p class="closing-num">THIRD</p>
+          <p class="closing-text">
+            <strong>기준 클럽을 확정하고 시작합니다.</strong>
+            인터뷰에서 가장 편한 클럽을 반드시 파악합니다. 이후 모든 변수 판단은
+            이 클럽의 스펙을 기준으로 진행합니다. <em>기준이 없으면 비교도 없습니다.</em>
+          </p>
+        </li>
+      </ol>
+
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 1</p>
+        <ol class="check-list">
+          <li>피팅에서 인터뷰가 론치모니터 측정보다 먼저 수행되어야 하는 가장 큰 이유는 무엇입니까?</li>
+          <li>Level 1 인터뷰는 주로 어떤 정보를 수집하는 단계이며, Level 2·3과 어떻게 구분됩니까?</li>
+          <li>골퍼가 "샤프트가 너무 무거워서 드라이버가 안 맞는다"고 말했습니다. 이 진술을 피팅 변수로 전환할 때 주의할 점은 무엇입니까?</li>
+        </ol>
+        <p class="check-foot">해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">책 전체 목차</span>
+      </a>
+      <a href="/book/part-2" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 2 · 판단 구조 시스템</span>
+        <span class="pg-sub">결과에서 원인으로</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</Layout>
+
+<!-- ============================================================
+     SCOPED STYLES — /book/part-1
+     디자인 토큰은 global.css에 있다고 가정.
+     없으면 아래 :root 폴백이 사용됨.
+============================================================ -->
+<style>
+  :root {
+    --bg:        #F8F5EE;
+    --bg-elev:  #FFFFFF;
+    --bg-soft:  #F1ECE0;
+    --text:     #1F1B16;
+    --text-2:   #3A332A;
+    --muted:    #6B6358;
+    --rule:     #E2DACA;
+    --rule-2:   #D2C9B5;
+    --accent:   #2C5F4F;
+    --accent-2: #87A99B;
+    --accent-soft: #E6EDE7;
+    --warn:     #B5462E;
+    --warn-soft:#F6E8E1;
+    --good:     #2C5F4F;
+    --good-soft:#E6EDE7;
+    --serif:    "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:     "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+  .narrow-wrap { max-width: 720px; margin: 0 auto; }
+
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em     { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+
+  /* ---------- ATOMS ---------- */
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+  }
+  .crumb {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  /* ---------- HERO ---------- */
+  .part-hero {
+    background: var(--bg);
+    padding: 72px 0 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .part-title {
+    font-family: var(--serif);
+    margin: 0 0 1rem;
+    line-height: 1.1;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .part-num {
+    display: block;
+    font-family: var(--sans);
+    font-size: .875rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    color: var(--muted);
+    margin-bottom: .75rem;
+  }
+  .part-name {
+    display: block;
+    font-size: clamp(2.75rem, 7vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: -.02em;
+  }
+  .part-sub {
+    display: block;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 300;
+    color: var(--text-2);
+    margin-top: .25em;
+  }
+  .part-en {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--muted);
+    letter-spacing: .02em;
+    margin: 1.5rem 0 2rem;
+    font-style: italic;
+  }
+  .part-lead {
+    font-family: var(--sans);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-2);
+    max-width: 640px;
+    margin: 0;
+  }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  /* ---------- OBJECTIVES CALLOUT ---------- */
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    border-radius: 2px;
+  }
+  .callout-label {
+    font-family: var(--sans);
+    font-size: .875rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 .75rem;
+    letter-spacing: .04em;
+  }
+  .callout-list {
+    margin: 0;
+    padding-left: 1.4em;
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-2);
+  }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-2);
+  }
+  .callout-bullets li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: .35rem;
+  }
+  .callout-bullets li:before {
+    content: "·";
+    position: absolute;
+    left: .25rem;
+    top: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .callout-bullets em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--accent-soft);
+    padding: 0 .25em;
+  }
+  .callout-foot {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--text-2);
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+
+  /* ---------- TOC ---------- */
+  .part-toc {
+    background: var(--bg);
+    padding: 16px 0 64px;
+  }
+  .toc-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+  }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 0;
+    text-decoration: none;
+    color: var(--text);
+    font-family: var(--sans);
+    transition: color .2s, padding .2s;
+  }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 2.5rem;
+  }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  /* ---------- INTRO ---------- */
+  .intro { padding: 56px 0; }
+
+  /* ---------- SECTION ---------- */
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 4vw, 2.625rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -.015em;
+    color: var(--text);
+    margin: 0 0 2rem;
+  }
+  .section-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .title-meta {
+    display: block;
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: .04em;
+    margin-top: .5rem;
+  }
+
+  /* ---------- PRINCIPLE CARD ---------- */
+  .principle-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    margin: 2.5rem 0;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .principle-label {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
+  }
+  .principle-flow {
+    font-family: var(--serif);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: .75rem 1.25rem;
+  }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-foot {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    max-width: 520px;
+    margin-inline: auto;
+  }
+
+  /* ---------- QUOTE PAIR ---------- */
+  .quote-pair {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin: 2.5rem 0;
+  }
+  @media (min-width: 720px) {
+    .quote-pair { grid-template-columns: 1fr 1fr; }
+  }
+  .quote-card {
+    margin: 0;
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent-2);
+    padding: 24px 28px;
+  }
+  .quote-card blockquote {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 1rem;
+    quotes: "\201C" "\201D";
+  }
+  .quote-card figcaption p {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0 0 .5em;
+  }
+  .caption-tag {
+    font-weight: 600;
+    color: var(--accent) !important;
+    margin-top: .75rem !important;
+  }
+
+  /* ---------- LEVEL CARDS ---------- */
+  .level-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 920px) {
+    .level-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .level-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 28px 26px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+  }
+  .level-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0 0 .5rem;
+  }
+  .level-title {
+    font-family: var(--serif);
+    font-size: 1.625rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 .25rem;
+  }
+  .level-tag {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--muted);
+    margin: 0 0 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .level-body {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.75;
+    color: var(--text-2);
+    margin: 0 0 1rem;
+    flex: 1;
+  }
+  .level-body em { font-style: normal; font-weight: 600; color: var(--text); }
+  .level-warning {
+    font-family: var(--sans);
+    font-size: .875rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0;
+    padding: 14px 16px;
+    background: var(--bg-soft);
+    border-left: 2px solid var(--accent-2);
+  }
+
+  /* ---------- AREA GRID (Section 4) ---------- */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    margin: 1.5rem 0 2.5rem;
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--text-2);
+  }
+  .legend-item { display: inline-flex; align-items: center; gap: .5rem; }
+  .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot.core { background: var(--accent); }
+  .dot.add  { background: var(--accent-2); }
+  .dot.deep { background: var(--rule-2); }
+
+  .area-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 720px) {
+    .area-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1100px) {
+    .area-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .area-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 28px 26px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .area-letter {
+    font-family: var(--serif);
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--accent);
+    margin: 0 0 .25rem;
+    font-weight: 500;
+  }
+  .area-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .qa-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .qa-list li {
+    display: flex;
+    gap: .65rem;
+    padding: .75rem 0;
+    border-bottom: 1px dashed var(--rule);
+    font-family: var(--sans);
+  }
+  .qa-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .qa-list .dot { margin-top: .55rem; }
+  .qa-list b {
+    display: block;
+    font-size: .9375rem;
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 600;
+    margin-bottom: .15rem;
+  }
+  .qa-list div > :not(b) { display: block; }
+  .qa-list li > div { font-size: .9375rem; color: var(--text-2); line-height: 1.55; }
+  .qa-link {
+    display: block;
+    font-size: .75rem;
+    color: var(--accent);
+    margin-top: .15rem;
+    letter-spacing: .02em;
+  }
+
+  /* ---------- MAP GROUPS (Section 5) ---------- */
+  .map-group { margin: 2.5rem 0; }
+  .map-group-title {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 0 0 1rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid var(--accent);
+    letter-spacing: -.005em;
+  }
+  .map-rows {
+    display: grid;
+    gap: .5rem;
+  }
+  .map-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .35rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    font-family: var(--sans);
+  }
+  @media (min-width: 720px) {
+    .map-row { grid-template-columns: 1.2fr 1.4fr 1fr; gap: 1rem; align-items: center; }
+  }
+  .map-row .said {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .map-row .parse {
+    font-size: .875rem;
+    color: var(--text-2);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .map-row .action {
+    font-size: .9375rem;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  .prio {
+    display: inline-block;
+    padding: .15rem .5rem;
+    border-radius: 2px;
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    margin-right: .5rem;
+    vertical-align: 1px;
+  }
+  .prio-1 { background: var(--accent); color: white; }
+  .prio-2 { background: var(--bg-soft); color: var(--text-2); border: 1px solid var(--rule-2); }
+
+  /* ---------- CASE GRID (Section 6) ---------- */
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 760px) { .case-grid { grid-template-columns: 1fr 1fr; } }
+  .case-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 28px 26px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+  .case-num {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0;
+  }
+  .case-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .case-meta {
+    padding: .75rem 1rem;
+    background: var(--bg-soft);
+    border-left: 2px solid var(--rule-2);
+    font-family: var(--sans);
+    margin-top: .25rem;
+  }
+  .case-said {
+    font-size: .875rem;
+    color: var(--text-2);
+    margin: 0;
+    font-style: italic;
+    line-height: 1.55;
+  }
+  .case-bad, .case-good {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0;
+  }
+  .case-rx {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--text);
+    margin: .25rem 0 0;
+    padding-top: .75rem;
+    border-top: 1px solid var(--rule);
+    line-height: 1.7;
+  }
+  .badge {
+    display: inline-block;
+    padding: .15rem .55rem;
+    border-radius: 2px;
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    margin-right: .5rem;
+    text-transform: uppercase;
+  }
+  .badge.bad  { background: var(--warn-soft); color: var(--warn); }
+  .badge.good { background: var(--good-soft); color: var(--good); }
+
+  /* ---------- CLOSING ---------- */
+  .closing {
+    background: var(--text);
+    color: var(--bg);
+    padding: 96px 0;
+  }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+
+  .closing-list {
+    list-style: none;
+    counter-reset: closing;
+    padding: 0;
+    margin: 2rem 0 3rem;
+  }
+  .closing-list li {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .75rem;
+  }
+  @media (min-width: 720px) {
+    .closing-list li { grid-template-columns: 120px 1fr; gap: 2rem; }
+  }
+  .closing-num {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent-2);
+    letter-spacing: .15em;
+    margin: 0;
+  }
+  .closing-text {
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,.9);
+    margin: 0;
+  }
+  .closing-text strong { color: white; font-weight: 600; }
+  .closing-text em {
+    font-style: normal;
+    color: var(--accent-2);
+    font-weight: 600;
+    background: none;
+    padding: 0;
+  }
+
+  .check-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.12);
+    padding: 28px 32px;
+    border-radius: 2px;
+  }
+  .check-label {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--accent-2);
+    font-weight: 700;
+    letter-spacing: .1em;
+    margin: 0 0 1rem;
+  }
+  .check-list {
+    margin: 0 0 1rem;
+    padding-left: 1.25em;
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,.85);
+  }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: rgba(255,255,255,.5);
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+  /* ---------- PAGINATION ---------- */
+  .part-pagination {
+    background: var(--bg);
+    padding: 56px 0 80px;
+    border-top: 1px solid var(--rule);
+  }
+  .part-pagination .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 760px) {
+    .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; }
+  }
+  .pg-back, .pg-next {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: var(--sans);
+    transition: transform .25s, background .25s;
+    border: 1px solid var(--rule);
+    padding: 20px 24px;
+    background: var(--bg-elev);
+    border-radius: 2px;
+    color: var(--text);
+  }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+
+  .pg-next {
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: .15rem;
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+    position: relative;
+    padding-right: 60px;
+  }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta {
+    font-size: .75rem;
+    color: var(--accent-2);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .pg-next .pg-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: .15rem;
+  }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: var(--accent-2);
+  }
+
+  /* ---------- RESPONSIVE TUNE ---------- */
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .area-card, .level-card, .case-card { padding: 22px 20px; }
+    .principle-card { padding: 24px 20px; }
+    .callout { padding: 22px 20px; }
+  }
+</style>
