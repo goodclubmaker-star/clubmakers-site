@@ -1,0 +1,523 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// AI 검색용 Article schema
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: '클럽메이커스의 클럽피팅 철학 — 3가지 원칙',
+  description: '인터뷰가 먼저, 사람마다 순위가 다릅니다, 평균이 아니라 최악을 봅니다. 클럽메이커스 24년의 현장에서 정리된 클럽피팅 3원칙.',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    jobTitle: '클럽메이커스 공작소장',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+  },
+  inLanguage: 'ko-KR',
+  about: [
+    { '@type': 'Thing', name: '클럽피팅', sameAs: 'https://en.wikipedia.org/wiki/Golf_club_fitting' },
+    { '@type': 'Thing', name: '키네마틱 시퀀스' },
+    { '@type': 'Thing', name: '론치모니터' },
+  ],
+};
+---
+
+<BaseLayout
+  title="공작소의 철학"
+  description="클럽메이커스의 3가지 원칙 — 인터뷰가 먼저, 사람마다 순위가 다릅니다, 평균이 아니라 최악을 봅니다. 24년 현장에서 정리된 클럽피팅 철학. 책 『실제적인 클럽피팅』의 근간."
+  schemaType="Article"
+  keywords="클럽피팅 철학, 클럽메이커스 원칙, 인터뷰 기반 피팅, 클럽피팅이란, 좋은 클럽피팅, club fitting Korea, 한국 클럽피팅, 채기웅, kinematic sequence, 표준 가이드"
+  extraSchema={articleSchema}
+>
+
+  <!-- 3-1. 히어로 -->
+  <article>
+  <section class="page-hero why-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">PHILOSOPHY · 공작소의 철학</div>
+      <h1>우리는 다르게<br>일합니다</h1>
+      <p class="page-hero-subtitle">
+        <strong>좋은 피팅은 데이터의 양이 아니라 골퍼를 읽는 깊이에서 갈립니다.</strong><br />
+        24년 현장에서 정리된 세 가지 원칙입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3-2. 책 인용 도입 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <div class="callout callout-cite">
+        <p class="cite-text">
+          "여러분은 좋은 피팅을 하고 있다고 생각하는가?<br /><br />
+          나는 우선 이 책을 펼쳤다는 것만으로도, 여러분이 계속해서 공부하고 좋은 피팅을 하고 있으며
+          앞으로 <strong>더 나은 피팅을 하고자 노력</strong>한다는 것을 잘 안다."
+        </p>
+        <p class="cite-source">
+          — 채기웅, <cite>『실제적인 클럽피팅』</cite> 서문 (Clubmakers Korea, 2026)
+        </p>
+      </div>
+      <p class="philosophy-intro">
+        24년 동안 매일 같은 질문 앞에 섰습니다. "이 고객님께 정말 맞는 클럽은 무엇인가."
+        그 시간 동안 정리된 답이 세 가지 원칙입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3-3. PRINCIPLE 01 — 인터뷰가 먼저 -->
+  <section class="section principle-section" id="principle-01">
+    <div class="section-content-narrow">
+      <div class="principle-header">
+        <span class="principle-badge">PRINCIPLE 01</span>
+        <h2>인터뷰가<br>먼저입니다</h2>
+      </div>
+
+      <div class="section-body principle-body">
+        <p>
+          많은 피팅이 론치모니터 앞에서 시작됩니다. 골퍼가 들어오면 바로 클럽을 쥐어 주고,
+          몇 구를 치게 한 다음, 수치를 보면서 판단을 내리는 방식입니다.
+          이 흐름이 빠르고 객관적으로 보이기 때문에 많은 현장에서 당연하게 받아들여지고 있습니다.
+        </p>
+        <p>
+          그러나 이 방식에는 구조적인 문제가 있습니다.
+          <strong>데이터는 결과입니다.</strong> 론치모니터에서 읽는 볼 스피드, 탄도각, 스핀율은
+          이미 여러 조건이 결합된 이후의 출력값입니다. 이 수치를 기준으로 장비를 바꾸는 것은,
+          원인을 모르는 상태에서 결과만 고치려는 시도입니다.
+        </p>
+      </div>
+
+      <div class="example-box">
+        <p class="example-label">같은 슬라이스라도 원인은 전혀 다를 수 있습니다</p>
+        <ul class="example-list">
+          <li>타점이 힐 쪽에 반복적으로 맞아서 기어이펙트로 발생한 슬라이스</li>
+          <li>페이스가 열린 채로 임팩트되는 슬라이스</li>
+          <li>릴리즈가 늦어져서 발생하는 슬라이스</li>
+        </ul>
+        <p class="example-conclusion">
+          세 가지는 겉으로 보면 동일한 "우측 미스"입니다. 그러나 처방은 완전히 다릅니다.
+        </p>
+      </div>
+
+      <div class="callout callout-cite">
+        <p class="cite-text">
+          "실제적인 피팅의 판단 순서 (기본 원칙)<br /><br />
+          <strong>인터뷰 → 관찰 → 데이터 → 장비</strong><br /><br />
+          이 순서를 거꾸로 하면, 이후의 모든 판단이 연쇄적으로 흔들립니다."
+        </p>
+        <p class="cite-source">
+          — <cite>『실제적인 클럽피팅』</cite> PART 1 1절
+        </p>
+      </div>
+
+      <p class="principle-end">
+        그래서 공작소는 클럽을 보기 전에 먼저 듣습니다. 어떤 클럽이 가장 편한지,
+        어디서 미스가 나오는지, 후반에 어떻게 무너지는지.
+        <em>진짜 답은 고객님의 이야기 속에 있습니다.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- 3-4. PRINCIPLE 02 — 사람마다 순위가 다릅니다 -->
+  <section class="section section-bg-soft principle-section" id="principle-02">
+    <div class="section-content-narrow">
+      <div class="principle-header">
+        <span class="principle-badge">PRINCIPLE 02</span>
+        <h2>사람마다<br>순위가 다릅니다</h2>
+      </div>
+
+      <div class="section-body principle-body">
+        <p>
+          어떤 골퍼는 <strong>길이</strong>가 가장 중요합니다.
+          어떤 골퍼는 <strong>총무게</strong>가 가장 중요합니다.
+          어떤 골퍼는 <strong>그립 사이즈</strong>가 모든 것에 우선합니다.
+        </p>
+        <p>
+          표준 가이드는 출발점일 뿐, 결론이 아닙니다.
+          "키 175cm면 표준 길이, 헤드스피드 95mph면 SR 샤프트" — 이 표대로 하면 절반은 맞고 절반은 틀립니다.
+          모든 골퍼가 보편적이지 않기 때문입니다.
+        </p>
+      </div>
+
+      <div class="example-box">
+        <p class="example-label">예시 — 손이 작은 골퍼와 그립 사이즈</p>
+        <p class="example-body">
+          손이 작은 골퍼에게는 작은 그립이 더 잘 맞습니다.
+          그러나 작은 그립으로 바꾸면 스윙웨이트가 올라갑니다.
+          여기서 많은 피터가 멈춥니다 — "스윙웨이트가 올라가니까 어렵다"는 결론으로.
+        </p>
+        <p class="example-body">
+          그러나 이 골퍼에게는 <strong>그립 사이즈가 스윙웨이트보다 훨씬 중요</strong>할 수 있습니다.
+          손이 클럽을 제대로 잡지 못하면 다른 변수는 의미를 잃습니다.
+          어떤 골퍼에게는 1순위인 항목이 다른 골퍼에게는 후순위입니다.
+        </p>
+      </div>
+
+      <div class="callout callout-cite">
+        <p class="cite-text">
+          "이 책의 모든 장은 변수를 다룬다. 길이, 라이각, 무게, 스윙웨이트, CPM, EI 분포, 라이·로프트 — 변수의 이해는 깊이 들어갈수록 정교해진다.
+          그러나 모든 장의 마지막에는 같은 질문이 남는다. <strong>이 변수가 이 골퍼에게 얼마나 중요한가.</strong>"
+        </p>
+        <p class="cite-source">
+          — <cite>『실제적인 클럽피팅』</cite> 서문
+        </p>
+      </div>
+
+      <p class="principle-end">
+        우리는 인터뷰에서, 측정 데이터에서, 시타에서, <strong>골퍼의 말 한마디에서</strong>
+        그 골퍼만의 우선순위를 읽어냅니다.
+        "지난번 클럽보다 가벼운 게 좋았다"는 한 문장이 총무게의 순위를 바꿉니다.
+        <em>같은 측정값을 본 두 피터가 다른 처방을 내릴 수 있고, 두 처방이 모두 옳을 수 있습니다.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- 3-5. PRINCIPLE 03 — 평균이 아니라 최악을 봅니다 -->
+  <section class="section principle-section" id="principle-03">
+    <div class="section-content-narrow">
+      <div class="principle-header">
+        <span class="principle-badge">PRINCIPLE 03</span>
+        <h2>평균이 아니라<br>최악을 봅니다</h2>
+      </div>
+
+      <div class="section-body principle-body">
+        <p>
+          피팅 현장에서 자주 사용하는 판단 기준은 평균값입니다.
+          평균 캐리, 평균 볼스피드, 평균 탄도각은 직관적이고 비교하기 쉽습니다.
+          그러나 <strong>평균은 분포를 숨깁니다.</strong>
+        </p>
+        <p>
+          좋은 샷이 15야드 늘었지만 나쁜 샷이 10야드 줄었을 때, 평균은 개선처럼 보입니다.
+          그러나 실제 라운드에서 점수에 영향을 주는 것은 완벽한 샷이 아닙니다.
+          <strong>경사진 라이, 바람, 긴장, 18홀의 피로</strong> 속에서
+          스윙 조건이 흔들렸을 때 결과가 어디까지 벗어나는지 — 그것이 스코어를 결정합니다.
+        </p>
+      </div>
+
+      <div class="callout callout-cite">
+        <p class="cite-text">
+          "피팅의 진짜 질문<br /><br />
+          '이 세팅이 더 좋은 결과를 만드는가?'가 아닙니다.<br /><br />
+          <strong>'이 세팅은 스윙이 무너질 때 결과를 어디까지 제한하는가?'</strong>입니다."
+        </p>
+        <p class="cite-source">
+          — <cite>『실제적인 클럽피팅』</cite> PART 2 3절
+        </p>
+      </div>
+
+      <p class="principle-end">
+        우리는 허용 범위를 설계합니다. 평균을 끌어올리는 것이 아니라,
+        <strong>최악의 샷이 허용 범위를 벗어나지 않도록 막아주는 것</strong> — 이것이 피팅의 실질적 목표입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3-6. 블로그 인용 — 시험 보는 기분 -->
+  <section class="section section-bg-cream blog-section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FROM THE BLOG · 공작소장의 글에서</p>
+      <h2>"시험 보는 기분으로<br>오시지 않으셨으면 합니다"</h2>
+
+      <div class="blog-quote">
+        <p>
+          론치모니터 앞에 서면 평소 스윙을 자연스럽게 하지 못하시는 분이 많습니다.
+          타석이 낯설고, 숫자가 눈에 들어오고, 과도하게 힘을 쓰거나 자세가 흐트러집니다.
+          그날 하루의 컨디션에 결과치가 쉽게 흔들립니다.
+        </p>
+        <p>
+          그래서 저는 늘 말씀드립니다.
+          <strong>"시험 보는 기분으로 오시지 않으셨으면 합니다."</strong>
+          공작소에 오시는 것은 채점받으러 오시는 것이 아니라,
+          <em>당신의 스윙과 클럽을 함께 들여다보러 오시는 것</em>입니다.
+        </p>
+        <p>
+          그날 하루의 컨디션에 맞는 클럽을 찾는 오류를 우리는 가장 경계합니다.
+          오늘 잘 맞은 클럽이 내일 안 맞을 수도 있습니다.
+          중요한 것은 <strong>당신의 스윙 구조에 맞는 클럽</strong>입니다.
+        </p>
+      </div>
+
+      <p class="blog-attribution">
+        — 채기웅 공작소장, 네이버 블로그 「clubmakers」 중에서
+      </p>
+    </div>
+  </section>
+
+  <!-- 3-7. 마침표 — 친근한 골프채공작소를 지향합니다 -->
+  <section class="section closing-section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow closing-eyebrow">CONCLUSION · 우리가 지키는 자세</p>
+      <h2 class="closing-h2">친근한 골프채공작소를<br>지향합니다.</h2>
+
+      <div class="closing-body">
+        <p>
+          우리는 어려운 용어로 권위를 세우지 않습니다.
+          데이터를 무기로 판매를 압박하지 않습니다.
+          숫자보다 사람을, 표준보다 한 분 한 분의 이야기를 먼저 봅니다.
+        </p>
+        <p>
+          꼼꼼하고 성실하게, 최선을 다해서 작업해드립니다.
+          그것이 24년 동안 지켜온 자세이고, 앞으로도 지킬 자세입니다.
+        </p>
+      </div>
+
+      <div class="closing-actions">
+        <a href="/system" class="btn-primary">공작소의 시스템 →</a>
+        <a href="/workshop" class="btn-ghost">분석 예약 →</a>
+        <a href="/book" class="btn-ghost">책으로 더 자세히 →</a>
+      </div>
+    </div>
+  </section>
+  </article>
+
+</BaseLayout>
+
+<style>
+  .why-hero {
+    background: var(--bg-soft);
+  }
+
+  /* ===== 책 인용 박스 (재사용) ===== */
+  .callout-cite {
+    background: var(--ink);
+    color: var(--cream);
+    border-left-color: var(--gold);
+    padding: 36px 40px;
+    margin: 36px 0;
+  }
+  .cite-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.85;
+    color: var(--cream);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .cite-text strong { color: var(--gold-soft); font-weight: 700; }
+  .cite-source {
+    font-size: 13px;
+    color: var(--gold-soft);
+    letter-spacing: 0.03em;
+    border-top: 1px solid rgba(212, 184, 136, 0.2);
+    padding-top: 14px;
+  }
+  .cite-source cite { font-style: italic; }
+
+  .philosophy-intro {
+    margin-top: 36px;
+    font-family: var(--font-serif);
+    font-size: 19px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ===== 원칙 섹션 ===== */
+  .principle-header {
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .principle-badge {
+    display: inline-block;
+    background: var(--green);
+    color: var(--cream);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+  }
+  .principle-section h2 {
+    font-family: var(--font-serif);
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 0;
+  }
+  .principle-body p {
+    font-size: 17px;
+    line-height: 1.95;
+    color: var(--ink-2);
+    margin-bottom: 22px;
+  }
+  .principle-body strong { color: var(--ink); font-weight: 700; }
+  .principle-end {
+    margin-top: 32px;
+    padding: 28px 32px;
+    background: var(--bg-cream);
+    border-left: 3px solid var(--gold);
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--ink);
+  }
+  .principle-end strong { font-weight: 700; }
+  .principle-end em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  /* ===== 예시 박스 ===== */
+  .example-box {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .example-label {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .example-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+  }
+  .example-list li {
+    padding: 10px 0 10px 22px;
+    position: relative;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .example-list li:last-child { border-bottom: none; }
+  .example-list li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    color: var(--gold);
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .example-conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .example-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+  }
+  .example-body:last-child { margin-bottom: 0; }
+  .example-body strong { color: var(--ink); font-weight: 700; }
+
+  /* ===== 블로그 인용 ===== */
+  .blog-section h2 {
+    font-family: var(--font-serif);
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 36px;
+    font-style: italic;
+  }
+  .blog-quote {
+    background: white;
+    border-left: 3px solid var(--gold);
+    padding: 32px 36px;
+    margin-bottom: 24px;
+  }
+  .blog-quote p {
+    font-family: var(--font-serif);
+    font-size: 17.5px;
+    line-height: 1.95;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+  .blog-quote p:last-child { margin-bottom: 0; }
+  .blog-quote strong { color: var(--ink); font-weight: 700; }
+  .blog-quote em { font-style: italic; color: var(--green); }
+  .blog-attribution {
+    font-size: 13px;
+    color: var(--grey);
+    text-align: right;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===== 마침표 ===== */
+  .closing-section {
+    text-align: center;
+    background: var(--green);
+    color: var(--cream);
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+  .closing-eyebrow { color: var(--gold-soft) !important; }
+  .closing-h2 {
+    color: var(--cream);
+    font-family: var(--font-serif);
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+    margin-bottom: 36px;
+  }
+  .closing-body {
+    max-width: 560px;
+    margin: 0 auto 40px;
+  }
+  .closing-body p {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--grey-3);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .closing-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .closing-section .btn-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+  }
+  .closing-section .btn-primary:hover { background: var(--gold-soft); }
+  .closing-section .btn-ghost {
+    color: var(--cream);
+    border-color: var(--cream);
+  }
+  .closing-section .btn-ghost:hover {
+    background: var(--cream);
+    color: var(--green);
+  }
+
+  /* ===== 모바일 ===== */
+  @media (max-width: 968px) {
+    .principle-section h2 { font-size: 34px; }
+    .callout-cite { padding: 24px 24px; }
+    .cite-text { font-size: 16px; }
+    .principle-body p { font-size: 15.5px; }
+    .principle-end { padding: 22px 22px; font-size: 15.5px; }
+    .example-box { padding: 22px 22px; }
+    .blog-section h2 { font-size: 26px; }
+    .blog-quote { padding: 22px 22px; }
+    .blog-quote p { font-size: 15.5px; }
+    .closing-h2 { font-size: 32px; }
+    .closing-actions { flex-direction: column; }
+    .closing-actions a { text-align: center; }
+  }
+</style>

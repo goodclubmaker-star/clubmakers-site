@@ -1,0 +1,697 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 41년 헤리티지 표 (1985 → 2026)
+const heritage = [
+  { year: '1985', label: '경인골프 출발', body: '부친 운영. 우드 1번이 실제 우드 재질이던 시절. 골프 장비 변천사의 출발점.' },
+  { year: '2002~', label: '클럽메이커스 시작', body: '공작소장 채기웅 본격 클럽피팅·메이킹 시작. 24년 현장 데이터 누적의 시작.' },
+  { year: '2008', label: '운동역학 도입', body: '국내 클럽피팅 현장에 키네마틱 시퀀스(Kinematic Sequence) 분석 도입.' },
+  { year: '2010~', label: 'KLPGA · LPGA 투어 지원', body: '박희영·김효주 등 투어 선수들의 클럽 분석·피팅 진행. 뽀로로 헤드커버 멘탈 파트너 동행.' },
+  { year: '2012', label: 'KIPO 특허 3종', body: '클럽피팅 관련 한국 특허청 등록 특허 3종 보유.' },
+  { year: '2018', label: 'TPI Level 3 인증', body: 'Titleist Performance Institute Level 3 — 한국에서 흔치 않은 단계.' },
+  { year: '2020~', label: '자체 R&D 제품 출시', body: 'VERSUS 드라이버, KRZ 203H 하이브리드, DEFINE 샤프트 자체 설계·출시.' },
+  { year: '2026', label: '책 『실제적인 클럽피팅』 출간', body: '24년 현장 노하우의 정리. 본문 15 PART · 부록 4 · 현장작업표준서 12종.' },
+];
+
+// 피팅에서 다루는 11가지 변수
+const variables = [
+  { ko: '길이',         en: 'Length',          group: 'A' },
+  { ko: '라이각',       en: 'Lie Angle',       group: 'A' },
+  { ko: '로프트각',     en: 'Loft Angle',      group: 'A' },
+  { ko: '페이스 앵글',   en: 'Face Angle',      group: 'A' },
+  { ko: '오프셋',       en: 'Offset',          group: 'A' },
+  { ko: '총무게',       en: 'Total Weight',    group: 'B' },
+  { ko: '스윙웨이트',    en: 'Swing Weight',    group: 'B' },
+  { ko: '관성모멘트',   en: 'MOI',             group: 'B' },
+  { ko: '샤프트 강성',   en: 'CPM / EI',        group: 'C' },
+  { ko: '토크',         en: 'Torque',          group: 'C' },
+  { ko: '그립 사이즈',   en: 'Grip Size',       group: 'D' },
+];
+
+// AI 검색 최적화: Person + Article 스키마
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': 'https://myclubmakers.com/about#person',
+  name: '채기웅',
+  alternateName: 'Chae Ki-Woong',
+  jobTitle: '공작소장 (Master Clubmaker)',
+  description: '클럽메이커스 공작소장. 24년 클럽피팅·클럽메이킹 현장 경력. TPI Level 3 인증. KIPO 특허 3종. 책 『실제적인 클럽피팅』 저자.',
+  image: 'https://myclubmakers.com/images/master-profile.jpg',
+  worksFor: {
+    '@type': 'LocalBusiness',
+    name: '클럽메이커스',
+    '@id': 'https://myclubmakers.com#business',
+  },
+  knowsAbout: [
+    '클럽피팅', 'Club Fitting', '클럽메이킹', 'Club Making',
+    '키네마틱 시퀀스', 'Kinematic Sequence',
+    'TPI', 'Titleist Performance Institute',
+    '샤프트 EI 프로파일', 'Shaft EI Profile',
+    'MOI 매칭', '라이각 조정', '스파인 정렬', 'FLO',
+  ],
+  hasCredential: [
+    { '@type': 'EducationalOccupationalCredential', name: 'TPI Level 3 Certified Fitter', credentialCategory: 'certification' },
+    { '@type': 'EducationalOccupationalCredential', name: 'KIPO 등록 특허 3종 (대한민국 특허청)', credentialCategory: 'patent' },
+  ],
+  url: 'https://myclubmakers.com/about',
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: '공작소장 소개 — 채기웅의 24년',
+  description: '클럽메이커스 공작소장 채기웅의 24년 클럽피팅·클럽메이킹 이야기. 1985년 경인골프부터 2026년까지 41년 헤리티지. TPI Level 3, KIPO 특허 3종, 청와대 일화, 11가지 피팅 변수.',
+  author: { '@id': 'https://myclubmakers.com/about#person' },
+  mainEntity: { '@id': 'https://myclubmakers.com/about#person' },
+  inLanguage: 'ko-KR',
+};
+---
+
+<BaseLayout
+  title="공작소장 소개"
+  description="클럽메이커스 공작소장 채기웅의 24년 이야기. 1985년 경인골프부터 41년 헤리티지. TPI Level 3 인증, KIPO 특허 3종, 책 『실제적인 클럽피팅』 저자. 운동역학 기반 클럽피팅."
+  schemaType="AboutPage"
+  keywords="클럽메이커스, 채기웅, 공작소장, 클럽피팅, 24년 클럽피팅, TPI Level 3, KIPO 특허, 한국 클럽피팅, 골프채 공작소, 클럽메이킹, 운동역학, kinematic sequence, club fitting Korea, master clubmaker"
+  extraSchema={[personSchema, articleSchema]}
+>
+
+  <!-- 2-1. 히어로 -->
+  <article>
+  <section class="page-hero about-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">ABOUT · 공작소장 소개</div>
+      <h1>24년의 기록</h1>
+      <p class="page-hero-subtitle">
+        <strong>채기웅 공작소장</strong> · 클럽메이커스
+      </p>
+      <p class="hero-credential">
+        TPI Level 3 인증 · KIPO 등록 특허 3종 · 책 『실제적인 클럽피팅』 저자<br/>
+        <span class="hero-credential-light">— 1985년 경인골프부터 시작된 41년 헤리티지</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2-2. 1인칭 — 더 나은 피팅을 하고 싶었습니다 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SECTION 01 · 어떻게 시작했는가</p>
+      <h2>"더 나은 피팅을 하고<br>싶었습니다"</h2>
+      <div class="section-body first-person">
+        <p>
+          저는 부친의 가게 <strong>경인골프</strong>(1985년 시작) 옆에서 골프채를 보며 자랐습니다.
+          우드 1번이 실제 나무 재질이던 시절부터, 메탈 우드의 등장, 티타늄, 카본 페이스에 이르는
+          기술 변천사를 손으로 직접 만지면서 경험했습니다.
+        </p>
+        <p>
+          본격적으로 클럽피팅 일을 시작한 것은 2002년경이었습니다.
+          <strong>그때부터 24년</strong>, 저는 매일 같은 질문 앞에 섰습니다.
+          "이 고객님께 정말 맞는 클럽은 무엇인가."
+        </p>
+        <p>
+          처음에는 표준 가이드대로 했습니다. 키 175cm면 표준 길이, 헤드스피드 95mph면 SR 샤프트.
+          그런데 시간이 지나면서 알게 됐습니다. <strong>표준대로 하면 절반은 맞고 절반은 틀린다</strong>는 것을.
+        </p>
+        <p>
+          어떤 고객님은 길이가 0.5인치 짧아야 비로소 타점이 잡히고,
+          어떤 고객님은 그립 사이즈만 한 단계 키워도 슬라이스가 사라졌습니다.
+          <strong>사람마다 결정 변수가 다르다</strong>는 것을, 그 수많은 케이스에서 배웠습니다.
+        </p>
+        <p>
+          그래서 지금도, 새로운 고객님이 오시면 클럽을 보기 전에 먼저 이야기를 듣습니다.
+          어떤 클럽이 가장 편한지, 어디서 미스가 나오는지, 후반에는 어떻게 무너지는지.
+          <em>진짜 답은 고객님의 이야기 속에 있습니다.</em>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2-3. 운동역학 도입 (2008) -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SECTION 02 · 운동역학과의 만남</p>
+      <h2>2008년, 운동역학을<br>현장으로 가져왔습니다</h2>
+      <div class="section-body">
+        <p>
+          2008년 무렵, 저는 한 가지 의문에 매달려 있었습니다.
+          <strong>"같은 헤드스피드인데 왜 어떤 사람은 부드러운 샤프트가 잘 맞고,
+          어떤 사람은 단단한 샤프트가 잘 맞을까?"</strong>
+        </p>
+        <p>
+          답은 스윙 자체의 구조에 있었습니다.
+          <strong>키네마틱 시퀀스(Kinematic Sequence)</strong> — 다운스윙에서 하체·몸통·팔·손이
+          순차적으로 가속도가 최고점에 도달하는 구조 — 를 분석하면, 같은 헤드스피드라도
+          힘이 어디서 어떻게 전달되는지가 보입니다.
+        </p>
+        <p>
+          이 운동역학적 접근을 한국 클럽피팅 현장에 도입한 것이 2008년이었습니다.
+          그 후 수많은 KLPGA·LPGA 선수들과 일반 고객님들의 스윙을 분석하면서,
+          데이터와 현장 경험이 함께 쌓였습니다.
+        </p>
+      </div>
+
+      <div class="callout callout-cite">
+        <p class="cite-text">
+          "결국 우리가 조정하는 것은 여섯 가지뿐이다 — 길이·총무게·밸런스·강도·라이각·로프트각.
+          모든 변수는 이 여섯 가지 안에서 움직인다.
+          반대로 말하면, 이 여섯 가지의 의미와 상호작용을 정확히 이해하면 피팅의 대부분이 풀린다."
+        </p>
+        <p class="cite-source">
+          — 채기웅, <cite>『실제적인 클럽피팅』</cite> 서문 (Clubmakers Korea, 2026)
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2-4. 11가지 변수 (피팅에서 다루는 모든 것) -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SECTION 03 · 다루는 변수들</p>
+      <h2>피팅에서 다루는<br>11가지 변수</h2>
+      <p class="section-lead">
+        클럽 하나에는 11가지 결정 변수가 있습니다. 각각이 골퍼의 결과에 영향을 주고,
+        서로 연결되어 있습니다. 어느 하나도 독립적으로 결정되지 않습니다.
+      </p>
+
+      <dl class="variable-grid">
+        {variables.map((v) => (
+          <div class={'variable-item variable-group-' + v.group}>
+            <dt>{v.ko}</dt>
+            <dd>{v.en}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <p class="variable-note">
+        <strong>그러나</strong> 11가지 변수보다 중요한 것이 있습니다.
+        <em>이 고객님에게 어떤 변수가 가장 중요한가</em> — 그 우선순위를 읽어내는 일입니다.
+        같은 슬라이스도 원인이 다르면 처방이 다릅니다.
+      </p>
+
+      <div class="callout callout-cite">
+        <p class="cite-text">
+          "이 책의 모든 장은 변수를 다룬다. 길이, 라이각, 무게, 스윙웨이트, CPM, EI 분포 — 변수의 이해는 깊이 들어갈수록 정교해진다.
+          그러나 모든 장의 마지막에는 같은 질문이 남는다. <strong>이 변수가 이 골퍼에게 얼마나 중요한가.</strong>"
+        </p>
+        <p class="cite-source">
+          — <cite>『실제적인 클럽피팅』</cite> 서문
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2-5. 41년 헤리티지 표 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SECTION 04 · 41년 헤리티지</p>
+      <h2>1985년부터 2026년까지</h2>
+      <p class="section-lead">
+        부친의 경인골프(1985)에서 시작한 41년의 흐름. 클럽메이커스가 본격 운영된 24년 동안의 주요 기록입니다.
+      </p>
+
+      <div class="timeline">
+        {heritage.map((item, idx) => (
+          <div class="timeline-item">
+            <div class="timeline-marker">{item.year}</div>
+            <div class="timeline-content">
+              <h3 class="timeline-label">{item.label}</h3>
+              <p class="timeline-body">{item.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2-6. 자격·인증 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SECTION 05 · 자격과 인증</p>
+      <h2>채기웅 공작소장<br>전문 자격</h2>
+
+      <div class="credential-grid">
+        <div class="credential-card">
+          <div class="credential-tag">CERTIFICATION</div>
+          <h3 class="credential-title">TPI Level 3</h3>
+          <p class="credential-body">
+            <strong>Titleist Performance Institute</strong> Level 3 — Golf, Medical, Fitness 통합 단계.
+            한국에서 보유자가 흔치 않은 등급. 골프 스윙·신체·건강을 연결해 분석하는 전문가 자격.
+          </p>
+          <a href="https://www.mytpi.com" class="credential-link" target="_blank" rel="noopener">
+            mytpi.com →
+          </a>
+        </div>
+
+        <div class="credential-card">
+          <div class="credential-tag">PATENT</div>
+          <h3 class="credential-title">KIPO 등록 특허 3종</h3>
+          <p class="credential-body">
+            대한민국 특허청(<strong>KIPO</strong>) 등록 특허 3종 보유.
+            클럽피팅·클럽메이킹 관련 자체 R&D의 결과물.
+            VERSUS · KRZ · DEFINE 자체 제품 라인의 기반이 됩니다.
+          </p>
+          <a href="https://www.kipo.go.kr" class="credential-link" target="_blank" rel="noopener">
+            kipo.go.kr →
+          </a>
+        </div>
+
+        <div class="credential-card">
+          <div class="credential-tag">PUBLICATION</div>
+          <h3 class="credential-title">『실제적인 클럽피팅』 (2026)</h3>
+          <p class="credential-body">
+            <strong>본문 15 PART · 부록 4 · 현장작업표준서 12종.</strong>
+            24년 동안 인터뷰하고 처방하고 수정해온 판단 기준의 정리. 피터를 위한 책.
+          </p>
+          <a href="/book" class="credential-link">책 자세히 →</a>
+        </div>
+
+        <div class="credential-card">
+          <div class="credential-tag">FIELD</div>
+          <h3 class="credential-title">KLPGA · LPGA 투어 지원</h3>
+          <p class="credential-body">
+            박희영 · 김효주 · 백규정 · 김민선 · 고진영 등 다수 프로 선수의 클럽피팅·분석 진행.
+            <strong>뽀로로 헤드커버</strong>는 2010년대 LPGA 우승의 순간 함께한 멘탈 파트너.
+          </p>
+          <a href="/products" class="credential-link">제품 라인 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2-7. 청와대 일화 (24년의 폭) -->
+  <section class="section section-bg-green">
+    <div class="section-content-narrow anecdote">
+      <p class="section-eyebrow anecdote-eyebrow">SECTION 06 · 한 가지 일화</p>
+      <h2 class="anecdote-title">"공작소장님,<br>그분 클럽 좀 봐 주세요"</h2>
+      <div class="anecdote-body">
+        <p>
+          24년 동안 다양한 분들의 클럽을 만져왔습니다.
+          어느 해, 청와대에서 특정 분의 클럽을 봐 달라는 요청이 들어왔습니다.
+          이름은 밝히지 않겠습니다 — 클럽피팅이라는 일에서, 누구의 클럽인지보다 중요한 것은
+          <strong>그 사람에게 그 클럽이 맞는가</strong>이기 때문입니다.
+        </p>
+        <p>
+          공작소를 찾아주시는 분들은 다양합니다. 투어 프로도, 회사원도, 시니어도, 입문자도 오십니다.
+          어떤 분이든 <strong>저는 같은 자세로 인터뷰를 시작합니다.</strong>
+          어떤 클럽이 가장 편하셨는지, 어디서 미스가 나오는지, 후반에 어떻게 무너지는지.
+        </p>
+        <p>
+          좋은 피팅에는 신분도, 명성도 들어오지 않습니다.
+          오직 <em>그날 이 분의 스윙과 클럽</em>만 존재합니다. 그것이 24년 동안 지켜온 자세입니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2-8. 마침표 + 다음 단계 -->
+  <section class="section closing-cta">
+    <div class="section-content-narrow">
+      <p class="closing-quote">
+        "친근한 골프채공작소를 지향합니다."
+      </p>
+      <p class="closing-body">
+        24년 동안 쌓인 것은 데이터와 케이스만이 아닙니다.
+        고객님 한 분 한 분의 이야기와, 그분들이 더 좋은 골프를 만나는 순간들이었습니다.
+      </p>
+      <div class="closing-actions">
+        <a href="/why-fitting" class="btn-primary">공작소의 철학 →</a>
+        <a href="/system" class="btn-ghost">공작소의 시스템 →</a>
+        <a href="/contact" class="btn-ghost">예약·문의 →</a>
+      </div>
+    </div>
+  </section>
+  </article>
+
+  <!-- AEO: 자주 묻는 질문 (이 페이지에 직접 노출) -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FREQUENTLY ASKED</p>
+      <h2>이 페이지에 자주 묻는 질문</h2>
+      <details class="faq-detail">
+        <summary>채기웅 공작소장은 어떤 자격을 갖고 있나요?</summary>
+        <p>TPI(Titleist Performance Institute) Level 3 인증, 대한민국 특허청(KIPO) 등록 특허 3종, 책 『실제적인 클럽피팅』 저자. 24년 클럽피팅·클럽메이킹 현장 경력.</p>
+      </details>
+      <details class="faq-detail">
+        <summary>클럽메이커스는 언제부터 운영되었나요?</summary>
+        <p>부친의 경인골프(1985년 시작)를 모태로, 채기웅 공작소장이 2002년부터 본격 클럽피팅·메이킹을 진행했습니다. 통산 41년 헤리티지, 24년 클럽메이커스 운영.</p>
+      </details>
+      <details class="faq-detail">
+        <summary>운동역학 기반 클럽피팅은 무엇인가요?</summary>
+        <p>키네마틱 시퀀스(Kinematic Sequence) — 다운스윙에서 하체·몸통·팔·손이 순차적으로 가속도가 최고점에 도달하는 구조 — 를 분석해 골퍼의 스윙 특성을 파악하고, 그에 맞는 클럽 변수를 결정하는 방식. 클럽메이커스가 2008년 한국 현장에 도입.</p>
+      </details>
+      <details class="faq-detail">
+        <summary>클럽피팅에서 가장 중요한 변수는 무엇인가요?</summary>
+        <p>『실제적인 클럽피팅』에서 정리한 6가지 핵심 변수는 길이·총무게·밸런스(SW/MOI)·샤프트 강도(CPM)·라이각·로프트각입니다. 그러나 우선순위는 골퍼마다 다릅니다. 같은 슬라이스도 원인이 다르면 처방이 다릅니다.</p>
+      </details>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<!-- AEO: FAQPage 스키마 (위 4개 질문) -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '채기웅 공작소장은 어떤 자격을 갖고 있나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'TPI(Titleist Performance Institute) Level 3 인증, 대한민국 특허청(KIPO) 등록 특허 3종, 책 『실제적인 클럽피팅』 저자. 24년 클럽피팅·클럽메이킹 현장 경력.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '클럽메이커스는 언제부터 운영되었나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '부친의 경인골프(1985년 시작)를 모태로, 채기웅 공작소장이 2002년부터 본격 클럽피팅·메이킹을 진행했습니다. 통산 41년 헤리티지, 24년 클럽메이커스 운영.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '운동역학 기반 클럽피팅은 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '키네마틱 시퀀스(Kinematic Sequence) — 다운스윙에서 하체·몸통·팔·손이 순차적으로 가속도가 최고점에 도달하는 구조 — 를 분석해 골퍼의 스윙 특성을 파악하고, 그에 맞는 클럽 변수를 결정하는 방식. 클럽메이커스가 2008년 한국 현장에 도입.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: '클럽피팅에서 가장 중요한 변수는 무엇인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '『실제적인 클럽피팅』에서 정리한 6가지 핵심 변수는 길이·총무게·밸런스(SW/MOI)·샤프트 강도(CPM)·라이각·로프트각입니다. 그러나 우선순위는 골퍼마다 다릅니다. 같은 슬라이스도 원인이 다르면 처방이 다릅니다.'
+      }
+    }
+  ]
+})} />
+
+<style>
+  /* ===== 히어로 ===== */
+  .about-hero {
+    background: var(--bg-cream);
+    border-bottom: none;
+  }
+  .hero-credential {
+    margin-top: 28px;
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    padding-top: 24px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+  .hero-credential-light {
+    color: var(--grey);
+    font-size: 13.5px;
+  }
+
+  /* ===== 1인칭 본문 ===== */
+  .first-person p {
+    font-family: var(--font-serif);
+    font-size: 18.5px;
+    line-height: 1.95;
+    margin-bottom: 22px;
+    color: var(--ink-2);
+  }
+  .first-person strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .first-person em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  /* ===== 인용 박스 ===== */
+  .callout-cite {
+    background: var(--ink);
+    color: var(--cream);
+    border-left-color: var(--gold);
+    padding: 36px 40px;
+    margin: 36px 0;
+  }
+  .cite-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.85;
+    color: var(--cream);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .cite-text strong {
+    color: var(--gold-soft);
+    font-weight: 700;
+  }
+  .cite-source {
+    font-size: 13px;
+    color: var(--gold-soft);
+    letter-spacing: 0.03em;
+    border-top: 1px solid rgba(212, 184, 136, 0.2);
+    padding-top: 14px;
+  }
+  .cite-source cite {
+    font-style: italic;
+  }
+
+  /* ===== 11가지 변수 ===== */
+  .section-lead {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--grey);
+    margin-bottom: 36px;
+    max-width: 660px;
+  }
+  .variable-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 24px 0;
+  }
+  .variable-item {
+    background: var(--bg-soft);
+    padding: 22px 20px;
+    border-top: 3px solid var(--green);
+    text-align: left;
+  }
+  .variable-item dt {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .variable-item dd {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+  .variable-group-A { border-top-color: var(--green); }
+  .variable-group-B { border-top-color: var(--gold); }
+  .variable-group-C { border-top-color: var(--ink); }
+  .variable-group-D { border-top-color: var(--grey-2); }
+  .variable-note {
+    margin-top: 28px;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+  }
+  .variable-note strong { color: var(--ink); font-weight: 700; }
+  .variable-note em { font-style: italic; color: var(--green); }
+
+  /* ===== 41년 타임라인 ===== */
+  .timeline {
+    margin-top: 36px;
+    border-left: 2px solid var(--gold);
+    padding-left: 32px;
+  }
+  .timeline-item {
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -41px;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 3px solid var(--bg-cream);
+  }
+  .timeline-marker {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .timeline-label {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.015em;
+  }
+  .timeline-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+
+  /* ===== 자격 카드 ===== */
+  .credential-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .credential-card {
+    background: var(--bg-soft);
+    padding: 32px 28px;
+    border-top: 3px solid var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .credential-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+  }
+  .credential-tag {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .credential-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: -0.015em;
+  }
+  .credential-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--grey);
+    margin-bottom: 18px;
+  }
+  .credential-body strong { color: var(--ink); font-weight: 700; }
+  .credential-link {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 700;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+
+  /* ===== 청와대 일화 ===== */
+  .anecdote h2 {
+    color: var(--cream);
+    margin-bottom: 28px;
+  }
+  .anecdote-eyebrow { color: var(--gold-soft) !important; }
+  .anecdote-title {
+    font-style: italic;
+  }
+  .anecdote-body {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.95;
+    color: var(--grey-3);
+  }
+  .anecdote-body p { margin-bottom: 20px; }
+  .anecdote-body strong { color: var(--gold-soft); font-weight: 700; }
+  .anecdote-body em { color: var(--cream); font-style: italic; }
+
+  /* ===== 마침표 ===== */
+  .closing-cta {
+    text-align: center;
+  }
+  .closing-quote {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    line-height: 1.5;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .closing-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    max-width: 580px;
+    margin: 0 auto 36px;
+  }
+  .closing-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ===== FAQ details ===== */
+  .faq-detail {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+  .faq-detail[open] { border-color: var(--green); }
+  .faq-detail summary {
+    padding: 20px 24px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+    font-size: 15px;
+    position: relative;
+    padding-right: 50px;
+  }
+  .faq-detail summary::after {
+    content: '+';
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: var(--gold);
+    transition: transform 0.2s;
+  }
+  .faq-detail[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .faq-detail summary::-webkit-details-marker { display: none; }
+  .faq-detail p {
+    padding: 0 24px 24px;
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: var(--ink-2);
+  }
+
+  /* ===== 모바일 ===== */
+  @media (max-width: 968px) {
+    .first-person p { font-size: 16px; }
+    .callout-cite { padding: 24px 24px; }
+    .cite-text { font-size: 16px; }
+    .variable-grid { grid-template-columns: 1fr 1fr; }
+    .credential-grid { grid-template-columns: 1fr; }
+    .timeline { padding-left: 24px; }
+    .timeline-item::before { left: -33px; }
+    .timeline-label { font-size: 19px; }
+    .closing-quote { font-size: 24px; }
+    .closing-actions { flex-direction: column; }
+    .closing-actions a { text-align: center; }
+    .anecdote-body { font-size: 16px; }
+  }
+</style>
