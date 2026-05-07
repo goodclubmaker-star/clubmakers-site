@@ -1,0 +1,784 @@
+---
+// /src/pages/book/part-3.astro
+// 『실제적인 클럽피팅』 PART 3 — 골퍼 구조 해석 시스템
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "PART 3. 골퍼 구조 해석 시스템 | 『실제적인 클럽피팅』";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 3. 골퍼 구조 해석 시스템 — 인터뷰 결과를 피팅 변수로 변환하기. PART 3는 인터뷰와 데이터 해석에서 얻은 정보를 실제 피팅 변수로 옮기는 단계를 다룹니다.";
+const pageKeywords = "클럽피팅, 골퍼 구조 해석 시스템, 채기웅, 실제적인 클럽피팅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 3</span>
+      </div>
+
+      <p class="eyebrow">PART 03 · 본문 14 PART 중 3번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 3</span>
+        <span class="part-name">골퍼 구조 해석 시스템</span>
+        <span class="part-sub">인터뷰 결과를 피팅 변수로 변환하기</span>
+      </h1>
+
+      <p class="part-en">Reading the Golfer's Architecture</p>
+
+      <p class="part-lead">PART 3는 인터뷰와 데이터 해석에서 얻은 정보를 실제 피팅 변수로 옮기는 단계를 다룹니다.</p>
+    </div>
+  </section>
+  <section class='objectives'><div class='container narrow'>
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 3 골퍼 해석을 마치면</p>
+        <ol class="callout-list">
+          <li>골퍼를 신체 구조·타이밍 구조·반복 구조 세 축으로 해석할 수 있다.</li>
+          <li>평균과 편차를 구분해 골퍼의 실제 역량을 읽어낼 수 있다.</li>
+          <li>인터뷰와 신체 측정만으로 초기 스펙(길이·그립·무게 방향)을 제시할 수 있다.</li>
+        </ol>
+      </div>
+</div></section>
+
+  <!-- ==================== TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        <li><a href="#sec-1"><span class="toc-num">01</span><span class="toc-text">골퍼는 평균이 아니라 편차입니다</span></a></li>
+        <li><a href="#sec-2"><span class="toc-num">02</span><span class="toc-text">골퍼 구조의 3축</span></a></li>
+        <li><a href="#sec-3"><span class="toc-num">03</span><span class="toc-text">신체 구조 — 스테틱 측정과 초기 스펙</span></a></li>
+        <li><a href="#sec-4"><span class="toc-num">04</span><span class="toc-text">스테틱 피팅 → 초기 스펙 산출</span></a></li>
+        <li><a href="#sec-5"><span class="toc-num">05</span><span class="toc-text">에너지의 크기 — 헤드스피드와 편차</span></a></li>
+        <li><a href="#sec-6"><span class="toc-num">06</span><span class="toc-text">에너지 투입 방식 — 템포와 전환</span></a></li>
+        <li><a href="#sec-7"><span class="toc-num">07</span><span class="toc-text">에너지 방출 시점 — 릴리즈 구조</span></a></li>
+        <li><a href="#sec-8"><span class="toc-num">08</span><span class="toc-text">반복 구조 — 타점 패턴이 1차 변수입니다</span></a></li>
+        <li><a href="#sec-9"><span class="toc-num">09</span><span class="toc-text">인터뷰 결과 → 골퍼 구조 변환 매핑표</span></a></li>
+        <li><a href="#sec-10"><span class="toc-num">10</span><span class="toc-text">골퍼 구조 → 피팅 변수 변환 오판 사례 3가지</span></a></li>
+        <li><a href="#sec-11"><span class="toc-num">11</span><span class="toc-text">골퍼 구조 해석 워크시트 — 1페이지 실전 양식</span></a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro">
+    <div class="container narrow prose">
+      <p>이 PART는 두 가지 역할을 함께 수행합니다. 하나는 골퍼를 신체 구조·타이밍 구조·반복 구조라는 세 축으로 해석하는 것이고, 다른 하나는 인터뷰와 신체 측정만으로도 가늠할 수 있는 초기 스펙(클럽 길이, 그립 사이즈, 샤프트 무게 방향)을 제시하는 것입니다. 스테틱 기준은 출발점에 가깝습니다. 여기서 출발한 값은 이후 다이나믹 검증을 거쳐 확정되거나 조정됩니다.</p>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">골퍼는 평균이 아니라 편차입니다</h2>
+
+      <div class="prose">
+        <p>피팅에서 골퍼를 판단할 때 가장 흔한 실수는 수치를 기준으로 삼는 것입니다. 헤드스피드가 95mph이면 SR 샤프트, 105mph이면 S 샤프트라는 식의 접근입니다. 이 방식은 빠르고 편리하지만 편차를 보지 못합니다.</p>
+        <p>같은 헤드스피드라도 결과가 전혀 다른 두 골퍼를 생각해 봅니다. A는 평균 95mph에 편차 ±2mph입니다. B는 평균 97mph이지만 편차가 ±8mph입니다. 숫자만 보면 B가 더 강한 골퍼입니다. 그러나 편차가 큰 B는 스피드가 빨라지는 날 타이밍이 앞서 좌측 미스가 커지고, 느려지는 날 헤드가 늦게 따라오며 우측 미스가 납니다. A는 스피드가 낮아도 결과 폭이 좁습니다.</p>
+        <p>수치는 결과입니다. 같은 수치라도 서로 다른 움직임에서 나올 수 있습니다. PART 3에서 골퍼를 이해한다는 것은 수치를 기억하는 것이 아니라, 그 수치가 어떤 움직임과 반복성에서 나왔는지를 파악하는 것입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">골퍼는 구조다</p>
+        <ul class="callout-bullets">
+          <li>수치는 그 구조의 결과입니다. 같은 수치라도 구조가 다르면 처방이 달라집니다.</li>
+        </ul>
+        <p class="callout-foot">PART 3의 목표: 인터뷰와 신체 측정 결과 → 구조 변환 → 초기 스펙 산출</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">골퍼 구조의 3축</h2>
+
+      <div class="prose">
+        <p>골퍼는 세 가지 구조 축으로 해석합니다. 신체 구조, 타이밍 구조, 반복 구조입니다. 세 축은 독립적으로 존재하지 않습니다. 서로 영향을 주고받으며 피팅 변수로 연결됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구조 축</th><th>핵심 내용</th><th>연결되는 피팅 변수</th></tr></thead>
+          <tbody><tr><td>신체 구조 (Physical)</td><td>키, WTF, 유연성, 근력(악력), 지구력, 손 크기</td><td>길이 / 라이각 / 총무게 / 그립 사이즈</td></tr>
+<tr><td>타이밍 구조 (Timing)</td><td>헤드스피드 편차, 템포, 전환 속도, 릴리즈 시점</td><td>EI / CPM / 토크 / 총무게</td></tr>
+<tr><td>반복 구조 (Consistency)</td><td>타점 패턴, 샷 편차, 피로 누적 후 변화</td><td>MOI / 총무게 / 길이</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>세 축 중 하나라도 불명확하면 장비 판단은 유보해야 합니다. 신체 구조는 인터뷰와 신체 측정만으로 즉시 파악할 수 있어 가장 먼저 확인합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">신체 구조 — 스테틱 측정과 초기 스펙</h2>
+
+      <div class="prose">
+        <p>신체 구조는 스테틱(정적) 측정으로 파악하는 변수입니다. 스윙 없이도 키, WTF(손목-바닥 거리), 손 크기, 악력(근력)을 측정하면 클럽 길이·그립 사이즈·샤프트 무게의 초기 방향을 잡을 수 있습니다.</p>
+        <p>스테틱 기준은 출발점입니다. 이 값은 반드시 다이나믹 검증(실제 타구 데이터)으로 확정하거나 수정합니다. 다만 론치모니터 없이도, 또는 피팅 전 인터뷰 단계에서도 초기 스펙을 제안할 수 있는 근거가 됩니다.</p>
+        <h3 class="subhead">3-1. 키 → 클럽 길이 기준 / 표준 클럽 길이표</h3>
+        <p>신장은 클럽 길이의 1차 기준입니다. 아래 표는 남성 표준 기준이며, 여성 표준은 동일 신장 대비 남성보다 1인치 짧습니다. 스틸 샤프트는 그라파이트보다 0.5인치 짧게 적용하는 것이 일반적이나, 드라이버의 경우 그라파이트 기준만 사용합니다.</p>
+        <p>(1) 신장 기준 표준 클럽 길이 — 드라이버 / 우드 / 하이브리드 / 아이언 통합 가이드</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>클럽 (헤드 무게 기준)</th><th>남성 그라파이트</th><th>여성 그라파이트</th><th>비고</th></tr></thead>
+          <tbody><tr><td>드라이버 (200g)</td><td>45"</td><td>44"</td><td>스틸은 별도 기준 없음 (그라파이트만 적용)</td></tr>
+<tr><td>3번 우드 (208g)</td><td>43"</td><td>42"</td><td>스틸: 남 42.5" / 여 41.5"</td></tr>
+<tr><td>5번 우드 (218g)</td><td>42"</td><td>41"</td><td>스틸: 남 41.5" / 여 40.5"</td></tr>
+<tr><td>7번 우드 (228g)</td><td>41"</td><td>40"</td><td>스틸: 남 40.5" / 여 39.5"</td></tr>
+<tr><td>하이브리드 (216g)</td><td>41.5"</td><td>40.5"</td><td>스틸: 남 41" / 여 40"</td></tr>
+<tr><td>하이브리드 (223g)</td><td>41"</td><td>40"</td><td>스틸: 남 40.5" / 여 39.5"</td></tr>
+<tr><td>5번 아이언 (257g)</td><td>38.5"</td><td>37.5"</td><td>스틸: 남 38" / 여 37"</td></tr>
+<tr><td>6번 아이언 (264g)</td><td>38"</td><td>37"</td><td>스틸: 남 37.5" / 여 36.5"</td></tr>
+<tr><td>7번 아이언 (271g)</td><td>37.5"</td><td>36.5"</td><td>스틸: 남 37" / 여 36"</td></tr>
+<tr><td>8번 아이언 (278g)</td><td>37"</td><td>36"</td><td>스틸: 남 36.5" / 여 35.5"</td></tr>
+<tr><td>9번 아이언 (285g)</td><td>36.5"</td><td>35.5"</td><td>스틸: 남 36" / 여 35"</td></tr>
+<tr><td>웨지 (291g+)</td><td>36"</td><td>35"</td><td>스틸: 남 35.5" / 여 34.5"</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">표준 길이 적용 원칙</p>
+        <ul class="callout-bullets">
+          <li>위 수치는 대략적 가이드입니다. 클럽 제조사마다 헤드 무게 기준이 다르면 표준 길이도 달라질 수 있습니다.</li>
+          <li>드라이버는 그라파이트 샤프트 기준만 제시합니다. 드라이버에 스틸 샤프트를 사용하는 경우는 드물어 별도 가이드를 적용하지 않습니다.</li>
+        </ul>
+        <p class="callout-foot">아이언과 웨지는 그라파이트/스틸 모두 기재했습니다. 스틸은 그라파이트보다 약 0.5인치 짧습니다.</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 8 이후에서 다룹니다: 클럽 길이가 타이밍·릴리즈·스윙웨이트에 미치는 원리와 심화 기준</p>
+      </aside>
+
+        <h3 class="subhead">3-2. WTF → 길이 미세 조정</h3>
+        <p>WTF(Wrist-to-Floor, 손목-바닥 거리)는 키 기준 길이를 미세 조정하는 보조 지표입니다. 골퍼가 편안한 자세로 바르게 서서 팔을 자연스럽게 내린 상태에서, 손목 주름(손목이 꺾이는 선)에서 바닥까지의 거리를 측정합니다.</p>
+        <h3 class="subhead">(2) 신장별 WTF 표준값</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>신장</th><th>표준 WTF (인치)</th><th>표준 WTF (cm)</th><th>표준 대비 길이 조정</th></tr></thead>
+          <tbody><tr><td>140cm (4'7")</td><td>26.9"</td><td>68cm</td><td>-2.5인치</td></tr>
+<tr><td>147cm (4'10")</td><td>28.4"</td><td>72cm</td><td>-2.0인치</td></tr>
+<tr><td>155cm (5'1")</td><td>29.8"</td><td>76cm</td><td>-1.5인치</td></tr>
+<tr><td>163cm (5'4")</td><td>31.3"</td><td>79cm</td><td>-1.0인치</td></tr>
+<tr><td>170cm (5'7")</td><td>32.8"</td><td>83cm</td><td>-0.5인치</td></tr>
+<tr><td>178cm (5'10")</td><td>34.2"</td><td>87cm</td><td>표준 (남성 기준)</td></tr>
+<tr><td>185cm (6'1")</td><td>35.7"</td><td>91cm</td><td>+0.5인치</td></tr>
+<tr><td>193cm (6'4")</td><td>37.2"</td><td>94cm</td><td>+1.0인치</td></tr>
+<tr><td>201cm (6'7")</td><td>38.6"</td><td>98cm</td><td>+1.5인치</td></tr>
+<tr><td>208cm (6'10")</td><td>40.1"</td><td>102cm</td><td>+2.0인치</td></tr>
+<tr><td>216cm (7'1")</td><td>41.6"</td><td>106cm</td><td>+2.5인치</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>신장 대비 WTF 측정값이 표준값에서 벗어나면 길이와 라이각 방향을 다음 기준으로 조정합니다.</p>
+        <p>(3) WTF 편차 → 길이/라이각 조정 기준</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>실측 WTF vs 표준값 편차</th><th>해석</th><th>조정 방향</th></tr></thead>
+          <tbody><tr><td>5cm(2인치) 이상 짧음</td><td>팔이 매우 짧은 구조</td><td>길이 -0.5인치 + 라이각 플랫 방향</td></tr>
+<tr><td>2~5cm(1~2인치) 짧음</td><td>팔이 약간 짧은 구조</td><td>라이각 플랫 방향 검토</td></tr>
+<tr><td>±2cm(0.7인치) 이내</td><td>비례 구조 정상</td><td>표준 길이 그대로 적용</td></tr>
+<tr><td>2~5cm(1~2인치) 김</td><td>팔이 약간 긴 구조</td><td>라이각 업라이트 방향 검토</td></tr>
+<tr><td>5cm(2인치) 이상 김</td><td>팔이 매우 긴 구조</td><td>길이 +0.5인치 + 라이각 업라이트 방향</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>WTF는 길이 조정보다 라이각 방향 판단에 더 자주 활용됩니다. WTF가 표준보다 짧으면 어드레스 시 클럽이 플랫하게 눕는 경향이 있어 라이각을 플랫 방향으로 조정합니다. WTF가 표준보다 길면 업라이트 방향입니다.</p>
+        <h3 class="subhead">3-3. 손 크기 → 그립 사이즈</h3>
+        <p>그립 사이즈는 손 크기를 측정해 결정합니다. 가장 긴 손가락(보통 중지) 끝에서 손목 주름까지의 직선 거리를 '손 길이'로 측정합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>손 길이 (cm)</th><th>손 길이 (인치)</th><th>그립 사이즈</th></tr></thead>
+          <tbody><tr><td>17 미만</td><td>6.5" 미만</td><td>언더사이즈 / 주니어</td></tr>
+<tr><td>17.0~19.0</td><td>6.5"~7.5"</td><td>스탠다드</td></tr>
+<tr><td>19.1~20.5</td><td>7.5"~8.0"</td><td>미드사이즈 (+2겹 빌드업)</td></tr>
+<tr><td>20.6~23.0</td><td>8.0"~9.0"</td><td>오버사이즈 (+4겹 빌드업)</td></tr>
+<tr><td>23 초과</td><td>9.0" 초과</td><td>점보</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">그립 사이즈 현장 판단 기준</p>
+        <ul class="callout-bullets">
+          <li>스탠다드 그립 장착 후: 왼손으로 쥐었을 때 가운데 두 손가락(중지·약지) 끝이 손바닥 두덩이 부분에 살짝 닿으면 적절합니다.</li>
+          <li>손가락 끝이 파고들면 → 그립이 가늘어 크기 증가 필요 (훅 유발 위험)</li>
+        </ul>
+        <p class="callout-foot">손가락 끝이 닿지 않으면 → 그립이 굵어 크기 감소 필요 (슬라이스 유발 위험)</p>
+      </aside>
+
+        <h3 class="subhead">3-4. 악력(근력) → 샤프트 무게 등급</h3>
+        <p>악력은 골퍼가 지속적으로 다룰 수 있는 클럽 총무게와 샤프트 무게의 방향을 결정하는 신체 지표입니다. 악력이 낮으면 무거운 클럽을 후반까지 반복적으로 컨트롤하기 어렵습니다. 악력이 높으면 가벼운 클럽에서 오히려 릴리즈가 빨라져 불안정해질 수 있습니다.</p>
+        <h3 class="subhead">무게 등급에 따른 샤프트 무게 기준</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>클럽</th><th>Lady-</th><th>Lady</th><th>Senior</th><th>Mstd-</th><th>Mstd</th><th>Mstd+</th><th>Mstd++</th></tr></thead>
+          <tbody><tr><td>드라이버</td><td>48g
+미만</td><td>45~
+53g</td><td>50~
+59g</td><td>55~
+63g</td><td>60~
+70g</td><td>65~
+75g</td><td>72g
+이상</td></tr>
+<tr><td>우드
+(Fw)</td><td>드라이버 샤프트 무게와 같거나 조금 더 무겁게 (+5~10g)</td><td>드라이버 샤프트 무게와 같거나 조금 더 무겁게 (+5~10g)</td><td>드라이버 샤프트 무게와 같거나 조금 더 무겁게 (+5~10g)</td><td>드라이버 샤프트 무게와 같거나 조금 더 무겁게 (+5~10g)</td><td>드라이버 샤프트 무게와 같거나 조금 더 무겁게 (+5~10g)</td><td>드라이버 샤프트 무게와 같거나 조금 더 무겁게 (+5~10g)</td><td>드라이버 샤프트 무게와 같거나 조금 더 무겁게 (+5~10g)</td></tr>
+<tr><td>하이브리드</td><td>우드보다 가볍거나 같게 / 아이언(스틸)보다 같거나 가볍게</td><td>우드보다 가볍거나 같게 / 아이언(스틸)보다 같거나 가볍게</td><td>우드보다 가볍거나 같게 / 아이언(스틸)보다 같거나 가볍게</td><td>우드보다 가볍거나 같게 / 아이언(스틸)보다 같거나 가볍게</td><td>우드보다 가볍거나 같게 / 아이언(스틸)보다 같거나 가볍게</td><td>우드보다 가볍거나 같게 / 아이언(스틸)보다 같거나 가볍게</td><td>우드보다 가볍거나 같게 / 아이언(스틸)보다 같거나 가볍게</td></tr>
+<tr><td>아이언
+(스틸)</td><td></td><td></td><td>80g
+미만</td><td>80~
+95g</td><td>90~
+100g</td><td>105~
+120g</td><td>120g
+이상</td></tr>
+<tr><td>아이언
+(그라파이트)</td><td>50g
+미만</td><td>50~
+55g</td><td>50~
+65g</td><td>60~
+75g</td><td>70g
+이상</td><td>75g
+이상</td><td></td></tr>
+<tr><td>웨지</td><td>아이언 샤프트 무게와 같거나 한 등급 더 무겁게</td><td>아이언 샤프트 무게와 같거나 한 등급 더 무겁게</td><td>아이언 샤프트 무게와 같거나 한 등급 더 무겁게</td><td>아이언 샤프트 무게와 같거나 한 등급 더 무겁게</td><td>아이언 샤프트 무게와 같거나 한 등급 더 무겁게</td><td>아이언 샤프트 무게와 같거나 한 등급 더 무겁게</td><td>아이언 샤프트 무게와 같거나 한 등급 더 무겁게</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>* Mstd(남성 표준) 기준: 악력 40~45kg, 정상적인 전후반 안정성, 일반 아마추어 남성 기준입니다.</p>
+        <p>* 지구력 보정: 후반 9홀 이후 스윙이 급격히 무너진다면 등급을 1단계 낮게 적용합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 8에서 다룹니다: 총무게·스윙웨이트·MOI의 물리 원리, 무게 등급 체계의 심화 기준과 구현 방법</p>
+      </aside>
+
+        <h3 class="subhead">§ 체크리스트 — 신체 구조</h3>
+        <p>이 골퍼의 신체 구조 해석이 완료되었는지 한 번에 확인합니다. 빈칸(▢)에는 측정값을 기입하고, 체크박스(☐)는 판단이 끝났을 때 표시합니다.</p>
+        <p>▢ 키: ________ cm  →  표준 드라이버 길이 기준: ________ 인치</p>
+        <p>▢ WTF(손목~바닥): ________ cm  →  길이 미세 보정 방향: ☐ 유지  ☐ 짧게  ☐ 길게</p>
+        <p>▢ 손 크기(중지 길이): ________ cm  →  그립 사이즈: ☐ Under  ☐ Standard  ☐ Mid  ☐ Jumbo</p>
+        <p>▢ 악력(우세손): ________ kg  →  무게 등급: ☐ Lady-  ☐ Lady  ☐ Senior  ☐ Mstd-  ☐ Mstd  ☐ Mstd+  ☐ Mstd++</p>
+        <p>☐  신체 측정 4항목을 모두 확보했다</p>
+        <p>☐  초기 스펙(길이·그립 사이즈·무게 등급) 3개 기본값을 도출했다</p>
+        <p>☐  신체 특이점(관절 제약·부상 이력 등)이 있다면 메모에 기록했다</p>
+        <p>※ 이 체크리스트의 결과는 4절 '스테틱 피팅 → 초기 스펙 산출'로 이어집니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">스테틱 피팅 → 초기 스펙 산출</h2>
+
+      <div class="prose">
+        <p>키, WTF, 손 크기, 악력 측정이 완료되면 론치모니터 없이도 초기 스펙을 제안할 수 있습니다. 이 스펙은 출발점입니다. 다이나믹 검증에서 타점 패턴과 샷 데이터가 확인되면 이를 기준으로 조정됩니다.</p>
+        <h3 class="subhead">스테틱 → 초기 스펙 산출 흐름</h3>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">스테틱 피팅 초기 스펙 산출 순서</p>
+        <ul class="callout-bullets">
+          <li>STEP 1: 키 측정 → 기준 길이 도출 (표준 클럽 길이표 + 키 기준 조정)</li>
+          <li>STEP 2: WTF 측정 → 신장별 표준 WTF와 비교 → 길이 미세 조정 / 라이각 방향 결정</li>
+          <li>STEP 3: 손 크기 측정 → 그립 사이즈 결정</li>
+          <li>STEP 4: 악력 측정 + 인터뷰(후반 체력) → 무게 등급 → 샤프트 무게 방향 결정</li>
+          <li>↓  초기 스펙 (출발점)</li>
+          <li>기준 길이: ___인치 (표준 대비 ___인치 조정)</li>
+          <li>그립 사이즈: 스탠다드 / 미드사이즈 / 오버사이즈</li>
+          <li>샤프트 무게 방향: ___ 등급 (Lady / Senior / Mstd- / Mstd / Mstd+)</li>
+        </ul>
+        <p class="callout-foot">↓  다이나믹 검증 (타점·편차·템포 확인 후 확정 또는 수정)</p>
+      </aside>
+
+        <p>스테틱 기준으로 도출한 초기 스펙은 실제로 활용 가능합니다. 원거리 피팅(전화·온라인), 초보 골퍼 첫 세팅, 선물용 클럽 구성 등 다이나믹 측정이 어려운 상황에서 출발점 역할을 합니다. 단, 스테틱 기준에만 의존하면 타이밍 구조(템포·릴리즈)와 반복 구조(타점 패턴)를 놓칩니다. 이 두 구조는 PART 3의 5~8절에서 이어서 다룹니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">에너지의 크기 — 헤드스피드와 편차</h2>
+
+      <div class="prose">
+        <p>헤드스피드는 골퍼가 만들어내는 에너지의 크기입니다. 피팅에서는 최고값보다 재현 가능한 속도 범위가 더 중요합니다. 편차가 큰 골퍼는 컨디션이 조금만 달라져도 샤프트 반응과 임팩트 구조가 급격히 달라집니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">평균 스피드 착각 사례</p>
+        <ul class="callout-bullets">
+          <li>A 골퍼: 평균 100mph, 편차 ±2mph → 결과 폭이 좁고 반복됩니다.</li>
+          <li>B 골퍼: 평균 105mph, 편차 ±8mph → 잘 맞는 날은 강하지만 나쁜 날은 좌우 교차가 심합니다.</li>
+          <li>결과 중심 피팅에서는 B가 상위 스펙 대상입니다. 그러나 편차가 큰 B에게 공격적인 세팅을 적용하면 필드에서 결과 폭이 더 커집니다.</li>
+        </ul>
+        <p class="callout-foot">피팅 기준은 평균이 아니라 편차입니다.</p>
+      </aside>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>헤드스피드 유형</th><th>특징</th><th>피팅 방향</th></tr></thead>
+          <tbody><tr><td>안정형 (편차 ±2mph 이하)</td><td>에너지가 고르게 전달. 결과 폭이 좁음</td><td>선택 폭이 넓음. 선호도와 데이터 기반 결정</td></tr>
+<tr><td>변동형 (편차 ±5mph 이상)</td><td>컨디션에 따라 결과 폭 커짐</td><td>변동을 억제하는 보수적 세팅 우선</td></tr>
+<tr><td>후반 저하형</td><td>초반은 좋으나 후반 급격히 무너짐</td><td>총무게 상한선 재설정. 지구력 기준 설계</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 9에서 다룹니다: 헤드스피드와 CPM 관계, 샤프트 강도 매핑의 원리와 기준</p>
+      </aside>
+
+        <h3 class="subhead">§ 체크리스트 — 에너지의 크기 (헤드스피드)</h3>
+        <p>▢ 드라이버 평균 헤드스피드: ________ mph  (또는 ________ m/s)</p>
+        <p>▢ 드라이버 헤드스피드 편차(최저~최고): ________ ~ ________ mph</p>
+        <p>▢ 7번 아이언 평균 헤드스피드: ________ mph</p>
+        <p>▢ 스피드 구간 판정: ☐ 저스피드(~85mph)  ☐ 중간(85~100mph)  ☐ 고스피드(100mph+)</p>
+        <p>☐  5샷 이상 측정해 평균을 냈다 (1~2샷 판단 금지)</p>
+        <p>☐  편차가 크면(±5mph 이상) 컨디션·자세 영향을 추가로 기록했다</p>
+        <p>☐  스피드 구간으로부터 CPM 출발점을 도출했다 → PART 9 3절 참조</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">에너지 투입 방식 — 템포와 전환</h2>
+
+      <div class="prose">
+        <p>템포는 백스윙부터 전환, 다운스윙으로 이어지는 시간 배분입니다. '빠르다/느리다'는 감각 표현이지만, 피팅에서는 클럽에 에너지가 전달되는 타이밍 패턴으로 해석합니다.</p>
+        <p>전환은 백스윙의 끝에서 다운스윙이 시작되는 구간입니다. 전환이 급하면 샤프트가 초기에 크게 휘며 타이밍 허용폭이 줄어드는 경향이 있습니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>유형</th><th>특징</th><th>장비 방향</th></tr></thead>
+          <tbody><tr><td>스윙어형 (Swinger)</td><td>템포 부드럽고 전환 완만. 스윙이 자연스럽고 효율적</td><td>버트 강성 과다 금지. 리듬을 살리는 세팅</td></tr>
+<tr><td>히터형 (Hitter)</td><td>전환 빠르고 전체 템포 빠름. 힘 있으나 타이밍 변동 큼</td><td>버트 안정 구조 필요. 총무게으로 전환 완충</td></tr>
+<tr><td>일반형 (Standard)</td><td>전환 속도 중간. 다운스윙에서 약간 감속</td><td>범용 세팅 가능. 데이터와 체감으로 미세 조정</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>인터뷰 답변 / 관찰</th><th>타이밍 구조 해석</th><th>검토 변수</th></tr></thead>
+          <tbody><tr><td>스윙이 빠르고 힘이 있습니다 (히터형)</td><td>전환 급함 → 초기 반응 과속 가능성</td><td>버트 안정 EI / 총무게</td></tr>
+<tr><td>스윙이 부드럽고 힘에 비해 멀리 납니다 (스윙어형)</td><td>전환 완만 → 과한 버트 강성은 역효과</td><td>버트 반응 완화 / 총무게 보수적</td></tr>
+<tr><td>드라이버·아이언 타이밍이 달라 한쪽이 항상 어렵습니다</td><td>FM 흐름 단절. 세트 간 타이밍 불일치</td><td>FM 흐름 점검</td></tr>
+<tr><td>백스윙이 빨리 끝나고 다운스윙도 빠릅니다</td><td>전환 구간이 짧음. 급가속형</td><td>중단 안정 EI 구조 / 총무게 상향</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 9에서 다룹니다: EI 구간(버트/미들/팁)이 템포·전환·릴리즈와 연결되는 타이밍 구조 원리</p>
+      </aside>
+
+        <p>§ 체크리스트 — 에너지 투입 방식 (템포와 전환)</p>
+        <p>▢ 스윙 총 시간(백스윙 시작~임팩트): ________ 초  (느림 &gt;1.2 / 일반 0.9~1.1 / 빠름 &lt;0.9)</p>
+        <p>▢ 전환 속도 판정: ☐ 부드러움  ☐ 보통  ☐ 급격함</p>
+        <p>▢ 템포 타입 판정: ☐ 느린 템포  ☐ 중간  ☐ 빠른 템포</p>
+        <p>☐  비디오를 뒤에서 촬영해 슬로우 모션으로 확인했다</p>
+        <p>☐  전환 속도와 헤드스피드의 매칭을 확인했다 (헤드스피드 대비 템포가 빠른지 느린지)</p>
+        <p>☐  CPM 보정 방향을 결정했다 → PART 9 3-3 보정 원칙 참조</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">에너지 방출 시점 — 릴리즈 구조</h2>
+
+      <div class="prose">
+        <p>릴리즈는 다운스윙 과정에서 샤프트에 저장된 에너지가 풀리기 시작하고 헤드가 손보다 빠르게 가속되기 시작하는 시간 구간입니다. 릴리즈는 손목 동작 하나가 아니라 구간입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>릴리즈 유형</th><th>현장 징후</th><th>검토 변수</th></tr></thead>
+          <tbody><tr><td>얼리 릴리즈 (Early)</td><td>타점이 힐 쪽 경향 / Dynamic Loft 높음 / 훅 또는 스핀 과다</td><td>팁 안정 EI / 강성 검토</td></tr>
+<tr><td>레이트 릴리즈 (Late)</td><td>타점이 토우 쪽 경향 / Dynamic Loft 낮음 / 우측 미스 경향</td><td>총무게 감소 / 토크 보정 검토</td></tr>
+<tr><td>릴리즈 변동형</td><td>잘 맞는 날/안 맞는 날 구질이 크게 달라짐</td><td>변동 억제 우선. 총무게·MOI 보수적 설정</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 9 / PART 10에서 다룹니다: 릴리즈 구조와 EI 프로파일 연결 원리. ROC(페이스 닫힘 속도)와 토크의 관계</p>
+      </aside>
+
+        <p>§ 체크리스트 — 에너지 방출 시점 (릴리즈 구조)</p>
+        <p>▢ 릴리즈 시점 판정: ☐ 조기 릴리즈(손이 빠른 타입)  ☐ 중간  ☐ 지연 릴리즈(몸통 주도)</p>
+        <p>▢ 백스윙 탑에서 다운스윙 초기 손 위치: ☐ 이른 풀림  ☐ 코킹 유지  ☐ 유지가 긴 편</p>
+        <p>▢ 임팩트 시 손 위치: ☐ 볼 뒤  ☐ 볼 위  ☐ 볼 앞(forward shaft lean)</p>
+        <p>☐  비디오에서 다운스윙 초반 클럽헤드 거동을 확인했다</p>
+        <p>☐  릴리즈 타입에 맞는 킥포인트 방향을 결정했다 → PART 9 5절 참조</p>
+        <p>☐  현재 클럽과의 궁합 가설을 세웠다 (조기 릴리즈 + 팁 부드러움 = 훅 원인 등)</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">◼ 그림 3-1. 임팩트 테이프 타점 패턴 5종 (실사)</p>
+        <p class="callout-foot" style="border:none;padding:0;">[제작 프롬프트 — 실제 촬영 사진이 필요함]
+
+아이언 헤드 페이스에 임팩트 테이프(마그네이트 또는 Dr.Scholl's 푸트 파우더 스프레이)를 부착한 상태에서 실제로 구를 친 뒤의 타점 흔적을 촬영한 사진 5장을 나란히 배치합니다.
+
+① 중앙 집중형 — 페이스 중앙에 흔적 반복 (이상적)
+② 힐 집중형 — 페이스 힐 쪽 흔적 반복
+③ 토 집중형 — 페이스 토 쪽 흔적 반복
+④ 상단 집중형 — 페이스 크라운 쪽 흔적 반복
+⑤ 하단 집중형 — 페이스 리딩 엣지 쪽 흔적 반복
+
+· 동일한 7번 아이언 헤드, 동일 조명, 동일 각도에서 촬영 (비교 가능성 확보).
+· 각 패턴당 8~12구 타격 후의 누적 흔적.
+· 사진 아래에 패턴명 라벨.
+· 참고: TaylorMade Custom-Fitting Guide의 Lie Board 검증 페이지 스타일.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 8 ==================== -->
+  <section id="sec-8" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 08 · 8절</p>
+      <h2 class="section-title">반복 구조 — 타점 패턴이 1차 변수입니다</h2>
+
+      <div class="prose">
+        <p>반복 구조는 골퍼의 샷이 어느 범위 안에서 반복되는지를 나타냅니다. 타점 패턴, 샷 간 편차, 피로 누적 후 변화가 여기에 속합니다. 그 중에서도 타점 패턴은 가장 먼저 확인해야 하는 1차 변수입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">타점이 1차 변수인 이유</p>
+        <ul class="callout-bullets">
+          <li>타점은 클럽과 공이 실제로 만나는 유일한 접촉점입니다.</li>
+          <li>타점이 중심에서 벗어나면 에너지 전달 효율, 스핀 방향, 출발 방향이 동시에 변합니다.</li>
+          <li>타점이 불안정한 상태에서는 다른 어떤 수치도 구조적 원인을 정확히 반영하지 못합니다.</li>
+        </ul>
+        <p class="callout-foot">따라서 타점 패턴을 먼저 파악하고, 그 패턴이 어디서 비롯되는지를 추적합니다.</p>
+      </aside>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>타점 패턴</th><th>구조적 해석</th><th>검토 변수</th></tr></thead>
+          <tbody><tr><td>항상 토우(toe) 쪽</td><td>길이 과다 → 어드레스 시 페이스가 멀어짐</td><td>길이 단축</td></tr>
+<tr><td>항상 힐(heel) 쪽</td><td>길이 부족 또는 어드레스 자세 문제</td><td>길이 연장 / 라이각</td></tr>
+<tr><td>상단 집중</td><td>Dynamic Loft 감소 → 탄도 낮음 / 스핀 감소 경향</td><td>티 높이 / 어드레스 / 길이</td></tr>
+<tr><td>하단 집중</td><td>Dynamic Loft 증가 → 탄도 높음 / 스핀 증가 경향</td><td>길이 / 어드레스 재검토</td></tr>
+<tr><td>랜덤 분산</td><td>타이밍 불안정 또는 총무게 문제</td><td>총무게 / MOI / 길이</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 7에서 다룹니다: MOI와 타점 안정성의 물리 관계. 타점 분산이 MOI 선택에 미치는 영향</p>
+      </aside>
+
+        <p>§ 체크리스트 — 반복 구조 (타점 패턴)</p>
+        <p>▢ 타점 테이프로 확인한 평균 타점 위치: ☐ 센터  ☐ 토우  ☐ 힐  ☐ 상단  ☐ 하단</p>
+        <p>▢ 타점 분산 정도: ☐ 좁음(±5mm)  ☐ 보통(±10mm)  ☐ 넓음(±15mm+)</p>
+        <h3 class="subhead">▢ 거리 편차: ________ 야드(최장~최단)</h3>
+        <p>▢ 반복성 종합 판정: ☐ 안정(1차 변수)  ☐ 중간  ☐ 불안정(스윙 개입 필요)</p>
+        <p>☐  최소 10샷의 타점 패턴을 확인했다 (5샷 이하는 판단 금지)</p>
+        <p>☐  특정 미스 샷을 제외한 평균이 아닌, '최악 샷'의 패턴을 함께 기록했다</p>
+        <p>☐  반복성이 낮으면 클럽 피팅 이전에 코치 협업 필요성을 검토했다 → 부록 C 패턴 5·6 참조</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 9 ==================== -->
+  <section id="sec-9" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 09 · 9절</p>
+      <h2 class="section-title">인터뷰 결과 → 골퍼 구조 변환 매핑표</h2>
+
+      <div class="prose">
+        <p>PART 1의 인터뷰에서 수집한 골퍼의 말을 신체·타이밍·반복 구조 변수로 변환하는 기준표입니다. 이 표는 '먼저 검토할 방향'을 제시하는 도구입니다. 최종 판단은 반드시 데이터 검증 이후에 내립니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>인터뷰 결과</th><th>구조 해석</th><th>검토 변수</th></tr></thead>
+          <tbody><tr><td>후반 9홀부터 공이 밀립니다</td><td>지구력 한계 → 릴리즈 지연 (반복 구조)</td><td>총무게 / MOI</td></tr>
+<tr><td>좌측 미스가 반복됩니다</td><td>릴리즈 과다 또는 타이밍 빠름 (타이밍 구조)</td><td>EI / 토크</td></tr>
+<tr><td>우측 미스가 반복됩니다</td><td>릴리즈 지연 또는 타점 힐 (타이밍·반복 구조)</td><td>EI / 길이 / MOI</td></tr>
+<tr><td>클럽별 미스 방향이 다릅니다</td><td>세트 일관성 문제 (타이밍 구조)</td><td>FM 흐름 / 길이 / MOI</td></tr>
+<tr><td>짧은 아이언은 잘 맞고 긴 아이언이 어렵습니다</td><td>롱아이언 길이 과다 또는 MOI 불일치 (반복 구조)</td><td>길이 / MOI 매칭</td></tr>
+<tr><td>공이 항상 토우 쪽에 맞습니다</td><td>길이 과다 (신체 구조)</td><td>길이 단축</td></tr>
+<tr><td>가벼운 클럽이 오히려 더 흔들립니다</td><td>총무게 부족 → 릴리즈 가속 (타이밍 구조)</td><td>총무게·MOI 상향</td></tr>
+<tr><td>헤드가 느껴지지 않아 타이밍을 못 잡겠습니다</td><td>SW 부족. 헤드 체감 부재 (타이밍 구조)</td><td>SW 상향</td></tr>
+<tr><td>스윙이 빠르고 힘이 있습니다</td><td>히터형. 전환 급함 (타이밍 구조)</td><td>버트 안정 EI / 총무게</td></tr>
+<tr><td>드라이버·아이언 타이밍이 달라 어렵습니다</td><td>FM 흐름 단절 (타이밍 구조)</td><td>FM 점검 / CPM 흐름</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 10 ==================== -->
+  <section id="sec-10" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 10 · 10절</p>
+      <h2 class="section-title">골퍼 구조 → 피팅 변수 변환 오판 사례 3가지</h2>
+
+      <div class="prose">
+        <p>아래 3개 케이스는 인터뷰와 골퍼 구조 파악 없이 데이터만 보고 판단했을 때 반복되는 오판 패턴입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>케이스</th><th>수집된 데이터</th><th>잘못된 판단</th><th>실제 구조와 올바른 접근</th></tr></thead>
+          <tbody><tr><td>CASE 1</td><td>헤드스피드 95mph. 플렉스 R 사용 중. 구질 불안정.</td><td>헤드스피드 기준 SR 또는 S 샤프트로 교체.</td><td>인터뷰 확인 시 후반 미스 증가. 지구력 한계로 후반 릴리즈 지연. 총무게 과다가 원인. 처방: 샤프트 강성 변경 전 총무게 감소 검토.</td></tr>
+<tr><td>CASE 2</td><td>타점 분포 랜덤. 스매시 팩터 낮음. 드라이버 거리 부족.</td><td>반발계수 높은 헤드 또는 가벼운 샤프트로 교체.</td><td>타점이 랜덤 분산. 타이밍 불안정이 원인. 처방: 장비 교체 전 길이 단축 후 타점 안정화 우선.</td></tr>
+<tr><td>CASE 3</td><td>아이언 슬라이스. 드라이버는 문제없음.</td><td>아이언 샤프트 강성 상향. CPM 조정.</td><td>최근 리샤프트 이력 확인. 드라이버 60g, 아이언 45g으로 경량화 → FM 단절 → 아이언 릴리즈 가속 → 슬라이스. 처방: CPM 조정 전 세트 무게 흐름 복원.</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 11 ==================== -->
+  <section id="sec-11" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 11 · 11절</p>
+      <h2 class="section-title">골퍼 구조 해석 워크시트 — 1페이지 실전 양식</h2>
+
+      <div class="prose">
+        <p>이 워크시트는 피터가 고객 상담에 실제로 복사해서 사용하는 양식입니다. 인터뷰부터 초기 스펙 산출까지 한 장에서 완료할 수 있도록 PART 3 전체를 요약한 구조입니다. 복사해서 매장 양식으로 변형해 사용하셔도 됩니다.</p>
+        <h3 class="subhead">A. 기본 정보</h3>
+        <p>▢ 고객명: ________________  ·  측정 일자: ________________  ·  피터: ________________</p>
+        <p>▢ 구력: ________ 년  ·  평균 스코어: ________  ·  라운드 빈도: ________ /월</p>
+        <p>▢ 피팅 목적(한 문장): ____________________________________________</p>
+        <h3 class="subhead">B. 신체 구조 (3절 참조)</h3>
+        <p>▢ 키 ______ cm / WTF ______ cm / 손(중지) ______ cm / 악력 ______ kg</p>
+        <p>▢ → 드라이버 길이 ______ 인치 / 그립 사이즈 ______ / 무게 등급 ______</p>
+        <h3 class="subhead">C. 타이밍 구조 (5~7절 참조)</h3>
+        <p>▢ Driver 헤드스피드 ______ mph / 편차 ______ ~ ______ mph / 7I ______ mph</p>
+        <p>▢ 스피드 구간: ☐ 저  ☐ 중  ☐ 고</p>
+        <p>▢ 템포: ☐ 느림  ☐ 보통  ☐ 빠름  /  전환: ☐ 부드러움  ☐ 보통  ☐ 급격</p>
+        <p>▢ 릴리즈: ☐ 조기  ☐ 중간  ☐ 지연</p>
+        <h3 class="subhead">D. 반복 구조 (8절 참조)</h3>
+        <p>▢ 타점 위치: ☐ 센터  ☐ 토우  ☐ 힐  ☐ 상  ☐ 하</p>
+        <p>▢ 타점 분산: ☐ 좁음  ☐ 보통  ☐ 넓음  /  거리 편차 ______ 야드</p>
+        <p>▢ 반복성: ☐ 안정  ☐ 중간  ☐ 불안정</p>
+        <h3 class="subhead">E. 인터뷰에서 나온 핵심 증상·요구</h3>
+        <p>▢ 현재 클럽 불만: ____________________________________________</p>
+        <p>▢ 본인이 느끼는 개선 희망점: ____________________________________________</p>
+        <p>▢ 현재 클럽 중 가장 편한 클럽: ____________________________________________</p>
+        <p>F. 초기 스펙 결정 (4절·PART 8·PART 9 종합)</p>
+        <p>▢ 드라이버 → 샤프트 무게 ______ g / CPM ______ / 토크 ______ / 킥포인트 ______ / SW ______ / 길이 ______</p>
+        <p>▢ 아이언(7번 기준) → 샤프트 무게 ______ g / CPM ______ / 킥포인트 ______ / SW ______ / 길이 ______</p>
+        <p>▢ 예상 오판 주의점: ____________________________________________</p>
+        <h3 class="subhead">G. 피터의 판단 근거 메모</h3>
+        <p>이 골퍼를 이 방향으로 피팅하는 이유를 한 단락으로 정리합니다. 나중에 결과 검증과 다음 피팅 학습에 사용됩니다.</p>
+        <h3 class="subhead">▢ ____________________________________________</h3>
+        <h3 class="subhead">▢ ____________________________________________</h3>
+        <h3 class="subhead">▢ ____________________________________________</h3>
+        <p>※ 이 양식은 시작점입니다. 피터마다 매장 특성·고객층에 맞춰 항목을 추가·변형해 사용하시기 바랍니다.</p>
+        
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 3 골퍼 해석</p>
+        <ol class="check-list">
+          <li>A 골퍼는 평균 95mph ±2mph, B 골퍼는 평균 97mph ±8mph입니다. 어느 골퍼가 더 '피팅이 쉬운' 대상이며 그 이유는 무엇입니까?
+문제 2. 클럽 길이를 손목-바닥 거리(wrist-to-floor) 한 가지 측정만으로 확정하는 것이 불충분한 이유는 무엇이며, 어떤 측정이 추가로 필요합니까?
+문제 3. 타이밍 구조란 무엇을 의미하며, 같은 헤드스피드에서도 이 구조가 다른 두 골퍼에게 다른 샤프트가 필요한 이유는 무엇입니까?
+※ 해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</li>
+        </ol>
+        
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== CLOSING ==================== -->
+  <section class="closing">
+    <div class="container narrow">
+      <p class="eyebrow">CLOSING · PART 3 마무리</p>
+      <h2 class="section-title">PART 3 마무리</h2>
+
+      <div class="closing-prose">
+        <p class="closing-paragraph">PART 3는 인터뷰와 신체 측정 결과를 두 가지로 변환합니다. 첫째, 스테틱 측정(키/WTF/손 크기/악력)에서 초기 스펙(길이, 그립 사이즈, 샤프트 무게 방향)을 도출합니다. 둘째, 인터뷰 결과(템포, 릴리즈, 타점 패턴)를 신체·타이밍·반복 구조 변수로 변환합니다.</p>
+        <p class="closing-paragraph">스테틱 기준은 출발점이며, 다이나믹 검증(타점·편차·볼 비행 데이터)이 이를 확정하거나 수정합니다.</p>
+        <p class="closing-paragraph">이후 파트에서 다룰 내용</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>변수</th><th>다루는 파트</th><th>내용</th></tr></thead>
+          <tbody><tr><td>길이의 원리와 심화 기준</td><td>PART 8 이후</td><td>길이가 타이밍·릴리즈·스윙웨이트에 미치는 원리</td></tr>
+<tr><td>MOI (관성 구조)</td><td>PART 7</td><td>타점 안정성과 MOI 관계. MOI 매칭 개념</td></tr>
+<tr><td>총무게 / 스윙웨이트</td><td>PART 8</td><td>무게 등급 체계. 총무게→MOI→SW 결정 순서</td></tr>
+<tr><td>샤프트 CPM / EI</td><td>PART 9</td><td>강도 기준. EI 구간별 타이밍 구조. FM 설계</td></tr>
+<tr><td>토크 / ROC (페이스 닫힘)</td><td>PART 10</td><td>방향성과 회전 응답. EI+무게+MOI 통합 연결</td></tr>
+<tr><td>헤드 기하 (라이/로프트/Offset)</td><td>PART 6</td><td>라이각·로프트가 볼 비행에 미치는 물리 구조</td></tr>
+<tr><td>통합 결정 시스템</td><td>PART 11</td><td>모든 변수를 한 번에 결정하는 의사결정 흐름</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+
+      
+    </div>
+  </section>
+
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book/part-2" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">PART 2 · 판단 구조 시스템</span>
+      </a>
+      <a href="/book/part-4" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 4 · 볼 비행 구조</span>
+        <span class="pg-sub">공이 왜 그렇게 날아가는지 물리적으로 설명합니다</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</BaseLayout>
+
+
+<!-- PART 1, 2와 동일한 디자인 시스템 -->
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+  .subhead { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 2em 0 .8em; padding-top: 1em; border-top: 1px dashed var(--rule); }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  .part-hero { background: var(--bg); padding: 72px 0 64px; border-bottom: 1px solid var(--rule); }
+  .part-title { font-family: var(--serif); margin: 0 0 1rem; line-height: 1.1; color: var(--text); font-weight: 500; }
+  .part-num { display: block; font-family: var(--sans); font-size: .875rem; font-weight: 600; letter-spacing: .2em; color: var(--muted); margin-bottom: .75rem; }
+  .part-name { display: block; font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 600; letter-spacing: -.02em; }
+  .part-sub { display: block; font-size: clamp(1.1875rem, 3vw, 1.625rem); font-weight: 300; color: var(--text-2); margin-top: .25em; }
+  .part-en { font-family: var(--sans); font-size: .9375rem; color: var(--muted); letter-spacing: .02em; margin: 1.5rem 0 2rem; font-style: italic; }
+  .part-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 640px; margin: 0; }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 28px 32px; border-radius: 2px; margin: 2rem 0; }
+  .callout-label { font-family: var(--sans); font-size: .875rem; font-weight: 700; color: var(--accent); margin: 0 0 .75rem; letter-spacing: .04em; }
+  .callout-list { margin: 0; padding-left: 1.4em; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets { list-style: none; padding: 0; margin: 0 0 1rem; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-bullets li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+  .callout-bullets li:before { content: "·"; position: absolute; left: .25rem; top: 0; color: var(--accent); font-weight: 700; }
+  .callout-foot { font-family: var(--sans); font-size: 1rem; color: var(--text-2); margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); line-height: 1.7; }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+
+  .part-toc { background: var(--bg); padding: 16px 0 64px; }
+  .toc-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; color: var(--text); font-family: var(--sans); transition: color .2s, padding .2s; }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--accent); min-width: 2.5rem; }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  .intro { padding: 56px 0; }
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4vw, 2.625rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .principle-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 32px; margin: 2.5rem 0; text-align: center; border-radius: 2px; }
+  .principle-label { font-family: var(--sans); font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .principle-flow { font-family: var(--serif); font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 500; color: var(--text); margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.25rem; }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-foot { font-family: var(--sans); font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); max-width: 520px; margin-inline: auto; }
+
+  /* Data table */
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 520px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+  .data-table tbody tr:hover td { background: var(--bg-soft); }
+  .data-table tbody tr.group-row td { background: var(--accent-soft); color: var(--accent); font-weight: 700; padding: 10px 14px; font-size: .8125rem; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* Closing */
+  .closing { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+  .closing-prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-prose p strong { color: white; font-weight: 600; }
+  .closing-prose p em { font-style: normal; color: var(--accent-2); font-weight: 600; background: none; padding: 0; }
+  .closing-paragraph { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-paragraph strong { color: white; }
+
+  .check-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); padding: 28px 32px; border-radius: 2px; margin-top: 2.5rem; }
+  .check-label { font-family: var(--sans); font-size: .8125rem; color: var(--accent-2); font-weight: 700; letter-spacing: .1em; margin: 0 0 1rem; }
+  .check-list { margin: 0 0 1rem; padding-left: 1.25em; font-family: var(--sans); font-size: .9375rem; line-height: 1.85; color: rgba(255,255,255,.85); }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot { font-family: var(--sans); font-size: .8125rem; color: rgba(255,255,255,.5); margin: 0; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.08); }
+
+  /* Pagination */
+  .part-pagination { background: var(--bg); padding: 56px 0 80px; border-top: 1px solid var(--rule); }
+  .part-pagination .container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 760px) { .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; } }
+  .pg-back, .pg-next { display: flex; align-items: center; text-decoration: none; font-family: var(--sans); transition: transform .25s, background .25s; border: 1px solid var(--rule); padding: 20px 24px; background: var(--bg-elev); border-radius: 2px; color: var(--text); }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+  .pg-next { flex-direction: column; align-items: flex-end; text-align: right; gap: .15rem; background: var(--text); color: var(--bg); border-color: var(--text); position: relative; padding-right: 60px; }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta { font-size: .75rem; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; font-weight: 600; }
+  .pg-next .pg-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-top: .15rem; }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .principle-card { padding: 24px 20px; }
+    .callout { padding: 22px 20px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 12px; font-size: .875rem; }
+  }
+</style>

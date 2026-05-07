@@ -1,0 +1,639 @@
+---
+// /src/pages/book/part-6.astro
+// 『실제적인 클럽피팅』 PART 6 — 헤드 기하 구조
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "PART 6. 헤드 기하 구조 | 『실제적인 클럽피팅』";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 6. 헤드 기하 구조 — 라이각·로프트·오프셋·페이스·CG. Loft / Face Angle / Lie / Offset / Face Progression / 어저스터블 슬리브";
+const pageKeywords = "클럽피팅, 헤드 기하 구조, 채기웅, 실제적인 클럽피팅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 6</span>
+      </div>
+
+      <p class="eyebrow">PART 06 · 본문 14 PART 중 6번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 6</span>
+        <span class="part-name">헤드 기하 구조</span>
+        <span class="part-sub">라이각·로프트·오프셋·페이스·CG</span>
+      </h1>
+
+      <p class="part-en">Head Geometry</p>
+
+      <p class="part-lead">Loft / Face Angle / Lie / Offset / Face Progression / 어저스터블 슬리브</p>
+    </div>
+  </section>
+  <section class='objectives'><div class='container narrow'>
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 6 헤드 기하를 마치면</p>
+        <ol class="callout-list">
+          <li>로프트·라이각·페이스 앵글·오프셋·Face Progression의 역할을 구분할 수 있다.</li>
+          <li>어저스터블 슬리브가 페이스 방향에 미치는 영향을 해석할 수 있다.</li>
+          <li>헤드 기하 변수 조합을 골퍼 특성에 맞춰 판단할 수 있다.</li>
+        </ol>
+      </div>
+</div></section>
+
+  <!-- ==================== TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        <li><a href="#sec-1"><span class="toc-num">01</span><span class="toc-text">페이스가 바라보는 방향 — 두 평면의 구조</span></a></li>
+        <li><a href="#sec-2"><span class="toc-num">02</span><span class="toc-text">로프트 (Loft) — V-Plane에서 페이스가 바라보는 방향</span></a></li>
+        <li><a href="#sec-3"><span class="toc-num">03</span><span class="toc-text">페이스 앵글 (Face Angle) — H-Plane에서 페이스가 바라보는 방향</span></a></li>
+        <li><a href="#sec-4"><span class="toc-num">04</span><span class="toc-text">라이각 (Lie Angle) — 라이각이 페이스 앵글을 바꾸는 이유</span></a></li>
+        <li><a href="#sec-5"><span class="toc-num">05</span><span class="toc-text">오프셋과 Face Progression</span></a></li>
+        <li><a href="#sec-6"><span class="toc-num">06</span><span class="toc-text">어저스터블 슬리브 — 로프트·페이스 앵글·라이각의 연동 구조</span></a></li>
+        <li><a href="#sec-7"><span class="toc-num">07</span><span class="toc-text">Head CG와 헤드 기하 구조의 결합</span></a></li>
+        <li><a href="#sec-8"><span class="toc-num">08</span><span class="toc-text">피팅에서의 헤드 기하 판단 순서</span></a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro">
+    <div class="container narrow prose">
+      <p>PART 6는 헤드가 본래 어떤 기하 구조로 설계되어 있는지를 다룹니다. 이 PART를 관통하는 질문은 하나로 모을 수 있습니다. 임팩트 순간 페이스는 어느 방향을 바라보고 있는가.</p>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">페이스가 바라보는 방향 — 두 평면의 구조</h2>
+
+      <div class="prose">
+        <p>임팩트 순간 페이스가 향하는 방향은 두 평면으로 분해할 수 있습니다. 수직 방향(위아래)과 수평 방향(좌우)입니다. PART 4에서 정의한 V-Plane과 H-Plane 구분이 여기서 그대로 적용됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>평면</th><th>무엇을 결정하는가</th><th>관련 변수</th></tr></thead>
+          <tbody><tr><td>V-Plane (수직 평면)</td><td>페이스가 위아래로 얼마나 기울어졌는가 → 탄도와 스핀량 결정</td><td>로프트(Loft)</td></tr>
+<tr><td>H-Plane (수평 평면)</td><td>페이스가 좌우로 어느 방향을 향하는가 → 출발 방향과 곡률 결정</td><td>페이스 앵글(Face Angle)</td></tr>
+<tr><td>두 평면의 결합</td><td>실제 임팩트에서 V와 H는 동시에 작용</td><td>라이각이 변하면 H-Plane의 페이스 앵글이 바뀜</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">핵심 전제</p>
+        <ul class="callout-bullets">
+          <li>로프트, 페이스 앵글, 라이각은 독립 변수가 아닙니다. 라이각이 달라지면 페이스 앵글이 바뀝니다. 슬리브를 돌려 로프트를 바꾸면 페이스 앵글도 함께 바뀝니다.</li>
+        </ul>
+        <p class="callout-foot">이 세 변수의 연동 구조를 이해해야 헤드 기하를 피팅에 올바르게 적용할 수 있습니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">로프트 (Loft) — V-Plane에서 페이스가 바라보는 방향</h2>
+
+      <div class="prose">
+        <p>로프트는 페이스면이 수직선과 이루는 각도입니다. 클럽을 옆에서 봤을 때(V-Plane 시점), 페이스가 얼마나 뒤로 기울어져 있는지를 나타냅니다. 로프트가 클수록 페이스는 더 위쪽을 향하고, 작을수록 더 전방을 향합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 6-1. 로프트 각도 측면도 — 드라이버 3종 비교</p>
+      </aside>
+
+        <h3 class="subhead">2-1. Static Loft vs Dynamic Loft</h3>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">※ PART 4에서 정의한 내용: Static Loft와 Dynamic Loft의 차이. Spin Loft = Dynamic Loft − Attack Angle. 탄도와 스핀의 결정 구조 완전 정의</p>
+      </aside>
+
+        <p>제조사가 스펙에 표기하는 값은 Static Loft입니다. 클럽을 정지 상태에서 측정한 값입니다. 실제 임팩트에서 페이스가 만들어내는 탄도와 스핀은 Dynamic Loft로 결정됩니다. 핸드 포워드가 많을수록 Dynamic Loft는 Static Loft보다 낮아집니다.</p>
+        <h3 class="subhead">2-2. 표준 로프트 기준</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>클럽</th><th>표준 Static Loft 범위</th><th>피팅 관점</th></tr></thead>
+          <tbody><tr><td>드라이버</td><td>8~13°</td><td>AoA와 함께 Dynamic Loft 최적화. AoA + 로프트 조합으로 결정</td></tr>
+<tr><td>3번 우드</td><td>15~18°</td><td>지면 타격. Spin Loft 최소화 → 낮은 로프트가 거리 효율적</td></tr>
+<tr><td>5번 아이언</td><td>24~28°</td><td>Strong Loft 제품은 20~23°까지 낮음. 번호가 아닌 실제 각도 확인</td></tr>
+<tr><td>7번 아이언</td><td>30~36°</td><td>세트 구성 기준점. 세트 내 로프트 간격(피치) 일정해야 함</td></tr>
+<tr><td>피칭 웨지</td><td>44~48°</td><td>마지막 아이언과 웨지 세트 연결 지점</td></tr>
+<tr><td>웨지</td><td>48~64°</td><td>4~6° 간격 유지. 풀 세트 기준 4개: 48°/52°/56°/60° 또는 50°/54°/58°/62°</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">Strong Loft 설계 주의사항</p>
+        <ul class="callout-bullets">
+          <li>현대 아이언은 Strong Loft 설계가 많아 7번 아이언이 28~30° 수준인 제품도 있습니다. 번호만 보면 같은 7번이어도 실제 탄도와 스핀이 전혀 다릅니다.</li>
+        </ul>
+        <p class="callout-foot">Strong Loft로 비거리는 늘지만 탄도가 낮아지고 스핀이 감소합니다. 그린에서 공이 멈추지 않는 문제가 생길 수 있습니다. 로프트는 번호가 아닌 실제 각도와 탄도 창(launch window)으로 판단합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">페이스 앵글 (Face Angle) — H-Plane에서 페이스가 바라보는 방향</h2>
+
+      <div class="prose">
+        <p>페이스 앵글은 클럽을 위에서 내려다봤을 때(H-Plane 시점), 페이스 중심의 법선이 타겟 방향과 이루는 각도입니다. 페이스 앵글은 PART 4에서 정의한 볼 출발 방향의 85%를 결정하는 바로 그 변수의 설계값입니다.</p>
+        <p>[그림 6-2]  로프트 각도와 탄도의 관계. 로프트가 클수록 페이스가 뒤로 기울어지며 볼의 초기 탄도가 높아진다. 빨간색 호는 수직 기준선에서 측정한 로프트 각도.</p>
+        <h3 class="subhead">3-1. 측정 방법</h3>
+        <p>페이스 앵글은 클럽이 정상 어드레스 포지션에 있을 때 — 솔 중앙이 지면에 닿고, 샤프트가 설계 각도로 세워졌을 때 — 페이스 중심선이 타겟 라인과 이루는 각도입니다. 이 값이 0이면 스퀘어, 양수면 오픈(우측), 음수면 클로즈드(좌측)입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>페이스 앵글</th><th>페이스 방향</th><th>D-Plane 상에서의 효과</th></tr></thead>
+          <tbody><tr><td>스퀘어 (0°)</td><td>타겟과 직각</td><td>중립. 다른 변수가 같으면 직선 출발</td></tr>
+<tr><td>오픈 (+ 값)</td><td>타겟 우측을 향함</td><td>출발 방향이 우측으로 편향. 페이드/슬라이스 경향</td></tr>
+<tr><td>클로즈드 (- 값)</td><td>타겟 좌측을 향함</td><td>출발 방향이 좌측으로 편향. 드로우/훅 경향</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">3-2. H-Plane 시점이 중요한 이유</h3>
+        <p>페이스 앵글을 이해할 때 위에서 내려다보는 H-Plane 시점이 필수입니다. 클럽을 앞에서 보면 페이스 앵글의 좌우 방향은 잘 보이지 않습니다. 반면 위에서 내려다보면 페이스가 타겟 라인과 얼마나 어긋나 있는지가 명확하게 보입니다. 론치모니터의 Face Angle 수치는 바로 이 시점에서 측정된 값입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">페이스 앵글 ≠ 패스 방향</p>
+        <ul class="callout-bullets">
+          <li>많은 피팅 현장에서 페이스 앵글과 패스 방향을 혼동합니다.</li>
+          <li>페이스 앵글은 헤드 설계값이고, 패스는 스윙 경로입니다.</li>
+        </ul>
+        <p class="callout-foot">론치모니터에서 Face Angle이 오픈으로 나오는 것은 헤드 설계 때문일 수도 있고, 임팩트 직전 페이스를 열고 치는 스윙 때문일 수도 있습니다. 두 원인을 반드시 구분해야 합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">라이각 (Lie Angle) — 라이각이 페이스 앵글을 바꾸는 이유</h2>
+
+      <div class="prose">
+        <p>라이각은 솔 중앙이 지면에 닿았을 때 샤프트 중심축이 지면과 이루는 각도입니다. 라이각 자체는 V-Plane의 개념처럼 보이지만, 실제로 라이각이 틀어지면 그 영향은 H-Plane(페이스 앵글)에서 나타납니다. 이것이 라이각을 이해할 때 가장 중요한 포인트입니다.</p>
+        <p>[그림 6-3] 어저스터블 슬리브 — 하나의 조정이 로프트·페이스 앵글·라이각 세 변수에 동시에 영향 (출처: 클럽메이커스 교육매뉴얼)</p>
+        <h3 class="subhead">4-1. 라이각이 페이스 앵글을 바꾸는 구조</h3>
+        <p>솔이 지면과 정확히 평행(스퀘어)할 때 페이스는 설계된 방향을 향합니다. 그런데 솔이 기울면 — 토 쪽이 뜨거나 힐 쪽이 뜨거나 — 페이스의 법선이 기울어지면서 H-Plane에서의 방향이 달라집니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">라이각 틀어짐 → 페이스 앵글 변화 원리</p>
+        <ul class="callout-bullets">
+          <li>토 쪽이 뜸 (Too Upright: 너무 업라이트): 솔이 힐 쪽으로 기울면 페이스 법선이 좌측으로 회전합니다. 페이스 앵글이 클로즈드 방향으로 틀어져 공이 좌측으로 출발하는 경향이 생깁니다.</li>
+          <li>힐 쪽이 뜸 (Too Flat: 너무 플랫): 솔이 토 쪽으로 기울면 페이스 법선이 우측으로 회전합니다. 페이스 앵글이 오픈 방향으로 틀어져 공이 우측으로 출발하는 경향이 생깁니다.</li>
+        </ul>
+        <p class="callout-foot">결론: 라이각이 맞지 않으면 페이스 앵글이 설계값과 달라집니다. 스윙이 같아도 라이각 하나로 방향이 틀어집니다.</p>
+      </aside>
+
+        <h3 class="subhead">4-2. Static Lie vs Dynamic Lie</h3>
+        <p>제조사 스펙의 라이각은 Static Lie입니다. 실제 임팩트 순간 솔이 지면과 이루는 각도는 Dynamic Lie입니다. Dynamic Lie는 골퍼의 신장, 팔 길이, WTF(손목-지면 거리), 스윙 플레인에 따라 달라집니다. 라이각 피팅은 Static Lie를 조정하여 Dynamic Lie를 스퀘어에 가깝게 만드는 작업입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Dynamic Lie 상태</th><th>솔 접지 상태</th><th>페이스 앵글 변화</th><th>출발 방향 경향</th><th>보정 방향</th></tr></thead>
+          <tbody><tr><td>토 쪽이 뜸</td><td>힐만 지면에 닿음</td><td>클로즈드 방향</td><td>좌측 미스</td><td>Static Lie를 더 업라이트로 조정</td></tr>
+<tr><td>스퀘어 (이상적)</td><td>솔 전체 지면 접지</td><td>설계값 그대로</td><td>방향 편차 최소</td><td>현재 유지</td></tr>
+<tr><td>힐 쪽이 뜸</td><td>토만 지면에 닿음</td><td>오픈 방향</td><td>우측 미스</td><td>Static Lie를 더 플랫으로 조정</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">4-3. 미국 스펙 vs 아시안 스펙 라이각 기준</h3>
+        <p>같은 모델이라도 미국 스펙(US Spec)과 아시안 스펙(Asian Spec)은 라이각 기준이 다릅니다. 이 차이는 평균 신장 차이에서 비롯됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>스펙 기준</th><th>7번 아이언 기준</th><th>배경</th><th>한국 피팅 시 주의사항</th></tr></thead>
+          <tbody><tr><td>미국 스펙 (US Spec)</td><td>약 62~64°, 상대적으로 업라이트</td><td>미국 성인 남성 평균 신장이 높아 어드레스 시 손이 더 위에 위치 → 클럽이 더 세워짐</td><td>키가 크고 서서 치는 아시아 골퍼에게 잘 맞을 수 있음. 그러나 국내 기준 골퍼에게는 너무 업라이트할 수 있음</td></tr>
+<tr><td>아시안 스펙 (Asian/Japan Spec)</td><td>약 60~62°, 상대적으로 플랫</td><td>아시아 성인 남성 평균 신장이 낮아 어드레스 시 손이 더 내려가 있음 → 클럽이 더 눕혀짐</td><td>국내 평균 체형에는 맞는 경우가 많지만, 개인차가 크므로 WTF 측정 후 확인 필수</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">현장 적용 원칙</p>
+        <ul class="callout-bullets">
+          <li>수입품 또는 병행 수입 제품은 US Spec인지 Asian Spec인지 반드시 확인합니다.</li>
+          <li>같은 모델 7번 아이언이어도 스펙에 따라 라이각이 2~3° 차이 날 수 있습니다. 벤딩 전 반드시 어느 스펙인지 확인해야 오차가 누적되지 않습니다.</li>
+        </ul>
+        <p class="callout-foot">현장 확인 방법: 임팩트 테이프 또는 솔 마커를 붙여 타격 후 지면 흔적 방향을 확인합니다. 힐~토 방향 흔적 = 페이스 오픈(플랫). 토~힐 방향 흔적 = 페이스 클로즈드(업라이트).</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 3에서 다룹니다: WTF(Wrist-to-Floor) 기준으로 라이각 초기 범위를 결정하는 방법</p>
+      </aside>
+
+        <h3 class="subhead">4-4. 국가별 아이언 스펙 비교 — 7번 아이언 기준과 1클럽 차이</h3>
+        <p>같은 "7번 아이언"이라도 어느 시장 기준으로 만들어졌는지에 따라 로프트와 라이각이 다릅니다. 피팅 대상자의 현재 클럽이 어떤 스펙 계열인지 확인하지 않으면 잘못된 기준으로 처방을 내릴 수 있습니다.</p>
+        <h3 class="subhead">4-4-1. 7번 아이언 기준 비교표 (로프트)</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구분</th><th>로프트 (7번)</th><th>라이각 (7번)</th><th>특징</th></tr></thead>
+          <tbody><tr><td>투어 스펙 (전통)</td><td>34~36°</td><td>62.5~63.5°</td><td>표준 로프트. 거리 차이 명확</td></tr>
+<tr><td>일본 아마추어 스펙</td><td>30~32°</td><td>62.5~63.5°</td><td>약한 스트롱 로프트</td></tr>
+<tr><td>미국 아마추어 스펙</td><td>28~30°</td><td>62.5~63.5°</td><td>강한 스트롱 로프트</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">4-4-2. 아이언 세트 1클럽 당 차이</h3>
+        <p>아이언 세트에서 인접한 두 번호(예: 7번과 8번) 사이의 기본 차이는 다음과 같습니다. 이 원칙은 피팅 후 스펙 조정이나 커스텀 세트 구성 시 기준이 됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>항목</th><th>1클럽 차이 (표준)</th></tr></thead>
+          <tbody><tr><td>길이</td><td>0.5인치 (12.7mm)</td></tr>
+<tr><td>라이각</td><td>0.5°</td></tr>
+<tr><td>로프트</td><td>4° (전통) / 3~3.5° (스트롱 세트)</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">스트롱 로프트 세트의 주의점</p>
+        <p class="callout-foot" style="border:none;padding:0;">현대 아마추어 세트는 로프트가 강화되어 7번 아이언이 28°대까지 낮아진 경우가 많습니다. 이런 세트는 비거리가 길어 보이지만 런딩 앵글이 낮아 그린에 서지 못하는 문제가 있습니다. 또한 PW 로프트까지 강화되어(42~44°) 웨지 갭 구성이 까다로워집니다. 피팅 시 반드시 PW 로프트를 확인한 뒤 웨지 구성을 결정해야 합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">오프셋과 Face Progression</h2>
+
+      <div class="prose">
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 6-4. Face Progression 측면도</p>
+      </aside>
+
+        <h3 class="subhead">5-1. Face Progression — 샤프트 중심에서 페이스까지</h3>
+        <p>Face Progression은 샤프트 중심축의 수직선과 페이스 리딩엣지 사이의 거리입니다. H-Plane 시점에서 보면 샤프트 기준선 대비 페이스가 얼마나 앞에 있는지를 나타냅니다. Face Progression이 클수록 페이스가 샤프트 기준선보다 앞에 있고, 핸드 포워드 포지션 없이도 어느 정도 로프트가 전달됩니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 6-5. 오프셋 측면도 — 3종 비교</p>
+      </aside>
+
+        <h3 class="subhead">5-2. 오프셋 — 호젤 앞에서 페이스까지</h3>
+        <p>오프셋은 호젤(hosel) 앞쪽 끝선과 페이스 리딩엣지 사이의 거리입니다. Face Progression이 샤프트 중심을 기준으로 한다면, 오프셋은 호젤의 최전방 라인을 기준으로 합니다. 오프셋이 클수록 페이스가 호젤 뒤에 더 많이 물러나 있습니다. 대부분의 아이언은 오프셋 설계이며, Face Progression과 오프셋은 반비례 관계입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>오프셋 크기</th><th>특성</th><th>피팅 효과</th><th>주요 대상</th></tr></thead>
+          <tbody><tr><td>0~2mm</td><td>제로 오프셋. 호젤과 페이스 거의 일직선</td><td>릴리즈 타이밍에 매우 민감. 페이스 닫힘 시간 없음</td><td>투어 플레이어, 로우 핸디캡</td></tr>
+<tr><td>3~5mm</td><td>소형 오프셋</td><td>어느 정도 닫힘 여유. 플레이어 향 설계</td><td>미드 핸디캡 이상</td></tr>
+<tr><td>6~8mm</td><td>중~대형 오프셋</td><td>닫힘 여유 크게 증가. 슬라이스 방지 효과</td><td>하이 핸디캡, 슬라이스 경향</td></tr>
+<tr><td>9mm+</td><td>대형 오프셋</td><td>게임 임프루브먼트 최대화</td><td>초보자, 시니어</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">오프셋에 대한 정확한 이해</p>
+        <ul class="callout-bullets">
+          <li>오프셋은 페이스가 닫힐 수 있는 시간 여유를 제공합니다. 슬라이스를 직접 고치지 않습니다.</li>
+        </ul>
+        <p class="callout-foot">오프셋이 있는 헤드에서도 페이스가 오픈된 채로 임팩트하면 슬라이스는 그대로 납니다. 오프셋은 골퍼가 페이스를 닫을 수 있는 환경을 만들어 줄 뿐입니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">어저스터블 슬리브 — 로프트·페이스 앵글·라이각의 연동 구조</h2>
+
+      <div class="prose">
+        <p>현대 드라이버와 일부 페어웨이 우드는 어저스터블 호젤(Adjustable Hosel) 또는 슬리브(Sleeve) 시스템을 탑재하고 있습니다. 슬리브를 회전시키면 로프트, 라이각, 페이스 앵글 세 값이 동시에 바뀝니다. 세 값이 독립적으로 바뀌지 않는다는 것이 핵심입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 6-6. 어저스터블 슬리브 분해도 (Exploded View)</p>
+      </aside>
+
+        <h3 class="subhead">6-1. 슬리브가 작동하는 원리</h3>
+        <p>어저스터블 호젤은 샤프트와 헤드 연결 구멍(보어)의 각도를 오프셋시킨 슬리브를 통해 작동합니다. 슬리브를 특정 포지션으로 돌리면 샤프트 축이 헤드에 대해 전후·좌우 방향으로 기울어집니다. 이 기울어짐이 세 변수를 동시에 바꿉니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">슬리브 조정 시 동시에 바뀌는 3가지</p>
+        <ul class="callout-bullets">
+          <li>① 로프트: 샤프트 축이 앞뒤로 기울면 페이스가 눕거나 세워지면서 로프트가 변합니다.</li>
+          <li>② 라이각: 샤프트 축이 좌우로 기울면 클럽이 더 업라이트하거나 플랫해집니다.</li>
+          <li>③ 페이스 앵글: 로프트가 변할 때 클럽 헤드가 회전 방향에 따라 페이스 방향도 함께 틀어집니다. 로프트 증가 → 페이스 클로즈드 경향, 로프트 감소 → 페이스 오픈 경향.</li>
+        </ul>
+        <p class="callout-foot">로프트만 바꾼다고 생각하고 슬리브를 돌리면, 출발 방향이 예상과 다르게 나오는 이유가 여기에 있습니다.</p>
+      </aside>
+
+        <h3 class="subhead">6-2. 포지션별 변화</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>슬리브 포지션</th><th>로프트 변화</th><th>라이각 변화</th><th>페이스 앵글 변화</th><th>예상 결과</th></tr></thead>
+          <tbody><tr><td>Standard (기준)</td><td>기준값</td><td>기준값</td><td>기준값</td><td>제조사 설계 의도</td></tr>
+<tr><td>로프트 올림 (+1~2°)</td><td>증가</td><td>약간 업라이트</td><td>클로즈드 방향</td><td>탄도 높아짐. 출발 방향 약간 좌측</td></tr>
+<tr><td>로프트 낮춤 (−1~2°)</td><td>감소</td><td>약간 플랫</td><td>오픈 방향</td><td>탄도 낮아짐. 출발 방향 약간 우측</td></tr>
+<tr><td>Draw 세팅</td><td>소폭 증가</td><td>업라이트 방향 강화</td><td>클로즈드 강화</td><td>드로우 경향 증가. 힐 CG 효과 복합</td></tr>
+<tr><td>Fade 세팅</td><td>소폭 감소</td><td>플랫 방향 강화</td><td>오픈 방향 강화</td><td>페이드 경향 증가. 토 CG 효과 복합</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">슬리브 피팅 원칙</p>
+        <ul class="callout-bullets">
+          <li>슬리브 조정 후에는 반드시 론치모니터로 실제 Launch Angle, Face Angle, 출발 방향을 재확인합니다.</li>
+          <li>스펙표의 조정값(±1°, ±2° 등)은 이론적 수치입니다. 실제 임팩트에서는 Dynamic Lie, 타점, AoA와 결합되어 다르게 나타날 수 있습니다.</li>
+        </ul>
+        <p class="callout-foot">Draw 세팅이라고 해서 무조건 드로우가 나오는 것이 아닙니다. 골퍼의 릴리즈 특성과 결합될 때 효과가 나타납니다. 슬리브는 경향을 만들 뿐입니다.</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 6-7. 머슬백 · 캐비티 · 홀로우 단면 비교</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">Head CG와 헤드 기하 구조의 결합</h2>
+
+      <div class="prose">
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">※ PART 5에서 정의한 내용: CG 3좌표(Depth/Height/Heel-Toe) 완전 정의. Gear Effect 원리. 타점과 CG의 모멘트 암 관계</p>
+      </aside>
+
+        <p>CG는 PART 5에서 완전히 정의했습니다. PART 6에서는 CG가 라이각, 로프트, 오프셋 등 헤드 기하 변수와 어떻게 결합되어 하나의 헤드 성격을 만드는지를 정리합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>결합 관계</th><th>내용</th><th>피팅 시 주의사항</th></tr></thead>
+          <tbody><tr><td>CG Heel-Toe × 라이각</td><td>힐 CG + 업라이트 라이 → 좌측 미스 누적. 토 CG + 플랫 라이 → 우측 미스 누적</td><td>두 변수를 동시에 검토. 한쪽만 보정하면 반쪽짜리 피팅</td></tr>
+<tr><td>CG Height × 로프트</td><td>Low CG → 로프트 올리지 않아도 탄도 확보 가능. High CG → 낮은 탄도, 컨트롤 향상</td><td>스핀 증가 없이 탄도 확보할 때 로프트 대신 CG Height로 접근</td></tr>
+<tr><td>CG Depth × 오프셋</td><td>Rear CG + 대형 오프셋 → 관용성 극대화, 조작성 감소. Forward CG + 소형 오프셋 → 정확성 우선</td><td>게임 임프루브먼트 vs 퍼포먼스 헤드 선택 기준</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>헤드 타입</th><th>CG 특성</th><th>오프셋</th><th>라이각 경향</th><th>주요 대상</th></tr></thead>
+          <tbody><tr><td>투어 블레이드</td><td>Forward / Neutral</td><td>0~2mm</td><td>표준</td><td>타점 안정, 강한 릴리즈, 고기술</td></tr>
+<tr><td>플레이어 캐비티</td><td>Mid / Low</td><td>2~4mm</td><td>표준~약간 업라이트</td><td>중급 이상, 어느 정도 반복성</td></tr>
+<tr><td>게임 임프루브먼트</td><td>Rear / Low / Heel쪽</td><td>5~8mm</td><td>업라이트 경향</td><td>타점 분산 큰 아마추어</td></tr>
+<tr><td>거리형 강화</td><td>Forward / Low</td><td>2~4mm</td><td>표준</td><td>헤드스피드 높고 스핀 과다</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 8 ==================== -->
+  <section id="sec-8" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 08 · 8절</p>
+      <h2 class="section-title">피팅에서의 헤드 기하 판단 순서</h2>
+
+      <div class="prose">
+        <p>헤드 기하 변수들은 독립적으로 작동하지 않습니다. 피팅에서는 다음 순서로 접근해야 합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">헤드 기하 피팅 순서</p>
+        <ul class="callout-bullets">
+          <li>STEP 1: 타점 안정화 확인 (PART 5) — 타점이 불안정하면 어떤 헤드 기하 변수도 정확히 판단할 수 없음</li>
+          <li>STEP 2: 로프트 적합성 확인 — 현재 헤드스피드와 AoA에 맞는 탄도창 안에 있는지 확인 (PART 4 기준)</li>
+          <li>STEP 3: 라이각 확인 — 임팩트 테이프로 Dynamic Lie 패턴 확인. US Spec인지 Asian Spec인지 확인</li>
+          <li>STEP 4: 오프셋/Face Progression 결정 — 릴리즈 타이밍 특성, 슬라이스 경향, 시각적 선호 반영</li>
+          <li>STEP 5: 슬리브 조정 확인 (어저스터블 헤드) — 로프트 조정 후 페이스 앵글과 라이각 변화 반드시 확인</li>
+          <li>STEP 6: CG 전략 결정 (PART 5 기준) — 타점 분산, 스핀, 탄도 확보 필요성에 따라 헤드 타입 결정</li>
+        </ul>
+        <p class="callout-foot">STEP 3(라이각)을 해결하지 않으면 STEP 6(CG)를 아무리 바꿔도 방향 문제는 해결되지 않습니다.</p>
+      </aside>
+
+        <h3 class="subhead">현장 오판 케이스</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>케이스</th><th>증상</th><th>잘못된 조치</th><th>올바른 접근</th></tr></thead>
+          <tbody><tr><td>CASE 1</td><td>일관된 좌측 미스</td><td>패스 수정 또는 그립 교정</td><td>라이각 먼저 확인. 업라이트 Dynamic Lie가 원인일 수 있음</td></tr>
+<tr><td>CASE 2</td><td>슬라이스에 오프셋 대형 헤드 적용</td><td>오프셋 최대화</td><td>페이스 앵글 오픈 여부를 먼저 확인. 오프셋은 근본 원인 미해결</td></tr>
+<tr><td>CASE 3</td><td>슬리브로 로프트 +1° 올렸는데 공이 더 우측으로 출발</td><td>로프트 수치가 실제로 올라갔는지 의심</td><td>슬리브 조정으로 페이스 앵글도 변화함. 론치모니터로 재확인 필요</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 6 헤드 기하</p>
+        <ol class="check-list">
+          <li>라이각이 업라이트한 상태로 임팩트하는 경우 볼은 어느 방향으로 출발합니까?
+문제 2. 드라이버에 오프셋을 두면 슬라이서에게 어떤 이점이 있습니까?
+문제 3. 어저스터블 슬리브에서 로프트를 +1도 올리면 페이스 앵글과 라이각은 어떻게 함께 변합니까?
+※ 해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</li>
+        </ol>
+        
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== CLOSING ==================== -->
+  <section class="closing">
+    <div class="container narrow">
+      <p class="eyebrow">CLOSING · PART 6 마무리</p>
+      <h2 class="section-title">PART 6 마무리</h2>
+
+      <div class="closing-prose">
+        <p class="closing-paragraph">헤드 기하 구조는 임팩트 순간 페이스가 어느 방향을 바라보는지를 결정합니다. V-Plane에서는 로프트, H-Plane에서는 페이스 앵글이 그 방향을 정의합니다. 라이각은 이 페이스 앵글을 간접적으로 바꾸는 변수이고, 오프셋과 Face Progression은 릴리즈 타이밍에 영향을 줍니다. 어저스터블 슬리브는 이 세 값을 동시에 변화시키는 도구입니다.</p>
+        <p class="closing-paragraph">이후 파트에서 다룰 내용</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>변수</th><th>다루는 파트</th><th>내용</th></tr></thead>
+          <tbody><tr><td>MOI 상세 구조</td><td>PART 7</td><td>MOI 3종 원리. 타점 안정성과 MOI 매칭</td></tr>
+<tr><td>총무게 / SW</td><td>PART 8</td><td>무게 = 시간 구조. SW / MOI / 총무게 삼각 관계</td></tr>
+<tr><td>샤프트 EI / CPM</td><td>PART 9</td><td>샤프트 구조와 Dynamic Loft/Lie의 연결</td></tr>
+<tr><td>통합 결정</td><td>PART 11</td><td>헤드 기하 변수를 골퍼 구조와 연결하는 결정 흐름</td></tr></tbody>
+        </table>
+      </div>
+
+        <p class="closing-paragraph">PART 6에서 헤드의 기하 변수 — 라이각, 로프트, 페이스 앵글, 오프셋, Face Progression — 를 다뤘습니다. 이 변수들은 헤드가 얼마나 관용적으로 반응하는지를 결정하는 MOI와 연결됩니다. PART 7에서는 헤드 MOI와 스윙 MOI가 타이밍과 타점에 어떻게 작용하는지를 다룹니다.</p>
+      </div>
+
+      
+    </div>
+  </section>
+
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book/part-5" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">PART 5 · 타점 / CG / 기어이펙트</span>
+      </a>
+      <a href="/book/part-7" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 7 · MOI / 관성 구조</span>
+        <span class="pg-sub">관성의 물리 원리와 피팅 적용</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</BaseLayout>
+
+
+<!-- PART 1, 2와 동일한 디자인 시스템 -->
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+  .subhead { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 2em 0 .8em; padding-top: 1em; border-top: 1px dashed var(--rule); }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  .part-hero { background: var(--bg); padding: 72px 0 64px; border-bottom: 1px solid var(--rule); }
+  .part-title { font-family: var(--serif); margin: 0 0 1rem; line-height: 1.1; color: var(--text); font-weight: 500; }
+  .part-num { display: block; font-family: var(--sans); font-size: .875rem; font-weight: 600; letter-spacing: .2em; color: var(--muted); margin-bottom: .75rem; }
+  .part-name { display: block; font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 600; letter-spacing: -.02em; }
+  .part-sub { display: block; font-size: clamp(1.1875rem, 3vw, 1.625rem); font-weight: 300; color: var(--text-2); margin-top: .25em; }
+  .part-en { font-family: var(--sans); font-size: .9375rem; color: var(--muted); letter-spacing: .02em; margin: 1.5rem 0 2rem; font-style: italic; }
+  .part-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 640px; margin: 0; }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 28px 32px; border-radius: 2px; margin: 2rem 0; }
+  .callout-label { font-family: var(--sans); font-size: .875rem; font-weight: 700; color: var(--accent); margin: 0 0 .75rem; letter-spacing: .04em; }
+  .callout-list { margin: 0; padding-left: 1.4em; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets { list-style: none; padding: 0; margin: 0 0 1rem; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-bullets li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+  .callout-bullets li:before { content: "·"; position: absolute; left: .25rem; top: 0; color: var(--accent); font-weight: 700; }
+  .callout-foot { font-family: var(--sans); font-size: 1rem; color: var(--text-2); margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); line-height: 1.7; }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+
+  .part-toc { background: var(--bg); padding: 16px 0 64px; }
+  .toc-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; color: var(--text); font-family: var(--sans); transition: color .2s, padding .2s; }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--accent); min-width: 2.5rem; }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  .intro { padding: 56px 0; }
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4vw, 2.625rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .principle-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 32px; margin: 2.5rem 0; text-align: center; border-radius: 2px; }
+  .principle-label { font-family: var(--sans); font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .principle-flow { font-family: var(--serif); font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 500; color: var(--text); margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.25rem; }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-foot { font-family: var(--sans); font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); max-width: 520px; margin-inline: auto; }
+
+  /* Data table */
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 520px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+  .data-table tbody tr:hover td { background: var(--bg-soft); }
+  .data-table tbody tr.group-row td { background: var(--accent-soft); color: var(--accent); font-weight: 700; padding: 10px 14px; font-size: .8125rem; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* Closing */
+  .closing { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+  .closing-prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-prose p strong { color: white; font-weight: 600; }
+  .closing-prose p em { font-style: normal; color: var(--accent-2); font-weight: 600; background: none; padding: 0; }
+  .closing-paragraph { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-paragraph strong { color: white; }
+
+  .check-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); padding: 28px 32px; border-radius: 2px; margin-top: 2.5rem; }
+  .check-label { font-family: var(--sans); font-size: .8125rem; color: var(--accent-2); font-weight: 700; letter-spacing: .1em; margin: 0 0 1rem; }
+  .check-list { margin: 0 0 1rem; padding-left: 1.25em; font-family: var(--sans); font-size: .9375rem; line-height: 1.85; color: rgba(255,255,255,.85); }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot { font-family: var(--sans); font-size: .8125rem; color: rgba(255,255,255,.5); margin: 0; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.08); }
+
+  /* Pagination */
+  .part-pagination { background: var(--bg); padding: 56px 0 80px; border-top: 1px solid var(--rule); }
+  .part-pagination .container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 760px) { .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; } }
+  .pg-back, .pg-next { display: flex; align-items: center; text-decoration: none; font-family: var(--sans); transition: transform .25s, background .25s; border: 1px solid var(--rule); padding: 20px 24px; background: var(--bg-elev); border-radius: 2px; color: var(--text); }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+  .pg-next { flex-direction: column; align-items: flex-end; text-align: right; gap: .15rem; background: var(--text); color: var(--bg); border-color: var(--text); position: relative; padding-right: 60px; }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta { font-size: .75rem; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; font-weight: 600; }
+  .pg-next .pg-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-top: .15rem; }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .principle-card { padding: 24px 20px; }
+    .callout { padding: 22px 20px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 12px; font-size: .875rem; }
+  }
+</style>

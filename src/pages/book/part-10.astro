@@ -1,0 +1,908 @@
+---
+// /src/pages/book/part-10.astro
+// 『실제적인 클럽피팅』 PART 10 — 론치모니터 해석 시스템
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "PART 10. 론치모니터 해석 시스템 | 『실제적인 클럽피팅』";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 10. 론치모니터 해석 시스템 — 데이터를 언어로, 언어를 결정으로. 론치모니터는 수십 개의 데이터를 한 번에 제공합니다. 다만 데이터의 양이 판단의 질을 자동으로 보장해 주지는 않습니다. 오히려 기준 없이 데이터만 많아지면 눈에 ";
+const pageKeywords = "클럽피팅, 론치모니터 해석 시스템, 채기웅, 실제적인 클럽피팅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 10</span>
+      </div>
+
+      <p class="eyebrow">PART 10 · 본문 14 PART 중 10번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 10</span>
+        <span class="part-name">론치모니터 해석 시스템</span>
+        <span class="part-sub">데이터를 언어로, 언어를 결정으로</span>
+      </h1>
+
+      <p class="part-en">Launch Monitor Interpretation</p>
+
+      <p class="part-lead">론치모니터는 수십 개의 데이터를 한 번에 제공합니다. 다만 데이터의 양이 판단의 질을 자동으로 보장해 주지는 않습니다. 오히려 기준 없이 데이터만 많아지면 눈에 띄는 수치 하나에 시선을 빼앗겨 전체 구조를 놓치거나, 결과를 보고 원인을 거꾸로 추정하거나, 한두 번의 샷을 전체 경향으로 일반화하는 오류가 생기기 쉽습니다.</p>
+    </div>
+  </section>
+  <section class='objectives'><div class='container narrow'>
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 10 론치모니터를 마치면</p>
+        <ol class="callout-list">
+          <li>도플러 레이더·사진·광학 방식 론치모니터의 측정 원리와 한계를 구분할 수 있다.</li>
+          <li>스매시 팩터·탄도각·스핀 데이터를 해석하는 4단계 질문을 적용할 수 있다.</li>
+          <li>데이터 해석의 7가지 함정을 식별하고 오판을 피할 수 있다.</li>
+        </ol>
+      </div>
+</div></section>
+
+  <!-- ==================== TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        <li><a href="#sec-1"><span class="toc-num">01</span><span class="toc-text">론치모니터가 측정하는 것 — 데이터는 언어입니다</span></a></li>
+        <li><a href="#sec-2"><span class="toc-num">02</span><span class="toc-text">해석의 4가지 원칙</span></a></li>
+        <li><a href="#sec-3"><span class="toc-num">03</span><span class="toc-text">해석 순서 — 5단계 현장 매뉴얼</span></a></li>
+        <li><a href="#sec-4"><span class="toc-num">04</span><span class="toc-text">현장 케이스 — 관찰에서 판단으로</span></a></li>
+        <li><a href="#sec-5"><span class="toc-num">05</span><span class="toc-text">의사결정 시스템 — IF-THEN 구조</span></a></li>
+        <li><a href="#sec-6"><span class="toc-num">06</span><span class="toc-text">탄도 설계 — 해석에서 장비 결정으로</span></a></li>
+        <li><a href="#sec-7"><span class="toc-num">07</span><span class="toc-text">측정 환경과 기기 특성 — 데이터 신뢰도의 조건</span></a></li>
+        <li><a href="#sec-8"><span class="toc-num">08</span><span class="toc-text">데이터 해석의 함정 — 자주 하는 오판</span></a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro">
+    <div class="container narrow prose">
+      <p>이 PART는 론치모니터 데이터를 읽는 일관된 사고 순서를 정리합니다. 현장에서의 해석은 대체로 네 가지 질문으로 수렴합니다. 지금 발생한 결과는 무엇인가. 그 결과를 만든 직접 원인은 무엇인가. 그 원인의 배경에 있는 구조는 무엇인가. 어떤 개입이 가장 빠르게 효과를 낼 수 있는가.</p>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">론치모니터가 측정하는 것 — 데이터는 언어입니다</h2>
+
+      <div class="prose">
+        <p>론치모니터는 임팩트 순간 발생하는 물리적 현상을 변수로 분해해 보여주는 도구입니다. 숫자가 아니라 임팩트 구조를 해석하기 위한 언어로 이해해야 합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>변수</th><th>정의</th><th>피팅에서의 의미</th></tr></thead>
+          <tbody><tr><td>Club Speed (헤드스피드)</td><td>클럽 헤드가 임팩트 순간 이동하는 속도 (mph)</td><td>골퍼의 '잠재 출력'. 클럽 선택 이전에 스윙 능력 범위 설정</td></tr>
+<tr><td>Ball Speed (볼스피드)</td><td>공이 페이스를 떠나는 순간의 속도 (mph)</td><td>동일 스피드 대비 낮으면 타점 또는 임팩트 구조 문제</td></tr>
+<tr><td>Smash Factor</td><td>Ball Speed ÷ Club Speed. 에너지 전달 효율</td><td>낮으면 타점, 스핀 로프트, 페이스 컨트롤 문제 가능성</td></tr>
+<tr><td>Launch Angle</td><td>공의 출발 각도 (°)</td><td>탄도 형태의 핵심. Dynamic Loft, Attack Angle, 타점으로 결정</td></tr>
+<tr><td>Spin Rate</td><td>공의 회전 속도 (rpm)</td><td>비행 안정성과 낙하 구조 결정. 원인이 아니라 결과</td></tr>
+<tr><td>Spin Axis</td><td>회전 축의 기울기 (°)</td><td>곡률 방향 결정. 스핀 자체보다 축 기울기가 방향에 영향</td></tr>
+<tr><td>Attack Angle</td><td>클럽이 공에 접근하는 수직 방향 각도 (°)</td><td>드라이버는 업블로 유리. Launch와 Spin에 직접 영향</td></tr>
+<tr><td>Dynamic Loft</td><td>임팩트 순간 실제 페이스 앵글 (°)</td><td>과도하면 스핀 증가. 부족하면 탄도 부족</td></tr>
+<tr><td>Spin Loft</td><td>Dynamic Loft − Attack Angle</td><td>에너지 전달 효율과 스핀 동시 결정. 피팅의 핵심 변수</td></tr>
+<tr><td>Face Angle</td><td>임팩트 순간 페이스가 향하는 방향 (°)</td><td>출발 방향 결정. 패스보다 영향 큼 (드라이버 80~90%)</td></tr>
+<tr><td>Club Path</td><td>헤드가 이동하는 방향 (°)</td><td>곡률 방향 결정 (Face to Path와의 관계로)</td></tr>
+<tr><td>Face to Path</td><td>Face Angle − Club Path. 곡률 크기</td><td>양수(+): 페이드/슬라이스 방향. 음수(-): 드로우/훅 방향</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">측정 방식에 따른 데이터 차이</p>
+        <ul class="callout-bullets">
+          <li>Trackman(레이더 기반): 볼 비행 추적 강점. 일부 변수는 모델링</li>
+          <li>GCQuad(카메라 기반): 임팩트 순간 데이터 정밀. 비행 데이터는 추정</li>
+          <li>시뮬레이터 환경: 일부 데이터가 모델링으로 계산. 실외와 차이 가능</li>
+        </ul>
+        <p class="callout-foot">중요한 것은 어떤 장비가 무엇을 직접 측정하고 무엇을 추정하는지 구분하는 것입니다.</p>
+      </aside>
+
+        <p>1-B절. H-Plane과 V-Plane — 3차원 볼 비행 구조</p>
+        <p>D-Plane은 3차원 구조지만 현장에서는 두 평면으로 나눠 해석하면 훨씬 명확해집니다. 방향과 곡률은 H-Plane, 탄도와 스핀은 V-Plane에서 각각 독립적으로 발생합니다. 이 구분 없이 해석하면 방향 문제를 탄도로 해결하거나 그 반대의 실수가 생깁니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구분</th><th>H-Plane (수평)</th><th>V-Plane (수직)</th></tr></thead>
+          <tbody><tr><td>결정 변수</td><td>Face Angle, Club Path, Spin Axis</td><td>Dynamic Loft, Attack Angle, Spin Loft</td></tr>
+<tr><td>결과 지표</td><td>출발 방향, 좌우 곡률</td><td>Launch Angle, Spin Rate, 탄도 높이</td></tr>
+<tr><td>핵심 관계</td><td>페이스 → 출발 방향 / Face to Path → 곡률</td><td>Dynamic Loft → Launch / Spin Loft → Spin</td></tr>
+<tr><td>론치모니터 확인</td><td>Face Angle, Club Path, Spin Axis 기울기</td><td>Launch Angle, Spin Rate, Attack Angle, Dynamic Loft</td></tr>
+<tr><td>대표 문제</td><td>슬라이스/훅/푸시/풀</td><td>탄도 낮음/높음/스핀 과다/부족</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">왜 H와 V를 분리해야 하는가</p>
+        <ul class="callout-bullets">
+          <li>스핀이 많다는 이유로 패스를 수정하면 → H-Plane 문제가 아니라 V-Plane 문제입니다. 스핀은 Attack Angle과 Dynamic Loft(V-Plane)의 결과입니다.</li>
+          <li>공이 오른쪽으로 휘는 이유를 탄도(V-Plane)에서 찾으면 → H-Plane(Face to Path, 타점)을 먼저 확인해야 합니다.</li>
+        </ul>
+        <p class="callout-foot">원칙: H-Plane은 방향 문제, V-Plane은 탄도/스핀 문제로 분리해서 접근합니다. 두 구조를 각각 해석한 후 하나로 통합해야 정확한 결과를 이해할 수 있습니다.</p>
+      </aside>
+
+        <h3 class="subhead">H-Plane 수치 해석 예시</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Face Angle</th><th>Club Path</th><th>Face to Path</th><th>결과</th><th>해석</th></tr></thead>
+          <tbody><tr><td>+3° (오픈)</td><td>0°</td><td>+3°</td><td>푸시 슬라이스</td><td>페이스 오픈이 출발 방향 결정</td></tr>
+<tr><td>0°</td><td>+2° (인-아웃)</td><td>-2°</td><td>드로우</td><td>패스가 페이스보다 우측 → 좌측 곡률</td></tr>
+<tr><td>0°</td><td>-2° (아웃-인)</td><td>+2°</td><td>페이드</td><td>패스가 페이스보다 좌측 → 우측 곡률</td></tr>
+<tr><td>-2° (클로즈드)</td><td>-2° (아웃-인)</td><td>0°</td><td>당김(풀)</td><td>페이스=패스이므로 직선. 하지만 좌측 출발</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>1-C절. 주요 론치모니터 장비의 측정 방식과 특성</p>
+        <p>론치모니터는 측정 방식에 따라 제공하는 수치의 신뢰도와 한계가 다릅니다. 현장 피터는 자신이 쓰는 장비가 어떤 원리로 무엇을 직접 측정하고 무엇을 추정으로 계산하는지 이해해야 합니다. 같은 샷을 측정해도 장비에 따라 수치가 다르게 나올 수 있는 이유가 여기에 있습니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>측정 방식</th><th>대표 장비</th><th>직접 측정</th><th>계산/추정</th><th>주 용도</th></tr></thead>
+          <tbody><tr><td>도플러 레이더
+(Doppler Radar)</td><td>Trackman, Flightscope</td><td>볼 스피드, 볼 궤적, 스핀율, 탄도각</td><td>임팩트 순간의 클럽 데이터(페이스·패스·AoA)</td><td>실외 피팅·투어 선수 피팅</td></tr>
+<tr><td>사진·카메라
+(High-Speed Camera)</td><td>Foresight GCQuad, GC Hawk</td><td>임팩트 직후 볼·클럽 이미지 다수 프레임, 스핀 축</td><td>볼 궤적(비행 모델로 예측)</td><td>실내 피팅·정밀 클럽 데이터</td></tr>
+<tr><td>광학 센서
+(Optical Sensor)</td><td>Uneekor, SkyTrak</td><td>임팩트 직후 볼 스피드·탄도각(천장/측면 센서)</td><td>클럽 데이터·궤적(시뮬레이션)</td><td>연습장·아마추어 피팅·시뮬레이터</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">도플러 레이더 방식</h3>
+        <p>볼의 궤적 전체(이륙에서 착지까지)를 초당 수만 번 추적합니다. 볼 데이터의 신뢰도가 가장 높습니다. 단 클럽 데이터는 임팩트 순간을 역산으로 추정하므로 실외에서 볼이 충분히 날아가야 정확합니다. 실내 짧은 거리 측정에서는 클럽 수치의 오차가 커질 수 있습니다.</p>
+        <h3 class="subhead">사진·카메라 방식</h3>
+        <p>임팩트 순간 볼과 클럽을 고속 카메라로 여러 컷 촬영해 수치를 직접 계산합니다. 클럽 데이터(페이스 앵글·패스·로프트·라이)의 정확도가 가장 높습니다. 볼 궤적은 임팩트 조건을 바탕으로 물리 모델이 예측한 값이므로, 바람이나 고도 같은 실외 변수의 영향은 반영되지 않습니다.</p>
+        <h3 class="subhead">광학 센서 방식</h3>
+        <p>천장 또는 측면에 설치한 센서가 임팩트 직후의 볼 속도와 탄도각을 잡아냅니다. 가격이 합리적이고 공간 설치가 쉬워 연습장·아마추어 피팅에 널리 쓰입니다. 다만 클럽 데이터는 대부분 계산값이며 스핀 측정의 정확도는 상위 장비보다 떨어집니다. 전문 피팅에서는 참고 지표로 쓰고 최종 판단은 더 정밀한 장비로 검증하는 것이 안전합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">핵심 정리 — 장비 선택의 기준</p>
+        <p class="callout-foot" style="border:none;padding:0;">● 실외에서 투어 수준의 볼 데이터가 필요하면 → 도플러 레이더
+● 실내에서 정밀한 클럽 데이터가 필요하면 → 사진·카메라
+● 연습장 피팅·시뮬레이터 용도에는 → 광학 센서
+
+같은 골퍼를 다른 장비로 측정하면 수치가 5~10% 차이 날 수 있습니다. 장비가 바뀌면 피팅의 기준 수치도 새로 잡아야 합니다. 한 장비에서 얻은 "헤드스피드 95mph"를 다른 장비의 95mph와 같은 것으로 취급하지 말아야 합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">해석의 4가지 원칙</h2>
+
+      <div class="prose">
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">원칙 1 — 결과가 아니라 원인을 먼저 봅니다</p>
+        <ul class="callout-bullets">
+          <li>Carry, Height, Side 등 Flight 데이터는 직관적이지만 해석의 출발점이 되어서는 안 됩니다. 결과는 현상이지 설명이 아닙니다.</li>
+        </ul>
+        <p class="callout-foot">항상 이 순서를 지킵니다: Club(임팩트 조건) → Launch(발사 조건) → Flight(비행 결과)</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">원칙 2 — 단일 수치는 의미가 없습니다</p>
+        <ul class="callout-bullets">
+          <li>Spin은 Dynamic Loft와 Attack Angle의 관계에서 생성됩니다.</li>
+          <li>Launch는 로프트, 타점, 속도의 결합입니다.</li>
+          <li>방향은 Face와 Path의 상대 관계입니다.</li>
+        </ul>
+        <p class="callout-foot">단일 수치를 기준으로 결론을 내리지 않습니다.</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">원칙 3 — 평균이 아니라 패턴을 봅니다</p>
+        <ul class="callout-bullets">
+          <li>한 번의 샷은 우연일 수 있습니다. 반복되는 패턴만이 구조를 보여줍니다.</li>
+        </ul>
+        <p class="callout-foot">권장 기준: 최소 5~10샷 이상, 동일한 의도와 조건에서 반복</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">원칙 4 — 좋은 수치가 아니라 맞는 구조를 봅니다</p>
+        <ul class="callout-bullets">
+          <li>모든 골퍼에게 동일한 정답 수치는 없습니다. 특정 수치가 아니라 해당 골퍼의 스윙과 목적에 맞는 구조가 중요합니다.</li>
+        </ul>
+        <p class="callout-foot">Launch 12° / Spin 2400rpm이 한 골퍼에게는 최적이고 다른 골퍼에게는 비효율일 수 있습니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">해석 순서 — 5단계 현장 매뉴얼</h2>
+
+      <div class="prose">
+        <p>해석은 반드시 이 순서를 유지합니다. 이 순서는 물리적 원인-결과 구조를 반영합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">5단계 해석 순서</p>
+        <ul class="callout-bullets">
+          <li>1단계: 타점 (Impact Location) — 모든 데이터를 왜곡하는 1차 변수</li>
+          <li>2단계: 에너지 전달 (Ball Speed / Smash / Club Speed) — 효율 문제</li>
+          <li>3단계: 방향 구조 (Face Angle / Club Path / Spin Axis) — 출발과 곡률 분리</li>
+          <li>4단계: 탄도 구조 (Launch / Spin / Height) — 높이와 회전의 관계</li>
+        </ul>
+        <p class="callout-foot">5단계: 결과 검증 (Carry / Total / Side) — 앞 단계 해석 검증. 시작점 아님</p>
+      </aside>
+
+        <h3 class="subhead">3-1. 1단계 — 타점 (Impact Location)</h3>
+        <p>타점은 가장 먼저 확인합니다. 타점이 불안정하면 다른 모든 해석의 정확도가 떨어집니다. 같은 클럽과 같은 스윙이라도 타점이 바뀌면 볼스피드, 스핀, 방향이 동시에 달라집니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>타점 기준 (드라이버)</th><th>범위</th><th>해석</th></tr></thead>
+          <tbody><tr><td>중앙 (이상적)</td><td>±5mm 이내</td><td>정상</td></tr>
+<tr><td>허용 범위</td><td>±10mm 이내</td><td>허용. 반복성 확인 필요</td></tr>
+<tr><td>명확한 미스</td><td>±15mm 이상</td><td>타점 문제 우선 해결</td></tr>
+<tr><td>하단 타점 (수직)</td><td>중심보다 5mm↓ 이상</td><td>스핀 증가 시작</td></tr>
+<tr><td>하단 타점 (심각)</td><td>중심보다 10mm↓ 이상</td><td>과도한 스핀. 거리 손실</td></tr>
+<tr><td>힐/토 타점</td><td>10mm 이상</td><td>방향 및 스핀축 영향</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">타점 해석 트리</p>
+        <ul class="callout-bullets">
+          <li>타점이 중앙에 모이는가? → YES → 2단계로 / NO → 타점 문제 우선 해결</li>
+          <li>하단 타점 반복? → YES → 스핀 증가 원인</li>
+          <li>상단 타점 반복? → YES → 스핀 감소 및 거리 변동</li>
+        </ul>
+        <p class="callout-foot">힐/토 편차 존재? → YES → 방향/스핀축 영향 포함</p>
+      </aside>
+
+        <h3 class="subhead">3-2. 2단계 — 에너지 전달 (Ball Speed / Smash / Club Speed)</h3>
+        <p>에너지 해석의 목적: 만들어진 스윙 속도가 공에 얼마나 효율적으로 전달되었는가. 힘의 문제가 아니라 효율의 문제입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구분</th><th>Club Speed</th><th>Ball Speed</th><th>Smash Factor 기준</th></tr></thead>
+          <tbody><tr><td>여성/시니어</td><td>60~75mph</td><td>100~120mph</td><td>1.40~1.45</td></tr>
+<tr><td>평균 아마추어</td><td>75~90mph</td><td>120~140mph</td><td>1.43~1.47</td></tr>
+<tr><td>빠른 편</td><td>90~105mph</td><td>140~155mph</td><td>1.45~1.49</td></tr>
+<tr><td>매우 빠른 편</td><td>105~115mph</td><td>155~170mph</td><td>1.47~1.50</td></tr>
+<tr><td>투어 레벨</td><td>115+ mph</td><td>170+ mph</td><td>1.48~1.50</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">에너지 해석 트리</p>
+        <ul class="callout-bullets">
+          <li>Club Speed 정상 + Ball Speed 낮음 → 효율 문제 → Smash 확인</li>
+          <li>Smash 1.40 이하 → 타점/페이스 정렬 문제</li>
+          <li>Smash 변동 큼 → 타점 안정성 문제</li>
+        </ul>
+        <p class="callout-foot">Club Speed 낮음 + Smash 높음 → 효율은 좋으나 파워 제한 → 무게/총무게 검토</p>
+      </aside>
+
+        <p>실제 판단 예시: Club 100 / Ball 140 / Smash 1.40 → 효율 낮음 → 타점 또는 페이스 문제. Club 95 / Ball 142 / Smash 1.49 → 매우 효율적 → 장비 매칭 양호. Club 110 / Ball 150 / Smash 1.36 → 스피드 대비 효율 부족 → 임팩트 구조 문제.</p>
+        <p>클럽별 Smash Factor 이상 범위 — 중심 타격 기준</p>
+        <p>Smash Factor(볼 스피드 ÷ 클럽 스피드)는 에너지 전달 효율의 지표입니다. 클럽이 짧고 로프트가 클수록 이 값이 낮아집니다. 아이언의 Smash Factor를 드라이버 기준으로 평가하면 잘못된 판단을 내리게 됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>클럽</th><th>이상 범위</th><th>경고 범위</th><th>주요 원인 (낮을 때)</th></tr></thead>
+          <tbody><tr><td>드라이버</td><td>1.45 ~ 1.50</td><td>&lt; 1.42</td><td>타점 오프센터 / AoA 과도한 다운블로 / 스핀 과다</td></tr>
+<tr><td>3번 우드</td><td>1.42 ~ 1.48</td><td>&lt; 1.40</td><td>타점 / 지나친 다운블로 / 헤드 설계 미스매치</td></tr>
+<tr><td>하이브리드</td><td>1.40 ~ 1.45</td><td>&lt; 1.38</td><td>타점 / 샤프트 강도 부족으로 탄도 왜곡</td></tr>
+<tr><td>7번 아이언</td><td>1.33 ~ 1.37</td><td>&lt; 1.30</td><td>타점 / 로프트 과다 / 다운블로 부족 (떠내는 스윙)</td></tr>
+<tr><td>피칭웨지</td><td>1.22 ~ 1.28</td><td>&lt; 1.18</td><td>타점 / 스핀 과다 / 디셀러레이션 (감속 임팩트)</td></tr>
+<tr><td>샌드웨지</td><td>1.15 ~ 1.20</td><td>&lt; 1.10</td><td>스핀 구조 / 그라인드와 라이 조건 불일치</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>Smash Factor가 낮을 때 원인 추적 순서</p>
+        <p>Smash Factor는 여러 원인이 한꺼번에 영향을 주는 결과 지표입니다. 낮은 값 하나를 보고 샤프트나 헤드를 바꾸면 원인을 놓친 채 결과만 쫓게 됩니다. 다음 순서로 추적합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>순서</th><th>확인 항목</th><th>조치</th></tr></thead>
+          <tbody><tr><td>1</td><td>타점 확인 (임팩트 테이프)</td><td>힐·토·상단·하단 오프센터가 반복되면 타점 안정화가 먼저입니다. 장비가 아니라 스윙 또는 셋업 문제입니다.</td></tr>
+<tr><td>2</td><td>AoA (Attack Angle)</td><td>드라이버는 +1°~+5°, 아이언은 -2°~-5° 범위가 이상적입니다. 드라이버를 너무 다운블로로 치면 Smash Factor가 낮아집니다.</td></tr>
+<tr><td>3</td><td>Spin Loft (= Dynamic Loft − AoA)</td><td>Spin Loft가 크면 볼이 페이스에서 더 오래 미끄러져 에너지 손실이 큽니다. 드라이버 Spin Loft 13~17°가 이상적입니다.</td></tr>
+<tr><td>4</td><td>샤프트·헤드 매칭</td><td>위 세 가지가 정상인데도 Smash Factor가 낮다면 샤프트 릴리즈 타이밍 또는 헤드의 CG 위치를 의심합니다.</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">⚠ 흔한 오판 — 드라이버 Smash Factor가 1.42라고 바로 "헤드가 안 맞는다"고 판단하는 경우. 실제 원인은 타점 흩어짐인 경우가 가장 많습니다. 임팩트 테이프로 타점을 먼저 확인하지 않고 헤드를 바꾸는 것은 증상 치료입니다.</p>
+      </aside>
+
+        <h3 class="subhead">3-3. 3단계 — 방향 구조 (Face Angle / Club Path / Spin Axis)</h3>
+        <p>방향 해석은 '출발 방향'과 '휘어짐'을 반드시 분리합니다. 공이 오른쪽으로 갔다는 결과만 보고 패스 문제라고 단정하면 오류가 발생합니다. 출발 방향은 대부분 Face Angle이 결정합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>관찰되는 결과</th><th>먼저 확인할 항목</th><th>해석 방향</th></tr></thead>
+          <tbody><tr><td>공이 처음부터 우측 출발</td><td>Face Angle, Launch Direction</td><td>페이스가 열려 임팩트</td></tr>
+<tr><td>출발은 정상인데 우측으로 휘어짐</td><td>Face to Path, 타점</td><td>페이스-패스 관계 문제</td></tr>
+<tr><td>출발과 휘어짐 모두 우측</td><td>Face + Face to Path</td><td>복합 방향 문제</td></tr>
+<tr><td>방향이 매번 다름</td><td>타점, Face 반복성</td><td>임팩트 불안정</td></tr>
+<tr><td>출발 괜찮은데 비행 중 크게 휘어짐</td><td>Face to Path, Spin Axis</td><td>Face to Path 크거나 타점 좌우 편차</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">방향 해석 핵심 요약 (D-Plane 원리 — 상세 이론: PART 4 3절)</p>
+        <ul class="callout-bullets">
+          <li>출발 방향 = 페이스 방향이 결정 (드라이버 기준 80~90%). 패스가 아닙니다.</li>
+          <li>공의 곡률 = Face to Path의 상대적 차이. 패스 단독으로 결정되지 않습니다.</li>
+          <li>타점이 힐/토로 이동하면 기어이펙트로 스핀축이 추가 왜곡됩니다 (PART 5 참조).</li>
+        </ul>
+        <p class="callout-foot">론치모니터 해석은 이 구조에서 출발합니다. 개념 심화는 PART 4를 먼저 읽으십시오.</p>
+      </aside>
+
+        <h3 class="subhead">3-4. 4단계 — 탄도 구조 (Launch / Spin / Height)</h3>
+        <p>탄도 해석은 Launch와 Spin을 항상 함께 읽습니다. 두 값은 서로 독립적이지 않습니다. 같은 탄도라도 원인 구조가 다르면 처방이 달라집니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구분</th><th>Launch Angle (드라이버)</th><th>Spin Rate (드라이버)</th><th>해석</th></tr></thead>
+          <tbody><tr><td>낮음</td><td>8° 이하</td><td>1800 이하</td><td>탄도 부족 / 낙하각 부족</td></tr>
+<tr><td>적정</td><td>10~14°</td><td>2000~2600rpm</td><td>이상적 구간</td></tr>
+<tr><td>높음</td><td>15° 이상</td><td>3000 이상</td><td>과도한 탄도 / 거리 손실 가능</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Launch 상태</th><th>Spin 상태</th><th>비행 특징</th><th>해석 방향</th></tr></thead>
+          <tbody><tr><td>높음</td><td>높음</td><td>높이만 형성. 전진력 부족</td><td>Dynamic Loft 과다 또는 하단 타점</td></tr>
+<tr><td>낮음</td><td>높음</td><td>뜨지 않고 끌림 (최악의 효율)</td><td>압축 부족. 타점 또는 Attack Angle 문제</td></tr>
+<tr><td>적정</td><td>적정</td><td>캐리와 런 균형</td><td>최적 구조</td></tr>
+<tr><td>낮음</td><td>낮음</td><td>낮게 뻗지만 캐리 부족</td><td>Launch 구조 부족. 로프트 또는 Attack Angle</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">탄도 해석 트리</p>
+        <ul class="callout-bullets">
+          <li>Launch 낮음? → Attack Angle / 타점(하단) / 로프트 확인</li>
+          <li>Launch 높음? → Dynamic Loft / 타점(하단) / 샤프트 EI 확인</li>
+          <li>Spin 높음? → 타점 → Attack Angle → Spin Loft → 로프트 순서로 확인</li>
+          <li>Spin 낮음? → 상단 타점 / 로프트 부족 / 타점 상단 확인</li>
+        </ul>
+        <p class="callout-foot">아이언: Landing Angle 45° 이상 → 정지력 확보. 45° 이하 → 정지력 부족</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">◼ 그림 10-2. 론치모니터 화면 해석 예시 (2가지 케이스)</p>
+        <p class="callout-foot" style="border:none;padding:0;">[제작 프롬프트 — 실제 Trackman 또는 GCQuad 화면 캡처]
+
+론치모니터 데이터가 표시된 실제 화면 2장을 비교 배치합니다.
+
+① 정상 임팩트 — Ball Speed, Launch Angle, Spin Rate, Smash Factor가 골퍼의 헤드스피드에 맞는 적정 범위. 각 수치에 녹색 표시.
+② 문제 임팩트 — 타점이 힐 쪽으로 치우쳐 Smash Factor가 낮고 Spin이 비정상. 각 수치에 붉은 표시.
+
+화면에 나타나는 주요 데이터 항목:
+- Ball Speed (mph)
+- Launch Angle (°)
+- Spin Rate (rpm)
+- Smash Factor
+- Club Path / Face Angle
+- Attack Angle / Dynamic Loft / Spin Loft
+
+· 참고: Trackman 4 / GCQuad / Foresight GCQuad 등 실제 론치모니터 SW 스크린샷
+· 수치 판독 가이드 라벨 병기 (이 수치는 이 의미)</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">현장 케이스 — 관찰에서 판단으로</h2>
+
+      <div class="prose">
+        <p>같은 증상이라도 원인이 다르면 처방이 달라집니다. 아래 케이스는 결과를 나열하는 방식이 아니라 관찰 → 판단 → 개입의 흐름으로 설명합니다.</p>
+        <p>CASE A — 드라이버가 계속 우측으로 출발한다</p>
+        <p>론치모니터에서 Launch Direction이 반복적으로 우측이고 Face Angle도 오픈 상태입니다. 이때 가장 흔한 실수는 바로 'OTT 패스'라고 단정하고 스윙 교정을 시작하는 것입니다.</p>
+        <p>출발 방향은 패스보다 페이스의 영향을 더 직접적으로 받습니다. 따라서 '왜 페이스가 반복적으로 열려 있는가'를 먼저 질문해야 합니다. 원인은 그립과 릴리즈 문제, 헤드 도달이 늦어지는 장비 구조(너무 긴 길이, 너무 무거운 총무게), 라이각 문제, 스윙 패스(OTT) 순으로 검토합니다. 스윙 패스는 가장 마지막에 확인합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">CASE A 개입 순서</p>
+        <ul class="callout-bullets">
+          <li>① Face Angle 확인 → 반복적으로 오픈인가?</li>
+          <li>② 그립 강도와 릴리즈 타이밍 확인 → 너무 약하거나 늦은가?</li>
+          <li>③ 클럽 길이·총무게 확인 → 헤드 도달이 늦는 구조인가? (PART 9 EI/ROC 참조)</li>
+          <li>④ 라이각 확인 → 플랫 라이각이 방향에 영향을 주는가?</li>
+        </ul>
+        <p class="callout-foot">⑤ 최종 확인: Club Path 확인 → OTT인가, 아닌가?</p>
+      </aside>
+
+        <p>CASE B — Club Speed는 나쁘지 않은데 거리가 안 나온다</p>
+        <p>Ball Speed가 기대보다 낮고 Smash Factor가 일정하지 않습니다. 이것은 힘의 문제가 아니라 만들어진 스피드가 공에 효율적으로 전달되지 못하는 구조 문제입니다.</p>
+        <p>가장 먼저 타점을 확인합니다. 타점이 중심에서 벗어나면 볼스피드는 즉시 손실됩니다. 드라이버에서 힐이나 토 미스가 반복될 때 숫자상 스피드는 유지되는 것처럼 보여도 실제 Ball Speed와 캐리는 기대에 못 미칩니다. 타점이 안정적인데도 Smash가 낮다면 Dynamic Loft와 Attack Angle의 관계(Spin Loft)를 확인합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">CASE B 개입 순서</p>
+        <ul class="callout-bullets">
+          <li>① 타점 패턴 확인 → 힐/토 또는 상하 편차 있는가?</li>
+          <li>② 타점 안정적 → Smash Factor 확인</li>
+          <li>③ Smash 낮음 → Spin Loft 확인 (Dynamic Loft - Attack Angle)</li>
+          <li>④ Spin Loft 높음 → Dynamic Loft 원인 추적 (샤프트 EI, 릴리즈 타이밍)</li>
+        </ul>
+        <p class="callout-foot">⑤ 타점과 Smash 모두 정상 → Club Speed 자체가 제한인지 확인 → 총무게 검토</p>
+      </aside>
+
+        <p>CASE C — 탄도가 너무 높고 스핀이 많다</p>
+        <p>Launch Angle이 높고 Spin Rate도 높습니다. 공이 뜨기는 뜨는데 전진력이 없고 캐리 대비 런이 거의 없습니다. 이때 바로 로프트를 낮추거나 샤프트를 강하게 바꾸는 것은 성급한 처방입니다.</p>
+        <p>먼저 확인할 것은 '왜 Dynamic Loft가 높게 형성됐는가'입니다. 원인은 두 가지입니다. 첫째, Dynamic Loft 과도(손이 뒤에 남거나, 릴리즈가 너무 빠름). 둘째, 하단 타점(드라이버에서 하단 타점은 스핀을 크게 증가시킴). 타점을 먼저 보고, 타점이 정상이면 Dynamic Loft 원인을 추적합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">CASE C 개입 순서</p>
+        <ul class="callout-bullets">
+          <li>① 타점 확인 → 하단 타점인가? → YES: 셋업·티높이·볼위치 검토</li>
+          <li>② 타점 정상 → Dynamic Loft 확인 → 과도한가?</li>
+          <li>③ Dynamic Loft 높음 → 손 위치·릴리즈 타이밍·샤프트 EI 검토</li>
+        </ul>
+        <p class="callout-foot">④ 최종 보정: 로프트 조정 또는 하이킥포인트 샤프트 → 장비 개입은 원인 확인 후</p>
+      </aside>
+
+        <p>CASE D — 아이언 비거리는 맞는데 그린에 안 선다</p>
+        <p>Carry는 충분한데 그린에서 공이 많이 굴러갑니다. 이 경우 캐리 숫자만 보고 문제가 없다고 판단하면 오류입니다. 아이언에서 중요한 것은 Landing Angle과 정지력입니다. Landing Angle이 45° 이하이면 캐리가 충분해도 그린에 서기 어렵습니다. 원인은 Launch 부족, Height 부족, Spin 부족 중 하나 또는 복합입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">CASE D 개입 순서</p>
+        <ul class="callout-bullets">
+          <li>① Landing Angle 확인 → 45° 미만인가?</li>
+          <li>② Launch와 Height 확인 → 충분히 높이 올라가는가?</li>
+          <li>③ Spin 확인 → 정지력을 만들 수 있는 수준인가?</li>
+        </ul>
+        <p class="callout-foot">④ 구조 원인 추적: Launch 부족 → 로프트/Attack Angle 검토. Spin 부족 → 타점·CG·로프트</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">의사결정 시스템 — IF-THEN 구조</h2>
+
+      <div class="prose">
+        <p>반복적인 패턴을 보고 개입을 결정하는 IF-THEN 프레임입니다. 이 결정은 PART 11 통합 결정 시스템으로 연결됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>관찰 패턴</th><th>IF</th><th>THEN 확인 항목</th><th>개입 우선순위</th></tr></thead>
+          <tbody><tr><td>Ball Speed 낮음</td><td>Club Speed 대비 낮은가?</td><td>타점 → Smash → Spin Loft 순서</td><td>길이·총무게 검토</td></tr>
+<tr><td>Spin 많음</td><td>3000rpm 이상 반복?</td><td>타점 → Attack Angle → Dynamic Loft → 로프트</td><td>타점 안정화 먼저</td></tr>
+<tr><td>방향 우측</td><td>Face Angle 오픈 반복?</td><td>Face 원인 → 릴리즈·길이·라이각 → 패스</td><td>페이스 원인 먼저, 패스 마지막</td></tr>
+<tr><td>방향 좌측</td><td>Face Angle 클로즈드?</td><td>릴리즈 빠름 → 토크/EI → 그립</td><td>ROC 과다 여부 확인</td></tr>
+<tr><td>탄도 낮음</td><td>Launch 8° 이하?</td><td>Attack Angle → Dynamic Loft → 로프트</td><td>어택앵글 확인 먼저</td></tr>
+<tr><td>타점 분산 큼</td><td>분산 15mm 이상?</td><td>길이 → 총무게 → MOI 순서</td><td>길이 단축 검토 먼저</td></tr>
+<tr><td>거리 일관성 없음</td><td>Smash 분산 큰가?</td><td>타점 → 총무게 → MOI 매칭</td><td>타점 우선</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">최종 판단 질문</p>
+        <ul class="callout-bullets">
+          <li>'이 문제는 스윙의 문제인가, 장비의 문제인가?'</li>
+          <li>스윙과 장비를 동시에 바꾸지 않습니다. 원인을 분리해서 하나씩 검증합니다.</li>
+        </ul>
+        <p class="callout-foot">타점이 불안정하면 장비를 바꾸기 전에 타점부터 잡습니다. 타점이 안정됐을 때 장비의 효과가 정확히 나타납니다.</p>
+      </aside>
+
+        <h3 class="subhead">5-B절. 데이터 기반 클럽 매칭 로직</h3>
+        <p>론치모니터 데이터를 해석했으면 그 결과를 장비 선택으로 연결합니다. 중요한 것은 '숫자를 맞추는 것'이 아니라 목표 탄도를 만들기 위한 구조를 선택하는 것입니다.</p>
+        <h3 class="subhead">데이터 → 장비 선택 연결 원칙</h3>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">원칙 1: 타점 문제는 CG로 해결되지 않습니다</p>
+        <p class="callout-foot" style="border:none;padding:0;">스핀이 많다 → 바로 CG 전방 헤드를 선택하면 안 됩니다. 타점 문제가 원인이면 CG를 바꿔도 스핀이 줄지 않습니다.</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">원칙 2: Launch가 부족한 골퍼에게 Low Spin 헤드는 적합하지 않을 수 있습니다</p>
+        <p class="callout-foot" style="border:none;padding:0;">Low Spin 헤드(전방 CG)는 탄도가 낮아지는 경향이 있습니다. 이미 탄도가 부족한 골퍼에게 적용하면 상황이 악화됩니다.</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">원칙 3: MOI는 결과를 안정시키지만 타이밍을 만들어주지는 않습니다</p>
+        <p class="callout-foot" style="border:none;padding:0;">High MOI 헤드는 오프센터 히트의 손실을 줄이지만, 타점이 불안정한 근본 원인(길이·무게)은 해결하지 않습니다.</p>
+      </aside>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>해석 결과</th><th>헤드/로프트 방향</th><th>샤프트 방향</th></tr></thead>
+          <tbody><tr><td>Spin 과다 (타점 정상)</td><td>Low Spin 헤드, 전방 CG, 로프트 감소</td><td>하이킥, CPM 상향</td></tr>
+<tr><td>Launch 부족</td><td>후방 CG, 로프트 증가</td><td>로우킥, CPM 하향</td></tr>
+<tr><td>Ball Speed 부족 (타점 문제)</td><td>타점 안정화 먼저 (장비 변경 전)</td><td>길이·총무게 최적화</td></tr>
+<tr><td>타점 분산 큼</td><td>관용성 헤드 (High MOI)</td><td>길이↓, 무게↑</td></tr>
+<tr><td>방향 분산 큼 (랜덤 미스)</td><td>라이각 재확인. 표준 CG</td><td>길이·무게 등급 재검토</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">탄도 설계 — 해석에서 장비 결정으로</h2>
+
+      <div class="prose">
+        <p>론치모니터 해석의 마지막은 데이터를 장비 선택으로 연결하는 것입니다. 중요한 것은 '숫자를 맞추는 것'이 아니라 목표 탄도를 만들기 위한 구조를 선택하는 것입니다.</p>
+        <h3 class="subhead">6-1. 드라이버 탄도 설계</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>관찰되는 결과</th><th>먼저 확인할 항목</th><th>장비 개입 방향</th></tr></thead>
+          <tbody><tr><td>캐리가 부족하다</td><td>Launch, Spin</td><td>발사 구조 부족 → 로프트↑, 로우킥 샤프트, 후방 CG</td></tr>
+<tr><td>볼이 뜨기만 한다</td><td>Spin, 타점</td><td>Dynamic Loft 과다 또는 하단 타점 → 로프트↓, 하이킥 샤프트, 전방 CG</td></tr>
+<tr><td>탄도가 낮다</td><td>Launch, Attack Angle</td><td>발사 조건 부족 → 로프트↑, 로우킥</td></tr>
+<tr><td>방향은 좋은데 거리 손실</td><td>Ball Speed, Smash</td><td>임팩트 효율 → 길이·총무게 최적화</td></tr>
+<tr><td>방향 분산이 크다</td><td>Face Angle, 타점</td><td>임팩트 불안정 → 길이↓, MOI↑, 토크 낮추기</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">6-2. 아이언 탄도 설계</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>관찰되는 결과</th><th>먼저 확인할 항목</th><th>장비 개입 방향</th></tr></thead>
+          <tbody><tr><td>공이 많이 굴러간다</td><td>Landing Angle, Spin</td><td>정지력 부족 → 로프트 확인, Spin 구조 검토</td></tr>
+<tr><td>탄도가 낮다</td><td>Launch, Height</td><td>발사 부족 → 로프트↑, 로우킥 샤프트</td></tr>
+<tr><td>스핀이 부족하다</td><td>타점, 로프트</td><td>임팩트 또는 로프트 문제 → 타점 안정화 먼저</td></tr>
+<tr><td>탄도가 불안정하다</td><td>Launch, Spin, 타점</td><td>임팩트 일관성 부족 → 길이·총무게 검토</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>해석 결과</th><th>헤드/로프트 방향</th><th>샤프트 방향</th></tr></thead>
+          <tbody><tr><td>Spin 과다</td><td>Low Spin 헤드, 전방 CG, 로프트↓</td><td>하이킥 샤프트, CPM 상향</td></tr>
+<tr><td>Launch 부족</td><td>후방 CG, 로프트↑</td><td>로우킥 샤프트</td></tr>
+<tr><td>Ball Speed 부족</td><td>타점 개선 우선</td><td>길이·총무게 최적화 (PART 8 기준)</td></tr>
+<tr><td>타점 불안정</td><td>관용성 헤드</td><td>길이↓, MOI↑ (PART 7 기준)</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 10 론치모니터</p>
+        <ol class="check-list">
+          <li>7번 아이언 스매시 팩터가 1.28로 측정되었습니다. 이 수치는 정상 범위입니까? 벗어났다면 가능한 원인은 무엇입니까?
+문제 2. 볼 스피드가 상승했는데 캐리 거리는 오히려 감소했습니다. 어떤 데이터를 우선 확인해야 합니까?
+문제 3. 광학 방식 론치모니터(예: SkyTrak)와 도플러 레이더 방식(Trackman)의 측정 대상 차이는 무엇이며, 실내 피팅에서 어느 쪽이 유리합니까?
+※ 해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</li>
+        </ol>
+        
+      </aside>
+
+        <h3 class="subhead">PART 10 마무리</h3>
+        <p>론치모니터 해석은 숫자를 읽는 작업이 아닙니다. 구조를 이해하고 순서대로 판단하는 과정입니다. 데이터는 결과이며, 원인은 항상 임팩트 구조에 있습니다. 타점 → 에너지 → 방향 → 탄도 → 결과의 순서를 지키면, 어떤 데이터 패턴도 구조적으로 해석할 수 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">측정 환경과 기기 특성 — 데이터 신뢰도의 조건</h2>
+
+      <div class="prose">
+        <p>6절에서는 해석된 데이터를 탄도 설계로 전환하는 흐름을 다뤘다. 그러나 모든 해석의 전제는 데이터가 신뢰할 만한가에 있다. 측정 환경과 기기 특성을 이해하지 못하면, 정확한 해석 원칙을 가지고도 오판에 이른다.</p>
+        <p>이 절은 데이터를 해석하기 전 반드시 확인해야 할 측정 환경 변수와 주요 기기의 특성을 정리한다.</p>
+        <h3 class="subhead">1. 측정 환경이 데이터에 미치는 영향</h3>
+        <p>같은 골퍼·같은 클럽이라도 측정 환경이 달라지면 결과값이 변한다. 환경 요인을 무시하고 기기에 표시된 숫자를 그대로 받아들이면 오판이 발생한다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">환경 변수 — 결과에 미치는 영향 / ① 실내 vs 실외 — 실내 측정은 공의 실제 비행을 관찰할 수 없어 스핀·캐리가 알고리즘 추정치다. 실외는 실제 비행 관찰이 가능하나 바람 영향을 받는다. / ② 매트 vs 잔디 — 매트에서는 어택 앵글이 실제보다 얕게 기록되는 경향이 있다. 잔디에서는 턴 상태에 따라 결과값이 크게 흔들린다. / ③ 기온·습도 — 기온 10°C 하락 시 드라이버 캐리 약 2~4야드 감소. 습도는 공기 저항에 미세한 영향. / ④ 고도 — 고도 300m 상승 시 드라이버 캐리 약 3야드 증가. 고지대 골프장 운용 시 고려.</p>
+      </aside>
+
+        <h3 class="subhead">2. 측정 샷 수와 신뢰도</h3>
+        <p>PART 2 3절에서 "평균이 아니라 최악을 기준으로 판단합니다"를 원칙으로 제시했다. 이 원칙을 데이터 측정에 적용하면 최소 측정 샷 수가 결정된다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">클럽별 최소 측정 샷 수 / 드라이버·3W — 10~12구 (편차 큼, 극단값 2~3개 배제 후 평균) / 유틸리티 — 8~10구 / 아이언(롱~미드) — 8구 (5~9I 기준) / 아이언(숏)·웨지 — 5~6구 (편차 작음, 안정적) / 퍼터 — 거리별 5구씩 (2m / 5m / 10m) / ※ 첫 2~3구는 워밍업 성격이 강하므로 데이터 집계에서 배제한다</p>
+      </aside>
+
+        <h3 class="subhead">3. 주요 기기의 특성 이해</h3>
+        <p>시장에는 다양한 론치모니터가 있으며, 각각 측정 방식과 강점이 다르다. 기기별 특성을 모른 채 데이터를 비교하면 오판이 발생한다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">주요 론치모니터 — 측정 방식과 특성 / Trackman — 도플러 레이더 방식. 실외 측정 표준. 풀 비행 추적 강점. 실내 설치 시 공간 제약. / Foresight GCQuad — 고속 카메라 방식. 실내 환경 최적화. 타점·페이스 각도 정밀. / Uneekor — 고속 카메라 방식. 실내 스튜디오형. 타석 고정 기기로 반복 측정 안정적. / Flightscope — 도플러 레이더 방식. 실외 강점. Trackman 대비 가격 경쟁력. / SkyTrak — 카메라 방식. 보급형. 교육·입문용. 스핀·방향 정밀도는 상급기 대비 제한.</p>
+      </aside>
+
+        <p>현장에서 중요한 것은 기기 절대 정확도보다 기기 내 일관성이다. 같은 피팅 세션에서는 동일 기기로 측정해야 처방 전후 비교가 의미를 갖는다.</p>
+        <h3 class="subhead">4. 기기별 해석 주의점</h3>
+        <p>레이더 방식 기기는 첫 0.5초 실측값을 기반으로 이후 비행을 계산한다. 카메라 방식 기기는 임팩트 직후 0.1초 이내 데이터를 기반으로 이후 비행을 추정한다. 둘은 측정 시점이 다르기 때문에 같은 샷이라도 기록값이 미세하게 다를 수 있다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">기기별 주요 주의점 / ① 레이더 방식 — 실내 설치 시 뒷벽까지 최소 6~8m 거리 필요. 부족하면 비행 말미 데이터 신뢰도 하락. / ② 카메라 방식 — 조명 환경에 민감. 특정 조명 조건에서 페이스 앵글 오류 발생 가능. / ③ 보급형 기기 — 스핀율 측정치가 상급기 대비 ±200~400rpm 편차 발생 가능. 절대값보다 상대 변화에 집중. / ④ 공통 — 측정 전 매번 캘리브레이션 확인. 클럽 교체 후 센서 인식 확인.</p>
+      </aside>
+
+        <p>5. 현장 체크리스트 — 측정 전 확인 항목</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">측정 전 10가지 체크리스트 / ☐ 기기 캘리브레이션 완료 / ☐ 측정 환경 (실내/실외) 기록 / ☐ 기온·습도 기록 (실외) / ☐ 타석면 상태 확인 (매트 종류 · 잔디 상태) / ☐ 공 동일 브랜드·모델로 통일 (최소 세션 내 통일) / ☐ 클럽별 최소 측정 샷 수 사전 결정 / ☐ 워밍업 구(2~3구) 데이터 배제 합의 / ☐ 피팅 대상자의 당일 컨디션 확인 (피로·통증) / ☐ 동일 기기로 처방 전후 측정 계획 수립 / ☐ 측정 기록을 워크시트(B-4)에 실시간 기입</p>
+      </aside>
+
+        <h3 class="subhead">마무리</h3>
+        <p>데이터는 측정 환경·기기 특성·샷 수가 함께 만들어낸 결과다. 해석의 원칙(2절)과 순서(3절)가 아무리 정확해도, 신뢰도 낮은 데이터에 적용하면 오판으로 이어진다.</p>
+        <p>측정 전에 환경을 통제하고, 샷 수를 충분히 확보하며, 기기 특성을 인지한 상태에서 해석을 시작하는 것이 PART 10 전체를 관통하는 현장 원칙이다. 이 전제가 깨지면 8절에서 다룰 "데이터 해석의 함정"에 빠지기 쉽다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 8 ==================== -->
+  <section id="sec-8" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 08 · 8절</p>
+      <h2 class="section-title">데이터 해석의 함정 — 자주 하는 오판</h2>
+
+      <div class="prose">
+        
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== CLOSING ==================== -->
+  <section class="closing">
+    <div class="container narrow">
+      <p class="eyebrow">CLOSING · PART 10 마무리</p>
+      <h2 class="section-title">PART 10 마무리</h2>
+
+      <div class="closing-prose">
+        <p class="closing-paragraph">론치모니터 해석은 숫자를 읽는 작업이 아닙니다. 구조를 이해하고 순서대로 판단하는 과정입니다. 데이터는 결과이며, 원인은 항상 임팩트 구조에 있습니다. 타점 → 에너지 → 방향 → 탄도 → 결과의 순서를 지키면, 어떤 데이터 패턴도 구조적으로 해석할 수 있습니다.</p>
+        <p class="closing-paragraph">7절. 측정 환경과 기기 특성 — 데이터 신뢰도의 조건</p>
+        <p class="closing-paragraph">6절에서는 해석된 데이터를 탄도 설계로 전환하는 흐름을 다뤘다. 그러나 모든 해석의 전제는 데이터가 신뢰할 만한가에 있다. 측정 환경과 기기 특성을 이해하지 못하면, 정확한 해석 원칙을 가지고도 오판에 이른다.</p>
+        <p class="closing-paragraph">이 절은 데이터를 해석하기 전 반드시 확인해야 할 측정 환경 변수와 주요 기기의 특성을 정리한다.</p>
+        <p class="closing-paragraph">1. 측정 환경이 데이터에 미치는 영향</p>
+        <p class="closing-paragraph">같은 골퍼·같은 클럽이라도 측정 환경이 달라지면 결과값이 변한다. 환경 요인을 무시하고 기기에 표시된 숫자를 그대로 받아들이면 오판이 발생한다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">환경 변수 — 결과에 미치는 영향 / ① 실내 vs 실외 — 실내 측정은 공의 실제 비행을 관찰할 수 없어 스핀·캐리가 알고리즘 추정치다. 실외는 실제 비행 관찰이 가능하나 바람 영향을 받는다. / ② 매트 vs 잔디 — 매트에서는 어택 앵글이 실제보다 얕게 기록되는 경향이 있다. 잔디에서는 턴 상태에 따라 결과값이 크게 흔들린다. / ③ 기온·습도 — 기온 10°C 하락 시 드라이버 캐리 약 2~4야드 감소. 습도는 공기 저항에 미세한 영향. / ④ 고도 — 고도 300m 상승 시 드라이버 캐리 약 3야드 증가. 고지대 골프장 운용 시 고려.</p>
+      </aside>
+
+        <p class="closing-paragraph">2. 측정 샷 수와 신뢰도</p>
+        <p class="closing-paragraph">PART 2 3절에서 "평균이 아니라 최악을 기준으로 판단합니다"를 원칙으로 제시했다. 이 원칙을 데이터 측정에 적용하면 최소 측정 샷 수가 결정된다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">클럽별 최소 측정 샷 수 / 드라이버·3W — 10~12구 (편차 큼, 극단값 2~3개 배제 후 평균) / 유틸리티 — 8~10구 / 아이언(롱~미드) — 8구 (5~9I 기준) / 아이언(숏)·웨지 — 5~6구 (편차 작음, 안정적) / 퍼터 — 거리별 5구씩 (2m / 5m / 10m) / ※ 첫 2~3구는 워밍업 성격이 강하므로 데이터 집계에서 배제한다</p>
+      </aside>
+
+        <p class="closing-paragraph">3. 주요 기기의 특성 이해</p>
+        <p class="closing-paragraph">시장에는 다양한 론치모니터가 있으며, 각각 측정 방식과 강점이 다르다. 기기별 특성을 모른 채 데이터를 비교하면 오판이 발생한다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">주요 론치모니터 — 측정 방식과 특성 / Trackman — 도플러 레이더 방식. 실외 측정 표준. 풀 비행 추적 강점. 실내 설치 시 공간 제약. / Foresight GCQuad — 고속 카메라 방식. 실내 환경 최적화. 타점·페이스 각도 정밀. / Uneekor — 고속 카메라 방식. 실내 스튜디오형. 타석 고정 기기로 반복 측정 안정적. / Flightscope — 도플러 레이더 방식. 실외 강점. Trackman 대비 가격 경쟁력. / SkyTrak — 카메라 방식. 보급형. 교육·입문용. 스핀·방향 정밀도는 상급기 대비 제한.</p>
+      </aside>
+
+        <p class="closing-paragraph">현장에서 중요한 것은 기기 절대 정확도보다 기기 내 일관성이다. 같은 피팅 세션에서는 동일 기기로 측정해야 처방 전후 비교가 의미를 갖는다.</p>
+        <p class="closing-paragraph">4. 기기별 해석 주의점</p>
+        <p class="closing-paragraph">레이더 방식 기기는 첫 0.5초 실측값을 기반으로 이후 비행을 계산한다. 카메라 방식 기기는 임팩트 직후 0.1초 이내 데이터를 기반으로 이후 비행을 추정한다. 둘은 측정 시점이 다르기 때문에 같은 샷이라도 기록값이 미세하게 다를 수 있다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">기기별 주요 주의점 / ① 레이더 방식 — 실내 설치 시 뒷벽까지 최소 6~8m 거리 필요. 부족하면 비행 말미 데이터 신뢰도 하락. / ② 카메라 방식 — 조명 환경에 민감. 특정 조명 조건에서 페이스 앵글 오류 발생 가능. / ③ 보급형 기기 — 스핀율 측정치가 상급기 대비 ±200~400rpm 편차 발생 가능. 절대값보다 상대 변화에 집중. / ④ 공통 — 측정 전 매번 캘리브레이션 확인. 클럽 교체 후 센서 인식 확인.</p>
+      </aside>
+
+        <p class="closing-paragraph">5. 현장 체크리스트 — 측정 전 확인 항목</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">측정 전 10가지 체크리스트 / ☐ 기기 캘리브레이션 완료 / ☐ 측정 환경 (실내/실외) 기록 / ☐ 기온·습도 기록 (실외) / ☐ 타석면 상태 확인 (매트 종류 · 잔디 상태) / ☐ 공 동일 브랜드·모델로 통일 (최소 세션 내 통일) / ☐ 클럽별 최소 측정 샷 수 사전 결정 / ☐ 워밍업 구(2~3구) 데이터 배제 합의 / ☐ 피팅 대상자의 당일 컨디션 확인 (피로·통증) / ☐ 동일 기기로 처방 전후 측정 계획 수립 / ☐ 측정 기록을 워크시트(B-4)에 실시간 기입</p>
+      </aside>
+
+        <p class="closing-paragraph">마무리</p>
+        <p class="closing-paragraph">데이터는 측정 환경·기기 특성·샷 수가 함께 만들어낸 결과다. 해석의 원칙(2절)과 순서(3절)가 아무리 정확해도, 신뢰도 낮은 데이터에 적용하면 오판으로 이어진다.</p>
+        <p class="closing-paragraph">측정 전에 환경을 통제하고, 샷 수를 충분히 확보하며, 기기 특성을 인지한 상태에서 해석을 시작하는 것이 PART 10 전체를 관통하는 현장 원칙이다. 이 전제가 깨지면 8절에서 다룰 "데이터 해석의 함정"에 빠지기 쉽다.</p>
+        <p class="closing-paragraph">8절. 데이터 해석의 함정 — 자주 하는 오판</p>
+        <p class="closing-paragraph">론치모니터 데이터는 강력하지만 해석의 함정도 많습니다. 숫자는 거짓말을 하지 않지만, 사람은 숫자에서 원하는 결론을 보려 합니다. 현장에서 반복해 관찰되는 대표적인 오판 7가지를 정리합니다. 각 오판의 공통점은 "단일 지표·단일 샷·원하는 결과"에 집중하고 "패턴·전체 구조·원인"을 놓치는 것입니다.</p>
+        <p class="closing-paragraph">함정 1. 한 번의 좋은 샷을 기준으로 클럽을 고르는 경우</p>
+        <p class="closing-paragraph">10번 친 것 중 가장 잘 맞은 한 샷의 Carry로 클럽을 선택하면 실제 라운드에서는 그 성능이 재현되지 않습니다. 평균에서 ±5% 편차 이내의 샷이 6개 이상 나오는 클럽이 실제로 잘 맞는 클럽입니다. 피크 퍼포먼스가 아니라 반복성이 기준입니다.</p>
+        <p class="closing-paragraph">함정 2. 스핀율이 높다고 Low Spin 헤드로 바꾸는 경우</p>
+        <p class="closing-paragraph">스핀율이 높은 원인은 Low Spin 헤드로 해결되지 않을 수 있습니다. Dynamic Loft가 높거나 AoA가 다운블로인 경우라면 헤드를 바꿔도 스핀은 여전히 높습니다. 원인이 골퍼의 임팩트 구조라면 장비 교체가 아니라 피팅 셋업(로프트 조정·샤프트 릴리즈) 쪽으로 접근해야 합니다.</p>
+        <p class="closing-paragraph">함정 3. Club Speed가 늘었다고 비거리가 늘 것이라 판단하는 경우</p>
+        <p class="closing-paragraph">클럽 스피드가 2mph 올랐다고 비거리가 반드시 느는 것은 아닙니다. 스매시 팩터가 떨어졌거나 탄도각·스핀 조합이 나빠졌다면 오히려 비거리는 줄어듭니다. 스피드는 잠재력이고 구조가 결과를 만듭니다. 스피드만 보고 판단하면 여러 다른 지표 변화를 놓칩니다.</p>
+        <p class="closing-paragraph">함정 4. Launch 각도만 보고 로프트를 조정하는 경우</p>
+        <p class="closing-paragraph">Launch 각도가 낮은 원인이 로프트가 아니라 AoA나 Dynamic Loft일 수 있습니다. 로프트를 올렸는데도 Launch가 그대로라면 Dynamic Loft가 이미 충분히 나오고 있었다는 뜻입니다. 이 경우 원인은 AoA(다운블로 과다)입니다. 로프트 조정 전에 Spin Loft의 구성을 먼저 봐야 합니다.</p>
+        <p class="closing-paragraph">함정 5. Smash Factor만 중시해서 얇은 임팩트를 유도하는 경우</p>
+        <p class="closing-paragraph">Smash Factor를 올리려고 AoA를 과도하게 업블로로 만들면 드라이버는 스핀이 줄고 Carry는 좋아지지만 일관성이 떨어지고 토 쪽 타점이 자주 나옵니다. Smash Factor는 결과이지 목표가 아닙니다. 타점 안정성과 Spin Loft 균형이 먼저입니다.</p>
+        <p class="closing-paragraph">함정 6. Carry만 보고 Total(총비거리)을 무시하는 경우</p>
+        <p class="closing-paragraph">Carry가 220미터 나와도 스핀이 3,200rpm이면 Roll이 거의 없어 Total이 230미터에 그칩니다. 반면 Carry 210미터·스핀 2,400rpm은 Roll까지 합해 230미터가 넘을 수 있습니다. 실전에서 중요한 것은 Carry가 아니라 Total에서의 일관성입니다. 다만 그린 공략 클럽(아이언 이하)은 Carry가 우선입니다.</p>
+        <p class="closing-paragraph">함정 7. 실내 측정값을 실외 그대로 적용하는 경우</p>
+        <p class="closing-paragraph">실내 측정은 바람·습도·해발 변수가 없는 통제된 조건입니다. 실외에서는 같은 임팩트라도 Carry가 5~10야드 차이 납니다. 실내 수치로 한국 코스 전략을 세우면 장마철·고지대 코스에서 오차가 누적됩니다. 실내 측정은 "구조 비교"용이고 실외 측정이 "거리 기준"입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">공통 교훈 — 데이터가 많다고 해석이 쉬워지지 않습니다</p>
+        <p class="callout-foot" style="border:none;padding:0;">7가지 함정의 공통점은 다음 세 가지입니다.
+
+첫째, 단일 지표를 보고 판단합니다. 지표는 서로 연결되어 있고 한 지표의 변화는 다른 지표의 변화를 동반합니다.
+둘째, 한두 번의 좋은 샷을 기준으로 삼습니다. 피팅은 평균의 반복성이지 최고점의 재현이 아닙니다.
+셋째, 결과를 원인으로 착각합니다. Smash Factor·Carry·Spin은 모두 여러 원인의 결과값입니다.
+
+데이터 해석의 본질은 "어떤 숫자가 좋은가"가 아니라 "이 숫자들이 함께 만드는 구조가 이 골퍼에게 반복 가능한가"입니다.</p>
+      </aside>
+
+      </div>
+
+      
+    </div>
+  </section>
+
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book/part-9" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">PART 9 · 샤프트 구조와 피팅 판단</span>
+      </a>
+      <a href="/book/part-11" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 11 · 통합 결정과 문제 해결 시스템</span>
+        <span class="pg-sub">인터뷰·데이터·측정을 하나의 실행 흐름으로</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</BaseLayout>
+
+
+<!-- PART 1, 2와 동일한 디자인 시스템 -->
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+  .subhead { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 2em 0 .8em; padding-top: 1em; border-top: 1px dashed var(--rule); }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  .part-hero { background: var(--bg); padding: 72px 0 64px; border-bottom: 1px solid var(--rule); }
+  .part-title { font-family: var(--serif); margin: 0 0 1rem; line-height: 1.1; color: var(--text); font-weight: 500; }
+  .part-num { display: block; font-family: var(--sans); font-size: .875rem; font-weight: 600; letter-spacing: .2em; color: var(--muted); margin-bottom: .75rem; }
+  .part-name { display: block; font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 600; letter-spacing: -.02em; }
+  .part-sub { display: block; font-size: clamp(1.1875rem, 3vw, 1.625rem); font-weight: 300; color: var(--text-2); margin-top: .25em; }
+  .part-en { font-family: var(--sans); font-size: .9375rem; color: var(--muted); letter-spacing: .02em; margin: 1.5rem 0 2rem; font-style: italic; }
+  .part-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 640px; margin: 0; }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 28px 32px; border-radius: 2px; margin: 2rem 0; }
+  .callout-label { font-family: var(--sans); font-size: .875rem; font-weight: 700; color: var(--accent); margin: 0 0 .75rem; letter-spacing: .04em; }
+  .callout-list { margin: 0; padding-left: 1.4em; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets { list-style: none; padding: 0; margin: 0 0 1rem; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-bullets li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+  .callout-bullets li:before { content: "·"; position: absolute; left: .25rem; top: 0; color: var(--accent); font-weight: 700; }
+  .callout-foot { font-family: var(--sans); font-size: 1rem; color: var(--text-2); margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); line-height: 1.7; }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+
+  .part-toc { background: var(--bg); padding: 16px 0 64px; }
+  .toc-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; color: var(--text); font-family: var(--sans); transition: color .2s, padding .2s; }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--accent); min-width: 2.5rem; }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  .intro { padding: 56px 0; }
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4vw, 2.625rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .principle-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 32px; margin: 2.5rem 0; text-align: center; border-radius: 2px; }
+  .principle-label { font-family: var(--sans); font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .principle-flow { font-family: var(--serif); font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 500; color: var(--text); margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.25rem; }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-foot { font-family: var(--sans); font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); max-width: 520px; margin-inline: auto; }
+
+  /* Data table */
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 520px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+  .data-table tbody tr:hover td { background: var(--bg-soft); }
+  .data-table tbody tr.group-row td { background: var(--accent-soft); color: var(--accent); font-weight: 700; padding: 10px 14px; font-size: .8125rem; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* Closing */
+  .closing { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+  .closing-prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-prose p strong { color: white; font-weight: 600; }
+  .closing-prose p em { font-style: normal; color: var(--accent-2); font-weight: 600; background: none; padding: 0; }
+  .closing-paragraph { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-paragraph strong { color: white; }
+
+  .check-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); padding: 28px 32px; border-radius: 2px; margin-top: 2.5rem; }
+  .check-label { font-family: var(--sans); font-size: .8125rem; color: var(--accent-2); font-weight: 700; letter-spacing: .1em; margin: 0 0 1rem; }
+  .check-list { margin: 0 0 1rem; padding-left: 1.25em; font-family: var(--sans); font-size: .9375rem; line-height: 1.85; color: rgba(255,255,255,.85); }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot { font-family: var(--sans); font-size: .8125rem; color: rgba(255,255,255,.5); margin: 0; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.08); }
+
+  /* Pagination */
+  .part-pagination { background: var(--bg); padding: 56px 0 80px; border-top: 1px solid var(--rule); }
+  .part-pagination .container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 760px) { .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; } }
+  .pg-back, .pg-next { display: flex; align-items: center; text-decoration: none; font-family: var(--sans); transition: transform .25s, background .25s; border: 1px solid var(--rule); padding: 20px 24px; background: var(--bg-elev); border-radius: 2px; color: var(--text); }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+  .pg-next { flex-direction: column; align-items: flex-end; text-align: right; gap: .15rem; background: var(--text); color: var(--bg); border-color: var(--text); position: relative; padding-right: 60px; }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta { font-size: .75rem; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; font-weight: 600; }
+  .pg-next .pg-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-top: .15rem; }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .principle-card { padding: 24px 20px; }
+    .callout { padding: 22px 20px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 12px; font-size: .875rem; }
+  }
+</style>

@@ -1,0 +1,623 @@
+---
+// /src/pages/book/part-7.astro
+// 『실제적인 클럽피팅』 PART 7 — MOI / 관성 구조
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "PART 7. MOI / 관성 구조 | 『실제적인 클럽피팅』";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 7. MOI / 관성 구조 — 관성의 물리 원리와 피팅 적용. 클럽의 시간 구조를 결정하는 변수";
+const pageKeywords = "클럽피팅, MOI / 관성 구조, 채기웅, 실제적인 클럽피팅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 7</span>
+      </div>
+
+      <p class="eyebrow">PART 07 · 본문 14 PART 중 7번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 7</span>
+        <span class="part-name">MOI / 관성 구조</span>
+        <span class="part-sub">관성의 물리 원리와 피팅 적용</span>
+      </h1>
+
+      <p class="part-en">Moment of Inertia</p>
+
+      <p class="part-lead">클럽의 시간 구조를 결정하는 변수</p>
+    </div>
+  </section>
+  <section class='objectives'><div class='container narrow'>
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 7 MOI를 마치면</p>
+        <ol class="callout-list">
+          <li>MOI 3종 구조(헤드 MOI·Club MOI·Total Club MOI)를 구분할 수 있다.</li>
+          <li>MOI와 스윙웨이트(SW)의 개념적 차이를 설명할 수 있다.</li>
+          <li>골퍼 타입별 MOI 매칭 방향을 제시할 수 있다.</li>
+        </ol>
+      </div>
+</div></section>
+
+  <!-- ==================== TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        <li><a href="#sec-1"><span class="toc-num">01</span><span class="toc-text">MOI의 물리 정의 — 회전에 대한 저항</span></a></li>
+        <li><a href="#sec-2"><span class="toc-num">02</span><span class="toc-text">MOI 3종 구조</span></a></li>
+        <li><a href="#sec-3"><span class="toc-num">03</span><span class="toc-text">MOI vs 스윙웨이트 — 왜 같은 SW라도 결과가 다른가</span></a></li>
+        <li><a href="#sec-4"><span class="toc-num">04</span><span class="toc-text">MOI와 타이밍 — 스윙 전 구간에서의 영향</span></a></li>
+        <li><a href="#sec-5"><span class="toc-num">05</span><span class="toc-text">타점 안정성과 MOI — Head MOI의 실질 효과</span></a></li>
+        <li><a href="#sec-6"><span class="toc-num">06</span><span class="toc-text">골퍼 구조 × MOI 매핑 — 총무게 → MOI → SW 순서</span></a></li>
+        <li><a href="#sec-7"><span class="toc-num">07</span><span class="toc-text">MOI 피팅 판단 기준</span></a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro">
+    <div class="container narrow prose">
+      <p>MOI(Moment of Inertia, 관성모멘트)는 피팅 현장에서 주로 '관용성'이라는 말로 번역되어 사용됩니다. 미스샷에 대한 용서 폭을 설명하는 용어로 자리 잡은 셈입니다. 다만 MOI의 의미는 관용성 한 가지에 국한되지 않습니다. MOI는 클럽이 회전에 저항하는 정도를 나타내는 물리량이며, 이 회전 저항은 스윙 전체의 타이밍과 반복성에도 영향을 줍니다. 그래서 MOI는 관용성이라는 번역보다 조금 더 넓은 의미를 갖는다고 볼 수 있습니다.</p>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">MOI의 물리 정의 — 회전에 대한 저항</h2>
+
+      <div class="prose">
+        <p>MOI는 회전 운동에서의 관성입니다. 선형 운동에서 질량(m)이 가속에 저항하듯, 회전 운동에서 MOI가 각가속도에 저항합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">MOI 공식: I = Σ m × r²</p>
+        <ul class="callout-bullets">
+          <li>I: 관성모멘트 (단위는 측정 대상에 따라 다름. Head MOI는 g·cm², Total Club MOI는 kg·cm²)</li>
+          <li>m: 각 질량 요소의 질량</li>
+          <li>r: 각 질량 요소에서 회전축까지의 거리</li>
+        </ul>
+        <p class="callout-foot">핵심: 질량이 회전축에서 멀수록 MOI가 급격히 증가합니다. r이 2배가 되면 MOI는 4배가 됩니다.</p>
+      </aside>
+
+        <p>[그림 7-2]와 같이 이 공식이 의미하는 바는 단순합니다. 같은 질량이라도 헤드 외곽에 배치할수록, 클럽을 길게 만들수록, 무거운 부품을 끝단에 둘수록 MOI는 커집니다. 그리고 MOI가 클수록 클럽은 회전에 더 강하게 저항합니다 — 즉 더 '무겁게' 반응하고 더 천천히 움직입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">MOI가 바뀌면 타점도 바뀝니다</p>
+        <ul class="callout-bullets">
+          <li>MOI가 달라지면 클럽이 움직이는 타이밍이 달라집니다. 타이밍이 달라지면 임팩트 순간 헤드가 도달하는 위치가 달라지고, 그 결과 타점이 달라집니다.</li>
+        </ul>
+        <p class="callout-foot">MOI가 타점에 직접 영향을 주는 것처럼 보이지 않아도, 타이밍이라는 경로를 통해 결국 타점에 닿습니다. 타점이 흔들릴 때 클럽만 탓하기 전에 MOI와 타이밍 구조를 먼저 확인해야 하는 이유입니다.</p>
+      </aside>
+
+        <p>[그림 7-1] MOI 3종 축 다이어그램 — 좌: Head MOI (헤드 CG 기준) / 중: Total Club MOI (그립 기준 전체 클럽) / 우: Shaft Axis MOI (샤프트 축 기준 비틀림).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">MOI 3종 구조</h2>
+
+      <div class="prose">
+        <p>[그림 7-1]과 같이 골프 클럽에서 MOI는 기준 축이 무엇이냐에 따라 세 가지로 나뉩니다. 각각이 피팅에서 담당하는 역할이 다릅니다.</p>
+        <h3 class="subhead">2-1. Head MOI — 헤드 비틀림 저항</h3>
+        <p>헤드의 CG를 기준 축으로 했을 때의 MOI입니다. 오프센터 타점에서 헤드가 얼마나 비틀리는지를 결정합니다. PART 5에서 소개한 개념입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Head MOI 수준</th><th>헤드 비틀림</th><th>오프센터 볼스피드</th><th>방향 편차</th></tr></thead>
+          <tbody><tr><td>낮음 (블레이드, 플레이어 헤드)</td><td>오프센터 시 많이 비틀림</td><td>손실 큼</td><td>방향 편차 큼. 타점 피드백 선명</td></tr>
+<tr><td>중간 (캐비티백, 일반)</td><td>중간</td><td>중간 손실</td><td>중간 편차</td></tr>
+<tr><td>높음 (MAX, 대형 헤드)</td><td>거의 비틀리지 않음</td><td>손실 최소</td><td>방향 편차 작음. 피드백 둔함</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>USGA 규정상 드라이버 헤드 MOI 상한선은 5,900 g·cm²입니다. 이 제한이 없다면 헤드 MOI를 무한정 높여 완전한 관용성 헤드를 만들 수 있지만, 그렇게 되면 기술 수준이 결과에 반영되지 않아 경쟁의 의미가 사라지기 때문에 규정으로 제한합니다.</p>
+        <h3 class="subhead">2-2. Total Club MOI — 스윙 타이밍 구조</h3>
+        <p>클럽 전체를 스윙 축(그립 끝 부근)을 기준으로 회전시킬 때의 MOI입니다. 클럽 전체의 질량 배분 구조가 이 값을 결정합니다. 스윙에서 다운스윙 전환부터 임팩트까지 클럽이 얼마나 빨리 또는 천천히 움직이는지 — 즉 타이밍 구조 — 를 결정하는 변수입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">Total Club MOI가 타이밍을 결정하는 이유</p>
+        <ul class="callout-bullets">
+          <li>클럽을 스윙하는 것은 회전 운동입니다. Total Club MOI가 클수록 클럽은 회전 가속에 더 강하게 저항합니다.</li>
+          <li>같은 힘을 가해도 MOI가 큰 클럽은 더 느리게 가속되고, MOI가 작은 클럽은 더 빨리 가속됩니다.</li>
+        </ul>
+        <p class="callout-foot">결과: MOI가 높은 클럽은 전환 타이밍이 느리고 안정적입니다. MOI가 낮은 클럽은 타이밍이 빠르고 예민합니다.</p>
+      </aside>
+
+        <p>Total Club MOI는 클럽 길이, 헤드 무게, 샤프트 무게 배분에 의해 결정됩니다. 클럽이 길수록, 헤드가 무거울수록, 무게가 끝쪽에 집중될수록 Total MOI가 커집니다. 이것이 드라이버의 타이밍이 웨지보다 훨씬 느리게 느껴지는 물리적 이유입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>변수</th><th>Total Club MOI 영향</th><th>타이밍 변화</th></tr></thead>
+          <tbody><tr><td>클럽 길이 ↑ 0.5인치</td><td>MOI 크게 증가 (r² 효과)</td><td>타이밍 느려짐. 전환 안정</td></tr>
+<tr><td>헤드 무게 ↑ 5g</td><td>MOI 증가 (가장 먼 위치)</td><td>타이밍 느려짐. 헤드 체감 증가</td></tr>
+<tr><td>샤프트 무게 ↑ 10g (중간 위치)</td><td>MOI 소폭 증가</td><td>타이밍 소폭 느려짐</td></tr>
+<tr><td>그립 무게 ↑ 10g (손 가까운 위치)</td><td>MOI 거의 변화 없음</td><td>타이밍 체감 변화 미미</td></tr>
+<tr><td>클럽 길이 ↓ 0.5인치</td><td>MOI 크게 감소</td><td>타이밍 빨라짐. 타점 안정화</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">2-3. Shaft Axis MOI — 페이스 회전 저항</h3>
+        <p>샤프트 중심축을 기준으로 헤드가 회전하는 데 저항하는 MOI입니다. 임팩트 순간 헤드가 샤프트 축을 중심으로 돌아가는 것을 얼마나 억제하는지를 나타냅니다. PART 10에서 다룰 토크(Torque)와 직접 연결되는 개념입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">Shaft Axis MOI와 토크의 관계</p>
+        <ul class="callout-bullets">
+          <li>Shaft Axis MOI가 높을수록: 임팩트에서 페이스가 열리거나 닫히는 속도가 느립니다. 방향 안정성이 높지만 릴리즈가 둔합니다.</li>
+          <li>Shaft Axis MOI가 낮을수록: 페이스가 빠르게 회전합니다. 릴리즈 감각이 예민하고 드로우/페이드 조작이 쉽습니다.</li>
+        </ul>
+        <p class="callout-foot">이 변수는 헤드 설계(CG Heel-Toe 위치)와 샤프트 토크값이 함께 결정합니다.</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 10에서 다룹니다: 토크(Torque)와 Shaft Axis MOI의 관계. ROC(Rate of Closure) 개념</p>
+      </aside>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>MOI 종류</th><th>기준 축</th><th>결정 요소</th><th>피팅에서의 역할</th></tr></thead>
+          <tbody><tr><td>Head MOI</td><td>헤드 CG</td><td>헤드 형태, 질량 배분(외곽 vs 중앙)</td><td>오프센터 타점 관용성. 타점 피드백 강도</td></tr>
+<tr><td>Total Club MOI</td><td>그립 끝 (스윙 축)</td><td>클럽 길이, 헤드·샤프트·그립 무게와 위치</td><td>스윙 전 구간의 타이밍 속도. 전환 안정성</td></tr>
+<tr><td>Shaft Axis MOI</td><td>샤프트 중심축</td><td>헤드 CG 위치, 헤드 질량 배분 방향</td><td>임팩트 페이스 회전 속도. 드로우/페이드 조작성</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">MOI vs 스윙웨이트 — 왜 같은 SW라도 결과가 다른가</h2>
+
+      <div class="prose">
+        <p>피팅 현장에서 가장 많이 쓰이는 밸런스 지표는 스윙웨이트(SW)입니다. D2, D3와 같이 표기하며 많은 피터들이 이 수치를 기준으로 클럽을 맞춥니다. 그러나 SW는 MOI와 다른 개념이며, SW만으로 타이밍 구조를 설명할 수 없습니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구분</th><th>스윙웨이트 (SW)</th><th>Total Club MOI</th></tr></thead>
+          <tbody><tr><td>정의</td><td>클럽 지지점(그립 끝에서 14인치 지점)을 받침으로 했을 때 헤드 쪽의 상대적 무게 체감을 알파벳+숫자로 표현한 값</td><td>클럽 전체를 스윙 축(그립 끝) 기준으로 회전시킬 때의 실제 물리적 회전 저항 (kg·cm²)</td></tr>
+<tr><td>측정</td><td>Lorythmic 스케일(C0~F9). D0~D2가 일반 남성 기준</td><td>직접 계산(부품별 무게×거리²의 합) 또는 특수 장비 측정</td></tr>
+<tr><td>체감 반영</td><td>헤드 감각(무겁다/가볍다)을 잘 반영</td><td>실제 다운스윙 전환 저항을 반영</td></tr>
+<tr><td>한계</td><td>같은 SW라도 클럽 길이·무게 구성에 따라 MOI가 다를 수 있음</td><td>직접 측정 어려움. 현장에서 SW+길이 조합으로 간접 추정</td></tr>
+<tr><td>용도</td><td>현장 밸런스 빠른 확인, 감각 조정</td><td>타이밍·반복성 구조 판단의 실질 기준</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">같은 SW라도 MOI가 다른 실제 사례</p>
+        <ul class="callout-bullets">
+          <li>케이스 A: 45인치 드라이버, 헤드 200g, D2 SW</li>
+          <li>케이스 B: 44인치 드라이버, 헤드 210g, D2 SW (길이 줄이고 헤드 추가)</li>
+          <li>두 클럽의 SW는 같지만, 케이스 A의 Total Club MOI가 더 큽니다. r(거리)이 더 크기 때문입니다.</li>
+        </ul>
+        <p class="callout-foot">결과: 케이스 A는 타이밍이 더 느리고 안정적입니다. 케이스 B는 타이밍이 빠르고 타점 안정성이 높습니다. SW 수치는 동일해도 클럽의 성격은 다릅니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">MOI와 타이밍 — 스윙 전 구간에서의 영향</h2>
+
+      <div class="prose">
+        <p>Total Club MOI는 스윙의 특정 구간이 아니라 전 구간에 걸쳐 타이밍에 영향을 줍니다. 다운스윙 시작부터 임팩트까지 단계별로 어떤 영향이 있는지 정리합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>스윙 구간</th><th>MOI 높을 때</th><th>MOI 낮을 때</th></tr></thead>
+          <tbody><tr><td>전환 (탑 → 다운스윙 시작)</td><td>헤드가 늦게 따라옴 → 자연스러운 지연 발생 → 라그 형성 유리</td><td>헤드가 빨리 따라옴 → 라그 형성 어려움. 캐스팅 경향</td></tr>
+<tr><td>다운스윙 중반</td><td>관성이 클럽을 일정한 속도로 유지시킴 → 리듬 안정</td><td>빠르게 가속되어 타이밍 조절 어려움</td></tr>
+<tr><td>임팩트 전후</td><td>헤드 도달 타이밍이 일정 → 반복성 높음</td><td>타이밍 편차 큼. 헤드가 너무 일찍 또는 늦게 도착</td></tr>
+<tr><td>팔로우스루</td><td>헤드 관성이 스윙을 자연스럽게 끌어감</td><td>헤드가 빨리 멈추려는 경향. 스윙 완결감 낮음</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">MOI가 높으면 무조건 좋은가?</p>
+        <ul class="callout-bullets">
+          <li>아닙니다. MOI가 과도하게 높으면 다운스윙에서 헤드가 너무 늦게 도달해 타이밍이 무너지거나 오히려 버거움이 발생합니다.</li>
+          <li>전환 속도가 빠른 골퍼(파워 히터)에게는 높은 MOI가 지연 효과로 작용해 타이밍 안정에 도움이 됩니다.</li>
+          <li>전환 속도가 느린 골퍼(스무스 스윙어)에게는 MOI가 너무 높으면 헤드가 임팩트 전에 도착하지 못하는 문제가 생깁니다.</li>
+        </ul>
+        <p class="callout-foot">결론: 적정 MOI는 골퍼의 전환 속도와 리듬에 맞춰 결정됩니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">타점 안정성과 MOI — Head MOI의 실질 효과</h2>
+
+      <div class="prose">
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">※ PART 5에서 정의한 내용: Head MOI 개요. 타점이 CG에서 벗어날 때 헤드 비틀림 발생 원리</p>
+      </aside>
+
+        <p>Head MOI가 높을수록 오프센터 타점에서 헤드가 덜 비틀리고 볼스피드 손실이 줄어듭니다. 이것이 일반적으로 말하는 '관용성'의 물리적 실체입니다. 그러나 Head MOI가 타점 분산 자체를 줄여주는 것은 아닙니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">Head MOI가 하는 것과 하지 않는 것</p>
+        <ul class="callout-bullets">
+          <li>Head MOI가 하는 것: 오프센터 타점에서 볼스피드 손실 최소화. 방향 편차 감소. 타구감 안정화.</li>
+          <li>PART 2에서 정의한 최악 샷 관리 관점으로 재표현하면: Head MOI가 높다는 것은 최악의 샷(오프센터 타점)에서 손실이 얼마나 커지지 않게 막아주느냐의 문제입니다. 좋은 샷의 결과를 높이는 것이 아니라 나쁜 샷의 손실을 줄이는 변수입니다.</li>
+          <li>Head MOI가 하지 않는 것: 타점 분산을 줄여주지 않습니다. 타점이 매번 다른 위치에 형성되는 것은 Head MOI가 아니라 Total Club MOI와 스윙 구조의 문제입니다.</li>
+        </ul>
+        <p class="callout-foot">오해: 관용성 높은 헤드를 쓰면 타점이 안정된다. → 관용성 헤드는 타점이 흔들려도 결과 편차를 줄여줄 뿐, 타점 자체를 잡아주지 않습니다.</p>
+      </aside>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>타점 분산 원인</th><th>해결 변수</th><th>MOI 역할</th></tr></thead>
+          <tbody><tr><td>클럽이 너무 길어 타점 중앙 잡기 어려움</td><td>길이 조정 (PART 10 피팅 순서 1단계)</td><td>Head MOI는 해결 안 됨</td></tr>
+<tr><td>Total Club MOI 불일치로 타이밍 불안</td><td>Total MOI 조정 (길이·무게 구성)</td><td>Head MOI는 해결 안 됨</td></tr>
+<tr><td>타점이 흔들려도 거리 편차를 줄이고 싶음</td><td>Head MOI 높은 헤드 선택</td><td>Head MOI가 직접 도움</td></tr>
+<tr><td>타점 중앙 안정 후에도 미스 시 볼스피드 손실</td><td>Head MOI 높은 헤드로 완충</td><td>Head MOI가 직접 도움</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">골퍼 구조 × MOI 매핑 — 총무게 → MOI → SW 순서</h2>
+
+      <div class="prose">
+        <p>MOI는 독립적으로 결정되는 변수가 아닙니다. 골퍼의 체력·템포·타이밍 구조에 따라 적정 MOI 범위가 다르며, 총무게(Total Weight) 및 SW와 연동되어 결정됩니다.</p>
+        <h3 class="subhead">6-1. 결정 순서</h3>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">통합 결정 순서: 총무게 → MOI → SW</p>
+        <ul class="callout-bullets">
+          <li>1단계 — 총무게: 골퍼가 18홀 내내 재현 가능한 최대 무게를 설정합니다. 체력과 지구력이 기준입니다. (PART 8에서 상세 다룸)</li>
+          <li>2단계 — MOI: 골퍼의 전환 속도와 리듬에 맞는 타이밍 저항을 설정합니다. 주로 클럽 길이와 헤드 무게 조합으로 결정됩니다.</li>
+          <li>3단계 — SW: 골퍼가 헤드를 느끼는 감각을 미세 조정합니다. 헤드 무게, 그립 무게, 납테이프로 조정합니다.</li>
+        </ul>
+        <p class="callout-foot">순서 원칙: 총무게가 맞지 않으면 MOI 판단이 흔들립니다. MOI가 맞지 않으면 SW는 의미 없는 수치가 됩니다.</p>
+      </aside>
+
+        <h3 class="subhead">6-2. Total Club MOI 수치 범위 (아이언 7번 기준)</h3>
+        <p>Total Club MOI는 직접 측정하기 어렵지만, 클럽 구성(길이·헤드 무게)을 알면 계산 또는 추정이 가능합니다. 아이언 7번 기준 대략적 범위는 다음과 같습니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구간</th><th>Total Club MOI 범위 (kg·cm²)</th><th>타이밍 특성</th><th>대상 골퍼</th></tr></thead>
+          <tbody><tr><td>낮음</td><td>~2,700</td><td>전환 빠름. 타이밍 민감</td><td>컨트롤 스윙어, 느린 전환 골퍼</td></tr>
+<tr><td>표준</td><td>2,700~2,800</td><td>균형적. 표준 타이밍</td><td>일반 아마추어</td></tr>
+<tr><td>높음</td><td>2,800~2,900</td><td>전환 느림. 안정적</td><td>전환 급격, 타점 분산 큰 골퍼</td></tr>
+<tr><td>매우 높음</td><td>2,900+</td><td>전환 매우 느림</td><td>파워 히터, 고체력 골퍼</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">클럽 종류·소재별 Total Club MOI 통상 범위
+위의 일반 범위는 7번 아이언(스틸 샤프트) 기준입니다. 클럽 종류와 샤프트 소재에 따라 통상값이 다음과 같이 달라집니다.
+그라파이트 샤프트는 스틸 대비 샤프트 무게가 가벼워 Total Club MOI가 약 50~100 낮은 경향을 보입니다. 여성 아이언은 헤드가 가볍고 길이도 짧아 더 낮은 범위에 분포합니다. 다골프머는 일관성을 더 추구하여 7번 아이언 스틸 기준 2,730~2,750을 사용하기도 합니다. 따라서 MOI 매칭 시에는 측정 대상 클럽의 종류와 샤프트 소재를 먼저 확인하고, 해당 클럽군의 통상 범위를 기준으로 판단해야 합니다.
+드라이버를 단독으로 MOI 매칭하는 경우는 드뭅니다. MOI 매칭은 본래 아이언 세트 내부의 일관성을 맞추기 위한 도구이며, 드라이버는 길이·헤드 디자인·샤프트 종류가 아이언과 달라 별도의 매칭 대상이 아닙니다. 시판 드라이버의 Total Club MOI는 통상 2,700~2,900 kg·cm² 범위에 분포합니다. 우드 세트를 매칭할 경우에는 아이언 MOI 대비 약 50 정도 높게 설정하는 방식이 사용됩니다.
+수치 해석 주의사항</p>
+        <ul class="callout-bullets">
+          <li>위 범위는 7번 아이언 기준 경향값입니다. 클럽 길이, 헤드 무게, 샤프트 무게 배분에 따라 실제 값은 달라집니다.</li>
+        </ul>
+        <p class="callout-foot">같은 범위라도 길이 차이로 만든 MOI와 헤드 무게 차이로 만든 MOI는 체감이 다릅니다. 수치만으로 판단하지 않고 골퍼 반응을 함께 검증해야 합니다.</p>
+      </aside>
+
+        <h3 class="subhead">6-3. 골퍼 타입별 MOI 방향</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>골퍼 타입</th><th>전환 특성</th><th>적정 MOI 방향</th><th>이유</th></tr></thead>
+          <tbody><tr><td>파워 히터 / 전환 급격</td><td>빠른 다운스윙 전환, 라그 과도</td><td>MOI 높임 (Total MOI 증가)</td><td>관성이 헤드 속도를 조절해 타이밍 안정</td></tr>
+<tr><td>타점 분산 큰 골퍼</td><td>타점이 매 샷 다름</td><td>Head MOI 높임 + 길이 단축 검토</td><td>Head MOI로 볼스피드 보상 + 짧은 길이로 타점 안정</td></tr>
+<tr><td>스무스 스윙어 / 전환 느림</td><td>느린 다운스윙, 헤드 도착 타이밍 이미 느림</td><td>MOI 낮춤 (길이 단축 또는 헤드 경량화)</td><td>MOI가 너무 높으면 헤드가 임팩트 전 도착 못함</td></tr>
+<tr><td>릴리즈 늦음 / 헤드 버거움 느낌</td><td>헤드가 무겁게 느껴짐, 후반 피로</td><td>Total MOI 낮춤 (무게 줄이기 우선)</td><td>Total MOI 감소로 스윙 부담 줄어듦</td></tr>
+<tr><td>세트 일관성 확보 필요</td><td>클럽마다 타이밍 달라짐</td><td>세트 내 Total MOI 매칭</td><td>클럽 번호가 바뀌어도 타이밍이 비슷하게 유지</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">6-4. MOI 매칭 — 세트 전체 일관성</h3>
+        <p>MOI 매칭(MOI Matching)은 아이언 세트 전체의 Total Club MOI를 일정하게 맞추는 작업입니다. 현재 대부분의 완성 클럽 세트는 클럽 번호가 바뀔수록 길이가 짧아지고, 이에 따라 Total MOI도 자동으로 낮아집니다. 이 변화가 크면 골퍼는 클럽마다 다른 타이밍을 써야 합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>매칭 방식</th><th>특성</th><th>장점</th><th>단점</th></tr></thead>
+          <tbody><tr><td>표준 세트 (Standard)</td><td>번호마다 일정한 길이 피치 (약 0.5인치). MOI는 자동으로 변함</td><td>제조가 단순. 보편적 기준</td><td>#4와 #9의 MOI 차이가 큼. 타이밍 조정 필요</td></tr>
+<tr><td>SW 매칭 (SW Matched)</td><td>세트 전체 SW를 D2로 통일</td><td>SW 감각 일정</td><td>SW가 같아도 MOI가 다름. 타이밍은 여전히 다름</td></tr>
+<tr><td>MOI 매칭 (MOI Matched)</td><td>세트 전체 Total Club MOI를 동일하게 설정. 짧은 클럽 헤드를 무겁게 만들거나 길이를 조정</td><td>타이밍 일관성 최고. 세트 통일감 강함</td><td>맞춤 제작 필요. 비용 증가. 완성 클럽으로는 적용 어려움</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">MOI 매칭 현장 적용 원칙</p>
+        <ul class="callout-bullets">
+          <li>완성 클럽 세트에서 MOI 완전 매칭은 현실적으로 어렵습니다. 대신 번호 간 MOI 변화량을 최소화하는 방향으로 접근합니다.</li>
+          <li>가장 실용적인 방법: 단아이언과 장아이언의 길이 차이를 줄이고(0.25~0.375인치 피치), 대신 헤드 무게를 세밀하게 조정합니다.</li>
+        </ul>
+        <p class="callout-foot">현장 판단 기준: 7번과 4번의 타이밍 체감이 크게 다르다면 MOI 편차가 과도한 것입니다. 길이 조정으로 먼저 접근합니다.</p>
+      </aside>
+
+        <h3 class="subhead">6-5. SW 선행 가이드 (감각 미세 조정 기준)</h3>
+        <p>SW는 Total Weight와 MOI가 결정된 이후 마지막에 감각을 조정하는 변수입니다. 다음은 현장 출발점으로 사용하는 범위 가이드입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구분</th><th>권장 SW 범위</th><th>해석</th></tr></thead>
+          <tbody><tr><td>초경량 / 초보</td><td>C8~D0</td><td>타이밍 확보 우선. 헤드 감각보다 반복성</td></tr>
+<tr><td>일반 아마추어</td><td>D0~D2</td><td>표준 범위. 대부분의 골퍼 출발점</td></tr>
+<tr><td>스피드형 / 강한 전환</td><td>D2~D4</td><td>헤드 감각 강화. 라그 유지에 도움</td></tr>
+<tr><td>고급 / 일관성 중시</td><td>D3~D5</td><td>일관성 중심. 체력 충분한 골퍼</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">SW 가이드 사용 원칙</p>
+        <ul class="callout-bullets">
+          <li>이 범위는 '결정'이 아니라 출발점입니다. Total Weight → MOI가 확정된 후 SW로 감각을 미세 조정합니다.</li>
+          <li>후반 무너짐이 있으면 SW -0.5~1 포인트. 헤드 감각 부족하면 SW +0.5~1 포인트.</li>
+        </ul>
+        <p class="callout-foot">동일한 SW라도 MOI가 다르면 타이밍 구조가 다릅니다. SW는 느낌 지표이며 최종 판단은 반드시 MOI와 함께 합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">MOI 피팅 판단 기준</h2>
+
+      <div class="prose">
+        <p>MOI를 직접 측정하는 장비가 없는 현장에서는 클럽 구성(길이·무게)과 골퍼 반응을 함께 보아 MOI를 간접적으로 판단합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">현장 MOI 판단 신호</p>
+        <ul class="callout-bullets">
+          <li>Total MOI 과다 신호: '헤드가 너무 늦게 도착한다', '팔로우 전에 이미 공이 맞는 느낌', '전환을 빠르게 해도 헤드가 늦다' → 길이 줄이기 또는 헤드 경량화</li>
+          <li>Total MOI 부족 신호: '클럽이 너무 빨리 돌아온다', '리듬을 유지하기 어렵다', '헤드 체감이 없다' → 길이 늘리기 또는 헤드 무게 추가</li>
+          <li>Head MOI 과소 신호: '토나 힐에 맞으면 방향이 크게 흔들린다', '타점이 조금 벗어나도 볼스피드 손실이 크다' → Head MOI 높은 헤드로 교체</li>
+        </ul>
+        <p class="callout-foot">Head MOI 과다 신호: '타점 위치를 느끼기 어렵다', '피드백이 없다', '정확한 컨트롤이 안된다' → Head MOI 낮은 플레이어 헤드 검토</p>
+      </aside>
+
+        <h3 class="subhead">현장 오판 케이스</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>케이스</th><th>증상</th><th>잘못된 조치</th><th>올바른 접근</th></tr></thead>
+          <tbody><tr><td>CASE 1</td><td>타이밍이 일정하지 않아 SW를 높임</td><td>SW D2 → D4로 조정</td><td>SW만 바꾸면 MOI 변화가 없어 타이밍 구조 그대로. 길이/무게 구성 먼저 검토</td></tr>
+<tr><td>CASE 2</td><td>미스 시 볼스피드 손실이 커서 관용성 헤드로 교체</td><td>Head MOI 높은 MAX 헤드 선택</td><td>타점 분산이 문제라면 Head MOI보다 Total MOI와 길이 먼저 검토. 타점 자체를 잡지 않으면 관용성 헤드도 한계</td></tr>
+<tr><td>CASE 3</td><td>세트 전체 SW 매칭 후에도 장아이언 타이밍이 이상함</td><td>SW를 더 세밀하게 맞춤</td><td>SW가 같아도 장아이언과 단아이언의 MOI 차이는 여전히 큼. 길이 피치 조정으로 MOI 편차 줄이기</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 7 MOI</p>
+        <ol class="check-list">
+          <li>SW(스윙웨이트)와 Total Club MOI(총 클럽 관성모멘트)의 가장 큰 개념 차이는 무엇입니까?
+문제 2. MOI 매칭의 기준 오차는 보통 ±10 kg·cm²로 제시됩니다. 1g 무게 변화가 Total Club MOI에 주는 영향은 얼마이며, 이 기준이 실무상 의미하는 바는 무엇입니까?
+문제 3. 스윙 템포가 급하고 전환이 빠른 골퍼에게 MOI를 높이거나 낮추는 방향 중 어느 쪽이 일반적으로 유리합니까? 이유를 설명하십시오.
+※ 해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</li>
+        </ol>
+        
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== CLOSING ==================== -->
+  <section class="closing">
+    <div class="container narrow">
+      <p class="eyebrow">CLOSING · PART 7 마무리</p>
+      <h2 class="section-title">PART 7 마무리</h2>
+
+      <div class="closing-prose">
+        <p class="closing-paragraph">MOI는 관용성이라는 좁은 개념을 넘어 스윙 전 구간의 타이밍과 반복성을 결정하는 물리 변수입니다. Head MOI는 오프센터 타점의 결과 편차를 줄이고, Total Club MOI는 다운스윙 전환부터 임팩트까지의 타이밍 속도를 결정하며, Shaft Axis MOI는 페이스 회전 속도를 조절합니다.</p>
+        <p class="closing-paragraph">SW는 감각 지표이고 MOI는 실제 물리 저항입니다. 같은 SW라도 MOI가 다를 수 있습니다. 피팅에서는 총무게 → MOI → SW 순서로 결정합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">PART 1~7 전체 인과 흐름</p>
+        <ul class="callout-bullets">
+          <li>인터뷰(PART 1) → 골퍼 구조 분류(PART 3) → 볼 비행 물리(PART 4) → 타점/CG(PART 5) → 헤드 기하(PART 6) → MOI / 타이밍 구조(PART 7)</li>
+          <li>MOI가 타이밍을 만들고, 타이밍이 타점을 만들며, 타점이 D-Plane을 통해 볼 비행을 결정합니다.</li>
+        </ul>
+        <p class="callout-foot">이 흐름이 끊기지 않아야 합니다. PART 8부터는 이 흐름 위에서 무게, 샤프트, 토크를 추가합니다.</p>
+      </aside>
+
+        <p class="closing-paragraph">이후 파트에서 다룰 내용</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>변수</th><th>다루는 파트</th><th>내용</th></tr></thead>
+          <tbody><tr><td>총무게 / 스윙웨이트</td><td>PART 8</td><td>무게 = 시간 구조. 총무게와 SW의 실전 결정 방법</td></tr>
+<tr><td>샤프트 CPM / EI</td><td>PART 9</td><td>샤프트 강성이 타이밍과 MOI에 미치는 간접 영향</td></tr>
+<tr><td>토크 / ROC</td><td>PART 10</td><td>Shaft Axis MOI와 연결. 페이스 회전 저항의 피팅 적용</td></tr>
+<tr><td>통합 결정</td><td>PART 11</td><td>골퍼 구조 → 총무게 → MOI → SW → 샤프트로 이어지는 최종 결정 흐름</td></tr></tbody>
+        </table>
+      </div>
+
+        <p class="closing-paragraph">PART 7에서 MOI가 타이밍·타점에 미치는 구조를 이해했습니다. 그런데 MOI는 클럽의 길이·무게·헤드 질량이 결합된 결과입니다. 다음 PART 8에서는 그 재료가 되는 총무게와 스윙웨이트를 다룹니다. MOI를 올리려면 무엇을 바꿔야 하는지가 PART 8에서 구체화됩니다.</p>
+      </div>
+
+      
+    </div>
+  </section>
+
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book/part-6" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">PART 6 · 헤드 기하 구조</span>
+      </a>
+      <a href="/book/part-8" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 8 · 무게 / 총무게 / 스윙웨이트</span>
+        <span class="pg-sub">무게를 시간 구조로 이해하기</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</BaseLayout>
+
+
+<!-- PART 1, 2와 동일한 디자인 시스템 -->
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+  .subhead { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 2em 0 .8em; padding-top: 1em; border-top: 1px dashed var(--rule); }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  .part-hero { background: var(--bg); padding: 72px 0 64px; border-bottom: 1px solid var(--rule); }
+  .part-title { font-family: var(--serif); margin: 0 0 1rem; line-height: 1.1; color: var(--text); font-weight: 500; }
+  .part-num { display: block; font-family: var(--sans); font-size: .875rem; font-weight: 600; letter-spacing: .2em; color: var(--muted); margin-bottom: .75rem; }
+  .part-name { display: block; font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 600; letter-spacing: -.02em; }
+  .part-sub { display: block; font-size: clamp(1.1875rem, 3vw, 1.625rem); font-weight: 300; color: var(--text-2); margin-top: .25em; }
+  .part-en { font-family: var(--sans); font-size: .9375rem; color: var(--muted); letter-spacing: .02em; margin: 1.5rem 0 2rem; font-style: italic; }
+  .part-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 640px; margin: 0; }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 28px 32px; border-radius: 2px; margin: 2rem 0; }
+  .callout-label { font-family: var(--sans); font-size: .875rem; font-weight: 700; color: var(--accent); margin: 0 0 .75rem; letter-spacing: .04em; }
+  .callout-list { margin: 0; padding-left: 1.4em; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets { list-style: none; padding: 0; margin: 0 0 1rem; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-bullets li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+  .callout-bullets li:before { content: "·"; position: absolute; left: .25rem; top: 0; color: var(--accent); font-weight: 700; }
+  .callout-foot { font-family: var(--sans); font-size: 1rem; color: var(--text-2); margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); line-height: 1.7; }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+
+  .part-toc { background: var(--bg); padding: 16px 0 64px; }
+  .toc-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; color: var(--text); font-family: var(--sans); transition: color .2s, padding .2s; }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--accent); min-width: 2.5rem; }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  .intro { padding: 56px 0; }
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4vw, 2.625rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .principle-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 32px; margin: 2.5rem 0; text-align: center; border-radius: 2px; }
+  .principle-label { font-family: var(--sans); font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .principle-flow { font-family: var(--serif); font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 500; color: var(--text); margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.25rem; }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-foot { font-family: var(--sans); font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); max-width: 520px; margin-inline: auto; }
+
+  /* Data table */
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 520px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+  .data-table tbody tr:hover td { background: var(--bg-soft); }
+  .data-table tbody tr.group-row td { background: var(--accent-soft); color: var(--accent); font-weight: 700; padding: 10px 14px; font-size: .8125rem; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* Closing */
+  .closing { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+  .closing-prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-prose p strong { color: white; font-weight: 600; }
+  .closing-prose p em { font-style: normal; color: var(--accent-2); font-weight: 600; background: none; padding: 0; }
+  .closing-paragraph { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-paragraph strong { color: white; }
+
+  .check-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); padding: 28px 32px; border-radius: 2px; margin-top: 2.5rem; }
+  .check-label { font-family: var(--sans); font-size: .8125rem; color: var(--accent-2); font-weight: 700; letter-spacing: .1em; margin: 0 0 1rem; }
+  .check-list { margin: 0 0 1rem; padding-left: 1.25em; font-family: var(--sans); font-size: .9375rem; line-height: 1.85; color: rgba(255,255,255,.85); }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot { font-family: var(--sans); font-size: .8125rem; color: rgba(255,255,255,.5); margin: 0; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.08); }
+
+  /* Pagination */
+  .part-pagination { background: var(--bg); padding: 56px 0 80px; border-top: 1px solid var(--rule); }
+  .part-pagination .container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 760px) { .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; } }
+  .pg-back, .pg-next { display: flex; align-items: center; text-decoration: none; font-family: var(--sans); transition: transform .25s, background .25s; border: 1px solid var(--rule); padding: 20px 24px; background: var(--bg-elev); border-radius: 2px; color: var(--text); }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+  .pg-next { flex-direction: column; align-items: flex-end; text-align: right; gap: .15rem; background: var(--text); color: var(--bg); border-color: var(--text); position: relative; padding-right: 60px; }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta { font-size: .75rem; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; font-weight: 600; }
+  .pg-next .pg-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-top: .15rem; }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .principle-card { padding: 24px 20px; }
+    .callout { padding: 22px 20px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 12px; font-size: .875rem; }
+  }
+</style>

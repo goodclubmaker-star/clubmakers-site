@@ -1,0 +1,560 @@
+---
+// /src/pages/book/part-5.astro
+// 『실제적인 클럽피팅』 PART 5 — 타점 / CG / 기어이펙트
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "PART 5. 타점 / CG / 기어이펙트 | 『실제적인 클럽피팅』";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 5. 타점 / CG / 기어이펙트 — 충돌이 만드는 왜곡 구조. 같은 스윙에서 결과가 달라지는 물리적 이유";
+const pageKeywords = "클럽피팅, 타점 / CG / 기어이펙트, 채기웅, 실제적인 클럽피팅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 5</span>
+      </div>
+
+      <p class="eyebrow">PART 05 · 본문 14 PART 중 5번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 5</span>
+        <span class="part-name">타점 / CG / 기어이펙트</span>
+        <span class="part-sub">충돌이 만드는 왜곡 구조</span>
+      </h1>
+
+      <p class="part-en">Impact Location, CG &amp; Gear Effect</p>
+
+      <p class="part-lead">같은 스윙에서 결과가 달라지는 물리적 이유</p>
+    </div>
+  </section>
+  <section class='objectives'><div class='container narrow'>
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 5 타점·CG를 마치면</p>
+        <ol class="callout-list">
+          <li>CG 위치와 타점의 관계에서 발생하는 Gear Effect를 설명할 수 있다.</li>
+          <li>페이스 9분할 타점별 결과 경향을 예측할 수 있다.</li>
+          <li>타점 데이터를 샤프트·헤드 선택에 반영할 수 있다.</li>
+        </ol>
+      </div>
+</div></section>
+
+  <!-- ==================== TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        <li><a href="#sec-1"><span class="toc-num">01</span><span class="toc-text">타점은 충돌의 출발점입니다</span></a></li>
+        <li><a href="#sec-2"><span class="toc-num">02</span><span class="toc-text">CG — 헤드의 무게중심은 어디에 있는가</span></a></li>
+        <li><a href="#sec-3"><span class="toc-num">03</span><span class="toc-text">Gear Effect — 수평 타점이 스핀을 바꾸는 원리</span></a></li>
+        <li><a href="#sec-4"><span class="toc-num">04</span><span class="toc-text">Vertical Gear Effect — 수직 타점이 스핀을 바꾸는 원리</span></a></li>
+        <li><a href="#sec-5"><span class="toc-num">05</span><span class="toc-text">Bulge &amp; Roll — 기어이펙트를 설계로 보상하는 구조</span></a></li>
+        <li><a href="#sec-6"><span class="toc-num">06</span><span class="toc-text">타점별 왜곡 — 통합 정리</span></a></li>
+        <li><a href="#sec-7"><span class="toc-num">07</span><span class="toc-text">MOI — 타점 편차를 줄이는 설계 원리 (개요)</span></a></li>
+        <li><a href="#sec-8"><span class="toc-num">08</span><span class="toc-text">구질 오판 구조 — 타점이 원인인 케이스</span></a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro">
+    <div class="container narrow prose">
+      <p>같은 페이스 앵글과 스윙 패스로 친 것 같은데 결과가 다르게 나오는 경우가 있습니다. 타점이 중앙에서 조금만 벗어나도 비슷한 현상이 나타나기도 합니다. PART 5는 이런 현상의 배경에 있는 물리 메커니즘을 다룹니다.</p>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">타점은 충돌의 출발점입니다</h2>
+
+      <div class="prose">
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">※ PART 2에서 정의한 내용: 타점은 에너지 전달, 방향, 스핀 구조를 동시에 바꾸는 1차 변수입니다. PART 3에서는 타점 패턴을 골퍼 구조 변수로 변환했습니다.</p>
+      </aside>
+
+        <p>PART 2에서 타점이 왜 1순위 변수인지를 정의했습니다. PART 5에서는 그 이유를 물리 구조로 설명합니다. 왜 타점이 조금 벗어나는 것만으로도 볼 비행 전체가 달라지는가. 그 핵심은 CG(무게중심)에 있습니다.</p>
+        <p>클럽 헤드는 샤프트 축을 중심으로 회전하지 않습니다. 헤드는 자신의 CG를 중심으로 회전합니다. 이 사실이 기어이펙트의 물리적 원인입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">핵심 원리</p>
+        <ul class="callout-bullets">
+          <li>임팩트 순간 클럽 헤드는 샤프트 축이 아니라 헤드 자체의 CG를 중심으로 회전합니다.</li>
+          <li>공이 CG와 정확히 일직선으로 만나면 회전이 발생하지 않고 D-Plane이 그대로 작용합니다.</li>
+        </ul>
+        <p class="callout-foot">공이 CG에서 벗어난 위치와 만나면, 그 거리(모멘트 암)만큼 회전 토크가 발생합니다.</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 5-2. 드라이버 CG 3좌표 투시도</p>
+      </aside>
+
+        <p>[그림 5-0] 에너지 전달 효율 — 오프센터 이탈 거리에 따른 볼스피드 및 캐리 거리 손실 (드라이버 100mph 기준)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">CG — 헤드의 무게중심은 어디에 있는가</h2>
+
+      <div class="prose">
+        <p>CG(Center of Gravity, 무게중심)는 헤드 전체의 질량을 하나의 점으로 환산했을 때 그 질량이 집중되어 있다고 가정되는 위치입니다. CG는 하나의 점이지만, 그 위치를 파악하기 위해서는 3개의 좌표가 필요합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>CG 좌표</th><th>측정 기준</th><th>피팅 영향</th></tr></thead>
+          <tbody><tr><td>CG Depth (심도)</td><td>페이스 면 기준 — CG가 후방으로 얼마나 떨어져 있는가</td><td>얕을수록: 스핀 감소, 타점 민감도 증가
+깊을수록: 스핀 증가, 관용성 증가, 탄도 높아짐</td></tr>
+<tr><td>CG Height (높이)</td><td>솔 기준 — CG가 얼마나 위에 있는가</td><td>낮을수록: 탄도 쉽게 올라감, 높은 페이스 타점에서 스핀 감소
+높을수록: 낮은 탄도, 침투성 강한 구질</td></tr>
+<tr><td>CG Heel-Toe (좌우)</td><td>힐-토 방향 — CG가 힐 쪽인가, 토 쪽인가</td><td>힐 쪽: 페이스 닫힘 쉬움, 드로우 경향
+토 쪽: 페이스 열림 저항, 페이드 안정성</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>세 좌표 중 하나라도 '낮다/높다'처럼 단방향으로만 표현하면 정보가 불완전합니다. 예를 들어 'CG가 낮다'는 표현만으로는 CG Depth(심도)와 CG Height(높이)가 동시에 낮은 건지, 아니면 높이만 낮은 건지를 구분할 수 없습니다.</p>
+        <h3 class="subhead">CG와 모멘트 암</h3>
+        <p>임팩트 위치와 CG 사이의 거리를 모멘트 암(Moment Arm)이라고 합니다. 모멘트 암이 클수록 헤드에 발생하는 회전 토크가 커집니다. 이것이 기어이펙트의 크기를 결정하는 변수입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">모멘트 암 = 타점 위치와 CG 사이의 거리</p>
+        <ul class="callout-bullets">
+          <li>토 타점: 타점이 CG보다 토 방향으로 벗어남 → 모멘트 암 발생 → 헤드 시계 방향 회전 → 기어이펙트: 드로우 스핀</li>
+          <li>힐 타점: 타점이 CG보다 힐 방향으로 벗어남 → 모멘트 암 발생 → 헤드 반시계 방향 회전 → 기어이펙트: 페이드 스핀</li>
+        </ul>
+        <p class="callout-foot">CG와 일직선 타점: 모멘트 암 없음 → 기어이펙트 없음 → 순수 D-Plane 결과</p>
+      </aside>
+
+        <p>같은 클럽이라도 헤드 설계에 따라 CG 위치가 다릅니다. 캐비티백 아이언은 중앙 소재를 제거하고 힐과 토 하단에 무게를 배치해 CG를 외곽으로 분산시킵니다. 블레이드 아이언은 질량이 중앙에 집중되어 있습니다. 이 차이가 같은 타점 편차에서도 다른 결과를 만드는 이유입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 5-3. Gear Effect 충돌 도해</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">Gear Effect — 수평 타점이 스핀을 바꾸는 원리</h2>
+
+      <div class="prose">
+        <p>기어이펙트(Gear Effect)는 타점이 CG에서 좌우로 벗어날 때 발생하는 추가 스핀 현상입니다. '기어'라는 이름은 두 개의 맞물린 기어에서 하나가 시계 방향으로 돌면 다른 하나가 반시계 방향으로 도는 현상에서 유래했습니다.</p>
+        <p>토 타점 — 드로우 스핀이 추가됩니다</p>
+        <p>타점이 토 쪽으로 이동하면 다음 순서로 현상이 발생합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">토 타점 메커니즘</p>
+        <ul class="callout-bullets">
+          <li>① 공이 CG보다 토 쪽에서 맞음 → 모멘트 암 발생</li>
+          <li>② 공의 충격이 헤드 토 쪽을 뒤로 밀어냄 → 헤드가 시계 방향(위에서 내려다볼 때)으로 회전</li>
+          <li>③ 기어 원리: 헤드가 시계 방향으로 돌면, 그 헤드에 닿아 있는 공은 반시계 방향(좌측) 스핀을 받음</li>
+          <li>④ 결과: 드로우/훅 스핀 추가 → 예상보다 좌측으로 더 휨</li>
+        </ul>
+        <p class="callout-foot">추가 효과: 드라이버에서 토 타점은 Bulge 효과에 의해 공이 처음 우측으로 출발하지만, 드로우 스핀으로 인해 좌측으로 되돌아옵니다.</p>
+      </aside>
+
+        <p>힐 타점 — 페이드 스핀이 추가됩니다</p>
+        <p>타점이 힐 쪽으로 이동하면 반대 현상이 발생합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">힐 타점 메커니즘</p>
+        <ul class="callout-bullets">
+          <li>① 공이 CG보다 힐 쪽에서 맞음 → 모멘트 암 발생</li>
+          <li>② 공의 충격이 헤드 힐 쪽을 뒤로 밀어냄 → 헤드가 반시계 방향으로 회전</li>
+          <li>③ 기어 원리: 헤드가 반시계 방향으로 돌면, 공은 시계 방향(우측) 스핀을 받음</li>
+          <li>④ 결과: 페이드/슬라이스 스핀 추가 → 예상보다 우측으로 더 휨</li>
+        </ul>
+        <p class="callout-foot">추가 효과: 드라이버에서 힐 타점은 Bulge 효과에 의해 공이 처음 좌측으로 출발하지만, 페이드 스핀으로 인해 우측으로 되돌아옵니다.</p>
+      </aside>
+
+        <p>기어이펙트는 D-Plane이 만든 스핀 축에 추가적으로 작용합니다. 같은 페이스/패스 조합이어도 타점에 따라 실제 결과가 달라지는 이유입니다. 이것이 론치모니터 데이터와 육안으로 보이는 구질 사이에 차이가 생기는 물리적 원인 중 하나입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 6에서 다룹니다: Bulge(수평 곡률) 설계가 기어이펙트를 얼마나 보상하는지. 헤드 기하 구조와의 연결</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">Vertical Gear Effect — 수직 타점이 스핀을 바꾸는 원리</h2>
+
+      <div class="prose">
+        <p>기어이펙트는 좌우 방향(힐/토)뿐 아니라 상하 방향(페이스 상단/하단)에서도 작동합니다. 이를 수직 기어이펙트(Vertical Gear Effect, VGE)라고 합니다.</p>
+        <p>하단 타점 — 백스핀이 증가합니다</p>
+        <p>타점이 CG보다 아래에 형성되면, 충격이 헤드의 하부를 뒤로 밀어냅니다. 헤드 페이스가 앞쪽으로 기울어지는(로프트 증가 방향) 회전이 발생합니다. 이 회전에 의해 공은 기어 원리로 추가 백스핀을 받습니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">하단 타점 결과</p>
+        <ul class="callout-bullets">
+          <li>헤드 앞쪽으로 기울어짐 → 추가 백스핀 발생 → Dynamic Loft 실질적으로 증가</li>
+          <li>결과: 탄도 높아짐, 스핀 증가, 전진력 감소 → 거리 손실</li>
+        </ul>
+        <p class="callout-foot">드라이버에서 낮은 티 사용 시 나타나는 '공이 높이 뜨지만 멀리 안 나가는' 현상의 원인 중 하나입니다.</p>
+      </aside>
+
+        <p>상단 타점 — 백스핀이 감소합니다</p>
+        <p>타점이 CG보다 위에 형성되면 반대 현상이 발생합니다. 충격이 헤드 상부를 뒤로 밀어내며 헤드 페이스가 뒤쪽으로 기울어지는(로프트 감소 방향) 회전이 발생합니다. 이 회전에 의해 공은 탑스핀 성분을 받아 실질적 백스핀이 감소합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">상단 타점 결과</p>
+        <ul class="callout-bullets">
+          <li>헤드 뒤쪽으로 기울어짐 → 탑스핀 성분 추가 → 실질 백스핀 감소 (단, 로프트에 의한 기본 백스핀이 훨씬 크므로 순수 탑스핀은 아님)</li>
+          <li>결과: 탄도 낮아짐, 런 증가 → 거리 유리하지만 그린 컨트롤 어려움</li>
+        </ul>
+        <p class="callout-foot">드라이버에서 높은 티 + 상단 타점 조합은 스핀을 크게 줄여 비거리를 늘리는 기법입니다. 그러나 스핀이 너무 낮으면 공이 비행 중 안정성을 잃습니다.</p>
+      </aside>
+
+        <p>VGE는 드라이버에서 특히 강하게 나타납니다. 페이스 면적이 크고 CG가 페이스에서 멀리 떨어져 있기 때문입니다. 아이언에서는 드라이버에 비해 CG가 페이스와 가까워 VGE의 영향이 상대적으로 작습니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 5-4. Bulge + Roll 3D 표면 형상</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">Bulge &amp; Roll — 기어이펙트를 설계로 보상하는 구조</h2>
+
+      <div class="prose">
+        <p>기어이펙트는 오프센터 타격 시 피할 수 없는 물리 현상입니다. 드라이버와 페어웨이 우드 헤드에는 이 왜곡을 부분적으로 상쇄하는 설계가 적용되어 있습니다. Bulge(불지)와 Roll(롤)입니다.</p>
+        <h3 class="subhead">Bulge — 수평 곡률</h3>
+        <p>Bulge는 드라이버/우드 페이스의 수평 방향 곡률입니다. 페이스 중앙이 가장 앞으로 돌출되어 있고, 힐과 토 방향으로 갈수록 안쪽으로 들어가 있는 형태입니다.</p>
+        <p>토 타점에서 페이스의 Bulge 곡률 때문에 공이 처음 우측으로 출발합니다. 동시에 기어이펙트로 드로우 스핀이 걸립니다. 공은 우측으로 출발하다가 드로우 스핀 때문에 좌측으로 되돌아오게 됩니다. Bulge가 없다면 토 타점에서 공이 처음부터 좌측으로 출발하고 추가 드로우 스핀까지 붙어 크게 훅이 나게 됩니다.</p>
+        <p>힐 타점에서는 반대로 공이 Bulge 때문에 처음 좌측으로 출발하고, 기어이펙트 페이드 스핀으로 우측으로 되돌아옵니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">Bulge의 역할 — 기어이펙트와 출발 방향을 조화시킵니다</p>
+        <ul class="callout-bullets">
+          <li>토 타점: Bulge → 우측 출발 / 기어이펙트 → 드로우 스핀 → 결과: 중앙 방향으로 되돌아옴 (보정)</li>
+          <li>힐 타점: Bulge → 좌측 출발 / 기어이펙트 → 페이드 스핀 → 결과: 중앙 방향으로 되돌아옴 (보정)</li>
+        </ul>
+        <p class="callout-foot">Bulge가 없으면 오프센터 타점에서의 결과 편차가 훨씬 크게 나타납니다.</p>
+      </aside>
+
+        <h3 class="subhead">Roll — 수직 곡률</h3>
+        <p>Roll은 페이스의 수직 방향 곡률입니다. 페이스 중앙이 가장 앞으로 돌출되어 있고 상하로 갈수록 안쪽으로 들어가 있는 형태입니다.</p>
+        <p>하단 타점에서는 VGE로 백스핀이 증가합니다. Roll 설계로 인해 하단 페이스는 위를 향하는 각도(로프트 증가 방향)를 가지고 있어, 탄도가 낮아질 수 있는 하단 타점에서 탄도를 유지하는 효과를 줍니다. 상단 타점에서는 반대 방향으로 보상됩니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">Bulge &amp; Roll 설계 핵심 정리</p>
+        <ul class="callout-bullets">
+          <li>Bulge: 수평 곡률. 힐/토 기어이펙트에 의한 출발 방향 편차를 보상합니다.</li>
+          <li>Roll: 수직 곡률. 상/하단 VGE에 의한 탄도 편차를 보상합니다.</li>
+          <li>두 설계 모두 오프센터 타격에서 완전한 보정을 제공하지는 않습니다. 중심 타점보다 에너지 전달 효율이 낮고 스핀 편차도 남아 있습니다.</li>
+        </ul>
+        <p class="callout-foot">아이언과 웨지에는 Bulge가 없거나 매우 작습니다. 이유: 아이언은 목표가 정확성이며 드라이버처럼 큰 기어이펙트 보정이 필요하지 않습니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">타점별 왜곡 — 통합 정리</h2>
+
+      <div class="prose">
+        <p>지금까지 설명한 타점 위치별 물리 효과를 하나의 기준표로 정리합니다. 이 표는 PART 4에서 다룬 D-Plane 구조에 기어이펙트와 VGE를 추가한 최종 해석 기준입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>타점 위치</th><th>헤드 반응</th><th>스핀 변화</th><th>결과 패턴</th></tr></thead>
+          <tbody><tr><td>힐 (Heel)</td><td>헤드 반시계 방향 회전</td><td>페이드/슬라이스 스핀 추가</td><td>예상보다 우측으로 더 휨. 방향 오판 원인 1위</td></tr>
+<tr><td>토 (Toe)</td><td>헤드 시계 방향 회전</td><td>드로우/훅 스핀 추가</td><td>예상보다 좌측으로 더 휨. 볼스피드 손실</td></tr>
+<tr><td>상단 (High Face)</td><td>헤드 후방 경사 (VGE)</td><td>백스핀 감소 → 탑스핀 성분 추가</td><td>탄도 낮아짐, 런 증가, 컨트롤 어려움</td></tr>
+<tr><td>하단 (Low Face)</td><td>헤드 전방 경사 (VGE)</td><td>백스핀 증가</td><td>탄도 높아짐, 스핀 과다, 거리 손실</td></tr>
+<tr><td>중심 (CG 일직선)</td><td>기어이펙트 없음</td><td>D-Plane 그대로 반영</td><td>최대 에너지 전달. 예측 가능한 결과</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">론치모니터 데이터 해석 시 주의사항</p>
+        <ul class="callout-bullets">
+          <li>Face Angle과 Club Path 값이 일정해도 타점이 달라지면 Spin Axis가 달라집니다.</li>
+          <li>Spin Rate가 샷마다 크게 변한다면, Dynamic Loft나 AoA보다 타점 분산을 먼저 의심합니다.</li>
+        </ul>
+        <p class="callout-foot">타점이 안정되지 않은 상태에서는 어떤 데이터도 정확한 구조 해석을 제공하지 못합니다. 타점 안정화가 피팅의 실질적 출발점입니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">MOI — 타점 편차를 줄이는 설계 원리 (개요)</h2>
+
+      <div class="prose">
+        <p>기어이펙트와 VGE는 타점이 CG에서 벗어날 때 발생하는 물리적 현상입니다. 클럽 헤드 설계에서 이 현상의 영향을 줄이는 가장 효과적인 방법이 MOI(Moment of Inertia, 관성모멘트)를 높이는 것입니다.</p>
+        <p>MOI는 물체가 회전에 저항하는 성질입니다. 헤드 MOI가 높을수록 오프센터 타점에서 헤드가 덜 비틀립니다. 즉 기어이펙트에 의한 스핀 추가량과 방향 편차가 줄어듭니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>설계 방식</th><th>MOI 영향</th><th>결과</th></tr></thead>
+          <tbody><tr><td>블레이드(머슬백): 질량이 중앙에 집중</td><td>낮은 MOI</td><td>오프센터 타점에서 헤드 많이 비틀림 → 방향·스핀 편차 큼</td></tr>
+<tr><td>캐비티백: 중앙 소재 제거, 외곽 분배</td><td>중간 MOI</td><td>오프센터 타점 관용성 향상</td></tr>
+<tr><td>드라이버 460cc: 질량을 외곽 최대 분산</td><td>높은 MOI</td><td>오프센터 타점에서 헤드 거의 비틀리지 않음 → 에너지 손실 최소화</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>같은 CG 좌표라도 MOI가 다르면 결과는 달라집니다. 이것이 CG 좌표만으로 헤드를 완전히 설명할 수 없는 이유입니다. MOI의 상세 원리와 피팅 적용은 PART 7에서 다룹니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 7에서 다룹니다: MOI 3종 구조(Head MOI, Total Club MOI, Axis MOI)의 물리 원리. MOI와 타점 분산의 정량적 관계</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 8 ==================== -->
+  <section id="sec-8" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 08 · 8절</p>
+      <h2 class="section-title">구질 오판 구조 — 타점이 원인인 케이스</h2>
+
+      <div class="prose">
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">※ PART 2에서 정의한 내용: PART 2에서 정의한 해석 순서: 타점 → 페이스 → 패스 → Dynamic Loft</p>
+      </aside>
+
+        <p>기어이펙트와 VGE를 이해하면, 현장에서 반복되는 구질 오판 케이스들이 설명됩니다. 다음 3가지는 타점을 먼저 확인했다면 피할 수 있었던 오판입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>케이스</th><th>관찰된 증상</th><th>잘못된 판단</th><th>실제 원인과 올바른 해석</th></tr></thead>
+          <tbody><tr><td>CASE 1</td><td>페이스 데이터 스퀘어인데도 지속적으로 우측 미스</td><td>패스가 아웃-인으로 잡혔다고 판단. 스윙 교정 시도</td><td>실제: 힐 타점 반복 → 기어이펙트 페이드 스핀 추가. 타점을 먼저 안정화해야 함</td></tr>
+<tr><td>CASE 2</td><td>드라이버 스핀 수치가 매번 크게 다름 (2,200~3,800rpm 편차)</td><td>Dynamic Loft 문제로 판단. 샤프트 교체 시도</td><td>실제: 타점이 페이스 상단/하단을 오가는 중. VGE로 스핀이 들쭉날쭉. 타점 분산 해결이 우선</td></tr>
+<tr><td>CASE 3</td><td>토 쪽에 항상 맞는데 오히려 슬라이스가 남</td><td>기어이펙트라면 드로우가 나야 한다고 혼동</td><td>실제: 토 기어이펙트 드로우 + 페이스 오픈으로 인한 강한 슬라이스가 합산. 기어이펙트 보정 후에도 페이스 문제 잔류</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">PART 5 핵심 원칙</p>
+        <ul class="callout-bullets">
+          <li>타점이 불안정한 상태에서는 론치모니터 데이터 어떤 값도 구조를 정확히 반영하지 못합니다.</li>
+          <li>기어이펙트는 D-Plane 이전에 작용합니다. 데이터를 보기 전에 타점 패턴을 먼저 확인해야 합니다.</li>
+        </ul>
+        <p class="callout-foot">MOI가 높은 헤드는 기어이펙트를 줄이지만 없애지는 못합니다. 타점 안정화가 항상 먼저입니다.</p>
+      </aside>
+
+        
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 5 타점·CG</p>
+        <ol class="check-list">
+          <li>드라이버 페이스의 토(toe)쪽 높은 타점에서 임팩트했을 때 Gear Effect에 의해 어떤 스핀 축 편향이 발생합니까?
+문제 2. 아이언의 CG는 드라이버보다 페이스에 더 가깝게 설계됩니다. 그 설계 의도는 무엇입니까?
+문제 3. 어떤 골퍼가 페이스 스틸러를 붙여 측정했더니 타점 분포가 힐 쪽에 치우쳐 있습니다. 샤프트 측면에서 어떤 조정을 검토할 수 있습니까?
+※ 해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</li>
+        </ol>
+        
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== CLOSING ==================== -->
+  <section class="closing">
+    <div class="container narrow">
+      <p class="eyebrow">CLOSING · PART 5 마무리</p>
+      <h2 class="section-title">PART 5 마무리</h2>
+
+      <div class="closing-prose">
+        <p class="closing-paragraph">타점이 CG에서 벗어나면 헤드가 비틀립니다. 이 비틀림이 기어이펙트(수평)와 VGE(수직)를 만들고 D-Plane 구조를 왜곡시킵니다. Bulge와 Roll은 이 왜곡을 부분적으로 보상하는 설계입니다. MOI는 헤드의 비틀림 자체를 줄입니다.</p>
+        <p class="closing-paragraph">이 파트에서 정의한 CG(3좌표), Gear Effect, VGE, Bulge &amp; Roll 개념은 이후 파트에서 정의 없이 사용됩니다.</p>
+        <p class="closing-paragraph">이후 파트에서 다룰 내용</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>변수</th><th>다루는 파트</th><th>내용</th></tr></thead>
+          <tbody><tr><td>헤드 기하 구조 (Lie/Loft/Offset/Face Progression)</td><td>PART 6</td><td>라이각·로프트·오프셋이 볼 비행과 타점 구조에 미치는 설계 영향</td></tr>
+<tr><td>MOI 상세 구조</td><td>PART 7</td><td>MOI 3종 구조. MOI 매칭. 타점 분산과 MOI의 정량적 관계</td></tr>
+<tr><td>총무게 / SW</td><td>PART 8</td><td>무게 배분이 타이밍에 미치는 영향. CG와 연계</td></tr>
+<tr><td>샤프트 EI</td><td>PART 9</td><td>샤프트 휨이 임팩트 타점 위치에 미치는 간접 영향</td></tr>
+<tr><td>통합 결정</td><td>PART 11</td><td>타점 패턴 → CG/MOI 선택 기준으로 연결</td></tr></tbody>
+        </table>
+      </div>
+
+        <p class="closing-paragraph">PART 5에서 타점과 CG가 볼 비행을 왜곡하는 방식을 다뤘습니다. 이제 헤드 자체가 어떤 기하 구조로 만들어지는지를 이해해야 합니다. 헤드가 애초에 어떤 각도, 어떤 페이스 방향을 갖고 있는지를 알아야 CG의 효과를 정확하게 적용할 수 있습니다. PART 6이 헤드 기하 구조를 다룹니다.</p>
+      </div>
+
+      
+    </div>
+  </section>
+
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book/part-4" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">PART 4 · 볼 비행 구조</span>
+      </a>
+      <a href="/book/part-6" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 6 · 헤드 기하 구조</span>
+        <span class="pg-sub">라이각·로프트·오프셋·페이스 프로그레션</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</BaseLayout>
+
+
+<!-- PART 1, 2와 동일한 디자인 시스템 -->
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+  .subhead { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 2em 0 .8em; padding-top: 1em; border-top: 1px dashed var(--rule); }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  .part-hero { background: var(--bg); padding: 72px 0 64px; border-bottom: 1px solid var(--rule); }
+  .part-title { font-family: var(--serif); margin: 0 0 1rem; line-height: 1.1; color: var(--text); font-weight: 500; }
+  .part-num { display: block; font-family: var(--sans); font-size: .875rem; font-weight: 600; letter-spacing: .2em; color: var(--muted); margin-bottom: .75rem; }
+  .part-name { display: block; font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 600; letter-spacing: -.02em; }
+  .part-sub { display: block; font-size: clamp(1.1875rem, 3vw, 1.625rem); font-weight: 300; color: var(--text-2); margin-top: .25em; }
+  .part-en { font-family: var(--sans); font-size: .9375rem; color: var(--muted); letter-spacing: .02em; margin: 1.5rem 0 2rem; font-style: italic; }
+  .part-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 640px; margin: 0; }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 28px 32px; border-radius: 2px; margin: 2rem 0; }
+  .callout-label { font-family: var(--sans); font-size: .875rem; font-weight: 700; color: var(--accent); margin: 0 0 .75rem; letter-spacing: .04em; }
+  .callout-list { margin: 0; padding-left: 1.4em; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets { list-style: none; padding: 0; margin: 0 0 1rem; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-bullets li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+  .callout-bullets li:before { content: "·"; position: absolute; left: .25rem; top: 0; color: var(--accent); font-weight: 700; }
+  .callout-foot { font-family: var(--sans); font-size: 1rem; color: var(--text-2); margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); line-height: 1.7; }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+
+  .part-toc { background: var(--bg); padding: 16px 0 64px; }
+  .toc-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; color: var(--text); font-family: var(--sans); transition: color .2s, padding .2s; }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--accent); min-width: 2.5rem; }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  .intro { padding: 56px 0; }
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4vw, 2.625rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .principle-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 32px; margin: 2.5rem 0; text-align: center; border-radius: 2px; }
+  .principle-label { font-family: var(--sans); font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .principle-flow { font-family: var(--serif); font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 500; color: var(--text); margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.25rem; }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-foot { font-family: var(--sans); font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); max-width: 520px; margin-inline: auto; }
+
+  /* Data table */
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 520px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+  .data-table tbody tr:hover td { background: var(--bg-soft); }
+  .data-table tbody tr.group-row td { background: var(--accent-soft); color: var(--accent); font-weight: 700; padding: 10px 14px; font-size: .8125rem; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* Closing */
+  .closing { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+  .closing-prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-prose p strong { color: white; font-weight: 600; }
+  .closing-prose p em { font-style: normal; color: var(--accent-2); font-weight: 600; background: none; padding: 0; }
+  .closing-paragraph { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-paragraph strong { color: white; }
+
+  .check-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); padding: 28px 32px; border-radius: 2px; margin-top: 2.5rem; }
+  .check-label { font-family: var(--sans); font-size: .8125rem; color: var(--accent-2); font-weight: 700; letter-spacing: .1em; margin: 0 0 1rem; }
+  .check-list { margin: 0 0 1rem; padding-left: 1.25em; font-family: var(--sans); font-size: .9375rem; line-height: 1.85; color: rgba(255,255,255,.85); }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot { font-family: var(--sans); font-size: .8125rem; color: rgba(255,255,255,.5); margin: 0; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.08); }
+
+  /* Pagination */
+  .part-pagination { background: var(--bg); padding: 56px 0 80px; border-top: 1px solid var(--rule); }
+  .part-pagination .container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 760px) { .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; } }
+  .pg-back, .pg-next { display: flex; align-items: center; text-decoration: none; font-family: var(--sans); transition: transform .25s, background .25s; border: 1px solid var(--rule); padding: 20px 24px; background: var(--bg-elev); border-radius: 2px; color: var(--text); }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+  .pg-next { flex-direction: column; align-items: flex-end; text-align: right; gap: .15rem; background: var(--text); color: var(--bg); border-color: var(--text); position: relative; padding-right: 60px; }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta { font-size: .75rem; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; font-weight: 600; }
+  .pg-next .pg-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-top: .15rem; }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .principle-card { padding: 24px 20px; }
+    .callout { padding: 22px 20px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 12px; font-size: .875rem; }
+  }
+</style>

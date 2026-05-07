@@ -1,0 +1,1232 @@
+---
+// /src/pages/book/part-12.astro
+// 『실제적인 클럽피팅』 PART 12 — 숏게임 클럽 — 웨지와 퍼터
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "PART 12. 숏게임 클럽 — 웨지와 퍼터 | 『실제적인 클럽피팅』";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 12. 숏게임 클럽 — 웨지와 퍼터 — 바운스·솔 그라인드·퍼터 헤드 구조·스트로크 매칭. 웨지 구조와 피팅";
+const pageKeywords = "클럽피팅, 숏게임 클럽 — 웨지와 퍼터, 채기웅, 실제적인 클럽피팅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 12</span>
+      </div>
+
+      <p class="eyebrow">PART 12 · 본문 14 PART 중 12번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 12</span>
+        <span class="part-name">숏게임 클럽 — 웨지와 퍼터</span>
+        <span class="part-sub">바운스·솔 그라인드·퍼터 헤드 구조·스트로크 매칭</span>
+      </h1>
+
+      <p class="part-en">Short Game — Wedges &amp; Putters</p>
+
+      <p class="part-lead">웨지 구조와 피팅</p>
+    </div>
+  </section>
+  <section class='objectives'><div class='container narrow'>
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 12-1부 웨지를 마치면</p>
+        <ol class="callout-list">
+          <li>웨지 로프트 매트릭스(PW-GW-SW-LW)를 골퍼 구성에 맞춰 결정할 수 있다.</li>
+          <li>바운스 각도와 그라인드 종류를 잔디 상태·스윙 타입에 매칭할 수 있다.</li>
+          <li>웨지 세트 내 SW 균등 설계의 원칙을 적용할 수 있다.</li>
+        </ol>
+      </div>
+</div></section>
+
+  <!-- ==================== TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        <li><a href="#sec-1"><span class="toc-num">01</span><span class="toc-text">웨지가 다른 아이언과 구조적으로 다른 이유</span></a></li>
+        <li><a href="#sec-2"><span class="toc-num">02</span><span class="toc-text">바운스 (Bounce) — 웨지 피팅의 핵심</span></a></li>
+        <li><a href="#sec-3"><span class="toc-num">03</span><span class="toc-text">솔 그라인드 (Sole Grind)</span></a></li>
+        <li><a href="#sec-4"><span class="toc-num">04</span><span class="toc-text">로프트 구성 — 세트 메이크업에서의 웨지</span></a></li>
+        <li><a href="#sec-5"><span class="toc-num">05</span><span class="toc-text">웨지의 스핀 메커니즘</span></a></li>
+        <li><a href="#sec-6"><span class="toc-num">06</span><span class="toc-text">웨지 샤프트</span></a></li>
+        <li><a href="#sec-7"><span class="toc-num">07</span><span class="toc-text">웨지 헤드 설계 요소</span></a></li>
+        <li><a href="#sec-8"><span class="toc-num">08</span><span class="toc-text">웨지 피팅 결정 순서</span></a></li>
+        <li><a href="#sec-9"><span class="toc-num">09</span><span class="toc-text">웨지 피팅 현장 오판 케이스</span></a></li>
+        <li><a href="#sec-1"><span class="toc-num">01</span><span class="toc-text">퍼터가 다른 클럽과 다른 이유</span></a></li>
+        <li><a href="#sec-2"><span class="toc-num">02</span><span class="toc-text">스트로크 타입 — 피팅의 출발점</span></a></li>
+        <li><a href="#sec-3"><span class="toc-num">03</span><span class="toc-text">헤드 형태 — 블레이드, 미드말렛, 말렛</span></a></li>
+        <li><a href="#sec-4"><span class="toc-num">04</span><span class="toc-text">넥(Neck) 구조 — 오프셋과 페이스 앵글에 영향</span></a></li>
+        <li><a href="#sec-5"><span class="toc-num">05</span><span class="toc-text">퍼터의 기하 변수 — 로프트, 라이각, 오프셋</span></a></li>
+        <li><a href="#sec-6"><span class="toc-num">06</span><span class="toc-text">퍼터 MOI — 관용성의 실체</span></a></li>
+        <li><a href="#sec-7"><span class="toc-num">07</span><span class="toc-text">페이스 소재와 롤 — 소프트 인서트 vs 밀드 페이스</span></a></li>
+        <li><a href="#sec-8"><span class="toc-num">08</span><span class="toc-text">퍼터 피팅 순서</span></a></li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1부</p>
+      <h2 class="section-title">웨지 — 바운스 · 솔 그라인드 · 로프트 · 스핀</h2>
+
+      <div class="prose">
+        <p>웨지는 아이언 세트 중 가장 짧고 가장 무거우며, 가장 다양한 솔 설계를 가진 클럽입니다. 동시에 대부분의 골퍼가 가장 무심하게 선택하는 클럽이기도 합니다. 웨지 피팅의 핵심은 로프트 구성이 아닙니다. 바운스입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">1부. 웨지 피팅의 핵심 전제</p>
+        <ul class="callout-bullets">
+          <li>웨지에서 거리는 풀스윙 클럽과 다른 기준으로 작동합니다. 스핀·컨트롤·일관성이 우선입니다.</li>
+        </ul>
+        <p class="callout-foot">바운스를 잘못 선택한 웨지는 좋은 스윙을 가진 골퍼도 망칩니다. 바운스가 맞지 않으면 아무리 좋은 소재·로프트·솔 형태도 보완이 불가능합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">웨지가 다른 아이언과 구조적으로 다른 이유</h2>
+
+      <div class="prose">
+        <p>아이언은 거리와 방향을 위해 설계됩니다. 웨지는 다릅니다. 웨지의 주요 사용 거리는 100야드 이하이며, 풀스윙보다 하프·쿼터·컨트롤 스윙이 더 많습니다. 이 차이가 웨지의 설계 방향을 완전히 다르게 만듭니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>설계 요소</th><th>아이언 (5~9번)</th><th>웨지</th></tr></thead>
+          <tbody><tr><td>주요 사용 목적</td><td>거리와 방향</td><td>거리 컨트롤 + 스핀</td></tr>
+<tr><td>스윙 유형</td><td>거의 항상 풀스윙</td><td>풀/하프/쿼터 혼재</td></tr>
+<tr><td>로프트 범위</td><td>22~45°</td><td>44~64°</td></tr>
+<tr><td>바운스 설계</td><td>최소화 (날카로운 리딩엣지)</td><td>핵심 설계 요소 (4~16°)</td></tr>
+<tr><td>솔 폭</td><td>좁음~중간</td><td>넓음~좁음 다양</td></tr>
+<tr><td>그루브 설계</td><td>거리 중심</td><td>스핀 극대화</td></tr>
+<tr><td>샤프트 선택</td><td>세트 연속성</td><td>아이언보다 무겁거나 동일</td></tr>
+<tr><td>SW 설정</td><td>세트 연속 (D0~D2)</td><td>동일하거나 소폭 낮게 (C9~D2)</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>[그림 12-1]  웨지 4종 구성의 로프트·거리 갭 시각화. 각 막대 높이는 헤드스피드 95mph 기준 풀스윙 평균 거리이며, 막대 위 숫자는 클럽 간 거리 갭을 나타낸다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">바운스 (Bounce) — 웨지 피팅의 핵심</h2>
+
+      <div class="prose">
+        <h3 class="subhead">2-1. 바운스란 무엇인가</h3>
+        <p>바운스는 웨지를 어드레스 위치에 놓았을 때 리딩엣지(앞날)와 트레일링엣지(뒷날)의 높이 차이로 발생하는 각도입니다. 지면과 샤프트 중심선이 이루는 각도에서 리딩엣지 각도를 뺀 값이 바운스각입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">바운스의 물리적 역할</p>
+        <ul class="callout-bullets">
+          <li>임팩트 시 클럽헤드가 지면에 접촉할 때 솔(밑바닥)이 지면을 밀어내는 저항력을 만듭니다.</li>
+          <li>바운스가 높으면 → 솔이 지면 위에서 미끄러지듯 통과. 지면에 박히지 않음</li>
+        </ul>
+        <p class="callout-foot">바운스가 낮으면 → 리딩엣지가 지면을 파고듦. 찍어치는 동작에 필요</p>
+      </aside>
+
+        <h3 class="subhead">2-2. 스윙 스타일과 바운스 선택</h3>
+        <p>바운스 선택의 출발점은 골퍼의 스윙 스타일과 코스 조건입니다. 이 두 가지를 확인하지 않고 바운스를 선택하면 안 됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>스윙 스타일</th><th>디봇 깊이</th><th>권장 바운스</th><th>이유</th></tr></thead>
+          <tbody><tr><td>쓸어치기 (Sweeper)</td><td>얕거나 없음</td><td>낮은 바운스 (4~8°)</td><td>바운스 과다 시 솔이 튕겨 토핑 발생</td></tr>
+<tr><td>표준 스윙</td><td>중간 (얕은 디봇)</td><td>중간 바운스 (8~12°)</td><td>범용. 대부분의 아마추어</td></tr>
+<tr><td>찍어치기 (Digger)</td><td>깊은 디봇</td><td>높은 바운스 (12~16°)</td><td>바운스 부족 시 헤드가 지면에 박힘</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>코스 조건</th><th>권장 바운스</th><th>이유</th></tr></thead>
+          <tbody><tr><td>단단한 잔디 (한국 중지)</td><td>낮은 바운스</td><td>잔디가 촘촘하고 단단. 높은 바운스 시 튕김</td></tr>
+<tr><td>부드러운 잔디 (양잔디)</td><td>중간~높은 바운스</td><td>잔디가 깊고 부드러움. 저항이 더 필요</td></tr>
+<tr><td>벙커 (굵은 모래)</td><td>높은 바운스 (12°+)</td><td>모래가 깊어 헤드가 박힘. 바운스로 저항</td></tr>
+<tr><td>벙커 (잔 모래·단단)</td><td>낮은~중간 바운스</td><td>잔 모래. 너무 높으면 얕게 진입</td></tr>
+<tr><td>러프</td><td>중간~높은 바운스</td><td>잔디 저항. 솔이 통과할 저항력 필요</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">바운스 미스매치의 증상</p>
+        <ul class="callout-bullets">
+          <li>바운스가 너무 낮음 → 잔디나 모래에 헤드가 박힘. 거리 감소. 뚝 끊기는 타감</li>
+          <li>바운스가 너무 높음 → 임팩트 전 솔이 지면에 닿아 튀어오름 (Bounce). 얇게 맞는 토핑 증가</li>
+        </ul>
+        <p class="callout-foot">두 증상 모두 바운스 문제가 원인일 수 있습니다. 스윙 탓으로 돌리기 전에 바운스를 확인합니다.</p>
+      </aside>
+
+        <h3 class="subhead">2-3. 바운스와 솔 폭의 관계</h3>
+        <p>바운스각이 같아도 솔 폭이 다르면 실제 작동 방식이 달라집니다. 솔이 넓을수록 지면과 접촉 면적이 넓어져 효과적인 바운스가 증가합니다. 좁은 솔은 바운스각이 있어도 실질적 저항이 적습니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>조합</th><th>실질 효과</th><th>적합 상황</th></tr></thead>
+          <tbody><tr><td>높은 바운스 + 넓은 솔</td><td>최대 저항. 지면에 가장 안 박힘</td><td>깊은 모래, 부드러운 잔디, 깊은 러프</td></tr>
+<tr><td>높은 바운스 + 좁은 솔</td><td>중간 저항</td><td>일반 잔디에서 쓸어치기 골퍼</td></tr>
+<tr><td>낮은 바운스 + 넓은 솔</td><td>중간 저항</td><td>단단한 잔디, 링크스 코스</td></tr>
+<tr><td>낮은 바운스 + 좁은 솔</td><td>최소 저항. 지면 파고들기 쉬움</td><td>단단한 잔디, 찍어치기 골퍼, 로브샷</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 13-2. 솔 그라인드 5종 측면도 (Full · C · S · M · L Grind)</p>
+      </aside>
+
+        <h3 class="subhead">2-3. 스윙 타입별 바운스 선택 매트릭스</h3>
+        <p>바운스는 단일 숫자로 결정되지 않습니다. 골퍼의 스윙 디봇 깊이, 공격 각도(AoA), 주로 플레이하는 코스의 지면 상태가 함께 들어가야 합니다. 아래 매트릭스는 이 세 변수를 조합해 바운스 후보를 제시합니다. 참고 자료로 히레코의 모던 골프에서도 유사한 분류를 찾을 수 있습니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>골퍼 타입</th><th>디봇 깊이</th><th>권장 바운스</th><th>현장 특징</th></tr></thead>
+          <tbody><tr><td>쓸어치기 (Sweeper)</td><td>얕음 (2cm 이하)</td><td>낮은 바운스 (4~7°)</td><td>타이트한 페어웨이·단단한 지면에서 리딩 엣지가 지면을 깎으며 지나간다. 높은 바운스를 쓰면 리딩 엣지가 들려 토핑이 발생한다.</td></tr>
+<tr><td>표준 (Neutral)</td><td>중간 (2~3cm)</td><td>중간 바운스 (8~10°)</td><td>대부분의 코스에서 안정적이다. 다목적 웨지로는 10° 바운스가 가장 무난하다.</td></tr>
+<tr><td>찍어치기 (Digger)</td><td>깊음 (3cm 이상)</td><td>높은 바운스 (11~14°)</td><td>부드러운 잔디·벙커·러프에서 유리하다. 단단한 지면에서는 리딩 엣지가 들려 얇게 맞을 수 있으므로 그라인드로 보완한다.</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">⚠ 실무 주의 — 바운스는 숫자만으로 결정하지 않는다</p>
+        <p class="callout-foot" style="border:none;padding:0;">같은 10° 바운스라도 솔의 폭(와이드 vs 슬림), 솔의 캠버(구부러진 정도), 힐/토 릴리프에 따라 실제 지면 저항이 완전히 달라집니다. 클럽메이커스 교육매뉴얼에 따르면 Titleist Vokey SM10의 M 그라인드 10°와 Cleveland RTX6 ZipCore Mid 10°는 같은 바운스 숫자이지만 체감은 M 쪽이 두꺼운 솔로 저항이 큽니다. 피팅에서는 바운스 숫자를 출발점으로 삼되, 반드시 잔디 위에서 실제 샷을 검증해야 합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">솔 그라인드 (Sole Grind)</h2>
+
+      <div class="prose">
+        <h3 class="subhead">3-1. 솔 그라인드란</h3>
+        <p>솔 그라인드는 웨지 솔의 특정 부분을 기계로 갈아내 형태를 변형한 것입니다. 기본 바운스각은 그대로 유지하면서 특정 샷 유형에서의 작동 방식을 조정합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>그라인드 유형</th><th>솔 형태</th><th>주요 효과</th><th>적합 샷</th></tr></thead>
+          <tbody><tr><td>Full Grind (없음)</td><td>솔 전체 유지</td><td>기본 바운스 그대로</td><td>표준 어프로치</td></tr>
+<tr><td>C-Grind (힐·토 제거)</td><td>힐과 토 측면 제거</td><td>페이스 오픈 시 바운스 감소</td><td>플랍샷·벙커</td></tr>
+<tr><td>S-Grind (힐 제거)</td><td>힐 측면만 제거</td><td>페이스 오픈 용이</td><td>로브샷·오픈 스탠스</td></tr>
+<tr><td>M-Grind (중앙 제거)</td><td>솔 중앙 크라운</td><td>다양한 잔디에서 범용</td><td>다목적</td></tr>
+<tr><td>T-Grind (토만 남김)</td><td>토 측 최소</td><td>최대 조작성</td><td>상급자 컨트롤</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">솔 그라인드 피팅 판단 기준</p>
+        <ul class="callout-bullets">
+          <li>핸디캡 18 이하 + 다양한 라이각에서 웨지를 사용하는 골퍼 → C나 S 그라인드 검토</li>
+          <li>핸디캡 18 이상 + 표준 어프로치 위주 → Full Grind(기본형) 또는 M-Grind</li>
+        </ul>
+        <p class="callout-foot">그라인드는 바운스를 보완하는 도구입니다. 바운스를 먼저 결정하고 그라인드를 선택합니다.</p>
+      </aside>
+
+        <h3 class="subhead">3-2. 주요 브랜드의 그라인드 시스템 비교</h3>
+        <p>그라인드는 제조사마다 이름과 형상 기준이 달라 현장 피팅의 혼란 원인이 됩니다. 아래 표는 2026년 기준 주요 브랜드의 그라인드 체계를 정리한 것입니다. 피터가 골퍼의 스윙 타입을 먼저 판단하고, 그에 맞는 그라인드를 브랜드별로 매핑할 수 있어야 합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>브랜드</th><th>그라인드 명칭 체계</th><th>대표 특징</th></tr></thead>
+          <tbody><tr><td>Titleist Vokey
+(SM10)</td><td>F · S · M · D · K · L · T</td><td>F: 풀솔·초보자·다목적 / S: 스탠다드 / M: 중간 릴리프·쓸어치기 / D: 더블 도트·풀스윙 / K: 와이드 솔·벙커 전용 / L: 로우 릴리프·스페셜 / T: 투어·전문가</td></tr>
+<tr><td>TaylorMade
+(MG4)</td><td>Standard · Low · HB · TW</td><td>Standard: 중간 / Low Bounce: 타이트 잔디 / HB(하이 바운스): 러프·벙커 / TW: Tiger Woods 시그니처 그라인드</td></tr>
+<tr><td>Cleveland
+(RTX6 ZipCore)</td><td>Full · Mid · Low · XLow</td><td>Full: 다목적 / Mid: 쓸어치기 / Low: 타이트 잔디 / XLow: 지면이 매우 단단한 조건 전용</td></tr>
+<tr><td>Callaway
+(Jaws Raw)</td><td>S · W · X · Z · C</td><td>S: 스탠다드 / W: 와이드(벙커) / X: 엑스 그라인드 / Z: Z 그라인드(멀티) / C: C 그라인드(토우·힐 릴리프)</td></tr>
+<tr><td>Mizuno
+(T24)</td><td>S · D · X · V · C</td><td>S: 스탠다드 / D: 딥 앵글 / X: 엑스트리트 릴리프 / V: V 그라인드(타이트) / C: C 그라인드(오픈 페이스)</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>실무에서는 골퍼가 자주 플레이하는 코스의 평균 잔디 상태와 벙커 모래의 양을 함께 확인한 뒤, 한 브랜드 안에서 2~3개의 그라인드를 묶어 운영하는 것이 일반적입니다. 예를 들어 50° PW 갭 → M 그라인드, 54° 표준 스윙 → M 또는 S, 58° 벙커·러프 탈출 → K 또는 D 같은 구성입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">로프트 구성 — 세트 메이크업에서의 웨지</h2>
+
+      <div class="prose">
+        <h3 class="subhead">4-1. PW 로프트가 출발점이다</h3>
+        <p>웨지 로프트 구성은 아이언 세트의 PW 로프트에서 시작합니다. PW 로프트를 확인하지 않고 웨지를 고르면 반드시 갭 문제가 생깁니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">웨지 로프트 구성 원칙</p>
+        <ul class="callout-bullets">
+          <li>PW 로프트 → GW까지 4~6° 간격 → SW까지 4~6° 간격 → LW까지 4~6° 간격</li>
+          <li>간격이 4° 이하면 거리가 겹칩니다. 6° 이상이면 빈 거리 구간이 생깁니다.</li>
+        </ul>
+        <p class="callout-foot">간격은 일정해야 합니다. PW→GW가 4°인데 GW→SW가 8°이면 50~54° 구간이 빕니다.</p>
+      </aside>
+
+        <h3 class="subhead">4-2. 스트롱 로프트 세트의 갭 문제</h3>
+        <p>현대 아이언 세트는 로프트가 강화(Strong)되어 있습니다. 7번 아이언이 27~29°인 세트는 PW가 42~44°인 경우가 많습니다. 이 세트에 일반 GW(52°)를 그대로 쓰면 PW~GW 사이에 8~10°의 간격이 생깁니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>아이언 PW 로프트</th><th>일반 GW(52°) 적용 시 간격</th><th>권장 GW 로프트</th><th>비고</th></tr></thead>
+          <tbody><tr><td>46° (표준)</td><td>6° → 정상</td><td>52°</td><td>일반 웨지 구성 그대로</td></tr>
+<tr><td>44° (약간 스트롱)</td><td>8° → 약간 넓음</td><td>50°</td><td>GW를 50°로 변경 검토</td></tr>
+<tr><td>42° (스트롱)</td><td>10° → 갭 발생</td><td>48°</td><td>GW 48° + SW 54° + LW 60° 재구성</td></tr>
+<tr><td>40° (매우 스트롱)</td><td>12° → 심각한 갭</td><td>46~48°</td><td>전체 웨지 로프트 재설계 필요</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">스트롱 로프트 세트 + 표준 웨지 조합 금지</p>
+        <ul class="callout-bullets">
+          <li>PW 42°짜리 세트에 52° GW를 연결하면 50야드 이내 거리에서 사용할 클럽이 없어집니다.</li>
+        </ul>
+        <p class="callout-foot">이 경우 골퍼는 PW를 짧게 쳐서 거리를 줄이거나, GW를 최대한 쳐서 올리게 됩니다. 두 방법 모두 일관성이 없습니다.</p>
+      </aside>
+
+        <h3 class="subhead">4-3. 웨지 수 결정 기준</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>핸디캡 수준</th><th>권장 웨지 수</th><th>구성 예시</th><th>이유</th></tr></thead>
+          <tbody><tr><td>36 이상 (입문)</td><td>2개</td><td>PW(기본) + SW(56°)</td><td>웨지 종류 늘어나면 혼란</td></tr>
+<tr><td>18~36</td><td>3개</td><td>GW(52°) + SW(56°) + PW</td><td>갭 관리 시작</td></tr>
+<tr><td>10~18</td><td>3~4개</td><td>GW + SW + LW 또는 GW + SW(54°) + LW(58°)</td><td>거리 정밀도 향상</td></tr>
+<tr><td>10 미만</td><td>4개</td><td>PW(46°)/GW(50°)/SW(54°)/LW(58°) 또는 60°</td><td>모든 거리 컨트롤</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">4-4. 표준 로프트 배열 예시</h3>
+        <p>PW 로프트를 확인한 후 남은 웨지 로프트를 어떻게 구성할지 결정합니다. 기본 원칙은 인접 웨지 사이 4~6° 간격을 유지하여 거리 갭을 일정하게 만드는 것입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>웨지 유형</th><th>로프트 범위</th><th>주 용도</th></tr></thead>
+          <tbody><tr><td>PW (Pitching Wedge)</td><td>44~48°</td><td>풀 스윙 기준 100~120m</td></tr>
+<tr><td>GW (Gap Wedge / AW)</td><td>50~52°</td><td>PW와 SW 사이 갭 / 80~100m</td></tr>
+<tr><td>SW (Sand Wedge)</td><td>54~56°</td><td>벙커 탈출 / 60~80m</td></tr>
+<tr><td>LW (Lob Wedge)</td><td>58~60°</td><td>높은 토출 어프로치 / 40~60m</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">4-4-1. 세트 구성 예시</h3>
+        <p>골퍼의 스윙 스피드와 선호 샷에 따라 다음 세 가지 구성이 현장에서 자주 사용됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구성</th><th>로프트 배열</th><th>적합 대상</th></tr></thead>
+          <tbody><tr><td>3웨지 (PW+SW+LW)</td><td>46 / 54 / 60°</td><td>시니어·여성 골퍼. 중간 갭 생략</td></tr>
+<tr><td>4웨지 (PW+GW+SW+LW)</td><td>46 / 50 / 54 / 58°</td><td>일반 아마추어. 갭 균일</td></tr>
+<tr><td>4웨지 (스트롱 세트 대응)</td><td>44 / 48 / 52 / 56 / 60°</td><td>스트롱 로프트 세트 + 5웨지</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">갭 구성의 현장 원칙</p>
+        <p class="callout-foot" style="border:none;padding:0;">로프트 간격과 별개로, 거리 갭(10~15m)이 일정한지 론치모니터로 검증합니다. 로프트 차이가 같아도 바운스와 헤드 구조에 따라 실제 거리는 달라집니다. 최종 확정 전 반드시 골퍼의 실제 샷 데이터로 갭을 확인합니다.</p>
+      </aside>
+
+        <h3 class="subhead">4-5. 웨지 세트 거리 갭 매트릭스</h3>
+        <p>PW에서 LW까지의 거리 갭은 10~15야드 간격이 이상적입니다. 갭이 15야드보다 넓으면 중간 거리에서 하프스윙이 필요해져 제어가 어려워지고, 5야드보다 좁으면 두 클럽의 용도가 겹쳐 판단이 혼란스러워집니다. 아래 표는 헤드스피드 95mph 남성 평균을 기준으로 한 거리 갭 예시입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>클럽</th><th>로프트</th><th>풀스윙 평균 거리</th><th>갭 (이전 클럽 대비)</th></tr></thead>
+          <tbody><tr><td>PW</td><td>46°</td><td>125~130야드</td><td>—</td></tr>
+<tr><td>GW (52°)</td><td>52°</td><td>110~115야드</td><td>약 15야드</td></tr>
+<tr><td>SW (56°)</td><td>56°</td><td>95~100야드</td><td>약 15야드</td></tr>
+<tr><td>LW (60°)</td><td>60°</td><td>80~85야드</td><td>약 15야드</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>세트 구성 결정에서 주의할 점은 PW의 로프트입니다. 최근 게임 임프루브먼트 아이언 세트의 PW는 43~45°까지 강화되어 있어, 이 경우 PW와 SW(56°) 사이 간격이 11~13°가 되어 갭 웨지 한 개로는 메울 수 없습니다. PW 44° 세트라면 48°·52°·56°·60°의 4웨지 구성이, PW 46° 세트라면 52°·56°·60° 3웨지 구성이 기본입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">⚠ 60° LW 사용 시 주의</p>
+        <p class="callout-foot" style="border:none;padding:0;">60° LW는 로프트가 높은 만큼 페이스 컨트롤이 민감합니다. 평균 헤드스피드가 85mph 이하인 골퍼는 60°에서 오히려 거리 손실과 토핑 미스가 늘 수 있습니다. 이 경우 60° 대신 58°로 내려 사용하거나, 58° SW 한 개로 롭샷과 벙커를 모두 처리하는 구성을 검토합니다. 웨지 세트는 "많이 가진다"보다 "능숙하게 운영할 수 있는 수만큼 가진다"가 원칙입니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">웨지의 스핀 메커니즘</h2>
+
+      <div class="prose">
+        <h3 class="subhead">5-1. 스핀을 만드는 세 가지 요소</h3>
+        <p>웨지에서 스핀은 세 요소가 결합하여 만들어집니다. 어느 하나만으로는 스핀이 최대화되지 않습니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>요소</th><th>스핀 기여</th><th>피팅 관련성</th></tr></thead>
+          <tbody><tr><td>그루브 (Groove)</td><td>표면 마찰로 역회전 부여</td><td>그루브 마모 시 스핀 급감. 교체 시기 중요</td></tr>
+<tr><td>임팩트 스피드</td><td>볼-페이스 상대 속도</td><td>스윙 속도 × 임팩트 정확도</td></tr>
+<tr><td>Spin Loft (Dynamic Loft - Attack Angle)</td><td>스핀량 직접 결정</td><td>로프트 선택 + 어택앵글이 결합</td></tr>
+<tr><td>볼 종류</td><td>우레탄 커버 반응도</td><td>투어 볼 vs 아이오노머 볼 차이 큼</td></tr>
+<tr><td>페이스 청결도</td><td>이물질 시 스핀 감소</td><td>잔디·흙 제거가 스핀 일관성에 직접 영향</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">5-2. Spin Loft와 웨지</h3>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">▶ PART 4 5절 참조 — Spin Loft 전체 정의. Dynamic Loft - Attack Angle = Spin Loft</p>
+      </aside>
+
+        <p>웨지에서 스핀을 극대화하려면 Spin Loft를 높여야 합니다. 높은 로프트(높은 Dynamic Loft) + 다운블로(작은 Attack Angle = 더 음수) 조합이 Spin Loft를 높입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>스윙 조건</th><th>Spin Loft</th><th>스핀 경향</th><th>현장 의미</th></tr></thead>
+          <tbody><tr><td>높은 로프트 + 다운블로</td><td>높음 (40°+)</td><td>스핀 많음</td><td>투어 선수 로브샷</td></tr>
+<tr><td>높은 로프트 + 수평 스윙</td><td>중간 (30~35°)</td><td>표준 스핀</td><td>일반 어프로치</td></tr>
+<tr><td>낮은 로프트 + 수평 스윙</td><td>낮음 (20°대)</td><td>스핀 적음</td><td>런닝 어프로치</td></tr>
+<tr><td>로프트에 관계없이 업블로</td><td>Spin Loft 감소</td><td>스핀 감소</td><td>토핑 직전 얕은 스윙</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">스핀이 안 나오는 골퍼의 웨지 피팅</p>
+        <ul class="callout-bullets">
+          <li>스핀 부족의 원인은 대부분 그루브 마모, 볼 종류, 임팩트 스피드 순서입니다. 웨지 교체보다 이 세 가지를 먼저 확인합니다.</li>
+        </ul>
+        <p class="callout-foot">로프트를 높이면 Spin Loft 증가 → 스핀 증가 효과가 있지만, 동시에 거리가 줄어들고 바운스 설계가 달라집니다. 단순히 '스핀 나오는 웨지'를 교체하는 것은 근본 해결이 아닙니다.</p>
+      </aside>
+
+        <h3 class="subhead">5-2절. 그루브 마모와 웨지 교체 주기</h3>
+        <p>웨지는 아이언 중 유일하게 "소모품"에 가까운 클럽입니다. 드라이버나 긴 아이언은 10년을 써도 헤드 성능이 눈에 띄게 떨어지지 않지만, 웨지의 그루브는 사용 횟수에 비례해 마모됩니다. 그루브가 마모되면 볼과 페이스 사이의 접촉 저항이 줄어 스핀 생성 능력이 급격히 떨어집니다. 같은 샷에서 스핀이 500~1,000rpm 덜 나오고, 그린에 떨어진 뒤 정지 거리가 2~4야드 길어집니다.</p>
+        <h3 class="subhead">5-2-1. 교체 시점 판단 기준</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>사용 라운드 수</th><th>그루브 상태</th><th>권장 조치</th></tr></thead>
+          <tbody><tr><td>약 75라운드 이하</td><td>그루브 날카로움 유지. 페이스 마감도 선명.</td><td>정상 사용 지속.</td></tr>
+<tr><td>약 75~125라운드</td><td>그루브 날이 미세하게 둔해지고, 스핀이 약 5~10% 감소.</td><td>중요 라운드 전 교체 검토. 숏게임이 스코어의 핵심인 골퍼는 교체.</td></tr>
+<tr><td>약 125라운드 이상</td><td>그루브 날이 확연히 둔해지고, 스핀이 20% 이상 감소.</td><td>교체 권고. 사용 지속 시 어프로치 스핀 부족으로 그린에서 제어가 어려워짐.</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>라운드 수는 참고치이며, 실제 마모 속도는 연습량에 더 크게 영향을 받습니다. 연습장에서 매트로 반복 타격하는 경우 그루브 마모가 더 빨라집니다. 잔디 위에서 치는 것과 매트 위에서 치는 것의 그루브 마모 속도는 약 2배 차이가 납니다.</p>
+        <h3 class="subhead">5-2-2. 그루브 검사 간이 방법</h3>
+        <p>현장에서 그루브 상태를 빠르게 판단하는 방법 세 가지를 제시합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>검사 방법</th><th>판정 기준</th></tr></thead>
+          <tbody><tr><td>손톱 긁기</td><td>그루브에 손톱을 대고 수직으로 빼낼 때 "턱"하고 걸리는 느낌이 있어야 정상. 부드럽게 빠지면 마모 진행 중.</td></tr>
+<tr><td>볼펜 잉크 테스트</td><td>그루브 안쪽에 볼펜 잉크를 바르고 페이스를 닦아낸다. 그루브 안에 잉크가 선명히 남으면 정상, 경계가 흐릿하면 마모.</td></tr>
+<tr><td>페이스 거칠기 육안</td><td>페이스 마감(밀드 또는 샌드블라스트)의 거칠기가 평평해 보이면 마모 진행. 새 클럽은 페이스 전체가 균일하게 거칠다.</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">웨지 샤프트</h2>
+
+      <div class="prose">
+        <p>웨지 샤프트는 아이언 세트의 연속이지만, 아이언보다 10~15g 무겁게 가져가는 것이 일반적입니다. 컨트롤이 최우선이기 때문입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>샤프트 변수</th><th>권장 방향</th><th>이유</th></tr></thead>
+          <tbody><tr><td>무게</td><td>아이언 샤프트 대비 +10~15g</td><td>짧은 스윙에서 컨트롤 우선</td></tr>
+<tr><td>플렉스</td><td>아이언과 동일하거나 한 단계 단단하게</td><td>풀스윙 아닌 컨트롤 스윙</td></tr>
+<tr><td>소재</td><td>스틸 우선 (그라파이트는 시니어·여성만)</td><td>타감 피드백이 중요</td></tr>
+<tr><td>팁 섹션</td><td>단단한 팁 (Tip Stiff)</td><td>헤드가 과도하게 돌아가지 않도록</td></tr>
+<tr><td>길이</td><td>아이언 PW와 동일 또는 ¼인치 짧게</td><td>세트 연속성</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">웨지 헤드 설계 요소</h2>
+
+      <div class="prose">
+        <h3 class="subhead">7-1. 글라인드·캐비티·블레이드</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>헤드 타입</th><th>특징</th><th>적합 골퍼</th></tr></thead>
+          <tbody><tr><td>블레이드 (Muscle Back)</td><td>좁은 솔, 날카로운 리딩엣지, 높은 타감 피드백</td><td>핸디캡 10 미만. 다양한 라이 조작</td></tr>
+<tr><td>캐비티 웨지</td><td>중간 솔, 약간의 관용성</td><td>핸디캡 10~20</td></tr>
+<tr><td>게임 임프루브먼트 웨지</td><td>넓은 솔, 두꺼운 탑라인, 관용성 우선</td><td>핸디캡 20 이상. 찍어치기 골퍼</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">7-2. 그루브 상태 — 교체 시기 판단</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>그루브 상태</th><th>스핀 변화</th><th>권장 조치</th></tr></thead>
+          <tbody><tr><td>신품 (0~50라운드)</td><td>최대 스핀</td><td>정상 사용</td></tr>
+<tr><td>중간 마모 (50~150라운드)</td><td>10~15% 스핀 감소</td><td>세척 관리 강화</td></tr>
+<tr><td>심한 마모 (150라운드+)</td><td>20~30% 스핀 감소</td><td>교체 검토</td></tr>
+<tr><td>그루브 손상 (찍힘·파손)</td><td>불규칙 스핀</td><td>즉시 교체</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">그루브 마모 자가 확인법</p>
+        <ul class="callout-bullets">
+          <li>손톱으로 그루브를 긁었을 때 날카롭게 걸리면 정상, 부드럽게 미끄러지면 마모 진행 중</li>
+        </ul>
+        <p class="callout-foot">투어 선수는 72홀(4라운드)마다 웨지를 교체하는 경우도 있습니다. 아마추어 기준 150라운드를 넘기면 스핀 저하를 체감하게 됩니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 8 ==================== -->
+  <section id="sec-8" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 08 · 8절</p>
+      <h2 class="section-title">웨지 피팅 결정 순서</h2>
+
+      <div class="prose">
+        <p>웨지 피팅은 다음 순서로 진행합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>순서</th><th>확인 항목</th><th>결정 내용</th></tr></thead>
+          <tbody><tr><td>1</td><td>PW 로프트 측정</td><td>전체 웨지 로프트 구조의 출발점 결정</td></tr>
+<tr><td>2</td><td>스윙 스타일 관찰</td><td>쓸어치기 vs 찍어치기 → 바운스 방향 결정</td></tr>
+<tr><td>3</td><td>코스 조건 확인</td><td>잔디·벙커 종류 → 바운스 수치 결정</td></tr>
+<tr><td>4</td><td>바운스 시타</td><td>2~3개 바운스 조합 비교</td></tr>
+<tr><td>5</td><td>로프트 구성 설계</td><td>PW 기준으로 4~6° 간격 구성</td></tr>
+<tr><td>6</td><td>솔 그라인드 선택</td><td>핸디캡·샷 다양성 기준으로 결정</td></tr>
+<tr><td>7</td><td>샤프트 결정</td><td>아이언 세트 연속성 + 무게 조정</td></tr>
+<tr><td>8</td><td>갭 최종 확인</td><td>각 웨지 캐리 거리 측정 후 갭 확인</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">웨지 피팅 핵심 요약</p>
+        <ul class="callout-bullets">
+          <li>바운스가 먼저입니다. 로프트는 나중입니다.</li>
+          <li>PW 로프트를 모르면 웨지 로프트를 정할 수 없습니다.</li>
+          <li>스핀이 안 나온다고 웨지를 바꾸기 전에 그루브와 볼을 먼저 확인합니다.</li>
+        </ul>
+        <p class="callout-foot">스트롱 로프트 세트에 표준 웨지를 그대로 쓰는 것은 피팅 실패입니다.</p>
+      </aside>
+
+        <p>이 1부에서 웨지의 구조적 특성과 피팅 판단 기준을 정리했습니다. 웨지는 세트의 일부이면서 동시에 독립된 피팅 대상입니다. 다음 2부 퍼터에서는 실제 피팅 세션 전체를 처음부터 끝까지 추적하는 통합 케이스 스터디를 다룹니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 9 ==================== -->
+  <section id="sec-9" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 09 · 9절</p>
+      <h2 class="section-title">웨지 피팅 현장 오판 케이스</h2>
+
+      <div class="prose">
+        <p>웨지 피팅에서 자주 발생하는 세 가지 오판을 정리합니다. 이 케이스들은 클럽메이커스 교육매뉴얼에서 반복적으로 관찰된 유형입니다.</p>
+        <p>오판 1. "벙커에서 공이 안 떠요" — 바운스 교체로만 대응</p>
+        <p>골퍼: "벙커에서 공이 안 떠요. 바운스가 낮아서 그런가요?"</p>
+        <p>피터의 첫 반응: 더 높은 바운스 웨지로 교체 권고.</p>
+        <p>결과: 교체 후에도 증상이 지속됨.</p>
+        <p>실제 원인: 골퍼의 벙커 셋업에서 페이스를 오픈하지 않고 스퀘어로 공략하고 있었습니다. 벙커에서 공을 띄우려면 리딩 엣지가 모래를 파고들지 않도록 페이스를 오픈해 실제 바운스 각을 더 크게 만들어야 합니다. 장비 교체 전에 셋업·스윙 확인이 먼저입니다.</p>
+        <p>오판 2. "PW 거리가 줄었어요" — 샤프트 교체로 대응</p>
+        <p>골퍼: "PW 거리가 최근 10야드 줄었습니다. 샤프트가 낡았나요?"</p>
+        <p>피터의 첫 반응: PW 샤프트 교체 권고.</p>
+        <p>결과: 교체 후에도 거리 회복 안 됨.</p>
+        <p>실제 원인: PW 그루브 마모로 스핀이 떨어져 볼이 굴러가지 않고 바로 정지하며, "캐리 + 런" 총 거리가 줄어든 것이었습니다. 헤드 자체의 스핀 능력 저하가 원인인데 샤프트를 교체한 셈입니다. PW는 풀스윙 빈도가 높아 그루브 마모가 가장 빠른 웨지 중 하나입니다.</p>
+        <p>오판 3. "60° LW를 꼭 넣어주세요" — 요청대로만 설정</p>
+        <p>골퍼(헤드스피드 80mph 아마추어): "프로들처럼 60° 로브웨지를 꼭 넣어주세요."</p>
+        <p>피터의 첫 반응: 요청대로 60° LW 세트에 포함.</p>
+        <p>결과: 실제 라운드에서 60° 사용 빈도 매우 낮고, 사용 시 토핑·뒤땅 빈도 높음.</p>
+        <p>실제 원인: 헤드스피드 80mph 이하에서는 60° LW의 페이스를 열고 치는 롭샷 구사가 기술적으로 어렵습니다. 이 골퍼에게는 60° 대신 58° SW 한 개로 롭샷·벙커·중거리를 모두 처리하는 구성이 실전에서 더 높은 스코어 기여도를 보입니다. 골퍼의 요청은 참고하되, 실제 운영 가능성은 피터가 객관적으로 판단해야 합니다.</p>
+        
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 12-1부 웨지</p>
+        <ol class="check-list">
+          <li>PW 로프트가 46도인 세트에 SW 한 개만 추가한다면 로프트는 몇 도가 적절하며, 그 이유는 무엇입니까?
+문제 2. 바운스가 낮은 웨지(4~6도)와 높은 웨지(10~12도)는 각각 어떤 잔디·스윙 조건에 적합합니까?
+문제 3. 웨지 세트 내에서 SW를 균등하게(예: D3으로) 맞추는 이유는 무엇입니까?
+※ 해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</li>
+        </ol>
+        
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2부</p>
+      <h2 class="section-title">퍼터 구조</h2>
+
+      <div class="prose">
+        <h3 class="subhead">퍼터 구조</h3>
+        
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 12-2부 퍼터를 마치면</p>
+        <ol class="callout-list">
+          <li>스트로크 타입(아크 vs 스트레이트)과 퍼터 헤드 구조를 매칭할 수 있다.</li>
+          <li>페이스 밸런스·토 밸런스·제로토크 구조를 이해하고 선택 기준을 적용할 수 있다.</li>
+          <li>최근 퍼터 그립 트렌드(리버스 테이퍼·Tilted·편심)의 설계 의도를 설명할 수 있다.</li>
+        </ol>
+      </div>
+
+        <p>헤드 형태 / 스트로크 타입 / 로프트·라이·오프셋 / 넥 구조 / MOI 설계</p>
+        <p>퍼터는 골프 클럽 가운데 공을 굴리는 것을 목적으로 하는 유일한 클럽입니다. 다른 클럽이 탄도와 스핀을 만들어내는 구조를 갖는다면, 퍼터는 공이 빠르게 순롤(True Roll)로 구르도록 초기 방향과 속도를 정확하게 전달하는 구조에 가깝습니다. 그래서 퍼터의 기하 구조는 드라이버나 아이언과는 다른 기준으로 읽어야 합니다.</p>
+        <p>퍼터 피팅에서 비중이 가장 큰 두 축은 스트로크 타입과 헤드 구조의 매칭입니다. 이 둘이 맞물리지 않으면 퍼터를 바꾸더라도 방향성이 쉽게 안정되지 않습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">퍼터가 다른 클럽과 다른 이유</h2>
+
+      <div class="prose">
+        <p>퍼터는 임팩트에서 다음 세 가지를 동시에 만족시켜야 합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>목표</th><th>내용</th><th>실패 시 결과</th></tr></thead>
+          <tbody><tr><td>Start Line</td><td>공이 의도한 방향으로 정확하게 출발해야 함</td><td>방향 오차 — 롤이 좋아도 의미 없음</td></tr>
+<tr><td>True Roll</td><td>공이 미끄러지지 않고 즉시 순롤로 구르기 시작해야 함</td><td>백스핀이 롤로 전환되는 거리가 길어져 탄도 예측 불가</td></tr>
+<tr><td>Consistent Distance</td><td>같은 스트로크에서 일정한 거리가 나와야 함</td><td>거리 컨트롤 붕괴. 타점 편차가 직접 거리 변화로 나타남</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">퍼터 피팅의 핵심 원칙</p>
+        <ul class="callout-bullets">
+          <li>퍼터에서는 탄도, 스핀, 비거리를 논하지 않습니다.</li>
+          <li>퍼터 피팅의 목표는 출발 방향의 재현성과 거리 컨트롤의 일관성입니다.</li>
+        </ul>
+        <p class="callout-foot">이 두 가지는 스트로크 타입과 헤드 구조가 맞을 때 자연스럽게 형성됩니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">스트로크 타입 — 피팅의 출발점</h2>
+
+      <div class="prose">
+        <p>퍼터 피팅에서 가장 먼저 결정해야 하는 것은 스트로크 타입입니다. 스트로크 타입에 따라 적합한 헤드 구조가 달라지기 때문입니다.</p>
+        <p>[그림 6B-1] 퍼터 헤드 밸런스 4단계 — 페이스 밸런스에서 강한 토우 행까지, 스트로크 아크와의 매칭 (출처: 클럽메이커스 교육매뉴얼)</p>
+        <h3 class="subhead">2-1. 두 가지 스트로크 타입</h3>
+        <p>모든 퍼트 스트로크는 크게 두 가지로 분류됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>스트로크 타입</th><th>특성</th><th>페이스 회전 패턴</th><th>자연스러운 헤드 구조</th></tr></thead>
+          <tbody><tr><td>아크(Arc) 스트로크</td><td>클럽이 몸의 회전축을 따라 인-스퀘어-인 경로로 움직임. 자연스러운 아크를 그림</td><td>어드레스에서 오픈 → 임팩트에서 스퀘어 → 팔로우에서 클로즈드</td><td>토 헝(Toe Hang) 퍼터 적합</td></tr>
+<tr><td>직선(Straight) 스트로크</td><td>클럽 헤드가 타겟 라인을 따라 직선으로 움직임. 의도적으로 페이스를 스퀘어 유지</td><td>전 구간에서 페이스 스퀘어 유지 필요</td><td>페이스 밸런스(Face-Balanced) 퍼터 적합</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 6B-2. 페이스 밸런스 vs 토 행 측정 방식</p>
+      </aside>
+
+        <h3 class="subhead">2-2. 스트로크 타입 판단 방법</h3>
+        <p>현장에서 스트로크 타입을 빠르게 판단하는 방법은 퍼터를 손가락 위에 올려 밸런스 포인트를 확인하는 것입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">퍼터 밸런스 테스트 — 샤프트를 손가락 위에 올렸을 때</p>
+        <ul class="callout-bullets">
+          <li>페이스 밸런스(Face-Balanced): 페이스가 하늘을 향해 수평으로 눕는다 → 직선 스트로크 골퍼에 적합</li>
+          <li>토 행(Toe Hang): 페이스가 비스듬히 또는 아래를 향한다 → 아크 스트로크 골퍼에 적합. 토 행 각도가 클수록 아크가 강한 골퍼에 유리</li>
+        </ul>
+        <p class="callout-foot">왜 이것이 중요한가: 아크 스트로크 골퍼가 페이스 밸런스 퍼터를 사용하면 임팩트 직전 페이스가 너무 오픈된 상태로 들어와 우측 미스가 반복됩니다. 반대의 경우도 마찬가지입니다.</p>
+      </aside>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">◼ 그림 6B-3. 퍼터 헤드 형태별 비교 (Blade · Mid-mallet · Mallet)</p>
+        <p class="callout-foot" style="border:none;padding:0;">[제작 프롬프트 — 실물 또는 고품질 일러스트]
+
+3종의 대표 퍼터 헤드 형태를 위에서 내려다본 평면도로 나란히 배치합니다.
+
+① Blade (블레이드) — 얇고 긴 직선형 헤드. 예: Ping Anser, Scotty Cameron Newport. MOI 낮음, 토 행.
+② Mid-mallet — 블레이드와 말렛의 중간 형태. 약간의 관성이 추가된 구조. 예: Odyssey #7 스타일.
+③ Mallet (말렛) — 크고 둥근 또는 기하학적 뒷부분이 있는 헤드. MOI 매우 높음, 페이스 밸런스.
+
+각 헤드 아래 라벨 + 대표 특성 (MOI · 균형 타입 · 권장 스트로크 타입).
+
+· 스타일: 고품질 선화 또는 3D 렌더 (통일된 각도 · 조명)
+· 각 헤드의 넥 구조도 드러나도록 (Plumber's neck / Slant / Center shaft 등)
+· 참고: Scotty Cameron, Odyssey, Ping 공식 카탈로그 스타일</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">헤드 형태 — 블레이드, 미드말렛, 말렛</h2>
+
+      <div class="prose">
+        <p>퍼터 헤드 형태는 크게 세 가지로 분류됩니다. 형태 자체보다 그 형태가 만들어내는 MOI와 무게 분포 구조가 피팅의 실질적 기준입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>헤드 형태</th><th>MOI 특성</th><th>토 행 특성</th><th>적합 스트로크</th><th>특성 요약</th></tr></thead>
+          <tbody><tr><td>블레이드 (Blade)</td><td>낮은 MOI. 오프센터 타점 민감</td><td>토 행 큼</td><td>아크 스트로크</td><td>타점 피드백 선명. 관용성 낮음. 조작성 높음</td></tr>
+<tr><td>미드 말렛 (Mid-Mallet)</td><td>중간 MOI</td><td>중간 토 행</td><td>아크~직선 중간</td><td>밸런스형. 두 타입 모두 어느 정도 대응</td></tr>
+<tr><td>말렛 (Mallet)</td><td>높은 MOI. 오프센터 타점 관용적</td><td>토 행 작음~페이스 밸런스</td><td>직선 스트로크</td><td>방향 안정성 높음. 타점 피드백 약함</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">헤드 형태 선택의 핵심</p>
+        <ul class="callout-bullets">
+          <li>말렛 = 쉬운 퍼터, 블레이드 = 어려운 퍼터라는 단순한 공식은 맞지 않습니다.</li>
+          <li>MOI가 높은 말렛은 타점 편차에 관용적이지만, 페이스 앵글 편차가 그대로 결과에 나타납니다.</li>
+          <li>블레이드는 타점 피드백이 강해 타점 안정성을 훈련하기에 유리한 측면도 있습니다.</li>
+        </ul>
+        <p class="callout-foot">결국 형태 선택은 스트로크 타입과의 매칭 + 골퍼의 감각 선호도를 함께 보아야 합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">넥(Neck) 구조 — 오프셋과 페이스 앵글에 영향</h2>
+
+      <div class="prose">
+        <p>퍼터의 넥 구조는 샤프트가 헤드에 연결되는 방식을 결정합니다. 넥 구조에 따라 오프셋의 양과 페이스 앵글, 그리고 토 행 특성이 달라집니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>넥 타입</th><th>오프셋</th><th>토 행</th><th>스트로크 적합</th><th>특성</th></tr></thead>
+          <tbody><tr><td>플러머 넥 (Plumber's Neck)</td><td>풀 샤프트 오프셋</td><td>강한 토 행</td><td>아크 스트로크</td><td>가장 전통적인 아크 퍼터 넥. 오프셋이 커서 페이스 클로즈드 느낌</td></tr>
+<tr><td>슬랜트 넥 (Slant Neck)</td><td>하프 샤프트 오프셋</td><td>중간 토 행</td><td>아크~중간</td><td>플러머 넥보다 오프셋 작음. 중간 아크에 적합</td></tr>
+<tr><td>싱글 벤드 (Single Bend)</td><td>거의 없음~하프</td><td>중간~낮음</td><td>중간~직선</td><td>샤프트가 한 번 꺾임. 현대 말렛에 많이 사용</td></tr>
+<tr><td>더블 벤드 / 쓰리 피스 (Double Bend)</td><td>거의 없음</td><td>낮음~페이스 밸런스</td><td>직선 스트로크</td><td>샤프트가 두 번 꺾여 헤드 중앙에 연결. 직선 스트로크에 최적</td></tr>
+<tr><td>센터샤프트 (Center Shaft)</td><td>없음 (중앙 연결)</td><td>페이스 밸런스</td><td>직선 스트로크</td><td>페이스 정중앙에 샤프트 연결. 완전한 페이스 밸런스</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">넥 구조와 아크 스트로크의 관계</p>
+        <ul class="callout-bullets">
+          <li>오프셋이 클수록 임팩트에서 페이스가 더 열린 상태에서 들어오는 경향이 있습니다. 아크 스트로크 골퍼는 이 오픈 상태를 임팩트 직전에 자연스럽게 닫으면서 스퀘어를 만듭니다.</li>
+        </ul>
+        <p class="callout-foot">반대로 오프셋이 없거나 센터샤프트인 퍼터는 페이스 방향이 항상 타겟과 일치하는 설계 의도이므로, 직선 스트로크가 아닌 골퍼가 쓰면 임팩트에서 페이스가 과도하게 닫혀 좌측 미스가 반복됩니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">퍼터의 기하 변수 — 로프트, 라이각, 오프셋</h2>
+
+      <div class="prose">
+        <h3 class="subhead">5-1. 로프트 — 왜 퍼터에 로프트가 필요한가</h3>
+        <p>퍼터의 표준 로프트는 2~4°입니다. 공을 굴리는 도구인데 왜 로프트가 필요한지 의아할 수 있습니다. 이유는 임팩트 순간 공의 상태에 있습니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">퍼터 로프트의 역할</p>
+        <ul class="callout-bullets">
+          <li>임팩트 직전 공은 잔디에 살짝 눌려 앉아 있습니다. 이 상태에서 로프트가 0°이면 공이 눌린 상태에서 맞아 처음에 지면을 따라 '튀는' 현상이 생깁니다.</li>
+          <li>적절한 로프트(약 3~4°)는 공을 가볍게 들어올려 즉시 순롤로 전환시킵니다. 이것이 True Roll의 시작입니다.</li>
+        </ul>
+        <p class="callout-foot">반대로 로프트가 너무 크면 공이 순간적으로 공중에 떠 바운드 후 착지하면서 방향이 틀어집니다.</p>
+      </aside>
+
+        <p>스탠다드 로프트는 약 3°이지만, 핸드 포워드 어드레스 습관이 강한 골퍼는 Dynamic Loft가 낮아지므로 Static Loft를 4~5°로 높여야 True Roll을 만들 수 있습니다. 반대로 핸즈 백(손이 공 뒤)으로 치는 골퍼는 Dynamic Loft가 높아지므로 3° 이하가 적합할 수 있습니다.</p>
+        <h3 class="subhead">5-2. 라이각 — 방향의 출발</h3>
+        <p>퍼터 라이각은 일반 아이언과 동일하게 솔 중앙이 지면에 닿았을 때 샤프트와 지면이 이루는 각도입니다. 퍼터는 아이언보다 라이각이 훨씬 크게 설계되는데, 표준은 약 70~72°입니다.</p>
+        <p>라이각이 맞지 않으면 퍼터 헤드의 힐 또는 토 쪽이 지면에 걸려 임팩트 직전 헤드가 기울면서 페이스 앵글이 틀어집니다. PART 6에서 설명한 라이각 변화 → 페이스 앵글 변화 원리가 퍼터에서도 동일하게 작용합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>라이각 상태</th><th>솔 접지 상태</th><th>페이스 방향</th><th>결과 경향</th></tr></thead>
+          <tbody><tr><td>너무 업라이트 (토 뜸)</td><td>힐만 지면에 닿음</td><td>페이스 클로즈드</td><td>좌측 미스 반복</td></tr>
+<tr><td>스퀘어</td><td>솔 전체 지면 접지</td><td>페이스 스퀘어</td><td>방향 편차 최소</td></tr>
+<tr><td>너무 플랫 (힐 뜸)</td><td>토만 지면에 닿음</td><td>페이스 오픈</td><td>우측 미스 반복</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>퍼터 라이각은 골퍼의 신장과 팔 길이뿐 아니라 어드레스 자세에 크게 영향을 받습니다. 허리를 많이 숙이는 골퍼는 더 업라이트한 라이각이 필요하고, 서서 치는 자세의 골퍼는 더 플랫한 라이각이 맞습니다.</p>
+        <h3 class="subhead">5-3. 오프셋 — 시각적 효과와 타이밍</h3>
+        <p>퍼터의 오프셋은 아이언과 같이 호젤 전방 끝에서 페이스 리딩엣지까지의 거리입니다. 그러나 퍼터에서 오프셋의 역할은 아이언과 다소 다릅니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">퍼터 오프셋의 두 가지 역할</p>
+        <ul class="callout-bullets">
+          <li>① 시각적 에이밍 효과: 오프셋이 있으면 어드레스 시 공이 페이스 앞에 위치한 것처럼 보입니다. 이 시각적 효과가 골퍼의 에이밍 습관과 맞아야 합니다. 오프셋이 있는 퍼터가 편한 골퍼가 오프셋 없는 퍼터를 쓰면 무의식적으로 닫아 치게 됩니다.</li>
+          <li>② 넥 구조와 연동: 오프셋은 대부분 넥 구조에서 결정됩니다. 플러머 넥 = 풀 오프셋, 더블 벤드 = 거의 없음으로 이미 정해지는 경우가 많습니다.</li>
+        </ul>
+        <p class="callout-foot">퍼터 오프셋 피팅은 '얼마나'보다 '골퍼의 시각적 선호와 스트로크 타입에 맞는가'가 더 중요합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">퍼터 MOI — 관용성의 실체</h2>
+
+      <div class="prose">
+        <p>PART 5에서 정의한 MOI(관성모멘트)는 퍼터에서도 동일하게 작용합니다. 퍼터 MOI가 높을수록 오프센터 타점에서 헤드가 덜 비틀리고 볼 스피드 손실이 줄어듭니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>설계 타입</th><th>MOI 수준</th><th>오프센터 관용성</th><th>거리 컨트롤 일관성</th><th>타점 피드백</th></tr></thead>
+          <tbody><tr><td>블레이드</td><td>낮음 (~4,000 g·cm²)</td><td>낮음. 타점 편차가 직접 방향·거리에 영향</td><td>민감함</td><td>선명함. 타점 위치를 느낄 수 있음</td></tr>
+<tr><td>미드 말렛</td><td>중간 (~5,000~6,000 g·cm²)</td><td>중간</td><td>어느 정도 안정</td><td>중간</td></tr>
+<tr><td>대형 말렛</td><td>높음 (~7,000 g·cm² 이상)</td><td>높음. 미스히트에 관용적</td><td>일관성 높음</td><td>둔함. 타점 위치 감지 어려움</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">MOI와 퍼팅 성향의 매칭</p>
+        <ul class="callout-bullets">
+          <li>거리 컨트롤이 문제이고 타점 분산이 큰 골퍼 → 높은 MOI 말렛이 거리 일관성 향상에 도움</li>
+          <li>방향 문제가 주된 이슈인 골퍼 → MOI보다 스트로크 타입 × 헤드 구조 매칭이 선행되어야 함</li>
+        </ul>
+        <p class="callout-foot">MOI가 높다고 반드시 더 잘 맞는 퍼터가 아닙니다. 스트로크 타입과 맞지 않는 MOI 높은 말렛은 오히려 방향 편차를 증폭시킵니다.</p>
+      </aside>
+
+        <h3 class="subhead">6-2절. 제로토크 구조 — 중력 토크를 없애는 설계</h3>
+        <p>페이스 밸런스 퍼터가 직선 스트로크에 적합한 이유, 토 행 퍼터가 아크 스트로크에 적합한 이유를 설명하면서 우리는 암묵적으로 중요한 전제를 지나쳤습니다. 전통적인 퍼터는 라이각에서 정확히 어드레스되어 있어도, 스트로크가 진행되는 동안 헤드를 회전시키려는 힘이 작용한다는 것입니다.</p>
+        <h3 class="subhead">6-2-1. 전통 퍼터에서 중력 토크가 발생하는 이유</h3>
+        <p>퍼터 헤드의 CG는 샤프트 중심축에서 벗어난 위치에 있습니다. 이 거리를 모멘트 암이라고 합니다. 헤드가 움직이는 동안 중력은 이 모멘트 암을 통해 헤드를 샤프트 축 주위로 회전시키려는 토크를 만들어냅니다. 이것이 스트로크 중 페이스가 열리거나 닫히는 경향의 물리적 원인입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">페이스 밸런스 vs 토 행의 한계</p>
+        <ul class="callout-bullets">
+          <li>페이스 밸런스 퍼터: 정지 상태에서 CG가 샤프트 축 바로 아래에 있어 중력 토크가 최소화됩니다. 그러나 스트로크 중 헤드가 호를 그리며 움직이면 완전한 제로 토크가 아닐 수 있습니다.</li>
+          <li>토 행 퍼터: 정지 상태에서 토 쪽이 아래로 향합니다. 아크 스트로크 골퍼는 이 토크를 스트로크의 자연스러운 흐름으로 활용합니다.</li>
+        </ul>
+        <p class="callout-foot">두 설계 모두 중력 토크 자체를 없애는 것이 아니라 스트로크 타입과 토크 방향을 맞추는 방식입니다.</p>
+      </aside>
+
+        <h3 class="subhead">6-2-2. 제로토크 설계 원리 — Lie Angle Balance</h3>
+        <p>제로토크 퍼터(Zero Torque Putter)는 이 문제를 다른 방식으로 접근합니다. 헤드의 CG를 샤프트 중심축 위에 정확히 위치시키는 설계로, 모멘트 암을 물리적으로 없앱니다. 정확한 라이각에서 어드레스했을 때 중력이 헤드를 회전시키려는 토크가 0이 됩니다. 이를 Lie Angle Balance(LAB)라고도 합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">제로토크 작동 원리</p>
+        <ul class="callout-bullets">
+          <li>① CG를 샤프트 중심축 선상에 위치시킴 → 모멘트 암 = 0</li>
+          <li>② 모멘트 암이 없으면 중력이 토크를 만들지 못함 → 스트로크 중 페이스를 열거나 닫으려는 힘 없음</li>
+          <li>③ 결과: 페이스가 스트로크 내내 설계 방향을 유지하려는 성질을 가짐</li>
+        </ul>
+        <p class="callout-foot">④ 전제 조건: 실제 어드레스 라이각이 설계 라이각과 정확히 일치해야 함</p>
+      </aside>
+
+        <h3 class="subhead">6-2-3. 피팅 관점에서의 특성</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>구분</th><th>전통 퍼터 (페이스 밸런스/토 행)</th><th>제로토크 퍼터</th></tr></thead>
+          <tbody><tr><td>스트로크 타입 의존성</td><td>높음 — 스트로크 타입과 헤드 구조 매칭 필수</td><td>낮음 — 스트로크 타입과 무관하게 페이스 안정성 확보 가능</td></tr>
+<tr><td>라이각 민감도</td><td>일반 수준</td><td>매우 높음 — 라이각이 틀리면 제로토크 조건이 깨짐</td></tr>
+<tr><td>누가 유리한가</td><td>스트로크 타입이 명확한 골퍼</td><td>스트로크 타입이 불명확하거나 일관성 없는 골퍼. 라이각 정확도가 확보된 경우</td></tr>
+<tr><td>피팅 순서</td><td>스트로크 타입 → 헤드 구조 매칭</td><td>라이각 정확도 먼저 확인 → 그 후 제로토크 효과 발휘 가능</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">제로토크 피팅 원칙</p>
+        <ul class="callout-bullets">
+          <li>제로토크 퍼터는 라이각 피팅이 전제되어야 합니다. 라이각이 맞지 않으면 CG가 샤프트 축에서 벗어나고, 오히려 일반 퍼터보다 더 큰 중력 토크가 발생할 수 있습니다.</li>
+          <li>제로토크 설계가 스트로크를 만들어주지는 않습니다. 페이스가 스트로크 중 중립을 유지하려는 성질이 있을 뿐, 출발 방향 자체는 여전히 어드레스 페이스 앵글로 결정됩니다.</li>
+        </ul>
+        <p class="callout-foot">결론: 라이각 정확도 + 어드레스 재현성이 높은 골퍼일수록 제로토크 설계의 효과가 명확하게 나타납니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">페이스 소재와 롤 — 소프트 인서트 vs 밀드 페이스</h2>
+
+      <div class="prose">
+        <p>퍼터 페이스 소재는 공이 얼마나 부드럽게 굴러가는지, 그리고 타점 피드백이 어떻게 느껴지는지에 영향을 줍니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>페이스 타입</th><th>소재 특성</th><th>롤 특성</th><th>타구감</th><th>적합 상황</th></tr></thead>
+          <tbody><tr><td>밀드(Milled) 금속 페이스</td><td>스테인리스 또는 탄소강 직접 가공</td><td>초기 구름 시 백스핀이 약간 더 오래 유지되는 경향</td><td>단단하고 선명함</td><td>타구감과 피드백 중시. 단단한 그린 환경</td></tr>
+<tr><td>소프트 인서트 페이스</td><td>폴리머, 우레탄, 알루미늄 등 삽입</td><td>공과 페이스 접촉 시간이 더 길어 초기 롤이 부드러움</td><td>부드럽고 은은함</td><td>부드러운 타구감 선호. 느린 그린 환경</td></tr>
+<tr><td>밀드 + 텍스처 패턴</td><td>미세 조각 패턴으로 그립력 향상</td><td>균일한 볼 스피드 분포 목표 (Evnroll 방식)</td><td>중간</td><td>타점 편차에 의한 볼스피드 변화 최소화</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">페이스 소재 피팅 원칙</p>
+        <ul class="callout-bullets">
+          <li>소프트 인서트가 무조건 더 좋다는 통념은 잘못입니다. 단단한 그린에서 소프트 인서트는 타구감이 과도하게 물렁해서 거리 컨트롤이 오히려 어려울 수 있습니다.</li>
+        </ul>
+        <p class="callout-foot">골프장의 그린 속도와 골퍼의 타구감 선호를 함께 고려해야 합니다.</p>
+      </aside>
+
+        <h3 class="subhead">7-2절. 퍼터 길이 — 눈 위치와 팔의 자유도</h3>
+        <p>퍼터 길이는 일반 클럽과 다른 기준으로 선택합니다. 드라이버와 아이언은 거리와 속도가 목적이므로 신체 기준에 맞춰 길이를 정합니다. 퍼터는 정확도가 목적이므로 길이를 "눈 위치"와 "팔의 자유도"로 정합니다. 셋업 상태에서 눈이 공 위에 정확히 오도록, 동시에 팔이 몸에 눌리거나 뻗어나가지 않도록 하는 길이가 그 골퍼의 적정 길이입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>신장</th><th>권장 길이</th><th>참고 사항</th></tr></thead>
+          <tbody><tr><td>160cm 이하</td><td>33인치</td><td>여성·시니어에서 흔한 길이. 셋업이 깊어지는 편이라 라이각이 플랫해야 안정</td></tr>
+<tr><td>160~170cm</td><td>33~34인치</td><td>아시아 아마추어 평균 구간. 34인치 완성 퍼터를 33.5로 줄여 쓰는 경우 많음</td></tr>
+<tr><td>170~180cm</td><td>34~35인치</td><td>남성 표준. 완성품 기성 길이가 대부분 이 범위</td></tr>
+<tr><td>180cm 이상</td><td>35~36인치</td><td>35인치 기본 + 필요 시 0.5~1인치 추가. 라이각을 업라이트 방향으로 보정</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>위 표는 출발점일 뿐입니다. 실제 길이는 셋업 상태에서 판단합니다. 두 가지 현장 체크가 있습니다. 첫째, 어드레스에서 골퍼의 눈이 공보다 몸 안쪽에 있으면 퍼터가 긴 것이고 공보다 바깥쪽에 있으면 짧은 것입니다. 둘째, 팔이 어깨에서 자연스럽게 내려와 겨드랑이에 가볍게 닿는 각도가 최적이며, 팔꿈치가 구부러지거나 어깨가 올라가면 부적절한 길이입니다. 길이를 고정한 뒤 라이각으로 미세 조정합니다.</p>
+        <h3 class="subhead">7-3절. 퍼터 그립 — 손목의 개입을 통제하는 장치</h3>
+        <p>퍼터 그립은 단순한 손잡이가 아닙니다. 퍼터 스트로크에서 손목이 얼마나 개입할 것인지를 결정하는 핵심 부품입니다. 최근 10년 사이 퍼터 그립은 두꺼워지는 추세입니다. 그립이 굵을수록 손가락 감각이 둔해지고 그만큼 손목의 미세한 개입이 줄어 스트로크 안정성이 높아지기 때문입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>그립 타입</th><th>대표 제품</th><th>적합 스트로크</th><th>특성</th></tr></thead>
+          <tbody><tr><td>피스톨 (Pistol)</td><td>Tour Wrap, Pistol</td><td>아크 스트로크</td><td>전통 형태. 상단이 두껍고 하단이 좁은 권총 손잡이 구조. 손바닥 압력이 상단에 집중되어 오픈-클로즈 동작 자연스러움</td></tr>
+<tr><td>표준 원형 (Standard)</td><td>Ping PP58, Super Stroke Traxion Tour</td><td>아크/스트레이트 모두</td><td>일정한 굵기의 원형 단면. 손목 개입을 일부 허용하면서도 일관성 유지. 가장 널리 쓰임</td></tr>
+<tr><td>굵은 원형 (Oversize)</td><td>Super Stroke Flatso, Mid-Slim, 2.0/3.0</td><td>스트레이트 스트로크</td><td>지름이 크고 단면이 평평한 상단(Flatso) 또는 두꺼운 원통. 손목 개입 최소화. 초경량 구조로 퍼터 SW에 영향 줄 수 있음</td></tr>
+<tr><td>점보 (Jumbo/Counterbalance)</td><td>Super Stroke XL, Fatso</td><td>아크가 매우 작은 스트로크</td><td>초대형 그립. 카운터밸런스 효과로 퍼터 헤드 움직임이 무거워짐. 입스(Yips) 있는 골퍼에게 권장</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>그립 선택의 핵심 원칙은 "현재 스트로크 유형"이 아니라 "만들고 싶은 스트로크 유형"입니다. 손목 개입을 줄이고 싶으면 굵은 그립으로, 감각을 살리고 싶으면 피스톨 형태로. 단 그립이 굵어지면 무게가 달라지고 SW가 최대 3~5포인트까지 변할 수 있으므로 그립 교체 시 퍼터 전체 균형을 재확인해야 합니다. 굵은 그립으로 바꾼 후 임팩트가 "가벼워진다"고 느끼는 것은 보통 SW가 낮아진 결과입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">핵심 — 그립·길이·헤드는 하나의 시스템입니다</p>
+        <p class="callout-foot" style="border:none;padding:0;">퍼터 피팅에서 가장 흔한 실수는 헤드만 골라 완성 퍼터를 구입하는 것입니다. 헤드 형태는 시각적 선호를 따라가기 쉽지만, 길이와 그립이 맞지 않으면 어떤 헤드도 제 기능을 하지 못합니다. "좋은 헤드"가 아니라 "내 스트로크와 길이·그립·헤드가 일치하는 조합"이 좋은 퍼터입니다.</p>
+      </aside>
+
+        <h3 class="subhead">7-4절. 최근 퍼터 그립 트렌드 — 페이스 스퀘어를 돕는 설계</h3>
+        <p>전통 피스톨 그립은 상단이 두껍고 하단이 가늘어지는 테이퍼 구조입니다. 이 구조는 양손 감각을 살리지만 하단 손(오른손)의 개입이 쉬워지는 단점이 있습니다. 2010년 Jim Furyk이 기존 그립을 거꾸로 달아 대회에서 우승하면서 "하단이 두꺼운 그립"의 효과가 업계에 주목받았고, 그 이후 10여 년 동안 대형 제조사들이 페이스 스퀘어 유지에 유리한 새로운 그립 형태를 차례로 내놓았습니다. 최근 현장에서 자주 만나는 네 가지 설계 방향을 정리합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>설계 방향</th><th>대표 제품</th><th>구조 특성</th><th>설계 목적과 효과</th></tr></thead>
+          <tbody><tr><td>리버스 테이퍼
+(Reverse Taper)</td><td>Golf Pride Reverse Taper
+(2026 신제품)</td><td>상단 얇음 · 하단 두꺼움</td><td>전통 피스톨과 반대 방향. 하단 손의 과도한 개입 억제. SAM Putt Lab 테스트에서 페이스 스퀘어 약 15% 개선 보고. Pistol·Round·Flat 3종 × S/M/L 사이즈</td></tr>
+<tr><td>평행/제로 테이퍼
+(Parallel / Zero Taper)</td><td>Golf Pride Zero Taper
+SuperStroke Zenergy·Traxion Flatso</td><td>상단부터 하단까지 일정한 굵기</td><td>양손에 같은 감각 제공. 테이퍼로 인한 손목 비틀림 요소 제거. SuperStroke가 오버사이즈 평행 그립으로 2010년대 시장을 선도했으며, 최근 Golf Pride도 Zero Taper 라인 출시</td></tr>
+<tr><td>기울어진 단면
+(Tilted / Asymmetric)</td><td>SuperStroke
+Zenergy TLT Pistol 2.0
+(56g, 1.32"W)</td><td>그립 단면이 한쪽으로 기울어진 비대칭</td><td>제로토크 퍼터와 짝을 이루는 전용 그립. 손목 각도를 자연스럽게 유지시켜 스트로크 중 페이스 회전 억제</td></tr>
+<tr><td>편심
+(Off-Axis)</td><td>Garsen G-Pro 등</td><td>그립의 기하 중심이 샤프트 축과 살짝 어긋남</td><td>자연스럽게 잡으면 손바닥 각도가 페이스 스퀘어에 맞춰지도록 유도. 셋업에서 정렬이 일관되지 않은 골퍼에게 유효</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">네 가지 설계의 공통 의도</h3>
+        <p>형태는 다르지만 네 가지 모두 공통된 설계 목적을 가집니다. 임팩트 순간 페이스를 스퀘어로 유지하기 어려운 근본 원인은 양손의 회전이 비대칭적으로 개입하는 것입니다. 전통 피스톨은 이 비대칭을 허용하는 구조이고, 리버스 테이퍼·평행·기울어진 단면·편심 그립은 각각 다른 방식으로 이 비대칭을 줄이려 합니다. 어느 방식이 절대적으로 우수하지는 않으며, 골퍼의 스트로크 유형과 과거 경험에 따라 맞는 것이 다릅니다.</p>
+        <p>선택 기준 — 골퍼의 문제 유형별 매칭</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>골퍼의 문제 유형</th><th>권장 설계 방향</th></tr></thead>
+          <tbody><tr><td>하단 손(오른손)의 개입으로 페이스가 클로즈되는 경우</td><td>리버스 테이퍼 — 하단 두께로 오른손 개입 억제. Golf Pride Reverse Taper Pistol 또는 Flat</td></tr>
+<tr><td>양손 감각 불일치로 스트로크가 불안정한 경우</td><td>평행 그립 — 상단·하단 같은 굵기로 양손 감각 통일. SuperStroke Zenergy 또는 Golf Pride Zero Taper</td></tr>
+<tr><td>스트로크 중 손목이 반복적으로 꺾이는 경우</td><td>기울어진 단면 — 손목 각도 고정. 특히 제로토크 퍼터와 짝으로 효과 큼</td></tr>
+<tr><td>셋업에서 페이스 정렬이 매번 다른 경우</td><td>편심 그립 — 잡는 각도로 자동 정렬 유도</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">그립 무게 — 실무 참고 수치</p>
+        <p class="callout-foot" style="border:none;padding:0;">현재 시장의 퍼터 그립 무게는 60~80g이 표준 구간입니다.
+
+● 전통 피스톨 그립: 46~55g (Golf Pride Tour Classic 등)
+● 리버스 테이퍼 (Golf Pride): 61~64g
+● 평행 그립 표준형 (SuperStroke Zenergy Tour, Traxion Pistol GT): 60~75g
+● 평행 그립 대형 (SuperStroke 2.0): 약 95g
+● 평행 그립 초대형 (SuperStroke Flatso, Fatso): 100~130g
+● 카운터밸런스형 (SuperStroke +Plus + CounterCore 50g): 약 130~150g
+
+대부분의 최근 트렌드 그립은 60~80g에 머물도록 설계됩니다. 기존 피스톨(50g)에서 표준형(70g)으로 교체 시 SW가 약 2~3포인트 감소합니다. 이 정도 변화는 피터가 현장에서 타감으로 분별할 수 있으며, 필요 시 헤드에 납테이프 3~5g 추가로 간단히 보정합니다. 반면 초대형 그립이나 카운터밸런스형으로 전환하는 경우는 SW 5~8포인트 감소 + 총무게 증가가 복합적으로 작용하므로 세트 전체의 리듬 재점검이 필요합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 8 ==================== -->
+  <section id="sec-8" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 08 · 8절</p>
+      <h2 class="section-title">퍼터 피팅 순서</h2>
+
+      <div class="prose">
+        <p>퍼터 피팅은 다른 클럽과 달리 탄도나 스핀 데이터 없이 진행되는 경우가 많습니다. 아래 순서로 접근하면 핵심을 놓치지 않습니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">퍼터 피팅 순서</p>
+        <ul class="callout-bullets">
+          <li>STEP 1: 스트로크 타입 확인 — 아크 스트로크인지 직선 스트로크인지 먼저 판단. 밸런스 테스트와 스트로크 관찰로 확인</li>
+          <li>STEP 2: 헤드 형태 × 넥 구조 결정 — 스트로크 타입에 맞는 토 행 특성과 오프셋 조합 결정</li>
+          <li>STEP 3: 길이 확인 — 어드레스 시 자연스럽게 눈 바로 아래 또는 타겟 라인 위에 눈이 오는지 확인. 표준 33~35인치</li>
+          <li>STEP 4: 라이각 확인 — 솔 스퀘어 테스트. 힐 또는 토 쪽이 뜨면 라이각 조정</li>
+          <li>STEP 5: 로프트 확인 — 핸드 포워드/핸즈 백 어드레스 습관 확인 후 Dynamic Loft 기준으로 Static Loft 결정</li>
+          <li>STEP 6: 페이스 소재와 타구감 검증 — 그린 속도와 골퍼 선호 반영</li>
+        </ul>
+        <p class="callout-foot">STEP 7: 종합 확인 — 10~15퍼트 반복 후 방향 편차 패턴과 거리 산포를 확인. 단일 샷이 아닌 패턴으로 판단</p>
+      </aside>
+
+        <h3 class="subhead">현장 오판 케이스</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>케이스</th><th>증상</th><th>잘못된 접근</th><th>올바른 접근</th></tr></thead>
+          <tbody><tr><td>CASE 1</td><td>아크 스트로크 골퍼에게 페이스 밸런스 말렛 추천</td><td>최신 고MOI 말렛이 좋다는 이유</td><td>스트로크 타입 먼저 확인. 아크 골퍼에게는 토 행 퍼터</td></tr>
+<tr><td>CASE 2</td><td>방향이 흔들리는데 더 부드러운 인서트로 교체</td><td>타구감 문제로 판단</td><td>라이각과 스트로크 타입 매칭 먼저 점검</td></tr>
+<tr><td>CASE 3</td><td>핸드 포워드 어드레스 골퍼가 로프트 3° 퍼터 사용</td><td>표준 로프트니 문제없다 판단</td><td>Dynamic Loft 추정 후 Static Loft 4~5° 검토</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 12-2부 퍼터</p>
+        <ol class="check-list">
+          <li>아크 스트로크 골퍼에게 페이스 밸런스 퍼터가 부적합한 이유는 무엇입니까?
+문제 2. 제로토크 퍼터의 설계 원리(Lie Angle Balance)를 간단히 설명하십시오.
+문제 3. SuperStroke Zenergy TLT Pistol 2.0 그립의 설계 의도와 어떤 골퍼에게 적합한지 설명하십시오.
+※ 해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</li>
+        </ol>
+        
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2부</p>
+      <h2 class="section-title">퍼터 마무리</h2>
+
+      <div class="prose">
+        <p>퍼터는 스트로크 타입 × 헤드 구조 매칭이 피팅의 출발점입니다. 로프트는 True Roll을 위해 존재하고, 라이각은 페이스 앵글을 결정하며, 넥 구조는 오프셋과 토 행을 함께 결정합니다. MOI는 타점 분산에 대한 관용성이지만, 스트로크 타입 매칭 없이는 효과가 없습니다.</p>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book/part-11" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">PART 11 · 통합 결정과 문제 해결 시스템</span>
+      </a>
+      <a href="/book/part-13" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 13 · 통합 케이스 스터디</span>
+        <span class="pg-sub">실전 피팅 사례</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</BaseLayout>
+
+
+<!-- PART 1, 2와 동일한 디자인 시스템 -->
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+  .subhead { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 2em 0 .8em; padding-top: 1em; border-top: 1px dashed var(--rule); }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  .part-hero { background: var(--bg); padding: 72px 0 64px; border-bottom: 1px solid var(--rule); }
+  .part-title { font-family: var(--serif); margin: 0 0 1rem; line-height: 1.1; color: var(--text); font-weight: 500; }
+  .part-num { display: block; font-family: var(--sans); font-size: .875rem; font-weight: 600; letter-spacing: .2em; color: var(--muted); margin-bottom: .75rem; }
+  .part-name { display: block; font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 600; letter-spacing: -.02em; }
+  .part-sub { display: block; font-size: clamp(1.1875rem, 3vw, 1.625rem); font-weight: 300; color: var(--text-2); margin-top: .25em; }
+  .part-en { font-family: var(--sans); font-size: .9375rem; color: var(--muted); letter-spacing: .02em; margin: 1.5rem 0 2rem; font-style: italic; }
+  .part-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 640px; margin: 0; }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 28px 32px; border-radius: 2px; margin: 2rem 0; }
+  .callout-label { font-family: var(--sans); font-size: .875rem; font-weight: 700; color: var(--accent); margin: 0 0 .75rem; letter-spacing: .04em; }
+  .callout-list { margin: 0; padding-left: 1.4em; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets { list-style: none; padding: 0; margin: 0 0 1rem; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-bullets li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+  .callout-bullets li:before { content: "·"; position: absolute; left: .25rem; top: 0; color: var(--accent); font-weight: 700; }
+  .callout-foot { font-family: var(--sans); font-size: 1rem; color: var(--text-2); margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); line-height: 1.7; }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+
+  .part-toc { background: var(--bg); padding: 16px 0 64px; }
+  .toc-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; color: var(--text); font-family: var(--sans); transition: color .2s, padding .2s; }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--accent); min-width: 2.5rem; }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  .intro { padding: 56px 0; }
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4vw, 2.625rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .principle-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 32px; margin: 2.5rem 0; text-align: center; border-radius: 2px; }
+  .principle-label { font-family: var(--sans); font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .principle-flow { font-family: var(--serif); font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 500; color: var(--text); margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.25rem; }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-foot { font-family: var(--sans); font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); max-width: 520px; margin-inline: auto; }
+
+  /* Data table */
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 520px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+  .data-table tbody tr:hover td { background: var(--bg-soft); }
+  .data-table tbody tr.group-row td { background: var(--accent-soft); color: var(--accent); font-weight: 700; padding: 10px 14px; font-size: .8125rem; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* Closing */
+  .closing { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+  .closing-prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-prose p strong { color: white; font-weight: 600; }
+  .closing-prose p em { font-style: normal; color: var(--accent-2); font-weight: 600; background: none; padding: 0; }
+  .closing-paragraph { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-paragraph strong { color: white; }
+
+  .check-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); padding: 28px 32px; border-radius: 2px; margin-top: 2.5rem; }
+  .check-label { font-family: var(--sans); font-size: .8125rem; color: var(--accent-2); font-weight: 700; letter-spacing: .1em; margin: 0 0 1rem; }
+  .check-list { margin: 0 0 1rem; padding-left: 1.25em; font-family: var(--sans); font-size: .9375rem; line-height: 1.85; color: rgba(255,255,255,.85); }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot { font-family: var(--sans); font-size: .8125rem; color: rgba(255,255,255,.5); margin: 0; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.08); }
+
+  /* Pagination */
+  .part-pagination { background: var(--bg); padding: 56px 0 80px; border-top: 1px solid var(--rule); }
+  .part-pagination .container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 760px) { .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; } }
+  .pg-back, .pg-next { display: flex; align-items: center; text-decoration: none; font-family: var(--sans); transition: transform .25s, background .25s; border: 1px solid var(--rule); padding: 20px 24px; background: var(--bg-elev); border-radius: 2px; color: var(--text); }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+  .pg-next { flex-direction: column; align-items: flex-end; text-align: right; gap: .15rem; background: var(--text); color: var(--bg); border-color: var(--text); position: relative; padding-right: 60px; }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta { font-size: .75rem; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; font-weight: 600; }
+  .pg-next .pg-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-top: .15rem; }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .principle-card { padding: 24px 20px; }
+    .callout { padding: 22px 20px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 12px; font-size: .875rem; }
+  }
+</style>

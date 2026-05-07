@@ -1,0 +1,781 @@
+---
+// /src/pages/book/part-8.astro
+// 『실제적인 클럽피팅』 PART 8 — 무게 / 총무게 / 스윙웨이트
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pageTitle = "PART 8. 무게 / 총무게 / 스윙웨이트 | 『실제적인 클럽피팅』";
+const pageDescription = "채기웅 저 『실제적인 클럽피팅』 PART 8. 무게 / 총무게 / 스윙웨이트 — 무게를 시간 구조로 이해하는 방법. PART 8은 총무게 → MOI → SW로 이어지는 결정 순서를 실제 장비 구성으로 전환하는 단계입니다. 무게 피팅의 핵심은 '몇 그램으로 할 것인가'라는 단일 ";
+const pageKeywords = "클럽피팅, 무게 / 총무게 / 스윙웨이트, 채기웅, 실제적인 클럽피팅";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="part-hero">
+    <div class="container narrow">
+      <div class="crumb">
+        <a href="/book">『실제적인 클럽피팅』</a>
+        <span>·</span>
+        <span class="crumb-current">PART 8</span>
+      </div>
+
+      <p class="eyebrow">PART 08 · 본문 14 PART 중 8번째</p>
+
+      <h1 class="part-title">
+        <span class="part-num">PART 8</span>
+        <span class="part-name">무게 / 총무게 / 스윙웨이트</span>
+        <span class="part-sub">무게를 시간 구조로 이해하는 방법</span>
+      </h1>
+
+      <p class="part-en">Weight, Total Weight &amp; Swing Weight</p>
+
+      <p class="part-lead">PART 8은 총무게 → MOI → SW로 이어지는 결정 순서를 실제 장비 구성으로 전환하는 단계입니다. 무게 피팅의 핵심은 '몇 그램으로 할 것인가'라는 단일 질문에 있지 않습니다. 같은 무게라도 어디에 배분하느냐, 어떤 기준으로 보정하느냐에 따라 골퍼의 체감이 달라지기 때문입니다.</p>
+    </div>
+  </section>
+  <section class='objectives'><div class='container narrow'>
+      <div class="callout callout-objectives">
+        <p class="callout-label">📘 학습 목표 — PART 8 무게·SW를 마치면</p>
+        <ol class="callout-list">
+          <li>총무게 → MOI → SW의 결정 순서를 실제 장비 구성에 적용할 수 있다.</li>
+          <li>무게 등급 7단계 체계로 골퍼를 분류할 수 있다.</li>
+          <li>헤드·샤프트·그립 무게 변화가 SW에 미치는 영향을 계산할 수 있다.</li>
+        </ol>
+      </div>
+</div></section>
+
+  <!-- ==================== TOC ==================== -->
+  <nav class="part-toc" aria-label="이 PART의 목차">
+    <div class="container narrow">
+      <p class="toc-label">CONTENTS · 이 PART 안에서</p>
+      <ol class="toc-list">
+        <li><a href="#sec-1"><span class="toc-num">01</span><span class="toc-text">가벼운 클럽이 더 어려운 이유</span></a></li>
+        <li><a href="#sec-2"><span class="toc-num">02</span><span class="toc-text">클럽별 헤드 무게 — 설계 기준과 범위</span></a></li>
+        <li><a href="#sec-3"><span class="toc-num">03</span><span class="toc-text">샤프트 무게 — 총무게의 핵심 조절 변수</span></a></li>
+        <li><a href="#sec-4"><span class="toc-num">04</span><span class="toc-text">총무게 (Total Weight) — 리듬과 지구력의 기반</span></a></li>
+        <li><a href="#sec-5"><span class="toc-num">05</span><span class="toc-text">무게 등급 체계 — 7단계 기준</span></a></li>
+        <li><a href="#sec-6"><span class="toc-num">06</span><span class="toc-text">스윙웨이트 (SW) — 헤드 감각의 지표</span></a></li>
+        <li><a href="#sec-7"><span class="toc-num">07</span><span class="toc-text">클럽별 무게 설계 철학</span></a></li>
+        <li><a href="#sec-8"><span class="toc-num">08</span><span class="toc-text">카운터밸런싱 — 총무게는 올리고 SW는 낮추는 방법</span></a></li>
+        <li><a href="#sec-9"><span class="toc-num">09</span><span class="toc-text">현장 오판 케이스</span></a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro">
+    <div class="container narrow prose">
+      <p>클럽의 무게는 세 가지 다른 개념을 동시에 가리킵니다. 총무게(Total Weight), 스윙웨이트(Swing Weight), 그리고 PART 7에서 정리한 관성모멘트(MOI)입니다. 세 개념은 서로 연결되어 있지만 측정 대상도, 골퍼에게 미치는 영향도 다르므로, 각각의 의미와 우선순위를 구분하는 것이 무게 피팅의 출발점이 됩니다.</p>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 1 ==================== -->
+  <section id="sec-1" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 01 · 1절</p>
+      <h2 class="section-title">가벼운 클럽이 더 어려운 이유</h2>
+
+      <div class="prose">
+        <p>많은 골퍼들이 가벼운 클럽일수록 스윙하기 쉽다고 생각합니다. 현장에서 클럽을 가볍게 바꾼 후 오히려 타이밍이 무너지고 방향 편차가 커지는 경우를 자주 봅니다.</p>
+        <p>볼링을 예로 들겠습니다. 볼링공 선택의 원칙은 편하게 속도를 유지하면서 던질 수 있는 가장 무거운 공을 고르는 것입니다. 너무 가벼운 공은 오히려 컨트롤하기 어렵습니다. 골프도 마찬가지입니다. 적정 무게는 스윙 내내 일정한 저항을 만들어 골퍼가 리듬을 유지할 수 있게 합니다. 그러나 골프에서 우리는 가장 무거운 클럽이 아니라 '내가 일관되게 컨트롤할 수 있는 가장 적합한 무게'를 찾는 것이 목표입니다.</p>
+        <p>특히 피로가 누적되는 라운드 후반이나 긴장된 상황에서 이 문제가 두드러집니다. 연습장에서는 잘 맞던 클럽이 라운드 후반에 흔들릴 때, 많은 피터들이 스윙 탓을 먼저 합니다. 그러나 원인이 클럽 무게일 가능성이 상당합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">무게 결정의 세 가지 기준</p>
+        <ul class="callout-bullets">
+          <li>① 지속 가능성 기준: 이 무게로 18홀을 치고 나서도 스윙 타이밍이 흔들리지 않는가 — 총무게가 결정합니다.</li>
+          <li>② 타이밍 기준: 다운스윙 전환 구간에서 클럽이 내 리듬에 맞게 반응하는가 — Total Club MOI가 결정합니다.</li>
+          <li>③ 감각 기준: 헤드가 어디 있는지 손으로 느낄 수 있는가 — 스윙웨이트(SW)가 결정합니다.</li>
+        </ul>
+        <p class="callout-foot">세 기준은 순서가 있습니다. 총무게 → MOI → SW 순으로 결정합니다.</p>
+      </aside>
+
+        <h3 class="subhead">1-2절. F=ma — 무게 피팅을 관통하는 근본 원리</h3>
+        <p>무게를 다루는 모든 피팅 판단의 바닥에는 뉴턴의 제2법칙, F=ma가 있습니다. 힘은 질량과 가속도의 곱입니다. 이 단순한 공식이 클럽 피팅에서 가장 자주 간과되지만, 실제로는 모든 결정의 출발점입니다.</p>
+        <p>공식을 골프 스윙에 대입하면 이렇게 됩니다.</p>
+        <p>임팩트에서 볼에 전달되는 힘 = 클럽 헤드의 질량 × 클럽 헤드의 가속도</p>
+        <p>이 관계식에서 두 가지 사실이 바로 드러납니다.</p>
+        <p>첫째, 헤드가 무거워지면 같은 가속도에서 더 큰 힘을 만듭니다. 거리는 이 힘에서 나옵니다.</p>
+        <p>둘째, 반대로 가속도가 커지면 같은 헤드 무게에서 더 큰 힘이 만들어집니다. 헤드스피드가 거리로 연결되는 이유입니다.</p>
+        <p>무게 피팅의 실제 관건 — m과 a의 균형점 찾기</p>
+        <p>F=ma 공식을 처음 보면 단순한 결론에 빠지기 쉽습니다. '클럽을 가볍게 만들면 가속도(a)가 올라가니까 힘(F)이 커지겠네'라는 생각입니다. 이것이 많은 피팅 오판의 출발점입니다.</p>
+        <p>실제로는 그렇게 단순하지 않습니다. 가벼운 클럽이 a를 증가시킬 수는 있습니다. 그러나 현장에서 일어나는 일은 이렇습니다.</p>
+        <p>가벼운 클럽을 쥐어주면 골퍼는 처음 몇 샷에서 '빨리 휘둘러진다'는 느낌을 받습니다. 그러나 시간이 지나면서 세 가지 문제가 순차적으로 나타납니다.</p>
+        <p>첫째, 클럽이 너무 가벼우면 m이 작아져 F=ma에서의 힘 자체가 확보되지 않습니다. 볼에 실리는 힘이 줄어들고 거리가 떨어집니다.</p>
+        <p>둘째, 헤드 무게감이 없어서 스윙 중 클럽의 위치를 감지하기 어려워집니다. 골퍼는 무의식적으로 a를 더 높이려 가속을 과도하게 쓰기 시작합니다.</p>
+        <p>셋째, 과도한 가속도는 반드시 자세 무너짐을 동반합니다. 백스윙이 짧아지거나 전환이 급해지거나 임팩트 자세가 허물어집니다. 이 시점부터 a는 오히려 떨어지고, 구질도 흔들립니다.</p>
+        <p>결국 무게 피팅의 실제 관건은 '얼마나 가볍게 만드는가'가 아닙니다. '얼마나 적절한 m을 유지하면서도 골퍼가 a와 자세를 끝까지 유지할 수 있는 균형점을 찾는가'입니다.</p>
+        <h3 class="subhead">균형점을 찾는 현장 원칙</h3>
+        <p>이 균형점은 골퍼마다 다릅니다. 다만 현장에서 통용되는 판단 원칙이 있습니다.</p>
+        <p>① 후반까지 자세가 흔들리지 않는 가장 무거운 무게가 그 골퍼의 상한입니다. 연습장 10분이 아니라 18홀 후반까지 버틸 수 있는 무게가 진짜 상한선입니다.</p>
+        <p>② 헤드의 위치감이 명확히 느껴지는 가장 가벼운 무게가 그 골퍼의 하한입니다. 이 하한선 아래로 내려가면 자세와 타이밍이 무너지기 시작합니다.</p>
+        <p>③ 이 상한과 하한 사이의 구간이 그 골퍼에게 허용되는 무게 대역입니다. 이 대역 안에서 골퍼의 선호도·세트 흐름·예산에 맞춰 최종값을 고릅니다.</p>
+        <p>피터의 역할은 '가장 가벼운 클럽을 찾는 것'도 아니고 '가장 무거운 클럽을 찾는 것'도 아닙니다. 이 골퍼에게 맞는 균형점을 찾는 것입니다. 그래서 무게 피팅은 F=ma라는 하나의 공식을 골퍼마다 다른 해로 푸는 일과 같습니다.</p>
+        <p>이 장에서 다루는 모든 무게 판단은 F=ma의 구체적 적용입니다. 헤드 무게, 샤프트 무게, 총무게, 스윙웨이트, 관성모멘트 — 다섯 가지 모두 이 공식의 서로 다른 얼굴입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2 ==================== -->
+  <section id="sec-2" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 02 · 2절</p>
+      <h2 class="section-title">클럽별 헤드 무게 — 설계 기준과 범위</h2>
+
+      <div class="prose">
+        <p>헤드 무게는 총무게에서 가장 큰 비중을 차지하며, 스윙웨이트를 직접적으로 결정합니다. 클럽마다 길이가 다르기 때문에 헤드 무게도 다르게 설계됩니다. 클럽이 길수록 헤드가 가벼워지고, 짧아질수록 무거워집니다. 같은 스윙웨이트를 유지하기 위해서입니다.</p>
+        <h3 class="subhead">2-1. 드라이버 헤드 무게</h3>
+        <p>드라이버 헤드의 표준 무게는 200g입니다. 제조사에 따라 190g(경량형)부터 210g(중량형 또는 Thriver)까지 범위가 있습니다. 헤드 무게가 10g 변할 때 동일 헤드스피드에서 볼스피드 차이는 약 1.5~1.6mph 수준으로, 이론 비거리로는 약 3야드 차이입니다. 헤드 무게 자체의 비거리 영향은 예상보다 작습니다. 그보다 타점 일관성과 스매시 팩터가 비거리에 훨씬 더 크게 영향을 줍니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>드라이버 헤드 유형</th><th>헤드 무게</th><th>권장 길이 (남성 그라파이트)</th><th>특성</th></tr></thead>
+          <tbody><tr><td>경량형 (Ultra-light)</td><td>190g</td><td>46인치</td><td>헤드스피드 극대화용. SW 확보에 긴 길이 필요</td></tr>
+<tr><td>표준형 (Standard)</td><td>200g</td><td>45인치</td><td>가장 일반적. 대부분의 완성 클럽</td></tr>
+<tr><td>중량형 (Thriver)</td><td>210g</td><td>44인치</td><td>컨트롤 우선. 짧게 세팅해도 SW 확보 가능</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">2-2. 페어웨이 우드 헤드 무게</h3>
+        <p>페어웨이 우드는 번호가 높아질수록 헤드가 무거워지고 길이는 짧아집니다. 3번 우드가 210~215g, 5번 우드가 220~225g, 7번 우드가 225~230g 수준입니다. 페어웨이 우드는 지면에서 치는 경우가 많아 드라이버보다 약간 무거운 헤드와 짧은 길이로 안정성을 확보합니다.</p>
+        <h3 class="subhead">2-3. 하이브리드(유틸리티) 헤드 무게</h3>
+        <p>하이브리드는 클럽마다 무게 편차가 큽니다. 대략 216~230g 범위이며, 동일 번호의 아이언 헤드보다 7~14g 가벼운 경우가 많습니다. 이 무게 차이 때문에 하이브리드는 같은 번호의 아이언보다 약 0.5~1인치 길게 조립합니다. 따라서 하이브리드 세팅 시 헤드 무게를 반드시 확인하고 길이를 결정해야 합니다.</p>
+        <h3 class="subhead">2-4. 아이언 헤드 무게 — 번호별 기준</h3>
+        <p>아이언은 번호가 하나 높아질 때마다(길이가 약 0.5인치 짧아질 때마다) 헤드가 약 7g씩 무거워집니다. 이것이 클럽이 짧아져도 스윙웨이트를 비슷하게 유지하는 설계 원리입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>클럽</th><th>표준 헤드 무게</th><th>남성 스틸 기준 길이</th><th>남성 그라파이트 기준 길이</th></tr></thead>
+          <tbody><tr><td>3번 아이언</td><td>243g</td><td>39.0인치</td><td>39.5인치</td></tr>
+<tr><td>4번 아이언</td><td>250g</td><td>38.5인치</td><td>39.0인치</td></tr>
+<tr><td>5번 아이언</td><td>257g</td><td>38.0인치</td><td>38.5인치</td></tr>
+<tr><td>6번 아이언</td><td>264g</td><td>37.5인치</td><td>38.0인치</td></tr>
+<tr><td>7번 아이언</td><td>271g</td><td>37.0인치</td><td>37.5인치</td></tr>
+<tr><td>8번 아이언</td><td>278g</td><td>36.5인치</td><td>37.0인치</td></tr>
+<tr><td>9번 아이언</td><td>285g</td><td>36.0인치</td><td>36.5인치</td></tr>
+<tr><td>PW / GW</td><td>291~295g</td><td>35.5인치</td><td>36.0인치</td></tr>
+<tr><td>SW / LW</td><td>296g 이상</td><td>35.25인치</td><td>35.75인치</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">헤드 무게와 길이의 연동 원리</p>
+        <ul class="callout-bullets">
+          <li>0.5인치 길이가 변할 때 SW는 약 3.5포인트 변합니다. 헤드가 2g 변하면 SW는 약 1포인트 변합니다.</li>
+          <li>예: 7번 아이언(271g, 37인치)에서 길이를 0.5인치 줄이면 SW가 약 3.5포인트 감소합니다. 이를 복원하려면 헤드 무게를 약 7g 올려야 합니다.</li>
+        </ul>
+        <p class="callout-foot">이것이 번호마다 헤드 무게가 7g씩 증가하는 이유입니다. 0.5인치 짧아지는 만큼 헤드를 무겁게 해 SW를 일정하게 유지하는 설계입니다.</p>
+      </aside>
+
+        <h3 class="subhead">2-5. 웨지 헤드 무게</h3>
+        <p>웨지 헤드는 일반적으로 296g 이상입니다. 풀스윙보다 하프스윙, 칩샷, 벙커샷 등 다양한 거리의 컨트롤 샷이 많기 때문에 무거운 헤드가 타점 안정성에 유리합니다. 웨지의 SW가 아이언보다 높게 설정되는 경우(D3~D5)가 많은 것도 이 때문입니다.</p>
+        <h3 class="subhead">2-6. 퍼터 헤드 무게</h3>
+        <p>퍼터 헤드 무게는 다른 클럽과 전혀 다른 범주에 있습니다. 일반 완성 클럽의 표준 퍼터 헤드 무게는 330~350g 수준입니다. 퍼터 길이는 33~35인치가 표준입니다.</p>
+        <p>최근에는 카운터밸런싱 개념을 퍼터에 적극적으로 적용하는 설계가 늘었습니다. 헤드를 약간 무겁게 하고 그립 쪽에 대형 퍼터 그립(80~150g)이나 카운터웨이트를 추가해 총무게를 높이면서 헤드 체감은 줄이는 방식입니다. 이렇게 하면 퍼팅 스트로크에서 손이 아닌 큰 근육(어깨, 몸통)을 사용하는 경향이 강해집니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>퍼터 유형</th><th>헤드 무게</th><th>총무게 수준</th><th>특성</th></tr></thead>
+          <tbody><tr><td>표준 퍼터</td><td>330~350g</td><td>약 490~530g</td><td>일반 완성 클럽 기준</td></tr>
+<tr><td>중량 퍼터</td><td>360~380g</td><td>약 530~560g</td><td>헤드 감각 강화. 거리 컨트롤 용이</td></tr>
+<tr><td>카운터밸런스 퍼터</td><td>350g 내외 + 대형 그립</td><td>약 570~650g+</td><td>총무게 높음. 큰 근육 스트로크 유도</td></tr>
+<tr><td>레이크 / 장척 퍼터 (규정 변경 전)</td><td>330~400g</td><td>600g 이상</td><td>현재 앵커링 금지로 사용 제한</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3 ==================== -->
+  <section id="sec-3" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 03 · 3절</p>
+      <h2 class="section-title">샤프트 무게 — 총무게의 핵심 조절 변수</h2>
+
+      <div class="prose">
+        <p>두 클럽의 헤드가 같아도 샤프트가 다르면 총무게가 전혀 달라집니다. 실제로 동일 번호의 클럽을 손에 들었을 때 가장 크게 느껴지는 무게 차이는 대부분 샤프트에서 옵니다. 제조사별로 헤드 무게는 비슷한 수준으로 설계되는 반면, 샤프트 무게는 40g에서 130g 이상까지 크게 다르기 때문입니다.</p>
+        <h3 class="subhead">3-1. 샤프트 무게 분류 체계</h3>
+        <p>샤프트 무게는 소재(스틸/그라파이트)와 무게 구간으로 분류됩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>분류</th><th>스틸 샤프트 무게</th><th>그라파이트 샤프트 무게</th><th>특징</th></tr></thead>
+          <tbody><tr><td>표준중량 (Standard)</td><td>124g 이상</td><td>90g 이상</td><td>전통적 무게. 투어 선수급 또는 고체력</td></tr>
+<tr><td>경량 (Lightweight)</td><td>110~123g</td><td>70~89g</td><td>일반 남성 아마추어 주력 구간</td></tr>
+<tr><td>초경량 (Ultra-light)</td><td>90~109g</td><td>51~69g</td><td>시니어, 여성, 헤드스피드 낮은 골퍼</td></tr>
+<tr><td>극경량 (Sub-ultra)</td><td>89g 미만</td><td>50g 미만</td><td>매우 낮은 스윙스피드 전용</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">3-2. 스틸 아이언 샤프트 대표 모델</h3>
+        <p>스틸 아이언 샤프트는 그라파이트보다 비틀림이 적고 타점 피드백이 선명합니다. 아이언 피팅에서 가장 많이 사용되는 스틸 샤프트 모델과 무게를 정리합니다. 아래 무게는 7번 아이언 기준 절단 후 완성 무게이며, 제조사 및 플렉스에 따라 ±2~3g 차이가 있을 수 있습니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>모델명</th><th>7번 무게 (g)</th><th>플렉스 범위</th><th>특성 및 피팅 포인트</th></tr></thead>
+          <tbody><tr><td>True Temper Dynamic Gold</td><td>125~132g</td><td>S200/S300/X100</td><td>가장 오래된 투어 표준. X100이 약 132g. 단단하고 직접적인 피드백</td></tr>
+<tr><td>True Temper Dynamic Gold 105</td><td>105~108g</td><td>R300/S300</td><td>DG보다 약 20g 가벼움. DG 특성 유지하며 총무게 감소</td></tr>
+<tr><td>True Temper Elevate</td><td>105~110g</td><td>R/S</td><td>입문~중급 남성 대상. DG보다 부드러운 느낌</td></tr>
+<tr><td>KBS Tour</td><td>118~122g</td><td>R/S/X</td><td>부드러운 중간 킥. 투어~상급 아마추어</td></tr>
+<tr><td>KBS Tour 90</td><td>90~93g</td><td>R/S</td><td>90g대 스틸. 가벼운 느낌 원하는 아마추어</td></tr>
+<tr><td>KBS C-Taper</td><td>108~115g</td><td>R/S/X</td><td>버트 강성 높고 팁 유연. 릴리즈 제어에 유리</td></tr>
+<tr><td>Project X</td><td>120~125g</td><td>5.0/5.5/6.0</td><td>강한 버트, 부드러운 팁. 정확성 중심</td></tr>
+<tr><td>Project X LZ</td><td>105~110g</td><td>5.0/5.5/6.0</td><td>Low Trajectory. 낮은 탄도 원하는 강한 골퍼</td></tr>
+<tr><td>Nippon NS Pro 950GH</td><td>95~98g</td><td>R/S</td><td>한국·일본 시장 인기. 가벼우면서 탄도 확보</td></tr>
+<tr><td>Nippon Modus³ 105</td><td>105~108g</td><td>R/S/X</td><td>NS950보다 무거운 Modus 시리즈 기준</td></tr>
+<tr><td>Nippon Modus³ 120</td><td>120~123g</td><td>S/X</td><td>투어~고급 아마추어. 버트 강하고 정확성 높음</td></tr>
+<tr><td>Nippon Modus³ 130</td><td>128~132g</td><td>S/X/Tour X</td><td>가장 무거운 Modus. 투어 선수 전용에 가까움</td></tr>
+<tr><td>Nippon NS Pro Zelos 8</td><td>약 82g</td><td>R/S</td><td>스틸 최경량 구간. 그라파이트 대체 스틸. 총무게 대폭 절감</td></tr>
+<tr><td>Nippon NS Pro Zelos 7</td><td>약 70g</td><td>A/R</td><td>초경량 스틸. 70g대로 일부 그라파이트보다 가벼운 수준</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">스틸 아이언 샤프트 선택 원칙</p>
+        <ul class="callout-bullets">
+          <li>Dynamic Gold 계열: 가장 선명한 피드백, 강한 타구감. 타점이 안정된 중~고급 골퍼에 적합. X100(132g)은 투어 선수 이상 수준의 체력 요구.</li>
+          <li>KBS 계열: DG보다 부드러운 중간 느낌. KBS Tour는 DG 대체로 많이 사용. KBS C-Taper는 릴리즈 빠른 골퍼에 좋음.</li>
+          <li>Modus³ 계열: 한국·일본 피팅 현장에서 점유율 높음. NS Pro 950은 90g대로 총무게 낮춤. Modus 105는 가장 범용성 높은 선택.</li>
+        </ul>
+        <p class="callout-foot">선택 기준: 무게 등급 결정 후 해당 무게 구간 안에서 EI 특성(버트/팁 강성 배분)을 고려합니다. 무게 숫자만 보지 않습니다.</p>
+      </aside>
+
+        <h3 class="subhead">3-3. 그라파이트 아이언 샤프트</h3>
+        <p>그라파이트 아이언 샤프트는 스틸에 비해 진동 흡수가 좋고 총무게를 낮출 수 있습니다. 시니어, 여성, 부상 이력이 있는 골퍼에게 적합합니다. 70~90g대 제품이 주력이며, 일부 투어 설계 제품은 95~105g까지 올라갑니다. 스틸 대비 토크(비틀림)가 약간 높아 타점 피드백이 다소 부드럽습니다.</p>
+        <h3 class="subhead">3-4. 그립 무게 — 초경량 추세와 SW 영향</h3>
+        <p>수십 년간 남성 표준 그립의 무게는 50~52g으로 거의 고정되어 있었습니다. 그러나 최근 소재 기술의 발전으로 저밀도 소재를 사용한 초경량 그립이 보편화되면서 그립 무게가 피팅의 새로운 변수로 떠오르고 있습니다. 샤프트 경량화는 이미 물리적 한계에 가까워졌고, 그립이 총무게를 추가로 줄일 수 있는 현실적인 수단이 된 것입니다.</p>
+        <p>그립 5g의 무게 변화는 SW 약 1포인트에 영향을 줍니다. 즉 50g 표준 그립에서 25g 초경량 그립으로 교체하면 SW가 약 5포인트 감소합니다. 이것을 보정하려면 헤드에 납테이프 약 10g을 추가해야 합니다. 그립 무게 변화는 생각보다 SW에 큰 영향을 미칩니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>그립 무게 구간</th><th>대표 무게</th><th>특성</th><th>SW 영향 (표준 50g 대비)</th></tr></thead>
+          <tbody><tr><td>초경량 그립</td><td>20~35g</td><td>저밀도 소재. 일부 모델은 25g 이하. 최근 인기 증가</td><td>약 -3~5포인트 감소</td></tr>
+<tr><td>경량 그립</td><td>36~45g</td><td>표준보다 가볍지만 감각 차이 크지 않음</td><td>약 -1~3포인트 감소</td></tr>
+<tr><td>표준 그립</td><td>50~52g</td><td>Golf Pride Tour Velvet, Lamkin Crossline 등 전통 기준</td><td>기준</td></tr>
+<tr><td>중량 그립(카운터밸런스)</td><td>60~80g</td><td>버트 쪽 질량 증가로 SW 낮추기 목적</td><td>약 -2~6포인트 감소</td></tr>
+<tr><td>초중량 그립 (퍼터용)</td><td>80~130g</td><td>SuperStroke 등 대형 퍼터 그립</td><td>SW 대폭 감소, 총무게 증가</td></tr>
+<tr><td>초중량 퍼터 그립</td><td>130g 이상</td><td>카운터밸런스 퍼팅 전용</td><td>퍼터에서만 적용</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">초경량 그립 추세와 피팅 적용 원칙</p>
+        <ul class="callout-bullets">
+          <li>초경량 그립(25~35g)은 총무게를 15~25g 줄이면서 SW도 함께 감소시킵니다. 총무게를 낮추면서도 헤드 감각을 유지하고 싶다면 그립 경량화 + 헤드 소폭 무게 추가 조합을 검토합니다.</li>
+          <li>Nippon Zelos 7/8 같은 초경량 스틸 샤프트와 초경량 그립을 조합하면 스틸 아이언이면서도 총무게를 그라파이트 수준으로 낮출 수 있습니다. 스틸의 피드백은 유지하면서 지구력 부담을 줄이는 방향입니다.</li>
+        </ul>
+        <p class="callout-foot">주의: 그립이 가벼워지면 SW가 함께 낮아져 헤드 감각이 줄어들 수 있습니다. 그립 무게를 바꿀 때는 반드시 SW를 재측정하고 헤드 무게로 보정 여부를 확인합니다.</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4 ==================== -->
+  <section id="sec-4" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 04 · 4절</p>
+      <h2 class="section-title">총무게 (Total Weight) — 리듬과 지구력의 기반</h2>
+
+      <div class="prose">
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">※ PART 7에서 정의한 내용: 총무게 → MOI → SW 결정 순서. 총무게 = 체력과 반복성의 함수</p>
+      </aside>
+
+        <p>총무게는 헤드 + 샤프트 + 그립 + 조립 부품의 합계입니다. 일반적인 드라이버는 헤드 200g + 샤프트 55g + 그립 50g + 기타 5g = 약 310g 수준이며, 스틸 샤프트 5번 아이언은 헤드 257g + 샤프트 114g + 그립 50g + 기타 5g = 약 426g에 달합니다. 같은 세트라도 드라이버와 웨지 사이에 100g 이상 차이가 납니다.</p>
+        <p>총무게가 중요한 이유는 한 번의 스윙이 아니라 18홀, 70~90개의 스윙 동안 같은 타이밍을 유지할 수 있느냐의 문제이기 때문입니다. 무거울수록 후반에 피로가 누적되고, 가벼울수록 타이밍 기준점이 없어져 일관성이 낮아집니다.</p>
+        <h3 class="subhead">4-1. 총무게가 타이밍에 미치는 영향</h3>
+        <p>총무게가 커지면 클럽 전체의 관성(Total MOI)이 증가합니다. 전환 구간에서 클럽이 더 천천히 반응하고 일정한 속도를 유지하는 경향이 생깁니다. 총무게가 너무 가벼우면 클럽이 급격하게 가속되어 타이밍 편차가 커집니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>총무게 상태</th><th>타이밍</th><th>피로도</th><th>일관성</th><th>적합 대상</th></tr></thead>
+          <tbody><tr><td>너무 가벼움</td><td>전환 급격, 타이밍 불안정</td><td>낮음</td><td>낮음</td><td>기력 매우 낮은 시니어, 초보</td></tr>
+<tr><td>적정 무게</td><td>리듬 안정, 타이밍 유지</td><td>적정</td><td>높음</td><td>대부분의 골퍼</td></tr>
+<tr><td>너무 무거움</td><td>전환 느리나 후반에 붕괴</td><td>빠른 누적</td><td>중반 이후 낮아짐</td><td>충분한 체력 확인 후만</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">4-2. 후반 붕괴 — 총무게가 맞지 않을 때의 신호</h3>
+        <p>총무게 문제는 전반에서는 잘 드러나지 않습니다. 피로가 쌓이는 후반에 증상이 나타납니다. 전반은 괜찮다가 후반 9홀에서 방향이 흔들리거나 타점 편차가 커진다면, 스윙보다 총무게를 먼저 의심해야 합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">후반 붕괴 체크리스트</p>
+        <ul class="callout-bullets">
+          <li>전반 9홀은 좋은데 후반에 방향이 흔들린다 → 총무게 과다 가능성</li>
+          <li>연습장에서는 잘 맞는데 라운드 후반에 무너진다 → 총무게 과다 또는 지구력 과소 평가</li>
+          <li>피로할수록 공이 우측으로 밀린다 → 릴리즈 지연, 총무게 줄이기 검토</li>
+        </ul>
+        <p class="callout-foot">피로할수록 훅이 나온다 → 손이 먼저 풀림, 총무게 또는 SW 조정 검토</p>
+      </aside>
+
+        <p>[그림 8-1] 총무게·SW·MOI — 세 가지 무게 개념의 측정 대상과 체감 차이 (출처: 클럽메이커스 교육매뉴얼)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5 ==================== -->
+  <section id="sec-5" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 05 · 5절</p>
+      <h2 class="section-title">무게 등급 체계 — 7단계 기준</h2>
+
+      <div class="prose">
+        <p>총무게 피팅의 출발점은 골퍼가 어느 무게 구간의 클럽을 다룰 수 있는지 판단하는 것입니다. 여기서는 악력을 주된 기준으로, 헤드스피드를 보조 기준으로 사용합니다.</p>
+        <h3 class="subhead">5-1. 악력 기반 7단계 등급</h3>
+        <p>악력은 전신 근력과 높은 상관관계를 가집니다. 악력으로 등급을 설정하고, 지구력(후반 안정성)으로 최종 보정합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>등급</th><th>아이언 샤프트 무게 (스틸 / 그라파이트)</th><th>악력 기준</th><th>해당 골퍼</th></tr></thead>
+          <tbody><tr><td>1등급 초경량 (Lady-)</td><td>스틸 —, 그라파이트 50g 미만</td><td>20kg 이하</td><td>근력 매우 낮음. 초보 여성, 고령 시니어</td></tr>
+<tr><td>2등급 경량 (Lady)</td><td>스틸 —, 그라파이트 50~55g</td><td>20~25kg</td><td>여성 골퍼, 시니어 남성 입문</td></tr>
+<tr><td>3등급 중경량 (Senior)</td><td>스틸 80g 미만, 그라파이트 50~65g</td><td>25~30kg</td><td>일반 여성 아마추어, 체력 낮은 시니어 남성</td></tr>
+<tr><td>4등급 표준 (Mstd-)</td><td>스틸 80~95g, 그라파이트 60~75g</td><td>30~35kg</td><td>일반 성인 남성 아마추어 대부분</td></tr>
+<tr><td>5등급 중량 (Mstd)</td><td>스틸 90~100g, 그라파이트 70g 이상</td><td>35~40kg</td><td>체력 좋은 아마추어</td></tr>
+<tr><td>6등급 중량+ (Mstd+)</td><td>스틸 105~120g, 그라파이트 75g 이상</td><td>40~45kg</td><td>활동적인 골퍼, 투어 아마추어</td></tr>
+<tr><td>7등급 헤비 (Mstd++)</td><td>스틸 120g 이상, 그라파이트 —</td><td>45kg 이상</td><td>투어 선수급 체력</td></tr></tbody>
+        </table>
+      </div>
+
+        <p>※ 악력과 지구력의 2축 원칙 — 원본 기준</p>
+        <p>· 악력은 근력의 지표가 될 수 있지만, 지구력이 안 좋은 경우에는 무게 등급을 낮게 가야 합니다.</p>
+        <p>· 무게에 관련된 추천은, 고객의 취향이나 써왔던 클럽과 비교해서 1등급 정도의 조정이 필요할 수 있습니다. (선호도 보정)</p>
+        <h3 class="subhead">5-2. 헤드스피드 보조 기준 — 드라이버 샤프트 무게</h3>
+        <p>악력 측정이 어려운 현장에서는 헤드스피드를 보조 기준으로 사용합니다. 아래는 드라이버 샤프트 무게 기준 출발점입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>드라이버 헤드스피드</th><th>권장 샤프트 무게 (g)</th><th>운용 범위</th><th>보정 방향</th></tr></thead>
+          <tbody><tr><td>70~85mph</td><td>45g</td><td>40~50g</td><td>Lady~Senior 등급 출발</td></tr>
+<tr><td>85~95mph</td><td>55g</td><td>50~60g</td><td>Senior~Mstd- 등급 출발</td></tr>
+<tr><td>95~105mph</td><td>65g</td><td>60~70g</td><td>Mstd- ~Mstd 등급 출발</td></tr>
+<tr><td>105~115mph</td><td>75g</td><td>70~80g</td><td>Mstd~Mstd+ 등급 출발</td></tr>
+<tr><td>115mph 이상</td><td>80g</td><td>75~85g</td><td>Mstd+~Mstd++ 등급 출발</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">헤드스피드는 출발점이지 결론이 아닙니다</p>
+        <ul class="callout-bullets">
+          <li>같은 헤드스피드라도 전환 속도, 템포, 지구력에 따라 적합한 무게가 달라집니다.</li>
+          <li>전환이 급하고 템포가 빠른 골퍼 → 한 등급 상향 검토</li>
+          <li>템포가 느리고 로딩이 부족한 골퍼 → 한 등급 하향 검토</li>
+        </ul>
+        <p class="callout-foot">후반에 타이밍이 무너지는 골퍼 → 지구력 확인 후 한 등급 하향</p>
+      </aside>
+
+        <h3 class="subhead">5-3. 지구력 기반 보정</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>라운드 후반 상태</th><th>해석</th><th>무게 보정</th></tr></thead>
+          <tbody><tr><td>후반 스윙이 급격히 무너짐</td><td>지구력 부족. 현재 무게 과다</td><td>등급 -1 (샤프트 약 10~15g 감량)</td></tr>
+<tr><td>전후반 안정적으로 유지</td><td>지구력 충분. 현재 무게 적합</td><td>현재 등급 유지</td></tr>
+<tr><td>후반이 오히려 더 안정적</td><td>여유 있음. 무게 증량 가능</td><td>등급 +1 검토 (론치모니터 검증 필요)</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">5-4. 클럽별 무게 등급 확장표</h3>
+        <p>드라이버 기준으로 결정한 등급을 세트 전체로 확장합니다. 클럽이 짧아질수록 샤프트는 점진적으로 무거워집니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>등급</th><th>드라이버 (g)</th><th>페어웨이 우드 (g)</th><th>유틸리티 (g)</th><th>아이언 스틸 (g)</th><th>아이언 그라파이트 (g)</th></tr></thead>
+          <tbody><tr><td>초경량 (Lady-)</td><td>48 미만</td><td>55 미만</td><td>65 미만</td><td>—</td><td>50 미만</td></tr>
+<tr><td>경량 (Lady)</td><td>45~53</td><td>55~65</td><td>65~75</td><td>—</td><td>50~55</td></tr>
+<tr><td>중경량 (Senior)</td><td>50~59</td><td>60~70</td><td>70~80</td><td>80g 미만</td><td>50~65</td></tr>
+<tr><td>표준 (Mstd-)</td><td>55~63</td><td>65~75</td><td>75~90</td><td>80~95g</td><td>60~75</td></tr>
+<tr><td>중량 (Mstd)</td><td>60~70</td><td>70~80</td><td>85~100</td><td>90~100g</td><td>70 이상</td></tr>
+<tr><td>중량+ (Mstd+)</td><td>65~75</td><td>75~85</td><td>95~110</td><td>105~120g</td><td>75 이상</td></tr>
+<tr><td>헤비 (Mstd++)</td><td>72 이상</td><td>80~90</td><td>105~120</td><td>120g 이상</td><td>—</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">세트 내 무게 흐름 원칙</p>
+        <ul class="callout-bullets">
+          <li>드라이버부터 웨지까지 클럽이 짧아지면서 샤프트 무게는 점진적으로 올라가야 합니다.</li>
+          <li>예: 드라이버 55g → 페어웨이 65g → 유틸 80g → 아이언 105g처럼 자연스러운 흐름이 있어야 합니다.</li>
+        </ul>
+        <p class="callout-foot">흐름이 갑자기 끊기면(예: 드라이버와 아이언은 맞는데 유틸리티만 이상하게 느껴진다면) 유틸리티 샤프트 무게가 세트 흐름에서 벗어나 있을 가능성이 높습니다.</p>
+      </aside>
+
+        <p>[그림 8-2] 무게 보정 3방식 — 납테이프·텅스텐 가루·황동 무게추의 적용 위치·단위·특징 비교 (출처: 클럽메이커스 교육매뉴얼)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6 ==================== -->
+  <section id="sec-6" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 06 · 6절</p>
+      <h2 class="section-title">스윙웨이트 (SW) — 헤드 감각의 지표</h2>
+
+      <div class="prose">
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">※ PART 7에서 정의한 내용: SW는 감각 지표이며 MOI 결정 이후 마지막에 조정. C8~D5 선행 가이드</p>
+      </aside>
+
+        <p>스윙웨이트는 클럽의 그립 끝에서 14인치 지점을 받침으로 삼았을 때 헤드 쪽이 얼마나 무겁게 느껴지는지를 알파벳+숫자로 표현한 수치입니다. A0부터 F9까지 있으며 포인트당 1.75 인치온스(약 49.6 g·cm) 차이입니다. 일반 남성 아마추어 기준으로 D0~D2 범위가 표준입니다.</p>
+        <h3 class="subhead">성별·연령에 따른 SW 표준 범위</h3>
+        <h3 class="subhead">일반 남성 아마추어: D0~D2 (드라이버 기준)</h3>
+        <h3 class="subhead">여성 아마추어: C5~C9 (남성보다 2~5포인트 낮게)</h3>
+        <p>시니어 남성 아마추어: C8~D1 (일반 남성보다 1~2포인트 낮게)</p>
+        <h3 class="subhead">여성 시니어: C3~C7 (가장 낮은 구간)</h3>
+        <p>상급자·투어 아마추어 남성: D2~D4 (강한 헤드 감각 선호)</p>
+        <p>여성·시니어에게 남성 표준(D0~D2)을 그대로 적용하면 헤드가 무겁게 느껴져 다운스윙에서 손이 먼저 풀리는 원인이 됩니다. 악력·체력 등급(5절)이 낮은 골퍼일수록 SW도 한 단계 낮추는 것이 원칙입니다.</p>
+        <p>SW는 클럽의 절대 무게가 아닙니다. 같은 총무게가어도 헤드 쪽에 질량이 집중되면 SW가 높고, 그립 쪽에 집중되면 낮습니다. SW는 골퍼가 스윙 중 헤드의 위치를 얼마나 뚜렷하게 감지하느냐에 영향을 줍니다. 이 감각이 릴리즈 타이밍과 연결됩니다.</p>
+        <h3 class="subhead">6-1. 부품별 SW 변화 수치</h3>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>조정 요소</th><th>변화량</th><th>SW 변화</th><th>방향</th><th>비고</th></tr></thead>
+          <tbody><tr><td>헤드 무게</td><td>+2g</td><td>약 +1 포인트</td><td>증가</td><td>45인치 드라이버 기준. 짧은 클럽은 2.3g 필요</td></tr>
+<tr><td>클럽 길이</td><td>+0.5인치</td><td>약 +3.5 포인트</td><td>증가</td><td>0.5인치 증가 = SW 3.5포인트 증가. 복원하려면 헤드 약 7g 필요</td></tr>
+<tr><td>샤프트 무게</td><td>±10g</td><td>약 ±1 포인트</td><td>비례</td><td>중간 위치라 영향 작음</td></tr>
+<tr><td>그립 무게</td><td>±4g</td><td>약 ∓1 포인트</td><td>반대</td><td>SW와 반대 방향. 그립 무게 ±4g = SW ∓1포인트 (픽스)</td></tr>
+<tr><td>납테이프 (솔)</td><td>헤드 솔에 1g</td><td>약 +0.5 포인트</td><td>증가</td><td>현장 미세 조정</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">길이-SW-헤드 무게의 연쇄 효과</p>
+        <ul class="callout-bullets">
+          <li>길이를 0.5인치 줄이면 SW가 약 3.5포인트 감소합니다. 이를 복원하려면 헤드를 약 7g 늘려야 합니다.</li>
+          <li>그러나 헤드가 7g 오르면 Total MOI도 함께 증가합니다. 즉 길이를 조정하면 SW, MOI, 총무게가 연쇄적으로 변합니다.</li>
+        </ul>
+        <p class="callout-foot">단순히 수치 하나만 조정하는 것이 아니라 세 변수가 함께 움직인다는 점을 항상 인식해야 합니다.</p>
+      </aside>
+
+        <h3 class="subhead">6-2. 헤드 무게 보정 방법과 실무 한계</h3>
+        <p>헤드 무게를 현장에서 보정하는 방법은 크게 세 가지가 있습니다. 납테이프, 텅스텐 가루, 황동 무게추입니다. 각 방식은 적용 부위와 정밀도, 조정 범위가 다르므로 상황에 따라 선택하거나 병행해서 사용합니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>방식</th><th>적용 부위</th><th>정밀도</th><th>조정 범위</th><th>특성</th></tr></thead>
+          <tbody><tr><td>납테이프
+(Lead Tape)</td><td>솔 · 백페이스 외부</td><td>1g 단위</td><td>±1~15g</td><td>가장 간편하고 가역적. 표면에 부착하므로 탈착 가능. 스윙 중 이탈 위험으로 고정력이 약하며, 미관 저하</td></tr>
+<tr><td>텅스텐 가루
+(Tungsten Powder)</td><td>호젤 내부 · 헤드 포트</td><td>0.5g 단위</td><td>±1~7g (호젤 기준)</td><td>고밀도로 소량으로 큰 무게 효과. 에폭시로 고정하므로 영구적. 호젤 사용 시 CG 힐 쪽 이동 주의</td></tr>
+<tr><td>황동 무게추
+(Brass Weight)</td><td>어저스터블 헤드의 지정 포트</td><td>제조사 규격</td><td>2g · 4g · 6g · 8g 등</td><td>제조사가 공식 제공하는 교체형 부품. 토크 규격 준수 필요. 설계 CG를 유지하며 조정</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">⚠ 실무 한계 — 호젤 무게 증대 7g 상한</p>
+        <p class="callout-foot" style="border:none;padding:0;">헤드 호젤(샤프트 삽입부)에 텅스텐 가루를 넣는 방식은 7g 이하로 제한하는 것이 안전합니다. 이유는 세 가지입니다.
+
+첫째, 호젤 무게가 증가하면 헤드의 무게중심(CG)이 힐 쪽으로 이동합니다. CG가 힐로 치우치면 토 기어이펙트가 강해져 구질이 드로우 방향으로 편향되며, 이는 설계자의 의도를 벗어난 결과를 만듭니다.
+
+둘째, 호젤 내부 공간의 구조적 한계로 7g을 초과하면 에폭시 접착 신뢰성이 떨어집니다. 스윙 중 무게가 밀려나거나 충격 흡수가 불균일해질 위험이 있습니다.
+
+셋째, 7g을 초과하는 보정이 필요한 경우에는 솔 쪽 납테이프나 백페이스 포트(어저스터블 헤드)와 병행하여 무게를 분산시키는 것이 안전합니다. 한 부위에 집중하지 말고 여러 부위로 나누되, CG 이동 방향을 반드시 계산에 넣어야 합니다.</p>
+      </aside>
+
+        <p>정리하면, 헤드 무게 보정은 한 방법만 고집하지 않습니다. 납테이프의 간편함, 텅스텐 가루의 정밀함, 황동 무게추의 규격 안정성을 상황에 맞게 조합합니다. 보정량이 커질수록 CG 이동을 함께 계산해야 원래 의도한 구질을 유지할 수 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7 ==================== -->
+  <section id="sec-7" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 07 · 7절</p>
+      <h2 class="section-title">클럽별 무게 설계 철학</h2>
+
+      <div class="prose">
+        <h3 class="subhead">7-1. 드라이버 — 속도와 일관성의 균형</h3>
+        <p>드라이버 총무게는 약 295~325g으로 세트 중 가장 가볍습니다. 가볍게 설계하는 이유는 헤드스피드를 최대화하기 위해서입니다. 그러나 무작정 가볍게 만들면 타이밍을 잡기 어려워집니다. 드라이버 무게 최적화는 '이 골퍼가 일관된 타이밍을 만들 수 있는 범위 안에서 가장 가벼운 무게'를 찾는 작업입니다.</p>
+        <h3 class="subhead">7-2. 아이언 — 반복성을 위한 무게</h3>
+        <p>아이언의 무게는 일관성 확보를 위한 수단입니다. 아이언 세트에서 가장 중요한 것은 번호마다 무게가 점진적으로 증가하는 흐름입니다. 4번과 9번의 총무게 차이가 너무 크면 클럽마다 타이밍을 달리 써야 하고, 이것이 일관성을 떨어뜨리는 주원인입니다.</p>
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>클럽</th><th>무게 설계 철학</th><th>총무게 수준</th><th>SW 기준</th><th>핵심 포인트</th></tr></thead>
+          <tbody><tr><td>드라이버</td><td>최대 스피드. 가볍되 타이밍 유지</td><td>295~325g</td><td>C9~D2</td><td>샤프트 무게가 총무게 결정</td></tr>
+<tr><td>페어웨이 우드</td><td>지면 타격 안정성</td><td>310~345g</td><td>D0~D2</td><td>드라이버보다 10~20g 무겁게</td></tr>
+<tr><td>유틸리티</td><td>거리와 방향 양립</td><td>330~370g</td><td>D1~D3</td><td>세트 흐름 연결이 핵심</td></tr>
+<tr><td>아이언</td><td>반복성 최우선</td><td>365~435g</td><td>D1~D3</td><td>CPM 흐름과 연동</td></tr>
+<tr><td>웨지</td><td>컨트롤, 고스핀</td><td>400~460g</td><td>D3~D5</td><td>헤드 무겁고 샤프트 짧음</td></tr>
+<tr><td>퍼터</td><td>방향과 거리 일관성</td><td>480~550g+</td><td>일반적으로 SW 적용 않음</td><td>헤드 330~380g + 그립 무게 변수</td></tr></tbody>
+        </table>
+      </div>
+
+        <h3 class="subhead">7-3. 몸통 스윙이 어려운 타입 — 시니어의 특수 처방</h3>
+        <p>일반적인 무게 피팅 원칙은 '몸통 회전으로 스윙하는' 골퍼를 전제로 합니다. 그런데 시니어 골퍼 중에는 어깨·허리·고관절 가동성 제약으로 몸통 스윙 자체가 거의 불가능한 경우가 많습니다. 이 골퍼들에게는 전혀 다른 무게 처방이 필요합니다.</p>
+        <h3 class="subhead">왜 일반 원칙이 통하지 않는가</h3>
+        <p>몸통 스윙이 작동하면 골퍼의 몸이 만들어낸 회전 에너지가 샤프트를 통해 헤드로 전달되고, 그 결과가 F=ma의 '가속도(a)'입니다. 그런데 몸통 회전 범위가 줄어들면 골퍼가 만들 수 있는 가속도의 상한이 낮아집니다.</p>
+        <p>이 상태에서 일반 원칙대로 '가볍게 만든다'를 적용하면 F=ma에서 질량(m)까지 작아져 버립니다. 결과는 거리 대폭 감소입니다. 골퍼는 '예전만큼 안 나간다'고 느끼고, 무의식적으로 더 세게 휘두르려다 타이밍이 무너집니다.</p>
+        <p>시니어 특수 처방 — 세 가지 축</p>
+        <p>몸통 스윙이 제약된 골퍼에게는 다음 세 가지를 동시에 조정해야 합니다. 어느 하나만 바꾸면 효과가 없거나 오히려 나빠집니다.</p>
+        <h3 class="subhead">① 길이를 오히려 더 길게</h3>
+        <p>일반 시니어 피팅은 '스윙이 약하니까 길이를 줄인다'는 방향으로 가는 경우가 많습니다. 그러나 몸통 스윙이 제약된 골퍼는 반대입니다. 길이를 오히려 표준보다 0.5~1인치 길게 만듭니다. 긴 클럽은 동일 스윙 속도에서 헤드의 원주 속도를 더 높입니다. 몸이 못 만드는 가속도를 클럽의 길이가 보조하는 원리입니다.</p>
+        <h3 class="subhead">② 총무게는 아주 가볍게</h3>
+        <p>총무게는 오히려 극경량 영역까지 내립니다. 몸이 힘을 못 만드는 골퍼에게 무거운 클럽은 회전 자체를 어렵게 합니다. 드라이버 275~290g, 아이언 350~380g까지 낮추는 것도 적극 검토합니다. 체력에 맞춰 클럽을 끝까지 휘두를 수 있는 무게가 우선입니다.</p>
+        <p>③ 스윙웨이트(SW)·관성모멘트는 높게 — 헤드 무게감으로 거리를 낸다</p>
+        <p>총무게는 낮췄지만 헤드 쪽 무게감은 오히려 높입니다. SW는 표준(D0~D2)보다 높은 D3~D5까지 올리고, 관성모멘트(MOI)도 큰 값으로 설계합니다. F=ma에서 질량(m) 값을 헤드 무게감으로 확보하는 방식입니다. 몸이 만들 수 없는 힘을 클럽의 회전 관성이 대신 만들어 줍니다.</p>
+        <h3 class="subhead">이 처방의 물리적 원리</h3>
+        <p>총무게는 가볍지만 SW와 MOI는 높은 클럽은, 손에 들었을 때는 가벼워 휘두르기 편하고, 헤드가 원심력으로 저절로 떨어져 임팩트에서 큰 질량감을 만드는 구조입니다. 골퍼는 몸으로 힘을 만들지 않고, 클럽의 무게 분포가 만들어주는 회전 힘만으로 거리를 확보합니다.</p>
+        <p>이 접근은 F=ma에서 골퍼가 만들 수 없는 가속도(a)를 클럽의 질량(m)과 회전 관성으로 대신 확보하는 방식입니다. 일반적인 무게 피팅이 '적절한 m을 유지하면서 a를 확보하는 균형점'을 찾는 작업이라면, 이 특수 처방은 '골퍼가 만들 수 있는 a의 상한이 매우 낮은 경우 m과 회전 관성으로 힘을 벌충하는' 별도의 설계 경로입니다.</p>
+        <h3 class="subhead">현장 적용 가이드</h3>
+        <p>이 처방이 맞는 골퍼의 판별 기준은 다음과 같습니다.</p>
+        <p>- 허리 회전 각도가 백스윙 탑에서 45° 이하 (일반 기준 90°)</p>
+        <p>- 어깨 회전이 40~50° 이하 (일반 기준 80~90°)</p>
+        <p>- 손·팔 위주로 스윙을 만들고, 임팩트에서 체중 이동이 거의 없음</p>
+        <p>- 본인이 '예전보다 거리가 줄었다'고 호소하지만 악력이나 근력은 유지되는 편</p>
+        <h3 class="subhead">판별된 경우의 출발 스펙 예시:</h3>
+        <p>- 드라이버: 46~46.5인치 (표준 45인치 대비 +1~1.5인치), 총무게 275~290g, SW D3~D5</p>
+        <p>- 7번 아이언: 37.5~38인치 (표준 37인치 대비 +0.5~1인치), 총무게 370~400g (그라파이트 샤프트 사용 시 더 낮출 수 있음), SW D3~D5</p>
+        <p>이 수치는 출발점일 뿐 최종값은 아닙니다. 반드시 시타 후 거리·방향·타감으로 확정합니다.</p>
+        <p>오판 주의 — 일반 시니어 원칙과 혼동하지 말 것</p>
+        <p>몸통 스윙이 가능한 시니어는 일반 원칙(PART 8 5절 7등급)을 따릅니다. 이 처방은 몸통 스윙이 불가능한 특수 타입에만 적용합니다. 둘을 혼동해서 일반 시니어에게 이 처방을 쓰면 헤드가 과도하게 무겁게 느껴져 역효과가 납니다.</p>
+        <p>핵심: F=ma에서 가속도(a)를 만들 수 있는 골퍼에게는 일반 원칙, 만들기 어려운 골퍼에게는 질량(m) 경로의 특수 처방. 원리는 하나, 적용은 둘입니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-foot" style="border:none;padding:0;">◼ 그림 8-3. 카운터밸런싱 질량 분포</p>
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 8 ==================== -->
+  <section id="sec-8" class="part-section alt">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 08 · 8절</p>
+      <h2 class="section-title">카운터밸런싱 — 총무게는 올리고 SW는 낮추는 방법</h2>
+
+      <div class="prose">
+        <p>카운터밸런싱은 그립 쪽 끝단에 무게를 추가하는 방법입니다. 총무게는 올라가면서 SW는 낮아지는, 일반적인 조정 방향과 반대의 효과를 만들어냅니다. 그립 쪽에 무게를 더하면 밸런스 포인트가 손 방향으로 이동합니다. SW 지렛목인 14인치 기준으로 헤드 쪽 모멘트가 상대적으로 줄어들어 SW 수치가 감소하고, 동시에 총무게는 증가합니다.</p>
+        
+      <aside class="callout callout-example">
+        <p class="callout-label">카운터밸런싱의 세 가지 동시 변화</p>
+        <ul class="callout-bullets">
+          <li>① SW 감소: 그립 쪽이 무거워지면서 헤드 체감이 줄어듭니다.</li>
+          <li>② 총무게 증가: 그립에 무게가 더해져 클럽 전체가 무거워집니다. 리듬 안정성 증가.</li>
+          <li>③ 밸런스 포인트 이동: 질량 중심이 그립 쪽으로 이동합니다. 전환 구간에서 헤드가 덜 당기는 느낌. 캐스팅 억제 효과.</li>
+        </ul>
+        <p class="callout-foot">요약: 총무게를 올리면서 SW를 낮추는 유일한 방법입니다.</p>
+      </aside>
+
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>방법</th><th>구체적 적용</th><th>SW 변화</th><th>총무게 변화</th></tr></thead>
+          <tbody><tr><td>무거운 그립 사용</td><td>표준 50g → 70~80g 그립으로 교체</td><td>약 -4~6 포인트</td><td>+20~30g</td></tr>
+<tr><td>그립 내부 납봉 삽입</td><td>그립 설치 전 버트 쪽에 납봉 삽입</td><td>삽입량에 따라 다름</td><td>삽입량에 따라 다름</td></tr>
+<tr><td>카운터밸런스 전용 그립</td><td>SuperStroke, Winn Dri-Tac 등</td><td>약 -2~4 포인트</td><td>+10~20g</td></tr>
+<tr><td>퍼터 대형 그립</td><td>일반 퍼터 그립 50g → Jumbo 100g 이상</td><td>대폭 감소</td><td>+50g 이상</td></tr></tbody>
+        </table>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 9 ==================== -->
+  <section id="sec-9" class="part-section">
+    <div class="container narrow">
+      <p class="eyebrow">SECTION 09 · 9절</p>
+      <h2 class="section-title">현장 오판 케이스</h2>
+
+      <div class="prose">
+        
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>케이스</th><th>증상</th><th>잘못된 조치</th><th>올바른 접근</th></tr></thead>
+          <tbody><tr><td>CASE 1</td><td>후반 라운드에서 스윙 무너짐</td><td>체력 문제, 운동 권유</td><td>총무게 확인. 등급 -1 검토</td></tr>
+<tr><td>CASE 2</td><td>헤드 감각이 없어 SW 계속 높임</td><td>헤드 무게 추가, 길이 늘리기</td><td>총무게와 MOI 먼저 확인</td></tr>
+<tr><td>CASE 3</td><td>가벼운 클럽으로 바꾼 후 방향 편차 증가</td><td>기존 클럽으로 복귀</td><td>총무게 낮아 타이밍 기준점 사라진 것. 등급 재설정</td></tr>
+<tr><td>CASE 4</td><td>드라이버 길이 늘렸는데 일관성 낮아짐</td><td>샤프트 교체 시도</td><td>길이 증가로 Total MOI 과다. 길이 되돌리고 헤드 무게로 SW 보정</td></tr>
+<tr><td>CASE 5</td><td>Mstd 등급 샤프트인데 피로 빠르다</td><td>샤프트 플렉스 조정 시도</td><td>총무게 확인. 동일 무게 내에서도 그라파이트 검토</td></tr></tbody>
+        </table>
+      </div>
+
+        
+      <aside class="check-card">
+        <p class="check-label">✎ 확인 문제 — PART 8 무게·SW</p>
+        <ol class="check-list">
+          <li>드라이버 헤드에 2g을 추가하면 SW는 얼마나 변합니까? 반대로 그립을 4g 가벼운 것으로 교체하면 SW는 어떻게 변합니까?
+문제 2. 길이를 45인치에서 44.5인치로 ½인치 줄였습니다. SW를 원래대로 복원하려면 헤드에 몇 그램을 추가해야 합니까?
+문제 3. 호젤에 텅스텐 가루로 무게를 추가할 때 일반적으로 7g을 상한으로 두는 이유는 무엇입니까?
+※ 해답과 해설은 책 뒤의 「확인 문제 해답」 부록을 참고하십시오.</li>
+        </ol>
+        
+      </aside>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== CLOSING ==================== -->
+  <section class="closing">
+    <div class="container narrow">
+      <p class="eyebrow">CLOSING · PART 8 마무리</p>
+      <h2 class="section-title">PART 8 마무리</h2>
+
+      <div class="closing-prose">
+        <p class="closing-paragraph">총무게는 18홀 내내 타이밍을 유지할 수 있는 지속 가능성의 기준입니다. 헤드 무게는 클럽 길이와 연동되어 스윙웨이트를 결정하며, 샤프트 무게가 총무게의 실질적 조절 수단입니다. 악력으로 등급을 설정하고 지구력으로 보정하며, SW는 총무게와 MOI가 결정된 후 마지막에 감각을 미세 조정합니다. 카운터밸런싱은 두 변수를 반대 방향으로 동시에 조정하는 유일한 방법입니다.</p>
+        <p class="closing-paragraph">이 파트에서 정의한 총무게, 스윙웨이트, 헤드 무게 범위, 샤프트 무게 체계, 카운터밸런싱은 이후 파트에서 재설명하지 않습니다.</p>
+        <p class="closing-paragraph">PART 8에서 총무게·스윙웨이트·MOI의 관계와 7단계 등급 분류를 정리했습니다. 무게를 결정했다면 그 무게를 전달하는 샤프트의 구조를 결정해야 합니다. 같은 무게의 샤프트라도 어디가 휘어지느냐(EI)와 얼마나 비틀리느냐(토크)에 따라 임팩트 타이밍이 완전히 달라집니다. PART 9가 그 구조를 다룹니다.</p>
+      </div>
+
+      
+    </div>
+  </section>
+
+
+  <!-- ==================== PAGINATION ==================== -->
+  <nav class="part-pagination" aria-label="PART 이동">
+    <div class="container">
+      <a href="/book/part-7" class="pg-back">
+        <span class="pg-arrow">←</span>
+        <span class="pg-label">PART 7 · MOI / 관성 구조</span>
+      </a>
+      <a href="/book/part-9" class="pg-next">
+        <span class="pg-meta">다음 PART</span>
+        <span class="pg-title">PART 9 · 샤프트 구조와 피팅 판단</span>
+        <span class="pg-sub">CPM·EI·팁 트리밍의 원리</span>
+        <span class="pg-arrow">→</span>
+      </a>
+    </div>
+  </nav>
+
+</BaseLayout>
+
+
+<!-- PART 1, 2와 동일한 디자인 시스템 -->
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --warn: #B5462E; --warn-soft: #F6E8E1;
+    --good: #2C5F4F; --good-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .narrow    { max-width: 720px; }
+  .prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: var(--text-2); margin: 0 0 1.1em; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose p em { font-style: normal; background: linear-gradient(180deg, transparent 60%, var(--accent-soft) 60%); padding: 0 .15em; }
+  .subhead { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 2em 0 .8em; padding-top: 1em; border-top: 1px dashed var(--rule); }
+
+  .eyebrow { font-family: var(--sans); font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem; }
+  .crumb { display: flex; align-items: center; gap: .5rem; font-family: var(--sans); font-size: .8125rem; color: var(--muted); margin-bottom: 2.5rem; }
+  .crumb a { color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--rule-2); }
+  .crumb a:hover { color: var(--accent); border-color: var(--accent); }
+  .crumb-current { color: var(--text); font-weight: 600; }
+
+  .part-hero { background: var(--bg); padding: 72px 0 64px; border-bottom: 1px solid var(--rule); }
+  .part-title { font-family: var(--serif); margin: 0 0 1rem; line-height: 1.1; color: var(--text); font-weight: 500; }
+  .part-num { display: block; font-family: var(--sans); font-size: .875rem; font-weight: 600; letter-spacing: .2em; color: var(--muted); margin-bottom: .75rem; }
+  .part-name { display: block; font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 600; letter-spacing: -.02em; }
+  .part-sub { display: block; font-size: clamp(1.1875rem, 3vw, 1.625rem); font-weight: 300; color: var(--text-2); margin-top: .25em; }
+  .part-en { font-family: var(--sans); font-size: .9375rem; color: var(--muted); letter-spacing: .02em; margin: 1.5rem 0 2rem; font-style: italic; }
+  .part-lead { font-family: var(--sans); font-size: 1.125rem; line-height: 1.8; color: var(--text-2); max-width: 640px; margin: 0; }
+  .part-lead strong { color: var(--text); font-weight: 600; }
+
+  .objectives { background: var(--bg); padding: 0 0 56px; }
+  .callout { background: var(--bg-elev); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 28px 32px; border-radius: 2px; margin: 2rem 0; }
+  .callout-label { font-family: var(--sans); font-size: .875rem; font-weight: 700; color: var(--accent); margin: 0 0 .75rem; letter-spacing: .04em; }
+  .callout-list { margin: 0; padding-left: 1.4em; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-list li { margin-bottom: .25em; }
+  .callout-bullets { list-style: none; padding: 0; margin: 0 0 1rem; font-family: var(--sans); font-size: 1rem; line-height: 1.8; color: var(--text-2); }
+  .callout-bullets li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+  .callout-bullets li:before { content: "·"; position: absolute; left: .25rem; top: 0; color: var(--accent); font-weight: 700; }
+  .callout-foot { font-family: var(--sans); font-size: 1rem; color: var(--text-2); margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); line-height: 1.7; }
+  .callout-example { background: var(--bg-soft); border-color: var(--rule-2); }
+
+  .part-toc { background: var(--bg); padding: 16px 0 64px; }
+  .toc-label { font-family: var(--sans); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list a { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; color: var(--text); font-family: var(--sans); transition: color .2s, padding .2s; }
+  .toc-list a:hover { color: var(--accent); padding-left: .5rem; }
+  .toc-num { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--accent); min-width: 2.5rem; }
+  .toc-text { font-size: 1rem; line-height: 1.5; }
+
+  .intro { padding: 56px 0; }
+  .part-section { padding: 80px 0; border-top: 1px solid var(--rule); }
+  .part-section.alt { background: var(--bg); }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 4vw, 2.625rem); font-weight: 500; line-height: 1.3; letter-spacing: -.015em; color: var(--text); margin: 0 0 2rem; }
+  .section-title em { font-style: normal; color: var(--accent); }
+
+  .principle-card { background: var(--bg-elev); border: 1px solid var(--rule); padding: 32px; margin: 2.5rem 0; text-align: center; border-radius: 2px; }
+  .principle-label { font-family: var(--sans); font-size: .8125rem; font-weight: 700; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.5rem; }
+  .principle-flow { font-family: var(--serif); font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 500; color: var(--text); margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.25rem; }
+  .principle-flow .arrow { color: var(--accent-2); font-weight: 300; }
+  .principle-foot { font-family: var(--sans); font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; padding-top: 1rem; border-top: 1px solid var(--rule); max-width: 520px; margin-inline: auto; }
+
+  /* Data table */
+  .data-table-wrap { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9375rem; min-width: 520px; }
+  .data-table thead th { background: var(--text); color: var(--bg); font-weight: 600; padding: 12px 14px; text-align: left; letter-spacing: .02em; font-size: .8125rem; }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--text-2); line-height: 1.6; vertical-align: top; }
+  .data-table tbody tr:hover td { background: var(--bg-soft); }
+  .data-table tbody tr.group-row td { background: var(--accent-soft); color: var(--accent); font-weight: 700; padding: 10px 14px; font-size: .8125rem; letter-spacing: .04em; text-transform: uppercase; }
+
+  /* Closing */
+  .closing { background: var(--text); color: var(--bg); padding: 96px 0; }
+  .closing .eyebrow { color: var(--accent-2); }
+  .closing .section-title { color: var(--bg); }
+  .closing .section-title em { color: var(--accent-2); }
+  .closing-prose p { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-prose p strong { color: white; font-weight: 600; }
+  .closing-prose p em { font-style: normal; color: var(--accent-2); font-weight: 600; background: none; padding: 0; }
+  .closing-paragraph { font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85; color: rgba(255,255,255,.9); margin: 0 0 1.1em; }
+  .closing-paragraph strong { color: white; }
+
+  .check-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); padding: 28px 32px; border-radius: 2px; margin-top: 2.5rem; }
+  .check-label { font-family: var(--sans); font-size: .8125rem; color: var(--accent-2); font-weight: 700; letter-spacing: .1em; margin: 0 0 1rem; }
+  .check-list { margin: 0 0 1rem; padding-left: 1.25em; font-family: var(--sans); font-size: .9375rem; line-height: 1.85; color: rgba(255,255,255,.85); }
+  .check-list li { margin-bottom: .5em; }
+  .check-foot { font-family: var(--sans); font-size: .8125rem; color: rgba(255,255,255,.5); margin: 0; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.08); }
+
+  /* Pagination */
+  .part-pagination { background: var(--bg); padding: 56px 0 80px; border-top: 1px solid var(--rule); }
+  .part-pagination .container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 760px) { .part-pagination .container { grid-template-columns: auto 1fr; align-items: stretch; } }
+  .pg-back, .pg-next { display: flex; align-items: center; text-decoration: none; font-family: var(--sans); transition: transform .25s, background .25s; border: 1px solid var(--rule); padding: 20px 24px; background: var(--bg-elev); border-radius: 2px; color: var(--text); }
+  .pg-back { gap: .75rem; }
+  .pg-back:hover { background: var(--bg-soft); transform: translateX(-2px); }
+  .pg-back .pg-arrow { color: var(--accent); }
+  .pg-back .pg-label { font-size: .9375rem; font-weight: 500; }
+  .pg-next { flex-direction: column; align-items: flex-end; text-align: right; gap: .15rem; background: var(--text); color: var(--bg); border-color: var(--text); position: relative; padding-right: 60px; }
+  .pg-next:hover { background: var(--accent); border-color: var(--accent); transform: translateX(2px); }
+  .pg-next .pg-meta { font-size: .75rem; color: var(--accent-2); letter-spacing: .15em; text-transform: uppercase; font-weight: 600; }
+  .pg-next .pg-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; margin-top: .15rem; }
+  .pg-next .pg-sub { font-size: .875rem; color: rgba(255,255,255,.65); }
+  .pg-next .pg-arrow { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--accent-2); }
+
+  @media (max-width: 480px) {
+    .part-hero { padding: 56px 0 48px; }
+    .part-section { padding: 64px 0; }
+    .closing { padding: 72px 0; }
+    .principle-card { padding: 24px 20px; }
+    .callout { padding: 22px 20px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 12px; font-size: .875rem; }
+  }
+</style>
