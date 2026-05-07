@@ -8,7 +8,7 @@ const heritage = [
   { year: '2008', label: '운동역학 도입', body: '국내 클럽피팅 현장에 키네마틱 시퀀스(Kinematic Sequence) 분석 도입.' },
   { year: '2010~', label: 'KLPGA · LPGA 투어 지원', body: '박희영·김효주 등 투어 선수들의 클럽 분석·피팅 진행. 뽀로로 헤드커버 멘탈 파트너 동행.' },
   { year: '2012', label: 'KIPO 특허 3종', body: '클럽피팅 관련 한국 특허청 등록 특허 3종 보유.' },
-  { year: '2018', label: 'TPI Level 3 인증', body: 'Titleist Performance Institute Level 3 — 한국에서 흔치 않은 단계.' },
+  { year: '2011~2013', label: 'TPI 인증', body: 'TPI(Titleist Performance Institute) Level 1 (2011), Junior Level 2 (2012), Golf Level 2 (2013) 인증. K-VEST Level 2 수료.' },
   { year: '2020~', label: '자체 R&D 제품 출시', body: 'VERSUS 드라이버, KRZ 203H 하이브리드, DEFINE 샤프트 자체 설계·출시.' },
   { year: '2026', label: '책 『실제적인 클럽피팅』 출간', body: '24년 현장 노하우의 정리. 본문 15 PART · 부록 4 · 현장작업표준서 12종.' },
 ];
@@ -36,7 +36,7 @@ const personSchema = {
   name: '채기웅',
   alternateName: 'Chae Ki-Woong',
   jobTitle: '공작소장 (Master Clubmaker)',
-  description: '클럽메이커스 공작소장. 24년 클럽피팅·클럽메이킹 현장 경력. TPI Level 3 인증. KIPO 특허 3종. 책 『실제적인 클럽피팅』 저자.',
+  description: '클럽메이커스 공작소장. 24년 클럽피팅·클럽메이킹 현장 경력. TPI Certified (Level 1·Junior 2·Golf 2). KIPO 특허 3종. 책 『실제적인 클럽피팅』 저자.',
   image: 'https://myclubmakers.com/images/master-profile.jpg',
   worksFor: {
     '@type': 'LocalBusiness',
@@ -51,7 +51,7 @@ const personSchema = {
     'MOI 매칭', '라이각 조정', '스파인 정렬', 'FLO',
   ],
   hasCredential: [
-    { '@type': 'EducationalOccupationalCredential', name: 'TPI Level 3 Certified Fitter', credentialCategory: 'certification' },
+    { '@type': 'EducationalOccupationalCredential', name: 'TPI Certified — Level 1, Junior Level 2, Golf Level 2', credentialCategory: 'certification' },
     { '@type': 'EducationalOccupationalCredential', name: 'KIPO 등록 특허 3종 (대한민국 특허청)', credentialCategory: 'patent' },
   ],
   url: 'https://myclubmakers.com/about',
@@ -61,7 +61,7 @@ const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
   name: '공작소장 소개 — 채기웅의 24년',
-  description: '클럽메이커스 공작소장 채기웅의 24년 클럽피팅·클럽메이킹 이야기. 1985년 경인골프부터 2026년까지 41년 헤리티지. TPI Level 3, KIPO 특허 3종, 청와대 일화, 11가지 피팅 변수.',
+  description: '클럽메이커스 공작소장 채기웅의 24년 클럽피팅·클럽메이킹 이야기. 1985년 경인골프부터 2026년까지 41년 헤리티지. TPI Certified, KIPO 특허 3종, 청와대 일화, 11가지 피팅 변수.',
   author: { '@id': 'https://myclubmakers.com/about#person' },
   mainEntity: { '@id': 'https://myclubmakers.com/about#person' },
   inLanguage: 'ko-KR',
@@ -70,9 +70,9 @@ const articleSchema = {
 
 <BaseLayout
   title="공작소장 소개"
-  description="클럽메이커스 공작소장 채기웅의 24년 이야기. 1985년 경인골프부터 41년 헤리티지. TPI Level 3 인증, KIPO 특허 3종, 책 『실제적인 클럽피팅』 저자. 운동역학 기반 클럽피팅."
+  description="클럽메이커스 공작소장 채기웅의 24년 이야기. 1985년 경인골프부터 41년 헤리티지. TPI Certified, KIPO 특허 3종, 책 『실제적인 클럽피팅』 저자. 운동역학 기반 클럽피팅."
   schemaType="AboutPage"
-  keywords="클럽메이커스, 채기웅, 공작소장, 클럽피팅, 24년 클럽피팅, TPI Level 3, KIPO 특허, 한국 클럽피팅, 골프채 공작소, 클럽메이킹, 운동역학, kinematic sequence, club fitting Korea, master clubmaker"
+  keywords="클럽메이커스, 채기웅, 공작소장, 클럽피팅, 24년 클럽피팅, TPI Certified, TPI Level 2, KIPO 특허, 한국 클럽피팅, 골프채 공작소, 클럽메이킹, 운동역학, kinematic sequence, club fitting Korea, master clubmaker"
   extraSchema={[personSchema, articleSchema]}
 >
 
@@ -86,7 +86,7 @@ const articleSchema = {
         <strong>채기웅 공작소장</strong> · 클럽메이커스
       </p>
       <p class="hero-credential">
-        TPI Level 3 인증 · KIPO 등록 특허 3종 · 책 『실제적인 클럽피팅』 저자<br/>
+        TPI Certified · KIPO 등록 특허 3종 · 책 『실제적인 클럽피팅』 저자<br/>
         <span class="hero-credential-light">— 1985년 경인골프부터 시작된 41년 헤리티지</span>
       </p>
     </div>
@@ -232,10 +232,10 @@ const articleSchema = {
       <div class="credential-grid">
         <div class="credential-card">
           <div class="credential-tag">CERTIFICATION</div>
-          <h3 class="credential-title">TPI Level 3</h3>
+          <h3 class="credential-title">TPI Certified</h3>
           <p class="credential-body">
-            <strong>Titleist Performance Institute</strong> Level 3 — Golf, Medical, Fitness 통합 단계.
-            한국에서 보유자가 흔치 않은 등급. 골프 스윙·신체·건강을 연결해 분석하는 전문가 자격.
+            <strong>Titleist Performance Institute</strong> 인증. Level 1 (2011), Junior Level 2 (2012),
+            Golf Level 2 (2013). 골프 스윙·신체·건강을 연결해 분석하는 자격 체계.
           </p>
           <a href="https://www.mytpi.com" class="credential-link" target="_blank" rel="noopener">
             mytpi.com →
@@ -329,7 +329,7 @@ const articleSchema = {
       <h2>이 페이지에 자주 묻는 질문</h2>
       <details class="faq-detail">
         <summary>채기웅 공작소장은 어떤 자격을 갖고 있나요?</summary>
-        <p>TPI(Titleist Performance Institute) Level 3 인증, 대한민국 특허청(KIPO) 등록 특허 3종, 책 『실제적인 클럽피팅』 저자. 24년 클럽피팅·클럽메이킹 현장 경력.</p>
+        <p>TPI(Titleist Performance Institute) Certified — Level 1, Junior Level 2, Golf Level 2 인증. 대한민국 특허청(KIPO) 등록 특허 3종. 책 『실제적인 클럽피팅』 저자. 24년 클럽피팅·클럽메이킹 현장 경력.</p>
       </details>
       <details class="faq-detail">
         <summary>클럽메이커스는 언제부터 운영되었나요?</summary>
@@ -358,7 +358,7 @@ const articleSchema = {
       name: '채기웅 공작소장은 어떤 자격을 갖고 있나요?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'TPI(Titleist Performance Institute) Level 3 인증, 대한민국 특허청(KIPO) 등록 특허 3종, 책 『실제적인 클럽피팅』 저자. 24년 클럽피팅·클럽메이킹 현장 경력.'
+        text: 'TPI(Titleist Performance Institute) Certified — Level 1, Junior Level 2, Golf Level 2 인증. 대한민국 특허청(KIPO) 등록 특허 3종. 책 『실제적인 클럽피팅』 저자. 24년 클럽피팅·클럽메이킹 현장 경력.'
       }
     },
     {
