@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// 4개 카테고리 × 5개 Q&A = 20개
+// 4개 카테고리 × Q&A = 21개 (BROKEN 5 / PERFORMANCE 6 / REPLACEMENT 5 / GENERAL 5)
 const categories = [
   {
     id: 'broken',
@@ -18,7 +18,6 @@ const categories = [
         ],
         cost: [
           { label: '샤프트 교체 공임', value: '18,000원' },
-          { label: '샤프트 부품', value: '드라이버용 5만 ~ 80만 원 / 아이언 12만 ~ 60만 원대' },
           { label: '연장 수리', value: '별도 견적 (위치·상태에 따라)' }
         ],
         visit: '클럽을 맡기시는 작업입니다. 신규 샤프트 주문 시간과 에폭시 경화 24시간이 필요합니다. 방문 전 전화로 클럽 모델과 부러진 위치를 알려주시면 미리 안내드립니다.',
@@ -60,11 +59,15 @@ const categories = [
       {
         q: '그립이 찢어졌어요. 한 자루만 교체할 수 있나요?',
         situation: '그립이 찢어지거나 닳은 경우입니다. 한 자루 또는 세트 전체일 수 있습니다.',
-        solutionText: '그립 교체가 답입니다. 한 자루만 따로 교체해도 되지만, 세트 전체가 같은 시기에 닳기 시작하면 한꺼번에 교체하시는 것이 일관성 면에서 낫습니다.',
+        solution: [
+          { title: '한 자루만 교체', body: '특정 클럽 그립만 닳거나 찢어진 경우. 그립이 같은 모델이면 손에 닿는 느낌의 차이가 적습니다.' },
+          { title: '전체 교체', body: '14자루 세트 한 번에. 일관성 면에서 추천' }
+        ],
+        solutionText: '그립 종류는 손 크기·기후·취향에 따라 다양해서 직접 잡아보고 결정하시는 것이 좋습니다.',
         cost: [
           { label: '그립 장착 공임 (그립을 가져오실 시)', value: '5,000원 / 한 자루' },
-          { label: '그립 부품', value: '일반 1~2만 원, 프리미엄 3만 원 이상' },
-          { label: '14자루 세트 전체', value: '공임 7만 원 + 그립값' }
+          { label: '퍼터 그립 (그립 가져오실 시)', value: '7,000원' },
+          { label: '그립 부품', value: '캐비어, 프라이드 2~3만원 / 슈퍼스트록 퍼터그립 4~5만원' }
         ],
         visit: '즉시 가능한 작업입니다. 한 자루는 10~15분, 세트 전체는 약 1시간이면 마무리됩니다.',
         actions: [
@@ -202,6 +205,33 @@ const categories = [
           { href: '/system', label: '공작소의 시스템' },
           { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
         ]
+      },
+      {
+        q: '구질이 갑자기 변했어요. 클럽 문제일까요?',
+        situation: '같은 클럽, 같은 스윙인데 구질이 달라진 경우입니다. 두 가지 패턴으로 자주 듣습니다.',
+        intro: '<strong>패턴 1 — 드라이버가 쭉 뻗다가 갑자기 뚝 떨어진다</strong> (백스핀 과다)<br/>캐리는 적당한데 런이 거의 없고, 같은 헤드스피드인데 거리가 평소보다 짧습니다.',
+        bullets: [
+          '<strong>로프트 과다</strong>: 슬리브가 잘못 조정되었거나, 어택앵글이 음수로 변해 다이나믹 로프트 상승',
+          '<strong>샤프트 강도 부족</strong>: 샤프트가 너무 약해서 임팩트에서 페이스가 닫히지 않고 위로 들림',
+          '<strong>타점 하단 편향</strong>: 페이스 아래쪽에 자주 맞아 기어이펙트로 백스핀 증가'
+        ],
+        intro2: '<strong>패턴 2 — 드라이버 친 후 아이언이 밀린다, 또는 연습장에선 괜찮은데 필드에서 감긴다</strong> (클럽 간 밸런스 붕괴 가능성)<br/>한 클럽이 다른 클럽으로 넘어갈 때 일관성이 깨지는 패턴입니다.',
+        bullets2: [
+          '<strong>MOI 매칭 미흡</strong>: 드라이버와 아이언 사이 SW·총무게 갭이 너무 큼',
+          '<strong>샤프트 강도 갭</strong>: 드라이버는 단단한데 아이언은 무르거나 그 반대',
+          '<strong>세트 일관성 문제</strong>: 클럽들이 한 세트로 매칭되어 있지 않음'
+        ],
+        solutionText: '원인이 다양해 분석을 통해 정확한 진단이 먼저입니다. 헤드스피드·타점·스매시 팩터·런치 앵글까지 확인하면 어느 변수가 원인인지 좁혀집니다.',
+        cost: [
+          { label: '분석 프로그램', value: '60,000원 (낮시간 45,000원)' },
+          { label: '진단 결과에 따라', value: '슬리브 조정 / 샤프트 교체 / SW·MOI 조정 등 별도 견적' }
+        ],
+        visit: '분석은 예약제로 진행됩니다. 1:1 약 40~60분.',
+        actions: [
+          { href: '/topics', label: '증상별 진단' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
       }
     ]
   },
@@ -213,9 +243,9 @@ const categories = [
     items: [
       {
         q: '샤프트 교체는 어떻게 진행되나요?',
-        situation: '샤프트 노후나 거동 변화로 샤프트를 교체하고 싶은 경우입니다.',
+        situation: '샤프트 노후나 강도 변화로 샤프트를 교체하고 싶은 경우입니다.',
         solution: [
-          { title: '1. 분석', body: '현재 클럽의 샤프트 거동(CPM·EI·토크)과 골퍼의 스윙 매칭 확인' },
+          { title: '1. 분석', body: '현재 클럽의 샤프트 강도(CPM·EI·토크)와 골퍼의 스윙 매칭 확인' },
           { title: '2. 샤프트 선택', body: '분석 결과에 맞는 모델 추천 (저희가 무리하게 권하지 않습니다)' },
           { title: '3. 분리·재조립', body: '헤드 분리 → 신규 샤프트 길이 재단 → 에폭시로 결합 → 그립 장착' },
           { title: '4. 검증', body: '라이각·SW 재측정 후 필요 시 미세 조정' }
@@ -225,8 +255,7 @@ const categories = [
           { label: '분석 (권장)', value: '60,000원 / 낮시간 45,000원' },
           { label: '샤프트 교체 공임', value: '18,000원' },
           { label: '길이 재단 샤프트 교체', value: '25,000원' },
-          { label: '슬리브 (드라이버 어댑터)', value: '12,000원' },
-          { label: '샤프트 부품', value: '드라이버용 5만 ~ 80만 원, 아이언 12만 ~ 60만 원대' }
+          { label: '슬리브 (드라이버 어댑터)', value: '12,000원' }
         ],
         visit: '클럽을 맡기시는 작업입니다. 에폭시 경화 24시간 필요. 분석부터 시작하시면 같은 자리에서 분석 → 작업 결정 → 클럽 맡기기까지 가능합니다.',
         actions: [
@@ -250,9 +279,8 @@ const categories = [
         solutionText: '그립 종류는 손 크기·기후·취향에 따라 다양해서 직접 잡아보고 결정하시는 것이 좋습니다.',
         cost: [
           { label: '그립 장착 공임 (그립을 가져오실 시)', value: '5,000원 / 한 자루' },
-          { label: '퍼터 그립', value: '7,000원' },
-          { label: '그립 부품', value: '일반 1~2만 원, 프리미엄 3만 원 이상' },
-          { label: '14자루 세트 전체', value: '공임 7만 원 + 그립값' }
+          { label: '퍼터 그립 (그립 가져오실 시)', value: '7,000원' },
+          { label: '그립 부품', value: '캐비어, 프라이드 2~3만원 / 슈퍼스트록 퍼터그립 4~5만원' }
         ],
         visit: '즉시 가능한 작업입니다. 한 자루는 10분, 세트 전체는 약 1시간. 분석·교육 예약과 겹치지 않으면 방문 즉시 진행됩니다.',
         actions: [
@@ -271,8 +299,7 @@ const categories = [
         ],
         cost: [
           { label: '다이나믹 라이 테스트', value: '분석 프로그램에 포함 (60,000원)' },
-          { label: '라이·로프트 조정', value: '10,000원 / 클럽' },
-          { label: '14자루 일괄', value: '별도 견적' }
+          { label: '라이·로프트 조정', value: '10,000원 / 클럽' }
         ],
         visit: '라이각 조정 자체는 즉시 가능한 작업입니다 (각 클럽당 몇 분 ~ 10분). 진단이 먼저이므로 분석 예약과 같이 가시는 것이 정확합니다.',
         actions: [
@@ -315,11 +342,6 @@ const categories = [
           '<strong>SW 부족 (헤드 안 느껴짐)</strong>: 헤드 무게 부족 또는 그립이 너무 무거워 SW가 낮아짐',
           '<strong>SW 과다 (헤드 무거움)</strong>: 그 반대',
           '<strong>클럽들 사이 MOI 불일치</strong>: 7번 아이언은 잘 맞는데 5번이나 9번은 어렵다 — 세트 일관성 문제'
-        ],
-        solution: [
-          { title: '납테이프로 헤드 무게 추가', body: '가장 간단' },
-          { title: '그립 교체로 그립 쪽 무게 변경', body: '그립 +5g당 SW -1pt 정도' },
-          { title: '길이 조정도 SW에 영향', body: '1인치 단축 = SW -3pt 정도' }
         ],
         solutionText: 'MOI 매칭은 좀 더 정밀한 작업입니다. 분해 없이 가능한 케이스와 헤드 분리해야 하는 케이스가 갈립니다.',
         cost: [
@@ -440,8 +462,8 @@ const faqSchemaItems = categories.flatMap(cat =>
 ---
 
 <BaseLayout
-  title="수리·작업 Q&A — 자주 묻는 20가지"
-  description="샤프트 교체, 그립 교체, 라이각 조정, 거리·슬라이스 문제 — 클럽 수리·작업과 관련된 자주 묻는 20가지 질문에 대한 답. 비용·소요시간·예약 안내까지 포함. 클럽메이커스 24년의 현장 답변."
+  title="수리·작업 Q&A — 자주 묻는 21가지"
+  description="샤프트 교체, 그립 교체, 라이각 조정, 거리·슬라이스·구질 문제 — 클럽 수리·작업과 관련된 자주 묻는 21가지 질문에 대한 답. 비용·소요시간·예약 안내까지 포함. 클럽메이커스 24년의 현장 답변."
   schemaType="FAQPage"
 >
 
@@ -458,7 +480,7 @@ const faqSchemaItems = categories.flatMap(cat =>
       <div class="page-hero-eyebrow">QNA · 수리·작업 자주 묻는 질문</div>
       <h1>"샤프트가 부러졌어요"<br>"그립을 바꾸고 싶은데"</h1>
       <p class="page-hero-subtitle">
-        실제 자주 듣는 <strong>20가지 질문</strong>에 대한 답을 정리했습니다.
+        실제 자주 듣는 <strong>21가지 질문</strong>에 대한 답을 정리했습니다.
         각 답에는 비용·소요시간·방문 안내까지 포함되어 있습니다.<br/>
         <span class="hero-sub-light">— 클럽메이커스 24년의 현장 답변.</span>
       </p>
@@ -502,7 +524,7 @@ const faqSchemaItems = categories.flatMap(cat =>
                 {item.answer && <p class="qna-answer-strong">{item.answer}</p>}
                 {item.situation && <p class="qna-paragraph">{item.situation}</p>}
                 {item.cause && <p class="qna-paragraph"><strong>원인 — </strong>{item.cause}</p>}
-                {item.intro && <p class="qna-paragraph">{item.intro}</p>}
+                {item.intro && <p class="qna-paragraph" set:html={item.intro} />}
 
                 {item.notice && (
                   <aside class="qna-notice">
@@ -514,6 +536,16 @@ const faqSchemaItems = categories.flatMap(cat =>
                 {item.bullets && (
                   <ul class="qna-bullets">
                     {item.bullets.map((b) => (
+                      <li set:html={b} />
+                    ))}
+                  </ul>
+                )}
+
+                {item.intro2 && <p class="qna-paragraph" set:html={item.intro2} />}
+
+                {item.bullets2 && (
+                  <ul class="qna-bullets">
+                    {item.bullets2.map((b) => (
                       <li set:html={b} />
                     ))}
                   </ul>
