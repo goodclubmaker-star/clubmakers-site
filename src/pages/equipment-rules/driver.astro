@@ -94,38 +94,44 @@ const faqSchema = {
     <div class="section-content-narrow">
       <p class="section-eyebrow">QUICK SUMMARY · 5가지 한계</p>
       <h2>드라이버 규정의 핵심 5가지</h2>
+      <p class="quick-hint">카드를 누르시면 상세 설명으로 이동합니다.</p>
       <div class="quick-grid quick-grid-5">
-        <div class="quick-card">
+        <a href="#cor" class="quick-card">
           <p class="quick-num">01</p>
           <h3 class="quick-title">반발계수<br/><strong>COR 0.830</strong></h3>
           <p class="quick-body">실측은 CT(Characteristic Time) <strong>257μs</strong>로 합니다.</p>
-        </div>
-        <div class="quick-card">
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#volume" class="quick-card">
           <p class="quick-num">02</p>
           <h3 class="quick-title">헤드 부피<br/><strong>460cc</strong></h3>
           <p class="quick-body">측정 허용오차 +10cc까지 인정. 실효 한계 <strong>470cc</strong>.</p>
-        </div>
-        <div class="quick-card">
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#moi" class="quick-card">
           <p class="quick-num">03</p>
           <h3 class="quick-title">관성모멘트<br/><strong>MOI 5,900</strong></h3>
           <p class="quick-body">수직축 기준 g·cm². 오프센터 안정성 한계.</p>
-        </div>
-        <div class="quick-card">
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#length" class="quick-card">
           <p class="quick-num">04</p>
           <h3 class="quick-title">클럽 길이<br/><strong>48인치</strong></h3>
           <p class="quick-body">엘리트 대회는 <strong>46인치</strong> 모범 로컬 룰.</p>
-        </div>
-        <div class="quick-card">
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#dimensions" class="quick-card">
           <p class="quick-num">05</p>
           <h3 class="quick-title">헤드 치수<br/><strong>5.0 × 2.8</strong></h3>
           <p class="quick-body">힐-토 5.0인치 / 솔-크라운 2.8인치 한계.</p>
-        </div>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- 3. 반발계수 (COR / CT) -->
-  <section class="section">
+  <section class="section" id="cor">
     <div class="section-content-narrow">
       <p class="section-eyebrow">REGULATION 01 · 반발계수</p>
       <h2>COR 0.830 — 가장 오래되고 가장 중요한 한계</h2>
@@ -186,7 +192,7 @@ const faqSchema = {
   </section>
 
   <!-- 4. 헤드 부피 (460cc) -->
-  <section class="section section-bg-cream">
+  <section class="section section-bg-cream" id="volume">
     <div class="section-content-narrow">
       <p class="section-eyebrow">REGULATION 02 · 헤드 부피</p>
       <h2>460cc — 22년째 변하지 않은 한계</h2>
@@ -223,7 +229,7 @@ const faqSchema = {
   </section>
 
   <!-- 5. MOI (관성모멘트) -->
-  <section class="section">
+  <section class="section" id="moi">
     <div class="section-content-narrow">
       <p class="section-eyebrow">REGULATION 03 · 관성모멘트</p>
       <h2>MOI 5,900 g·cm² — 미스히트에 얼마나 관용적인가</h2>
@@ -267,7 +273,7 @@ const faqSchema = {
   </section>
 
   <!-- 6. 길이 (48인치 / 46인치) -->
-  <section class="section section-bg-soft">
+  <section class="section section-bg-soft" id="length">
     <div class="section-content-narrow">
       <p class="section-eyebrow">REGULATION 04 · 클럽 길이</p>
       <h2>48인치 / 46인치 — 두 가지 한계가 공존</h2>
@@ -328,7 +334,7 @@ const faqSchema = {
   </section>
 
   <!-- 7. 헤드 치수 -->
-  <section class="section">
+  <section class="section" id="dimensions">
     <div class="section-content-narrow">
       <p class="section-eyebrow">REGULATION 05 · 헤드 치수</p>
       <h2>5.0 × 2.8 — 부피와 함께 작동하는 모양 한계</h2>
@@ -553,6 +559,13 @@ const faqSchema = {
   }
 
   /* ==================== QUICK SUMMARY 5 카드 ==================== */
+  .quick-hint {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
   .quick-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -573,6 +586,20 @@ const faqSchema = {
     border-top: 3px solid var(--green);
     padding: 22px 22px;
     border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .quick-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(15, 41, 34, 0.12);
+    border-top-color: var(--gold);
+  }
+  .quick-card:hover .quick-arrow {
+    color: var(--gold);
   }
   .quick-num {
     font-family: var(--font-serif);
@@ -600,9 +627,23 @@ const faqSchema = {
     font-size: 13px;
     line-height: 1.7;
     color: var(--ink-2);
-    margin: 0;
+    margin: 0 0 14px;
+    flex: 1;
   }
   .quick-body strong { color: var(--ink); font-weight: 700; }
+  .quick-arrow {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    margin-top: auto;
+    transition: color 0.2s;
+  }
+
+  /* 앵커 점프 시 상단 nav에 가려지지 않게 */
+  section[id] {
+    scroll-margin-top: 80px;
+  }
 
   /* ==================== Rule 본문 ==================== */
   .section-body {
