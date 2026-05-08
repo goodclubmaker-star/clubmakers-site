@@ -1,43 +1,80 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// 공임표 17개 (페이지 8-5)
-const priceList = [
-  { label: '헤드·샤프트 연결부 수리', price: '18,000' },
-  { label: '페룰 헐거움', price: '5,000' },
-  { label: '샤프트 교체', price: '18,000' },
-  { label: '슬리브 교체', price: '18,000' },
-  { label: '헤드·샤프트 분리', price: '10,000' },
-  { label: '그립 장착', price: '5,000' },
-  { label: '그립 추출', price: '5,000' },
-  { label: '퍼터 그립', price: '7,000' },
-  { label: '길이재단 샤프트 교체', price: '25,000' },
-  { label: '연장', price: '10,000' },
-  { label: '조립', price: '10,000' },
-  { label: '클럽 제작', price: '25,000' },
-  { label: '정밀 조립 (MOI 매칭 + 길이 + 밸런스 포함)', price: '30,000' },
-  { label: 'MOI 매칭', price: '25,000' },
-  { label: '스윙웨이트 조정', price: '5,000' },
-  { label: '라이·로프트 조정', price: '10,000' },
-  { label: '슬리브 (타이틀·캘러웨이·테일러·핑)', price: '12,000' },
+// 공임표 — 카테고리별 묶음
+const priceGroups = [
+  {
+    title: '헤드 · 샤프트',
+    items: [
+      { label: '헤드·샤프트 연결부 수리', price: '18,000' },
+      { label: '페룰 헐거움', price: '5,000' },
+      { label: '샤프트 교체', price: '18,000' },
+      { label: '슬리브 교체', price: '18,000' },
+      { label: '헤드·샤프트 분리', price: '10,000' },
+      { label: '슬리브 (타이틀·캘러웨이·테일러·핑)', price: '12,000' },
+      { label: '클럽 제작', price: '25,000' },
+      { label: '정밀 조립 (MOI 매칭 + 길이 + 밸런스 포함)', price: '30,000' },
+    ],
+  },
+  {
+    title: '그립',
+    items: [
+      { label: '그립 장착 (고객님이 그립을 가져오실 시)', price: '5,000' },
+      { label: '그립 추출', price: '5,000' },
+      { label: '퍼터 그립', price: '7,000' },
+    ],
+  },
+  {
+    title: '길이 · 밸런스',
+    items: [
+      { label: '길이재단 샤프트 교체', price: '25,000' },
+      { label: '연장', price: '10,000' },
+      { label: '스윙웨이트 조정', price: '5,000' },
+      { label: 'MOI 매칭 (분해 없이 납테이프로 증가)', price: '5,000' },
+      { label: 'MOI 매칭 (헤드 분리 시)', price: '25,000' },
+    ],
+  },
+  {
+    title: '라이 · 로프트',
+    items: [
+      { label: '라이·로프트 조정', price: '10,000' },
+    ],
+  },
 ];
 ---
 
 <BaseLayout
-  title="공작소의 작업"
-  description="클럽메이커스 공작소의 작업 — 분석 프로그램 60,000원 (낮시간 45,000원), 정직한 공임표 17개 항목. 24년의 숙련. 무리한 판매를 권하지 않습니다. 서울 서초구 가보빌딩 지하층."
+  title="공작소의 작업 — 공임 안내"
+  description="클럽메이커스 공작소의 작업과 공임. 분석 프로그램 60,000원 (낮시간 45,000원), 카테고리별 공임표 18개 항목 공개. 24년의 숙련. 무리한 판매를 권하지 않습니다. 서울 서초구 가보빌딩 지하층."
   schemaType="AboutPage"
+  keywords="클럽메이커스, 골프채수리, 샤프트교체, 그립교체, 라이각조정, MOI매칭, 클럽피팅 가격, 양재동 골프공작소"
 >
 
   <!-- 8-1. 히어로 -->
   <section class="page-hero workshop-hero">
     <div class="page-hero-content">
       <div class="page-hero-eyebrow">WORKSHOP · 공작소의 작업</div>
-      <h1>공작소의 작업</h1>
+      <h1>꼼꼼하게,<br>필요한 만큼만</h1>
       <p class="page-hero-subtitle">
-        서울 서초동, 가보빌딩 지하층.<br />
-        모든 작업은 예약제로 진행됩니다.
+        24년 동안 다듬어 온 클럽 작업입니다. 무리한 판매를 권하지 않고,
+        <strong>고객님께 필요한 만큼만 작업</strong>합니다. 모든 공임을 공개합니다.<br/>
+        <span class="hero-sub-light">서울 서초구 양재동, 가보빌딩 지하층.</span>
       </p>
+    </div>
+  </section>
+
+  <!-- 8-1.5. 예약 안내 박스 — contact와 일관 -->
+  <section class="section reserve-notice-section">
+    <div class="section-content-narrow">
+      <div class="reserve-notice">
+        <p class="reserve-notice-label">RESERVATION · 예약 안내</p>
+        <p class="reserve-notice-body">
+          <strong>분석과 교육은 예약제로 진행</strong>합니다.
+          그립 교체·라이각 조정 등 <strong>즉시 가능한 작업은 예약 없이 방문</strong>하셔도 됩니다.
+          종류에 따라 즉시 가능한 작업과 클럽을 맡기고 찾으셔야 하는 작업이 있어,
+          방문 전 <a href="tel:01043635555">전화 한 통</a> 주시면 가장 확실합니다.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -127,26 +164,87 @@ const priceList = [
     </div>
   </section>
 
-  <!-- 8-5. 공임표 -->
+  <!-- 8-5. 공임표 (카테고리별) -->
   <section class="section">
     <div class="section-content-narrow">
       <p class="section-eyebrow">PRICE · 공임표</p>
       <h2>정직한 가격, 명확한 기준</h2>
       <p class="price-intro">
-        공작소에서 가장 자주 하는 작업 17가지의 공임을 모두 공개합니다.
-        부품(그립·샤프트·슬리브) 가격은 별도이며, 정확한 견적은 클럽을 직접 보고 안내드립니다.
+        공작소에서 자주 하는 작업을 카테고리별로 정리했습니다.
+        <strong>부품(그립·샤프트·헤드 등) 가격은 별도</strong>이며 — 이 페이지 아래쪽에 안내해 두었습니다.
+        정확한 견적은 클럽을 직접 보고 안내드립니다.
       </p>
 
-      <table class="price-table">
-        <tbody>
-          {priceList.map((item) => (
-            <tr>
-              <td class="price-label">{item.label}</td>
-              <td class="price-value"><strong>{item.price}</strong>원</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {priceGroups.map((group) => (
+        <div class="price-group">
+          <h3 class="price-group-title">{group.title}</h3>
+          <table class="price-table">
+            <tbody>
+              {group.items.map((item) => (
+                <tr>
+                  <td class="price-label">{item.label}</td>
+                  <td class="price-value"><strong>{item.price}</strong>원</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 8-5.5. 부품 단가 안내 -->
+  <section class="section section-bg-soft parts-section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">PARTS · 부품 단가 안내</p>
+      <h2>부품 가격은 별도입니다</h2>
+      <p class="parts-intro">
+        공임은 작업 비용입니다. 샤프트·그립·헤드 등 <strong>부품 가격은 제품에 따라 다양</strong>해서
+        공임표에 포함하지 않았습니다. 부품별로 일반적인 가격대를 안내드리며,
+        실제 견적은 고객님이 원하시는 모델·브랜드에 따라 달라집니다.
+      </p>
+
+      <div class="parts-grid">
+        <div class="parts-card">
+          <p class="parts-label">SHAFT</p>
+          <h3 class="parts-title">샤프트</h3>
+          <p class="parts-desc">
+            드라이버·우드용은 <strong>5만 원대 ~ 80만 원 이상</strong>까지 다양합니다 (모델에 따라).
+            아이언 스틸은 12만 원 ~ 20만 원, 아이언 그라파이트는 30만 원 ~ 60만 원대.
+          </p>
+          <p class="parts-note">정확한 견적은 원하시는 모델 확인 후 안내드립니다.</p>
+        </div>
+
+        <div class="parts-card">
+          <p class="parts-label">GRIP</p>
+          <h3 class="parts-title">그립</h3>
+          <p class="parts-desc">
+            일반 라운드 그립 <strong>1만 원 ~ 2만 원대</strong>가 보편적입니다.
+            프리미엄 그립(가죽·실리콘 코어 등)은 3만 원 이상.
+          </p>
+          <p class="parts-note">고객님이 그립을 가져오시면 장착 공임만 받습니다.</p>
+        </div>
+
+        <div class="parts-card">
+          <p class="parts-label">HEAD</p>
+          <h3 class="parts-title">헤드</h3>
+          <p class="parts-desc">
+            드라이버 헤드 단품은 <strong>20만 원 ~ 100만 원 이상</strong>, 아이언 헤드 세트는
+            모델·브랜드에 따라 차이가 큽니다.
+          </p>
+          <p class="parts-note">신클럽 제작 또는 헤드 교체 작업 시 안내드립니다.</p>
+        </div>
+
+        <div class="parts-card">
+          <p class="parts-label">ETC</p>
+          <h3 class="parts-title">기타 부품</h3>
+          <p class="parts-desc">
+            슬리브 어댑터, 페룰, 납테이프, 카운터밸런스 웨이트 등은
+            <strong>몇 천 원 ~ 2만 원대</strong> 범위입니다.
+          </p>
+          <p class="parts-note">작업에 필요한 만큼만 청구합니다.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -169,8 +267,42 @@ const priceList = [
     </div>
   </section>
 
+  <!-- 8-6.5. 책 / 시스템으로 가는 다리 -->
+  <section class="section bridge-section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">DEEPER · 작업의 원리는</p>
+      <h2>왜 이 작업이 필요한가</h2>
+      <p class="bridge-lead">
+        공임표는 작업의 가격입니다. <strong>이 작업이 골퍼의 어떤 변수에 영향을 주는지</strong>,
+        피팅 진행 단계에서 어디에 위치하는지는 별도로 정리되어 있습니다.
+      </p>
+
+      <div class="bridge-grid">
+        <a href="/book" class="bridge-card">
+          <p class="bridge-label">CONCEPT</p>
+          <h3 class="bridge-title">『실제적인 클럽피팅』</h3>
+          <p class="bridge-desc">
+            라이각·로프트·MOI·SW·EI — 각 작업이 다루는 변수가 클럽피팅 판단에서
+            어떻게 쓰이는지 본문 14 PART에 정리되어 있습니다.
+          </p>
+          <span class="bridge-arrow">→</span>
+        </a>
+
+        <a href="/system" class="bridge-card">
+          <p class="bridge-label">SYSTEM</p>
+          <h3 class="bridge-title">공작소의 시스템</h3>
+          <p class="bridge-desc">
+            인터뷰부터 처방까지 6단계 시스템. 어떤 작업이 어느 단계에서 결정되는지
+            살펴보실 수 있습니다.
+          </p>
+          <span class="bridge-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- 8-7. 위치와 예약 -->
-  <section class="section">
+  <section class="section section-bg-soft">
     <div class="section-content-narrow">
       <p class="section-eyebrow">LOCATION · 위치와 예약</p>
       <h2>찾아오시거나, 연락주세요</h2>
@@ -182,11 +314,13 @@ const priceList = [
         </tbody>
       </table>
       <p class="location-note">
-        모든 작업은 예약제로 진행됩니다.
-        분석 프로그램은 네이버 예약을 통해 진행됩니다.
+        분석과 교육은 예약제로 진행됩니다. 작업은 종류에 따라 즉시 가능 또는 맡김 작업으로 나뉘니,
+        방문 전 전화 한 통 주시면 가장 확실합니다.
       </p>
       <div class="cta-row">
         <a href="https://naver.me/GfrbfXtX" class="btn-primary" target="_blank" rel="noopener">분석 예약하기</a>
+        <a href="/why-fitting" class="btn-ghost">공작소의 철학 →</a>
+        <a href="/system" class="btn-ghost">공작소의 시스템 →</a>
         <a href="/contact" class="btn-ghost">기타 문의</a>
       </div>
     </div>
@@ -249,6 +383,45 @@ const priceList = [
     line-height: 1.7;
     color: var(--ink);
   }
+
+  /* ===== Hero subtitle ===== */
+  .hero-sub-light {
+    font-size: 14px;
+    color: var(--grey);
+    font-weight: 400;
+  }
+
+  /* ===== 8-1.5 예약 안내 박스 ===== */
+  .reserve-notice-section {
+    padding-top: 0 !important;
+  }
+  .reserve-notice {
+    background: var(--bg-soft, #F1ECE0);
+    border-left: 3px solid var(--gold, #C19A4F);
+    padding: 22px 26px;
+    border-radius: 4px;
+  }
+  .reserve-notice-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold, #C19A4F);
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+  .reserve-notice-body {
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: var(--ink-2, var(--ink, #1F1B16));
+    margin: 0;
+  }
+  .reserve-notice-body strong { color: var(--ink); font-weight: 600; }
+  .reserve-notice-body a {
+    color: var(--green, #2C5F4F);
+    border-bottom: 1px solid var(--green, #2C5F4F);
+    font-weight: 600;
+  }
+  .reserve-notice-body a:hover { color: var(--green-2); }
 
   /* ===== 8-4 ANALYSIS ===== */
   .analysis-section {
@@ -337,12 +510,30 @@ const priceList = [
     background: var(--gold-soft);
   }
 
-  /* ===== 8-5 공임표 ===== */
+  /* ===== 8-5 공임표 (카테고리별) ===== */
   .price-intro {
     font-size: 15px;
     line-height: 1.85;
     color: var(--grey);
     margin-bottom: 32px;
+  }
+  .price-intro strong { color: var(--ink, #1F1B16); font-weight: 600; }
+
+  .price-group {
+    margin-bottom: 28px;
+  }
+  .price-group:last-child {
+    margin-bottom: 0;
+  }
+  .price-group-title {
+    font-family: var(--font-serif, serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green, #2C5F4F);
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--green, #2C5F4F);
+    letter-spacing: -0.01em;
   }
   .price-table {
     width: 100%;
@@ -378,6 +569,62 @@ const priceList = [
     font-size: 17px;
   }
 
+  /* ===== 8-5.5 부품 단가 안내 ===== */
+  .parts-intro {
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 32px;
+  }
+  .parts-intro strong { color: var(--ink); font-weight: 600; }
+
+  .parts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .parts-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .parts-card {
+    background: white;
+    border: 1px solid var(--line, #E2DACA);
+    border-top: 3px solid var(--gold, #C19A4F);
+    padding: 24px 26px 22px;
+    border-radius: 4px;
+  }
+  .parts-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--gold, #C19A4F);
+    margin: 0 0 8px;
+  }
+  .parts-title {
+    font-family: var(--font-serif, serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink, #1F1B16);
+    margin: 0 0 12px;
+    line-height: 1.4;
+  }
+  .parts-desc {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-2, var(--ink, #1F1B16));
+    margin: 0 0 12px;
+  }
+  .parts-desc strong { color: var(--ink); font-weight: 600; }
+  .parts-note {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--grey, #6B6358);
+    margin: 0;
+    padding-top: 10px;
+    border-top: 1px dotted var(--line, #E2DACA);
+    font-style: italic;
+  }
+
   /* ===== 8-6 자부심 ===== */
   .pride-intro {
     font-size: 16px;
@@ -399,6 +646,81 @@ const priceList = [
     font-weight: 600;
     color: var(--ink);
     font-size: 15px;
+  }
+
+  /* ===== 8-6.5 다리 섹션 ===== */
+  .bridge-section h2 {
+    font-family: var(--font-serif, serif);
+    margin-bottom: 16px;
+  }
+  .bridge-lead {
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: var(--ink-2, var(--ink, #1F1B16));
+    margin-bottom: 32px;
+    max-width: 620px;
+  }
+  .bridge-lead strong { color: var(--ink); font-weight: 600; }
+  .bridge-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .bridge-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .bridge-card {
+    background: var(--bg-elev, #FFFFFF);
+    border: 1px solid var(--line, #E2DACA);
+    border-top: 3px solid var(--green, #2C5F4F);
+    padding: 28px 26px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink, #1F1B16);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s, background 0.25s;
+    position: relative;
+    padding-right: 50px;
+  }
+  .bridge-card:hover {
+    transform: translateY(-3px);
+    background: var(--green-soft, #E6EDE7);
+  }
+  .bridge-card:hover .bridge-arrow {
+    color: var(--green, #2C5F4F);
+    transform: translateY(-50%) translateX(4px);
+  }
+  .bridge-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--green, #2C5F4F);
+    margin: 0 0 12px;
+  }
+  .bridge-title {
+    font-family: var(--font-serif, serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink, #1F1B16);
+    margin: 0 0 12px;
+    line-height: 1.4;
+  }
+  .bridge-desc {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-2, var(--ink, #1F1B16));
+    margin: 0;
+    flex: 1;
+  }
+  .bridge-arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--gold, #C19A4F);
+    transition: color 0.2s, transform 0.2s;
   }
 
   /* ===== 8-7 위치 ===== */
@@ -455,6 +777,9 @@ const priceList = [
     .price-value {
       width: 100px;
     }
+    .price-group-title {
+      font-size: 16px;
+    }
     .closing-section {
       padding: 70px 24px;
     }
@@ -467,5 +792,7 @@ const priceList = [
     .cta-row a {
       text-align: center;
     }
+    .parts-card { padding: 22px 22px 18px; }
+    .bridge-card { padding: 24px 22px 20px; padding-right: 44px; }
   }
 </style>
