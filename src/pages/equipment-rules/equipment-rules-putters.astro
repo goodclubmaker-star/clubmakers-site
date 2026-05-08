@@ -1,0 +1,875 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const putterRulesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': 'https://myclubmakers.com/equipment-rules/putters/#article',
+  headline: '퍼터 장비 규정 — 앵커링 금지·롱퍼터·브룸스틱·벨리퍼터·암락',
+  description: '2016년 1월 발효된 Rule 10.1b 앵커링 금지 규정 한글 정리. 롱퍼터·벨리퍼터·브룸스틱은 여전히 합법, 다만 몸에 고정시키지 못함. 아담 스콧·디섐보·키건 브래들리의 합법적 사용 예시 포함.',
+  inLanguage: 'ko-KR',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+    url: 'https://myclubmakers.com',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '롱퍼터(브룸스틱)는 지금 사용해도 되나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '네, 합법입니다. 2016년 발효된 Rule 10.1b는 장비가 아니라 스트로크 방식을 규정하는 룰입니다. 롱퍼터·벨리퍼터·브룸스틱은 여전히 합법이며, 다만 클럽을 몸에 고정(앵커링)시키지 않고 사용해야 합니다. 아담 스콧이 대표적 예시 — 롱퍼터의 그립 끝을 가슴에서 살짝 떨어뜨려 잡습니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '벨리퍼터를 배에 대고 치는 것이 왜 금지되었나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'USGA·R&A는 "자유롭게 휘두르는 스트로크(free swing)"를 골프 스트로크의 본질로 보고 있습니다. 클럽을 몸에 고정시키면 그 고정점이 회전축 역할을 해서 자유로운 스트로크가 아니라는 판단이었습니다. 2011~2013년 메이저 우승자 4명이 모두 앵커링 사용자였던 것도 결정 배경입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Arm-lock(암락) 퍼팅은 합법인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '네, 합법입니다. Rule 10.1b는 클럽이나 손이 "몸"에 닿는 것을 금지합니다. 다만 클럽이 "팔뚝"에 닿는 것은 명시적으로 허용됩니다. 브라이슨 디섐보·키건 브래들리·맷 쿠차가 사용하는 방식이 이 케이스입니다. 롱퍼터를 팔뚝에 기대고 치는 방식은 합법입니다.',
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="퍼터 규정 — 앵커링 금지·롱퍼터·브룸스틱"
+  description="2016년 1월 발효된 Rule 10.1b 앵커링 금지 규정 한글 정리. 롱퍼터·벨리퍼터·브룸스틱은 여전히 합법, 다만 몸에 고정시키지 못함. 아담 스콧·디섐보의 합법적 사용 예시. 클럽메이커스 24년 현장 해석."
+  schemaType="Article"
+  keywords="앵커링 금지, Rule 10.1b, Rule 14-1b, 롱퍼터, 벨리퍼터, 브룸스틱, 암락 퍼팅, arm-lock, 아담 스콧, 디섐보, 키건 브래들리, 퍼터 길이 48인치, 퍼터 규정, USGA 퍼터, R&A 퍼터, 골프 룰 퍼터"
+  extraSchema={[putterRulesSchema, faqSchema]}
+>
+
+  <!-- 1. Hero -->
+  <section class="page-hero putter-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">EQUIPMENT RULES · TOPIC 07 · 퍼터 규정</div>
+      <h1>퍼터 — 앵커링 금지와<br/>롱퍼터의 운명</h1>
+      <p class="page-hero-subtitle">
+        퍼터는 골프 클럽 중 가장 자유로운 형태가 허용되는 클럽입니다. 그러나 <strong>스트로크 방식</strong>에는 분명한 제한이 있습니다.<br/>
+        <span class="hero-sub-light">2016년 발효된 Rule 10.1b는 "앵커링(클럽을 몸에 고정시키는 것)"을 금지합니다. 그 의미와 한계를 정리합니다.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. 빠른 핵심 박스 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">QUICK SUMMARY · 한 줄 요약</p>
+      <h2>퍼터 규정의 핵심 4가지</h2>
+      <div class="quick-grid">
+        <div class="quick-card">
+          <p class="quick-num">01</p>
+          <h3 class="quick-title">롱퍼터·브룸스틱·벨리퍼터<br>모두 <strong>합법</strong></h3>
+          <p class="quick-body">2016년 룰은 장비를 금지한 것이 아니라 <strong>스트로크 방식</strong>을 규정합니다.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">02</p>
+          <h3 class="quick-title">앵커링은 <strong>금지</strong></h3>
+          <p class="quick-body">클럽이나 손을 몸에 고정시키는 것 / 팔뚝을 몸에 대서 앵커 포인트 만드는 것 모두 금지.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">03</p>
+          <h3 class="quick-title">Arm-lock은 <strong>합법</strong></h3>
+          <p class="quick-body">클럽이 팔뚝에 닿는 것은 명시적으로 허용. 브라이슨 디섐보·키건 브래들리 사용 방식.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">04</p>
+          <h3 class="quick-title">최대 길이 <strong>48인치</strong></h3>
+          <p class="quick-body">일반 클럽 길이 규정 적용. 퍼터에는 46인치 모범 로컬 룰이 <strong>적용되지 않음</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 앵커링 금지 — 본문 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RULE 10.1b · 앵커링 금지</p>
+      <h2>"클럽을 몸에 고정시키지 않는다"</h2>
+      <p class="section-body">
+        2016년 1월 1일 발효된 <strong>Rule 14-1b</strong> (현행 룰북에서 <strong>Rule 10.1b</strong>로 재편)는
+        앵커링을 두 가지 방식으로 금지합니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">Rule 10.1b — 앵커링의 두 가지 형태</p>
+        <ul class="rule-list">
+          <li>
+            <strong>① 직접 앵커링 (Direct Anchoring)</strong><br/>
+            클럽이나 클럽을 잡은 손을 <strong>몸의 어느 부분에든 직접 닿게 고정</strong>시키는 것.
+            예: 벨리퍼터 그립 끝을 배에 대고 치기 / 브룸스틱 그립을 가슴이나 턱에 대고 치기.
+          </li>
+          <li>
+            <strong>② 간접 앵커링 (Indirect Anchoring · 앵커 포인트)</strong><br/>
+            <strong>팔뚝을 몸에 대서 고정점</strong>을 만들고, 그 고정점을 통해 클럽을 간접적으로 고정시키는 것.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">규정의 핵심 — "장비"가 아니라 "방식"</h3>
+      <p class="section-body">
+        이 규정의 가장 중요한 점은 <strong>장비를 금지한 것이 아니라 스트로크 방식을 금지</strong>했다는 것입니다.
+        롱퍼터·브룸스틱·벨리퍼터 자체는 여전히 합법이며, 적합 클럽 리스트에도 등재됩니다.
+        다만 그 클럽을 사용할 때 몸에 고정시키지 않으면 됩니다.
+      </p>
+      <p class="section-body">
+        실제로 베른하르트 랑거(독일, PGA Tour Champions)는 룰 발효 후에도 브룸스틱을
+        그대로 사용하면서 그립 위치만 가슴에서 살짝 떨어뜨려 잡는 방식으로 우승을 이어갔습니다.
+      </p>
+
+      <h3 class="subsection-h3">예외 — 손과 팔뚝</h3>
+      <p class="section-body">
+        규정 본문에는 다음과 같이 명시되어 있습니다:
+      </p>
+      <blockquote class="rule-quote">
+        "클럽이나 그립을 잡은 손이 <strong>다른 손이나 팔뚝</strong>에 닿는 것은 허용된다."
+      </blockquote>
+      <p class="section-body">
+        이 예외 조항이 <strong>arm-lock(암락) 퍼팅</strong>의 합법적 근거입니다.
+        클럽을 팔뚝에 기대고 치는 방식은 명시적으로 허용됩니다.
+        브라이슨 디섐보가 2020 US Open 우승 시 사용한 방식이 대표적입니다.
+      </p>
+
+      <h3 class="subsection-h3">위반 시 페널티</h3>
+      <ul class="penalty-list">
+        <li><strong>스트로크 플레이</strong>: 2벌타</li>
+        <li><strong>매치 플레이</strong>: 해당 홀 패배 (Loss of Hole)</li>
+      </ul>
+      <p class="section-body section-body-small">
+        의도성이 핵심입니다. 스트로크 도중 클럽이나 손이 의도 없이 몸에 살짝 닿는 경우는 위반이 아닙니다.
+        2016년 Sony Open에서 잭 블레어 선수의 페어웨이 우드 그립이 스트로크 끝에서 몸통에 닿은 사례는
+        <strong>의도가 없었기 때문에</strong> USGA가 규정 위반이 아니라고 명확히 발표했습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4. 합법적 vs 불법적 사용 비교표 -->
+  <section class="section section-bg-cream">
+    <div class="section-content">
+      <p class="section-eyebrow">COMPARISON · 합법 vs 불법</p>
+      <h2>합법적 사용 vs 불법적 사용</h2>
+
+      <div class="compare-table">
+        <table>
+          <thead>
+            <tr>
+              <th>방식</th>
+              <th>설명</th>
+              <th>합법성</th>
+              <th>대표 선수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-legal">
+              <td><strong>Conventional</strong><br/><span class="row-meta">전통 스트로크</span></td>
+              <td>일반 길이 퍼터(33~36인치)를 양손으로 잡고 몸에서 떨어뜨려 자유롭게 스트로크</td>
+              <td><span class="badge badge-legal">합법</span></td>
+              <td>대부분의 골퍼</td>
+            </tr>
+            <tr class="row-legal">
+              <td><strong>Long Putter Free</strong><br/><span class="row-meta">롱퍼터 비고정</span></td>
+              <td>브룸스틱(48인치 가까운 롱퍼터)을 사용하되, 그립 끝을 가슴에서 살짝 떨어뜨려 잡기</td>
+              <td><span class="badge badge-legal">합법</span></td>
+              <td>아담 스콧, 베른하르트 랑거</td>
+            </tr>
+            <tr class="row-legal">
+              <td><strong>Arm-Lock</strong><br/><span class="row-meta">암락 퍼팅</span></td>
+              <td>긴 퍼터를 짧게 잡고, 클럽 샤프트를 앞팔(팔뚝)에 기대어 고정. 팔뚝과 클럽이 한 단위로 움직임</td>
+              <td><span class="badge badge-legal">합법</span></td>
+              <td>브라이슨 디섐보, 키건 브래들리, 매트 쿠차</td>
+            </tr>
+            <tr class="row-legal">
+              <td><strong>Cross-Handed / Claw Grip</strong><br/><span class="row-meta">크로스핸드·클로 그립</span></td>
+              <td>전통 그립과 다른 손 위치(왼손이 아래·집게손가락 등). 몸에 닿지 않는 한 모두 합법</td>
+              <td><span class="badge badge-legal">합법</span></td>
+              <td>다양한 투어 프로</td>
+            </tr>
+            <tr class="row-illegal">
+              <td><strong>Belly Putter Anchor</strong><br/><span class="row-meta">벨리퍼터 배 고정</span></td>
+              <td>중간 길이 퍼터의 그립 끝을 배·복부에 고정시킨 채로 스트로크. 2016년 1월 이후 금지</td>
+              <td><span class="badge badge-illegal">불법</span></td>
+              <td>(이전: 키건 브래들리·웹 심슨)</td>
+            </tr>
+            <tr class="row-illegal">
+              <td><strong>Broomstick Chest Anchor</strong><br/><span class="row-meta">브룸스틱 가슴 고정</span></td>
+              <td>롱퍼터 그립 끝을 가슴이나 턱에 고정시킨 채로 스트로크. 2016년 1월 이후 금지</td>
+              <td><span class="badge badge-illegal">불법</span></td>
+              <td>(이전: 아담 스콧·베른하르트 랑거)</td>
+            </tr>
+            <tr class="row-illegal">
+              <td><strong>Forearm Anchor Point</strong><br/><span class="row-meta">팔뚝 앵커 포인트</span></td>
+              <td>팔뚝을 몸(가슴·옆구리 등)에 의도적으로 대서 고정점을 만드는 방식</td>
+              <td><span class="badge badge-illegal">불법</span></td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="compare-note">
+        <strong>핵심 구분</strong>: 클럽이나 손이 <strong>몸</strong>에 닿으면 → 불법.
+        클럽이나 손이 <strong>다른 손이나 팔뚝</strong>에만 닿으면 → 합법.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. 역사적 배경 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">HISTORY · 규정의 배경</p>
+      <h2>왜 2016년에 금지되었는가</h2>
+      <div class="history-timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">1980년대</div>
+          <div class="timeline-body">
+            <strong>롱퍼터(브룸스틱)의 등장</strong> — 가슴이나 턱에 고정시켜 안정된 회전축을 만드는 방식이 확산.
+            처음에는 입스(Yips)에 시달리는 시니어 선수들의 마지막 수단으로 시작.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2000년대</div>
+          <div class="timeline-body">
+            <strong>벨리퍼터의 부상</strong> — 중간 길이 퍼터를 배에 고정시키는 방식. 키건 브래들리·웹 심슨·어니 엘스·아담 스콧이
+            연이어 메이저 우승. 2011~2013년 메이저 5개 중 4개가 앵커링 사용 선수의 우승.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2012.11</div>
+          <div class="timeline-body">
+            <strong>USGA·R&A 앵커링 금지 제안</strong> — 90일간 의견 수렴 기간.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2013.05</div>
+          <div class="timeline-body">
+            <strong>Rule 14-1b 발효 결정</strong> — 2016년 1월 1일부터 적용 발표. 약 2년 6개월의 유예 기간 부여.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2016.01.01</div>
+          <div class="timeline-body">
+            <strong>Rule 14-1b 발효</strong> — 모든 골프 라운드에서 앵커링 금지.
+            아담 스콧·베른하르트 랑거 등 기존 사용자는 그립 위치만 조정해서 적응.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-body">
+            <strong>Rule 10.1b로 재편</strong> — 룰북 전체 개정에 따라 14-1b가 10.1b로 번호 변경. 내용은 동일.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2020~현재</div>
+          <div class="timeline-body">
+            <strong>Arm-Lock 퍼팅의 부상</strong> — 디섐보 2020 US Open 우승, 키건 브래들리·매트 쿠차 활약.
+            "이것도 앵커링 아닌가" 논란이 있으나 USGA 공식 입장은 <strong>합법</strong> — 클럽이 팔뚝에 닿는 것은
+            규정상 허용된 예외에 해당.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 클럽메이커스 해석 -->
+  <section class="section section-bg-green">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">CLUBMAKERS' INTERPRETATION · 공작소 해석</p>
+      <h2 class="green-h2">현장에서 본 의미</h2>
+      <p class="green-body">
+        퍼터는 다른 클럽과 달리 <strong>"규정의 한계"가 골퍼 행동에 직접 영향</strong>을 줍니다.
+        2016년 룰 발효 후 공작소를 찾는 분들의 패턴이 명확히 바뀐 것을 봤습니다.
+      </p>
+      <ul class="interpretation-list">
+        <li>
+          <strong>벨리퍼터를 쓰던 분들 → 일반 길이 퍼터로 전환</strong><br/>
+          <span class="green-body-small">대부분 처음에는 거리감 손실을 호소했지만, 6개월 정도 적응하면 회복되는 경우가 많았습니다.</span>
+        </li>
+        <li>
+          <strong>롱퍼터(브룸스틱) 사용자 → 그립 위치 조정</strong><br/>
+          <span class="green-body-small">랑거 방식(가슴에서 살짝 떨어뜨리기)으로 전환한 분들. 시니어 골퍼에게 여전히 유효한 선택입니다.</span>
+        </li>
+        <li>
+          <strong>입스 골퍼 → arm-lock 시도</strong><br/>
+          <span class="green-body-small">팔뚝 고정 방식이 입스에 어느 정도 효과적이라는 분들이 있습니다. 다만 모든 사람에게 맞지는 않아서, 시타 후 결정하시기를 권합니다.</span>
+        </li>
+      </ul>
+      <p class="green-body">
+        <strong>장비 측면에서</strong>: 롱퍼터·브룸스틱·암락용 퍼터(보통 38~42인치)는 여전히 시중에 출시되고 있어요.
+        Odyssey·SeeMore·L.A.B. Golf 등이 arm-lock 전용 모델을 내놓고 있습니다.
+        다만 일반 골프숍에서는 흔치 않으니 별도 주문이 필요한 경우가 많습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FAQ · 자주 묻는 질문</p>
+      <h2>실무에서 자주 받는 질문</h2>
+      <ul class="faq-list">
+        <li class="faq-item">
+          <p class="faq-q">Q1. 롱퍼터를 새로 사도 되나요?</p>
+          <p class="faq-a">네, 가능합니다. 롱퍼터(브룸스틱) 자체는 합법이며 적합 클럽 리스트에도 등재됩니다.
+          다만 사용 시 <strong>몸에 고정시키지 않는 방식</strong>(아담 스콧·랑거 방식)으로 사용해야 합니다.
+          최대 길이는 일반 클럽과 같은 <strong>48인치</strong>입니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q2. 일반 라운드에서도 앵커링 금지가 적용되나요?</p>
+          <p class="faq-a">네, <strong>모든 라운드</strong>에 적용됩니다. 친선 라운드·동호회 라운드·연습 라운드 모두 포함입니다.
+          다만 점수가 공식적으로 기록되지 않는 라운드라면 실제 페널티 부과는 함께 치는 분들의 합의에 달려 있어요.
+          핸디캡 등록 라운드와 공식 대회는 반드시 적용됩니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q3. 공작소에서 일반 퍼터를 arm-lock용으로 개조 가능한가요?</p>
+          <p class="faq-a">기존 퍼터를 길게 늘리는 작업은 가능합니다. 다만 단순 길이 연장만으로는 arm-lock에 적합하지 않을 수 있어요.
+          arm-lock용 퍼터는 <strong>특수한 그립 형태(평행한 두꺼운 그립)와 더 큰 로프트(5~7°)</strong>가 필요합니다.
+          기존 퍼터로 시작해서 본인에게 맞는지 확인 후 전용 모델을 검토하시기를 권합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q4. 시니어인데 입스 때문에 브룸스틱이 필요합니다. 합법적으로 쓸 방법은?</p>
+          <p class="faq-a">두 가지 합법적 방법이 있습니다.<br/>
+          <strong>① 비고정 브룸스틱</strong>: 그립 끝을 가슴이나 턱에서 1~2cm 떨어뜨려 잡습니다 (랑거 방식).<br/>
+          <strong>② Arm-lock</strong>: 더 짧은 38~42인치 퍼터를 팔뚝에 기대고 칩니다 (디섐보 방식).<br/>
+          입스에는 ②번이 더 효과적이라는 분들이 많지만, 본인에게 맞는 것은 시타로 확인하시기를 권합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q5. 짧은 퍼터를 가슴 가까이 안 닿게 들고 치는 것도 앵커링 아닌가요?</p>
+          <p class="faq-a">실제로 닿지 않으면 합법입니다. 룰의 기준은 <strong>"의도적으로 닿게 고정시키는 것"</strong>입니다.
+          닿지 않거나, 의도 없이 잠깐 스친 경우는 위반이 아닙니다.
+          다만 의심을 피하기 위해 그립과 몸 사이에 명확한 거리(1~2cm 이상)를 두시기를 권합니다.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8. 관련 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RELATED · 관련 페이지</p>
+      <h2>함께 읽으면 좋은 자료</h2>
+      <div class="related-grid">
+        <a href="/equipment-rules" class="related-card">
+          <p class="related-card-eyebrow">INDEX</p>
+          <h3 class="related-card-title">장비 규정 인덱스</h3>
+          <p class="related-card-body">8개 토픽 전체 안내. 다른 규정 분야로 이동하실 수 있어요.</p>
+        </a>
+        <a href="/glossary" class="related-card">
+          <p class="related-card-eyebrow">GLOSSARY</p>
+          <h3 class="related-card-title">용어사전 (109개)</h3>
+          <p class="related-card-body">제로토크 퍼터·페이스 밸런스·토 행 같은 퍼터 용어 정의는 용어사전에서.</p>
+        </a>
+        <a href="/book/part-12" class="related-card">
+          <p class="related-card-eyebrow">BOOK</p>
+          <h3 class="related-card-title">PART 12. 숏게임 클럽</h3>
+          <p class="related-card-body">책의 PART 12-2부 퍼터 — 스트로크 타입·헤드 형태·MOI 등 깊이 있는 해설.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. 출처 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SOURCE · 출처</p>
+      <h2>이 글의 자료 출처</h2>
+      <ul class="source-list">
+        <li>USGA, "Rule 14-1b in Action" (2016), <a href="https://www.usga.org/articles/2016/02/anchors-away-rule-14-1-b-in-action.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA, "Anchoring the Club — Understanding Rule 14-1b" 인포그래픽, <a href="https://www.usga.org/content/dam/usga/images/infographics/2016-anchoring-the-club-final.pdf" target="_blank" rel="noopener noreferrer">PDF ↗</a></li>
+        <li>R&A, Rules of Golf Rule 10.1b (현행 룰북), <a href="https://www.randa.org" target="_blank" rel="noopener noreferrer">randa.org ↗</a></li>
+        <li>USGA Equipment Rules — 클럽 길이 규정, <a href="https://www.usga.org/equipment-standards.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+      </ul>
+      <p class="source-disclaimer-text">
+        ⚠ 이 글은 일반 이해를 돕는 가이드입니다. 공식 대회나 핸디캡 등록 라운드의 적합성 판정은
+        <strong>USGA·R&A 공식 룰북</strong>을 직접 확인하셔야 합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 10. Closing -->
+  <section class="closing-section">
+    <div class="closing-content">
+      <h3>"클럽이 무엇이냐가 아니라,<br/>클럽을 어떻게 잡느냐가 룰의 기준입니다."</h3>
+      <p class="closing-meta">— Rule 10.1b의 핵심</p>
+      <div class="closing-actions">
+        <a href="/equipment-rules" class="btn-primary">장비 규정 인덱스 →</a>
+        <a href="/contact" class="btn-ghost">퍼터 점검 문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  /* ==================== HERO ==================== */
+  .putter-hero { background: var(--bg-cream); }
+  .hero-sub-light {
+    font-size: 14px;
+    color: var(--grey);
+    font-weight: 400;
+  }
+
+  /* ==================== QUICK SUMMARY ==================== */
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (min-width: 720px) {
+    .quick-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1080px) {
+    .quick-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .quick-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 24px;
+    border-radius: 4px;
+  }
+  .quick-num {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .quick-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .quick-title strong { color: var(--green); }
+  .quick-body {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .quick-body strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== Rule 본문 ==================== */
+  .section-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+  .section-body-small { font-size: 14.5px; }
+
+  .subsection-h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    line-height: 1.3;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .rule-box {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--green);
+    padding: 24px 28px;
+    border-radius: 4px;
+    margin: 24px 0;
+  }
+  .rule-box-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    margin: 0 0 14px;
+  }
+  .rule-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .rule-list li {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .rule-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rule-list strong { color: var(--ink); font-weight: 700; }
+
+  .rule-quote {
+    background: var(--bg);
+    border-left: 3px solid var(--gold);
+    padding: 18px 24px;
+    margin: 18px 0;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .rule-quote strong { color: var(--green); font-style: normal; }
+
+  .penalty-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 22px;
+  }
+  .penalty-list li {
+    padding: 8px 0;
+    font-size: 15px;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .penalty-list li:last-child { border-bottom: none; }
+  .penalty-list strong { color: var(--ink); font-weight: 700; }
+
+  /* ==================== 비교표 ==================== */
+  .compare-table {
+    overflow-x: auto;
+    margin: 28px 0;
+  }
+  .compare-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+  }
+  .compare-table th,
+  .compare-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .compare-table th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .row-meta {
+    font-size: 11.5px;
+    color: var(--grey);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .row-legal { background: rgba(15, 41, 34, 0.02); }
+  .row-illegal { background: rgba(184, 70, 46, 0.04); }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .badge-legal {
+    background: var(--green);
+    color: var(--cream);
+  }
+  .badge-illegal {
+    background: var(--warn, #B5462E);
+    color: white;
+  }
+  .compare-note {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .compare-note strong { color: var(--green); font-weight: 700; }
+
+  /* ==================== 타임라인 ==================== */
+  .history-timeline {
+    margin-top: 28px;
+    border-left: 2px solid var(--line);
+    padding-left: 24px;
+  }
+  .timeline-item {
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+  .timeline-year {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .timeline-body {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+  }
+  .timeline-body strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== 그린 배경 — 클럽메이커스 해석 ==================== */
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .green-h2 {
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .green-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 20px;
+  }
+  .green-body strong { color: var(--gold-soft); font-weight: 700; }
+  .green-body-small {
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.75);
+    display: block;
+    margin-top: 4px;
+  }
+  .interpretation-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+  }
+  .interpretation-list li {
+    padding: 16px 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.9);
+    border-bottom: 1px solid rgba(212, 184, 136, 0.2);
+  }
+  .interpretation-list li:last-child { border-bottom: none; }
+  .interpretation-list strong { color: var(--cream); font-weight: 700; }
+
+  /* ==================== FAQ ==================== */
+  .faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+  }
+  .faq-item {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    padding: 22px 28px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .faq-q {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+  .faq-a {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .faq-a strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== RELATED ==================== */
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (min-width: 720px) {
+    .related-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .related-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .related-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(15, 41, 34, 0.08);
+  }
+  .related-card-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .related-card-title {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+  .related-card-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ==================== SOURCE ==================== */
+  .source-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+  }
+  .source-list li {
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list a {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: 600;
+  }
+  .source-list a:hover { opacity: 0.7; }
+  .source-disclaimer-text {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .source-disclaimer-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== CLOSING ==================== */
+  .closing-section {
+    background: var(--ink);
+    padding: 100px 80px;
+    text-align: center;
+  }
+  .closing-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .closing-section h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 4vw, 30px);
+    line-height: 1.55;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.015em;
+    margin-bottom: 20px;
+  }
+  .closing-meta {
+    font-size: 12px;
+    color: var(--gold-soft);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .closing-section .closing-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .closing-section .btn-primary,
+  .closing-section .btn-ghost {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 26px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .closing-section .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .closing-section .btn-primary::after { content: ''; }
+  .closing-section .btn-primary:hover {
+    background: var(--gold-soft);
+    transform: translateX(2px);
+  }
+  .closing-section .btn-ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .closing-section .btn-ghost::after { content: ''; }
+  .closing-section .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 640px) {
+    .quick-card { padding: 18px 20px; }
+    .compare-table table { font-size: 12.5px; }
+    .compare-table th, .compare-table td { padding: 10px 10px; }
+    .closing-section { padding: 70px 24px; }
+  }
+</style>
