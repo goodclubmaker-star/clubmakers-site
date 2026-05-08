@@ -1,0 +1,1064 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const groovesRulesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': 'https://myclubmakers.com/equipment-rules/grooves/#article',
+  headline: '그루브 장비 규정 — 2010년 변경의 의미와 현재',
+  description: 'USGA·R&A 2010년 그루브 규정 변경 한글 정리. 그루브 부피 제한·엣지 라운딩(0.010인치)·V/U 그루브 차이·일반 골퍼와 엘리트 골퍼 적용 차이. 클럽메이커스 24년 현장 해석.',
+  inLanguage: 'ko-KR',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+    url: 'https://myclubmakers.com',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '내가 가진 2009년 이전 클럽도 사용 가능한가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '일반 라운드와 핸디캡 등록 라운드에서는 가능합니다. 2010년 그루브 규정은 모범 로컬 룰(G-2)이라 대회 주최 측이 채택할 때만 적용됩니다. PGA Tour, USGA 챔피언십, 엘리트 아마추어 대회는 적용 중이지만, 일반 골퍼·일반 클럽 대회·친선 라운드에서는 2009년 이전 그루브도 합법입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'V그루브와 U그루브 중 어느 것이 합법인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '둘 다 합법입니다. 2010년 규정은 그루브 모양(V냐 U냐)을 직접 규제하지 않고, 단면적/간격 비율과 엣지의 날카로움을 제한합니다. U그루브여도 새 규정의 한계(0.010인치 엣지 반지름) 안에 있으면 합법입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '드라이버와 퍼터에는 그루브 규정이 적용되지 않나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '2010년 그루브 규정 변경은 드라이버와 퍼터에 적용되지 않습니다. 다만 다른 일반적인 그루브 규정(폭, 깊이, 간격 한계)은 모든 클럽에 적용됩니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '그루브가 마모된 클럽은 부적합인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '대부분의 경우 합법입니다. 마모는 사용 누적의 결과이며, 출고 시 적합했던 클럽이 자연스럽게 마모됐다는 이유로 부적합 판정을 받지는 않습니다. 다만 의도적으로 그루브를 깊게 갈거나 날카롭게 만들면 위반입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '오래된 웨지를 그루브 재가공해서 다시 쓸 수 있나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '그루브 재가공(re-grooving)은 USGA 규정상 위험한 작업입니다. 단순히 마모된 그루브를 닦아내는 정도는 허용되지만, 깊이를 늘리거나 엣지를 날카롭게 만들면 부적합이 됩니다. 클럽메이커스는 그루브 재생 작업을 다루지 않습니다 — 마모된 웨지는 교체를 권합니다.',
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="그루브 규정 — 2010년 변경과 현재"
+  description="USGA·R&A 2010년 그루브 규정 변경 한글 정리. 그루브 부피 제한·엣지 라운딩(0.010인치)·V/U 그루브 차이·일반 골퍼와 엘리트 골퍼 적용 차이. 클럽메이커스 24년 현장 해석."
+  schemaType="Article"
+  keywords="그루브 규정, 2010 그루브 룰, V그루브, U그루브, 박스 그루브, 그루브 부피, 그루브 엣지, 0.010인치, Model Local Rule G-2, USGA 그루브, R&A 그루브, 웨지 그루브, 아이언 그루브, 핑 EYE2, Ping Eye 2"
+  extraSchema={[groovesRulesSchema, faqSchema]}
+>
+
+  <!-- 1. Hero -->
+  <section class="page-hero grooves-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">EQUIPMENT RULES · TOPIC 02 · 그루브 규정</div>
+      <h1>그루브 — 2010년에 무엇이<br/>바뀌었고, 누구에게 적용되는가</h1>
+      <p class="page-hero-subtitle">
+        그루브는 페이스에 새겨진 작은 홈입니다. 이 작은 홈이 <strong>스핀과 컨트롤의 핵심 메커니즘</strong>입니다.<br/>
+        <span class="hero-sub-light">2010년 USGA·R&A는 그루브 규정을 대폭 강화했습니다. 그 변화의 의미와 현재 적용 범위를 정리합니다.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. Quick Summary -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">QUICK SUMMARY · 핵심 4가지</p>
+      <h2>2010년 그루브 규정의 핵심</h2>
+      <div class="quick-grid">
+        <div class="quick-card">
+          <p class="quick-num">01</p>
+          <h3 class="quick-title">발효일<br/><strong>2010.01.01</strong></h3>
+          <p class="quick-body">신규 제조 클럽에 새 규정 적용. PGA Tour와 메이저 대회에 즉시 적용.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">02</p>
+          <h3 class="quick-title">엣지 라운딩<br/><strong>0.010인치 +</strong></h3>
+          <p class="quick-body">25° 이상 클럽의 그루브 엣지에 최소 0.010인치(0.254mm) 반지름.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">03</p>
+          <h3 class="quick-title">단면적·간격<br/><strong>비율 제한</strong></h3>
+          <p class="quick-body">그루브 단면적 / 인접 그루브 간격의 비율로 그루브 부피 제한.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">04</p>
+          <h3 class="quick-title">일반 골퍼<br/><strong>여전히 OK</strong></h3>
+          <p class="quick-body">모범 로컬 룰 G-2. 일반 라운드에서 2009년 이전 그루브 사용 가능.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 그루브의 역할 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FUNDAMENTALS · 그루브의 역할</p>
+      <h2>그루브는 무엇을 하는가</h2>
+      <p class="section-body">
+        그루브는 단순한 장식이 아닙니다. 임팩트 순간 페이스와 볼 사이의 <strong>접촉 마찰을 결정</strong>하는 핵심 구조입니다.
+        그루브가 하는 일은 두 가지입니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">그루브의 두 가지 기능</p>
+        <ul class="rule-list">
+          <li>
+            <strong>① 이물질 배출</strong><br/>
+            잔디·흙·물기가 페이스와 볼 사이에 있을 때, 그루브 안으로 빠져 페이스가 볼과 직접 접촉하도록 함.
+            러프나 젖은 잔디에서 결정적인 역할.
+          </li>
+          <li>
+            <strong>② 마찰 생성</strong><br/>
+            그루브 엣지가 볼 표면을 미세하게 잡아 회전(스핀)을 부여. 엣지가 날카로울수록 마찰이 강하고, 결과적으로 스핀이 많이 발생.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">왜 USGA가 개입했는가</h3>
+      <p class="section-body">
+        2000년대 중반, USGA·R&A는 골프의 본질적인 문제를 인식했습니다.
+        프로 선수들이 <strong>러프에서도 페어웨이만큼 좋은 스핀</strong>을 만들고 있었어요.
+        결과적으로 "정확한 드라이브"의 가치가 떨어지고,
+        파워풀한 거리만이 우승의 가장 중요한 요소가 되어가고 있었습니다.
+      </p>
+      <p class="section-body">
+        2007년 USGA가 그루브의 영향을 본격 연구한 결과,
+        러프에서의 스핀이 <strong>U그루브(박스 그루브)에서 비정상적으로 높다</strong>는 결론에 도달했습니다.
+        2008년 8월 변경안 발표, 2010년 1월 1일 발효까지 약 17개월의 유예 기간이 있었습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4. V그루브 vs U그루브 역사 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">HISTORY · 그루브의 역사</p>
+      <h2>V그루브에서 U그루브로, 그리고 다시</h2>
+      <div class="history-timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">~1984</div>
+          <div class="timeline-body">
+            <strong>V그루브 시대</strong> — 모든 클럽이 V자 단면 그루브. 단조 가공의 한계로 V형이 자연스러운 선택.
+            러프에서 스핀이 적게 나와 정확성의 가치가 컸던 시기.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">1984</div>
+          <div class="timeline-body">
+            <strong>U그루브 허용</strong> — 주조(인베스트먼트 캐스팅) 기술 발전으로 U자 단면 그루브 제작 가능.
+            USGA 규정에서 "V형이어야 한다"는 조항 삭제. U그루브 시대 시작.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">1990</div>
+          <div class="timeline-body">
+            <strong>핑 EYE 2 소송</strong> — PGA Tour가 핑(Karsten Manufacturing)의 EYE 2 아이언 U그루브를 부적합 판정.
+            법정 분쟁 끝에 PGA Tour가 합의로 사용을 허용. U그루브의 합법성이 굳어짐.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2000~2007</div>
+          <div class="timeline-body">
+            <strong>U그루브 진화기</strong> — 클리블랜드, 보키, 미즈노 등이 더 깊고 날카로운 U그루브로
+            <strong>러프에서도 7,000~9,000rpm 스핀</strong>을 만들어내기 시작.
+            "러프에서 핀에 붙이기"가 일상화.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2007.02</div>
+          <div class="timeline-body">
+            <strong>USGA·R&A 그루브 변경 제안</strong> — 메이커들로부터 의견 수렴 시작.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2008.08</div>
+          <div class="timeline-body">
+            <strong>새 규정 채택</strong> — 단면적/간격 비율 + 엣지 라운딩 발표. 2010년 1월 1일 발효 결정.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2010.01.01</div>
+          <div class="timeline-body">
+            <strong>새 규정 발효</strong> — 모든 신제품 적용. PGA Tour, 유러피언 투어, LPGA 즉시 채택.
+            메이저 챔피언십(US Open, US Women's Open, US Senior Open)도 적용.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2014.01.01</div>
+          <div class="timeline-body">
+            <strong>USGA 모든 챔피언십에 확대</strong> — US 아마추어, US 미드아마추어 등도 적용 시작.
+            엘리트 아마추어 대회가 새 규정에 합류.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2024~현재</div>
+          <div class="timeline-body">
+            <strong>일반 골퍼는 여전히 모범 로컬 룰</strong> — 일반 골퍼의 일반 라운드에서는 여전히
+            2009년 이전 그루브 사용 가능. USGA가 "최소 4년 후" 적용 검토 중이지만 발표 X.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 새 규정 상세 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION · 새 규정 상세</p>
+      <h2>2010년 규정의 두 가지 핵심</h2>
+      <p class="section-body">
+        새 그루브 규정은 그루브의 모양(V냐 U냐)을 직접 규제하지 않습니다.
+        대신 <strong>두 가지 측정값</strong>으로 그루브의 효과를 제한합니다.
+      </p>
+
+      <h3 class="subsection-h3">규정 ① 단면적 / 간격 비율</h3>
+      <p class="section-body">
+        그루브의 단면적(cross-sectional area)을 인접 그루브 간격(pitch)으로 나눈 값에 한계를 둡니다.
+        쉽게 표현하면 <strong>"페이스 1인치당 그루브가 차지하는 부피"</strong>입니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">왜 이 비율이 중요한가</p>
+        <ul class="rule-list">
+          <li>
+            <strong>U그루브의 우위 차단</strong>: U그루브는 같은 폭이라도 V그루브보다 단면적이 큼.
+            단면적/간격 비율로 제한하면 U그루브를 만들려면 간격을 더 넓게 해야 함.
+          </li>
+          <li>
+            <strong>총 그루브 양 제한</strong>: 그루브가 차지하는 페이스 공간이 줄어들어 이물질 배출 능력 제한.
+            러프나 젖은 라이에서 스핀 감소.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">규정 ② 엣지 반지름 (Edge Radius) — 0.010인치 이상</h3>
+      <p class="section-body">
+        25° 이상의 로프트를 가진 클럽(5번 아이언 ~ 웨지 전체)의 그루브 엣지에는
+        <strong>최소 0.010인치(0.254mm)의 반지름</strong>이 적용되어야 합니다.
+        이전 규정에서는 가공 직후의 날카로운 엣지가 그대로 허용됐었어요.
+        새 규정은 엣지를 <strong>의도적으로 둥글게 다듬어야</strong> 합니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">엣지 라운딩의 효과</p>
+        <ul class="rule-list">
+          <li>
+            <strong>스핀 약 5~15% 감소</strong> (러프에서 측정 기준)<br/>
+            엣지가 둥글면 볼 표면을 잡는 마찰력이 줄어듦.
+          </li>
+          <li>
+            <strong>러프에서 더 큰 효과</strong><br/>
+            잔디가 페이스와 볼 사이에 끼어 있을 때 엣지의 마찰이 핵심. 둥근 엣지는 잔디를 그냥 넘김.
+          </li>
+          <li>
+            <strong>페어웨이에서는 영향 적음</strong><br/>
+            깨끗한 임팩트에서는 엣지보다 그루브 자체의 깊이가 중요.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">25° 미만 클럽 — 부피 제한만 적용</h3>
+      <p class="section-body">
+        25° 미만의 로프트(주로 3~4번 아이언, 하이브리드, 페어웨이우드)에는 엣지 라운딩 규정이 적용되지 않습니다.
+        이런 클럽은 풀스윙 위주이고 러프에서의 스핀 의존도가 낮기 때문이에요.
+        다만 단면적/간격 비율 제한은 그대로 적용됩니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 6. 적용 범위 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SCOPE · 적용 범위</p>
+      <h2>누구에게 적용되는가 — 핵심 정리</h2>
+      <p class="section-body">
+        그루브 규정의 가장 헷갈리는 부분이 바로 <strong>적용 범위</strong>입니다.
+        "내가 가진 옛 클럽이 부적합인가?" 하는 질문에 답하려면 정확한 구분이 필요합니다.
+      </p>
+
+      <div class="compare-table">
+        <table>
+          <thead>
+            <tr>
+              <th>적용 대상</th>
+              <th>2010 규정 적용?</th>
+              <th>적용 시점</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-applies">
+              <td><strong>제조사 신제품</strong><br/><span class="row-meta">2010.01.01 이후 출시</span></td>
+              <td><span class="badge badge-yes">강제</span></td>
+              <td>2010.01.01 이후 모든 신모델</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>PGA Tour</strong><br/><span class="row-meta">엘리트 프로 투어</span></td>
+              <td><span class="badge badge-yes">강제</span></td>
+              <td>2010.01.01부터</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>유러피언 투어, LPGA</strong><br/><span class="row-meta">국제 프로 투어</span></td>
+              <td><span class="badge badge-yes">강제</span></td>
+              <td>2010.01.01부터</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>메이저 챔피언십</strong><br/><span class="row-meta">US Open / US Women's Open / US Senior Open</span></td>
+              <td><span class="badge badge-yes">강제</span></td>
+              <td>2010.01.01부터</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>USGA 챔피언십 전체</strong><br/><span class="row-meta">US 아마추어, US 미드아마추어 등</span></td>
+              <td><span class="badge badge-yes">강제</span></td>
+              <td>2014.01.01부터</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>한국 KPGA·KLPGA 정규 투어</strong><br/><span class="row-meta">국내 엘리트 프로</span></td>
+              <td><span class="badge badge-yes">강제</span></td>
+              <td>국제 투어와 동일</td>
+            </tr>
+            <tr class="row-not-applies">
+              <td><strong>일반 골퍼·일반 라운드</strong><br/><span class="row-meta">친선·연습·핸디캡 등록</span></td>
+              <td><span class="badge badge-no">선택</span></td>
+              <td>2009년 이전 그루브 OK</td>
+            </tr>
+            <tr class="row-not-applies">
+              <td><strong>일반 클럽 챔피언십</strong><br/><span class="row-meta">동호회·클럽 대회</span></td>
+              <td><span class="badge badge-no">선택</span></td>
+              <td>대부분 적용 안 함</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="compare-note">
+        <strong>핵심 구분</strong>: <strong>엘리트 대회</strong>(프로 투어, USGA 챔피언십, 메이저)는 강제 적용.
+        <strong>일반 골퍼</strong>는 모범 로컬 룰(G-2)이라 선택적. 대부분의 일반 라운드에서 옛 그루브 그대로 사용 가능합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. 적용 클럽 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">CLUBS · 적용 클럽</p>
+      <h2>어떤 클럽에 적용되는가</h2>
+      <p class="section-body">
+        그루브 규정은 클럽 종류와 로프트에 따라 적용 범위가 다릅니다. 표로 정리합니다.
+      </p>
+
+      <div class="compare-table">
+        <table>
+          <thead>
+            <tr>
+              <th>클럽 종류</th>
+              <th>로프트 범위</th>
+              <th>단면적·간격 제한</th>
+              <th>엣지 라운딩</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>웨지</strong> (PW·GW·SW·LW)</td>
+              <td>44~64°</td>
+              <td><span class="badge badge-yes">적용</span></td>
+              <td><span class="badge badge-yes">적용</span></td>
+            </tr>
+            <tr>
+              <td><strong>아이언 5~9</strong></td>
+              <td>25~45°</td>
+              <td><span class="badge badge-yes">적용</span></td>
+              <td><span class="badge badge-yes">적용</span></td>
+            </tr>
+            <tr>
+              <td><strong>아이언 3~4 / 유틸리티</strong></td>
+              <td>~24°</td>
+              <td><span class="badge badge-yes">적용</span></td>
+              <td><span class="badge badge-no">제외</span></td>
+            </tr>
+            <tr>
+              <td><strong>하이브리드</strong></td>
+              <td>16~25°</td>
+              <td><span class="badge badge-yes">적용</span></td>
+              <td><span class="badge badge-no">제외</span></td>
+            </tr>
+            <tr>
+              <td><strong>페어웨이우드</strong></td>
+              <td>13~21°</td>
+              <td><span class="badge badge-yes">적용</span></td>
+              <td><span class="badge badge-no">제외</span></td>
+            </tr>
+            <tr>
+              <td><strong>드라이버</strong></td>
+              <td>8~12°</td>
+              <td><span class="badge badge-no">제외</span></td>
+              <td><span class="badge badge-no">제외</span></td>
+            </tr>
+            <tr>
+              <td><strong>퍼터</strong></td>
+              <td>2~5°</td>
+              <td><span class="badge badge-no">제외</span></td>
+              <td><span class="badge badge-no">제외</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="compare-note">
+        <strong>핵심 정리</strong>: 25° 이상 클럽(5번 아이언~웨지)이 가장 강한 규제.
+        25° 미만(롱 아이언·유틸리티·페어웨이우드)은 단면적 제한만, 엣지 라운딩은 면제.
+        <strong>드라이버와 퍼터</strong>는 2010년 그루브 규정에서 완전히 제외됩니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 8. 그루브 마모 vs 부적합 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">WEAR vs ILLEGAL · 마모와 부적합 구분</p>
+      <h2>그루브 마모는 부적합이 아닙니다</h2>
+      <p class="section-body">
+        오해하기 쉬운 부분 — <strong>"마모된 그루브"는 부적합이 아닙니다.</strong>
+        출고 시 적합 판정을 받은 클럽은 사용에 따른 자연 마모가 일어나도 합법성을 유지합니다.
+        다만 마모는 <strong>스핀 성능</strong>에는 직접 영향을 줍니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">합법 vs 위반 — 명확한 구분</p>
+        <ul class="rule-list">
+          <li>
+            <strong>합법 — 자연 마모</strong><br/>
+            라운드와 연습으로 그루브 엣지가 둥글어지고 깊이가 줄어드는 것. 스핀은 줄어들지만 적합성은 유지.
+          </li>
+          <li>
+            <strong>합법 — 단순 청소·세척</strong><br/>
+            그루브 안의 흙·잔디를 닦아내거나 솔로 긁어내는 작업. 그루브 자체를 변형하지 않음.
+          </li>
+          <li>
+            <strong>위반 — 그루브 깊이 확장</strong><br/>
+            의도적으로 그루브를 깊게 갈아내는 작업. 단면적이 한계를 넘어 부적합.
+          </li>
+          <li>
+            <strong>위반 — 엣지 날카롭게 만들기</strong><br/>
+            엣지의 라운딩(0.010인치)을 제거하거나 더 날카롭게 가공. 즉시 부적합.
+          </li>
+          <li>
+            <strong>위반 — 새 그루브 추가 가공</strong><br/>
+            기존 그루브 사이에 새 그루브를 새기는 작업. 간격 규정 위반 가능성 높음.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">투어 선수의 그루브 교체 주기</h3>
+      <p class="section-body">
+        투어 선수들은 <strong>4~6 라운드(약 3~5주)마다 웨지를 교체</strong>합니다.
+        스핀 일관성이 그만큼 중요하기 때문이에요. 일반 아마추어가 이렇게 자주 교체할 필요는 없습니다.
+        다만 라운드 100~150회를 넘으면 스핀이 눈에 띄게 줄어들기 시작합니다.
+      </p>
+      <p class="section-body section-body-small">
+        책 『실제적인 클럽피팅』 PART 12-1부 5절 "웨지의 스핀 메커니즘"에 그루브 마모와 교체 시기를 더 자세히 다룹니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 9. 클럽메이커스 해석 -->
+  <section class="section section-bg-green">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">CLUBMAKERS' INTERPRETATION · 공작소 해석</p>
+      <h2 class="green-h2">현장에서 본 그루브 규정</h2>
+      <p class="green-body">
+        그루브 규정은 일반 골퍼가 가장 오해하기 쉬운 영역입니다.
+        24년간 공작소에서 만난 케이스를 정리합니다.
+      </p>
+      <ul class="interpretation-list">
+        <li>
+          <strong>"내 옛날 클럽이 부적합인가요?"</strong><br/>
+          <span class="green-body-small">2009년 이전 클럽이라도 일반 라운드에서는 합법입니다. 엘리트 대회 출전 계획이 없으시면 큰 문제 없습니다.
+          다만 라운드 100회 이상이면 스핀 성능 자체가 떨어져 새 클럽으로 바꾸시는 분들이 많습니다.</span>
+        </li>
+        <li>
+          <strong>"그루브 재가공으로 다시 살릴 수 있나요?"</strong><br/>
+          <span class="green-body-small">USGA 규정상 위험한 영역입니다. 단순 세척은 OK지만, 깊이를 늘리거나 엣지를 날카롭게 만들면 부적합이 됩니다.
+          공작소는 그루브 재가공 작업을 다루지 않습니다. 마모된 웨지는 교체를 권합니다.</span>
+        </li>
+        <li>
+          <strong>"투어 프로처럼 자주 교체해야 하나요?"</strong><br/>
+          <span class="green-body-small">일반 아마추어는 그럴 필요 없습니다. 라운드 빈도가 월 2~4회면 2~3년에 한 번 교체로 충분합니다.
+          매일 연습장에서 매트로 치시는 분은 마모가 더 빠르니 1~2년에 한 번 점검 권장.</span>
+        </li>
+        <li>
+          <strong>"드라이버와 퍼터는 그루브 신경 안 써도 되나요?"</strong><br/>
+          <span class="green-body-small">2010년 그루브 규정 자체는 적용 안 됩니다. 다만 일반적인 그루브 규정(폭, 깊이, 간격)은 모든 클럽에 있어요.
+          시판 정품 드라이버·퍼터는 모두 적합 리스트에 등재되어 있어 걱정 없습니다.</span>
+        </li>
+        <li>
+          <strong>"중고 웨지 살 때 무엇을 봐야 하나요?"</strong><br/>
+          <span class="green-body-small">출시 연도(2010년 이후)와 그루브 마모 상태 두 가지를 봅니다. 손톱으로 그루브를 긁어 "턱"하고 걸리면 정상.
+          부드럽게 빠지면 마모 진행. 마모가 심하면 가격이 싸도 사용 가치는 낮습니다.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10. FAQ -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FAQ · 자주 묻는 질문</p>
+      <h2>실무에서 자주 받는 질문</h2>
+      <ul class="faq-list">
+        <li class="faq-item">
+          <p class="faq-q">Q1. 일반 동호회 클럽 챔피언십에서 옛 클럽 사용해도 되나요?</p>
+          <p class="faq-a">대부분 가능합니다. 모범 로컬 룰(G-2)을 채택한 대회만 적용되는데,
+          <strong>일반 클럽 챔피언십은 거의 G-2를 채택하지 않습니다.</strong>
+          출전 전 대회 시행 안내서를 확인하시면 정확합니다. "Local Rule G-2 적용" 또는
+          "Condition of Competition" 같은 표현이 있으면 새 규정 적용 대회입니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q2. 시중에서 "non-conforming" 그루브 웨지를 보았는데 살 만한가요?</p>
+          <p class="faq-a">친선 라운드와 연습용으로는 가능합니다. 다만
+          <strong>핸디캡 등록 라운드와 모든 공식 대회에서 사용 불가</strong>합니다.
+          USGA 적합 리스트에 없는 웨지는 점수 등록 자체가 무효 처리될 수 있어요.
+          진지하게 골프하시는 분에게는 권하지 않습니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q3. 그루브 청소 솔로 매번 닦는 것이 의미가 있나요?</p>
+          <p class="faq-a">네, 의미 있습니다. 그루브 안에 잔디·흙이 끼어 있으면 그루브가 제 역할을 못 합니다.
+          매 샷 후 솔로 그루브를 청소하시면 스핀 일관성이 눈에 띄게 좋아집니다.
+          이건 적합성이 아니라 <strong>성능</strong>의 문제입니다. 마모된 클럽도 청소만 잘해도 어느 정도 회복됩니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q4. 두 라운드 사이 그루브 마모 차이가 큰 이유는?</p>
+          <p class="faq-a">잔디 종류와 모래·흙 양에 따라 차이가 큽니다. 한국 코스의 한지·켄터키 같은 단단한 잔디는
+          마모를 더 빠르게 만들고, 양잔디는 비교적 마모가 느립니다.
+          또 벙커 모래에서 그루브 마모가 가장 빠릅니다 — 모래가 미세 연마제 역할을 하기 때문이에요.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q5. 옛 클럽 전체 세트 그루브 진단 가능한가요?</p>
+          <p class="faq-a">공작소 방문하시면 그루브 상태와 마모 정도를 직접 확인해드립니다.
+          정밀 측정(0.010인치 라운딩 측정 등)은 USGA 측정기가 있는 곳에서만 가능하고,
+          공작소는 일반적인 마모 진단과 교체 시점 권고를 드립니다.
+          엘리트 대회 출전 계획이 있으시면 USGA 공식 측정 기관을 권합니다.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11. 관련 자료 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RELATED · 관련 페이지</p>
+      <h2>함께 읽으면 좋은 자료</h2>
+      <div class="related-grid">
+        <a href="/equipment-rules" class="related-card">
+          <p class="related-card-eyebrow">INDEX</p>
+          <h3 class="related-card-title">장비 규정 인덱스</h3>
+          <p class="related-card-body">8개 토픽 전체 안내. 다른 규정 분야로 이동하실 수 있어요.</p>
+        </a>
+        <a href="/equipment-rules/driver" class="related-card">
+          <p class="related-card-eyebrow">DRIVER</p>
+          <h3 class="related-card-title">드라이버 규정</h3>
+          <p class="related-card-body">COR 0.830 · 부피 460cc · MOI 5,900 · 길이 48인치/46인치.</p>
+        </a>
+        <a href="/book/part-12" class="related-card">
+          <p class="related-card-eyebrow">BOOK</p>
+          <h3 class="related-card-title">PART 12. 숏게임 클럽</h3>
+          <p class="related-card-body">웨지 그루브 마모와 교체 주기, 스핀 메커니즘 깊이 있는 해설.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. 출처 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SOURCE · 출처</p>
+      <h2>이 글의 자료 출처</h2>
+      <ul class="source-list">
+        <li>USGA "Grooves: Common Questions & Answers", <a href="https://www.usga.org/rules-hub/grooves/common-questions-answers.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA "Update on 2010 Equipment Changes Related to Grooves" (2024), <a href="https://www.usga.org/content/usga/home-page/equipment-standards/equipment-changes-2010-grooves-model-local-rule.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA "Q&A: Implementation Of New Groove Rules", <a href="https://www.usga.org/articles/2012/02/qa-implementation-of-new-groove-rules-2147496267.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA Equipment Rules — Model Local Rule G-2 (그루브 적용)</li>
+        <li>R&A Rules of Golf — Equipment Standards, <a href="https://www.randa.org" target="_blank" rel="noopener noreferrer">randa.org ↗</a></li>
+      </ul>
+      <p class="source-disclaimer-text">
+        ⚠ 이 글은 일반 이해를 돕는 가이드입니다. 공식 대회나 핸디캡 등록 라운드의 적합성 판정은
+        <strong>USGA·R&A 공식 적합 리스트</strong>를 직접 확인하셔야 합니다.
+        규정 수치는 2026년 5월 기준이며, 향후 변경될 수 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 13. Closing -->
+  <section class="closing-section">
+    <div class="closing-content">
+      <h3>"작은 홈이 스핀을 만들고,<br/>스핀이 그린에서 공을 멈춥니다."</h3>
+      <p class="closing-meta">— 클럽메이커스 그루브 규정 가이드</p>
+      <div class="closing-actions">
+        <a href="/equipment-rules" class="btn-primary">장비 규정 인덱스 →</a>
+        <a href="/contact" class="btn-ghost">웨지 점검 문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  /* ==================== HERO ==================== */
+  .grooves-hero { background: var(--bg-cream); }
+  .hero-sub-light {
+    font-size: 14px;
+    color: var(--grey);
+    font-weight: 400;
+  }
+
+  /* ==================== QUICK SUMMARY ==================== */
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (min-width: 720px) {
+    .quick-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1080px) {
+    .quick-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .quick-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 24px;
+    border-radius: 4px;
+  }
+  .quick-num {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .quick-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .quick-title strong {
+    color: var(--green);
+    font-size: 17px;
+    display: inline-block;
+    margin-top: 2px;
+  }
+  .quick-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .quick-body strong { color: var(--ink); font-weight: 700; }
+
+  /* ==================== Rule 본문 ==================== */
+  .section-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+  .section-body-small { font-size: 14.5px; }
+
+  .subsection-h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    line-height: 1.3;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .rule-box {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--green);
+    padding: 24px 28px;
+    border-radius: 4px;
+    margin: 24px 0;
+  }
+  .rule-box-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    margin: 0 0 14px;
+  }
+  .rule-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .rule-list li {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .rule-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rule-list strong { color: var(--ink); font-weight: 700; }
+
+  /* ==================== 타임라인 ==================== */
+  .history-timeline {
+    margin-top: 28px;
+    border-left: 2px solid var(--line);
+    padding-left: 24px;
+  }
+  .timeline-item {
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+  .timeline-year {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .timeline-body {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+  }
+  .timeline-body strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== 비교표 ==================== */
+  .compare-table {
+    overflow-x: auto;
+    margin: 28px 0;
+  }
+  .compare-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+  }
+  .compare-table th,
+  .compare-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .compare-table th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .row-meta {
+    font-size: 11.5px;
+    color: var(--grey);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .row-applies { background: rgba(15, 41, 34, 0.02); }
+  .row-not-applies { background: rgba(184, 152, 92, 0.04); }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+  }
+  .badge-yes {
+    background: var(--green);
+    color: var(--cream);
+  }
+  .badge-no {
+    background: var(--bg-soft);
+    color: var(--grey);
+    border: 1px solid var(--line);
+  }
+  .compare-note {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .compare-note strong { color: var(--green); font-weight: 700; }
+
+  /* ==================== 그린 배경 ==================== */
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .green-h2 {
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .green-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 20px;
+  }
+  .green-body strong { color: var(--gold-soft); font-weight: 700; }
+  .green-body-small {
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.75);
+    display: block;
+    margin-top: 4px;
+  }
+  .interpretation-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+  }
+  .interpretation-list li {
+    padding: 16px 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.9);
+    border-bottom: 1px solid rgba(212, 184, 136, 0.2);
+  }
+  .interpretation-list li:last-child { border-bottom: none; }
+  .interpretation-list strong { color: var(--cream); font-weight: 700; }
+
+  /* ==================== FAQ ==================== */
+  .faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+  }
+  .faq-item {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    padding: 22px 28px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .faq-q {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+  .faq-a {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .faq-a strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== RELATED ==================== */
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (min-width: 720px) {
+    .related-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .related-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .related-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(15, 41, 34, 0.08);
+  }
+  .related-card-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .related-card-title {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+  .related-card-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ==================== SOURCE ==================== */
+  .source-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+  }
+  .source-list li {
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list a {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: 600;
+  }
+  .source-list a:hover { opacity: 0.7; }
+  .source-disclaimer-text {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .source-disclaimer-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== CLOSING ==================== */
+  .closing-section {
+    background: var(--ink);
+    padding: 100px 80px;
+    text-align: center;
+  }
+  .closing-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .closing-section h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 4vw, 30px);
+    line-height: 1.55;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.015em;
+    margin-bottom: 20px;
+  }
+  .closing-meta {
+    font-size: 12px;
+    color: var(--gold-soft);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .closing-section .closing-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .closing-section .btn-primary,
+  .closing-section .btn-ghost {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 26px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .closing-section .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .closing-section .btn-primary::after { content: ''; }
+  .closing-section .btn-primary:hover {
+    background: var(--gold-soft);
+    transform: translateX(2px);
+  }
+  .closing-section .btn-ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .closing-section .btn-ghost::after { content: ''; }
+  .closing-section .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 640px) {
+    .quick-card { padding: 18px 18px; }
+    .closing-section { padding: 70px 24px; }
+    .compare-table table { font-size: 12.5px; }
+    .compare-table th, .compare-table td { padding: 10px 10px; }
+  }
+</style>
