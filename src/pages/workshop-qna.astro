@@ -1,0 +1,1054 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 4개 카테고리 × 5개 Q&A = 20개
+const categories = [
+  {
+    id: 'broken',
+    label: 'BROKEN',
+    title: '클럽이 부서졌을 때',
+    intro: '샤프트 부러짐 · 헤드 분리 · 페룰 손상 · 그립 찢어짐 · 헤드 흠집',
+    items: [
+      {
+        q: '샤프트가 부러졌어요. 어떻게 하나요?',
+        situation: '스윙 중이나 충격으로 샤프트가 부러진 경우입니다. 헤드 쪽에서 부러지는 경우와 그립 쪽에서 부러지는 경우 두 가지가 있습니다.',
+        solution: [
+          { title: '1) 샤프트 교체', body: '부러진 샤프트를 빼내고 새 샤프트로 교체합니다. 가장 일반적인 방법입니다. 단, 같은 OEM 샤프트를 구하기 어려운 경우가 많아 비슷한 성향의 대체 샤프트를 선택하시게 됩니다.' },
+          { title: '2) 연장 수리', body: '헤드에 가까운 쪽이 부러진 경우, 손상 부위를 잘라내고 그립 쪽에 연장 키트를 넣어 길이를 맞추는 방법입니다. 같은 샤프트를 구하기 어렵거나 비용이 부담될 때 검토할 수 있습니다. 다만 길이와 밸런스가 변하면서 클럽 느낌이 달라질 수 있습니다.' }
+        ],
+        cost: [
+          { label: '샤프트 교체 공임', value: '18,000원' },
+          { label: '샤프트 부품', value: '드라이버용 5만 ~ 80만 원 / 아이언 12만 ~ 60만 원대' },
+          { label: '연장 수리', value: '별도 견적 (위치·상태에 따라)' }
+        ],
+        visit: '클럽을 맡기시는 작업입니다. 신규 샤프트 주문 시간과 에폭시 경화 24시간이 필요합니다. 방문 전 전화로 클럽 모델과 부러진 위치를 알려주시면 미리 안내드립니다.',
+        actions: [
+          { href: '/workshop#head-shaft', label: '헤드·샤프트 작업 보기' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '헤드가 빠졌어요. 다시 붙일 수 있나요?',
+        situation: '헤드와 샤프트 사이가 분리되어 헤드가 빠진 경우입니다.',
+        cause: '대부분 에폭시 노후입니다. 5~10년 이상 된 클럽은 에폭시가 약해져 분리될 수 있습니다. 새 클럽인데도 빠졌다면 처음 조립 시 에폭시 도포가 부족했거나 유격이 있던 경우입니다.',
+        solutionText: '헤드와 샤프트가 모두 손상되지 않았다면 재접합이 가능합니다. 페룰과 샤프트 팁을 정리한 뒤 신규 에폭시로 재접착합니다. 샤프트 팁이 손상되었다면 샤프트 교체가 필요합니다.',
+        cost: [
+          { label: '연결부 수리 공임', value: '18,000원' },
+          { label: '부품 (에폭시·페룰 등)', value: '몇 천 원 ~ 1만 원대' }
+        ],
+        visit: '클럽을 맡기시는 작업입니다. 에폭시 24시간 경화 시간이 필요해 당일 회수는 어렵습니다. 다음 날 또는 그다음 날 픽업 가능합니다.',
+        actions: [
+          { href: '/workshop#head-shaft', label: '헤드·샤프트 작업 보기' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '페룰이 갈라졌어요. 그냥 둬도 되나요?',
+        situation: '헤드와 샤프트 연결부의 검은 플라스틱 부품이 페룰입니다. 페룰이 갈라지거나 헐거워진 경우입니다.',
+        cause: '충격·마모 또는 처음 조립 시 압착 부족입니다. 페룰 자체는 결합력에 직접 영향을 주지 않지만, 갈라진 채로 두면 헤드 분리의 신호일 수 있습니다.',
+        solutionText: '페룰 교체가 필요합니다. 헤드를 분리하지 않고 교체할 수 있는 경우와, 헤드를 분리해야 정확히 교체되는 경우가 있어 클럽 상태를 보고 판단합니다.',
+        cost: [
+          { label: '페룰 헐거움 공임', value: '5,000원' },
+          { label: '헤드 분리 필요 시', value: '+10,000원' }
+        ],
+        visit: '대부분 즉시 가능한 작업입니다. 분석·교육 예약과 겹치지 않는 시간이라면 방문 즉시 진행됩니다. 미리 전화 한 통 주시면 안전합니다.',
+        actions: [
+          { href: '/workshop#head-shaft', label: '헤드·샤프트 작업 보기' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '그립이 찢어졌어요. 한 자루만 교체할 수 있나요?',
+        situation: '그립이 찢어지거나 닳은 경우입니다. 한 자루 또는 세트 전체일 수 있습니다.',
+        solutionText: '그립 교체가 답입니다. 한 자루만 따로 교체해도 되지만, 세트 전체가 같은 시기에 닳기 시작하면 한꺼번에 교체하시는 것이 일관성 면에서 낫습니다.',
+        cost: [
+          { label: '그립 장착 공임 (그립을 가져오실 시)', value: '5,000원 / 한 자루' },
+          { label: '그립 부품', value: '일반 1~2만 원, 프리미엄 3만 원 이상' },
+          { label: '14자루 세트 전체', value: '공임 7만 원 + 그립값' }
+        ],
+        visit: '즉시 가능한 작업입니다. 한 자루는 10~15분, 세트 전체는 약 1시간이면 마무리됩니다.',
+        actions: [
+          { href: '/workshop#grip', label: '그립 작업 보기' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '클럽이 떨어져서 헤드에 흠집이 났어요. 수리 가능한가요?',
+        situation: '헤드 표면에 흠집·페인트 손상·금속 패임이 생긴 경우입니다.',
+        notice: '공작소는 헤드 도색·복원·그루브 재생 같은 작업은 다루지 않습니다. 이런 작업이 필요한 경우 제조사 또는 전문 도색·복원 업체에 문의하셔야 합니다.',
+        solution: [
+          { title: '공작소에서 가능한 부분', body: '직접 보고 헤드의 손상 정도와 사용 가능 여부를 진단해드립니다. 헤드 자체에 균열이나 깊은 패임이 있어 사용이 어려우면 새 헤드로 교체할 수 있습니다.' }
+        ],
+        bullets: [
+          '<strong>표면 페인트 손상</strong>: 미관 문제로 성능 영향은 거의 없음 (전문 도색 업체 안내)',
+          '<strong>페이스 그루브 마모</strong>: 시간이 지나면 자연스럽게 마모됨. 새 클럽 또는 헤드 교체로 해결',
+          '<strong>헤드 균열·깊은 패임</strong>: 사용 불가일 가능성. 헤드 교체 필요'
+        ],
+        visit: '직접 보고 진단해드립니다. 도색·복원이 필요한 경우 적합한 곳을 안내드릴 수 있습니다.',
+        actions: [
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'performance',
+    label: 'PERFORMANCE',
+    title: '클럽 성능 문제',
+    intro: '거리 부족 · 슬라이스 · 무게 문제 · 어드레스 · 후반 무너짐',
+    items: [
+      {
+        q: '갑자기 거리가 안 나요. 무엇 때문일까요?',
+        situation: '같은 스윙인데 평소보다 거리가 줄었습니다. 일시적일 수도 있고 지속될 수도 있습니다.',
+        bullets: [
+          '<strong>스윙 변화</strong>: 컨디션·자세·계절(겨울 옷차림) 등으로 헤드스피드 감소',
+          '<strong>클럽 변화</strong>: 샤프트 노후·페이스 마모·그립 노후로 잡는 힘 변화',
+          '<strong>타점 변동</strong>: 페이스 중심에서 자주 벗어나면 거리 손실이 큽니다',
+          '<strong>공의 변화</strong>: 더 단단한 공으로 바꾸면 짧아질 수 있음'
+        ],
+        solutionText: '원인이 다양해 분석을 통해 무엇이 줄어든 지점인지 확인이 필요합니다. 헤드스피드·타점·스매시 팩터 — 이 세 가지를 측정하면 원인이 좁혀집니다.',
+        cost: [
+          { label: '분석 프로그램', value: '60,000원 (낮시간 45,000원)' },
+          { label: '분석 후 작업', value: '결정되면 별도 견적' }
+        ],
+        visit: '분석은 예약제로 진행됩니다. 네이버 예약이 가장 빠릅니다. 분석 후 클럽 작업이 필요하면 같은 자리에서 진행되는 경우가 많습니다.',
+        actions: [
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      },
+      {
+        q: '슬라이스가 갑자기 심해졌어요. 클럽 문제일까요?',
+        situation: '평소와 같은 클럽인데 슬라이스가 심해진 경우입니다.',
+        intro: '"같은 슬라이스도 원인이 다르면 처방이 다릅니다." 가능성을 좁혀야 합니다.',
+        bullets: [
+          '<strong>그립 노후</strong>: 미끄러우면 페이스가 열리는 경향',
+          '<strong>라이각 변화</strong>: 너무 업라이트 또는 플랫이 되면 페이스 방향이 바뀜',
+          '<strong>샤프트 노후</strong>: EI 변화 또는 샤프트 휨',
+          '<strong>타점 변화</strong>: 힐 쪽으로 자주 맞으면 기어이펙트로 슬라이스',
+          '<strong>스윙 변화</strong>: 클럽 문제가 아니라 스윙 자체의 변화'
+        ],
+        solutionText: '원인이 다섯 가지 이상이라 장비를 바꾸기 전에 진단부터 합니다. 인터뷰 → 클럽 측정 → 스윙 분석 순서로 좁혀가면 어느 변수가 원인인지 분명해집니다.',
+        cost: [
+          { label: '분석 프로그램', value: '60,000원 (낮시간 45,000원)' },
+          { label: '진단 결과에 따라', value: '그립 교체 5,000원 + 부품 / 라이각 조정 10,000원 / 샤프트 교체 18,000원 + 부품' }
+        ],
+        visit: '분석은 예약제로 진행됩니다. 1:1로 약 40~60분.',
+        actions: [
+          { href: '/topics/slice-hook', label: '증상별 진단: 슬라이스·훅' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      },
+      {
+        q: '클럽이 무겁게 느껴져요. 가볍게 만들 수 있나요?',
+        situation: '같은 클럽인데 평소보다 무겁게 느껴지거나, 처음부터 자기에게 무거웠던 경우입니다.',
+        intro: '"무겁다"는 두 가지 다른 문제를 가리킵니다.',
+        solution: [
+          { title: '1) 총무게가 무거움', body: '라운드 후반에 피곤하고 거리도 짧아집니다. → 가벼운 샤프트나 그립으로 무게 조정 필요.' },
+          { title: '2) 헤드가 무겁게 느껴짐 (스윙웨이트 SW가 높음)', body: '헤드는 무겁고 손은 가벼운 느낌. → SW 조정으로 해결.' }
+        ],
+        solutionText: '두 가지는 처방이 다릅니다. 처음에는 둘 중 어느 문제인지 진단부터입니다.',
+        bullets: [
+          '<strong>총무게 줄이기</strong>: 가벼운 샤프트로 교체 (가장 큰 차이) 또는 가벼운 그립',
+          '<strong>SW 줄이기</strong>: 그립 교체 (그립 +5g당 SW -1pt 정도) 또는 헤드 무게 조정'
+        ],
+        cost: [
+          { label: '분석 (필요 시)', value: '60,000원 / 낮시간 45,000원' },
+          { label: 'SW 조정', value: '5,000원' },
+          { label: '그립 교체', value: '5,000원 + 그립값' },
+          { label: '샤프트 교체', value: '18,000원 + 샤프트값' }
+        ],
+        visit: '진단부터 작업까지 같은 날에 끝나는 경우가 많습니다 (단순 SW 조정 또는 그립 교체). 샤프트 교체가 필요하면 클럽을 맡기셔야 합니다.',
+        actions: [
+          { href: '/workshop#length-balance', label: '길이·밸런스 작업' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      },
+      {
+        q: '어드레스가 어색해요. 클럽이 안 맞는 걸까요?',
+        situation: '클럽을 어드레스했을 때 토우가 들리거나 힐이 들리는 등 자세가 어색한 경우입니다.',
+        intro: '대부분 라이각 불일치입니다.',
+        bullets: [
+          '<strong>너무 업라이트</strong>: 토우가 들리고 미스가 좌측 (페이스 닫힘)',
+          '<strong>너무 플랫</strong>: 힐이 들리고 미스가 우측 (페이스 열림)'
+        ],
+        solutionText: '신체(특히 키와 손-바닥 거리)에 따라 적정 라이각이 달라집니다. 다이나믹 라이 테스트로 측정 후 라이각 조정합니다. 임팩트 테이프로 실제 임팩트 시 클럽이 어떻게 닿는지 확인합니다.',
+        cost: [
+          { label: '다이나믹 라이 테스트', value: '분석 프로그램에 포함 (60,000원)' },
+          { label: '라이·로프트 조정', value: '10,000원 / 클럽' }
+        ],
+        visit: '라이각 조정 자체는 즉시 가능한 작업입니다 (몇 분 ~ 10분). 정확한 진단이 먼저라 분석을 권장합니다. 분석 + 작업 같은 날 가능합니다.',
+        actions: [
+          { href: '/workshop#lie-loft', label: '라이·로프트 작업' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      },
+      {
+        q: '후반에 클럽이 무너져요. 무엇을 봐야 하나요?',
+        situation: '13~14번 홀 이후로 거리가 줄거나 미스가 많아지는 패턴입니다.',
+        cause: '대부분 클럽 무게 + 골퍼의 지구력 불일치입니다. 후반에 피곤해지면 릴리즈가 늦어지고, 그 결과 우측 미스나 거리 손실이 나타납니다. 이는 스윙 문제가 아니라 클럽이 그분의 지구력을 초과한다는 신호입니다.',
+        solutionText: '총무게 재조정이 핵심입니다. 가벼운 샤프트 또는 가벼운 그립으로 무게 부담을 낮춥니다. 분석으로 후반 패턴을 확인한 후 결정합니다.',
+        cost: [
+          { label: '분석 프로그램', value: '60,000원 / 낮시간 45,000원' },
+          { label: '그립 교체', value: '5,000원 + 부품' },
+          { label: '샤프트 교체', value: '18,000원 + 부품' }
+        ],
+        visit: '분석부터 시작하시는 것이 정확합니다. 예약제로 진행.',
+        actions: [
+          { href: '/topics/rhythm-timing', label: '증상별 진단: 리듬·타이밍' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'replacement',
+    label: 'REPLACEMENT',
+    title: '부품 교체 / 조정',
+    intro: '샤프트 교체 · 그립 교체 시기 · 라이각 조정 · 길이 조정 · SW/MOI',
+    items: [
+      {
+        q: '샤프트 교체는 어떻게 진행되나요?',
+        situation: '샤프트 노후나 거동 변화로 샤프트를 교체하고 싶은 경우입니다.',
+        solution: [
+          { title: '1. 분석', body: '현재 클럽의 샤프트 거동(CPM·EI·토크)과 골퍼의 스윙 매칭 확인' },
+          { title: '2. 샤프트 선택', body: '분석 결과에 맞는 모델 추천 (저희가 무리하게 권하지 않습니다)' },
+          { title: '3. 분리·재조립', body: '헤드 분리 → 신규 샤프트 길이 재단 → 에폭시로 결합 → 그립 장착' },
+          { title: '4. 검증', body: '라이각·SW 재측정 후 필요 시 미세 조정' }
+        ],
+        oem: '완성품 클럽에 처음 장착되어 있던 OEM 샤프트는 브랜드 전용 스펙으로 공급되거나 단종된 경우가 있어, 같은 제품을 구하기 어려울 수 있습니다. 이 경우 무게·CPM·토크·탄도 성향이 비슷한 대체 샤프트를 선택합니다. 오히려 기존 샤프트가 안 맞았다면 더 좋은 결과로 이어지는 경우도 있습니다.',
+        cost: [
+          { label: '분석 (권장)', value: '60,000원 / 낮시간 45,000원' },
+          { label: '샤프트 교체 공임', value: '18,000원' },
+          { label: '길이 재단 샤프트 교체', value: '25,000원' },
+          { label: '슬리브 (드라이버 어댑터)', value: '12,000원' },
+          { label: '샤프트 부품', value: '드라이버용 5만 ~ 80만 원, 아이언 12만 ~ 60만 원대' }
+        ],
+        visit: '클럽을 맡기시는 작업입니다. 에폭시 경화 24시간 필요. 분석부터 시작하시면 같은 자리에서 분석 → 작업 결정 → 클럽 맡기기까지 가능합니다.',
+        actions: [
+          { href: '/workshop#head-shaft', label: '헤드·샤프트 작업' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      },
+      {
+        q: '그립 교체는 얼마나 자주 해야 하나요?',
+        situation: '그립이 닳거나 미끄러워서 교체 시기를 알고 싶은 경우입니다.',
+        bullets: [
+          '라운드 빈도에 따라 다릅니다 — 매주 라운드 분은 1년에 한 번, 월 1회 분은 2~3년에 한 번',
+          '손에 땀이 많거나 비 라운드 자주 하시면 빨리 닳습니다',
+          '표면이 반들반들해지거나 미끄러우면 교체 시점'
+        ],
+        solution: [
+          { title: '부분 교체', body: '자주 쓰는 클럽(드라이버, 7번 아이언 등)만 먼저' },
+          { title: '전체 교체', body: '14자루 세트 한 번에. 일관성 면에서 추천' }
+        ],
+        solutionText: '그립 종류는 손 크기·기후·취향에 따라 다양해서 직접 잡아보고 결정하시는 것이 좋습니다.',
+        cost: [
+          { label: '그립 장착 공임 (그립을 가져오실 시)', value: '5,000원 / 한 자루' },
+          { label: '퍼터 그립', value: '7,000원' },
+          { label: '그립 부품', value: '일반 1~2만 원, 프리미엄 3만 원 이상' },
+          { label: '14자루 세트 전체', value: '공임 7만 원 + 그립값' }
+        ],
+        visit: '즉시 가능한 작업입니다. 한 자루는 10분, 세트 전체는 약 1시간. 분석·교육 예약과 겹치지 않으면 방문 즉시 진행됩니다.',
+        actions: [
+          { href: '/workshop#grip', label: '그립 작업' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '라이각 조정은 어떤 클럽에 필요한가요?',
+        situation: '라이각이 자기 신체와 안 맞아 어드레스나 임팩트가 어색한 경우입니다.',
+        intro: '주로 아이언과 웨지에 적용됩니다. 드라이버·페어웨이는 슬리브로 대부분 보정됩니다.',
+        solution: [
+          { title: '1. 다이나믹 라이 테스트', body: '임팩트 테이프로 실제 임팩트 위치 확인' },
+          { title: '2. 단조(연철) 헤드', body: '±2~3도 정도까지 조정 가능' },
+          { title: '3. 주조(스테인리스) 헤드', body: '±1도 정도가 안전. 그 이상은 헤드가 깨질 수 있어 권장하지 않습니다.' }
+        ],
+        cost: [
+          { label: '다이나믹 라이 테스트', value: '분석 프로그램에 포함 (60,000원)' },
+          { label: '라이·로프트 조정', value: '10,000원 / 클럽' },
+          { label: '14자루 일괄', value: '별도 견적' }
+        ],
+        visit: '라이각 조정 자체는 즉시 가능한 작업입니다 (각 클럽당 몇 분 ~ 10분). 진단이 먼저이므로 분석 예약과 같이 가시는 것이 정확합니다.',
+        actions: [
+          { href: '/workshop#lie-loft', label: '라이·로프트 작업' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      },
+      {
+        q: '클럽 길이를 줄이거나 늘릴 수 있나요?',
+        situation: '신체 사이즈와 클럽 길이가 안 맞는 경우입니다.',
+        bullets: [
+          '키가 작은 분이 표준 길이 클럽을 쓰시는 경우 (특히 여성)',
+          '시니어 분이 클럽이 무거워 짧게 하고 싶은 경우',
+          '키가 큰 분이 표준보다 길게 쓰고 싶은 경우',
+          '신클럽 제작 시 처음부터 본인 길이로'
+        ],
+        solution: [
+          { title: '1. WTF (Wrist-to-Floor) 측정', body: '손목에서 바닥까지의 거리로 적정 길이 산출' },
+          { title: '2. 현재 클럽 측정', body: '적정 범위에서 얼마나 벗어났는지' },
+          { title: '3. 줄이기', body: '그립 쪽 잘라낸 후 그립 재장착. SW 변화 동반 (약 -3pt)' },
+          { title: '4. 늘리기', body: '익스텐션 부품을 추가. 한 자루당 1~2인치까지 가능' }
+        ],
+        cost: [
+          { label: '연장', value: '10,000원 / 클럽' },
+          { label: '길이 재단 샤프트 교체', value: '25,000원 (샤프트 교체 시 같이)' },
+          { label: '부품', value: '익스텐션 부품 / 그립 재장착 시 그립값' }
+        ],
+        visit: '대부분 즉시 가능합니다. 다만 길이가 바뀌면 SW와 라이각도 영향받으므로, 측정과 함께 가시는 것이 좋습니다. 분석에 WTF 측정도 포함됩니다.',
+        actions: [
+          { href: '/workshop#length-balance', label: '길이·밸런스 작업' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      },
+      {
+        q: '스윙웨이트(SW)나 MOI 조정은 어떤 사람에게 필요한가요?',
+        situation: '헤드 감각이 어색하거나 클럽들 사이 일관성이 떨어진다고 느끼는 경우입니다.',
+        bullets: [
+          '<strong>SW 부족 (헤드 안 느껴짐)</strong>: 헤드 무게 부족 또는 그립이 너무 무거워 SW가 낮아짐',
+          '<strong>SW 과다 (헤드 무거움)</strong>: 그 반대',
+          '<strong>클럽들 사이 MOI 불일치</strong>: 7번 아이언은 잘 맞는데 5번이나 9번은 어렵다 — 세트 일관성 문제'
+        ],
+        solution: [
+          { title: '납테이프로 헤드 무게 추가', body: '가장 간단' },
+          { title: '그립 교체로 그립 쪽 무게 변경', body: '그립 +5g당 SW -1pt 정도' },
+          { title: '길이 조정도 SW에 영향', body: '1인치 단축 = SW -3pt 정도' }
+        ],
+        solutionText: 'MOI 매칭은 좀 더 정밀한 작업입니다. 분해 없이 가능한 케이스와 헤드 분리해야 하는 케이스가 갈립니다.',
+        cost: [
+          { label: '스윙웨이트 조정', value: '5,000원 / 클럽' },
+          { label: 'MOI 매칭 (분해 없이 납테이프로 증가)', value: '5,000원 / 클럽' },
+          { label: 'MOI 매칭 (헤드 분리 시)', value: '25,000원 / 클럽' },
+          { label: '분석 (권장)', value: '60,000원' }
+        ],
+        visit: '분해 없이 가능한 조정은 즉시 가능한 작업, 헤드 분리 필요한 경우는 클럽을 맡기시는 작업 (24시간).',
+        actions: [
+          { href: '/workshop#length-balance', label: '길이·밸런스 작업' },
+          { href: '/system', label: '공작소의 시스템' },
+          { href: 'https://naver.me/GfrbfXtX', label: '네이버 예약', primary: true, external: true }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'general',
+    label: 'GENERAL',
+    title: '일반 문의',
+    intro: '구입처 · 보증기간 · 작업 시간 · 작업 후 보증 · 분석 없이 작업',
+    items: [
+      {
+        q: '다른 곳에서 산 클럽도 봐주시나요?',
+        answer: '네, 어디서 구입하셨든 관계없이 봐드립니다. 클럽메이커스는 자체 제품 판매보다 골퍼의 클럽이 잘 작동하는 것을 더 중요하게 봅니다.',
+        notice: '일부 특수 헤드(카본 크라운 드라이버 등)는 가열·분리 시 변형 위험이 있어 작업 가능 여부를 미리 확인합니다. 방문 전 전화로 클럽 모델을 알려주시면 미리 안내드립니다.',
+        cost: [
+          { label: '공임', value: '구입처와 무관하게 동일하게 적용' }
+        ],
+        visit: '방문하시면 됩니다. 즉시 가능한 작업과 맡김 작업이 갈리니, 방문 전 전화 한 통 권장합니다.',
+        actions: [
+          { href: '/workshop', label: '공작소의 작업' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '보증기간 지난 클럽도 작업 가능한가요?',
+        answer: '보증기간과 무관하게 작업해드립니다. 제조사 보증은 페이스 균열이나 헤드 결함 같은 제조 결함을 다루는 것이고, 공작소는 샤프트 교체·그립 교체·라이각 조정 같은 일반 작업을 다룹니다 — 둘은 영역이 다릅니다.',
+        bullets: [
+          '부품(샤프트·슬리브) 호환성 확인 필요',
+          '헤드 도색·페이스 마모 등 노후로 인한 한계 가능성 (도색·복원·그루브 재생은 다루지 않습니다)'
+        ],
+        solutionText: '오래된 클럽인 경우 방문 전 전화로 미리 확인하시면 정확합니다.',
+        cost: [
+          { label: '공임', value: '일반 공임표 그대로 적용' }
+        ],
+        visit: '전화로 클럽 모델을 알려주시면 작업 가능 여부와 견적을 미리 안내드립니다.',
+        actions: [
+          { href: '/workshop', label: '공작소의 작업' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '작업 시간은 얼마나 걸리나요?',
+        situation: '방문해서 즉시 가져갈 수 있는지, 아니면 맡기고 와야 하는지 알고 싶은 경우입니다.',
+        solution: [
+          { title: '즉시 가능 (방문 후 10분 ~ 1시간)', body: '그립 장착·추출 (한 자루 10분, 세트 1시간) / 라이·로프트 조정 (몇 분) / 스윙웨이트 조정 (5분) / MOI 매칭 (분해 없이) (5분) / 페룰 헐거움 (10분)' },
+          { title: '클럽을 맡기시는 작업 (24시간 ~ 며칠)', body: '샤프트 교체 / 헤드·샤프트 분리·재접합 / MOI 매칭 (헤드 분리 시) / 클럽 제작·정밀 조립' }
+        ],
+        visit: '분석·교육 예약 시간과 겹치면 즉시 응대가 어려울 수 있어, 방문 전 전화 한 통 권장합니다.',
+        actions: [
+          { href: '/workshop', label: '공임표 보기' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '작업 후 보증이나 사후 관리가 있나요?',
+        intro: '작업 자체에 대한 보증은 있습니다.',
+        bullets: [
+          '샤프트 교체 후 결합부에 단기간 분리가 일어나면 무상 재작업',
+          '라이각 조정이 의도한 각도가 아니면 재조정',
+          '그립 장착 후 미끄러지거나 풀리면 재장착'
+        ],
+        notice: '보증되지 않는 것 — 샤프트 자체의 결함(제조사 보증 대상), 사용 중 새로 생긴 손상(충격·노후 등), 작업 결과에 대한 만족도(예: "거리가 더 안 났다"). 이런 부분은 분석으로 미리 확인하시는 것이 안전합니다.',
+        solutionText: '저희는 무리한 판매를 권하지 않고 필요한 만큼만 작업하는 것을 원칙으로 합니다. 작업 후 문제가 생기면 전화로 연락주세요.',
+        actions: [
+          { href: '/workshop', label: '공작소의 작업' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      },
+      {
+        q: '분석 없이 작업만 받을 수 있나요?',
+        answer: '네, 작업만 받으셔도 됩니다. 명확한 작업(그립 교체, 페룰 헐거움, 라이각 조정 등)은 분석 없이 진행됩니다.',
+        intro: '다만 두 가지 권장:',
+        bullets: [
+          '<strong>간단한 점검</strong>: 작업 전 클럽 상태를 확인하면서 다른 문제가 보이면 알려드립니다 (강요는 절대 없습니다)',
+          '<strong>변경 후 검증</strong>: SW나 라이각이 바뀌었으면 다른 영향이 있는지 같이 봐드립니다'
+        ],
+        solution: [
+          { title: '분석을 권장하는 케이스', body: '"어떤 클럽이 안 맞는다"는 문제 호소가 있을 때 (원인이 무엇인지 모를 때) / 처음 클럽 세트를 만드시는 경우 / 거리·방향에 변화가 생겼는데 원인을 모를 때' }
+        ],
+        cost: [
+          { label: '공임', value: '공임표 그대로' },
+          { label: '분석 없이 작업만', value: '분석비 60,000원 발생 X' }
+        ],
+        visit: '어떤 작업인지 분명하면 전화로 견적·시간 미리 확인 후 방문하시면 됩니다.',
+        actions: [
+          { href: '/workshop', label: '공임표 보기' },
+          { href: '/contact', label: '예약·문의', primary: true }
+        ]
+      }
+    ]
+  }
+];
+
+// FAQ Schema for Google Search rich results
+const faqSchemaItems = categories.flatMap(cat =>
+  cat.items.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.situation || item.answer || item.intro || item.q
+    }
+  }))
+);
+---
+
+<BaseLayout
+  title="수리·작업 Q&A — 자주 묻는 20가지"
+  description="샤프트 교체, 그립 교체, 라이각 조정, 거리·슬라이스 문제 — 클럽 수리·작업과 관련된 자주 묻는 20가지 질문에 대한 답. 비용·소요시간·예약 안내까지 포함. 클럽메이커스 24년의 현장 답변."
+  schemaType="FAQPage"
+>
+
+  <!-- FAQ Schema 추가 -->
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqSchemaItems
+  })} />
+
+  <!-- Hero -->
+  <section class="page-hero qna-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">QNA · 수리·작업 자주 묻는 질문</div>
+      <h1>"샤프트가 부러졌어요"<br>"그립을 바꾸고 싶은데"</h1>
+      <p class="page-hero-subtitle">
+        실제 자주 듣는 <strong>20가지 질문</strong>에 대한 답을 정리했습니다.
+        각 답에는 비용·소요시간·방문 안내까지 포함되어 있습니다.<br/>
+        <span class="hero-sub-light">— 클럽메이커스 24년의 현장 답변.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 카테고리 점프 링크 -->
+  <section class="section qna-nav-section">
+    <div class="section-content-narrow">
+      <div class="qna-nav">
+        {categories.map((cat) => (
+          <a href={`#${cat.id}`} class="qna-nav-link">
+            <span class="qna-nav-label">{cat.label}</span>
+            <span class="qna-nav-title">{cat.title}</span>
+            <span class="qna-nav-count">{cat.items.length}개</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4개 카테고리 -->
+  {categories.map((cat) => (
+    <section id={cat.id} class="section qna-category-section">
+      <div class="section-content-narrow">
+        <div class="qna-cat-head">
+          <p class="section-eyebrow">{cat.label} · {cat.title}</p>
+          <h2>{cat.title}</h2>
+          <p class="qna-cat-intro">{cat.intro}</p>
+        </div>
+
+        <div class="qna-list">
+          {cat.items.map((item, idx) => (
+            <article class="qna-item">
+              <h3 class="qna-q">
+                <span class="qna-q-num">Q.</span>
+                {item.q}
+              </h3>
+
+              <div class="qna-body">
+                {item.answer && <p class="qna-answer-strong">{item.answer}</p>}
+                {item.situation && <p class="qna-paragraph">{item.situation}</p>}
+                {item.cause && <p class="qna-paragraph"><strong>원인 — </strong>{item.cause}</p>}
+                {item.intro && <p class="qna-paragraph">{item.intro}</p>}
+
+                {item.notice && (
+                  <aside class="qna-notice">
+                    <p class="qna-notice-label">⚠ 중요 안내</p>
+                    <p class="qna-notice-body">{item.notice}</p>
+                  </aside>
+                )}
+
+                {item.bullets && (
+                  <ul class="qna-bullets">
+                    {item.bullets.map((b) => (
+                      <li set:html={b} />
+                    ))}
+                  </ul>
+                )}
+
+                {item.solution && (
+                  <div class="qna-solution">
+                    {item.solution.map((s) => (
+                      <div class="qna-solution-item">
+                        <p class="qna-solution-title">{s.title}</p>
+                        <p class="qna-solution-body">{s.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {item.solutionText && <p class="qna-paragraph">{item.solutionText}</p>}
+
+                {item.oem && (
+                  <aside class="qna-oem">
+                    <p class="qna-oem-label">OEM 샤프트는 같은 모델 구하기 어려울 수 있습니다</p>
+                    <p class="qna-oem-body">{item.oem}</p>
+                  </aside>
+                )}
+
+                {item.cost && (
+                  <div class="qna-cost-box">
+                    <p class="qna-cost-label">비용</p>
+                    <table class="qna-cost-table">
+                      <tbody>
+                        {item.cost.map((c) => (
+                          <tr>
+                            <td class="qna-cost-key">{c.label}</td>
+                            <td class="qna-cost-value">{c.value}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {item.visit && (
+                  <div class="qna-visit-box">
+                    <p class="qna-visit-label">방문 안내</p>
+                    <p class="qna-visit-body">{item.visit}</p>
+                  </div>
+                )}
+
+                {item.actions && (
+                  <div class="qna-actions">
+                    {item.actions.map((a) => (
+                      <a
+                        href={a.href}
+                        class={a.primary ? 'qna-btn qna-btn-primary' : 'qna-btn'}
+                        target={a.external ? '_blank' : undefined}
+                        rel={a.external ? 'noopener' : undefined}
+                      >
+                        {a.label} →
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- 끝 — 더 많은 자료 -->
+  <section class="section section-bg-soft qna-bottom">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">MORE · 답을 찾지 못하셨나요?</p>
+      <h2>직접 보고 정확하게<br>안내해드립니다</h2>
+      <p class="qna-bottom-intro">
+        클럽 상태에 따라 답이 달라지는 경우가 많습니다.
+        <strong>전화 한 통</strong>이면 가장 정확한 안내를 받으실 수 있습니다.
+      </p>
+
+      <div class="qna-bottom-actions">
+        <a href="tel:01043635555" class="qna-btn-large qna-btn-primary">
+          📞 010-4363-5555
+        </a>
+        <a href="mailto:clubmakers@naver.com" class="qna-btn-large">
+          ✉ 이메일 문의
+        </a>
+      </div>
+
+      <div class="qna-blog-link">
+        <p class="qna-blog-label">더 자세한 글</p>
+        <p class="qna-blog-body">
+          블로그에 클럽피팅·수리 관련 글을 정리하고 있습니다.
+          <a href="https://blog.naver.com/clubmakers" target="_blank" rel="noopener">클럽메이커스 블로그 →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- closing-actions -->
+  <section class="section qna-closing">
+    <div class="section-content-narrow">
+      <div class="closing-actions">
+        <a href="/workshop" class="btn-primary">공작소의 작업 →</a>
+        <a href="/system" class="btn-ghost">공작소의 시스템 →</a>
+        <a href="/contact" class="btn-ghost">예약·문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  /* ==================== HERO ==================== */
+  .qna-hero { background: var(--bg-soft, #F1ECE0); }
+
+  .hero-sub-light {
+    font-size: 14px;
+    color: var(--grey, #6B6358);
+    font-weight: 400;
+  }
+
+  /* ==================== 카테고리 점프 링크 ==================== */
+  .qna-nav-section {
+    padding-top: 0 !important;
+  }
+  .qna-nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 720px) {
+    .qna-nav { grid-template-columns: repeat(4, 1fr); }
+  }
+  .qna-nav-link {
+    background: var(--bg-elev, #FFFFFF);
+    border: 1px solid var(--line, #E2DACA);
+    border-top: 3px solid var(--green, #2C5F4F);
+    padding: 18px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .qna-nav-link:hover {
+    transform: translateY(-2px);
+    background: var(--green-soft, #E6EDE7);
+  }
+  .qna-nav-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--green, #2C5F4F);
+  }
+  .qna-nav-title {
+    font-family: var(--font-serif, serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink, #1F1B16);
+    line-height: 1.3;
+  }
+  .qna-nav-count {
+    font-size: 12px;
+    color: var(--grey, #6B6358);
+    margin-top: auto;
+  }
+
+  /* ==================== 카테고리 헤드 ==================== */
+  .qna-category-section { scroll-margin-top: 80px; }
+  .qna-cat-head { margin-bottom: 36px; }
+  .qna-cat-head h2 {
+    font-family: var(--font-serif, serif);
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink, #1F1B16);
+    margin-bottom: 12px;
+  }
+  .qna-cat-intro {
+    font-size: 15px;
+    color: var(--grey, #6B6358);
+    line-height: 1.7;
+  }
+
+  /* ==================== Q&A 항목 ==================== */
+  .qna-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .qna-item {
+    background: var(--bg-elev, #FFFFFF);
+    border: 1px solid var(--line, #E2DACA);
+    border-radius: 6px;
+    padding: 32px 36px;
+  }
+  @media (max-width: 640px) {
+    .qna-item { padding: 24px 22px; }
+  }
+
+  .qna-q {
+    font-family: var(--font-serif, serif);
+    font-size: clamp(20px, 2.5vw, 24px);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink, #1F1B16);
+    margin: 0 0 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--green, #2C5F4F);
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .qna-q-num {
+    color: var(--green, #2C5F4F);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .qna-body { color: var(--ink-2, #3A332A); }
+
+  .qna-paragraph {
+    font-size: 16px;
+    line-height: 1.85;
+    margin: 0 0 16px;
+  }
+  .qna-paragraph strong { color: var(--ink, #1F1B16); font-weight: 600; }
+
+  .qna-answer-strong {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--ink, #1F1B16);
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 14px;
+    border-left: 3px solid var(--green, #2C5F4F);
+  }
+
+  /* 중요 안내 박스 (도색·복원 안 함 등) */
+  .qna-notice {
+    background: var(--warn-soft, #F6E8E1);
+    border-left: 3px solid var(--warn, #B5462E);
+    padding: 18px 22px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+  .qna-notice-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--warn, #B5462E);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .qna-notice-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2, #3A332A);
+    margin: 0;
+  }
+
+  /* OEM 안내 박스 */
+  .qna-oem {
+    background: var(--bg-soft, #F1ECE0);
+    border-left: 3px solid var(--gold, #C19A4F);
+    padding: 18px 22px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+  .qna-oem-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--gold, #C19A4F);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .qna-oem-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2, #3A332A);
+    margin: 0;
+  }
+
+  /* 불릿 리스트 */
+  .qna-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 20px;
+  }
+  .qna-bullets li {
+    position: relative;
+    padding: 8px 0 8px 22px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-2, #3A332A);
+    border-bottom: 1px dotted var(--line-2, #D2C9B5);
+  }
+  .qna-bullets li:last-child { border-bottom: none; }
+  .qna-bullets li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    color: var(--gold, #C19A4F);
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .qna-bullets li strong { color: var(--ink, #1F1B16); font-weight: 600; }
+
+  /* 단계별 솔루션 */
+  .qna-solution {
+    background: var(--bg-soft, #F1ECE0);
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .qna-solution-item {
+    padding-bottom: 12px;
+    border-bottom: 1px dotted var(--line-2, #D2C9B5);
+  }
+  .qna-solution-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .qna-solution-title {
+    font-family: var(--font-serif, serif);
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--green, #2C5F4F);
+    margin: 0 0 6px;
+  }
+  .qna-solution-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2, #3A332A);
+    margin: 0;
+  }
+
+  /* 비용 박스 */
+  .qna-cost-box {
+    background: var(--ink, #1F1B16);
+    color: white;
+    padding: 22px 26px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+  .qna-cost-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold-soft, #D4B888);
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .qna-cost-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .qna-cost-table tr {
+    border-bottom: 1px solid rgba(212, 184, 136, 0.15);
+  }
+  .qna-cost-table tr:last-child { border-bottom: none; }
+  .qna-cost-table td {
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    vertical-align: top;
+  }
+  .qna-cost-key {
+    color: rgba(255, 255, 255, 0.75);
+    width: 45%;
+    padding-right: 16px;
+  }
+  .qna-cost-value {
+    color: white;
+    font-weight: 600;
+    text-align: right;
+  }
+  @media (max-width: 640px) {
+    .qna-cost-table td { font-size: 13px; padding: 8px 0; }
+    .qna-cost-key { width: 50%; padding-right: 10px; }
+  }
+
+  /* 방문 안내 박스 */
+  .qna-visit-box {
+    background: var(--green-soft, #E6EDE7);
+    border-left: 3px solid var(--green, #2C5F4F);
+    padding: 18px 22px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+  .qna-visit-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--green, #2C5F4F);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .qna-visit-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2, #3A332A);
+    margin: 0;
+  }
+
+  /* 액션 버튼 */
+  .qna-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px dotted var(--line-2, #D2C9B5);
+  }
+  .qna-btn {
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    background: var(--bg-soft, #F1ECE0);
+    color: var(--ink, #1F1B16);
+    border: 1px solid var(--line, #E2DACA);
+  }
+  .qna-btn:hover {
+    background: var(--bg-elev, #FFFFFF);
+    border-color: var(--green, #2C5F4F);
+    color: var(--green, #2C5F4F);
+    transform: translateX(2px);
+  }
+  .qna-btn-primary {
+    background: var(--green, #2C5F4F);
+    color: white;
+    border-color: var(--green, #2C5F4F);
+  }
+  .qna-btn-primary:hover {
+    background: var(--green-2, #87A99B);
+    color: white;
+    border-color: var(--green-2, #87A99B);
+  }
+
+  /* ==================== 페이지 끝 ==================== */
+  .qna-bottom h2 {
+    font-family: var(--font-serif, serif);
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink, #1F1B16);
+    margin-bottom: 16px;
+  }
+  .qna-bottom-intro {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2, #3A332A);
+    margin-bottom: 32px;
+    max-width: 580px;
+  }
+  .qna-bottom-intro strong { color: var(--ink, #1F1B16); font-weight: 600; }
+
+  .qna-bottom-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  .qna-btn-large {
+    font-family: var(--font-serif, serif);
+    font-size: 17px;
+    font-weight: 700;
+    padding: 16px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    background: var(--bg-elev, #FFFFFF);
+    color: var(--ink, #1F1B16);
+    border: 1px solid var(--line, #E2DACA);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .qna-btn-large:hover {
+    background: var(--bg-soft, #F1ECE0);
+    border-color: var(--green, #2C5F4F);
+    color: var(--green, #2C5F4F);
+    transform: translateX(2px);
+  }
+  .qna-btn-large.qna-btn-primary {
+    background: var(--green, #2C5F4F);
+    color: white;
+    border-color: var(--green, #2C5F4F);
+  }
+  .qna-btn-large.qna-btn-primary:hover {
+    background: var(--green-2, #87A99B);
+    color: white;
+    border-color: var(--green-2, #87A99B);
+  }
+
+  .qna-blog-link {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line, #E2DACA);
+  }
+  .qna-blog-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold, #C19A4F);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .qna-blog-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2, #3A332A);
+    margin: 0;
+  }
+  .qna-blog-body a {
+    color: var(--green, #2C5F4F);
+    border-bottom: 1px solid var(--green, #2C5F4F);
+    font-weight: 600;
+  }
+  .qna-blog-body a:hover { color: var(--green-2, #87A99B); }
+
+  /* closing-actions은 기존 글로벌 스타일 사용 */
+  .qna-closing { padding-top: 0 !important; }
+
+  @media (max-width: 640px) {
+    .qna-cost-box { padding: 18px 20px; }
+    .qna-bottom-actions { flex-direction: column; }
+    .qna-btn-large { width: 100%; justify-content: center; }
+  }
+</style>
