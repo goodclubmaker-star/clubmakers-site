@@ -80,6 +80,42 @@ const articleSchema = {
         <button class="filter-tag" data-filter="system">📊 시스템·분석</button>
         <button class="filter-tag" data-filter="other">📚 기타</button>
       </div>
+
+      <!-- 가나다 + 영문 색인 -->
+      <div class="alphabet-index" id="alphabet-index">
+        <div class="alphabet-group">
+          <span class="alphabet-label">가나다</span>
+          <button class="alphabet-letter" data-letter="ㄱ">ㄱ</button>
+          <button class="alphabet-letter" data-letter="ㄴ">ㄴ</button>
+          <button class="alphabet-letter" data-letter="ㄷ">ㄷ</button>
+          <button class="alphabet-letter" data-letter="ㄹ">ㄹ</button>
+          <button class="alphabet-letter" data-letter="ㅁ">ㅁ</button>
+          <button class="alphabet-letter" data-letter="ㅂ">ㅂ</button>
+          <button class="alphabet-letter" data-letter="ㅅ">ㅅ</button>
+          <button class="alphabet-letter" data-letter="ㅇ">ㅇ</button>
+          <button class="alphabet-letter" data-letter="ㅈ">ㅈ</button>
+          <button class="alphabet-letter" data-letter="ㅋ">ㅋ</button>
+          <button class="alphabet-letter" data-letter="ㅌ">ㅌ</button>
+          <button class="alphabet-letter" data-letter="ㅍ">ㅍ</button>
+          <button class="alphabet-letter" data-letter="ㅎ">ㅎ</button>
+        </div>
+        <div class="alphabet-group">
+          <span class="alphabet-label">영문</span>
+          <button class="alphabet-letter alphabet-en" data-letter-en="A">A</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="B">B</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="C">C</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="D">D</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="E">E</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="F">F</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="H">H</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="I">I</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="L">L</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="M">M</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="S">S</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="T">T</button>
+          <button class="alphabet-letter alphabet-en" data-letter-en="W">W</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -174,6 +210,64 @@ const articleSchema = {
     color: var(--cream);
     border-color: var(--green);
     font-weight: 600;
+  }
+
+  /* ===== 가나다·영문 색인 ===== */
+  .alphabet-index {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .alphabet-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .alphabet-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-right: 8px;
+    flex-shrink: 0;
+    min-width: 48px;
+  }
+  .alphabet-letter {
+    background: transparent;
+    border: 1px solid var(--line);
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+  }
+  .alphabet-letter:hover {
+    background: var(--green);
+    color: var(--cream);
+    border-color: var(--green);
+  }
+  .alphabet-letter.alphabet-en {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .alphabet-letter:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
 
   /* ===== Markdown prose 스타일 ===== */
@@ -507,7 +601,43 @@ const articleSchema = {
         });
       }
 
-      // === 4. 필터 적용 ===
+      // === 4. 가나다·영문 색인 — 클릭 시 해당 자음/알파벳으로 점프 ===
+      // 한글 가나다: ## ㄱ, ## ㄴ ... 같은 H2 헤더로 점프
+      const koreanLetterBtns = document.querySelectorAll('.alphabet-letter[data-letter]');
+      koreanLetterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const letter = btn.dataset.letter;
+          // ## ㄱ 등의 H2 헤더 찾기
+          const h2s = document.querySelectorAll('.glossary-prose h2');
+          for (let i = 0; i < h2s.length; i++) {
+            if (h2s[i].textContent.trim() === letter) {
+              h2s[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+              return;
+            }
+          }
+        });
+      });
+
+      // 영문 알파벳: 첫 영문 시작 H3 용어로 점프
+      const enLetterBtns = document.querySelectorAll('.alphabet-letter[data-letter-en]');
+      enLetterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const letter = btn.dataset.letterEn;
+          // 그 글자로 시작하는 첫 H3 찾기
+          const h3s = document.querySelectorAll('h3.term-header');
+          for (let i = 0; i < h3s.length; i++) {
+            const text = h3s[i].textContent.trim();
+            // 표시 상태인 것만
+            if (h3s[i].style.display === 'none') continue;
+            if (text.charAt(0) === letter) {
+              h3s[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+              return;
+            }
+          }
+        });
+      });
+
+      // === 5. 필터 적용 ===
       const noResultsMsg = document.getElementById('no-results-msg');
 
       function applyFilters() {
