@@ -1,0 +1,1087 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const ballRulesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': 'https://myclubmakers.com/equipment-rules/ball/#article',
+  headline: '볼 장비 규정 — 직경·무게·초속·ODS·대칭성',
+  description: 'USGA·R&A 골프공 장비 규정 한글 정리. 직경 1.680인치 · 무게 1.620oz · 초속 250ft/s · ODS 317야드 · 대칭성. 2028년 ODS 테스트 조건 변경 예정. 클럽메이커스 24년 현장 해석.',
+  inLanguage: 'ko-KR',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+    url: 'https://myclubmakers.com',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '시중에서 파는 거의 모든 볼은 적합한가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '주요 메이저 브랜드의 정품 볼은 모두 USGA 적합 골프볼 리스트에 등재되어 있습니다. Titleist, Callaway, TaylorMade, Bridgestone, Srixon, Mizuno 등이 대표적입니다. 다만 X-out(불량 처분품), 직구 무명 볼, 명백한 비공인 거리 볼(non-conforming) 등은 적합 리스트에서 제외되니 공식 대회 출전 시 확인이 필요합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '2028년 변경되는 ODS 테스트 조건이 일반 골퍼에게도 영향을 주나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '간접적으로 영향이 있습니다. ODS 한계 자체는 317야드로 변하지 않지만, 테스트 조건이 더 빠른 헤드스피드(125mph)로 강화되면서 현재 적합한 일부 볼이 2028년 이후 부적합 판정을 받을 수 있습니다. 다만 일반 골퍼의 헤드스피드(85~110mph)에서는 실제 거리 변화가 거의 없을 것으로 USGA가 분석합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '볼 직경이 1.680인치보다 크면 합법인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '네, 합법입니다. USGA 규정은 최소 직경 1.680인치만 정하고 최대 직경은 정하지 않습니다. 다만 더 큰 볼은 공기저항이 커서 거리가 짧아지므로 거의 모든 메이커가 1.680인치에 정확히 맞춰 생산합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '컬러볼(노란색·분홍색 등)도 적합한가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '네, 색깔은 규정에 영향이 없습니다. 흰색·노란색·분홍색·주황색 모두 합법입니다. 페인트나 로고도 적합성에 영향을 주지 않습니다. 다만 대칭성 규정에 의해 색깔이 한쪽에만 칠해져 비대칭이 되면 안 됩니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '연습장 볼(range ball)도 적합한가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '대부분 부적합입니다. 연습장 볼은 내구성을 위해 일부러 거리가 짧게 설계되거나, 적합 리스트에 등재되지 않은 모델이 많습니다. 연습용으로는 문제없지만, 라운드와 공식 대회에서는 사용할 수 없습니다.',
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="볼 규정 — 직경·무게·초속·ODS·대칭성"
+  description="USGA·R&A 골프공 장비 규정 한글 정리. 직경 1.680인치 · 무게 1.620oz · 초속 250ft/s · ODS 317야드 · 대칭성. 2028년 ODS 테스트 조건 변경 예정. 클럽메이커스 24년 현장 해석."
+  schemaType="Article"
+  keywords="골프공 규정, 골프볼 규격, 볼 직경 1.68인치, 볼 무게 1.62oz, 초속 250, Initial Velocity, ODS, Overall Distance Standard, 317야드, 골프공 대칭성, Polara, USGA 적합 볼, R&A 볼 규정, 컬러볼, X-out, 2028 ODS"
+  extraSchema={[ballRulesSchema, faqSchema]}
+>
+
+  <!-- 1. Hero -->
+  <section class="page-hero ball-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">EQUIPMENT RULES · TOPIC 03 · 볼 규정</div>
+      <h1>볼 — 작은 공에 담긴<br/>다섯 가지 한계</h1>
+      <p class="page-hero-subtitle">
+        골프공은 손바닥 위에 올라가는 작은 공이지만, <strong>다섯 가지 정밀한 규정</strong>의 영향을 받습니다.<br/>
+        <span class="hero-sub-light">직경·무게·초속·종합 거리·대칭성. USGA·R&A 부록 III에 정리된 모든 한계를 한글로 풀어 정리합니다.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. Quick Summary -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">QUICK SUMMARY · 5가지 한계</p>
+      <h2>볼 규정의 핵심 5가지</h2>
+      <p class="quick-hint">카드를 누르시면 상세 설명으로 이동합니다.</p>
+      <div class="quick-grid quick-grid-5">
+        <a href="#diameter" class="quick-card">
+          <p class="quick-num">01</p>
+          <h3 class="quick-title">직경<br/><strong>1.680인치 +</strong></h3>
+          <p class="quick-body">최소 1.680인치 (42.67mm). 더 작으면 부적합.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#weight" class="quick-card">
+          <p class="quick-num">02</p>
+          <h3 class="quick-title">무게<br/><strong>1.620oz</strong></h3>
+          <p class="quick-body">최대 1.620oz (45.93g). 더 무거우면 부적합.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#velocity" class="quick-card">
+          <p class="quick-num">03</p>
+          <h3 class="quick-title">초속<br/><strong>250 ft/s</strong></h3>
+          <p class="quick-body">USGA 기계 측정 기준 초속 한계.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#ods" class="quick-card">
+          <p class="quick-num">04</p>
+          <h3 class="quick-title">종합 거리<br/><strong>317야드</strong></h3>
+          <p class="quick-body">ODS 한계 + 허용 3야드 = <strong>320야드</strong>. 2028년 테스트 조건 변경.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#symmetry" class="quick-card">
+          <p class="quick-num">05</p>
+          <h3 class="quick-title">대칭성<br/><strong>구형 대칭</strong></h3>
+          <p class="quick-body">의도적 비대칭 설계 금지. 1981년 Polara 사건 이후.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 직경 -->
+  <section class="section" id="diameter">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 01 · 직경</p>
+      <h2>직경 1.680인치 — 최소 한계만 정해진 규정</h2>
+      <p class="section-body">
+        골프공 직경은 <strong>최소 1.680인치(42.67mm) 이상</strong>이어야 합니다.
+        주목할 점은 <strong>최대 직경 한계는 없다</strong>는 것입니다.
+        이론적으로 더 큰 공도 합법입니다 — 다만 거의 만들지 않습니다.
+      </p>
+
+      <h3 class="subsection-h3">왜 큰 볼을 만들지 않는가</h3>
+      <p class="section-body">
+        직경이 커지면 <strong>공기저항이 비례 이상으로 커집니다</strong>. 같은 무게라도 큰 공은 더 빨리 감속합니다.
+        결과적으로 캐리 거리가 줄고 바람 영향도 커져요.
+        모든 메이저 브랜드가 1.680인치에 정확히 맞춰 생산하는 이유입니다.
+      </p>
+
+      <h3 class="subsection-h3">1990년 이전 — "영국 소형 볼" 시대</h3>
+      <p class="section-body">
+        1990년까지 R&A는 <strong>1.620인치(41.15mm)</strong> 볼을 허용했습니다.
+        같은 무게에 더 작은 볼은 거리·바람 안정성에서 유리해 영국·유럽 골퍼들이 선호했어요.
+        1990년 R&A가 USGA 기준(1.680인치)에 맞추면서 통합되었습니다.
+        지금도 옛 영국 볼은 <strong>"British ball"</strong>로 알려져 있고, 빈티지 컬렉션 가치가 있습니다.
+      </p>
+
+      <h3 class="subsection-h3">측정 방법</h3>
+      <p class="section-body">
+        USGA는 <strong>금속 링 게이지</strong>로 측정합니다. 공이 1.680인치 링을 통과하지 못하면 합격(직경 1.680인치 이상),
+        통과하면 불합격(직경이 너무 작음)입니다. 단순하지만 신뢰성 높은 방식이에요.
+        시판 거의 모든 볼은 출고 시 1.681~1.685인치 범위에 맞춰 출시됩니다 — 한계 바로 위.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4. 무게 -->
+  <section class="section section-bg-cream" id="weight">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 02 · 무게</p>
+      <h2>무게 1.620oz — 최대 한계만 정해진 규정</h2>
+      <p class="section-body">
+        볼 무게는 <strong>최대 1.620oz(45.93g) 이하</strong>여야 합니다.
+        직경과는 반대로 <strong>최소 무게 한계는 없습니다</strong>.
+        이론적으로 무게 0g 볼도 합법이지만, 운동량이 없어 굴러가지 않으니 의미가 없어요.
+      </p>
+
+      <h3 class="subsection-h3">왜 가벼운 볼을 만들지 않는가</h3>
+      <p class="section-body">
+        무게가 가벼우면 운동량이 작아 <strong>거리 손실</strong>이 큽니다.
+        또 바람의 영향을 더 크게 받아 방향성이 떨어져요.
+        모든 메이커가 1.620oz에 정확히 맞춰 생산합니다 — 한계 바로 아래.
+      </p>
+
+      <h3 class="subsection-h3">측정 방법</h3>
+      <p class="section-body">
+        정밀 저울로 측정. 0.001g 단위까지 측정 가능한 정밀 저울을 사용합니다.
+        시판 볼은 출고 시 약 <strong>45.6~45.9g 범위</strong>에 맞춰 출시됩니다.
+        제조 공차로 인해 같은 박스 안의 볼들도 미세하게 무게가 다를 수 있어요 (보통 ±0.1g 이내).
+      </p>
+
+      <h3 class="subsection-h3">왜 직경과 무게는 반대 방향인가</h3>
+      <p class="section-body">
+        직경은 "최소 이상", 무게는 "최대 이하" — 이 조합은 의도적입니다.
+        둘 다 거리를 늘리려는 방향(더 작게, 더 무겁게)을 막는 규정이에요.
+        결과적으로 <strong>모든 합법 볼이 비슷한 크기와 무게</strong>에 수렴하게 됩니다.
+        이것이 USGA가 의도한 "장비가 아닌 기술의 차이"를 만드는 토대입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. 초속 -->
+  <section class="section" id="velocity">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 03 · 초속 (Initial Velocity)</p>
+      <h2>초속 250 ft/s — 표준 기계 테스트 한계</h2>
+      <p class="section-body">
+        볼이 페이스를 떠난 직후의 속도(Initial Velocity, IV)에 한계가 있습니다.
+        USGA의 표준 기계로 임팩트 했을 때 <strong>최대 250 ft/s(약 76.2 m/s, 170mph)</strong>를 넘지 못합니다.
+      </p>
+
+      <h3 class="subsection-h3">측정 방법 — Iron Byron</h3>
+      <p class="section-body">
+        USGA는 "<strong>아이언 바이런(Iron Byron)</strong>"이라는 표준 스윙 머신을 사용합니다.
+        실제 골퍼 Byron Nelson의 스윙을 본떠 만든 기계로, 일정한 헤드스피드와 임팩트 조건을 재현합니다.
+        이 기계로 임팩트 후 측정 장비로 볼 속도를 잽니다.
+      </p>
+
+      <h3 class="subsection-h3">왜 초속이 중요한가</h3>
+      <p class="section-body">
+        초속이 거리의 가장 직접적 결정 요인입니다.
+        같은 헤드스피드라도 초속이 빠른 볼이 더 멀리 갑니다.
+        제조사들이 <strong>"트램폴린 효과"</strong>를 일으키는 코어/커버 조합을 개발해도 이 한계 안에 머물러야 해요.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">시판 볼은 모두 한계 근처</p>
+        <ul class="rule-list">
+          <li>
+            <strong>투어급 볼</strong>: Titleist Pro V1, Callaway Chrome Tour 등 — 초속 250 ft/s 한계 바로 아래에 맞춰져 있음
+          </li>
+          <li>
+            <strong>가성비 볼</strong>: Srixon Q-STAR, Bridgestone e6 등 — 코어 강도가 약간 낮아 초속이 약 5~10 ft/s 낮음
+          </li>
+          <li>
+            <strong>거리 볼</strong>: Titleist Velocity, Callaway Warbird 등 — 한계까지 끌어올려 거리 우선 설계
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ODS (Overall Distance Standard) -->
+  <section class="section section-bg-cream" id="ods">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 04 · 종합 거리 (ODS)</p>
+      <h2>ODS 317야드 — 가장 정치적인 한계</h2>
+      <p class="section-body">
+        종합 거리 표준(<strong>Overall Distance Standard, ODS</strong>)은 USGA 표준 테스트 조건에서 볼이
+        <strong>317야드를 넘지 못한다</strong>는 규정입니다. 측정 허용오차 3야드까지 인정해 실효 한계는 320야드입니다.
+      </p>
+
+      <h3 class="subsection-h3">현재 (~2027년) 테스트 조건</h3>
+      <div class="rule-box">
+        <p class="rule-box-title">ODS 측정 표준 (현재)</p>
+        <ul class="rule-list">
+          <li><strong>헤드스피드</strong>: 120mph (53.6 m/s)</li>
+          <li><strong>볼 스피드</strong>: 176mph (78.6 m/s)</li>
+          <li><strong>스핀</strong>: 2,520rpm</li>
+          <li><strong>런치 앵글</strong>: 10°</li>
+          <li><strong>거리 한계</strong>: 317야드 + 허용 3야드 = 320야드</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">2028년 1월 변경 — 더 빠른 헤드스피드 테스트</h3>
+      <p class="section-body">
+        20년 만에 ODS 테스트 조건이 강화됩니다. 거리 한계 자체(317야드)는 그대로지만,
+        테스트 헤드스피드가 <strong>120mph → 125mph</strong>로 올라갑니다.
+        이 변경으로 현재 적합한 일부 볼이 2028년 이후 부적합 판정을 받을 수 있어요.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">ODS 측정 새 표준 (2028년~)</p>
+        <ul class="rule-list">
+          <li><strong>헤드스피드</strong>: 125mph (55.9 m/s) — +5mph 강화</li>
+          <li><strong>볼 스피드</strong>: 183mph (81.8 m/s)</li>
+          <li><strong>스핀</strong>: 2,200rpm — 더 낮은 스핀 (현대 투어급 환경 반영)</li>
+          <li><strong>런치 앵글</strong>: 11° — 살짝 높은 런치</li>
+          <li><strong>거리 한계</strong>: 317야드 + 허용 3야드 = 320야드 (변동 없음)</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">왜 변경되는가 — 거리 인플레이션</h3>
+      <p class="section-body">
+        지난 20년간 PGA Tour 평균 비거리가 약 30야드 늘었습니다.
+        헤드스피드 120mph는 1990년대~2000년대 초반 투어 평균이었지만,
+        지금 PGA Tour 평균은 <strong>117mph</strong>이고 상위 30%는 <strong>120~125mph</strong>입니다.
+        Bryson DeChambeau 등은 130mph까지 도달해요.
+        그래서 USGA·R&A는 "현대 투어 환경을 반영하는 테스트가 필요하다"고 판단했습니다.
+      </p>
+
+      <h3 class="subsection-h3">일반 골퍼에게 미치는 영향</h3>
+      <p class="section-body">
+        USGA 분석에 따르면 일반 골퍼(헤드스피드 85~110mph)에게 영향이 거의 없습니다.
+        85mph 골퍼의 ODS 환경 거리 차이는 <strong>2야드 이내</strong>로 예측됩니다.
+        다만 헤드스피드 110mph 이상의 엘리트 골퍼는 5~7야드 차이가 가능하다는 분석.
+        2028년 1월 발효까지 메이커들이 신규 라인업을 새 기준에 맞춰 출시할 예정입니다.
+      </p>
+
+      <h3 class="subsection-h3">ODS 테스트는 어떻게 진행되는가</h3>
+      <p class="section-body">
+        ODS 측정은 USGA의 뉴저지 본부 안에 있는 <strong>Research and Test Center</strong>에서 진행됩니다.
+        테스트 자체는 30년 넘게 진화해왔으며, 핵심 장비도 1972년부터 두 차례 교체되었습니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">측정 장비의 변천</p>
+        <ul class="rule-list">
+          <li>
+            <strong>1972~2004 — Iron Byron (아이언 바이런)</strong><br/>
+            True Temper 샤프트 회사가 제작한 기계식 골퍼. Byron Nelson의 스윙을 본떠 설계.
+            처음에는 "Iron Mike"로 불리다가 Iron Byron으로 정착. 최고 109mph 헤드스피드로
+            봄·가을 하루 400~500개 볼을 테스트. 32년간 USGA의 표준 측정 장비로 활약했습니다.
+            ODS 자체가 1976년 Iron Byron 테스트 결과를 기반으로 처음 도입됐어요.
+          </li>
+          <li>
+            <strong>2004~현재 — 서보전기 기계 골퍼</strong><br/>
+            Golf Laboratories사가 제작한 신형 기계식 골퍼. 현대 투어 평균에 맞춰 120mph 헤드스피드로 작동.
+            Iron Byron보다 정밀한 임팩트 조건 재현 가능.
+          </li>
+          <li>
+            <strong>2005~현재 — Indoor Test Range (ITR)</strong><br/>
+            기계식 골퍼와 함께 사용하는 70피트 길이의 실내 비행 터널.
+            야구 피칭머신을 옆으로 눕힌 형태로, 볼을 발사한 뒤 비행 패턴을 정밀 측정합니다.
+            볼의 항공역학 특성을 측정한 후 컴퓨터 시뮬레이션으로 실제 거리 계산.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">ITR — 실내 비행 터널의 원리</h3>
+      <p class="section-body">
+        야외 측정은 바람·기온·습도에 영향을 받아 일관성 확보가 어렵습니다.
+        ITR은 통제된 실내 환경에서 볼의 <strong>항공역학적 지문(aerodynamic fingerprint)</strong>을 측정하는 장비예요.
+        16개의 다른 볼 스피드와 스핀 조합으로 같은 볼을 발사해, 각 조건에서 비행 패턴을 기록합니다.
+        이 데이터를 컴퓨터 시뮬레이션에 입력하면 실제 야외에서의 거리를 정확히 계산할 수 있어요.
+      </p>
+
+      <h3 class="subsection-h3">표준 테스트 절차 (TPX3006)</h3>
+      <p class="section-body">
+        한 모델의 ODS 적합성 판정에는 <strong>24개의 샘플볼</strong>이 필요합니다.
+        절차는 USGA-TPX3006 문서에 표준화되어 있어요.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">테스트 진행 단계</p>
+        <ul class="rule-list">
+          <li>
+            <strong>① 샘플 분배</strong><br/>
+            제조사가 보낸 24개 볼을 12개씩 두 박스(Dozen 1, Dozen 2)로 분배. 박스에 붙은 번호와
+            볼 표면 번호가 일치하는지 확인.
+          </li>
+          <li>
+            <strong>② 마킹</strong><br/>
+            12개 볼에 <strong>이음매(seam)</strong>와 <strong>극(pole)</strong> 위치를 표시.
+            대칭성 측정을 위해 각 볼의 회전 축 기준점이 됩니다.
+          </li>
+          <li>
+            <strong>③ 온도 안정화</strong><br/>
+            <strong>23.9°C(75°F) 인큐베이터에서 3시간 이상 보관.</strong> 온도가 코어 반발력에 영향을 주므로
+            모든 볼을 동일 온도로 안정화시키는 것이 핵심.
+          </li>
+          <li>
+            <strong>④ 캘리브레이션</strong><br/>
+            기계식 골퍼의 정확도 검증을 위해 <strong>USGA Calibration Ball 6개</strong>를 먼저 타격.
+            이 컨트롤 볼은 Bridgestone Sports에서 USGA용으로만 공급되는 표준 볼입니다.
+          </li>
+          <li>
+            <strong>⑤ 본 측정</strong><br/>
+            마킹된 12개 샘플볼을 차례로 발사. 각 볼은 <strong>seam-down</strong>과 <strong>pole-down</strong> 두 방향으로 측정.
+            ITR로 항공역학 데이터 수집 → 컴퓨터로 거리 계산.
+          </li>
+          <li>
+            <strong>⑥ 판정</strong><br/>
+            12개 볼의 평균 거리가 <strong>317야드 + 허용오차 3야드 이내</strong>면 합격.
+            대칭성 측정에서도 seam과 pole 방향 거리 차이가 한계 안에 있어야 함.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">제조사 테스트 비용 (2025년 기준)</h3>
+      <p class="section-body">
+        제조사가 신모델을 USGA에 제출할 때 발생하는 테스트 비용입니다. 모델당 비용이라
+        대형 메이커는 연간 수십~수백 모델을 제출합니다.
+      </p>
+
+      <div class="cost-table">
+        <table>
+          <thead>
+            <tr>
+              <th>테스트 종류</th>
+              <th>샘플볼 수</th>
+              <th>비용</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>대칭성 재테스트</strong></td>
+              <td>24개</td>
+              <td>$600</td>
+            </tr>
+            <tr>
+              <td><strong>ITR 단독 테스트</strong></td>
+              <td>6개</td>
+              <td>$800 (2028년 새 조건은 $600)</td>
+            </tr>
+            <tr>
+              <td><strong>ALC 단독 테스트</strong></td>
+              <td>12개</td>
+              <td>$200 (2028년 새 조건은 $150)</td>
+            </tr>
+            <tr>
+              <td><strong>초속 테스트</strong></td>
+              <td>12개</td>
+              <td>$300</td>
+            </tr>
+            <tr>
+              <td><strong>크기·무게·초속 종합</strong></td>
+              <td>12개</td>
+              <td>$450</td>
+            </tr>
+            <tr>
+              <td><strong>지연 제출 (긴급)</strong></td>
+              <td>24개</td>
+              <td>$1,500</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="section-body section-body-small">
+        등재된 모델은 <strong>12개월간 적합 리스트에 유지</strong>되며, 갱신을 위해서는 매년 재제출이 필요합니다.
+        만약 이미 등재된 모델이 무작위 점검에서 부적합 판정을 받으면 즉시 리스트에서 제외돼요.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. 대칭성 -->
+  <section class="section" id="symmetry">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 05 · 대칭성 (Symmetry)</p>
+      <h2>구형 대칭 — 한 사건이 만든 규정</h2>
+      <p class="section-body">
+        볼은 <strong>구형 대칭(spherically symmetrical) 형태</strong>로 설계·제조되어야 합니다.
+        쉽게 말해 어느 방향으로 회전해도 비행 특성이 같아야 한다는 뜻이에요.
+        이 규정은 1980년대 한 사건에서 시작됐습니다.
+      </p>
+
+      <h3 class="subsection-h3">1980년 — Polara 사건</h3>
+      <p class="section-body">
+        1979년 Polara라는 회사가 <strong>비대칭 딤플 볼</strong>을 출시했습니다.
+        적도 부근에 정상 딤플 6열 + 다른 부분은 매우 얕은 딤플로 구성되어,
+        공이 비행 중 자동으로 스핀 축을 안정시키는 효과가 있었어요.
+        결과: <strong>훅·슬라이스가 줄어드는 "스마트 볼"</strong>이었습니다.
+      </p>
+
+      <h3 class="subsection-h3">1981년 — USGA 금지</h3>
+      <p class="section-body">
+        USGA는 Polara 볼이 "전통적 골프공의 형태가 아니다"라며 적합 리스트에서 제외.
+        Polara는 USGA를 상대로 소송을 제기했고, 1985년 <strong>USGA가 137.5만 달러를 합의금</strong>으로 지급하며 종결됐습니다.
+        그 후 USGA는 Appendix III에 명시적인 대칭성 조항을 추가했어요.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">현재 대칭성 규정의 의미</p>
+        <ul class="rule-list">
+          <li>
+            <strong>딤플 패턴 대칭</strong>: 딤플의 배열이 어느 방향에서 봐도 일정한 패턴이어야 함
+          </li>
+          <li>
+            <strong>의도적 비대칭 금지</strong>: 비행 중 자동 보정이 목적인 설계 X
+          </li>
+          <li>
+            <strong>단순 컬러·로고는 OK</strong>: 회사 로고나 번호 인쇄는 비대칭이 아니라 표시 목적이므로 합법
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">현재 시판 — Polara는 여전히 존재</h3>
+      <p class="section-body">
+        흥미롭게도 Polara 회사는 <strong>지금도 존재합니다</strong>.
+        "Self-correcting golf ball" 마케팅으로 비공인 볼을 판매해요.
+        미국·한국 모두 일반 골프숍에서 살 수 있지만 <strong>USGA 적합 리스트에 없어 공식 라운드 사용 불가</strong>입니다.
+        취미용 또는 슬라이스 교정 연습용으로 사용되는 정도.
+      </p>
+    </div>
+  </section>
+
+  <!-- 8. 적합 골프공 리스트 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">CONFORMING LIST · 적합 골프공 리스트</p>
+      <h2>USGA Conforming Golf Ball List</h2>
+      <p class="section-body">
+        새 볼 모델은 출시 전 USGA에 제출되어 위 5가지 한계를 모두 통과해야 합니다.
+        통과한 모델만 <strong>적합 골프공 리스트(List of Conforming Golf Balls)</strong>에 등재됩니다.
+        이 리스트는 매월 갱신되며 USGA 공식 사이트에서 검색할 수 있어요.
+      </p>
+
+      <h3 class="subsection-h3">시판 볼의 적합성 — 거의 모두 OK</h3>
+      <p class="section-body">
+        주요 메이저 브랜드(Titleist, Callaway, TaylorMade, Bridgestone, Srixon, Mizuno, Volvik, 낫소 등)의
+        정품 볼은 <strong>거의 100% 적합 리스트에 등재</strong>되어 있어요.
+        반대로 의도적으로 적합 리스트에서 빠진 케이스는 다음과 같습니다:
+      </p>
+      <ul class="penalty-list">
+        <li><strong>"Non-conforming" 표시 거리 볼</strong>: 일부러 한계 초과해 거리만 강조 (Polara, Top Flite XL 등)</li>
+        <li><strong>X-out 볼</strong>: 제조 결함으로 메이커가 폐기 처분한 볼. 같은 모델이라도 X-out은 부적합</li>
+        <li><strong>리퍼브(Refurbished) 볼</strong>: 사용된 볼을 재도색·재포장한 볼. 원래 적합했어도 재가공 후엔 부적합</li>
+        <li><strong>연습장 전용 볼(Range ball)</strong>: 내구성 우선 설계로 적합 리스트 등재 안 됨</li>
+        <li><strong>무명 직구 볼</strong>: USGA 제출 자체가 안 된 경우 다수</li>
+      </ul>
+
+      <div class="source-links" style="margin-top: 24px;">
+        <a href="https://www.usga.org/content/usga/home-page/equipment-standards/conforming-club-ball-lists.html" target="_blank" rel="noopener noreferrer" class="source-link">
+          USGA 적합 골프공 리스트 ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. 클럽메이커스 해석 -->
+  <section class="section section-bg-green">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">CLUBMAKERS' INTERPRETATION · 공작소 해석</p>
+      <h2 class="green-h2">현장에서 본 볼 규정</h2>
+      <p class="green-body">
+        볼은 클럽보다 자주 교체되고, 한 라운드에 여러 개를 쓰기 때문에 골퍼들의 관심이 많은 영역입니다.
+        24년 공작소에서 만난 케이스를 정리합니다.
+      </p>
+      <ul class="interpretation-list">
+        <li>
+          <strong>"투어 프로처럼 Pro V1을 써야 하나요?"</strong><br/>
+          <span class="green-body-small">헤드스피드 95mph 이하 골퍼는 Pro V1보다 한 단계 부드러운 볼(AVX, Q-STAR Tour 등)이
+          오히려 거리·컨트롤 모두 좋은 경우가 많습니다. 투어 볼은 헤드스피드 100mph+ 골퍼에 최적화되어 있어요.</span>
+        </li>
+        <li>
+          <strong>"리퍼브 볼은 연습용으로 OK?"</strong><br/>
+          <span class="green-body-small">연습장에서는 OK지만 라운드에서는 권하지 않습니다. 재가공 과정에서 코어가 미세하게 손상되어
+          비행이 불안정해질 수 있어요. 가격 차이가 크지 않으니 신품 볼을 권합니다.</span>
+        </li>
+        <li>
+          <strong>"슬라이스 잘 안 나는 볼이 있다던데?"</strong><br/>
+          <span class="green-body-small">Polara 같은 비공인 볼은 실제로 슬라이스를 줄여줍니다. 다만 <strong>적합 리스트에 없어 공식 라운드 X</strong>.
+          연습용으로만 가능. 슬라이스의 근본 원인은 스윙·클럽이라 장비 분석부터 시작하시는 것을 권합니다.</span>
+        </li>
+        <li>
+          <strong>"컬러볼이 거리에 손해인가요?"</strong><br/>
+          <span class="green-body-small">아닙니다. 컬러는 페인트 층 두께만 다를 뿐 비행 특성에 영향이 거의 없습니다.
+          오히려 시야가 좋고 분실 시 찾기 쉬워 일반 골퍼에게 컬러볼을 권하는 경우가 많아요.</span>
+        </li>
+        <li>
+          <strong>"2028년 ODS 변경 — 지금 사 둔 볼은 어떻게?"</strong><br/>
+          <span class="green-body-small">현재 적합 리스트에 있는 볼은 2028년 이후에도 일반 라운드에서 사용 가능합니다.
+          다만 메이저 챔피언십·엘리트 대회에서는 2028년 새 기준에 맞는 볼만 적합. 일반 골퍼는 큰 영향 없습니다.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10. FAQ -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FAQ · 자주 묻는 질문</p>
+      <h2>실무에서 자주 받는 질문</h2>
+      <ul class="faq-list">
+        <li class="faq-item">
+          <p class="faq-q">Q1. 한 라운드 중에 다른 모델 볼로 바꿔도 되나요?</p>
+          <p class="faq-a">"원-볼 룰(One Ball Rule)"이 적용되는 대회면 안 됩니다. 라운드 내내 같은 모델을 사용해야 합니다.
+          일반 라운드에서는 자유롭게 바꿀 수 있어요. 메이저 대회와 PGA Tour는 원-볼 룰 적용,
+          일반 클럽 대회는 보통 적용 X. 대회 시행 안내 확인 권장합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q2. 옛날 볼(10년 이상)도 사용 가능한가요?</p>
+          <p class="faq-a">사용 자체는 가능합니다. 다만 <strong>오래된 볼은 코어가 굳어 거리·스핀 성능이 떨어집니다.</strong>
+          개봉 후 보관 중인 볼은 약 5년 정도 성능을 유지하지만, 그 이후엔 신품 대비 5~10야드 거리 손실이 있어요.
+          대회 출전 계획 있으시면 신품 볼 권장.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q3. 호수에서 건진 볼(레이크볼)도 적합한가요?</p>
+          <p class="faq-a">짧은 침수(몇 시간~며칠)는 영향이 거의 없습니다. 다만
+          <strong>몇 달~몇 년간 물에 잠겨 있던 볼은 코어가 흡수해 거리 손실</strong>이 발생합니다.
+          또 페인트가 손상되면 비대칭이 되어 비행이 불안정해질 수 있어요.
+          연습용으로는 OK지만 진지한 라운드에서는 권하지 않습니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q4. 골프공 적합성을 직접 측정할 방법이 있나요?</p>
+          <p class="faq-a">개인이 직접 측정하기는 어렵습니다. 직경은 1.680인치 링 게이지가 있으면 되지만,
+          무게는 정밀 저울이 필요하고, 초속·ODS·대칭성은 USGA 측정 장비가 있어야 가능해요.
+          일반 골퍼라면 <strong>USGA 적합 리스트에서 제조사·모델명 검색</strong>이 가장 확실한 방법입니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q5. 한국 메이커 볼(낫소, 볼빅 등)도 적합 리스트에 있나요?</p>
+          <p class="faq-a">네, 모두 등재되어 있습니다. <strong>낫소 N1·N2 시리즈, 볼빅 비비드·S4 시리즈</strong> 등
+          한국 메이커 정품 볼은 USGA 적합 리스트에 정상 등재되어 공식 대회 사용 가능합니다.
+          실제로 USGA 리스트에는 한국 브랜드 100여 종이 등재되어 있어요.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11. 관련 자료 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RELATED · 관련 페이지</p>
+      <h2>함께 읽으면 좋은 자료</h2>
+      <div class="related-grid">
+        <a href="/equipment-rules" class="related-card">
+          <p class="related-card-eyebrow">INDEX</p>
+          <h3 class="related-card-title">장비 규정 인덱스</h3>
+          <p class="related-card-body">8개 토픽 전체 안내. 다른 규정 분야로 이동하실 수 있어요.</p>
+        </a>
+        <a href="/equipment-rules/driver" class="related-card">
+          <p class="related-card-eyebrow">DRIVER</p>
+          <h3 class="related-card-title">드라이버 규정</h3>
+          <p class="related-card-body">COR · 부피 · MOI · 길이 · 치수. 볼과 함께 거리의 양 축.</p>
+        </a>
+        <a href="/glossary" class="related-card">
+          <p class="related-card-eyebrow">GLOSSARY</p>
+          <h3 class="related-card-title">용어사전</h3>
+          <p class="related-card-body">초속(Ball Speed), 스매시 팩터 같은 볼 관련 용어는 용어사전에서.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. 출처 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SOURCE · 출처</p>
+      <h2>이 글의 자료 출처</h2>
+      <ul class="source-list">
+        <li>USGA Appendix III — The Ball, <a href="https://www.usga.org/custom-search-pages/rules/equipment-rules/rule-14611.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA Equipment Rules 공식 PDF, <a href="https://www.usga.org/content/dam/usga/pdf/Equipment/Equipment%20Rules%20Final.pdf" target="_blank" rel="noopener noreferrer">PDF ↗</a></li>
+        <li>USGA "Revised Golf Ball Testing Conditions to Take Effect in 2028" (2023.12), <a href="https://www.usga.org/content/usga/home-page/articles/2023/12/revised-golf-ball-testing-conditions-to-take-effect-in-2028.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA Conforming Golf Ball List, <a href="https://www.usga.org/content/usga/home-page/equipment-standards/conforming-club-ball-lists.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>R&A Rules of Golf Appendix III, <a href="https://www.randa.org" target="_blank" rel="noopener noreferrer">randa.org ↗</a></li>
+      </ul>
+      <p class="source-disclaimer-text">
+        ⚠ 이 글은 일반 이해를 돕는 가이드입니다. 공식 대회나 핸디캡 등록 라운드의 적합성 판정은
+        <strong>USGA·R&A 공식 적합 골프공 리스트</strong>를 직접 확인하셔야 합니다.
+        규정 수치는 2026년 5월 기준이며, 2028년 1월 ODS 테스트 조건 변경이 예정되어 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 13. Closing -->
+  <section class="closing-section">
+    <div class="closing-content">
+      <h3>"손바닥 위의 작은 공에<br/>다섯 가지 한계가 새겨져 있습니다."</h3>
+      <p class="closing-meta">— 클럽메이커스 볼 규정 가이드</p>
+      <div class="closing-actions">
+        <a href="/equipment-rules" class="btn-primary">장비 규정 인덱스 →</a>
+        <a href="/contact" class="btn-ghost">예약·문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  /* ==================== HERO ==================== */
+  .ball-hero { background: var(--bg-cream); }
+  .hero-sub-light {
+    font-size: 14px;
+    color: var(--grey);
+    font-weight: 400;
+  }
+
+  /* ==================== QUICK SUMMARY 5 카드 (clickable) ==================== */
+  .quick-hint {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (min-width: 720px) {
+    .quick-grid { grid-template-columns: repeat(2, 1fr); }
+    .quick-grid-5 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1080px) {
+    .quick-grid { grid-template-columns: repeat(4, 1fr); }
+    .quick-grid-5 { grid-template-columns: repeat(5, 1fr); }
+  }
+  .quick-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 22px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .quick-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(15, 41, 34, 0.12);
+    border-top-color: var(--gold);
+  }
+  .quick-card:hover .quick-arrow {
+    color: var(--gold);
+  }
+  .quick-num {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .quick-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .quick-title strong {
+    color: var(--green);
+    font-size: 17px;
+    display: inline-block;
+    margin-top: 2px;
+  }
+  .quick-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0 0 14px;
+    flex: 1;
+  }
+  .quick-body strong { color: var(--ink); font-weight: 700; }
+  .quick-arrow {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    margin-top: auto;
+    transition: color 0.2s;
+  }
+
+  /* 앵커 점프 시 nav 가림 방지 */
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+
+  /* ==================== Rule 본문 ==================== */
+  .section-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+  .section-body-small { font-size: 14.5px; }
+
+  .subsection-h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    line-height: 1.3;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .rule-box {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--green);
+    padding: 24px 28px;
+    border-radius: 4px;
+    margin: 24px 0;
+  }
+  .rule-box-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    margin: 0 0 14px;
+  }
+  .rule-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .rule-list li {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .rule-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rule-list strong { color: var(--ink); font-weight: 700; }
+
+  .penalty-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 22px;
+  }
+  .penalty-list li {
+    padding: 8px 0;
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.85;
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .penalty-list li:last-child { border-bottom: none; }
+  .penalty-list strong { color: var(--ink); font-weight: 700; }
+
+  .source-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ==================== 비용 표 ==================== */
+  .cost-table {
+    overflow-x: auto;
+    margin: 24px 0;
+  }
+  .cost-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+  }
+  .cost-table th,
+  .cost-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .cost-table th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .cost-table tr:last-child td { border-bottom: none; }
+  .cost-table strong { color: var(--ink); font-weight: 600; }
+  .source-link {
+    display: inline-block;
+    background: var(--bg);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .source-link:hover {
+    background: var(--green);
+    color: var(--cream);
+  }
+
+  /* ==================== 그린 배경 ==================== */
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .green-h2 {
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .green-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 20px;
+  }
+  .green-body strong { color: var(--gold-soft); font-weight: 700; }
+  .green-body-small {
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.75);
+    display: block;
+    margin-top: 4px;
+  }
+  .interpretation-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+  }
+  .interpretation-list li {
+    padding: 16px 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.9);
+    border-bottom: 1px solid rgba(212, 184, 136, 0.2);
+  }
+  .interpretation-list li:last-child { border-bottom: none; }
+  .interpretation-list strong { color: var(--cream); font-weight: 700; }
+
+  /* ==================== FAQ ==================== */
+  .faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+  }
+  .faq-item {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    padding: 22px 28px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .faq-q {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+  .faq-a {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .faq-a strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== RELATED ==================== */
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (min-width: 720px) {
+    .related-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .related-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .related-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(15, 41, 34, 0.08);
+  }
+  .related-card-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .related-card-title {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+  .related-card-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ==================== SOURCE ==================== */
+  .source-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+  }
+  .source-list li {
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list a {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: 600;
+  }
+  .source-list a:hover { opacity: 0.7; }
+  .source-disclaimer-text {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .source-disclaimer-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== CLOSING ==================== */
+  .closing-section {
+    background: var(--ink);
+    padding: 100px 80px;
+    text-align: center;
+  }
+  .closing-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .closing-section h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 4vw, 30px);
+    line-height: 1.55;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.015em;
+    margin-bottom: 20px;
+  }
+  .closing-meta {
+    font-size: 12px;
+    color: var(--gold-soft);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .closing-section .closing-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .closing-section .btn-primary,
+  .closing-section .btn-ghost {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 26px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .closing-section .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .closing-section .btn-primary::after { content: ''; }
+  .closing-section .btn-primary:hover {
+    background: var(--gold-soft);
+    transform: translateX(2px);
+  }
+  .closing-section .btn-ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .closing-section .btn-ghost::after { content: ''; }
+  .closing-section .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 640px) {
+    .quick-card { padding: 18px 18px; }
+    .closing-section { padding: 70px 24px; }
+  }
+</style>
