@@ -117,6 +117,11 @@ const isActive = (paths: string[]) =>
 <!-- 모바일 메뉴 (오버레이) -->
 <div class="nav-mobile-panel" aria-hidden="true">
   <ul>
+    <!-- 예약·문의를 맨 위에 (모바일 주소창에 가려지지 않게) -->
+    <li class="nav-mobile-cta-top">
+      <a href="/contact">예약·문의 →</a>
+    </li>
+
     {menuGroups.flatMap((group) =>
       group.items
         ? [
@@ -127,7 +132,12 @@ const isActive = (paths: string[]) =>
           ]
         : [<li><a href={group.href} class="nav-mobile-single">{group.label}</a></li>]
     )}
-    <li class="nav-mobile-cta"><a href="/contact">예약·문의 →</a></li>
+
+    <!-- 하단 보너스: 전화 / 이메일 -->
+    <li class="nav-mobile-quick-actions">
+      <a href="tel:01043635555" class="nav-mobile-quick-call">📞 010-4363-5555</a>
+      <a href="mailto:clubmakers@naver.com" class="nav-mobile-quick-email">✉ 이메일</a>
+    </li>
   </ul>
 </div>
 
@@ -315,8 +325,12 @@ const isActive = (paths: string[]) =>
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     z-index: 49;
     padding: 16px 0;
+    /* iOS Safari 주소창 대응 — dvh 사용 + safe-area inset */
     max-height: calc(100vh - 60px);
+    max-height: calc(100dvh - 60px);
     overflow-y: auto;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    -webkit-overflow-scrolling: touch;
   }
   .nav-mobile-panel[aria-hidden="false"] { display: block; }
   .nav-mobile-panel ul {
@@ -346,19 +360,54 @@ const isActive = (paths: string[]) =>
     text-transform: uppercase;
     font-weight: 700;
   }
-  .nav-mobile-cta {
-    margin-top: 12px;
-    padding: 0 16px;
+
+  /* === 예약·문의 — 메뉴 상단 (스크롤 안 해도 즉시 보임) === */
+  .nav-mobile-cta-top {
+    margin: 0 16px 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
   }
-  .nav-mobile-cta a {
+  .nav-mobile-cta-top a {
     background: var(--green);
     color: var(--cream) !important;
-    border-radius: 4px;
+    border-radius: 6px;
     text-align: center;
     font-weight: 700;
+    font-size: 16px !important;
+    padding: 16px 24px !important;
     border-bottom: none !important;
+    letter-spacing: 0.02em;
   }
-  .nav-mobile-cta a:active { background: var(--green-deep); }
+  .nav-mobile-cta-top a:active { background: var(--green-deep); }
+
+  /* === 하단 보너스 액션: 전화 / 이메일 === */
+  .nav-mobile-quick-actions {
+    display: flex;
+    gap: 8px;
+    padding: 16px;
+    margin-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+  .nav-mobile-quick-actions a {
+    flex: 1;
+    text-align: center;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    font-weight: 600;
+    border-radius: 6px;
+    border-bottom: none !important;
+    background: var(--bg-soft);
+    color: var(--ink) !important;
+  }
+  .nav-mobile-quick-actions a:active {
+    background: var(--green-soft, var(--bg-soft));
+  }
+  .nav-mobile-quick-call {
+    border: 1px solid var(--green) !important;
+  }
+  .nav-mobile-quick-email {
+    border: 1px solid var(--line) !important;
+  }
 
   @media (max-width: 1100px) {
     .nav { padding: 16px 32px; gap: 16px; }
