@@ -1,796 +1,378 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// VERSUS 샤프트 5종
-const versusShafts = [
-  { model: '45LU',  weight: '55g', torque: '4.2', length: '45"', cpm: '225', speed: '85~95',   kp: 'M.Low',  flex: 'R'  },
-  { model: '55MR',  weight: '60g', torque: '3.8', length: '46"', cpm: '238', speed: '90~100',  kp: 'Mid',    flex: 'SR' },
-  { model: '55MS',  weight: '63g', torque: '3.3', length: '46"', cpm: '247', speed: '92~105',  kp: 'Mid',    flex: 'S'  },
-  { model: '65MS',  weight: '69g', torque: '3.1', length: '46"', cpm: '256', speed: '95~110',  kp: 'Mid',    flex: 'S2' },
-  { model: '75MHS', weight: '75g', torque: '2.7', length: '46"', cpm: '266', speed: '100~115', kp: 'M.High', flex: 'X'  },
-];
-
-// KRZ 203H 두 스펙
-const krzSpecs = [
-  { loft: '19°',   lie: '59°',   length: '39.75"', weight: '345g (D2)', kp: 'MID', moi: '2,468' },
-  { loft: '23°',   lie: '59.5°', length: '39.25"', weight: '347g (D2)', kp: 'MID', moi: '2,270' },
-];
-
-// DEFINE 샤프트
-const defineShafts = [
-  { model: 'Define Reg.',   flex: 'R', length: '41"', weight: '67g', torque: '3.4', tipOd: '.370"', buttOd: '.600"', bend: 'Mid' },
-  { model: 'Define Stiff',  flex: 'S', length: '41"', weight: '68g', torque: '3.4', tipOd: '.370"', buttOd: '.600"', bend: 'Mid' },
-];
+const title = '자체 제품 — VERSUS / DEFINE / KRZ / 뽀로로 — 클럽메이커스';
+const description = '클럽메이커스가 직접 설계하고 제작한 제품들. VERSUS 맞춤 드라이버 (650,000원), DEFINE 하이브리드 샤프트, KRZ 203H 헤드, 뽀로로 라이센스 골프 라인업.';
 ---
 
-<BaseLayout
-  title="공작소의 제품들"
-  description="클럽메이커스 자체 R&D 제품 — VERSUS 드라이버 (650,000원), KRZ 203H 하이브리드, DEFINE 샤프트, 뽀로로 골프 헤드커버·골프공. 설계는 공작소, 완성은 필드."
-  schemaType="CollectionPage"
->
+<BaseLayout title={title} description={description}>
 
-  <!-- 10-0. 인트로 -->
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
   <section class="page-hero products-hero">
     <div class="page-hero-content">
-      <div class="page-hero-eyebrow">PRODUCTS · 공작소의 제품들</div>
-      <h1>설계는 공작소,<br>완성은 필드</h1>
+      <div class="page-hero-eyebrow">PRODUCTS · 자체 제품</div>
+      <h1>공작소가 만든 제품들</h1>
       <p class="page-hero-subtitle">
-        공작소에서 설계되고, 필드에서 시험되고, 손에서 완성됩니다.
-        오랜 시간 다양한 헤드와 샤프트를 분석하고, 피팅하고, 판매해온 경험을 바탕으로
-        클럽메이커스가 직접 R&D 한 제품들입니다.
+        공작소가 직접 설계하고 제작한 제품들입니다.
+        VERSUS 맞춤 드라이버를 중심으로, DEFINE 하이브리드 샤프트와 KRZ 203H 헤드, 그리고 뽀로로 라이센스 라인업이 한자리에 있습니다.
       </p>
     </div>
   </section>
 
-  <!-- 라인업 인덱스 -->
-  <section class="lineup-index">
-    <div class="section-content">
-      <div class="lineup-callout">
-        <p class="lineup-quote">
-          "한 타의 차이를 만드는 것은 공작소장의 손과 골퍼의 스윙."
-        </p>
-      </div>
-      <div class="lineup-grid">
-        <a href="#versus" class="lineup-item">
-          <div class="lineup-num">01</div>
-          <div class="lineup-title">VERSUS</div>
-          <div class="lineup-desc">자체 R&D 드라이버 (헤드 + 샤프트)</div>
-        </a>
-        <a href="#krz" class="lineup-item">
-          <div class="lineup-num">02</div>
-          <div class="lineup-title">KRZ 203H</div>
-          <div class="lineup-desc">자체 CAD 설계 하이브리드</div>
-        </a>
-        <a href="#define" class="lineup-item">
-          <div class="lineup-num">03</div>
-          <div class="lineup-title">DEFINE</div>
-          <div class="lineup-desc">하이브리드·롱아이언 샤프트</div>
-        </a>
-        <a href="#pororo" class="lineup-item">
-          <div class="lineup-num">04</div>
-          <div class="lineup-title">뽀로로 골프</div>
-          <div class="lineup-desc">헤드커버 + 한정 골프공</div>
-        </a>
-        <a href="#tools" class="lineup-item">
-          <div class="lineup-num">05</div>
-          <div class="lineup-title">피팅 보조 도구</div>
-          <div class="lineup-desc">곧 공개</div>
-        </a>
-      </div>
-    </div>
-  </section>
+  <!-- ============================================================
+       SECTION 01 — VERSUS 드라이버 헤드
+       ============================================================ -->
+  <section class="section section-versus-head">
+    <div class="section-inner">
+      <p class="section-eyebrow">SECTION 01 · VERSUS 드라이버 헤드</p>
+      <h2 class="versus-head-title">검정 무광, 0.5° 훅페이스</h2>
+      <p class="versus-head-lede">
+        딥페이스와 샬로우의 중간 타입입니다.
+        어떤 레벨의 골퍼가 들어와도 헤드가 자연스럽게 적응할 수 있도록 설계했습니다.
+      </p>
 
-  <!-- 10-1. VERSUS -->
-  <section class="section product-section" id="versus">
-    <div class="section-content">
-      <div class="product-header">
-        <p class="product-eyebrow">PRODUCT 01 · VERSUS</p>
-        <h2 class="product-headline">VERSUS,<br>우승을 향하여</h2>
-        <p class="product-meaning">
-          VERSUS (베르서스) — (약어) VS, 대, (라틴) ~향하여, 에 대항하여.
-        </p>
-      </div>
+      <div class="versus-head-layout">
+        <figure class="versus-head-image">
+          <img
+            src="/products/versus-head.jpg"
+            alt="VERSUS 드라이버 헤드 — 검정 무광 0.5° 훅페이스"
+            loading="lazy"
+          />
+          <figcaption class="versus-head-caption">VERSUS 드라이버 헤드 — 검정 무광</figcaption>
+        </figure>
 
-      <div class="product-body">
-        <p>
-          우승을 위해 샤프트를 선택해야 하는 모든 골퍼를 위해, 지난 몇 년에 걸쳐
-          플레이어 타입별 가장 만족하는 샤프트 프로파일을 정리하고 구분해왔습니다.
-          통계를 바탕으로 시제품을 만들고, 6개월의 샘플 테스트를 통해 프로파일을
-          계속 수정한 끝에 — 샷의 퍼포먼스 뿐 아니라 손에 전해오는 타격감까지
-          만족시키는 샤프트가 만들어졌고, 거기에 어울리는 헤드까지 함께 설계되었습니다.
-        </p>
-      </div>
-
-      <!-- VERSUS 헤드 -->
-      <div class="sub-block">
-        <h3 class="sub-block-title">VERSUS 헤드 — 검정 무광, 0.5° 훅페이스</h3>
-        <p class="sub-block-tagline">
-          딥페이스와 샬로우의 중간 타입. 모든 레벨에 대응하는 설계.
-        </p>
-        <table class="table">
-          <tbody>
-            <tr><th>기본 로프트 앵글</th><td>10.5°</td></tr>
-            <tr><th>페이스 앵글</th><td>0.5° 훅페이스</td></tr>
-            <tr><th>도금</th><td>검정 무광 (프리미엄)</td></tr>
-            <tr><th>헤드 형태</th><td>중간 타입 (딥과 샬로우의 균형)</td></tr>
-          </tbody>
-        </table>
-        <p class="sub-block-body">
-          미적인 감각을 살린 검정 무광 도금, 중급자가 가장 선호하는 0.5° 훅페이스 앵글.
-          클럽메이커스가 분석·피팅·판매해온 다양한 헤드 가운데 가장 퍼포먼스와
-          가성비가 뛰어난 헤드를 모태로, 소재를 강화해 프리미엄 헤드로 다시 제작했습니다.
-        </p>
-      </div>
-
-      <!-- VERSUS 샤프트 5종 -->
-      <div class="sub-block">
-        <h3 class="sub-block-title">VERSUS 샤프트 5종 — 헤드 스피드별, 다섯 가지 답</h3>
-        <p class="sub-block-tagline">
-          버트부터 팁까지의 강성 분포로 헤드 들어오는 타이밍을 설계.
-        </p>
-        <div class="table-scroll">
-          <table class="table table-spec">
-            <thead>
-              <tr>
-                <th>모델</th>
-                <th>무게</th>
-                <th>토크</th>
-                <th>길이</th>
-                <th>CPM</th>
-                <th>추천 스피드 (mph)</th>
-                <th>K.P.</th>
-                <th>강도</th>
-              </tr>
-            </thead>
-            <tbody>
-              {versusShafts.map((s) => (
-                <tr>
-                  <td><strong>{s.model}</strong></td>
-                  <td>{s.weight}</td>
-                  <td>{s.torque}</td>
-                  <td>{s.length}</td>
-                  <td>{s.cpm}</td>
-                  <td>{s.speed}</td>
-                  <td>{s.kp}</td>
-                  <td>{s.flex}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <ul class="positioning-list">
-          <li><strong>45LU, 55MR</strong> — 아마추어 골퍼 지향</li>
-          <li><strong>55MS, 65MS</strong> — 빠른 템포·헤드 스피드 플레이어</li>
-          <li><strong>75MHS</strong> — 선수 대응</li>
-        </ul>
-      </div>
-
-      <!-- VERSUS 가격 박스 -->
-      <div class="price-box">
-        <div class="price-box-label">VERSUS 맞춤 드라이버</div>
-        <div class="price-box-value">650,000원</div>
-        <div class="price-box-spec">
-          헤드 + 샤프트 + 그립 · 피팅 + 제작 일체 포함
-        </div>
-        <div class="price-box-note">
-          헤드 단품 / 샤프트 단품 구입도 가능합니다.
+        <div class="versus-head-specs">
+          <article class="versus-spec">
+            <p class="versus-spec-label">기본 로프트</p>
+            <p class="versus-spec-value">10.5°</p>
+          </article>
+          <article class="versus-spec">
+            <p class="versus-spec-label">페이스</p>
+            <p class="versus-spec-value">0.5° 훅페이스</p>
+          </article>
+          <article class="versus-spec">
+            <p class="versus-spec-label">표면</p>
+            <p class="versus-spec-value">검정 무광</p>
+          </article>
+          <article class="versus-spec">
+            <p class="versus-spec-label">페이스 타입</p>
+            <p class="versus-spec-value">중간 타입</p>
+            <p class="versus-spec-note">딥페이스와 샬로우 사이</p>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 10-2. KRZ 203H -->
-  <section class="section section-bg-soft product-section" id="krz">
-    <div class="section-content">
-      <div class="product-header">
-        <p class="product-eyebrow">PRODUCT 02 · KRZ 203H</p>
-        <h2 class="product-headline">하이브리드,<br>그 이상의 하이브리드</h2>
-        <p class="product-meaning">
-          The Highest Grade Playability & Versatility.
-        </p>
+  <!-- ============================================================
+       VERSUS 맞춤 드라이버 — 가격 강조 박스
+       (검은 배경 + 골드 라벨 — workshop-qna의 비용 박스 패턴 차용)
+       ============================================================ -->
+  <section class="versus-price">
+    <div class="versus-price-inner">
+      <p class="versus-price-eyebrow">VERSUS 맞춤 드라이버</p>
+      <h2 class="versus-price-heading">VERSUS — 우승을 향하여</h2>
+      <p class="versus-price-tagline">
+        클럽메이커스 자체 R&amp;D · 헤드와 샤프트의 완전한 결합
+      </p>
+
+      <div class="versus-price-amount">
+        <span class="versus-price-number">650,000</span>
+        <span class="versus-price-unit">원</span>
       </div>
 
-      <div class="product-body">
-        <p>
-          보다 나은 성능과 사용성을 갖춘 하이브리드 클럽을 필요로 하는 투어 선수들의
-          요구로부터, 203H 하이브리드의 주요 컨셉이 설정되었습니다.
-        </p>
-        <p>
-          상하로 넓어진 특수합금강 페이스는 보다 나은 컨트롤 성능과 일관성을 가능하게
-          합니다. 최적의 볼 탄도와 차별화된 타구감을 목적으로 내부 설계가 이루어졌고,
-          어드레스에서의 안정감과 스윙에 대한 확신을 가질 수 있는 날렵한 디자인을
-          자랑합니다.
-        </p>
-        <p>
-          많은 프로 선수들이 클럽메이커스의 클럽피팅과 스윙 매니지먼트 서비스를
-          이용하고 있습니다.
-        </p>
-      </div>
-
-      <div class="sub-block">
-        <h3 class="sub-block-title">203H 주요 사양</h3>
-        <div class="table-scroll">
-          <table class="table table-spec">
-            <thead>
-              <tr>
-                <th>로프트</th>
-                <th>라이</th>
-                <th>길이</th>
-                <th>전체 무게</th>
-                <th>킥 포인트</th>
-                <th>헤드 M.O.I</th>
-              </tr>
-            </thead>
-            <tbody>
-              {krzSpecs.map((s) => (
-                <tr>
-                  <td><strong>{s.loft}</strong></td>
-                  <td>{s.lie}</td>
-                  <td>{s.length}</td>
-                  <td>{s.weight}</td>
-                  <td>{s.kp}</td>
-                  <td>{s.moi} g·cm²</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="sub-block">
-        <h3 class="sub-block-title">매치 샤프트 — DEFINE 635VTM</h3>
-        <p class="sub-block-tagline">하이브리드 전용 설계.</p>
-        <table class="table">
-          <tbody>
-            <tr><th>무게</th><td>68g (40")</td></tr>
-            <tr><th>토크</th><td>3.3 ~ 3.5</td></tr>
-            <tr><th>강도</th><td>Regular / Stiff</td></tr>
-          </tbody>
-        </table>
-        <p class="sub-block-body">
-          하이브리드 클럽을 위해 설계된 샤프트로, 203H가 단순히 롱아이언을
-          대체하는 것 이상을 가능하게 합니다. 가벼워진 중량으로 스윙 스피드가 향상되고,
-          팁 부분의 안정화로 공격적인 볼 스트라이킹이 가능합니다.
-        </p>
-      </div>
-
-      <div class="callout">
-        KRZ 의 모든 클럽은 ㈜클럽메이커스 코리아가 최종 제조하고 품질을 보증합니다.
-        숙련된 인력과 노하우를 바탕으로 일관된 성능과 차별화된 만듦새를 제공합니다.
-      </div>
-    </div>
-  </section>
-
-  <!-- 10-3. DEFINE -->
-  <section class="section product-section" id="define">
-    <div class="section-content">
-      <div class="product-header">
-        <p class="product-eyebrow">PRODUCT 03 · DEFINE</p>
-        <h2 class="product-headline">하이브리드 롱드라이브용<br>아이언 샤프트</h2>
-      </div>
-
-      <div class="product-body">
-        <p>
-          가벼운 중량과 팁 부분의 안정화로 공격적인 볼 스트라이킹이 가능합니다.
-          기본 길이 42 inch 로 하이브리드부터 아이언까지 대응합니다.
-        </p>
-        <p>
-          견고하게 잡아주고, 강한 다운스윙에서도 에너지를 끝까지 받아주는 샤프트입니다.
-        </p>
-      </div>
-
-      <ul class="bullet-list">
-        <li><strong>Regular 타입</strong> — 견고하지만 부드러움이 전달</li>
-        <li><strong>Stiff 타입</strong> — 75g 이상의 무겁기만 하고 팁이 소프트한 샤프트와는 분명히 차별화</li>
+      <ul class="versus-price-includes">
+        <li>헤드</li>
+        <li>샤프트</li>
+        <li>그립</li>
+        <li>피팅</li>
+        <li>제작</li>
       </ul>
+      <p class="versus-price-includes-note">일체 포함</p>
 
-      <div class="sub-block">
-        <h3 class="sub-block-title">상세 사양</h3>
-        <div class="table-scroll">
-          <table class="table table-spec">
-            <thead>
-              <tr>
-                <th>모델</th>
-                <th>Flex</th>
-                <th>Length</th>
-                <th>Weight</th>
-                <th>Torque</th>
-                <th>Tip OD</th>
-                <th>Butt OD</th>
-                <th>Bend Point</th>
-              </tr>
-            </thead>
-            <tbody>
-              {defineShafts.map((s) => (
-                <tr>
-                  <td><strong>{s.model}</strong></td>
-                  <td>{s.flex}</td>
-                  <td>{s.length}</td>
-                  <td>{s.weight}</td>
-                  <td>{s.torque}</td>
-                  <td>{s.tipOd}</td>
-                  <td>{s.buttOd}</td>
-                  <td>{s.bend}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p class="sub-block-body">Parallel Tip — 7"</p>
-      </div>
-
-      <div class="callout">
-        <strong>트리밍 가이드 (참고)</strong><br>
-        클럽 당 1/4 inch 기준 · 16° 유틸 기준 노컷 · 19°는 1/4 inch · 3번 아이언 기준 노컷.
-        샤프트 강도 조정을 위해 트리밍은 임의로 조정 가능합니다.
-      </div>
-    </div>
-  </section>
-
-  <!-- 10-4. 뽀로로 골프 -->
-  <section class="section section-bg-cream product-section" id="pororo">
-    <div class="section-content">
-      <div class="product-header">
-        <p class="product-eyebrow">PRODUCT 04 · PORORO GOLF</p>
-        <h2 class="product-headline">뽀로로,<br>너로 정했어</h2>
-        <p class="product-meaning">선수들의 멘탈 파트너</p>
-      </div>
-
-      <div class="product-body">
-        <p>
-          골프는 멘탈 게임. 친숙한 캐릭터를 곁에 두면 그만큼 마음의 안정감을 유지할
-          수 있습니다. 클럽메이커스 뽀로로 헤드커버는 KLPGA·LPGA 투어 현장에서
-          수많은 프로 선수들의 멘탈 파트너로 함께해왔습니다.
-        </p>
-      </div>
-
-      <div class="sub-block">
-        <h3 class="sub-block-title">뽀로로 헤드커버 — 투어가 선택한 멘탈 파트너</h3>
-        <ul class="bullet-list">
-          <li><strong>박희영 프로</strong> — LPGA 매뉴라이프 파이낸셜 클래식 우승 당시 사용. "리틀 세리키즈 삼총사" 일원으로 언론 조명</li>
-          <li><strong>김효주 프로</strong> — 스위스 우승의 순간 함께</li>
-          <li><strong>그 외</strong> — 백규정·김민선·고진영 등 KLPGA·LPGA 다수 선수</li>
-        </ul>
-        <p class="sub-block-body">
-          국내 애니메이션의 대표 캐릭터 뽀로로의 친근하고 귀여운 모습은
-          연장 승부 같은 긴장 상황에서도 선수들에게 심리적 안정감을 제공합니다.
-          매경닷컴 등 언론에서도 클럽메이커스 뽀로로 헤드커버를 여러 차례 조명했습니다.
-        </p>
-      </div>
-
-      <div class="sub-block">
-        <h3 class="sub-block-title">뽀로로 골프공 — 한정 제작</h3>
-        <p class="sub-block-tagline">최고의 선물. 클럽메이커스 한정 제작.</p>
-        <div class="ball-features">
-          <div class="ball-feat">
-            <div class="ball-feat-num">3 PIECE</div>
-            <div class="ball-feat-desc">프리미엄 구조</div>
-          </div>
-          <div class="ball-feat">
-            <div class="ball-feat-num">UV PRINT</div>
-            <div class="ball-feat-desc">정밀 캐릭터 인쇄</div>
-          </div>
-          <div class="ball-feat">
-            <div class="ball-feat-num">LIMITED</div>
-            <div class="ball-feat-desc">한정 제작</div>
-          </div>
-        </div>
-        <p class="sub-block-body">
-          3-piece 프리미엄 구조에 UV 인쇄로 캐릭터를 정밀하게 새긴 한정판 골프공.
-          라운드 선물용으로 가장 추천드리는 아이템입니다.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 10-5. 피팅 보조 도구 -->
-  <section class="section product-section coming-soon" id="tools">
-    <div class="section-content-narrow">
-      <p class="product-eyebrow">PRODUCT 05 · COMING SOON</p>
-      <h2>피팅 보조 도구</h2>
-      <p class="coming-soon-body">
-        공작소가 직접 만들어 사용해온 피팅·작업 도구들을 정리해 일반 공급용으로
-        준비하고 있습니다.
-      </p>
-      <ul class="bullet-list">
-        <li>공작소장이 24년간 현장에서 쓰며 다듬어온 도구</li>
-        <li>세부 라인업 및 출시 일정은 추후 안내 예정</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 10-6. 구매·문의 -->
-  <section class="section section-bg-green">
-    <div class="section-content-narrow purchase-cta">
-      <p class="section-eyebrow">PURCHASE · 구매·문의</p>
-      <h2>제품 구매와 피팅 상담은<br>아래 채널로 문의해주세요</h2>
-      <p class="purchase-body">
-        VERSUS 드라이버, 헤드 단품, 샤프트 단품, KRZ 203H, DEFINE 샤프트,
-        뽀로로 헤드커버·골프공 모두 상담 후 안내드립니다.
-      </p>
-      <div class="purchase-channels">
-        <a href="tel:01043635555" class="purchase-channel">
-          📞 010-4363-5555
-        </a>
-        <a href="mailto:clubmakers@naver.com" class="purchase-channel">
-          ✉️ clubmakers@naver.com
-        </a>
-        <a href="/contact" class="purchase-channel purchase-channel-primary">
-          예약·문의 페이지로 →
-        </a>
+      <div class="versus-price-actions">
+        <a href="/contact" class="versus-cta-primary">예약·문의</a>
+        <a href="/system" class="versus-cta-ghost">분석 시스템 보기 →</a>
       </div>
     </div>
   </section>
 
 </BaseLayout>
 
-<style>
-  .products-hero {
-    background: var(--bg-soft);
-  }
 
-  /* ===== 라인업 인덱스 ===== */
-  .lineup-index {
-    padding: 80px 80px;
+<style>
+  /* ============================================================
+     SECTION 베이스 (페이지 로컬)
+     글로벌 .section / .section-eyebrow 와 충돌하지 않도록
+     versus-head- / versus-price- 프리픽스로 스코프
+     ============================================================ */
+  .section {
+    padding: clamp(4rem, 8vw, 6rem) 1.5rem;
     background: var(--bg);
   }
-  .lineup-callout {
-    text-align: center;
-    margin-bottom: 50px;
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
   }
-  .lineup-quote {
-    font-family: var(--font-serif);
-    font-size: 22px;
-    color: var(--green);
-    font-style: italic;
-    line-height: 1.6;
-    letter-spacing: -0.01em;
-  }
-  .lineup-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-  }
-  .lineup-item {
-    background: var(--bg-soft);
-    padding: 28px 22px;
-    border-top: 3px solid var(--gold);
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-align: center;
-  }
-  .lineup-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
-  }
-  .lineup-num {
-    font-family: var(--font-serif);
-    font-size: 13px;
-    color: var(--gold);
-    letter-spacing: 0.15em;
-    margin-bottom: 12px;
-    font-weight: 700;
-  }
-  .lineup-title {
-    font-family: var(--font-serif);
-    font-size: 18px;
-    font-weight: 700;
+
+  /* ============================================================
+     SECTION 01 — VERSUS 헤드
+     ============================================================ */
+  .versus-head-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height: 1.35;
     color: var(--ink);
-    margin-bottom: 6px;
+    margin: 0.4rem 0 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
   }
-  .lineup-desc {
-    font-size: 12.5px;
-    color: var(--grey);
+  .versus-head-lede {
+    font-family: var(--sans);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--text-2);
+    max-width: 60ch;
+    margin: 0 0 3rem;
+  }
+
+  .versus-head-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 3rem;
+    align-items: stretch;
+  }
+
+  .versus-head-image {
+    margin: 0;
+    background: var(--bg-soft);
+    border: 1px solid var(--rule);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    position: relative;
+  }
+  .versus-head-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .versus-head-caption {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.9rem;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    color: rgba(31, 27, 22, 0.55);
+    background: rgba(248, 245, 238, 0.85);
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  .versus-head-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+  }
+  .versus-spec {
+    padding: 1.5rem 1.25rem;
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 110px;
+  }
+  .versus-spec-label {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin: 0 0 0.65rem;
+    font-weight: 500;
+  }
+  .versus-spec-value {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    color: var(--ink);
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .versus-spec-note {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin: 0.5rem 0 0;
     line-height: 1.5;
   }
 
-  /* ===== 제품 섹션 공통 ===== */
-  .product-section {
-    padding: 110px 80px;
+  /* ============================================================
+     VERSUS 맞춤 드라이버 — 가격 박스
+     ============================================================ */
+  .versus-price {
+    padding: clamp(4.5rem, 9vw, 7rem) 1.5rem;
+    background: #1F1B16; /* var(--ink) 톤 */
+    color: #F8F5EE;
+    position: relative;
   }
-  .product-header {
-    margin-bottom: 50px;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 50px;
+  .versus-price::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
   }
-  .product-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.25em;
+  .versus-price-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .versus-price-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
     color: var(--gold);
     text-transform: uppercase;
-    margin-bottom: 20px;
-    font-weight: 700;
+    margin: 0 0 1.5rem;
+    font-weight: 500;
   }
-  .product-headline {
-    font-family: var(--font-serif);
-    font-size: 52px;
-    font-weight: 700;
-    line-height: 1.18;
-    letter-spacing: -0.025em;
-    color: var(--ink);
-    margin-bottom: 16px;
-  }
-  .product-meaning {
-    font-size: 14px;
-    color: var(--grey);
-    font-style: italic;
-    letter-spacing: 0.02em;
-  }
-
-  .product-body {
-    font-size: 16px;
-    line-height: 1.95;
-    color: var(--ink-2);
-    max-width: 760px;
-    margin-bottom: 40px;
-  }
-  .product-body p { margin-bottom: 18px; }
-
-  /* ===== 서브 블록 ===== */
-  .sub-block {
-    margin-top: 50px;
-    padding-top: 40px;
-    border-top: 1px solid var(--line);
-  }
-  .sub-block:first-of-type { border-top: none; padding-top: 0; }
-  .sub-block-title {
-    font-family: var(--font-serif);
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 12px;
-    letter-spacing: -0.015em;
-  }
-  .sub-block-tagline {
-    font-size: 14.5px;
-    color: var(--gold);
+  .versus-price-heading {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4.2vw, 2.8rem);
+    color: #F8F5EE;
+    margin: 0 0 1rem;
     font-weight: 600;
-    margin-bottom: 24px;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+  }
+  .versus-price-tagline {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: rgba(248, 245, 238, 0.7);
+    margin: 0 0 3rem;
+    line-height: 1.7;
     letter-spacing: 0.01em;
   }
-  .sub-block-body {
-    font-size: 15px;
-    line-height: 1.85;
-    color: var(--grey);
-    margin-top: 20px;
-    max-width: 720px;
+  .versus-price-amount {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.3rem;
+    margin: 0 0 2rem;
   }
-
-  /* ===== 스펙 표 ===== */
-  .table-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 24px 0;
+  .versus-price-number {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 6.5vw, 4.5rem);
+    color: var(--gold);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.005em;
   }
-  .table-spec {
-    min-width: 600px;
+  .versus-price-unit {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    color: var(--gold);
+    font-weight: 400;
   }
-  .table-spec thead th {
-    background: var(--ink);
-    color: var(--cream);
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    padding: 12px 14px;
-  }
-  .table-spec td {
-    font-size: 14px;
-    padding: 12px 14px;
-  }
-
-  .positioning-list {
+  .versus-price-includes {
     list-style: none;
-    margin-top: 24px;
-    padding: 22px 28px;
-    background: var(--bg-soft);
-    border-radius: 6px;
-  }
-  .positioning-list li {
-    padding: 6px 0;
-    font-size: 14.5px;
-    color: var(--ink-2);
-  }
-  .positioning-list strong {
-    font-family: var(--font-serif);
-    color: var(--green);
-    font-weight: 700;
-    min-width: 120px;
-    display: inline-block;
-  }
-
-  /* ===== 가격 박스 ===== */
-  .price-box {
-    margin-top: 50px;
-    padding: 40px;
-    background: linear-gradient(135deg, var(--green) 0%, var(--green-deep) 100%);
-    border-radius: 8px;
-    color: var(--cream);
-    box-shadow: 0 12px 32px rgba(15, 41, 34, 0.2);
-    text-align: center;
-  }
-  .price-box-label {
-    font-size: 12px;
-    color: var(--gold-soft);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-  .price-box-value {
-    font-family: var(--font-serif);
-    font-size: 56px;
-    font-weight: 700;
-    color: var(--cream);
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-  }
-  .price-box-spec {
-    font-size: 14px;
-    color: var(--grey-3);
-    margin-bottom: 8px;
-  }
-  .price-box-note {
-    font-size: 12.5px;
-    color: var(--gold-soft);
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(212, 184, 136, 0.2);
-  }
-
-  /* ===== 뽀로로 골프공 features ===== */
-  .ball-features {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-    margin: 24px 0;
-  }
-  .ball-feat {
-    background: white;
-    padding: 24px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    text-align: center;
-  }
-  .ball-feat-num {
-    font-family: var(--font-serif);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: 0.05em;
-    margin-bottom: 6px;
-  }
-  .ball-feat-desc {
-    font-size: 13px;
-    color: var(--grey);
-  }
-
-  /* ===== bullet-list 공통 (workshop과 동일 패턴) ===== */
-  .bullet-list {
-    list-style: none;
-    margin: 24px 0;
     padding: 0;
+    margin: 0 0 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 1.25rem;
+    row-gap: 0.5rem;
   }
-  .bullet-list li {
-    padding: 12px 0 12px 24px;
+  .versus-price-includes li {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: rgba(248, 245, 238, 0.85);
     position: relative;
-    font-size: 15.5px;
-    line-height: 1.7;
-    color: var(--ink-2);
-    border-bottom: 1px solid var(--line);
   }
-  .bullet-list li:last-child { border-bottom: none; }
-  .bullet-list li::before {
+  .versus-price-includes li:not(:last-child)::after {
     content: '·';
     position: absolute;
-    left: 4px;
-    top: 8px;
-    color: var(--gold);
-    font-size: 24px;
-    font-weight: 700;
+    right: -0.85rem;
+    top: 0;
+    color: rgba(193, 154, 79, 0.5);
   }
-  .bullet-list strong { color: var(--ink); font-weight: 700; }
-
-  /* ===== Coming Soon ===== */
-  .coming-soon h2 {
-    font-family: var(--font-serif);
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 20px;
+  .versus-price-includes-note {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: rgba(248, 245, 238, 0.5);
+    margin: 0 0 3rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
-  .coming-soon-body {
-    font-size: 16px;
-    line-height: 1.85;
-    color: var(--ink-2);
-    margin-bottom: 18px;
-  }
-
-  /* ===== 구매 CTA ===== */
-  .purchase-cta {
-    text-align: center;
-  }
-  .purchase-cta h2 {
-    color: var(--cream);
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  .purchase-body {
-    font-size: 15.5px;
-    line-height: 1.85;
-    color: var(--grey-3);
-    margin-bottom: 32px;
-  }
-  .purchase-channels {
+  .versus-price-actions {
     display: flex;
-    gap: 12px;
     justify-content: center;
+    gap: 0.85rem;
     flex-wrap: wrap;
   }
-  .purchase-channel {
-    background: rgba(212, 184, 136, 0.1);
-    border: 1px solid rgba(212, 184, 136, 0.3);
-    color: var(--cream);
-    padding: 14px 24px;
-    border-radius: 100px;
-    font-size: 14px;
-    font-weight: 600;
-    transition: background 0.2s, border-color 0.2s;
+  .versus-cta-primary {
+    display: inline-block;
+    padding: 0.95rem 2rem;
+    background: var(--accent);
+    color: #F8F5EE;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    transition: background 0.2s ease;
   }
-  .purchase-channel:hover {
-    background: rgba(212, 184, 136, 0.2);
-    border-color: var(--gold-soft);
+  .versus-cta-primary:hover {
+    background: #234B3F;
   }
-  .purchase-channel-primary {
-    background: var(--gold);
-    color: var(--green-deep);
+  .versus-cta-ghost {
+    display: inline-block;
+    padding: 0.95rem 2rem;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid rgba(193, 154, 79, 0.45);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .versus-cta-ghost:hover {
     border-color: var(--gold);
-  }
-  .purchase-channel-primary:hover {
-    background: var(--gold-soft);
-    border-color: var(--gold-soft);
+    background: rgba(193, 154, 79, 0.08);
   }
 
-  /* ===== 모바일 ===== */
-  @media (max-width: 968px) {
-    .lineup-index {
-      padding: 60px 24px;
+  /* ============================================================
+     모바일
+     ============================================================ */
+  @media (max-width: 860px) {
+    .versus-head-layout {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
     }
-    .lineup-quote {
-      font-size: 17px;
-    }
-    .lineup-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    .product-section {
-      padding: 70px 24px;
-    }
-    .product-headline {
-      font-size: 32px;
-    }
-    .product-header {
-      margin-bottom: 32px;
-      padding-bottom: 32px;
-    }
-    .sub-block {
-      margin-top: 36px;
-      padding-top: 28px;
-    }
-    .sub-block-title {
-      font-size: 19px;
-    }
-    .price-box {
-      padding: 28px 20px;
-    }
-    .price-box-value {
-      font-size: 40px;
-    }
-    .ball-features {
+  }
+  @media (max-width: 540px) {
+    .versus-head-specs {
       grid-template-columns: 1fr;
     }
-    .positioning-list strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-    .purchase-channels {
+    .versus-spec { min-height: auto; }
+    .versus-price-actions {
       flex-direction: column;
+      align-items: stretch;
+    }
+    .versus-cta-primary,
+    .versus-cta-ghost {
+      text-align: center;
     }
   }
 </style>
