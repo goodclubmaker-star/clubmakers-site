@@ -2,37 +2,51 @@
 // 현재 페이지 경로를 받아 nav 활성 표시
 const currentPath = Astro.url.pathname;
 
-// 5개 메뉴 + 드롭다운 구조
-// (홈은 로고 클릭 / 예약·문의는 우측 CTA)
+// 새 메뉴 구조 (2026.05 업데이트)
+// 5개 메뉴 + 처음이세요? + 예약·문의 CTA
+//
+// 처음이세요?    공작소 ▼      작업·가격 ▼     교육     자료실 ▼              [예약·문의 →]
+//                ├ 공작소장    ├ 공임 안내               ├ 책
+//                ├ 철학        ├ 수리 Q&A              ├ 증상별 진단
+//                ├ 시스템      └ 케이스 스터디           ├ 용어사전
+//                └ 자체 제품                              └ FAQ
+
 const menuGroups = [
   {
-    label: '공작소 소개',
-    paths: ['/about', '/why-fitting', '/system'],
+    label: '처음이세요?',
+    paths: ['/first-visit'],
+    href: '/first-visit',
+  },
+  {
+    label: '공작소',
+    paths: ['/about', '/why-fitting', '/system', '/products'],
     items: [
-      { href: '/about',       label: '공작소장 소개' },
-      { href: '/why-fitting', label: '공작소의 철학' },
-      { href: '/system',      label: '공작소의 시스템' },
+      { href: '/about',       label: '공작소장' },
+      { href: '/why-fitting', label: '클럽피팅 철학' },
+      { href: '/system',      label: '시스템' },
+      { href: '/products',    label: '자체 제품' },
     ],
   },
   {
-    label: '공작소가 하는 일',
-    paths: ['/workshop', '/case-studies', '/education'],
+    label: '작업·가격',
+    paths: ['/workshop', '/workshop-qna', '/case-studies'],
     items: [
-      { href: '/workshop',     label: '공작소의 작업' },
-      { href: '/case-studies', label: '케이스 스터디' },
-      { href: '/education',    label: '클럽메이킹 교육' },
+      { href: '/workshop',      label: '공임 안내' },
+      { href: '/workshop-qna',  label: '수리 Q&A' },
+      { href: '/case-studies',  label: '케이스 스터디' },
     ],
   },
   {
-    label: '공작소의 제품들',
-    paths: ['/products'],
-    href: '/products',
+    label: '교육',
+    paths: ['/education'],
+    href: '/education',
   },
   {
-    label: '공작소의 자료들',
-    paths: ['/book', '/glossary', '/faq'],
+    label: '자료실',
+    paths: ['/book', '/topics', '/glossary', '/faq'],
     items: [
       { href: '/book',     label: '책 『실제적인 클럽피팅』' },
+      { href: '/topics',   label: '증상별 진단' },
       { href: '/glossary', label: '용어사전 (109개)' },
       { href: '/faq',      label: '자주 묻는 질문' },
     ],
@@ -111,9 +125,9 @@ const isActive = (paths: string[]) =>
               <li><a href={item.href}>{item.label}</a></li>
             )),
           ]
-        : [<li><a href={group.href}>{group.label}</a></li>]
+        : [<li><a href={group.href} class="nav-mobile-single">{group.label}</a></li>]
     )}
-    <li class="nav-mobile-cta"><a href="/contact">예약·문의</a></li>
+    <li class="nav-mobile-cta"><a href="/contact">예약·문의 →</a></li>
   </ul>
 </div>
 
@@ -141,6 +155,7 @@ const isActive = (paths: string[]) =>
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
+    text-decoration: none;
   }
   .logo::before {
     content: '';
@@ -148,6 +163,7 @@ const isActive = (paths: string[]) =>
     height: 9px;
     background: var(--green);
     border-radius: 50%;
+    flex-shrink: 0;
   }
   .logo small {
     font-family: var(--font-sans);
@@ -167,6 +183,7 @@ const isActive = (paths: string[]) =>
     font-size: 14px;
     font-weight: 500;
     margin: 0 auto;
+    padding: 0;
   }
   .nav-item {
     position: relative;
@@ -182,6 +199,11 @@ const isActive = (paths: string[]) =>
     transition: color 0.15s, background 0.15s, border-color 0.15s;
     font: inherit;
     cursor: pointer;
+    text-decoration: none;
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
   }
   .nav-link:hover {
     color: var(--green);
@@ -213,6 +235,7 @@ const isActive = (paths: string[]) =>
     border-radius: 6px;
     box-shadow: 0 14px 32px rgba(15, 41, 34, 0.12);
     padding: 8px;
+    margin: 0;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -233,6 +256,7 @@ const isActive = (paths: string[]) =>
     color: var(--ink-2);
     border-radius: 4px;
     transition: background 0.15s, color 0.15s;
+    text-decoration: none;
   }
   .nav-dropdown a:hover { background: var(--bg-soft); color: var(--green); }
   .nav-dropdown a.active { color: var(--green); font-weight: 600; }
@@ -247,6 +271,7 @@ const isActive = (paths: string[]) =>
     border-radius: 100px;
     transition: background 0.2s;
     flex-shrink: 0;
+    text-decoration: none;
   }
   .nav-cta:hover { background: var(--green-2); }
   .nav-cta.active { background: var(--green-deep); }
@@ -257,6 +282,9 @@ const isActive = (paths: string[]) =>
     flex-direction: column;
     gap: 4px;
     padding: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
   }
   .nav-mobile-toggle span {
     display: block;
@@ -287,18 +315,29 @@ const isActive = (paths: string[]) =>
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     z-index: 49;
     padding: 16px 0;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
   }
   .nav-mobile-panel[aria-hidden="false"] { display: block; }
-  .nav-mobile-panel ul { list-style: none; }
+  .nav-mobile-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
   .nav-mobile-panel li { display: block; }
   .nav-mobile-panel a {
     display: block;
     padding: 14px 24px;
     font-size: 15px;
     color: var(--ink-2);
-    border-bottom: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft, var(--line));
+    text-decoration: none;
   }
   .nav-mobile-panel a:active { background: var(--bg-soft); }
+  .nav-mobile-single {
+    font-weight: 600;
+    color: var(--ink) !important;
+  }
   .nav-mobile-group {
     padding: 16px 24px 6px;
     font-size: 11px;
@@ -307,9 +346,25 @@ const isActive = (paths: string[]) =>
     text-transform: uppercase;
     font-weight: 700;
   }
+  .nav-mobile-cta {
+    margin-top: 12px;
+    padding: 0 16px;
+  }
   .nav-mobile-cta a {
-    color: var(--green);
+    background: var(--green);
+    color: var(--cream) !important;
+    border-radius: 4px;
+    text-align: center;
     font-weight: 700;
+    border-bottom: none !important;
+  }
+  .nav-mobile-cta a:active { background: var(--green-deep); }
+
+  @media (max-width: 1100px) {
+    .nav { padding: 16px 32px; gap: 16px; }
+    .nav-menu { font-size: 13.5px; }
+    .nav-link { padding: 10px 11px; }
+    .logo small { display: none; }
   }
 
   @media (max-width: 968px) {
@@ -330,10 +385,31 @@ const isActive = (paths: string[]) =>
     const toggle = document.querySelector('.nav-mobile-toggle');
     const panel = document.querySelector('.nav-mobile-panel');
     if (!toggle || !panel) return;
+
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!open));
       panel.setAttribute('aria-hidden', String(open));
+      // 메뉴 열림시 body 스크롤 잠금
+      document.body.style.overflow = open ? '' : 'hidden';
+    });
+
+    // 모바일 메뉴 안의 링크 클릭 시 메뉴 닫기
+    panel.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        toggle.setAttribute('aria-expanded', 'false');
+        panel.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // ESC 키로 메뉴 닫기
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        toggle.setAttribute('aria-expanded', 'false');
+        panel.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
     });
   });
 </script>
