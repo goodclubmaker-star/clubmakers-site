@@ -1,0 +1,906 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const driverRulesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': 'https://myclubmakers.com/equipment-rules/driver/#article',
+  headline: '드라이버 장비 규정 — COR 0.830 · 부피 460cc · MOI 5,900 · 길이 48인치',
+  description: 'USGA·R&A 드라이버 장비 규정 한글 정리. COR/CT 측정, 헤드 부피 460cc, MOI 5,900 한계, 길이 48인치(엘리트 46인치 모범 로컬 룰). 클럽메이커스 24년 현장 해석.',
+  inLanguage: 'ko-KR',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+    url: 'https://myclubmakers.com',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'COR 0.830은 어떻게 측정하나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '실제 측정은 COR이 아니라 CT(Characteristic Time)로 합니다. CT는 페이스에 충격체를 보내 페이스가 변형 후 복원되는 시간을 마이크로초(μs) 단위로 측정합니다. 한계는 239μs + 측정 허용오차 18μs = 257μs입니다. 이 한계가 COR 0.830에 해당합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '드라이버 부피 460cc는 정확히 무엇을 측정하나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '드라이버 헤드 내부 부피(volume)를 측정합니다. 측정은 물에 헤드를 잠기게 하거나 정밀 부피 측정 장비를 사용합니다. 한계는 460cc + 측정 허용오차 10cc = 최대 470cc입니다. 이 한계는 2004년 1월 1일부터 적용되어 왔습니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '드라이버 길이는 정확히 어디서 어디까지 재나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '클럽을 60도 라이각에 놓고, 그립 끝(butt)에서 솔이 지면에 닿는 점까지의 거리를 측정합니다. 일반 룰 한계는 48인치, 엘리트 대회 모범 로컬 룰은 46인치입니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '오래된 드라이버의 COR이 한계를 넘을 수 있나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '가능합니다. 페이스는 사용에 따라 미세하게 늘어나(creep) COR이 상승하는 경향이 있습니다. 출고 시 0.825~0.830 범위였던 페이스가 5~10년 후 한계치를 넘을 수 있습니다. 공식 대회 출전 시 측정으로 부적합 판정이 가능합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '46인치 길이 제한은 일반 골퍼에게도 적용되나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '아닙니다. 46인치 제한은 모범 로컬 룰(Model Local Rule)이라 대회 주최 측이 채택할 때만 적용됩니다. PGA Tour, 엘리트 아마추어 대회는 2022년 1월부터 적용 중. 일반 라운드와 친선 라운드에서는 여전히 48인치까지 합법입니다.',
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="드라이버 규정 — COR · 부피 · MOI · 길이"
+  description="USGA·R&A 드라이버 장비 규정 한글 정리. COR 0.830 (CT 257μs) · 부피 460cc · MOI 5,900 · 길이 48인치 (엘리트 46인치 모범 로컬 룰). 클럽메이커스 24년 현장 해석."
+  schemaType="Article"
+  keywords="드라이버 규정, COR 0.830, CT 257, 반발계수, 드라이버 부피 460cc, 드라이버 길이 48인치, 46인치 제한, 모범 로컬 룰, MOI 5900, 스프링 효과, USGA 드라이버, R&A 드라이버, 적합 드라이버 리스트, Conforming Driver"
+  extraSchema={[driverRulesSchema, faqSchema]}
+>
+
+  <!-- 1. Hero -->
+  <section class="page-hero driver-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">EQUIPMENT RULES · TOPIC 01 · 드라이버 규정</div>
+      <h1>드라이버 — 다섯 가지 한계,<br/>그 안에서 모든 설계가 이루어집니다</h1>
+      <p class="page-hero-subtitle">
+        드라이버는 골프 클럽 중 <strong>가장 많은 규정의 영향</strong>을 받습니다.
+        부피·반발계수·관성모멘트·길이·치수 — 다섯 가지 한계가 헤드 설계의 경계를 그립니다.<br/>
+        <span class="hero-sub-light">USGA·R&A의 드라이버 장비 규정을 한글로 정리하고, 24년 공작소 관점에서 의미를 해설합니다.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. 빠른 핵심 박스 — 5가지 한계 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">QUICK SUMMARY · 5가지 한계</p>
+      <h2>드라이버 규정의 핵심 5가지</h2>
+      <div class="quick-grid quick-grid-5">
+        <div class="quick-card">
+          <p class="quick-num">01</p>
+          <h3 class="quick-title">반발계수<br/><strong>COR 0.830</strong></h3>
+          <p class="quick-body">실측은 CT(Characteristic Time) <strong>257μs</strong>로 합니다.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">02</p>
+          <h3 class="quick-title">헤드 부피<br/><strong>460cc</strong></h3>
+          <p class="quick-body">측정 허용오차 +10cc까지 인정. 실효 한계 <strong>470cc</strong>.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">03</p>
+          <h3 class="quick-title">관성모멘트<br/><strong>MOI 5,900</strong></h3>
+          <p class="quick-body">수직축 기준 g·cm². 오프센터 안정성 한계.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">04</p>
+          <h3 class="quick-title">클럽 길이<br/><strong>48인치</strong></h3>
+          <p class="quick-body">엘리트 대회는 <strong>46인치</strong> 모범 로컬 룰.</p>
+        </div>
+        <div class="quick-card">
+          <p class="quick-num">05</p>
+          <h3 class="quick-title">헤드 치수<br/><strong>5.0 × 2.8</strong></h3>
+          <p class="quick-body">힐-토 5.0인치 / 솔-크라운 2.8인치 한계.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 반발계수 (COR / CT) -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 01 · 반발계수</p>
+      <h2>COR 0.830 — 가장 오래되고 가장 중요한 한계</h2>
+      <p class="section-body">
+        반발계수(Coefficient of Restitution, COR)는 페이스와 볼이 충돌했을 때
+        <strong>볼이 얼마나 효율적으로 튕겨나가는지</strong>를 나타내는 지표입니다.
+        이론상 0~1 사이 값이며, 1에 가까울수록 에너지 손실이 적습니다.
+      </p>
+      <p class="section-body">
+        USGA·R&A는 이 값을 <strong>0.830 이하</strong>로 제한합니다.
+        이 한계는 1998년 처음 도입되어 30년 가까이 드라이버 헤드 설계의 가장 강력한 경계선 역할을 해왔습니다.
+      </p>
+
+      <h3 class="subsection-h3">실제 측정 — CT (Characteristic Time)</h3>
+      <p class="section-body">
+        현장에서 USGA가 실시하는 측정은 COR 자체가 아니라
+        <strong>CT(Characteristic Time, 특성 시간)</strong>입니다.
+        CT는 페이스에 충격체를 보냈을 때 페이스가 변형 후 원래 형태로 복원되기까지 걸리는 시간을 측정합니다.
+        단위는 마이크로초(μs)입니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">CT 한계치 (USGA·R&A)</p>
+        <ul class="rule-list">
+          <li>
+            <strong>기본 한계: 239μs</strong> — COR 0.822에 해당하는 값
+          </li>
+          <li>
+            <strong>측정 허용오차: +18μs</strong> — 동일 클럽을 여러 번 측정해도 미세 편차 인정
+          </li>
+          <li>
+            <strong>실효 한계: 257μs</strong> — COR 약 0.830에 해당. 이 값을 넘으면 부적합
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">출고 시 대부분 한계 근처에 맞춰져 있음</h3>
+      <p class="section-body">
+        주요 메이커의 정품 드라이버는 출고 시 <strong>대부분 한계 근처(0.825~0.830)</strong>에 맞춰져 있습니다.
+        제조사 입장에서는 한계까지 끌어올린 페이스가 거리 면에서 유리하기 때문입니다.
+        다만 그 결과 <strong>사용 시간이 누적되면 한계를 넘는 경우</strong>가 발생합니다.
+      </p>
+
+      <h3 class="subsection-h3">시간이 지날수록 COR이 올라가는 이유</h3>
+      <p class="section-body">
+        티타늄 페이스는 반복적인 임팩트로 미세하게 늘어나는 현상(creep)이 있습니다.
+        새 클럽일 때 0.828였던 페이스가 5~10년 후 0.832~0.835까지 올라갈 수 있어요.
+        공식 대회에서 USGA가 무작위로 측정하면 부적합 판정이 가능합니다.
+      </p>
+
+      <h3 class="subsection-h3">위반 시 결과</h3>
+      <ul class="penalty-list">
+        <li><strong>적합 클럽 리스트(Conforming Clubs List)에서 제외</strong> — 새로 출시되는 모델</li>
+        <li><strong>대회 출전 시 부적합 판정</strong> — 측정에서 한계 초과 시</li>
+        <li><strong>드라이버 사용 자체가 불가</strong> — 라운드 시작 후 발견 시 페널티</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. 헤드 부피 (460cc) -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 02 · 헤드 부피</p>
+      <h2>460cc — 22년째 변하지 않은 한계</h2>
+      <p class="section-body">
+        드라이버 헤드 부피는 <strong>460cc 이하</strong>로 제한됩니다.
+        측정 허용오차 +10cc를 인정해 실질적으로는 <strong>최대 470cc</strong>까지 허용됩니다.
+        이 한계는 <strong>2004년 1월 1일</strong>부터 적용되어 22년째 그대로입니다.
+      </p>
+
+      <h3 class="subsection-h3">2000년대 초반의 부피 경쟁</h3>
+      <p class="section-body">
+        2000년 350cc 드라이버가 처음 등장한 이후, 2001년 400cc, 2002년 500cc로 헤드 부피는 폭발적으로 커졌습니다.
+        부피가 크면 관성모멘트(MOI)가 높아져 미스히트에 관용적이고, 동시에 스위트스팟이 넓어지기 때문이었습니다.
+        제조사들의 부피 경쟁이 가속되자 USGA가 2003년 10월 460cc 한계를 발표했고,
+        2004년 1월부터 모든 신제품에 적용됐습니다.
+      </p>
+
+      <h3 class="subsection-h3">왜 460cc인가</h3>
+      <p class="section-body">
+        460cc는 임의의 숫자가 아니라 <strong>그 시점 기술의 상한선</strong> 근처에 그어진 선입니다.
+        당시 메이저 메이커가 만들 수 있던 최대 부피였고, 이를 정점으로 정한 것입니다.
+        이후 22년 동안 헤드 부피의 경쟁은 사실상 사라졌고, 메이커들은 한계 안에서
+        <strong>무게 분배·MOI·페이스 두께·사운드</strong> 같은 다른 변수로 차별화하고 있습니다.
+      </p>
+
+      <h3 class="subsection-h3">현재 시판 드라이버는 모두 한계 근처</h3>
+      <p class="section-body">
+        오늘날 출시되는 거의 모든 드라이버는 <strong>455~470cc 범위</strong> 안에 있습니다.
+        TaylorMade Qi 시리즈, Titleist GT 시리즈, Callaway Paradym/Elyte 시리즈, PING G 시리즈, Cobra Darkspeed 등
+        주요 라인업이 한계 근처에 맞춰져 있어요.
+        "큰 헤드"가 마케팅 포인트가 되지 않는 이유입니다 — 모두 같은 한계에서 멈췄으니까요.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. MOI (관성모멘트) -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 03 · 관성모멘트</p>
+      <h2>MOI 5,900 g·cm² — 미스히트에 얼마나 관용적인가</h2>
+      <p class="section-body">
+        관성모멘트(Moment of Inertia, MOI)는 헤드가 충돌 후
+        <strong>회전축 주변에서 얼마나 비틀리지 않는가</strong>를 나타내는 값입니다.
+        MOI가 높을수록 페이스가 비틀리지 않아 오프센터 타점에서도 거리·방향 손실이 적습니다.
+        단위는 g·cm²입니다.
+      </p>
+
+      <p class="section-body">
+        USGA·R&A는 헤드의 <strong>수직축 MOI를 5,900 g·cm² 이하</strong>로 제한합니다.
+        헤드가 60도 라이각에 놓였을 때 헤드 무게중심을 통과하는 수직축을 기준으로 측정합니다.
+        측정 허용오차도 별도로 적용됩니다.
+      </p>
+
+      <h3 class="subsection-h3">10,000 MOI 마케팅의 진실</h3>
+      <p class="section-body">
+        최근 TaylorMade Qi35 Max, PING G440, Callaway Paradym Ai 같은 모델이
+        "<strong>10,000 MOI</strong>" 라는 표현을 쓰고 있습니다.
+        이 숫자는 <strong>수직축 MOI + 수평축 MOI의 합</strong>입니다.
+      </p>
+      <ul class="penalty-list">
+        <li><strong>수직축 MOI (Iz)</strong>: 페이스가 좌우로 비틀리는 것에 대한 저항. 한계 5,900</li>
+        <li><strong>수평축 MOI (Iy)</strong>: 페이스가 위아래로 비틀리는 것에 대한 저항. 한계 없음</li>
+        <li><strong>"총 MOI"</strong>: Iz + Iy의 합. 마케팅에서 사용 ("10,000 MOI" 등)</li>
+      </ul>
+      <p class="section-body section-body-small">
+        즉 "10,000 MOI 드라이버"가 규정 위반은 아닙니다. 수직축은 여전히 5,900 한계 안에 있고, 수평축에서 추가됐을 뿐입니다.
+        다만 마케팅 숫자만 보고 "한계를 넘었다"고 오해할 수 있어 정확한 이해가 필요합니다.
+      </p>
+
+      <h3 class="subsection-h3">MOI는 미스히트에 직접 영향</h3>
+      <p class="section-body">
+        타점이 페이스 중심에서 1cm 벗어났을 때 헤드는 회전하려고 합니다.
+        MOI가 4,000인 헤드는 5도 정도 비틀리고, MOI가 5,800인 헤드는 약 2~3도 정도만 비틀립니다.
+        이 차이가 캐리 거리 5~10야드, 좌우 산포 4~6야드 차이로 나타납니다.
+        고관용성(High MOI) 드라이버가 아마추어에게 의미있는 이유입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 6. 길이 (48인치 / 46인치) -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 04 · 클럽 길이</p>
+      <h2>48인치 / 46인치 — 두 가지 한계가 공존</h2>
+      <p class="section-body">
+        드라이버 길이는 <strong>두 가지 다른 한계</strong>가 동시에 존재합니다.
+        일반 룰의 48인치, 그리고 엘리트 대회용 모범 로컬 룰의 46인치입니다.
+        헷갈리기 쉬운 부분이라 정확한 구분이 필요합니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">두 가지 길이 한계</p>
+        <ul class="rule-list">
+          <li>
+            <strong>일반 룰: 48인치</strong><br/>
+            모든 골퍼·모든 라운드·모든 일반 대회에 적용. 친선 라운드, 핸디캡 등록 라운드, 일반 아마추어 대회 모두 포함.
+          </li>
+          <li>
+            <strong>모범 로컬 룰: 46인치</strong><br/>
+            <strong>2022년 1월 1일 발효.</strong> 대회 주최 측이 선택적으로 채택. PGA Tour, 엘리트 아마추어 대회에서 적용.
+            일반 골퍼에게는 적용되지 않음.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">길이 측정 방법</h3>
+      <p class="section-body">
+        길이 측정에는 정확한 방법이 있습니다.
+        클럽을 지면에 <strong>60도 라이각</strong>으로 세우고, 그립 끝(butt)에서
+        솔이 지면에 닿는 점까지의 거리를 직선으로 잽니다.
+        단순히 그립 끝에서 헤드 끝까지 재는 것이 아닙니다.
+      </p>
+
+      <h3 class="subsection-h3">왜 46인치가 도입되었나</h3>
+      <p class="section-body">
+        2020년 Bryson DeChambeau가 48인치 가까운 드라이버를 시도하며 평균 비거리가 320야드를 넘기 시작했습니다.
+        USGA는 이를 "거리 인플레이션이 게임의 근간을 위협한다"고 판단해 길이 제한을 검토했어요.
+        2021년 의견 수렴을 거쳐 2022년 1월 1일부터 모범 로컬 룰로 발효됐습니다.
+        Phil Mickelson 등이 격렬히 반대했지만, PGA Tour는 즉시 적용을 결정했습니다.
+      </p>
+
+      <h3 class="subsection-h3">실제 영향 — 일반 골퍼에겐 거의 없음</h3>
+      <p class="section-body">
+        USGA 자체 조사에 따르면, 46인치를 초과하는 드라이버를 사용하는 PGA Tour 프로는
+        <strong>약 3%</strong>, 일반 아마추어는 <strong>약 2%</strong>에 불과했습니다.
+        대부분의 드라이버는 출고 시 45~46인치 범위에 있어, 46인치 제한이 들어와도
+        대부분의 골퍼에게는 변화가 없었습니다.
+      </p>
+
+      <h3 class="subsection-h3">공작소 관점 — 길이 변경 작업의 의미</h3>
+      <p class="section-body">
+        공작소에서 드라이버 길이를 늘리거나 줄이는 작업을 할 때, 두 한계 모두 고려합니다.
+        엘리트 대회 출전 계획이 있으면 46인치 안에서 작업하고,
+        일반 골퍼는 48인치 안에서 자유롭게 조정 가능합니다.
+        다만 <strong>길이가 1인치 늘어나면 SW가 약 6포인트 증가, 1인치 줄어들면 SW가 약 6포인트 감소</strong>합니다.
+        길이만 바꿔도 클럽 전체의 무게 균형이 흔들리니, 함께 SW와 라이각을 재점검하는 것이 좋습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. 헤드 치수 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 05 · 헤드 치수</p>
+      <h2>5.0 × 2.8 — 부피와 함께 작동하는 모양 한계</h2>
+      <p class="section-body">
+        부피 460cc 한계와 별개로, 헤드의 <strong>모양 자체</strong>에도 두 가지 치수 한계가 있습니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">헤드 치수 한계</p>
+        <ul class="rule-list">
+          <li>
+            <strong>힐-토 (Heel-to-Toe): 5.0인치 (약 127mm)</strong><br/>
+            헤드를 위에서 봤을 때 좌우 길이의 한계. 헤드를 가로로 길게 만들 수 없음.
+          </li>
+          <li>
+            <strong>솔-크라운 (Sole-to-Crown): 2.8인치 (약 71mm)</strong><br/>
+            헤드의 위아래 두께 한계. 헤드를 아래위로 길게 만들 수 없음 (페이스 높이의 간접 제한).
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">왜 모양에 한계를 두는가</h3>
+      <p class="section-body">
+        부피 460cc만 한계로 두면, 제조사들이 헤드를 비정상적으로 길거나 평평하게 만들 수 있습니다.
+        예를 들어 폭이 6인치인 헤드는 MOI가 비정상적으로 높아져 미스히트 패널티가 거의 사라집니다.
+        반대로 두께가 4인치인 헤드는 페이스 높이가 극단적으로 커서 다른 게임이 됩니다.
+        치수 한계는 부피 한계와 함께 작동해 <strong>"전통적 드라이버의 형태"를 유지</strong>하는 역할을 합니다.
+      </p>
+
+      <h3 class="subsection-h3">실제 시판 드라이버 치수</h3>
+      <p class="section-body">
+        대부분의 시판 드라이버는 한계 근처에 맞춰져 있어요.
+        <strong>힐-토는 약 4.7~5.0인치, 솔-크라운은 약 2.5~2.8인치</strong> 범위 안에 있습니다.
+        TaylorMade Qi35 Max, PING G440 Max 같은 "맥스" 모델이 한계에 가까운 형태입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 8. 적합 드라이버 리스트 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">CONFORMING LIST · 적합 드라이버 리스트</p>
+      <h2>출시 전 USGA 검증을 거친 드라이버만</h2>
+      <p class="section-body">
+        새 드라이버 헤드는 출시 전 USGA에 제출되어 위 5가지 한계를 모두 통과해야 합니다.
+        통과한 모델만 <strong>적합 드라이버 리스트(List of Conforming Driver Heads)</strong>에 등재됩니다.
+        이 리스트는 USGA 공식 사이트에서 공개되어 있어 누구나 검색할 수 있습니다.
+      </p>
+
+      <h3 class="subsection-h3">리스트에 없으면 부적합</h3>
+      <p class="section-body">
+        리스트에 등재되지 않은 드라이버는 <strong>공식 대회·핸디캡 등록 라운드 사용 불가</strong>입니다.
+        주의해야 할 케이스:
+      </p>
+      <ul class="penalty-list">
+        <li><strong>"Non-Conforming" 표시 드라이버</strong> — 거리만을 위한 비공인 모델. 리스트에서 의도적으로 제외</li>
+        <li><strong>중국·동남아 직구 무명 드라이버</strong> — USGA 제출 자체를 안 한 경우 많음</li>
+        <li><strong>구형 드라이버 페이스 마모</strong> — 출시 당시 적합했어도 사용 누적으로 한계 초과 가능</li>
+      </ul>
+
+      <h3 class="subsection-h3">리스트 직접 확인하는 방법</h3>
+      <p class="section-body">
+        USGA 사이트의 <strong>Equipment Database</strong>에서 헤드 제조사·모델명으로 검색 가능합니다.
+        Driver Head 카테고리 외에도 Iron, Wood, Putter, Wedge, Ball 모두 별도 리스트가 있어요.
+        대회 출전이나 핸디캡 등록을 앞둔 분이라면 직접 확인하시는 것이 안전합니다.
+      </p>
+      <div class="source-links" style="margin-top: 20px;">
+        <a href="https://www.usga.org/content/usga/home-page/equipment-standards/conforming-club-ball-lists.html" target="_blank" rel="noopener noreferrer" class="source-link">
+          USGA 적합 장비 리스트 ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. 클럽메이커스 해석 -->
+  <section class="section section-bg-green">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">CLUBMAKERS' INTERPRETATION · 공작소 해석</p>
+      <h2 class="green-h2">현장에서 본 드라이버 규정</h2>
+      <p class="green-body">
+        24년간 공작소를 운영하면서, 드라이버 규정과 관련해 자주 받는 질문과 현장 관점을 정리합니다.
+      </p>
+      <ul class="interpretation-list">
+        <li>
+          <strong>구형 드라이버를 가져오시는 분들</strong><br/>
+          <span class="green-body-small">10년 이상 된 드라이버는 페이스 COR이 한계를 넘었을 가능성이 있습니다.
+          공식 대회 계획 없으시면 큰 문제 없지만, 핸디캡 등록 라운드에 참여하시면 점검 권장합니다.</span>
+        </li>
+        <li>
+          <strong>"내 드라이버 460cc 맞나요?" 질문</strong><br/>
+          <span class="green-body-small">정품 메이저 브랜드 드라이버는 거의 모두 460cc(±몇 cc) 범위에 있습니다.
+          헤드에 "460" 표시가 없어도 메이저 브랜드면 거의 한계 근처입니다.</span>
+        </li>
+        <li>
+          <strong>10,000 MOI 마케팅 — 실효성</strong><br/>
+          <span class="green-body-small">수직축 MOI는 여전히 5,900 한계라 좌우 산포 줄이는 효과는 한계가 있어요.
+          다만 수평축 MOI는 위아래 미스에 영향을 주니 의미가 없는 건 아닙니다.</span>
+        </li>
+        <li>
+          <strong>드라이버 길이 작업 — 46인치냐 48인치냐</strong><br/>
+          <span class="green-body-small">아마추어 대회 출전하시는 분은 46인치 안에서 작업하시는 것을 권합니다.
+          엘리트 대회는 거의 모두 46인치 모범 로컬 룰을 채택하고 있어요.</span>
+        </li>
+        <li>
+          <strong>중고 드라이버 구매 — 적합 리스트 확인</strong><br/>
+          <span class="green-body-small">중고 거래에서 무명 브랜드 드라이버나 거리 강조 드라이버를 만나면
+          USGA 적합 리스트 확인이 필수입니다. 부적합 모델은 가격이 싸도 공식 라운드에서 못 씁니다.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10. FAQ -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FAQ · 자주 묻는 질문</p>
+      <h2>실무에서 자주 받는 질문</h2>
+      <ul class="faq-list">
+        <li class="faq-item">
+          <p class="faq-q">Q1. 내 드라이버가 적합한지 어떻게 확인하나요?</p>
+          <p class="faq-a">USGA <strong>Equipment Database</strong>에서 제조사·모델명으로 검색하시면 됩니다.
+          정품 메이저 브랜드(Titleist, TaylorMade, Callaway, PING, Cobra, Mizuno, Srixon 등)는 거의 모든 모델이 등재되어 있어요.
+          중고로 구입한 무명 브랜드나 직구 모델이라면 반드시 확인이 필요합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q2. 오래된 드라이버 페이스가 늘어났는지 어떻게 알 수 있나요?</p>
+          <p class="faq-a">육안 확인은 불가능합니다. CT 측정기가 있는 곳에서만 정확히 알 수 있어요.
+          간접 신호로는 <strong>같은 헤드스피드인데 거리가 늘어났다(2~5야드 정도)</strong>는 느낌이 있을 수 있지만 명확하지는 않습니다.
+          공식 대회 출전 계획 있으시면 USGA 측정 가능한 곳에서 점검하시는 것이 안전합니다.
+          공작소에서는 클럽 노후 진단은 가능하지만, CT 정밀 측정 장비는 별도 시설입니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q3. 슬리브로 로프트를 조정하면 다른 규정에 영향이 있나요?</p>
+          <p class="faq-a">조정 가능한 호젤(어드저스터블 슬리브)은 합법적인 장비입니다. 다만
+          <strong>라운드 시작 전에 설정한 상태로 라운드를 마쳐야 합니다.</strong>
+          출발 후 호젤을 다시 돌리면 페널티가 부과됩니다.
+          더 자세한 내용은 어드저스터블 클럽 규정 페이지에서 다룹니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q4. 46인치 모범 로컬 룰이 적용되는 대회를 어떻게 알 수 있나요?</p>
+          <p class="faq-a">대회 시행 안내에 명시되어 있습니다. PGA Tour, 한국 KPGA·KLPGA 정규 투어, 메이저 대회는 거의 모두 적용 중입니다.
+          엘리트 아마추어 대회(국가대표 선발전, 시도협회 대회 등)도 대부분 적용합니다.
+          일반 클럽 챔피언십이나 친선 라운드는 적용 X. 출전 전 시행 안내 확인 권장합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q5. 드라이버 페이스를 가공해서 COR을 낮출 수 있나요?</p>
+          <p class="faq-a">기술적으로는 가능합니다. 페이스 두께를 늘리거나 내부 구조를 변경하면 COR이 내려갑니다.
+          다만 이는 <strong>제조사 영역</strong>이고, 공작소에서 다루는 작업은 아닙니다.
+          한계를 초과한 드라이버는 폐기하거나 연습용으로만 쓰시는 것이 합리적입니다.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11. 관련 자료 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RELATED · 관련 페이지</p>
+      <h2>함께 읽으면 좋은 자료</h2>
+      <div class="related-grid">
+        <a href="/equipment-rules" class="related-card">
+          <p class="related-card-eyebrow">INDEX</p>
+          <h3 class="related-card-title">장비 규정 인덱스</h3>
+          <p class="related-card-body">8개 토픽 전체 안내. 다른 규정 분야로 이동하실 수 있어요.</p>
+        </a>
+        <a href="/equipment-rules/putters" class="related-card">
+          <p class="related-card-eyebrow">PUTTER</p>
+          <h3 class="related-card-title">퍼터 규정</h3>
+          <p class="related-card-body">앵커링 금지 (Rule 10.1b) · 롱퍼터·브룸스틱·arm-lock의 합법성.</p>
+        </a>
+        <a href="/glossary" class="related-card">
+          <p class="related-card-eyebrow">GLOSSARY</p>
+          <h3 class="related-card-title">용어사전</h3>
+          <p class="related-card-body">COR · CT · MOI · 어드저스터블 같은 용어 정의는 용어사전에서.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. 출처 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SOURCE · 출처</p>
+      <h2>이 글의 자료 출처</h2>
+      <ul class="source-list">
+        <li>USGA Equipment Standards — 적합 클럽·볼 리스트, <a href="https://www.usga.org/content/usga/home-page/equipment-standards/conforming-club-ball-lists.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA Equipment Rules 공식 PDF, <a href="https://www.usga.org/content/dam/usga/pdf/Equipment/Equipment%20Rules%20Final.pdf" target="_blank" rel="noopener noreferrer">PDF ↗</a></li>
+        <li>USGA "History of Equipment Rules" — 규정 변천사 PDF, <a href="https://www.usga.org/content/dam/usga/pdf/Equipment/History%20of%20Equipment%20Rules.pdf" target="_blank" rel="noopener noreferrer">PDF ↗</a></li>
+        <li>R&A Rules of Golf — Equipment Standards, <a href="https://www.randa.org" target="_blank" rel="noopener noreferrer">randa.org ↗</a></li>
+        <li>USGA·R&A Joint Notice — 46인치 Model Local Rule (2021.10.12 발표), 2022.01.01 발효</li>
+      </ul>
+      <p class="source-disclaimer-text">
+        ⚠ 이 글은 일반 이해를 돕는 가이드입니다. 공식 대회나 핸디캡 등록 라운드의 적합성 판정은
+        <strong>USGA·R&A 공식 적합 리스트</strong>를 직접 확인하셔야 합니다.
+        규정 수치는 2026년 5월 기준이며, 향후 변경될 수 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 13. Closing -->
+  <section class="closing-section">
+    <div class="closing-content">
+      <h3>"드라이버는 다섯 개의 선 안에 갇혀 있습니다.<br/>그 한계 안에서 헤드 설계의 모든 변수가 재구성됩니다."</h3>
+      <p class="closing-meta">— 클럽메이커스 드라이버 규정 가이드</p>
+      <div class="closing-actions">
+        <a href="/equipment-rules" class="btn-primary">장비 규정 인덱스 →</a>
+        <a href="/contact" class="btn-ghost">드라이버 점검 문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  /* ==================== HERO ==================== */
+  .driver-hero { background: var(--bg-cream); }
+  .hero-sub-light {
+    font-size: 14px;
+    color: var(--grey);
+    font-weight: 400;
+  }
+
+  /* ==================== QUICK SUMMARY 5 카드 ==================== */
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (min-width: 720px) {
+    .quick-grid { grid-template-columns: repeat(2, 1fr); }
+    .quick-grid-5 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1080px) {
+    .quick-grid { grid-template-columns: repeat(4, 1fr); }
+    .quick-grid-5 { grid-template-columns: repeat(5, 1fr); }
+  }
+  .quick-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 22px;
+    border-radius: 4px;
+  }
+  .quick-num {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .quick-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .quick-title strong {
+    color: var(--green);
+    font-size: 17px;
+    display: inline-block;
+    margin-top: 2px;
+  }
+  .quick-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .quick-body strong { color: var(--ink); font-weight: 700; }
+
+  /* ==================== Rule 본문 ==================== */
+  .section-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+  .section-body-small { font-size: 14.5px; }
+
+  .subsection-h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    line-height: 1.3;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .rule-box {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--green);
+    padding: 24px 28px;
+    border-radius: 4px;
+    margin: 24px 0;
+  }
+  .rule-box-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    margin: 0 0 14px;
+  }
+  .rule-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .rule-list li {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .rule-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rule-list strong { color: var(--ink); font-weight: 700; }
+
+  .penalty-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 22px;
+  }
+  .penalty-list li {
+    padding: 8px 0;
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.85;
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .penalty-list li:last-child { border-bottom: none; }
+  .penalty-list strong { color: var(--ink); font-weight: 700; }
+
+  /* ==================== 그린 배경 — 클럽메이커스 해석 ==================== */
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .green-h2 {
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .green-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 20px;
+  }
+  .green-body strong { color: var(--gold-soft); font-weight: 700; }
+  .green-body-small {
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.75);
+    display: block;
+    margin-top: 4px;
+  }
+  .interpretation-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+  }
+  .interpretation-list li {
+    padding: 16px 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.9);
+    border-bottom: 1px solid rgba(212, 184, 136, 0.2);
+  }
+  .interpretation-list li:last-child { border-bottom: none; }
+  .interpretation-list strong { color: var(--cream); font-weight: 700; }
+
+  /* ==================== FAQ ==================== */
+  .faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+  }
+  .faq-item {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    padding: 22px 28px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .faq-q {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+  .faq-a {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .faq-a strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== RELATED ==================== */
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (min-width: 720px) {
+    .related-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .related-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .related-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(15, 41, 34, 0.08);
+  }
+  .related-card-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .related-card-title {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+  .related-card-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ==================== SOURCE ==================== */
+  .source-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+  }
+  .source-list li {
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list a {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: 600;
+  }
+  .source-list a:hover { opacity: 0.7; }
+  .source-disclaimer-text {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .source-disclaimer-text strong { color: var(--ink); font-weight: 600; }
+  .source-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .source-link {
+    display: inline-block;
+    background: var(--bg);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .source-link:hover {
+    background: var(--green);
+    color: var(--cream);
+  }
+
+  /* ==================== CLOSING ==================== */
+  .closing-section {
+    background: var(--ink);
+    padding: 100px 80px;
+    text-align: center;
+  }
+  .closing-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .closing-section h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 4vw, 30px);
+    line-height: 1.55;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.015em;
+    margin-bottom: 20px;
+  }
+  .closing-meta {
+    font-size: 12px;
+    color: var(--gold-soft);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .closing-section .closing-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .closing-section .btn-primary,
+  .closing-section .btn-ghost {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 26px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .closing-section .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .closing-section .btn-primary::after { content: ''; }
+  .closing-section .btn-primary:hover {
+    background: var(--gold-soft);
+    transform: translateX(2px);
+  }
+  .closing-section .btn-ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .closing-section .btn-ghost::after { content: ''; }
+  .closing-section .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 640px) {
+    .quick-card { padding: 18px 18px; }
+    .closing-section { padding: 70px 24px; }
+  }
+</style>
