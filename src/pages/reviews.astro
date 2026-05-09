@@ -1,0 +1,619 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const aggregateRatingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': 'https://myclubmakers.com/#localbusiness',
+  name: '클럽메이커스',
+  description: '서울 서초 양재 클럽피팅·골프채 수리·드라이버 피팅 전문 공작소',
+  url: 'https://myclubmakers.com',
+  telephone: '+82-10-4363-5555',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '서울 서초구 동산로2길 50, 가보빌딩 지하층',
+    addressLocality: '서울특별시',
+    addressRegion: '서초구',
+    addressCountry: 'KR',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '74',
+    bestRating: '5',
+    worstRating: '1',
+  },
+};
+
+const reviews = [
+  // ⭐ FEATURED — 자체 제품 (VERSUS·KRZ·DEFINE) 사용 후기
+  {
+    name: '대치아빠',
+    location: '단골 손님',
+    reviewCount: 5,
+    rating: 5,
+    date: '02.27',
+    isRegular: true,
+    isFeatured: true,
+    productMention: 'VERSUS 드라이버 → KRZ 203H 19° 유틸 → DEFINE 샤프트',
+    text: '지난번 베르서스 드라이버 성능이 나름 신뢰가 가서 19도 유틸 하나 믿고 제작 요청 했습니다.\n\n잠깐 스크린 가서 사용해보니 원하던 180미터 비거리 잘 나오네요.\n\n직진성, 정확성 나름 좋습니다.\n\n잘 사용하겠습니다!!',
+    helpful: 1,
+    views: 135,
+    reply: '고객님 항상 믿고 맡겨주셔서 감사드립니다! 혹시라도 유틸의 무게나 강도 조절이 필요하시면 언제든지 말씀해 주세요!',
+  },
+
+  // 🌟 HIGHLIGHT — 사장님 톤이 그대로 인지된 후기 (D 패턴 검증)
+  {
+    name: 'WATARI',
+    location: '단골 손님',
+    reviewCount: 3,
+    rating: 5,
+    date: '2025.12.04',
+    isRegular: true,
+    isHighlight: true,
+    highlightQuote: '"무언가를 추천해주시는 것에 강요로 느껴지실까 아주 조심스러우시더라구요"',
+    text: '피팅? 스윙분석? 이런건 저와는 거리가 먼 줄 알았는데 해보니 생각보다 재미있는 경험이었습니다.\n\n몸에 기계를 붙이고 스윙분석하는 경험은 색다른 경험이었어요. 소장님께서 차분하게 설명도 잘 해주시고 경험이 많으신 것 같았어요.^^\n\n무엇보다도 무언가를 추천해주시는 것에 강요로 느껴지실까 아주 조심스러우시더라구요.\n\n그립 교체도 잘 해주시고 많은 조언 정말 도움 많이 되었습니다.\n\n드라이버와 유틸 샤프트 제게 맞는 것 찾으시면 연락주세요~ 시간 내서 달려갈게요~~\n\n저처럼 유명 메이커에서 하는 피팅이 부담스러우신 분들께는 추천드립니다. 내 몸이 어디가 문제고 어떤 스윙을 하는지 뭐가 부족한지 알아보고 싶으신 분들께는 정말 추천드립니다.\n\n소장님~ 감사합니다~',
+    helpful: 2,
+    views: 256,
+    reply: '정성이 담긴 후기 진심으로 감사드립니다!! 샤프트 꼭 찾아서 저렴하게 제대로 피팅해드리겠습니다!!',
+  },
+
+  // 정밀 측정 + 브랜드 편견 없는 추천 — 사이트의 핵심 차별점
+  {
+    name: '불가마',
+    location: '서울',
+    rating: 5,
+    date: '2025.12.25',
+    isRegular: false,
+    text: '평소 궁금했던 제 클럽들의 정확한 스펙도 확인하고, 스윙의 문제점까지 명확히 짚어보고 온 알찬 피팅이었습니다.\n\n가장 먼저 현재 사용 중인 아이언과 드라이버의 스펙을 정밀하게 측정했습니다. 막연하게 알고 있던 수치를 데이터로 직접 확인하니 제 장비에 대한 이해도가 훨씬 높아졌습니다.\n\n특히 고민이 많았던 드라이버의 경우, 브랜드를 가린 채 오직 수치와 피드백에만 집중하여 시타를 진행한 점이 인상적이었습니다. 브랜드의 이름값에 현혹되지 않고, 저의 스윙 스피드와 궤적에 가장 적합한 최적의 스펙을 제안해 주셔서 신뢰도가 무척 높았습니다.\n\n나에게 맞는 장비가 무엇인지 확실한 기준을 세울 수 있었던 유익한 시간이었습니다.',
+  },
+
+  // 단골 — 핸디 한 자릿수 도달
+  {
+    name: '단골 손님',
+    location: '오랜 단골',
+    rating: 5,
+    date: '02.04',
+    isRegular: true,
+    reviewNote: '2번째 후기',
+    text: '그동안 맡긴 아이언 세트만 3-4세트 되는 것 같네요 ㅎㅎ\n\n사진도 다 사장님 손길 닿은 채들입니다.\n\n언제나 깔끔하게 작업해주시니 정말 좋네요 🙇‍♂️ 덕분에 핸디도 한 자릿수에 가까워지네요.\n\n라이/로프트/그립/커팅 등등 고민하셨던 것들 방문하셔서 작업해보세요.\n\n매주 뵙는 거 같네요😅',
+    helpful: 1,
+    views: 420,
+    reply: '고객님 제가 감사 인사를 남긴다는 것을 정말 깜빡 잊고!! 늦었지만 후기 정말 감사드립니다. ㅠㅠ 새해 복 많이 받으세요!',
+  },
+
+  // 탄도왕 - 특허 + 은둔고수
+  {
+    name: '탄도왕',
+    location: '단골 손님',
+    reviewCount: 4,
+    rating: 5,
+    date: '02.21',
+    isRegular: true,
+    text: '문의드릴 때부터 정말 친절하시고, 매장 방문했는데 편안한 인상으로 말씀도 차분하게 잘 해주시고 감동하고 돌아왔습니다.\n\n집 근처에 이런 샵이 있다는 거에 감사한 하루였어요. 골프 피팅 관련 특허도 있으시고 은둔고수 스멜이 강하게 느껴지는 훌륭한 사장님이셨습니다. 강추드립니다.!',
+    helpful: 1,
+    views: 104,
+    reply: '고객님 후기 진심으로 감사드립니다. 제가 너무 어수선한 모습을 보여 걱정도 하고 그러던 차에 받은 후기여서 더욱 감사합니다!',
+  },
+
+  {
+    name: '미스터본드',
+    location: '서울 강남 개포동',
+    verifyCount: 29,
+    rating: 4,
+    date: '4일 전',
+    isRegular: false,
+    text: '다음에 드라이버 피팅을 받고 싶을 정도로 설명이 좋았고 친절하셨습니다',
+    helpful: 1,
+    reply: '고객님 시간 내어 방문 주셔서 감사드립니다! 번거로우실텐데 이렇게 좋은 후기도 정말 감사합니다! 더 친절하게 뵐 수 있도록 노력하겠습니다!',
+  },
+  {
+    name: '쌈보라',
+    location: '서울 강남 삼성동',
+    verifyCount: 29,
+    rating: 5,
+    date: '최근',
+    isRegular: true,
+    text: '갈 때마다 신뢰가 쌓입니다',
+    helpful: 1,
+    reply: '또 방문해 주셔서 감사합니다 고객님! 더 꼼꼼하게 작업하도록 하겠습니다!! 후기가 큰 힘이 됩니다!! 즐거운 주말 보내세요!',
+  },
+  {
+    name: '물돌이',
+    location: '서울',
+    rating: 5,
+    date: '04.06',
+    isRegular: false,
+    text: '너무너무 친절하십니다. 그리고 너무너무 꼼꼼하십니다. 골프 치는 동안에 평생 이용하고 싶습니다. 감사합니다',
+    reply: '안녕하세요! 고객님 후기를 보고 감동을 받아서 어떻게 감사 인사를 드려야 할 지 한참을 생각하다가 벌써 시간이 많이 흘러버렸습니다. 평생 이용하고 싶다는 말씀, 정말 큰 힘이 됩니다.',
+  },
+  {
+    name: '마사토',
+    location: '경기 파주 광탄면',
+    verifyCount: 14,
+    rating: 5,
+    date: '최근',
+    isRegular: false,
+    text: '공작소 소장님 너무 친절하시고 소비자와 커뮤니케이션을 통해 합리적인 방법 제시해 주시는 것도 너무 감사했습니다. 전에 방문보다 손님도 많이 늘어나고 있는 거 같아서 좋았습니다. 강추 드려요~~~',
+    reply: '안녕하세요! 고객님, 이전에도 오시고 또 방문해 주셔서 정말 감사드립니다! 고객님들 덕분에 또 다른 분들도 찾아주시고 많은 도움이 되고, 마음으로도 큰 힘이 되고 그렇습니다!! 즐겁게 찾을 수 있는 공작소가 되도록 노력하겠습니다!!',
+  },
+  {
+    name: 'dude',
+    location: '서울',
+    rating: 5,
+    date: '03.16',
+    isRegular: true,
+    text: '아주 친절하게 응대해 주시고 슬리브 교체도 신속하게 해 주셔서 감사합니다',
+  },
+];
+---
+
+<BaseLayout
+  title="손님 후기 — 당근 ★4.9 / 후기 74개 / 단골 635명"
+  description="클럽메이커스 손님들의 실제 후기. 당근마켓 평균 별점 4.9 (후기 74개, 단골 635명). 양재·서초·강남·파주 골퍼들의 진짜 평가를 모았습니다."
+  schemaType="LocalBusiness"
+  keywords="클럽메이커스 후기, 골프채공작소 후기, 당근 후기, 양재 클럽피팅 후기, 서초 골프 수리 후기, 강남 클럽 공작소"
+  extraSchema={[aggregateRatingSchema]}
+>
+
+  <section class="page-hero reviews-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">REVIEWS · 손님 후기</div>
+      <h1>손님이 직접 남기신<br/>당근마켓 후기</h1>
+      <p class="page-hero-subtitle">
+        익명이 아닌 동네 손님들의 진짜 평가입니다.
+        당근마켓 동네 가게 페이지에 쌓인 후기를 그대로 옮겨드립니다.
+      </p>
+
+      <div class="rating-box">
+        <div class="rating-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="rating-info">
+          <p class="rating-number">4.9</p>
+          <p class="rating-meta">평균 별점</p>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <p class="stat-num">74</p>
+          <p class="stat-label">개<br/>후기</p>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <p class="stat-num">635</p>
+          <p class="stat-label">명<br/>단골 손님</p>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <p class="stat-num">25</p>
+          <p class="stat-label">년차<br/>피팅 경력</p>
+        </div>
+      </div>
+
+      <a href="https://www.daangn.com/kr/local-profile/yyeaukav6525/" target="_blank" rel="noopener noreferrer" class="daangn-link">
+        당근마켓 골프채공작소에서 모든 후기 보기 ↗
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SELECTED REVIEWS · 일부 후기 모음</p>
+      <h2>손님이 남기신 한 마디</h2>
+      <p class="section-body">
+        총 <strong>74개의 후기 전체</strong>는 당근마켓 골프채공작소 페이지에서 확인하실 수 있습니다.
+        아래는 사이트에 옮긴 10개의 후기입니다.
+      </p>
+
+      <div class="review-grid">
+        {reviews.map((review) => (
+          <article class={`review-card ${review.isFeatured ? 'review-card-featured' : ''} ${review.isHighlight ? 'review-card-highlight' : ''}`}>
+            {review.isFeatured && (
+              <div class="featured-badge">
+                <span class="featured-icon">⭐</span>
+                <span class="featured-text">자체 제품 사용 후기</span>
+              </div>
+            )}
+
+            {review.isHighlight && (
+              <div class="highlight-badge">
+                <span class="highlight-icon">💬</span>
+                <span class="highlight-text">손님이 직접 짚어주신 한 마디</span>
+              </div>
+            )}
+
+            <header class="review-header">
+              <div class="review-avatar"></div>
+              <div class="review-meta">
+                <p class="review-name">
+                  {review.name}
+                  {review.isRegular && <span class="review-badge">단골</span>}
+                </p>
+                <p class="review-location">
+                  {review.location}
+                  {review.verifyCount && (
+                    <span class="review-verify"> · 인증 {review.verifyCount}회</span>
+                  )}
+                  {review.reviewCount && (
+                    <span class="review-verify"> · 후기 {review.reviewCount}개 작성</span>
+                  )}
+                  {review.reviewNote && (
+                    <span class="review-verify"> · {review.reviewNote}</span>
+                  )}
+                </p>
+              </div>
+            </header>
+
+            <div class="review-rating">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <span class={`star-mini ${i < review.rating ? 'star-filled' : 'star-empty'}`}>★</span>
+              ))}
+              <span class="review-date">· {review.date}</span>
+            </div>
+
+            {review.productMention && (
+              <p class="review-product">🛠 {review.productMention}</p>
+            )}
+
+            {review.highlightQuote && (
+              <p class="review-highlight-quote">{review.highlightQuote}</p>
+            )}
+
+            <p class="review-text" set:html={review.text.replace(/\n/g, '<br/>')}></p>
+
+            {(review.helpful !== undefined && review.helpful > 0) || review.views ? (
+              <div class="review-stats">
+                {review.helpful !== undefined && review.helpful > 0 && (
+                  <span class="review-helpful">👍 도움돼요 {review.helpful}</span>
+                )}
+                {review.views && (
+                  <span class="review-views">조회 {review.views}</span>
+                )}
+              </div>
+            ) : null}
+
+            {review.reply && (
+              <div class="review-reply">
+                <p class="reply-header">
+                  <span class="reply-icon">└</span>
+                  <strong>사장님의 답글</strong>
+                </p>
+                <p class="reply-text">{review.reply}</p>
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FROM · 손님이 오시는 곳</p>
+      <h2>전국에서 양재 공작소를 찾아주십니다</h2>
+      <p class="section-body">
+        당근 후기에 인증된 손님들의 거주 지역입니다.
+        양재·서초·강남·송파는 물론, 경기도와 멀리서도 찾아주십니다.
+      </p>
+
+      <div class="locations-grid">
+        <div class="location-tag">서울 강남구 개포동</div>
+        <div class="location-tag">서울 강남구 삼성동</div>
+        <div class="location-tag">서울 서초구 양재동</div>
+        <div class="location-tag">서울 송파구</div>
+        <div class="location-tag">경기 파주시 광탄면</div>
+        <div class="location-tag">+ 그 외 다수</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SOURCE · 출처</p>
+      <h2>왜 당근마켓 후기인가요?</h2>
+      <p class="section-body">
+        클럽메이커스는 동네 손님을 가장 소중히 여깁니다.
+        25년 경력 동안 양재·서초·강남에서 골프채 작업을 해드리면서, 자연스럽게 당근마켓 동네 가게로 등록되어
+        손님들의 후기가 쌓였습니다.
+      </p>
+      <p class="section-body">
+        당근 후기는 <strong>실제 동네 손님이 남긴 후기</strong>이고,
+        가짜 후기를 막는 시스템이 있어 신뢰도가 높습니다.
+        평균 별점 <strong>4.9 (5점 만점)</strong>, 후기 <strong>74개</strong>,
+        단골 <strong>635명</strong>이 손님들이 직접 남겨주신 평가입니다.
+      </p>
+
+      <div class="cta-box">
+        <p class="cta-box-title">더 많은 후기를 보고 싶으세요?</p>
+        <p class="cta-box-text">당근마켓 골프채공작소 페이지에서 전체 74개의 후기를 확인하실 수 있습니다.</p>
+        <a href="https://www.daangn.com/kr/local-profile/yyeaukav6525/" target="_blank" rel="noopener noreferrer" class="cta-button">
+          당근마켓에서 모든 후기 보기 ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing-section">
+    <div class="closing-content">
+      <h3>"평생 이용하고 싶다는<br/>그 한 마디가 가장 큰 힘입니다."</h3>
+      <p class="closing-meta">— 채기웅 공작소장</p>
+      <div class="closing-actions">
+        <a href="/contact" class="btn-primary">예약·문의 →</a>
+        <a href="/case-studies" class="btn-ghost">케이스 스터디 보기 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  .reviews-hero { background: var(--bg-cream); }
+  .page-hero h1 { margin-bottom: 1.5rem; }
+  .page-hero-subtitle { margin-bottom: 2.5rem; }
+
+  .rating-box {
+    display: inline-flex; align-items: center; gap: 24px;
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 24px 32px; margin-bottom: 1.5rem;
+  }
+  .rating-stars { display: flex; gap: 4px; }
+  .rating-stars .star { font-size: 28px; color: #FF7A00; line-height: 1; }
+  .rating-info { text-align: left; }
+  .rating-number {
+    font-family: var(--font-serif); font-size: 36px; font-weight: 700;
+    color: var(--ink); line-height: 1; margin: 0 0 6px;
+  }
+  .rating-meta { font-size: 13px; color: var(--grey); margin: 0; }
+
+  .stats-row {
+    display: flex; align-items: center; justify-content: center; gap: 32px;
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 20px 32px;
+    margin: 1.5rem auto; max-width: 540px;
+  }
+  .stat-item { text-align: center; flex: 1; }
+  .stat-num {
+    font-family: var(--font-serif); font-size: 32px; font-weight: 700;
+    color: var(--green); line-height: 1; margin: 0 0 6px;
+  }
+  .stat-label { font-size: 12px; color: var(--grey); margin: 0; line-height: 1.4; }
+  .stat-divider { width: 1px; height: 36px; background: var(--line); flex-shrink: 0; }
+
+  .daangn-link {
+    display: inline-block; font-size: 14px; color: #FF7A00;
+    text-decoration: none; border-bottom: 1px solid #FF7A00;
+    padding-bottom: 2px; font-weight: 600; transition: opacity 0.2s;
+  }
+  .daangn-link:hover { opacity: 0.7; }
+
+  .section-body {
+    font-size: 16px; line-height: 1.85; color: var(--ink-2); margin-bottom: 18px;
+  }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+
+  .review-grid {
+    display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 36px;
+  }
+  @media (min-width: 720px) {
+    .review-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .review-card {
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 28px 32px; transition: box-shadow 0.2s;
+    position: relative;
+  }
+  .review-card:hover { box-shadow: 0 8px 24px rgba(15, 41, 34, 0.06); }
+
+  /* 자체 제품 사용 후기 강조 */
+  .review-card-featured {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--cream, #F8F2E5) 100%);
+    border: 2px solid var(--gold, #B8985C);
+    box-shadow: 0 4px 20px rgba(184, 152, 92, 0.12);
+  }
+  .review-card-featured:hover {
+    box-shadow: 0 12px 32px rgba(184, 152, 92, 0.18);
+  }
+  .featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green, #0F2922);
+    color: var(--cream, #F8F2E5);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 6px 12px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+  .featured-icon { font-size: 12px; }
+
+  .review-product {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--gold, #B8985C);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green, #0F2922);
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 0 0 14px;
+  }
+
+  /* Highlight card — D 톤 일치 후기 강조 */
+  .review-card-highlight {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--bg) 0%, rgba(15, 41, 34, 0.04) 100%);
+    border: 2px solid var(--green, #0F2922);
+    box-shadow: 0 4px 20px rgba(15, 41, 34, 0.08);
+  }
+  .review-card-highlight:hover {
+    box-shadow: 0 12px 32px rgba(15, 41, 34, 0.14);
+  }
+  .highlight-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green, #0F2922);
+    color: var(--cream, #F8F2E5);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 6px 12px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+  .highlight-icon { font-size: 12px; }
+  .review-highlight-quote {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--green, #0F2922);
+    background: var(--cream, #F8F2E5);
+    border-left: 3px solid var(--gold, #B8985C);
+    padding: 14px 18px;
+    margin: 0 0 16px;
+    border-radius: 4px;
+    font-style: italic;
+  }
+
+  .review-stats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0 0 16px;
+  }
+  .review-stats > span {
+    font-size: 12px;
+    color: var(--grey);
+    padding: 6px 12px;
+    background: var(--bg-soft);
+    border-radius: 100px;
+    display: inline-block;
+  }
+  .review-views {
+    color: var(--grey);
+  }
+
+  .review-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+  }
+  .review-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--bg-soft); border: 1px solid var(--line); flex-shrink: 0;
+  }
+  .review-meta { flex: 1; }
+  .review-name {
+    font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+    color: var(--ink); margin: 0 0 2px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .review-badge {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    color: var(--grey); background: var(--bg-soft);
+    border: 1px solid var(--line); padding: 2px 7px; border-radius: 100px;
+  }
+  .review-location { font-size: 11.5px; color: var(--grey); margin: 0; }
+  .review-verify { color: #FF7A00; font-weight: 600; }
+
+  .review-rating {
+    display: flex; align-items: center; gap: 2px; margin-bottom: 14px;
+  }
+  .star-mini { font-size: 16px; line-height: 1; }
+  .star-filled { color: #FF7A00; }
+  .star-empty { color: var(--line); }
+  .review-date { margin-left: 8px; font-size: 12px; color: var(--grey); }
+
+  .review-text {
+    font-size: 15px; line-height: 1.75; color: var(--ink-2); margin: 0 0 12px;
+  }
+
+  .review-reply {
+    background: var(--bg-soft); border-radius: 6px;
+    padding: 14px 18px; margin-top: 16px;
+  }
+  .reply-header {
+    font-size: 13px; color: var(--grey); margin: 0 0 6px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .reply-icon { color: var(--grey); font-weight: 400; }
+  .reply-header strong { color: var(--ink); font-weight: 700; }
+  .reply-text { font-size: 13.5px; line-height: 1.7; color: var(--ink-2); margin: 0; }
+
+  .locations-grid {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+  }
+  .location-tag {
+    display: inline-block; font-size: 13px; color: var(--ink-2);
+    padding: 8px 16px; background: var(--bg);
+    border: 1px solid var(--line); border-radius: 100px;
+  }
+
+  .cta-box {
+    background: var(--bg); border: 1px solid var(--line);
+    border-left: 3px solid #FF7A00; border-radius: 6px;
+    padding: 24px 28px; margin-top: 24px;
+  }
+  .cta-box-title {
+    font-family: var(--font-serif); font-size: 17px; font-weight: 700;
+    color: var(--ink); margin: 0 0 8px;
+  }
+  .cta-box-text {
+    font-size: 14.5px; color: var(--ink-2); line-height: 1.7; margin: 0 0 16px;
+  }
+  .cta-button {
+    display: inline-block; background: #FF7A00; color: white;
+    padding: 12px 24px; border-radius: 6px; text-decoration: none;
+    font-size: 14px; font-weight: 700;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .cta-button:hover { background: #E66E00; transform: translateX(2px); }
+
+  .closing-section { background: var(--ink); padding: 100px 80px; text-align: center; }
+  .closing-content { max-width: 720px; margin: 0 auto; }
+  .closing-section h3 {
+    font-family: var(--font-serif); font-size: clamp(22px, 4vw, 30px);
+    line-height: 1.55; font-weight: 600; color: white;
+    letter-spacing: -0.015em; margin-bottom: 20px;
+  }
+  .closing-meta {
+    font-size: 12px; color: var(--gold-soft);
+    letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 36px;
+  }
+  .closing-actions {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 12px;
+  }
+  .closing-section .btn-primary, .closing-section .btn-ghost {
+    font-size: 15px; font-weight: 600; padding: 14px 26px;
+    border-radius: 4px; text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .closing-section .btn-primary { background: var(--gold); color: var(--ink); }
+  .closing-section .btn-primary::after { content: ''; }
+  .closing-section .btn-primary:hover { background: var(--gold-soft); transform: translateX(2px); }
+  .closing-section .btn-ghost {
+    background: transparent; color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .closing-section .btn-ghost::after { content: ''; }
+  .closing-section .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06); color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 640px) {
+    .rating-box { padding: 18px 22px; gap: 16px; }
+    .rating-stars .star { font-size: 22px; }
+    .rating-number { font-size: 28px; }
+    .stats-row { padding: 16px 20px; gap: 16px; }
+    .stat-num { font-size: 24px; }
+    .stat-label { font-size: 11px; }
+    .review-card { padding: 22px 24px; }
+    .closing-section { padding: 70px 24px; }
+  }
+</style>
