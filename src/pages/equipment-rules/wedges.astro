@@ -1,0 +1,401 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const wedgesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': 'https://myclubmakers.com/equipment-rules/wedges/#article',
+  headline: '웨지 특수 규정 — 그루브·펀치마크·바운스·교체 주기',
+  description: 'USGA·R&A 웨지 특수 규정 한글 정리. 그루브 폭·깊이·엣지 라운딩, 펀치 마크 규정, 칩핑 클럽 길이 한계, 웨지 마모 교체 주기.',
+  inLanguage: 'ko-KR',
+  author: { '@type': 'Person', name: '채기웅', url: 'https://myclubmakers.com/about' },
+  publisher: { '@type': 'Organization', name: '클럽메이커스', url: 'https://myclubmakers.com' },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '웨지를 얼마나 자주 교체해야 하나요?', acceptedAnswer: { '@type': 'Answer', text: '투어 프로는 4~6 라운드(약 3~5주)마다 교체합니다. 일반 아마추어는 라운드 100~150회 또는 2~3년 주기 권장.' } },
+    { '@type': 'Question', name: '바운스각이 너무 크거나 작으면 부적합인가요?', acceptedAnswer: { '@type': 'Answer', text: '아닙니다. USGA 규정에 바운스각 자체에 대한 한계는 없습니다.' } },
+    { '@type': 'Question', name: '펀치 마크와 그루브 둘 다 있는 웨지도 있나요?', acceptedAnswer: { '@type': 'Answer', text: '네, 일부 웨지가 그렇습니다. 25° 이상 클럽에는 모두 엣지 라운딩 0.010~0.020인치 규정이 적용됩니다.' } },
+    { '@type': 'Question', name: '오래된 박스 그루브 웨지를 시중에서 보았는데 살 만한가요?', acceptedAnswer: { '@type': 'Answer', text: '일반 라운드 사용은 가능하지만 권하지 않습니다. 마모 진행 가능성이 높고 엘리트 대회 사용 불가입니다.' } },
+    { '@type': 'Question', name: '치퍼(Chipper)도 합법인가요?', acceptedAnswer: { '@type': 'Answer', text: 'USGA 규정상 칩핑 전용 클럽이 일반 클럽보다 길면 부적합. 시판 치퍼는 36~37인치로 합법.' } },
+  ],
+};
+---
+
+<BaseLayout
+  title="웨지 특수 규정 — 그루브·펀치마크·바운스·교체"
+  description="USGA·R&A 웨지 특수 규정 한글 정리. 그루브 폭·깊이·엣지 라운딩, 펀치 마크 규정, 칩핑 클럽 길이 한계, 웨지 마모 교체 주기."
+  schemaType="Article"
+  keywords="웨지 규정, 웨지 그루브, 펀치 마크, 바운스, 웨지 마모, 웨지 교체 주기, 칩핑 클럽, chipper, USGA 웨지"
+  extraSchema={[wedgesSchema, faqSchema]}
+>
+
+  <section class="page-hero wedges-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">EQUIPMENT RULES · TOPIC 06 · 웨지 특수 규정</div>
+      <h1>웨지 — 가장 정밀한 클럽,<br/>가장 자주 마모되는 클럽</h1>
+      <p class="page-hero-subtitle">
+        웨지는 골프 클럽 중 가장 자주 사용되는 그루브를 가지고 있습니다. 그래서 가장 빠르게 마모되고, 가장 자주 교체됩니다.<br/>
+        <span class="hero-sub-light">그루브·펀치 마크·바운스·길이 — 웨지 고유의 규정과 교체 주기를 정리합니다.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">QUICK SUMMARY · 핵심 5가지</p>
+      <h2>웨지 규정의 핵심</h2>
+      <p class="quick-hint">카드를 누르시면 상세 설명으로 이동합니다.</p>
+      <div class="quick-grid quick-grid-5">
+        <a href="#types" class="quick-card">
+          <p class="quick-num">01</p>
+          <h3 class="quick-title">웨지 종류<br/><strong>PW·GW·SW·LW</strong></h3>
+          <p class="quick-body">로프트 44~64°. 모두 25° 이상 그루브 규정 적용.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#groove-spec" class="quick-card">
+          <p class="quick-num">02</p>
+          <h3 class="quick-title">그루브 규정<br/><strong>폭 0.035" · 깊이 0.020"</strong></h3>
+          <p class="quick-body">엣지 라운딩 0.010~0.020인치. 단면적/간격 비율 한계.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#punchmark" class="quick-card">
+          <p class="quick-num">03</p>
+          <h3 class="quick-title">펀치 마크<br/><strong>깊이 0.040"</strong></h3>
+          <p class="quick-body">간격 최소 0.168인치. 25° 이상은 엣지 라운딩 적용.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#bounce" class="quick-card">
+          <p class="quick-num">04</p>
+          <h3 class="quick-title">바운스<br/><strong>한계 없음</strong></h3>
+          <p class="quick-body">바운스각 자체 규정 X. 4°부터 14°까지 자유.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#wear" class="quick-card">
+          <p class="quick-num">05</p>
+          <h3 class="quick-title">교체 주기<br/><strong>2~3년</strong></h3>
+          <p class="quick-body">투어 4~6 라운드. 일반 아마추어 100~150회 라운드.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="types">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 01 · 웨지 종류</p>
+      <h2>웨지의 분류 — 로프트 기준</h2>
+      <p class="section-body">웨지는 <strong>로프트 44° 이상의 클럽</strong>을 통칭합니다. 세트 구성과 골퍼 스타일에 따라 4가지 종류로 분류돼요.</p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">웨지 4종류</p>
+        <ul class="rule-list">
+          <li><strong>피칭 웨지 (PW)</strong><br/>로프트 <strong>44~48°</strong>. 일반적으로 아이언 세트의 마지막 클럽으로 포함됨. 풀스윙 100야드 부근 전용.</li>
+          <li><strong>갭 웨지 (GW)</strong><br/>로프트 <strong>50~52°</strong>. PW와 SW 사이의 "갭"을 메우는 클럽. 85~95야드 거리 전용.</li>
+          <li><strong>샌드 웨지 (SW)</strong><br/>로프트 <strong>54~56°</strong>. 벙커 탈출이 주 용도였으나 현대는 다양한 그린 사이드 샷에 사용. 바운스가 가장 큰 웨지(보통 10~14°).</li>
+          <li><strong>로브 웨지 (LW)</strong><br/>로프트 <strong>58~64°</strong>. 그린 주변 부드러운 띄움 샷 전용. 1980년대 등장 후 90년대 이후 표준 클럽으로 정착.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">현대 웨지 셋업 — 4도 간격</h3>
+      <p class="section-body">현대 표준 웨지 셋업은 <strong>4도 간격</strong>입니다. 예: PW 46° → GW 50° → SW 54° → LW 58°. 각 웨지의 풀스윙 거리 차이가 약 8~12야드씩 나도록 설계.</p>
+
+      <h3 class="subsection-h3">현대 PW의 로프트 변화</h3>
+      <p class="section-body">20년 전 PW는 보통 50~52°였지만, 최근에는 <strong>44~46°까지 짧아졌어요</strong>. 아이언 세트의 거리감 늘리기 마케팅 때문에 PW가 점점 강한 로프트가 되었습니다. 결과적으로 PW와 SW 사이 갭이 커져 GW(갭 웨지)가 필수가 된 것입니다.</p>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream" id="groove-spec">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 02 · 그루브 상세 규정</p>
+      <h2>웨지 그루브 — 가장 엄격한 규정</h2>
+      <p class="section-body">웨지의 그루브는 USGA 규정에서 <strong>가장 정밀하게 측정됩니다</strong>. 25° 이상 모든 클럽에 적용되는 일반 그루브 규정이 웨지에서 가장 엄격하게 영향을 미쳐요.</p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">그루브 측정 한계 (Equipment Rules Part 2 Section 5)</p>
+        <ul class="rule-list">
+          <li><strong>그루브 폭 (W) ≤ 0.035인치 (0.9mm)</strong><br/>30도 측정법으로 측정.</li>
+          <li><strong>그루브 깊이 ≤ 0.020인치 (0.508mm)</strong><br/>너무 깊으면 이물질 배출 효과가 비정상적으로 커져 부적합.</li>
+          <li><strong>그루브 간격 (S) ≥ 폭의 3배 또는 0.075인치 (1.905mm)</strong><br/>인접 그루브 사이 최소 간격.</li>
+          <li><strong>단면적/간격 비율 (A/(W+S)) ≤ 0.0030 sq in/in</strong><br/>(0.0762 mm²/mm) — 페이스 1인치당 그루브 부피 한계.</li>
+          <li><strong>엣지 라운딩 (25° 이상): 0.010~0.020인치</strong><br/>(0.254~0.508mm) — 너무 날카로워도, 너무 둥글어도 안 됨.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">2010년 이후 모든 그루브 규정 변경</h3>
+      <p class="section-body">2010년 1월 1일 USGA·R&A는 그루브 규정을 대폭 강화했습니다. 새 규정의 핵심은 <strong>① 단면적/간격 비율 + ② 엣지 라운딩</strong>이었어요. 자세한 내용은 <a href="/equipment-rules/grooves" style="color: var(--green); border-bottom: 1px solid var(--green); text-decoration: none; font-weight: 600;">그루브 규정 페이지</a>에 정리.</p>
+
+      <h3 class="subsection-h3">웨지 그루브 = 가장 빠르게 마모</h3>
+      <p class="section-body">모든 클럽 중 웨지 그루브가 가장 빠르게 마모됩니다. 이유:</p>
+      <ul class="penalty-list">
+        <li><strong>가장 가파른 어택 앵글</strong> — 페이스 아래쪽이 잔디·모래에 직접 접촉</li>
+        <li><strong>벙커 사용</strong> — 모래는 가장 강한 미세 연마제</li>
+        <li><strong>러프에서 빈번한 사용</strong> — 잔디·흙이 그루브에 끼어 마모 가속</li>
+        <li><strong>가장 짧은 거리·풀 어택</strong> — 풀스윙으로 페이스 모서리까지 사용</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="punchmark">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 03 · 펀치 마크</p>
+      <h2>펀치 마크 — 그루브의 보조 마킹</h2>
+      <p class="section-body">펀치 마크(Punch Marks)는 페이스 바닥에 새겨진 <strong>작은 점 모양 자국</strong>입니다. 그루브의 보조로 마찰을 더하는 역할이며, 일부 웨지에 그루브와 함께 사용되어요. Cleveland RTX, Mizuno T-Series 등 일부 웨지에서 볼 수 있어요.</p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">펀치 마크 측정 한계</p>
+        <ul class="rule-list">
+          <li><strong>깊이 ≤ 0.040인치 (1.02mm)</strong><br/>그루브 깊이 한계(0.020인치)의 두 배까지 허용.</li>
+          <li><strong>간격 ≥ 0.168인치 (4.27mm)</strong><br/>인접 펀치 마크 사이, 또는 펀치 마크와 그루브 사이의 중심 간 최소 거리.</li>
+          <li><strong>날카로운 엣지 금지</strong><br/>그루브와 동일하게 펀치 마크 엣지에 날카로움이나 융기 X.</li>
+          <li><strong>25° 이상: 엣지 라운딩 0.010~0.020인치</strong><br/>그루브와 동일한 라운딩 규정 적용.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">왜 펀치 마크를 쓰는가</h3>
+      <p class="section-body">그루브는 페이스를 가로지르는 일직선 형태라 페이스 가장자리에는 영향이 적어요. 펀치 마크는 <strong>페이스 전체 면적에 균일한 마찰</strong>을 만듭니다. 특히 그린 사이드 짧은 컷 샷에서 풀 페이스의 일관된 스핀에 도움이 됩니다.</p>
+
+      <h3 class="subsection-h3">합법 vs 비합법 — 시판 웨지</h3>
+      <p class="section-body">시판되는 정품 웨지는 거의 모두 그루브와 펀치 마크 규정을 통과합니다. 다만 다음 경우는 부적합 가능성:</p>
+      <ul class="penalty-list">
+        <li><strong>중국·동남아 직구 카피 웨지</strong> — USGA 제출 안 된 모델 다수</li>
+        <li><strong>"고스핀" 강조 비공인 웨지</strong> — 의도적으로 비공인 출시</li>
+        <li><strong>리마킹된 중고 웨지</strong> — 그루브 재가공으로 깊이가 한계 초과 가능</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream" id="bounce">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 04 · 바운스</p>
+      <h2>바운스 — 규정 한계 X, 골퍼 선택의 영역</h2>
+      <p class="section-body">흥미로운 사실 — <strong>바운스각 자체에는 USGA 규정이 없습니다</strong>. 일반 클럽 모양 규정(샤프트, 헤드, 페이스, 그루브)만 따르면 바운스는 자유롭게 설계 가능해요. 그래서 시판 웨지의 바운스는 4°부터 14°까지 매우 다양합니다.</p>
+
+      <h3 class="subsection-h3">바운스란 무엇인가</h3>
+      <p class="section-body">바운스(Bounce)는 솔의 리딩 엣지(앞쪽 끝)와 바닥(뒤쪽) 사이의 각도예요. 솔이 잔디·모래에 닿을 때 헤드가 어떻게 미끄러질지를 결정합니다.</p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">바운스 분류와 용도</p>
+        <ul class="rule-list">
+          <li><strong>로우 바운스 (4~6°)</strong><br/>단단한 라이, 빠른 그린, 얇은 잔디에 적합. 정밀 컨트롤 우선. 상급자에게 인기.</li>
+          <li><strong>미디엄 바운스 (8~10°)</strong><br/>대부분의 라이에 적합한 만능 바운스. 일반 골퍼에게 가장 안전한 선택.</li>
+          <li><strong>하이 바운스 (12~14°)</strong><br/>푹신한 잔디, 깊은 러프, 부드러운 모래에 적합. 솔이 바닥을 미끄러져 dig(파고드는 것) 방지.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">바운스 + 그라인드 — 솔 형태</h3>
+      <p class="section-body">바운스와 함께 <strong>그라인드(Grind)</strong>도 솔 형태를 결정합니다. 그라인드는 솔의 토우(앞)와 힐(뒤) 부분을 미세하게 깎아낸 가공이에요. 예: Vokey의 M, S, F, K, L 그라인드 등. 그라인드가 다르면 같은 바운스값이라도 실제 거동이 달라집니다. USGA 규정상 그라인드도 별도 한계 없이 자유로워요.</p>
+    </div>
+  </section>
+
+  <section class="section" id="wear">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 05 · 마모와 교체</p>
+      <h2>웨지는 얼마나 자주 교체해야 하는가</h2>
+      <p class="section-body">그루브 마모 자체는 <strong>적합성 문제가 아닙니다</strong>. 출고 시 적합했던 웨지는 사용에 따라 자연 마모돼도 합법성을 유지합니다. 다만 <strong>스핀 성능</strong>이 떨어지는 것은 분명합니다.</p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">레벨별 교체 주기</p>
+        <ul class="rule-list">
+          <li><strong>PGA Tour 프로</strong><br/><strong>4~6 라운드(약 3~5주)마다 교체.</strong> 스핀 일관성이 우승을 좌우하기 때문.</li>
+          <li><strong>엘리트 아마추어 (월 8~10회 라운드)</strong><br/><strong>1년 주기.</strong> 또는 라운드 50회 정도.</li>
+          <li><strong>일반 골퍼 (월 2~4회 라운드)</strong><br/><strong>2~3년 주기 또는 라운드 100~150회.</strong></li>
+          <li><strong>매트 연습 위주</strong><br/><strong>1~2년 주기.</strong> 매트는 잔디보다 그루브 마모 속도가 약 2배 빠릅니다.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">마모 진단 방법</h3>
+      <ul class="penalty-list">
+        <li><strong>손톱 테스트</strong> — 그루브를 손톱으로 긁어 "턱" 걸리면 정상, 부드럽게 빠지면 마모 진행</li>
+        <li><strong>육안 확인</strong> — 그루브 가장자리가 둥글어 보이고 페이스 광택이 사라짐</li>
+        <li><strong>스핀 변화 체감</strong> — 같은 거리에서 그린 위 정지 거리가 늘어남 (스핀 부족)</li>
+      </ul>
+
+      <h3 class="subsection-h3">"마모"는 부적합이 아니다</h3>
+      <p class="section-body">오해 X — <strong>마모된 웨지를 가지고 친선 라운드든 핸디캡 등록 라운드든 사용 가능합니다</strong>. 부적합이 되는 경우는 의도적 그루브 재가공으로 한계를 넘었을 때만이에요.</p>
+
+      <h3 class="subsection-h3">그루브 재가공 — 권하지 않음</h3>
+      <p class="section-body">시중에 "그루브 샤프닝" 도구나 서비스가 있지만, USGA 규정상 위험한 영역입니다. 깊이를 늘리거나 엣지를 날카롭게 만들면 즉시 부적합이 됩니다. <strong>클럽메이커스는 그루브 재가공 작업을 다루지 않습니다</strong> — 마모된 웨지는 교체를 권합니다.</p>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">CHIPPER · 칩핑 클럽 규정</p>
+      <h2>치퍼 — 짧은 그린 사이드 클럽의 길이 한계</h2>
+      <p class="section-body">치퍼(Chipper)는 짧은 거리 칩샷 전용 클럽으로, 보통 32~37° 로프트입니다. 퍼터처럼 잡고 칩샷할 수 있게 설계되어 일반 골퍼에게 인기예요. 다만 USGA 규정상 <strong>"칩핑 전용 클럽이 같은 로프트의 일반 클럽보다 길면 부적합"</strong>이라는 조항이 있어요.</p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">치퍼 길이 규정</p>
+        <ul class="rule-list">
+          <li><strong>같은 로프트 일반 클럽 표준 길이 초과 X</strong><br/>예: 32° 치퍼라면 6번~7번 아이언 표준 길이(36~37인치) 안에 있어야 함.</li>
+          <li><strong>퍼터처럼 길게 만들면 부적합</strong><br/>로프트 25° 이상 클럽이 35인치 이상 길이를 가지면 칩핑 전용으로 의심받음.</li>
+          <li><strong>퍼터 형태 손잡이는 OK</strong><br/>그립이 두껍거나 평평한 형태(퍼터식)는 자유. 단 "두 면 사용 가능"한 양면 페이스는 퍼터 외 클럽에서 X.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">시판 치퍼 — 모두 합법</h3>
+      <p class="section-body">시판 정품 치퍼(Cleveland Smart Sole, Wilson Harmonized 등)는 모두 35~36인치 길이로 출시되어 합법. 퍼터 그립을 단 형태도 그립 형태 자체는 합법이에요.</p>
+    </div>
+  </section>
+
+  <section class="section section-bg-green">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">CLUBMAKERS' INTERPRETATION · 공작소 해석</p>
+      <h2 class="green-h2">현장에서 본 웨지 규정과 교체</h2>
+      <p class="green-body">웨지는 골퍼들이 가장 자주 교체하는 클럽이지만, "언제 교체해야 하나요?" 질문이 가장 많기도 합니다. 24년 공작소 관점을 정리합니다.</p>
+      <ul class="interpretation-list">
+        <li><strong>"7년 된 웨지인데 아직 잘 맞아요"</strong><br/><span class="green-body-small">감각이 좋다면 그대로 쓰셔도 됩니다 — 적합성 문제는 아니에요. 다만 핀에 가까이 붙는 정도와 그린 위 정지 거리는 새 웨지가 분명 더 좋습니다.</span></li>
+        <li><strong>"웨지 4자루 모두 같은 모델로 맞춰야 하나요?"</strong><br/><span class="green-body-small">권장하지만 필수 X. 같은 모델 + 같은 그라인드면 셋업 일관성이 좋습니다. PW는 아이언 세트와 함께 가는 경우가 많아 다른 모델이어도 괜찮아요. GW·SW·LW 세 자루는 같은 모델 권장.</span></li>
+        <li><strong>"바운스를 어떻게 골라야 하나요?"</strong><br/><span class="green-body-small">두 가지 기준: <strong>① 어택 앵글</strong>, <strong>② 라운드 코스</strong>. 한국 코스는 잔디 종류가 다양해서 미디엄 바운스(8~10°)가 가장 안전합니다. 분석에서 확인 가능.</span></li>
+        <li><strong>"그루브 재가공 서비스 광고를 봤는데?"</strong><br/><span class="green-body-small">하지 마시기를 권합니다. USGA 규정상 깊이 한계를 넘기 쉬워 부적합 위험. 또 마모된 웨지를 살리려는 시도보다 새 웨지가 거의 모든 면에서 좋습니다.</span></li>
+        <li><strong>"PW 로프트가 너무 강한 것 같아요. 갭 웨지가 필요한가요?"</strong><br/><span class="green-body-small">현대 PW가 44~46°로 강해진 결과, GW(50~52°)가 거의 필수가 됐습니다. PW 풀스윙 거리와 SW 풀스윙 거리 사이 갭이 25~35야드면 GW가 비어 있는 거리를 메울 수 있어요.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FAQ · 자주 묻는 질문</p>
+      <h2>실무에서 자주 받는 질문</h2>
+      <ul class="faq-list">
+        <li class="faq-item">
+          <p class="faq-q">Q1. 웨지를 얼마나 자주 교체해야 하나요?</p>
+          <p class="faq-a">투어 프로는 4~6 라운드(약 3~5주)마다 교체합니다. 일반 아마추어는 라운드 100~150회 또는 2~3년 주기 권장. 매트 연습이 많으면 1~2년 주기로 단축됩니다. 그루브 마모 자체는 부적합이 아니지만 <strong>스핀 성능이 떨어집니다</strong>.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q2. 바운스각이 너무 크거나 작으면 부적합인가요?</p>
+          <p class="faq-a">아닙니다. <strong>USGA 규정에 바운스각 자체에 대한 한계는 없습니다</strong>. 일반 클럽 모양 규정만 따르면 모두 합법입니다. 바운스 4°부터 14°까지 다양한 각도가 시판되며 모두 적합 리스트에 등재됩니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q3. 펀치 마크와 그루브 둘 다 있는 웨지도 있나요?</p>
+          <p class="faq-a">네, 일부 웨지가 그렇습니다. Cleveland RTX, Mizuno T-Series 등이 대표적. 두 가지 모두 25° 이상 클럽에는 엣지 라운딩 0.010~0.020인치 규정이 적용됩니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q4. 오래된 박스 그루브 웨지를 시중에서 보았는데 살 만한가요?</p>
+          <p class="faq-a">일반 라운드 사용은 가능하지만 권하지 않습니다. 2009년 이전 그루브 웨지는 박스 그루브의 강한 스핀이 매력이었지만, <strong>그루브 마모가 진행됐을 가능성이 높고 엘리트 대회에는 사용 불가</strong>입니다. 새 웨지는 마모된 옛 웨지보다 스핀이 더 좋습니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q5. 치퍼(Chipper) 같은 짧은 그린 사이드 클럽도 합법인가요?</p>
+          <p class="faq-a">USGA 규정상 칩핑 전용 클럽이 일반 클럽보다 길면 부적합입니다. 시판되는 치퍼는 모두 36~37인치 정도로 표준 7번 아이언 길이 안에 있어 <strong>합법</strong>입니다.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RELATED · 관련 페이지</p>
+      <h2>함께 읽으면 좋은 자료</h2>
+      <div class="related-grid">
+        <a href="/equipment-rules" class="related-card"><p class="related-card-eyebrow">INDEX</p><h3 class="related-card-title">장비 규정 인덱스</h3><p class="related-card-body">8개 토픽 전체 안내.</p></a>
+        <a href="/equipment-rules/grooves" class="related-card"><p class="related-card-eyebrow">GROOVES</p><h3 class="related-card-title">그루브 규정</h3><p class="related-card-body">2010년 변경의 핵심.</p></a>
+        <a href="/book/part-12" class="related-card"><p class="related-card-eyebrow">BOOK</p><h3 class="related-card-title">PART 12. 숏게임 클럽</h3><p class="related-card-body">웨지 스핀 메커니즘 깊이 있는 해설.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SOURCE · 출처</p>
+      <h2>이 글의 자료 출처</h2>
+      <ul class="source-list">
+        <li>USGA Equipment Rules Part 2 Section 5 — Club Face, <a href="https://www.usga.org/equipment-standards/equipment-rules-2019/equipment-rules/part-2-rule-6.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA "Grooves: Common Questions & Answers", <a href="https://www.usga.org/rules-hub/grooves/common-questions-answers.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA Informational Club Database, <a href="https://www.usga.org/rules-hub/grooves/informational-club-database.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>R&A Rules of Golf — Equipment Standards, <a href="https://www.randa.org" target="_blank" rel="noopener noreferrer">randa.org ↗</a></li>
+        <li>USGA TPX3001 — Groove Measurement Procedure, <a href="https://www.usga.org/content/dam/usga/pdf/Equipment/TPX3001-groove-measurement-procedure-outline.pdf" target="_blank" rel="noopener noreferrer">PDF ↗</a></li>
+      </ul>
+      <p class="source-disclaimer-text">⚠ 이 글은 일반 이해를 돕는 가이드입니다.</p>
+    </div>
+  </section>
+
+  <section class="closing-section">
+    <div class="closing-content">
+      <h3>"가장 정밀한 클럽,<br/>가장 자주 닳는 클럽."</h3>
+      <p class="closing-meta">— 클럽메이커스 웨지 가이드</p>
+      <div class="closing-actions">
+        <a href="/equipment-rules" class="btn-primary">장비 규정 인덱스 →</a>
+        <a href="/contact" class="btn-ghost">웨지 점검 문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  .wedges-hero { background: var(--bg-cream); }
+  .hero-sub-light { font-size: 14px; color: var(--grey); font-weight: 400; }
+  .quick-hint { font-size: 13px; color: var(--gold); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 20px; }
+  .quick-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
+  @media (min-width: 720px) { .quick-grid { grid-template-columns: repeat(2, 1fr); } .quick-grid-5 { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1080px) { .quick-grid { grid-template-columns: repeat(4, 1fr); } .quick-grid-5 { grid-template-columns: repeat(5, 1fr); } }
+  .quick-card { background: var(--bg); border: 1px solid var(--line); border-top: 3px solid var(--green); padding: 22px 22px; border-radius: 4px; text-decoration: none; color: var(--ink); display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
+  .quick-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(15, 41, 34, 0.12); border-top-color: var(--gold); }
+  .quick-card:hover .quick-arrow { color: var(--gold); }
+  .quick-num { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 10px; }
+  .quick-title { font-family: var(--font-serif); font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 10px; line-height: 1.4; }
+  .quick-title strong { color: var(--green); font-size: 17px; display: inline-block; margin-top: 2px; }
+  .quick-body { font-size: 13px; line-height: 1.7; color: var(--ink-2); margin: 0 0 14px; flex: 1; }
+  .quick-body strong { color: var(--ink); font-weight: 700; }
+  .quick-arrow { font-size: 12px; font-weight: 600; color: var(--green); letter-spacing: 0.05em; margin-top: auto; transition: color 0.2s; }
+  section[id] { scroll-margin-top: 80px; }
+  .section-body { font-size: 16px; line-height: 1.85; color: var(--ink-2); margin-bottom: 18px; }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+  .subsection-h3 { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--ink); margin: 36px 0 16px; line-height: 1.3; padding-top: 24px; border-top: 1px solid var(--line); }
+  .rule-box { background: var(--bg-soft); border-left: 3px solid var(--green); padding: 24px 28px; border-radius: 4px; margin: 24px 0; }
+  .rule-box-title { font-family: var(--font-serif); font-size: 16px; font-weight: 700; color: var(--green); margin: 0 0 14px; }
+  .rule-list { list-style: none; padding: 0; margin: 0; }
+  .rule-list li { font-size: 15px; line-height: 1.85; color: var(--ink-2); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .rule-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rule-list strong { color: var(--ink); font-weight: 700; }
+  .penalty-list { list-style: none; padding: 0; margin: 16px 0 22px; }
+  .penalty-list li { padding: 8px 0; font-size: 15px; color: var(--ink-2); line-height: 1.85; border-bottom: 1px solid var(--line-soft, var(--line)); }
+  .penalty-list li:last-child { border-bottom: none; }
+  .penalty-list strong { color: var(--ink); font-weight: 700; }
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .green-h2 { color: var(--cream); margin-bottom: 24px; }
+  .green-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+  .green-body strong { color: var(--gold-soft); font-weight: 700; }
+  .green-body-small { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.75); display: block; margin-top: 4px; }
+  .interpretation-list { list-style: none; padding: 0; margin: 24px 0; }
+  .interpretation-list li { padding: 16px 0; font-size: 15px; line-height: 1.85; color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(212, 184, 136, 0.2); }
+  .interpretation-list li:last-child { border-bottom: none; }
+  .interpretation-list strong { color: var(--cream); font-weight: 700; }
+  .faq-list { list-style: none; padding: 0; margin: 24px 0 0; }
+  .faq-item { background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--green); padding: 22px 28px; border-radius: 4px; margin-bottom: 14px; }
+  .faq-q { font-family: var(--font-serif); font-size: 16px; font-weight: 700; color: var(--ink); margin: 0 0 10px; line-height: 1.5; }
+  .faq-a { font-size: 14.5px; line-height: 1.85; color: var(--ink-2); margin: 0; }
+  .faq-a strong { color: var(--ink); font-weight: 600; }
+  .related-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
+  @media (min-width: 720px) { .related-grid { grid-template-columns: repeat(3, 1fr); } }
+  .related-card { background: var(--bg); border: 1px solid var(--line); border-top: 3px solid var(--green); padding: 22px 24px; border-radius: 4px; text-decoration: none; color: var(--ink); transition: transform 0.2s, box-shadow 0.2s; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(15, 41, 34, 0.08); }
+  .related-card-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; color: var(--gold); margin: 0 0 10px; }
+  .related-card-title { font-family: var(--font-serif); font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 8px; line-height: 1.3; }
+  .related-card-body { font-size: 13px; line-height: 1.7; color: var(--ink-2); margin: 0; }
+  .source-list { list-style: none; padding: 0; margin: 16px 0 24px; }
+  .source-list li { padding: 10px 0; font-size: 14px; line-height: 1.7; color: var(--ink-2); border-bottom: 1px solid var(--line-soft, var(--line)); }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list a { color: var(--green); border-bottom: 1px solid var(--green); text-decoration: none; margin-left: 4px; font-weight: 600; }
+  .source-list a:hover { opacity: 0.7; }
+  .source-disclaimer-text { background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 22px; border-radius: 4px; font-size: 13.5px; line-height: 1.75; color: var(--ink-2); margin: 0; }
+  .source-disclaimer-text strong { color: var(--ink); font-weight: 600; }
+  .closing-section { background: var(--ink); padding: 100px 80px; text-align: center; }
+  .closing-content { max-width: 720px; margin: 0 auto; }
+  .closing-section h3 { font-family: var(--font-serif); font-size: clamp(22px, 4vw, 30px); line-height: 1.55; font-weight: 600; color: white; letter-spacing: -0.015em; margin-bottom: 20px; }
+  .closing-meta { font-size: 12px; color: var(--gold-soft); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 36px; }
+  .closing-section .closing-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .closing-section .btn-primary, .closing-section .btn-ghost { font-size: 15px; font-weight: 600; padding: 14px 26px; border-radius: 4px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .closing-section .btn-primary { background: var(--gold); color: var(--ink); }
+  .closing-section .btn-primary::after { content: ''; }
+  .closing-section .btn-primary:hover { background: var(--gold-soft); transform: translateX(2px); }
+  .closing-section .btn-ghost { background: transparent; color: rgba(255, 255, 255, 0.85); border: 1px solid rgba(255, 255, 255, 0.25); }
+  .closing-section .btn-ghost::after { content: ''; }
+  .closing-section .btn-ghost:hover { background: rgba(255, 255, 255, 0.06); color: white; border-color: rgba(255, 255, 255, 0.4); }
+  @media (max-width: 640px) { .quick-card { padding: 18px 18px; } .closing-section { padding: 70px 24px; } }
+</style>

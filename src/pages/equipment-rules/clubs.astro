@@ -1,0 +1,550 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const clubsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': 'https://myclubmakers.com/equipment-rules/clubs/#article',
+  headline: '클럽 일반 규정 — 샤프트·헤드·그립의 기본 형태',
+  description: 'USGA·R&A 클럽 일반 규정 한글 정리. 전통적 형태 원칙, 길이 18~48인치, 샤프트 직선·대칭, 그립 원형 단면 1.75인치, 헤드와 넥 5인치 한계.',
+  inLanguage: 'ko-KR',
+  author: { '@type': 'Person', name: '채기웅', url: 'https://myclubmakers.com/about' },
+  publisher: { '@type': 'Organization', name: '클럽메이커스', url: 'https://myclubmakers.com' },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: '내가 가진 모든 클럽이 자동으로 적합한가요?', acceptedAnswer: { '@type': 'Answer', text: '메이저 브랜드 정품(Titleist, Callaway, TaylorMade 등)이라면 거의 100% 적합 리스트에 등재됩니다. 다만 USGA 적합 리스트에 등재되지 않은 무명 브랜드 직구 클럽은 직접 확인이 필요합니다.' } },
+    { '@type': 'Question', name: '샤프트가 휘어있는 것 같아요. 부적합인가요?', acceptedAnswer: { '@type': 'Answer', text: '샤프트는 그립 끝부터 솔 위 5인치까지 직선이어야 합니다. 그 아래 부분(헤드 부근)은 약간의 곡률이 허용됩니다. 휘어 보이는 것이 그 부분이라면 정상이고, 그립 쪽이 휘어있으면 손상으로 부적합 가능성.' } },
+    { '@type': 'Question', name: '두꺼운 그립을 끼우면 부적합인가요?', acceptedAnswer: { '@type': 'Answer', text: '직경 최대 1.75인치(44.45mm) 한계 안에 있으면 합법입니다. 시판되는 점보 그립, 미드사이즈 그립 모두 이 한계 안에 있어요. 다만 형태가 "원형 단면"이어야 하며, 퍼터를 제외한 클럽은 손가락 모양이 새겨진 그립은 부적합입니다.' } },
+    { '@type': 'Question', name: '롱 퍼터에 그립이 두 개 있는 것을 봤는데 합법인가요?', acceptedAnswer: { '@type': 'Answer', text: '네, 퍼터에 한해 두 개의 그립이 합법입니다. 다만 두 그립 모두 원형 단면이어야 하고, 두 그립 사이 간격이 최소 1.5인치(38.1mm) 이상이어야 합니다.' } },
+    { '@type': 'Question', name: '클럽 헤드에 페인트나 스티커를 붙여도 되나요?', acceptedAnswer: { '@type': 'Answer', text: '페인트와 장식적 스티커는 합법입니다. 다만 페이스 표면에 부착해 성능에 영향을 주는 스티커는 부적합. 또 라운드 시작 후엔 어떤 부착물도 추가할 수 없습니다.' } },
+  ],
+};
+---
+
+<BaseLayout
+  title="클럽 일반 규정 — 샤프트·헤드·그립의 기본 형태"
+  description="USGA·R&A 클럽 일반 규정 한글 정리. 전통적 형태 원칙, 길이 18~48인치, 샤프트 직선·대칭, 그립 원형 단면 1.75인치, 헤드와 넥 5인치 한계."
+  schemaType="Article"
+  keywords="클럽 일반 규정, 골프 클럽 형태, 전통적 형태, 샤프트 직선, 그립 원형, 1.75 인치, 클럽 길이 18 48 인치, 넥 5 인치, 두 그립 퍼터"
+  extraSchema={[clubsSchema, faqSchema]}
+>
+
+  <section class="page-hero clubs-gen-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">EQUIPMENT RULES · TOPIC 08 · 클럽 일반 규정</div>
+      <h1>클럽 일반 규정 —<br/>"전통적 형태"라는 큰 원칙</h1>
+      <p class="page-hero-subtitle">
+        모든 골프 클럽이 따라야 하는 기본 규정입니다. 드라이버·아이언·웨지·퍼터를 막론하고 적용되는 형태와 측정 한계.<br/>
+        <span class="hero-sub-light">샤프트·헤드·그립의 기본 형태와 길이 한계, "전통적 형태" 원칙의 의미를 정리합니다.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">QUICK SUMMARY · 핵심 5가지</p>
+      <h2>클럽 일반 규정의 핵심</h2>
+      <p class="quick-hint">카드를 누르시면 상세 설명으로 이동합니다.</p>
+      <div class="quick-grid quick-grid-5">
+        <a href="#tradition" class="quick-card">
+          <p class="quick-num">01</p>
+          <h3 class="quick-title">전통적 형태<br/><strong>원칙</strong></h3>
+          <p class="quick-body">"traditional and customary form and make" — 가장 기본 원칙.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#length" class="quick-card">
+          <p class="quick-num">02</p>
+          <h3 class="quick-title">길이<br/><strong>18~48인치</strong></h3>
+          <p class="quick-body">최소 18인치 (0.457m), 최대 48인치 (1.219m). 퍼터는 최대 X.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#shaft" class="quick-card">
+          <p class="quick-num">03</p>
+          <h3 class="quick-title">샤프트<br/><strong>직선·대칭</strong></h3>
+          <p class="quick-body">그립 끝~솔 위 5인치까지 직선. 회전 대칭.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#grip" class="quick-card">
+          <p class="quick-num">04</p>
+          <h3 class="quick-title">그립<br/><strong>원형 1.75"</strong></h3>
+          <p class="quick-body">원형 단면 (퍼터 예외), 최대 1.75인치. 손모형 X.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#head" class="quick-card">
+          <p class="quick-num">05</p>
+          <h3 class="quick-title">헤드와 넥<br/><strong>5인치 이내</strong></h3>
+          <p class="quick-body">샤프트는 힐 부착, 넥 5인치 이내. 퍼터 예외.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tradition">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 01 · 전통적 형태</p>
+      <h2>"Traditional and Customary Form and Make"</h2>
+      <p class="section-body">
+        USGA·R&A 클럽 규정의 가장 큰 원칙입니다. 영어 그대로 옮기면
+        "<strong>전통적이고 관습적인 형태와 제작 방식</strong>"에서 <strong>크게 벗어나지 않아야 한다</strong>는 뜻이에요.
+        구체적인 측정값보다 더 근본적인 원칙입니다.
+      </p>
+
+      <h3 class="subsection-h3">왜 이런 추상적 원칙이 있는가</h3>
+      <p class="section-body">
+        구체적 한계를 다 적어도 새로운 형태의 클럽이 등장할 수 있어요. 그래서 USGA는 모든 측정 한계를 통과해도
+        "<strong>전통적 형태에서 너무 멀어진 클럽</strong>"은 부적합으로 판정할 권한을 가집니다.
+        쉽게 말해 "이상하게 생긴 클럽은 안 됩니다"라는 안전장치예요.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">"전통적 형태" 위반 사례 (실제 부적합 판정)</p>
+        <ul class="rule-list">
+          <li><strong>두 개의 헤드를 가진 클럽</strong> — 한 샤프트에 헤드 2개. 클럽은 단일 단위여야 함.</li>
+          <li><strong>드라이버 모양 퍼터</strong> — 퍼팅용으로 만들었어도 형태가 드라이버와 비슷하면 부적합.</li>
+          <li><strong>망치형 클럽</strong> — 헤드가 망치처럼 길쭉하거나 직사각형. 전통적 클럽 형태와 다름.</li>
+          <li><strong>독특한 단면 샤프트</strong> — 사각, 타원, 삼각 단면 등. 골프 클럽 샤프트는 원형이어야 함.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">기본 구성</h3>
+      <p class="section-body">규정상 클럽은 <strong>샤프트 + 헤드</strong>로 구성되며, 보통 그립이 추가됩니다. 모든 부품이 한 단위로 고정되어야 하고, 외부 부착물은 원칙적으로 금지됩니다(예외 인정 일부).</p>
+
+      <ul class="penalty-list">
+        <li><strong>한 클럽 = 하나의 샤프트 + 하나의 헤드</strong> — 다중 헤드 불가</li>
+        <li><strong>고정되어 한 단위로 작동</strong> — 작동 중 분리되거나 풀리지 않아야 함</li>
+        <li><strong>외부 부착물 원칙 금지</strong> — 단 납테이프, 토크 렌치 같은 전통적 예외 인정</li>
+        <li><strong>움직이는 부품 금지</strong> — 분말, 액체, 진동 와이어, 롤러 등 X</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream" id="length">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 02 · 클럽 길이</p>
+      <h2>최소 18인치 / 최대 48인치</h2>
+      <p class="section-body">
+        클럽의 전체 길이는 <strong>최소 18인치(0.457m) 이상, 최대 48인치(1.219m) 이하</strong>여야 합니다.
+        다만 <strong>퍼터에는 최대 한계가 적용되지 않습니다</strong>. 이론적으로 50인치 퍼터도 합법.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">길이 측정 방법</p>
+        <ul class="rule-list">
+          <li><strong>우드와 아이언</strong><br/>클럽을 수평면에 놓고 솔이 60도 평면에 닿게 한 상태. 두 평면의 교차점에서 그립 끝(top of grip)까지의 거리.</li>
+          <li><strong>퍼터</strong><br/>그립 끝부터 샤프트 축(또는 그 직선 연장선) 따라 솔까지의 거리.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">왜 최소 18인치인가</h3>
+      <p class="section-body">
+        18인치는 어린이 클럽이나 트레이닝 도구가 골프 클럽으로 분류되는 것을 막는 한계입니다.
+        더 짧은 막대는 골프 클럽이 아닌 다른 종류의 도구로 간주되어요.
+        실제로 18인치 클럽을 가져가는 골퍼는 거의 없습니다.
+      </p>
+
+      <h3 class="subsection-h3">최대 48인치 — 드라이버 핵심 한계</h3>
+      <p class="section-body">
+        48인치 한계는 드라이버에 가장 큰 영향을 줍니다. 페어웨이우드와 아이언은 자연히 짧아 한계 근처에 갈 일이 없어요.
+        2022년 1월 발효된 모범 로컬 룰 G-10은 엘리트 대회에서 <strong>46인치까지 추가 제한</strong>합니다.
+        자세한 내용은 <a href="/equipment-rules/driver" style="color: var(--green); border-bottom: 1px solid var(--green); text-decoration: none; font-weight: 600;">드라이버 규정 페이지</a>에 정리.
+      </p>
+
+      <h3 class="subsection-h3">치퍼(Chipper) — 별도 길이 제한</h3>
+      <p class="section-body">
+        칩핑 전용 클럽은 같은 로프트의 일반 클럽 표준 길이를 초과하면 부적합. 자세한 내용은 웨지 규정 페이지에.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="shaft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 03 · 샤프트</p>
+      <h2>샤프트 — 직선과 대칭의 원칙</h2>
+      <p class="section-body">
+        샤프트는 <strong>직선 + 회전 대칭</strong>이라는 두 가지 큰 원칙을 따릅니다.
+        매우 기본적이지만 위반 케이스가 의외로 많은 영역이에요.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">샤프트 형태 규정</p>
+        <ul class="rule-list">
+          <li><strong>① 직선 부분 — 그립 끝부터 솔 위 5인치까지</strong><br/>그립 쪽 대부분은 일직선이어야 함. 솔 위 5인치(127mm) 이내 부분에서만 곡률 허용.</li>
+          <li><strong>② 회전 대칭 — 어느 방향으로 돌려도 같은 동작</strong><br/>샤프트를 회전시켜도 휘는 방향과 정도가 일정해야 함. 의도적 비대칭 설계 금지.</li>
+          <li><strong>③ 단면 — 일반적으로 원형</strong><br/>표준 원형 단면이 안전. 사각·타원·삼각 단면은 USGA 검토 필요.</li>
+          <li><strong>④ 헤드 부착 — 힐(heel)에 단일 plain neck으로</strong><br/>퍼터 외 모든 클럽은 힐 부분에 부착. 넥 길이 5인치(127mm) 이내. 퍼터는 어디든 부착 가능.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">샤프트 스파인 — 자연 발생은 OK</h3>
+      <p class="section-body">
+        대부분의 그라파이트 샤프트는 제조 과정에서 미세한 "스파인(spine)"이 생깁니다.
+        이는 자연적인 제조 결과로 USGA가 인정해요. 다만
+        <strong>의도적으로 비대칭하게 설계한 샤프트는 부적합</strong>입니다.
+        예를 들어 슬라이스 보정용으로 한 방향으로만 휘는 샤프트를 만들면 위반.
+      </p>
+
+      <h3 class="subsection-h3">샤프트 정렬 — 메이커는 OK, 라운드 중 X</h3>
+      <p class="section-body">
+        제조사가 일관성을 위해 샤프트 스파인을 정렬해서 클럽을 조립하는 것은 합법입니다.
+        다만 골퍼가 라운드 중 샤프트를 회전시켜 성능을 변경하면 위반(Rule 4.1a(3) 위반).
+      </p>
+
+      <h3 class="subsection-h3">넥 (Hosel) 5인치 한계</h3>
+      <p class="section-body">
+        샤프트와 헤드를 연결하는 넥(호젤)의 길이는 <strong>5인치(127mm) 이내</strong>여야 합니다.
+        넥이 너무 길면 클럽 형태가 비전통적으로 변하기 때문이에요.
+        시판되는 거의 모든 클럽이 이 한계 안에 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream" id="grip">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 04 · 그립</p>
+      <h2>그립 — 원형 단면, 최대 1.75인치</h2>
+      <p class="section-body">
+        그립은 골퍼가 클럽을 잡는 부분이라 <strong>형태에 명확한 한계</strong>가 있습니다.
+        그립 형태는 라운드 중 아주 자주 만지는 부분이라 의도적으로 손에 맞춰진 모양은 금지돼요.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">그립 형태 규정</p>
+        <ul class="rule-list">
+          <li><strong>① 원형 단면 (퍼터 외)</strong><br/>모든 클럽 그립은 원형 단면. 작은 직선 리브(reminder rib)나 나선형 인덴트는 허용.</li>
+          <li><strong>② 손 모형 금지</strong><br/>손가락 모양·손바닥 모양으로 새겨진 그립은 부적합. 그립을 잡는 자세를 강제하지 않아야 함.</li>
+          <li><strong>③ 직경 최대 1.75인치 (44.45mm)</strong><br/>어느 방향으로 측정해도 1.75인치 초과 X.</li>
+          <li><strong>④ 일자형 (테이퍼는 OK, 벌지/웨이스트는 X)</strong><br/>위에서 아래로 점점 가늘어지는 테이퍼는 합법. 중간이 부풀거나 잘록해지면 부적합.</li>
+          <li><strong>⑤ 샤프트 끝까지 연장</strong><br/>그립이 샤프트 끝까지 덮어야 함. 그립 끝과 샤프트 끝 사이 공백 X.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">퍼터 그립 — 예외</h3>
+      <p class="section-body">
+        퍼터 그립은 <strong>원형이 아니어도 됩니다</strong>. "Pistol" 모양처럼 한쪽이 평평한 형태가 합법.
+        다만 다음 조건을 따라야 해요:
+      </p>
+      <ul class="penalty-list">
+        <li><strong>오목한 부분 X</strong> — 곡선 중 어느 부분도 오목해선 안 됨</li>
+        <li><strong>대칭</strong> — 좌우 대칭이어야 함</li>
+        <li><strong>전체 길이에 걸쳐 일관된 형태</strong> — 위와 아래 형태가 비슷해야 함</li>
+        <li><strong>1.75인치 한계 동일 적용</strong></li>
+      </ul>
+
+      <h3 class="subsection-h3">두 개의 그립 — 퍼터만 가능</h3>
+      <p class="section-body">
+        롱퍼터에는 <strong>두 개의 그립</strong>이 가능합니다 (한 손씩 잡는 방식).
+        다만:
+      </p>
+      <ul class="penalty-list">
+        <li><strong>두 그립 모두 원형 단면</strong> — pistol 형태 X</li>
+        <li><strong>그립 사이 간격 최소 1.5인치(38.1mm)</strong> — 너무 가깝게 붙어 있으면 X</li>
+        <li><strong>각 그립 직경은 다를 수 있음</strong> — 두 그립 직경 같을 필요 X</li>
+        <li><strong>두 그립 모두 1.75인치 한계 안</strong></li>
+      </ul>
+
+      <h3 class="subsection-h3">잘 쓰이는 변형</h3>
+      <p class="section-body">시중에 다양한 그립이 있지만 거의 모두 합법:</p>
+      <ul class="penalty-list">
+        <li><strong>점보 그립 (Jumbo)</strong> — 직경 1.5~1.7인치. 1.75인치 한계 안</li>
+        <li><strong>미드사이즈 (Midsize)</strong> — 직경 1.0~1.1인치. 손이 큰 분에게 인기</li>
+        <li><strong>슈퍼스트록 (Super Stroke)</strong> — 퍼터용 점보 그립. 일자형이라 합법</li>
+        <li><strong>피스톨 (Pistol)</strong> — 퍼터 전용 평평한 형태. 합법</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="head">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 05 · 헤드와 넥</p>
+      <h2>헤드와 넥 — 형태와 부착 규정</h2>
+      <p class="section-body">
+        클럽 헤드는 <strong>전통적 형태</strong>이어야 하며, 샤프트와의 연결도 명확한 규정이 있어요.
+        클럽 종류별로 추가 규정이 적용되지만, 모든 클럽이 따라야 하는 기본은 다음과 같습니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">헤드 일반 규정</p>
+        <ul class="rule-list">
+          <li><strong>전통적 형태</strong><br/>전통적 골프 클럽과 명백히 다른 모양 X. 망치형, 막대형, 다중 면 등 X.</li>
+          <li><strong>한 헤드 - 하나의 페이스</strong><br/>퍼터를 제외한 모든 클럽은 하나의 페이스만 가짐. 양면 페이스는 퍼터 외 부적합.</li>
+          <li><strong>힐 위치 한계</strong><br/>퍼터 외 클럽은 힐 부분이 샤프트 축을 통과하는 평면에서 0.625인치(15.88mm) 이내.</li>
+          <li><strong>외부 부착물 X</strong><br/>성능에 영향을 주는 외부 부착물 금지. 장식 스티커, 보호 커버, 정렬 라인은 OK.</li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">샤프트-헤드 연결 (넥)</h3>
+      <p class="section-body">
+        샤프트는 헤드의 <strong>힐(heel) 부분에 단일 plain neck</strong>으로 연결됩니다 — 퍼터 제외.
+        넥의 길이는 솔에서부터 측정해 5인치(127mm) 이내.
+        넥은 "plain"해야 하며, 샤프트와 헤드를 연결하는 본래 목적 외 다른 형태가 가공돼선 안 됩니다.
+      </p>
+
+      <h3 class="subsection-h3">퍼터의 자유로운 부착</h3>
+      <p class="section-body">
+        퍼터는 예외적으로 <strong>샤프트 또는 넥이 헤드 어느 위치에나 부착</strong> 가능합니다.
+        그래서 센터샤프트 퍼터, 더블벤드 퍼터, 다양한 호젤 디자인이 모두 합법.
+        퍼터의 형태 자유는 다른 클럽보다 훨씬 큽니다.
+      </p>
+
+      <h3 class="subsection-h3">샤프트 정렬 (Alignment)</h3>
+      <p class="section-body">
+        클럽이 일반 어드레스 자세에 있을 때 샤프트의 직선 부분이 다음 조건을 만족해야 합니다:
+      </p>
+      <ul class="penalty-list">
+        <li><strong>토우-힐 평면에서 수직 대비 최소 10° 이상 기울어짐</strong> — 라이각의 한계.</li>
+        <li><strong>플레이 라인 평면에서 앞쪽 20° 또는 뒤쪽 10° 이내</strong> — 페이스 앵글의 한계.</li>
+      </ul>
+      <p class="section-body section-body-small">
+        이 규정으로 "수직 또는 거의 수직 자세"에서 사용되는 클럽(예: 크로켓 스타일 퍼터)이 부적합 처리됩니다.
+        센터샤프트 퍼터는 이 한계 안에서 설계되었기 때문에 합법.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">EXTERNAL · 외부 부착물</p>
+      <h2>외부 부착물 — 무엇이 합법인가</h2>
+      <p class="section-body">
+        클럽에 추가로 부착되는 것에 대해서도 명확한 규정이 있습니다. 합법과 비합법을 헷갈리지 않도록 정리합니다.
+      </p>
+
+      <div class="compare-table">
+        <table>
+          <thead>
+            <tr>
+              <th>부착물</th>
+              <th>합법 여부</th>
+              <th>조건</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-applies">
+              <td><strong>납테이프</strong></td>
+              <td><span class="badge badge-yes">합법</span></td>
+              <td>전통적 예외. 라운드 중 추가/제거/이동 X.</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>그립 위 테이프·거즈</strong></td>
+              <td><span class="badge badge-yes">합법</span></td>
+              <td>그립 전체 길이 적용. 변경 후에도 그립 형태 한계 안.</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>장식 스티커·페인트</strong></td>
+              <td><span class="badge badge-yes">합법</span></td>
+              <td>페이스 외 부분. 성능 영향 X. 적합 리스트 식별 방해 X.</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>정렬 라인 (Alignment Line)</strong></td>
+              <td><span class="badge badge-yes">합법</span></td>
+              <td>크라운, 솔, 그립에 그어진 라인. 정렬 도움.</td>
+            </tr>
+            <tr class="row-applies">
+              <td><strong>보호 커버 (Protective)</strong></td>
+              <td><span class="badge badge-yes">합법</span></td>
+              <td>헤드 마감재 보호 목적. 페이스에 부착 X.</td>
+            </tr>
+            <tr class="row-not-applies">
+              <td><strong>페이스 스티커 (성능 변경)</strong></td>
+              <td><span class="badge badge-no">불법</span></td>
+              <td>스핀, 마찰을 변경하는 페이스 부착물 금지.</td>
+            </tr>
+            <tr class="row-not-applies">
+              <td><strong>외부 정렬 보조 도구</strong></td>
+              <td><span class="badge badge-no">불법</span></td>
+              <td>아이밍 바, 무게 추가 도구. 트레이닝용은 라운드 X.</td>
+            </tr>
+            <tr class="row-not-applies">
+              <td><strong>비행 후 회수 도구</strong></td>
+              <td><span class="badge badge-yes">합법 (제한)</span></td>
+              <td>그립 끝 ball retriever 등. 그립 형태에 영향 X 조건.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="compare-note">
+        <strong>핵심 원칙</strong>: 클럽 성능에 영향을 주는 부착물은 거의 모두 금지. 미관·정렬·보호 목적의 부착물은 대부분 합법.
+        라운드 중에는 어떤 부착물도 추가/제거할 수 없습니다 (Rule 4.1a(3)).
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-bg-green">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">CLUBMAKERS' INTERPRETATION · 공작소 해석</p>
+      <h2 class="green-h2">현장에서 본 클럽 일반 규정</h2>
+      <p class="green-body">
+        클럽 일반 규정은 일반 골퍼가 신경 쓰지 않아도 거의 자동으로 통과하는 영역입니다.
+        다만 24년간 공작소에서 만난 케이스 중 의외로 자주 부각된 것을 정리합니다.
+      </p>
+      <ul class="interpretation-list">
+        <li><strong>"길이 늘려서 50인치 드라이버 만들고 싶어요"</strong><br/><span class="green-body-small">48인치 한계로 X. 모든 클럽 통합 길이 한계가 48인치예요. 키 큰 분도 이 한계 안에서 작업해야 합니다. 다만 퍼터는 한계 X — 50인치 롱퍼터 가능.</span></li>
+        <li><strong>"손가락 그립 모양으로 만들고 싶어요"</strong><br/><span class="green-body-small">그립 형태 한계로 X. 손모형 금지. 다만 두꺼운 그립이나 평평한 형태 퍼터 그립은 가능. "손에 맞는" 느낌은 그립 직경과 압력 변화로 만들어야 해요.</span></li>
+        <li><strong>"시중 무명 브랜드 드라이버 — 적합한가요?"</strong><br/><span class="green-body-small">USGA 적합 리스트에서 검색해 보시기 권합니다. 메이저 브랜드는 거의 100% 등재되지만, 무명 브랜드와 직구 클럽은 미등재 가능성이 있어요.</span></li>
+        <li><strong>"오래된 클럽 샤프트가 살짝 휘었는데"</strong><br/><span class="green-body-small">그립 끝부터 솔 위 5인치까지 직선 한계라 그 부분이 휘었다면 부적합. 솔 부근 휘었다면 정상이에요. 사용 누적으로 휜 거면 새 샤프트로 교체 권장.</span></li>
+        <li><strong>"클럽 하나에 헤드 두 개 만들 수 있나요?"</strong><br/><span class="green-body-small">전통적 형태 원칙 위반으로 X. 한 클럽 = 하나의 샤프트 + 하나의 헤드. 양면 페이스는 퍼터에만 허용 (다만 두 면 사용 가능 X).</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FAQ · 자주 묻는 질문</p>
+      <h2>실무에서 자주 받는 질문</h2>
+      <ul class="faq-list">
+        <li class="faq-item">
+          <p class="faq-q">Q1. 내가 가진 모든 클럽이 자동으로 적합한가요?</p>
+          <p class="faq-a">메이저 브랜드 정품(Titleist, Callaway, TaylorMade, PING, Cobra, Mizuno, Srixon 등)이라면 거의 100% 적합 리스트에 등재됩니다. 다만 USGA 적합 리스트에 등재되지 않은 무명 브랜드 직구 클럽은 직접 확인이 필요합니다. 적합 리스트는 <strong>USGA 공식 사이트</strong>에서 검색 가능합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q2. 샤프트가 휘어있는 것 같아요. 부적합인가요?</p>
+          <p class="faq-a">샤프트는 <strong>그립 끝부터 솔 위 5인치까지 직선</strong>이어야 합니다. 그 아래 부분(헤드 부근)은 약간의 곡률이 허용됩니다. 휘어 보이는 것이 그 부분이라면 정상이고, 그립 쪽이 휘어있으면 손상으로 부적합 가능성. 정확한 진단은 공작소 방문 시 가능합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q3. 두꺼운 그립을 끼우면 부적합인가요?</p>
+          <p class="faq-a">직경 최대 <strong>1.75인치(44.45mm)</strong> 한계 안에 있으면 합법입니다. 시판되는 점보 그립, 미드사이즈 그립 모두 이 한계 안에 있어요. 다만 형태가 "원형 단면"이어야 하며, 퍼터를 제외한 클럽은 손가락 모양이 새겨진 그립은 부적합입니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q4. 롱 퍼터에 그립이 두 개 있는 것을 봤는데 합법인가요?</p>
+          <p class="faq-a">네, 퍼터에 한해 두 개의 그립이 합법입니다. 다만 두 그립 모두 <strong>원형 단면</strong>이어야 하고, 두 그립 사이 간격이 <strong>최소 1.5인치(38.1mm)</strong> 이상이어야 합니다. 두 그립 직경은 같지 않아도 되지만, 각 그립 모두 1.75인치 한계 안에 있어야 합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q5. 클럽 헤드에 페인트나 스티커를 붙여도 되나요?</p>
+          <p class="faq-a">페인트와 장식적 스티커는 합법입니다. 다만 <strong>페이스 표면에 부착해 성능에 영향을 주는 스티커</strong>는 부적합. 또 라운드 시작 후엔 어떤 부착물도 추가할 수 없습니다 — Rule 4.1a(3) 위반으로 즉시 실격.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RELATED · 관련 페이지</p>
+      <h2>함께 읽으면 좋은 자료</h2>
+      <div class="related-grid">
+        <a href="/equipment-rules" class="related-card"><p class="related-card-eyebrow">INDEX</p><h3 class="related-card-title">장비 규정 인덱스</h3><p class="related-card-body">8개 토픽 전체 안내.</p></a>
+        <a href="/equipment-rules/adjustable" class="related-card"><p class="related-card-eyebrow">ADJUSTABLE</p><h3 class="related-card-title">어드저스터블 클럽</h3><p class="related-card-body">조정 가능 클럽 — 일반 클럽 규정의 확장.</p></a>
+        <a href="/equipment-rules/14-clubs" class="related-card"><p class="related-card-eyebrow">14 CLUBS</p><h3 class="related-card-title">14개 클럽 룰</h3><p class="related-card-body">한 라운드 클럽 한계 — 모든 클럽 종류 통합.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SOURCE · 출처</p>
+      <h2>이 글의 자료 출처</h2>
+      <ul class="source-list">
+        <li>USGA Equipment Rules Part 2 Section 1 — Clubs, <a href="https://www.usga.org/equipment-standards/equipment-rules-2019/equipment-rules/part-2-rule-2.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA Equipment Rules Part 2 Section 2 — Shafts, <a href="https://www.usga.org/equipment-standards/equipment-rules-2019/equipment-rules/part-2-rule-3.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA Equipment Rules Part 2 Section 3 — Grip, <a href="https://www.usga.org/custom-search-pages/rules/equipment-rules/rule-14619.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>USGA Equipment FAQ, <a href="https://www.usga.org/content/usga/home-page/equipment-standards/equipment-faq-25852.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>R&A Rules of Golf — Equipment Standards, <a href="https://www.randa.org" target="_blank" rel="noopener noreferrer">randa.org ↗</a></li>
+      </ul>
+      <p class="source-disclaimer-text">⚠ 이 글은 일반 이해를 돕는 가이드입니다. 공식 대회나 핸디캡 등록 라운드의 적합성 판정은 <strong>USGA·R&A 공식 적합 리스트</strong>를 직접 확인하셔야 합니다.</p>
+    </div>
+  </section>
+
+  <section class="closing-section">
+    <div class="closing-content">
+      <h3>"전통적 형태에서 크게 벗어나지 않는다 —<br/>모든 클럽 규정의 출발점."</h3>
+      <p class="closing-meta">— USGA·R&A Equipment Rules Part 2</p>
+      <div class="closing-actions">
+        <a href="/equipment-rules" class="btn-primary">장비 규정 인덱스 →</a>
+        <a href="/contact" class="btn-ghost">클럽 점검 문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  .clubs-gen-hero { background: var(--bg-cream); }
+  .hero-sub-light { font-size: 14px; color: var(--grey); font-weight: 400; }
+  .quick-hint { font-size: 13px; color: var(--gold); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 20px; }
+  .quick-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
+  @media (min-width: 720px) { .quick-grid { grid-template-columns: repeat(2, 1fr); } .quick-grid-5 { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1080px) { .quick-grid { grid-template-columns: repeat(4, 1fr); } .quick-grid-5 { grid-template-columns: repeat(5, 1fr); } }
+  .quick-card { background: var(--bg); border: 1px solid var(--line); border-top: 3px solid var(--green); padding: 22px 22px; border-radius: 4px; text-decoration: none; color: var(--ink); display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
+  .quick-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(15, 41, 34, 0.12); border-top-color: var(--gold); }
+  .quick-card:hover .quick-arrow { color: var(--gold); }
+  .quick-num { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 10px; }
+  .quick-title { font-family: var(--font-serif); font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 10px; line-height: 1.4; }
+  .quick-title strong { color: var(--green); font-size: 17px; display: inline-block; margin-top: 2px; }
+  .quick-body { font-size: 13px; line-height: 1.7; color: var(--ink-2); margin: 0 0 14px; flex: 1; }
+  .quick-body strong { color: var(--ink); font-weight: 700; }
+  .quick-arrow { font-size: 12px; font-weight: 600; color: var(--green); letter-spacing: 0.05em; margin-top: auto; transition: color 0.2s; }
+  section[id] { scroll-margin-top: 80px; }
+  .section-body { font-size: 16px; line-height: 1.85; color: var(--ink-2); margin-bottom: 18px; }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+  .section-body-small { font-size: 14.5px; }
+  .subsection-h3 { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--ink); margin: 36px 0 16px; line-height: 1.3; padding-top: 24px; border-top: 1px solid var(--line); }
+  .rule-box { background: var(--bg-soft); border-left: 3px solid var(--green); padding: 24px 28px; border-radius: 4px; margin: 24px 0; }
+  .rule-box-title { font-family: var(--font-serif); font-size: 16px; font-weight: 700; color: var(--green); margin: 0 0 14px; }
+  .rule-list { list-style: none; padding: 0; margin: 0; }
+  .rule-list li { font-size: 15px; line-height: 1.85; color: var(--ink-2); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .rule-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rule-list strong { color: var(--ink); font-weight: 700; }
+  .penalty-list { list-style: none; padding: 0; margin: 16px 0 22px; }
+  .penalty-list li { padding: 8px 0; font-size: 15px; color: var(--ink-2); line-height: 1.85; border-bottom: 1px solid var(--line-soft, var(--line)); }
+  .penalty-list li:last-child { border-bottom: none; }
+  .penalty-list strong { color: var(--ink); font-weight: 700; }
+  .compare-table { overflow-x: auto; margin: 28px 0; }
+  .compare-table table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--bg); border: 1px solid var(--line); }
+  .compare-table th, .compare-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .compare-table th { background: var(--bg-soft); font-family: var(--font-sans); font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: 0.05em; text-transform: uppercase; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .row-applies { background: rgba(15, 41, 34, 0.02); }
+  .row-not-applies { background: rgba(184, 152, 92, 0.04); }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; letter-spacing: 0.05em; }
+  .badge-yes { background: var(--green); color: var(--cream); }
+  .badge-no { background: var(--bg-soft); color: var(--grey); border: 1px solid var(--line); }
+  .compare-note { background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 22px; border-radius: 4px; font-size: 14.5px; line-height: 1.75; color: var(--ink-2); margin: 0; }
+  .compare-note strong { color: var(--green); font-weight: 700; }
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .green-h2 { color: var(--cream); margin-bottom: 24px; }
+  .green-body { font-size: 16px; line-height: 1.85; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+  .green-body strong { color: var(--gold-soft); font-weight: 700; }
+  .green-body-small { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.75); display: block; margin-top: 4px; }
+  .interpretation-list { list-style: none; padding: 0; margin: 24px 0; }
+  .interpretation-list li { padding: 16px 0; font-size: 15px; line-height: 1.85; color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(212, 184, 136, 0.2); }
+  .interpretation-list li:last-child { border-bottom: none; }
+  .interpretation-list strong { color: var(--cream); font-weight: 700; }
+  .faq-list { list-style: none; padding: 0; margin: 24px 0 0; }
+  .faq-item { background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--green); padding: 22px 28px; border-radius: 4px; margin-bottom: 14px; }
+  .faq-q { font-family: var(--font-serif); font-size: 16px; font-weight: 700; color: var(--ink); margin: 0 0 10px; line-height: 1.5; }
+  .faq-a { font-size: 14.5px; line-height: 1.85; color: var(--ink-2); margin: 0; }
+  .faq-a strong { color: var(--ink); font-weight: 600; }
+  .related-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
+  @media (min-width: 720px) { .related-grid { grid-template-columns: repeat(3, 1fr); } }
+  .related-card { background: var(--bg); border: 1px solid var(--line); border-top: 3px solid var(--green); padding: 22px 24px; border-radius: 4px; text-decoration: none; color: var(--ink); transition: transform 0.2s, box-shadow 0.2s; }
+  .related-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(15, 41, 34, 0.08); }
+  .related-card-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; color: var(--gold); margin: 0 0 10px; }
+  .related-card-title { font-family: var(--font-serif); font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 8px; line-height: 1.3; }
+  .related-card-body { font-size: 13px; line-height: 1.7; color: var(--ink-2); margin: 0; }
+  .source-list { list-style: none; padding: 0; margin: 16px 0 24px; }
+  .source-list li { padding: 10px 0; font-size: 14px; line-height: 1.7; color: var(--ink-2); border-bottom: 1px solid var(--line-soft, var(--line)); }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list a { color: var(--green); border-bottom: 1px solid var(--green); text-decoration: none; margin-left: 4px; font-weight: 600; }
+  .source-list a:hover { opacity: 0.7; }
+  .source-disclaimer-text { background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 16px 22px; border-radius: 4px; font-size: 13.5px; line-height: 1.75; color: var(--ink-2); margin: 0; }
+  .source-disclaimer-text strong { color: var(--ink); font-weight: 600; }
+  .closing-section { background: var(--ink); padding: 100px 80px; text-align: center; }
+  .closing-content { max-width: 720px; margin: 0 auto; }
+  .closing-section h3 { font-family: var(--font-serif); font-size: clamp(22px, 4vw, 30px); line-height: 1.55; font-weight: 600; color: white; letter-spacing: -0.015em; margin-bottom: 20px; }
+  .closing-meta { font-size: 12px; color: var(--gold-soft); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 36px; }
+  .closing-section .closing-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .closing-section .btn-primary, .closing-section .btn-ghost { font-size: 15px; font-weight: 600; padding: 14px 26px; border-radius: 4px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .closing-section .btn-primary { background: var(--gold); color: var(--ink); }
+  .closing-section .btn-primary::after { content: ''; }
+  .closing-section .btn-primary:hover { background: var(--gold-soft); transform: translateX(2px); }
+  .closing-section .btn-ghost { background: transparent; color: rgba(255, 255, 255, 0.85); border: 1px solid rgba(255, 255, 255, 0.25); }
+  .closing-section .btn-ghost::after { content: ''; }
+  .closing-section .btn-ghost:hover { background: rgba(255, 255, 255, 0.06); color: white; border-color: rgba(255, 255, 255, 0.4); }
+  @media (max-width: 640px) { .quick-card { padding: 18px 18px; } .closing-section { padding: 70px 24px; } .compare-table table { font-size: 12.5px; } .compare-table th, .compare-table td { padding: 10px 10px; } }
+</style>
