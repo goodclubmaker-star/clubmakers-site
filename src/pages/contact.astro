@@ -85,21 +85,44 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <tbody>
             <tr><th>평일</th><td>오전 10시 ~ 오후 8시</td></tr>
             <tr><th>토요일</th><td>오전 10시 ~ 오후 5시</td></tr>
-            <tr><th>일요일·공휴일</th><td>탄력 근무</td></tr>
+            <tr><th>일요일·공휴일</th><td>탄력 근무 (사전 문의)</td></tr>
           </tbody>
         </table>
         <p class="hours-note">
           ※ 모든 시간 사전 예약을 권장드립니다. 작업 중일 때는 충분히 응대해드리지 못할 수 있습니다.
         </p>
       </div>
-      <div class="map-placeholder">
-        <div class="map-placeholder-inner">
-          <div class="map-icon">📍</div>
-          <p class="map-text">가보빌딩 지하층</p>
-          <p class="map-sub">동산로2길 50</p>
-          <a href="https://map.naver.com/p/search/서울%20서초구%20동산로2길%2050" target="_blank" rel="noopener" class="map-link">
-            네이버 지도에서 보기 →
+      <div class="map-area">
+        <!-- 네이버 지도 임베드 (정적 이미지 + 클릭 링크) -->
+        <a href="https://map.naver.com/p/search/서울%20서초구%20동산로2길%2050" target="_blank" rel="noopener" class="map-link-wrap" aria-label="네이버 지도에서 위치 보기">
+          <iframe
+            class="naver-map-iframe"
+            src="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EC%84%9C%EC%B4%88%EA%B5%AC%20%EB%8F%99%EC%82%B0%EB%A1%9C2%EA%B8%B8%2050?c=15.00,0,0,0,dh"
+            width="100%"
+            height="280"
+            frameborder="0"
+            loading="lazy"
+            title="클럽메이커스 위치 - 네이버 지도"
+          ></iframe>
+        </a>
+
+        <div class="map-actions">
+          <a href="https://map.naver.com/p/search/서울%20서초구%20동산로2길%2050" target="_blank" rel="noopener" class="map-btn map-btn-naver">
+            🟢 네이버 지도에서 보기 ↗
           </a>
+          <a href="https://map.kakao.com/?q=서울%20서초구%20동산로2길%2050" target="_blank" rel="noopener" class="map-btn map-btn-kakao">
+            💛 카카오맵에서 보기 ↗
+          </a>
+        </div>
+
+        <div class="map-tip">
+          <p class="map-tip-title">📍 찾아오시는 길</p>
+          <ul class="map-tip-list">
+            <li><strong>주소</strong> 서울 서초구 동산로2길 50, 가보빌딩 <strong>지하층</strong></li>
+            <li><strong>지하철</strong> 양재역 (3호선·신분당선) 도보 약 8분</li>
+            <li><strong>주차</strong> 가보빌딩 주차 가능 (방문 시 안내)</li>
+            <li><strong>입구</strong> 가보빌딩 정문에서 지하 1층으로 내려오세요. 지하라 처음엔 못 찾으실 수 있어요 — 헤매시면 010-4363-5555 전화 주세요.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -142,58 +165,69 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- 12-6. 문의 폼 -->
+  <!-- 12-6. 직접 연락 채널 -->
   <section class="section section-bg-soft">
     <div class="section-content-narrow">
-      <p class="section-eyebrow">INQUIRY · 문의 폼</p>
-      <h2>직접 연락이 어려우시면<br>아래 폼으로 남겨주세요</h2>
-      <p class="form-intro">영업일 기준 1~2일 내 답신드립니다.</p>
+      <p class="section-eyebrow">DIRECT · 가장 빠른 연락 방법</p>
+      <h2>편하신 방법으로<br/>바로 연락주세요</h2>
+      <p class="form-intro">사장님께 직접 닿습니다. 영업시간 내 빠르게 답변드립니다.</p>
 
-      <form class="contact-form" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact?sent=true">
-        <input type="hidden" name="form-name" value="contact" />
-        <p hidden><label>안 채우는 칸: <input name="bot-field" /></label></p>
-
-        <fieldset class="form-field">
-          <legend>문의 종류 *</legend>
-          <div class="radio-grid">
-            <label><input type="radio" name="kind" value="분석 예약" required /> 분석 예약</label>
-            <label><input type="radio" name="kind" value="작업 문의" /> 작업 문의</label>
-            <label><input type="radio" name="kind" value="교육 문의" /> 교육 문의</label>
-            <label><input type="radio" name="kind" value="제품 구매" /> 제품 구매</label>
-            <label><input type="radio" name="kind" value="기타 문의" /> 기타 문의</label>
+      <div class="contact-channels">
+        <a href="tel:010-4363-5555" class="channel-card channel-phone">
+          <div class="channel-icon">📞</div>
+          <div class="channel-body">
+            <p class="channel-label">전화</p>
+            <p class="channel-value">010-4363-5555</p>
+            <p class="channel-note">한 번 탭으로 바로 연결 (모바일)</p>
           </div>
-        </fieldset>
+          <span class="channel-arrow">→</span>
+        </a>
 
-        <div class="form-field">
-          <label for="name">성함 *</label>
-          <input type="text" id="name" name="name" required autocomplete="name" />
-        </div>
+        <a href="https://naver.me/GfrbfXtX" target="_blank" rel="noopener noreferrer" class="channel-card channel-naver">
+          <div class="channel-icon">🟢</div>
+          <div class="channel-body">
+            <p class="channel-label">네이버 예약</p>
+            <p class="channel-value">분석·교육 예약</p>
+            <p class="channel-note">시간 선택 + 예약 확정까지 한 번에</p>
+          </div>
+          <span class="channel-arrow">↗</span>
+        </a>
 
-        <div class="form-field">
-          <label for="phone">연락처 (전화번호)</label>
-          <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="010-1234-5678" />
-        </div>
+        <a href="https://blog.naver.com/clubmakers" target="_blank" rel="noopener noreferrer" class="channel-card channel-blog">
+          <div class="channel-icon">📝</div>
+          <div class="channel-body">
+            <p class="channel-label">네이버 블로그</p>
+            <p class="channel-value">작업 사례·공지</p>
+            <p class="channel-note">블로그에서 댓글로도 문의 가능</p>
+          </div>
+          <span class="channel-arrow">↗</span>
+        </a>
 
-        <div class="form-field">
-          <label for="email">이메일</label>
-          <input type="email" id="email" name="email" autocomplete="email" />
-          <p class="form-help">※ 전화 또는 이메일 둘 중 하나는 꼭 적어주세요.</p>
-        </div>
+        <a href="https://naver.me/GiyUpXkH" target="_blank" rel="noopener noreferrer" class="channel-card channel-cafe">
+          <div class="channel-icon">💬</div>
+          <div class="channel-body">
+            <p class="channel-label">네이버 카페 「골프채공작소」</p>
+            <p class="channel-value">회원 1만 명</p>
+            <p class="channel-note">카페에서 다른 손님들 후기·질문도 보실 수 있습니다</p>
+          </div>
+          <span class="channel-arrow">↗</span>
+        </a>
 
-        <div class="form-field">
-          <label for="message">문의 내용 *</label>
-          <textarea id="message" name="message" rows="6" required></textarea>
-        </div>
+        <a href="mailto:clubmakers@naver.com" class="channel-card channel-email">
+          <div class="channel-icon">✉️</div>
+          <div class="channel-body">
+            <p class="channel-label">이메일</p>
+            <p class="channel-value">clubmakers@naver.com</p>
+            <p class="channel-note">상세한 문의는 이메일이 편합니다</p>
+          </div>
+          <span class="channel-arrow">→</span>
+        </a>
+      </div>
 
-        <div class="form-field form-checkbox">
-          <label>
-            <input type="checkbox" name="privacy" required />
-            개인정보 수집·이용에 동의합니다 (필수)
-          </label>
-        </div>
-
-        <button type="submit" class="btn-primary form-submit">문의 보내기</button>
-      </form>
+      <p class="contact-tip">
+        💡 <strong>가장 빠른 연락은 전화 또는 네이버 예약</strong>입니다.
+        분석·교육은 사전 예약을 권장드립니다 — 작업 중일 때는 충분히 응대해드리지 못할 수 있습니다.
+      </p>
     </div>
   </section>
 
@@ -412,6 +446,89 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     line-height: 1.7;
   }
 
+  /* ===== 12-4 지도 영역 (새 임베드) ===== */
+  .map-area {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .map-link-wrap {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+    cursor: pointer;
+    line-height: 0;
+  }
+  .naver-map-iframe {
+    display: block;
+    width: 100%;
+    height: 280px;
+    border: 0;
+  }
+
+  .map-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .map-btn {
+    display: block;
+    text-align: center;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .map-btn:hover {
+    background: var(--bg-soft);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .map-btn-naver:hover { border-color: #03C75A; }
+  .map-btn-kakao:hover { border-color: #FEE500; }
+
+  .map-tip {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--gold, #B8985C);
+    padding: 16px 20px;
+    border-radius: 6px;
+    margin-top: 6px;
+  }
+  .map-tip-title {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+  .map-tip-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .map-tip-list li {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    padding: 4px 0;
+  }
+  .map-tip-list strong {
+    display: inline-block;
+    min-width: 50px;
+    color: var(--ink);
+    font-weight: 700;
+    margin-right: 8px;
+  }
+
+  /* ===== 옛 지도 placeholder 스타일 (비활성, 유지) ===== */
   .map-placeholder {
     background: var(--green);
     border-radius: 8px;
@@ -491,12 +608,108 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--gold-soft);
   }
 
-  /* ===== 12-6 폼 ===== */
+  /* ===== 12-6 직접 연락 채널 (폼 대체) ===== */
   .form-intro {
     font-size: 14.5px;
     color: var(--grey);
     margin-bottom: 36px;
   }
+
+  .contact-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .channel-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .channel-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 41, 34, 0.06);
+    border-color: var(--accent);
+  }
+  .channel-icon {
+    font-size: 26px;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-soft);
+    border-radius: 50%;
+  }
+  .channel-body { flex: 1; min-width: 0; }
+  .channel-label {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+    margin: 0 0 4px;
+    text-transform: uppercase;
+  }
+  .channel-value {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+    line-height: 1.3;
+  }
+  .channel-note {
+    font-size: 12px;
+    color: var(--grey);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .channel-arrow {
+    font-size: 20px;
+    color: var(--grey);
+    flex-shrink: 0;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .channel-card:hover .channel-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+  .channel-phone { border-left: 3px solid var(--green, #0F2922); }
+  .channel-naver { border-left: 3px solid #03C75A; }
+  .channel-blog  { border-left: 3px solid #03C75A; }
+  .channel-cafe  { border-left: 3px solid #03C75A; }
+  .channel-email { border-left: 3px solid var(--gold, #B8985C); }
+  .contact-tip {
+    background: var(--cream, #F8F2E5);
+    border-left: 3px solid var(--gold, #B8985C);
+    padding: 16px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .contact-tip strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  @media (max-width: 640px) {
+    .channel-card { padding: 16px 18px; gap: 14px; }
+    .channel-icon { width: 42px; height: 42px; font-size: 22px; }
+    .channel-value { font-size: 15.5px; }
+  }
+
+  /* ===== 옛 폼 스타일 (비활성, 유지) ===== */
   .contact-form {
     background: white;
     padding: 40px;
