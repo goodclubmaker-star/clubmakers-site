@@ -1,0 +1,985 @@
+---
+// /src/pages/index.astro
+// 홈 화면 재구성 — 4개 동선을 한눈에
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "클럽메이커스";
+const pageDescription = "골프채로 즐거운 시간을. 클럽메이커스는 키네마틱 시퀀스가 결합된 스윙 분석, 골프채로 시도하는 여러 실험, 24년 손에 익은 클럽 작업, 채기웅 공작소장이 직접 진행하는 클럽피팅 교육을 한자리에서 제공합니다. 서울 서초구 양재동.";
+const pageKeywords = "클럽메이커스, 클럽피팅, 골프채공작소, 채기웅, 양재동 골프, 서초구 골프, 골프채수리, 샤프트교체, 피팅";
+
+// 4개 방문자 동선
+const paths = [
+  {
+    label: "DIAGNOSE",
+    title: "피팅 · 분석 받기",
+    desc: "드라이버 슬라이스, 거리 부족, 후반 무너짐 — 결과가 아니라 원인부터 진단합니다.",
+    href: "/system",
+    cta: "피팅 시스템 보기",
+    accent: "primary",
+  },
+  {
+    label: "REPAIR",
+    title: "수리 · 작업 · 교체",
+    desc: "샤프트 교체, 그립 교체, 라이각 조정, 길이 조정. 현장 작업 표준과 가격 안내.",
+    href: "/workshop",
+    cta: "작업 · 가격 보기",
+    accent: "default",
+  },
+  {
+    label: "STUDY",
+    title: "책으로 공부하기",
+    desc: "『실제적인 클럽피팅』. 본문 14 PART, 약 600페이지의 클럽피팅 매뉴얼.",
+    href: "/book",
+    cta: "책 보기",
+    accent: "default",
+  },
+  {
+    label: "LEARN",
+    title: "클럽피팅 배우기",
+    desc: "현장에서 직접 배우는 클럽피팅 · 클럽메이킹 교육 과정.",
+    href: "/education",
+    cta: "교육 보기",
+    accent: "default",
+  },
+];
+
+// 자료실 카드
+const resources = [
+  {
+    title: "『실제적인 클럽피팅』",
+    sub: "14 PART · 약 600 페이지",
+    desc: "인터뷰부터 론치모니터, 통합 결정과 문제 해결까지. 피팅 판단의 기준을 구조로 정리한 매뉴얼.",
+    href: "/book",
+    label: "BOOK",
+  },
+  {
+    title: "증상별 진단 트리",
+    sub: "9가지 진단 페이지",
+    desc: "슬라이스, 훅, 거리 부족, 탄도 문제, 후반 무너짐 — 자주 만나는 9가지 증상의 원인을 추적.",
+    href: "/topics",
+    label: "DIAGNOSE",
+  },
+  {
+    title: "클럽피팅 용어사전",
+    sub: "109개 용어 정리",
+    desc: "F2P, MOI, EI, CPM, Spin Loft, 카운터밸런싱 — 책에서 사용한 용어의 정의와 PART 참조.",
+    href: "/glossary",
+    label: "REFERENCE",
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="WebSite"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="home-hero">
+    <div class="container narrow">
+      <p class="eyebrow">CLUBMAKERS · 친근한 골프채 공작소</p>
+
+      <h1 class="hero-title">
+        골프채로 <br />
+        <em>즐거운 시간</em>을
+      </h1>
+
+      <p class="hero-lead">
+        클럽메이커스를 찾아주신 모든 분께 <strong>즐거운 경험을 드리는 것</strong>이
+        목표입니다. 키네마틱 시퀀스가 결합된 스윙 분석과 골프채로 시도하는 여러 실험,
+        24년 손에 익은 클럽 작업, 그리고 채기웅 공작소장이 직접 진행하는 클럽피팅 교육 —
+        <strong>골프채를 다루는 네 가지 방식이 한자리에 있습니다.</strong>
+      </p>
+
+      <div class="hero-cta">
+        <a href="/first-visit" class="btn-primary">
+          <span>처음이세요?</span>
+          <span>→</span>
+        </a>
+        <a href="/contact" class="btn-ghost-hero">
+          <span>피팅 문의하기</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <div class="hero-meta">
+        <div class="meta-item">
+          <p class="meta-label">공작소장</p>
+          <p class="meta-value">채기웅</p>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="meta-item">
+          <p class="meta-label">현장 경력</p>
+          <p class="meta-value">24년</p>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="meta-item">
+          <p class="meta-label">위치</p>
+          <p class="meta-value">서울 서초구 양재동</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PHILOSOPHY QUOTE ==================== -->
+  <section class="philosophy">
+    <div class="container narrow">
+      <p class="eyebrow">PHILOSOPHY</p>
+      <blockquote class="philosophy-quote">
+        같은 증상도 <em>원인이 다르면 처방이 다릅니다.</em>
+      </blockquote>
+      <p class="philosophy-source">
+        『실제적인 클럽피팅』 PART 1 · 인터뷰
+      </p>
+      <p class="philosophy-expand">
+        슬라이스 하나에도 페이스 오픈, 힐 타점 기어이펙트, 릴리즈 지연 — 세 가지 다른 원인이
+        있습니다. 진단 없이 처방하면 같은 실수를 반복합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== 4 PATHS (CORE) ==================== -->
+  <section id="paths" class="paths-section">
+    <div class="container">
+      <div class="paths-head">
+        <p class="eyebrow">PATHS · 무엇을 도와드릴까요</p>
+        <h2 class="section-title">
+          어떤 일로 <em>오셨나요?</em>
+        </h2>
+        <p class="section-lead">
+          방문 목적에 따라 가장 가까운 입구를 안내합니다.
+        </p>
+      </div>
+
+      <div class="paths-grid">
+        {paths.map((p, i) => (
+          <a href={p.href} class={`path-card${p.accent === "primary" ? " path-primary" : ""}`}>
+            <p class="path-num">{String(i + 1).padStart(2, "0")}</p>
+            <p class="path-label">{p.label}</p>
+            <h3 class="path-title">{p.title}</h3>
+            <p class="path-desc">{p.desc}</p>
+            <span class="path-cta">{p.cta} →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== RESOURCES ==================== -->
+  <section class="resources-section">
+    <div class="container">
+      <div class="resources-head">
+        <p class="eyebrow">RESOURCES · 자료실</p>
+        <h2 class="section-title">
+          <em>자료</em>로 먼저 살펴보기
+        </h2>
+        <p class="section-lead">
+          전문 콘텐츠를 직접 읽으면서 자기 문제를 진단해 볼 수 있습니다.
+        </p>
+      </div>
+
+      <div class="resources-grid">
+        {resources.map((r) => (
+          <a href={r.href} class="resource-card">
+            <p class="resource-label">{r.label}</p>
+            <h3 class="resource-title">{r.title}</h3>
+            <p class="resource-sub">{r.sub}</p>
+            <p class="resource-desc">{r.desc}</p>
+            <span class="resource-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT (TRUST) ==================== -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-content">
+          <p class="eyebrow">ABOUT · 클럽메이커스</p>
+          <h2 class="section-title">
+            왜 <em>구조부터</em> 진단하는가
+          </h2>
+          <p class="about-text">
+            론치모니터에 표시되는 볼스피드, 방향, 스핀율은 <strong>이미 여러 조건이 결합된
+            이후의 출력값</strong>입니다. 결과만 보고 장비를 바꾸면 원인은 그대로 남습니다.
+          </p>
+          <p class="about-text">
+            클럽메이커스는 인터뷰 → 관찰 → 데이터 → 장비 순으로 접근합니다. 이 순서가
+            지켜질 때 같은 슬라이스도 정확한 처방이 가능합니다.
+          </p>
+          <div class="about-links">
+            <a href="/about" class="about-link">공작소장 채기웅 →</a>
+            <a href="/why-fitting" class="about-link">클럽피팅 철학 →</a>
+            <a href="/system" class="about-link">피팅 진행 과정 →</a>
+          </div>
+        </div>
+
+        <aside class="about-stats">
+          <div class="stat-row">
+            <p class="stat-num">1985</p>
+            <p class="stat-label">클럽메이킹 시작</p>
+          </div>
+          <div class="stat-row">
+            <p class="stat-num">24<span class="stat-unit">년</span></p>
+            <p class="stat-label">현장 경력</p>
+          </div>
+          <div class="stat-row">
+            <p class="stat-num">600<span class="stat-unit">p</span></p>
+            <p class="stat-label">『실제적인 클럽피팅』 분량</p>
+          </div>
+          <div class="stat-row">
+            <p class="stat-num">109</p>
+            <p class="stat-label">정리한 클럽피팅 용어</p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CASE TEASER ==================== -->
+  <section class="case-teaser">
+    <div class="container narrow">
+      <p class="eyebrow">CASE STUDIES · 실전 피팅 사례</p>
+      <h2 class="section-title">
+        실제 사례로 <em>구조 진단</em>이란 무엇인가
+      </h2>
+
+      <ul class="case-list">
+        <li>
+          <p class="case-num">CASE 01</p>
+          <p class="case-title">드라이버 슬라이스 — 원인은 라이각이었습니다</p>
+          <p class="case-desc">
+            힐 타점 + 페이스 오픈 → 라이각 업라이트의 전형적 패턴. 헤드 교체 없이
+            라이각 3도 플랫 조정으로 해결.
+          </p>
+        </li>
+        <li>
+          <p class="case-num">CASE 02</p>
+          <p class="case-title">거리 부족 — 무거운 클럽이 원인이었습니다</p>
+          <p class="case-desc">
+            여성 골퍼 / 남성 표준 무게 클럽 사용. 그라파이트 샤프트 + 길이 단축으로
+            헤드스피드 6mph 회복.
+          </p>
+        </li>
+        <li>
+          <p class="case-num">CASE 03</p>
+          <p class="case-title">타이밍 불안정 — MOI와 스윙 리듬의 불일치</p>
+          <p class="case-desc">
+            "어느 날은 완벽한데 어느 날은 완전히 틀린다." 신체 변화에 따른 타이밍-장비
+            불일치의 전형적 증상.
+          </p>
+        </li>
+      </ul>
+
+      <a href="/case-studies" class="case-more">
+        <span>실전 피팅 사례 8개 모두 보기</span>
+        <span>→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==================== LOCATION ==================== -->
+  <section class="location-section">
+    <div class="container narrow">
+      <p class="eyebrow">VISIT · 공작소 위치 · 시간</p>
+      <h2 class="section-title">
+        <em>방문</em>해 주세요
+      </h2>
+
+      <div class="location-grid">
+        <div class="location-block">
+          <p class="loc-label">주소</p>
+          <p class="loc-value">
+            서울 서초구 양재동 <br />
+            동산로2길 50, 가보빌딩 지하층
+          </p>
+        </div>
+
+        <div class="location-block">
+          <p class="loc-label">영업 시간</p>
+          <p class="loc-value">
+            평일 10:00 — 20:00 <br />
+            토요일 10:00 — 17:00 <br />
+            <span class="muted">일요일·공휴일 휴무</span>
+          </p>
+        </div>
+
+        <div class="location-block">
+          <p class="loc-label">연락</p>
+          <p class="loc-value">
+            <a href="tel:01043635555">010-4363-5555</a> <br />
+            <a href="mailto:clubmakers@naver.com">clubmakers@naver.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FINAL CTA ==================== -->
+  <section class="final-cta">
+    <div class="container narrow">
+      <p class="eyebrow">NEXT STEP · 진단은 측정에서 시작합니다</p>
+      <h2 class="final-title">
+        같은 슬라이스도 <br /><em>당신의 원인</em>은 다를 수 있습니다
+      </h2>
+
+      <p class="final-lead">
+        이 사이트의 자료들은 가능한 원인의 분류를 보여줍니다. 실제 처방은 타점·데이터·
+        샤프트 거동을 직접 측정해야 결정할 수 있습니다.
+        <strong>구조 진단부터 시작합니다.</strong>
+      </p>
+
+      <a href="/contact" class="btn-large">
+        <span>피팅 문의하기</span>
+        <span>→</span>
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+
+  .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.875rem, 4.5vw, 2.875rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -.02em;
+    color: var(--text);
+    margin: 0 0 1.25rem;
+  }
+  .section-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .section-lead {
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text-2);
+    max-width: 580px;
+    margin: 0;
+  }
+
+  /* ==================== HERO ==================== */
+  .home-hero {
+    background: var(--bg);
+    padding: 96px 0 88px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 7.5vw, 5rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -.025em;
+    color: var(--text);
+    margin: 0 0 2rem;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .hero-lead {
+    font-family: var(--sans);
+    font-size: 1.1875rem;
+    line-height: 1.8;
+    color: var(--text-2);
+    max-width: 660px;
+    margin: 0 0 2.5rem;
+  }
+  .hero-lead strong { color: var(--text); font-weight: 600; }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .btn-primary {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 16px 28px;
+    background: var(--text);
+    color: var(--bg);
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    transition: background .25s, transform .25s;
+  }
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateX(2px);
+  }
+  .btn-text {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rule-2);
+    padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .btn-text:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Hero 두 번째 CTA — 시각적으로 가벼움, Primary와 동급은 아님 */
+  .btn-ghost-hero {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 16px 28px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    transition: border-color .25s, background .25s, transform .25s;
+  }
+  .btn-ghost-hero:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--bg-soft, rgba(0,0,0,0.02));
+    transform: translateX(2px);
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+    font-family: var(--sans);
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+  }
+  .meta-label {
+    font-size: .6875rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .meta-value {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+  }
+  .meta-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--rule);
+  }
+  @media (max-width: 640px) {
+    .meta-divider { display: none; }
+  }
+
+  /* ==================== PHILOSOPHY ==================== */
+  .philosophy {
+    padding: 96px 0;
+    background: var(--text);
+    color: var(--bg);
+    text-align: center;
+  }
+  .philosophy .eyebrow { color: var(--accent-2); }
+  .philosophy-quote {
+    font-family: var(--serif);
+    font-size: clamp(1.875rem, 5vw, 3rem);
+    font-weight: 500;
+    line-height: 1.35;
+    color: white;
+    margin: 0 auto 1.5rem;
+    max-width: 800px;
+    quotes: none;
+  }
+  .philosophy-quote em {
+    font-style: normal;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  .philosophy-source {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--accent-2);
+    letter-spacing: .1em;
+    margin: 0 0 2rem;
+    text-transform: uppercase;
+  }
+  .philosophy-expand {
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,.7);
+    margin: 0 auto;
+    max-width: 580px;
+  }
+
+  /* ==================== 4 PATHS (CORE) ==================== */
+  .paths-section {
+    padding: 96px 0;
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+  }
+  .paths-head {
+    max-width: 760px;
+    margin: 0 auto 4rem;
+    padding: 0 24px;
+  }
+  .paths-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 600px) { .paths-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1000px) { .paths-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .path-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 36px 32px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform .3s, border-color .3s, background .3s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 280px;
+  }
+  .path-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .path-primary {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+  .path-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .path-primary .path-num,
+  .path-primary .path-label,
+  .path-primary .path-cta { color: var(--accent-2); }
+  .path-primary .path-title { color: var(--bg); }
+  .path-primary .path-desc { color: rgba(255,255,255,.78); }
+
+  .path-num {
+    font-family: var(--serif);
+    font-size: 1.875rem;
+    line-height: 1;
+    color: var(--accent);
+    margin: 0 0 1.5rem;
+    font-weight: 500;
+    opacity: .35;
+  }
+  .path-card:hover .path-num { opacity: 1; }
+  .path-primary .path-num { opacity: .6; }
+
+  .path-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0 0 .5rem;
+  }
+  .path-title {
+    font-family: var(--serif);
+    font-size: 1.375rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 .85rem;
+    line-height: 1.4;
+  }
+  .path-desc {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0 0 1.5rem;
+    flex: 1;
+  }
+  .path-cta {
+    font-family: var(--sans);
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: .02em;
+  }
+
+  /* ==================== RESOURCES ==================== */
+  .resources-section {
+    padding: 96px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .resources-head {
+    max-width: 760px;
+    margin: 0 auto 4rem;
+    padding: 0 24px;
+  }
+  .resources-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 720px) { .resources-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .resource-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent);
+    padding: 32px 28px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform .25s, background .25s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-right: 50px;
+  }
+  .resource-card:hover {
+    transform: translateY(-3px);
+    background: var(--accent-soft);
+  }
+  .resource-card:hover .resource-arrow { color: var(--accent); transform: translateY(-50%) translateX(4px); }
+  .resource-label {
+    font-family: var(--sans);
+    font-size: .6875rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0 0 1rem;
+  }
+  .resource-title {
+    font-family: var(--serif);
+    font-size: 1.375rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 .35rem;
+    line-height: 1.4;
+  }
+  .resource-sub {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--muted);
+    margin: 0 0 1rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+  .resource-desc {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0;
+    flex: 1;
+  }
+  .resource-arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: var(--accent-2);
+    transition: color .2s, transform .2s;
+  }
+
+  /* ==================== ABOUT ==================== */
+  .about-section {
+    padding: 96px 0;
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  @media (min-width: 920px) { .about-grid { grid-template-columns: 1.4fr 1fr; gap: 5rem; } }
+
+  .about-text {
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: var(--text-2);
+    margin: 0 0 1.25em;
+  }
+  .about-text strong { color: var(--text); font-weight: 600; }
+
+  .about-links {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+  }
+  .about-link {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: .65rem;
+    transition: color .2s, border-color .2s, padding-left .2s;
+  }
+  .about-link:hover {
+    color: var(--text);
+    border-color: var(--text);
+    padding-left: .35rem;
+  }
+
+  .about-stats {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    border-radius: 2px;
+  }
+  .stat-row {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .stat-row:first-child { padding-top: 0; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--accent);
+    font-weight: 500;
+    margin: 0 0 .35rem;
+    letter-spacing: -.01em;
+  }
+  .stat-unit {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: .15em;
+  }
+  .stat-label {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    color: var(--text-2);
+    margin: 0;
+    letter-spacing: .02em;
+  }
+
+  /* ==================== CASE TEASER ==================== */
+  .case-teaser {
+    padding: 96px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .case-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 3rem;
+  }
+  .case-list li {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-list li:first-child { padding-top: 0; }
+  .case-list li:last-child { border-bottom: none; }
+  .case-num {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0 0 .5rem;
+  }
+  .case-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 .5rem;
+    line-height: 1.4;
+  }
+  .case-desc {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.75;
+    color: var(--text-2);
+    margin: 0;
+  }
+  .case-more {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--accent-2);
+    transition: color .2s, gap .2s;
+  }
+  .case-more:hover {
+    color: var(--text);
+    gap: 1rem;
+  }
+
+  /* ==================== LOCATION ==================== */
+  .location-section {
+    padding: 96px 0;
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+  }
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 720px) { .location-grid { grid-template-columns: repeat(3, 1fr); } }
+  .location-block {
+    border-left: 2px solid var(--accent-2);
+    padding-left: 20px;
+  }
+  .loc-label {
+    font-family: var(--sans);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0 0 .65rem;
+  }
+  .loc-value {
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin: 0;
+  }
+  .loc-value a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rule-2);
+    transition: color .2s, border-color .2s;
+  }
+  .loc-value a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .loc-value .muted {
+    color: var(--muted);
+    font-size: .875rem;
+  }
+
+  /* ==================== FINAL CTA ==================== */
+  .final-cta {
+    background: var(--text);
+    color: var(--bg);
+    padding: 112px 0;
+    text-align: center;
+  }
+  .final-cta .eyebrow { color: var(--accent-2); }
+  .final-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.25;
+    color: white;
+    margin: 0 0 1.5rem;
+    letter-spacing: -.02em;
+  }
+  .final-title em {
+    font-style: normal;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  .final-lead {
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,.78);
+    margin: 0 auto 3rem;
+    max-width: 580px;
+  }
+  .final-lead strong { color: white; font-weight: 600; }
+  .btn-large {
+    font-family: var(--sans);
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding: 22px 44px;
+    background: var(--accent);
+    color: white;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    transition: background .25s, transform .25s;
+    border: 1px solid var(--accent);
+  }
+  .btn-large:hover {
+    background: var(--accent-2);
+    border-color: var(--accent-2);
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 480px) {
+    .home-hero { padding: 64px 0 56px; }
+    .philosophy, .paths-section, .resources-section, .about-section, .case-teaser, .location-section { padding: 64px 0; }
+    .final-cta { padding: 80px 0; }
+    .paths-head, .resources-head { margin-bottom: 2.5rem; }
+    .path-card { padding: 28px 24px 22px; min-height: 240px; }
+    .resource-card { padding: 26px 22px 22px; padding-right: 44px; }
+    .about-stats { padding: 24px 22px; }
+    .stat-num { font-size: 2rem; }
+    .btn-large { font-size: 1rem; padding: 18px 32px; }
+  }
+</style>
