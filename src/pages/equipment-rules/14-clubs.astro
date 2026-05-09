@@ -1,0 +1,998 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const fourteenClubsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': 'https://myclubmakers.com/equipment-rules/14-clubs/#article',
+  headline: '14개 클럽 룰 — Rule 4.1b 한 라운드 최대 14개',
+  description: 'USGA·R&A Rule 4.1b 한 라운드 최대 14개 클럽 규정. 스트로크 플레이 2벌타·매치 플레이 1홀 패배·최대 4벌타. 1938년 도입, Lawson Little 31개 시대. Joel Dahmen 2024 사례. 클럽메이커스 24년 현장 해석.',
+  inLanguage: 'ko-KR',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+    url: 'https://myclubmakers.com',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '14개 미만으로 라운드해도 되나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '네, 가능합니다. 1개부터 14개까지 자유롭게 선택할 수 있어요. 최대 한계만 14개이고 최소 한계는 없습니다. 시니어 골퍼나 입문자가 가벼운 가방을 위해 8~10개만 가지고 라운드하는 경우도 흔합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '백에 14개를 넘게 가져갔는데 사용 안 했으면 페널티 없나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '아닙니다. 사용 여부와 무관하게 페널티가 부과됩니다. 라운드 시작 시점(첫 티 샷)에 14개를 넘으면 위반입니다. 발견 즉시 초과 클럽을 OUT 처리해야 추가 페널티를 막을 수 있어요.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '라운드 중 클럽이 부러졌을 때 새 클럽으로 교체 가능한가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '본인이 일으키지 않은 손상이라면 교체 가능합니다. 다른 사람의 행동이나 외부 요인으로 손상된 경우만 해당. 본인의 분노 표출 등으로 부러진 클럽은 교체 불가입니다. 부러진 클럽은 그대로 사용하거나 (사용 가능하면) 빼두는 선택만 가능해요.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '카트에 다른 사람의 클럽이 같이 있는데 페널티인가요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '본인이 모르고 있었다면 14개 한계에 포함되지 않습니다. Rule 4.1b(1)의 예외 조항: "라운드 시작 후 다른 선수의 클럽이 본인 백에 모르게 들어가 있어도 14개 한계에 포함되지 않는다." 다만 발견 즉시 그 클럽으로 스트로크하지 말아야 합니다.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: '내가 일반 라운드에서 15개를 가져갔다가 발견했어요. 어떻게 하나요?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: '발견 즉시 한 자루를 OUT 처리하시면 됩니다. 동반자에게 "이 클럽 빼겠습니다" 선언하고, 클럽을 거꾸로 두거나 카트 바닥에 두시면 됩니다. 친선 라운드면 페널티 부과가 자율이지만, 핸디캡 등록 라운드와 공식 대회는 위반 발견 홀당 2벌타(라운드 최대 4벌타)가 적용됩니다.',
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="14개 클럽 룰 — Rule 4.1b 한 라운드 최대 14개"
+  description="USGA·R&A Rule 4.1b 한 라운드 최대 14개 클럽 규정. 스트로크 플레이 2벌타·매치 플레이 1홀 패배·최대 4벌타. 1938년 도입 배경, Lawson Little 31개 시대. Joel Dahmen 2024 사례. 클럽메이커스 24년 현장 해석."
+  schemaType="Article"
+  keywords="14개 클럽 룰, Rule 4.1b, 골프 클럽 한계, 14자루 룰, 14개 클럽 페널티, 2벌타, 매치플레이 1홀 패배, Lawson Little, Joel Dahmen, 클럽 OUT 처리, 클럽 공유, 파트너 클럽 공유"
+  extraSchema={[fourteenClubsSchema, faqSchema]}
+>
+
+  <!-- 1. Hero -->
+  <section class="page-hero clubs14-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">EQUIPMENT RULES · TOPIC 04 · 14개 클럽 룰</div>
+      <h1>14자루 — 가장 단순하지만<br/>가장 자주 위반되는 룰</h1>
+      <p class="page-hero-subtitle">
+        Rule 4.1b. <strong>한 라운드 최대 14개 클럽.</strong> 1938년부터 90년 가까이 변하지 않은 단순한 규정입니다.<br/>
+        <span class="hero-sub-light">그러나 PGA Tour 프로도 매년 위반하는 룰. 그 의미와 정확한 적용을 정리합니다.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. Quick Summary -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">QUICK SUMMARY · 핵심 4가지</p>
+      <h2>14개 클럽 룰의 핵심</h2>
+      <p class="quick-hint">카드를 누르시면 상세 설명으로 이동합니다.</p>
+      <div class="quick-grid">
+        <a href="#limit" class="quick-card">
+          <p class="quick-num">01</p>
+          <h3 class="quick-title">최대 한계<br/><strong>14개</strong></h3>
+          <p class="quick-body">최소 한계 없음. <strong>1~14개</strong> 자유 선택.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#penalty" class="quick-card">
+          <p class="quick-num">02</p>
+          <h3 class="quick-title">페널티<br/><strong>2벌타·1홀 패배</strong></h3>
+          <p class="quick-body">스트로크 2벌타 / 매치 1홀 패배. 최대 4벌타·2홀.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#procedure" class="quick-card">
+          <p class="quick-num">03</p>
+          <h3 class="quick-title">발견 시 처리<br/><strong>즉시 OUT</strong></h3>
+          <p class="quick-body">초과 클럽을 즉시 선언하고 OUT 처리. 안 하면 실격.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+        <a href="#sharing" class="quick-card">
+          <p class="quick-num">04</p>
+          <h3 class="quick-title">공유 규정<br/><strong>파트너 합산</strong></h3>
+          <p class="quick-body">파트너끼리 합쳐 <strong>14개 이내</strong>면 클럽 공유 가능.</p>
+          <span class="quick-arrow">자세히 ↓</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 한계의 의미 -->
+  <section class="section" id="limit">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 01 · 14개 한계</p>
+      <h2>왜 14개인가 — 임의의 숫자에서 표준이 되기까지</h2>
+      <p class="section-body">
+        Rule 4.1b의 14개 한계는 <strong>1938년 USGA, 1939년 R&A</strong>가 도입한 규정입니다.
+        90년 가까이 변하지 않고 유지되어 온 골프의 가장 오래된 규정 중 하나입니다.
+      </p>
+
+      <h3 class="subsection-h3">한계가 없던 시대</h3>
+      <p class="section-body">
+        1930년대 이전에는 <strong>클럽 개수 제한이 없었습니다.</strong>
+        선수들이 자유롭게 가방에 넣을 수 있었고, 캐디가 무거운 가방을 메고 다녔어요.
+        Lawson Little 같은 톱 아마추어 선수는 <strong>1934~1935년 아마추어 챔피언십 우승 시 31개 클럽</strong>을 사용했다고 알려져 있습니다.
+        각 거리에 정확히 맞는 전용 클럽을 가지고 다녔던 거죠.
+      </p>
+
+      <p class="section-body">
+        USGA는 이런 흐름이 <strong>"기술이 아닌 장비의 다양성"</strong>이 우승을 결정하게 만든다고 판단했습니다.
+        1938년 14개 한계를 도입했고, 다음 해 R&A도 동참했습니다.
+        14라는 숫자 자체는 임의에 가까웠지만 — 당시 평균적인 가방 구성을 기준으로 정해진 것으로 보입니다.
+      </p>
+
+      <h3 class="subsection-h3">최소 한계는 없다</h3>
+      <p class="section-body">
+        규정은 "최대 14개"만 정합니다. <strong>최소 한계는 없어요.</strong>
+        이론상 클럽 1개로도 라운드가 가능합니다 (실제 시도하는 골퍼들도 있어요).
+        시니어 골퍼나 입문자는 <strong>8~10개</strong>로 가벼운 가방을 선호하고, 미니멀 골프 운동도 있습니다.
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">14개에 포함되는 것 / 안 되는 것</p>
+        <ul class="rule-list">
+          <li>
+            <strong>포함</strong>: 라운드 시작 시 가방에 있는 모든 클럽 (드라이버, 우드, 하이브리드, 아이언, 웨지, 퍼터)
+          </li>
+          <li>
+            <strong>포함 안 됨</strong>: 부러진 클럽의 분리된 부품 (헤드만 / 샤프트만 / 그립만 따로 가지고 있는 경우)
+          </li>
+          <li>
+            <strong>포함 안 됨</strong>: 라운드 시작 후 본인 모르게 가방에 들어간 다른 사람의 클럽 (Rule 4.1b(1) 예외)
+          </li>
+          <li>
+            <strong>포함 안 됨</strong>: 라운드 시작 전 발견한 초과 클럽을 미리 OUT 처리하고 가방에 그냥 두는 경우
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 페널티 -->
+  <section class="section section-bg-cream" id="penalty">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 02 · 페널티</p>
+      <h2>위반 시 페널티 — 게임 형식별로 다름</h2>
+      <p class="section-body">
+        14개 한계 위반 시 페널티는 <strong>게임 형식</strong>에 따라 다릅니다.
+        스트로크 플레이와 매치 플레이가 각각 다른 방식으로 적용됩니다.
+      </p>
+
+      <h3 class="subsection-h3">스트로크 플레이 — 2벌타 × 위반 홀, 최대 4벌타</h3>
+      <div class="rule-box">
+        <p class="rule-box-title">스트로크 플레이 페널티</p>
+        <ul class="rule-list">
+          <li>
+            <strong>위반 홀마다 2벌타</strong> — 14개 초과 상태로 시작한 모든 홀에 적용
+          </li>
+          <li>
+            <strong>라운드 최대 4벌타</strong> — 처음 두 홀까지만 페널티 적용 (3홀 이상은 추가 X)
+          </li>
+          <li>
+            <strong>발견 시 즉시 OUT</strong> — 초과 클럽을 선언하고 OUT 처리. 그 후 홀은 페널티 없음
+          </li>
+        </ul>
+      </div>
+
+      <p class="section-body">
+        예시: 15개로 라운드 시작 → 4번 홀에서 발견 → 1, 2번 홀 각 2벌타 = <strong>최대 4벌타</strong>.
+        3, 4번 홀은 처음 두 홀 페널티가 이미 부과되어 추가 페널티 없음.
+        4번 홀에서 즉시 OUT 처리하지 않으면 실격(DQ)입니다.
+      </p>
+
+      <h3 class="subsection-h3">매치 플레이 — 1홀 패배 × 위반 홀, 최대 2홀</h3>
+      <div class="rule-box">
+        <p class="rule-box-title">매치 플레이 페널티</p>
+        <ul class="rule-list">
+          <li>
+            <strong>위반 홀마다 1홀 패배</strong> — 매치 스코어에서 직접 차감
+          </li>
+          <li>
+            <strong>라운드 최대 2홀 패배</strong> — 처음 두 홀만 차감
+          </li>
+          <li>
+            <strong>"홀 패배"가 아닌 "스코어 조정"</strong> — 이긴 홀이라도 매치 스코어에서 빠짐
+          </li>
+        </ul>
+      </div>
+
+      <p class="section-body">
+        예시: 15개로 라운드 시작 → 3번 홀까지 3홀 차이로 리드 → 4번 홀에서 발견 → 처음 2홀 페널티 = 매치 스코어에서 2홀 차감
+        → <strong>3업이 1업으로 조정</strong>. 발견 후 즉시 OUT 처리.
+      </p>
+
+      <h3 class="subsection-h3">스테이블포드 / Par·Bogey 형식</h3>
+      <p class="section-body">
+        스테이블포드 — <strong>위반 홀에서 2점 차감 (위반 홀이 2개 이상이면 4점 차감)</strong>.<br/>
+        Par/Bogey — 1홀 패배 또는 2홀 패배 (스트로크 플레이와 동일 패턴).
+      </p>
+
+      <h3 class="subsection-h3">실제 사례 — 2024 Joel Dahmen PGA Tour</h3>
+      <p class="section-body">
+        2024년 PGA Tour Shriners Children's Open 첫 라운드에서 Joel Dahmen 선수가
+        <strong>15개 클럽으로 시작</strong>해 4번 홀 티잉 그라운드에서 4번 아이언이 추가로 들어있는 것을 발견했어요.
+        <strong>4벌타</strong>가 부과됐습니다 (1, 2번 홀 각 2벌타). Dahmen은 인터뷰에서
+        "투어 프로들도 컨디션·코스에 따라 15~16개를 가지고 다니다가 시작 전 정리한다"고 설명했어요.
+        그날 캐디가 빼는 것을 잊은 것이 원인이었다고 합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. 발견 시 처리 절차 -->
+  <section class="section" id="procedure">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 03 · 발견 시 처리</p>
+      <h2>14개 초과 발견 시 — 정확한 처리 절차</h2>
+      <p class="section-body">
+        라운드 중 14개 초과 사실을 알게 되면 <strong>다음 스트로크 전에</strong> 반드시 OUT 처리해야 합니다.
+        절차를 따르지 않거나 늦게 처리하면 페널티가 누적되거나 실격될 수 있어요.
+      </p>
+
+      <h3 class="subsection-h3">처리 단계</h3>
+      <div class="rule-box">
+        <p class="rule-box-title">초과 클럽 OUT 처리 단계</p>
+        <ul class="rule-list">
+          <li>
+            <strong>① 즉시 정지</strong> — 다음 스트로크 전에 멈춥니다. 다음 샷 후에 처리하면 그 홀에도 페널티 적용.
+          </li>
+          <li>
+            <strong>② 빼낼 클럽 선택</strong> — 본인이 OUT 처리할 클럽을 선택. 어떤 클럽이든 선택 가능.
+          </li>
+          <li>
+            <strong>③ 명확한 선언</strong> — 매치 플레이는 상대에게, 스트로크 플레이는 마커나 동반자에게
+            "이 클럽 OUT 처리합니다"라고 분명히 알림.
+          </li>
+          <li>
+            <strong>④ 시각적 표시</strong> — 클럽을 가방에 거꾸로 꽂거나, 카트 바닥에 두거나, 다른 사람에게 맡김.
+            남은 라운드 동안 사용 불가 표시.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">선언하지 않거나 사용하면 — 실격</h3>
+      <p class="section-body">
+        OUT 처리한 클럽으로 <strong>다시 스트로크하면 실격(DQ)</strong>입니다.
+        또 OUT 처리 자체를 하지 않거나 늦게 처리해도 페널티가 추가됩니다.
+        절차상 가장 중요한 것은 "<strong>다음 스트로크 전</strong>"이라는 시점을 지키는 것입니다.
+      </p>
+
+      <h3 class="subsection-h3">라운드 시작 전 발견 시 — 페널티 없음</h3>
+      <p class="section-body">
+        티잉 그라운드에 도착해서 시작 직전에 발견한 경우 — <strong>페널티 없이 처리 가능</strong>합니다.
+        조건: 본인이 의도적으로 가져온 것이 아니라 "실수로" 들어간 경우만.
+        의도적으로 15개를 가져갔다면 적용 X (위반 시작).
+      </p>
+
+      <div class="rule-box">
+        <p class="rule-box-title">시작 전 처리 옵션</p>
+        <ul class="rule-list">
+          <li>
+            <strong>옵션 A — 차에 두고 오기</strong>: 가장 안전. 가방에서 빼서 클럽하우스 반납 또는 차에 보관.
+          </li>
+          <li>
+            <strong>옵션 B — OUT 처리 후 그대로 가져가기</strong>: 가방에 두되 사용하지 않음. 14개 한계에 포함되지 않음.
+            동반자나 마커에게 미리 선언 필요.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 클럽 공유 규정 -->
+  <section class="section section-bg-cream" id="sharing">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REGULATION 04 · 공유 규정</p>
+      <h2>클럽 공유 — 파트너끼리만 가능</h2>
+      <p class="section-body">
+        클럽 공유는 <strong>파트너끼리만 가능</strong>한 제한적 규정입니다.
+        포섬·포볼 같은 팀 매치에서 한 백을 두 사람이 공유하는 경우, 합산해서 14개 이내여야 합니다.
+      </p>
+
+      <h3 class="subsection-h3">파트너 공유 — Rule 4.1b의 예외</h3>
+      <div class="rule-box">
+        <p class="rule-box-title">파트너 클럽 공유 조건</p>
+        <ul class="rule-list">
+          <li>
+            <strong>합산 14개 이하</strong> — 두 사람이 가지고 있는 모든 클럽의 합이 14개를 넘지 않아야 함.
+          </li>
+          <li>
+            <strong>한 사람이 위반하면 둘 다 페널티</strong> — 파트너 한 명이 위반해도 양쪽 모두 페널티.
+          </li>
+          <li>
+            <strong>공유 가방의 의미</strong> — 보통 두 명이 한 캐디를 공유하거나, 둘이 함께 백을 카트에 싣는 경우.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="subsection-h3">개인 라운드 — 다른 사람 클럽 사용 불가</h3>
+      <p class="section-body">
+        파트너십이 아닌 일반 개인 라운드에서는 <strong>다른 선수의 클럽을 절대 사용할 수 없습니다.</strong>
+        Rule 4.1b(2): "다른 선수의 클럽으로 스트로크하면 페널티." 같은 그룹이든, 다른 그룹이든, 다른 대회든 무관하게 적용.
+        예: 동반자가 두고 간 클럽을 잠깐 빌려 쓰는 것 — 페널티.
+      </p>
+
+      <h3 class="subsection-h3">놓고 간 클럽 / 모르게 들어간 클럽 — 예외</h3>
+      <p class="section-body">
+        다른 골퍼가 두고 간 클럽을 본인이 줍는 경우 — 14개 한계에 영향이 없습니다.
+        모르고 가방에 들어간 클럽도 마찬가지입니다.
+        조건: <strong>그 클럽으로 스트로크하지 않을 것</strong>. 발견 즉시 동반자에게 알리고 OUT 처리.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. 클럽 손상과 교체 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RELATED RULE · 손상 클럽 교체</p>
+      <h2>라운드 중 클럽이 부러지면</h2>
+      <p class="section-body">
+        14개 한계와 직접 관련은 아니지만, 자주 함께 묻는 질문이라 정리합니다.
+        라운드 중 클럽이 부러지거나 손상됐을 때의 처리는 Rule 4.1a에 정리되어 있습니다.
+      </p>
+
+      <h3 class="subsection-h3">본인 책임 손상 — 교체 불가</h3>
+      <p class="section-body">
+        본인의 분노 표출, 부주의한 사용 등으로 클럽이 부러진 경우 — <strong>새 클럽으로 교체할 수 없습니다.</strong>
+        부러진 클럽은 그대로 사용하거나 OUT 처리하는 두 가지 옵션만 가능.
+        부러진 부품을 가지고 다니는 것은 14개 한계에 포함되지 않으므로, 빼두고 13개로 진행 가능.
+      </p>
+
+      <h3 class="subsection-h3">외부 요인 손상 — 교체 가능</h3>
+      <p class="section-body">
+        본인이 일으키지 않은 손상(다른 사람의 행동, 카트 사고 등)이라면 <strong>새 클럽으로 교체 가능</strong>합니다.
+        다만 라운드를 부당하게 지연시키지 않는 범위에서만. 클럽하우스에서 새 클럽을 가져와 합법적으로 교체할 수 있어요.
+      </p>
+
+      <h3 class="subsection-h3">14개 미만으로 시작했다면 — 추가 가능</h3>
+      <p class="section-body">
+        13개 이하로 라운드를 시작했다면 라운드 중 14개까지 추가 가능합니다.
+        다만 추가하는 클럽이 <strong>같은 그룹의 다른 선수가 사용 중인 클럽이면 안 됩니다.</strong>
+        또 라운드 부당 지연 금지 — 클럽 가지러 멀리 가는 것은 페널티 가능성.
+      </p>
+    </div>
+  </section>
+
+  <!-- 8. 클럽 구성 가이드 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SET COMPOSITION · 클럽 구성</p>
+      <h2>14개 안에서 어떻게 구성할 것인가</h2>
+      <p class="section-body">
+        규정은 "최대 14개"만 정하고, 구성은 자유입니다.
+        골퍼의 능력·코스 특성·기상 조건에 따라 다양한 구성이 가능해요.
+      </p>
+
+      <h3 class="subsection-h3">전형적인 구성 (14개 풀세트)</h3>
+      <div class="compare-table">
+        <table>
+          <thead>
+            <tr>
+              <th>분류</th>
+              <th>구성</th>
+              <th>개수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>드라이버</strong></td>
+              <td>1W</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td><strong>페어웨이우드</strong></td>
+              <td>3W, 5W (또는 3W만)</td>
+              <td>1~2</td>
+            </tr>
+            <tr>
+              <td><strong>하이브리드/유틸리티</strong></td>
+              <td>4U, 5U</td>
+              <td>1~2</td>
+            </tr>
+            <tr>
+              <td><strong>아이언</strong></td>
+              <td>5~9번 또는 6~9번</td>
+              <td>4~5</td>
+            </tr>
+            <tr>
+              <td><strong>웨지</strong></td>
+              <td>PW, GW(50°), SW(54°), LW(58°)</td>
+              <td>3~4</td>
+            </tr>
+            <tr>
+              <td><strong>퍼터</strong></td>
+              <td>1개</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td colspan="2"><strong>합계</strong></td>
+              <td><strong>14개</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="subsection-h3">상황별 구성 변형</h3>
+      <ul class="penalty-list">
+        <li>
+          <strong>여성·시니어 골퍼</strong>: 롱아이언 대신 하이브리드 더 많이 (3U, 4U, 5U).
+          웨지는 PW + SW 2개만으로 단순화.
+        </li>
+        <li>
+          <strong>거리 큰 골퍼 (HS 110mph+)</strong>: 5W 빼고 2-iron 또는 드라이빙 아이언 추가.
+          웨지 3~4개로 숏게임 강화.
+        </li>
+        <li>
+          <strong>링크스 코스 라운드</strong>: 페어웨이우드 더 많이 (3W, 5W, 7W).
+          런 위주 플레이 위해 9번 아이언 빼고 펀치우드 추가하기도 함.
+        </li>
+        <li>
+          <strong>겨울철 골프</strong>: 웨지 4개 풀세트 (PW, GW, SW, LW).
+          그린 주변 결빙·노출에 다양한 로프트 필요.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9. 클럽메이커스 해석 -->
+  <section class="section section-bg-green">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">CLUBMAKERS' INTERPRETATION · 공작소 해석</p>
+      <h2 class="green-h2">현장에서 본 14개 클럽 룰</h2>
+      <p class="green-body">
+        24년간 공작소를 운영하면서 느낀 14개 룰의 의미와 구성에 대한 관점을 정리합니다.
+      </p>
+      <ul class="interpretation-list">
+        <li>
+          <strong>"꼭 14개를 채워야 하나요?"</strong><br/>
+          <span class="green-body-small">아닙니다. 본인 능력에 안 맞는 클럽을 억지로 채우는 것보다 12~13개로 잘 쓰시는 것이 좋습니다.
+          예를 들어 4번 아이언을 잘 못 치는데 억지로 백에 넣어두면 미스만 만들어요. 빼고 5W나 5U로 대체하는 것이 실용적입니다.</span>
+        </li>
+        <li>
+          <strong>"공작소에서 풀세트 작업하면 자동으로 14개?"</strong><br/>
+          <span class="green-body-small">전통적인 풀세트는 14개입니다. 다만 클럽메이커스에서는 골퍼의 능력·신체·코스 환경을 보고
+          때로는 13개나 12개를 권하기도 해요. 갭 와인지 표를 만들어 거리 공백 없이 구성하는 것이 핵심입니다.</span>
+        </li>
+        <li>
+          <strong>"드라이버 슬리브로 두 가지 로프트 만들면?"</strong><br/>
+          <span class="green-body-small">슬리브 조정으로 9°와 10.5°를 한 클럽에서 만들 수 있어도, 라운드 시작 후엔 1개 클럽으로 카운트됩니다.
+          라운드 중 슬리브 조정도 금지 — 자세한 내용은 어드저스터블 클럽 규정 페이지에서 다룹니다.</span>
+        </li>
+        <li>
+          <strong>"백에 골프 가방 두 개 가지고 다니면?"</strong><br/>
+          <span class="green-body-small">실제로 본 적은 없지만 — 두 가방 안의 클럽을 모두 합쳐 14개 이하면 OK.
+          한 가방에 있든 두 가방에 있든 본인이 가지고 다니는 모든 클럽이 합산됩니다.</span>
+        </li>
+        <li>
+          <strong>"라운드 직전 동반자에게 클럽 빌리는 것은?"</strong><br/>
+          <span class="green-body-small">라운드 시작 전이면 OK입니다. 시작 시점에 본인 가방에 14개 이내면 합법.
+          다만 라운드 시작 후 빌리는 것은 페널티(다른 선수 클럽으로 스트로크 = 페널티). 라운드 전에 정리하시는 것이 안전합니다.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10. FAQ -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FAQ · 자주 묻는 질문</p>
+      <h2>실무에서 자주 받는 질문</h2>
+      <ul class="faq-list">
+        <li class="faq-item">
+          <p class="faq-q">Q1. 일반 친선 라운드에서도 페널티가 적용되나요?</p>
+          <p class="faq-a">친선 라운드는 페널티 부과가 동반자들의 합의에 달려 있습니다.
+          공식적으로는 모든 라운드에 적용되는 룰이지만, 친선 라운드에서는 발견 즉시 OUT 처리하는 정도로 마무리되는 경우가 많아요.
+          <strong>핸디캡 등록 라운드와 공식 대회</strong>에서는 정확히 페널티가 부과됩니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q2. 가방 두 개를 가지고 다녀도 되나요?</p>
+          <p class="faq-a">네, 가방 개수에 제한은 없습니다. 다만 두 가방의 모든 클럽이 합쳐 14개 이내여야 합니다.
+          예를 들어 한 가방에 14개, 다른 가방에 1개 = 위반. 가방 두 개에 합쳐 14개면 합법.
+          현실적으로는 한 가방에 14개로 정리하시는 것이 편리합니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q3. 클럽이 부러진 채로 가지고 다니는 건 14개에 포함?</p>
+          <p class="faq-a">완전히 부러져 분리된 부품(헤드만 / 샤프트만 / 그립만)은 14개 한계에 <strong>포함되지 않습니다.</strong>
+          다만 살짝 휘었지만 형태가 유지된 클럽은 1개로 카운트됩니다.
+          판단 기준: "이 부품으로 스트로크 가능한가?" 가능하면 1개, 불가능하면 0개.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q4. 드라이빙 레인지에서 친구 클럽으로 연습 후 라운드해도 되나요?</p>
+          <p class="faq-a">드라이빙 레인지는 라운드가 아니라 페널티 없습니다. 다만 그 친구 클럽이 본인 가방에 들어간 채로 라운드 시작하면 위반.
+          <strong>라운드 시작 전 가방 정리</strong>를 항상 하시는 것이 안전합니다.
+          PGA Tour 캐디들도 매 라운드 시작 전 클럽 카운트를 의무화하는 이유입니다.</p>
+        </li>
+        <li class="faq-item">
+          <p class="faq-q">Q5. 비상시 클럽이 부러졌는데 다른 사람 클럽 빌려도 되나요?</p>
+          <p class="faq-a">기본적으로 <strong>안 됩니다.</strong> 본인 책임으로 부러진 클럽은 교체 불가, 다른 사람 클럽 사용 페널티 별도.
+          다만 외부 요인(예: 카트 사고로 부러짐)이라면 클럽하우스에서 새 클럽 가져와 합법적 교체 가능.
+          또는 그냥 13개로 라운드 마무리하시는 것이 가장 안전합니다.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11. 관련 자료 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RELATED · 관련 페이지</p>
+      <h2>함께 읽으면 좋은 자료</h2>
+      <div class="related-grid">
+        <a href="/equipment-rules" class="related-card">
+          <p class="related-card-eyebrow">INDEX</p>
+          <h3 class="related-card-title">장비 규정 인덱스</h3>
+          <p class="related-card-body">8개 토픽 전체 안내. 다른 규정 분야로 이동하실 수 있어요.</p>
+        </a>
+        <a href="/equipment-rules/driver" class="related-card">
+          <p class="related-card-eyebrow">DRIVER</p>
+          <h3 class="related-card-title">드라이버 규정</h3>
+          <p class="related-card-body">14개 중 1개를 차지하는 드라이버 — COR · 부피 · MOI · 길이.</p>
+        </a>
+        <a href="/equipment-rules/putters" class="related-card">
+          <p class="related-card-eyebrow">PUTTER</p>
+          <h3 class="related-card-title">퍼터 규정</h3>
+          <p class="related-card-body">14개 중 마지막 1개 — 앵커링 금지 (Rule 10.1b).</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. 출처 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SOURCE · 출처</p>
+      <h2>이 글의 자료 출처</h2>
+      <ul class="source-list">
+        <li>USGA Rules of Golf — Rule 4 The Player's Equipment, <a href="https://www.usga.org/content/usga/home-page/custom-search-pages/rules/2019-golf-rules-and-interpretations/pe-rule-4.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>R&A Rules of Golf — Rule 4, <a href="https://www.randa.org/en/rog/the-rules-of-golf/rule-4" target="_blank" rel="noopener noreferrer">randa.org ↗</a></li>
+        <li>USGA Rules of Golf — Rule 21 Other Forms of Stroke Play, <a href="https://www.usga.org/content/usga/home-page/custom-search-pages/rules/2019-golf-rules-and-interpretations/fr-rule-21.html" target="_blank" rel="noopener noreferrer">usga.org ↗</a></li>
+        <li>Joel Dahmen 2024 Shriners Children's Open 4벌타 사례 (PGA Tour 보도)</li>
+        <li>Lawson Little 1934~1935 아마추어 챔피언십 31개 클럽 사례 — Kenneth Chapman, "The Rules of the Green"</li>
+      </ul>
+      <p class="source-disclaimer-text">
+        ⚠ 이 글은 일반 이해를 돕는 가이드입니다. 공식 대회의 정확한 페널티 적용은
+        <strong>USGA·R&A 공식 룰북</strong>을 직접 확인하셔야 합니다.
+        규정은 2026년 5월 기준이며, 향후 변경될 수 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 13. Closing -->
+  <section class="closing-section">
+    <div class="closing-content">
+      <h3>"한 라운드, 14자루.<br/>그 안에서 전략이 만들어집니다."</h3>
+      <p class="closing-meta">— 클럽메이커스 14개 클럽 룰 가이드</p>
+      <div class="closing-actions">
+        <a href="/equipment-rules" class="btn-primary">장비 규정 인덱스 →</a>
+        <a href="/contact" class="btn-ghost">클럽 구성 상담 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  /* ==================== HERO ==================== */
+  .clubs14-hero { background: var(--bg-cream); }
+  .hero-sub-light {
+    font-size: 14px;
+    color: var(--grey);
+    font-weight: 400;
+  }
+
+  /* ==================== QUICK SUMMARY (clickable) ==================== */
+  .quick-hint {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (min-width: 720px) {
+    .quick-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1080px) {
+    .quick-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .quick-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .quick-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(15, 41, 34, 0.12);
+    border-top-color: var(--gold);
+  }
+  .quick-card:hover .quick-arrow {
+    color: var(--gold);
+  }
+  .quick-num {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .quick-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .quick-title strong { color: var(--green); }
+  .quick-body {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0 0 14px;
+    flex: 1;
+  }
+  .quick-body strong { color: var(--ink); font-weight: 700; }
+  .quick-arrow {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    margin-top: auto;
+    transition: color 0.2s;
+  }
+
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+
+  /* ==================== Rule 본문 ==================== */
+  .section-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+  .section-body-small { font-size: 14.5px; }
+
+  .subsection-h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    line-height: 1.3;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .rule-box {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--green);
+    padding: 24px 28px;
+    border-radius: 4px;
+    margin: 24px 0;
+  }
+  .rule-box-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    margin: 0 0 14px;
+  }
+  .rule-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .rule-list li {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .rule-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .rule-list strong { color: var(--ink); font-weight: 700; }
+
+  .penalty-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 22px;
+  }
+  .penalty-list li {
+    padding: 12px 0;
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.85;
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .penalty-list li:last-child { border-bottom: none; }
+  .penalty-list strong { color: var(--ink); font-weight: 700; }
+
+  /* ==================== 비교표 ==================== */
+  .compare-table {
+    overflow-x: auto;
+    margin: 24px 0;
+  }
+  .compare-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+  }
+  .compare-table th,
+  .compare-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .compare-table th {
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== 그린 배경 ==================== */
+  .apply-eyebrow { color: var(--gold-soft) !important; }
+  .green-h2 {
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .green-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 20px;
+  }
+  .green-body strong { color: var(--gold-soft); font-weight: 700; }
+  .green-body-small {
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.75);
+    display: block;
+    margin-top: 4px;
+  }
+  .interpretation-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+  }
+  .interpretation-list li {
+    padding: 16px 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.9);
+    border-bottom: 1px solid rgba(212, 184, 136, 0.2);
+  }
+  .interpretation-list li:last-child { border-bottom: none; }
+  .interpretation-list strong { color: var(--cream); font-weight: 700; }
+
+  /* ==================== FAQ ==================== */
+  .faq-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+  }
+  .faq-item {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    padding: 22px 28px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .faq-q {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+  .faq-a {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .faq-a strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== RELATED ==================== */
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (min-width: 720px) {
+    .related-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .related-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 22px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .related-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(15, 41, 34, 0.08);
+  }
+  .related-card-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .related-card-title {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+  .related-card-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ==================== SOURCE ==================== */
+  .source-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+  }
+  .source-list li {
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-soft, var(--line));
+  }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list a {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: 600;
+  }
+  .source-list a:hover { opacity: 0.7; }
+  .source-disclaimer-text {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    padding: 16px 22px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .source-disclaimer-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ==================== CLOSING ==================== */
+  .closing-section {
+    background: var(--ink);
+    padding: 100px 80px;
+    text-align: center;
+  }
+  .closing-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .closing-section h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 4vw, 30px);
+    line-height: 1.55;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.015em;
+    margin-bottom: 20px;
+  }
+  .closing-meta {
+    font-size: 12px;
+    color: var(--gold-soft);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .closing-section .closing-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .closing-section .btn-primary,
+  .closing-section .btn-ghost {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 26px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .closing-section .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .closing-section .btn-primary::after { content: ''; }
+  .closing-section .btn-primary:hover {
+    background: var(--gold-soft);
+    transform: translateX(2px);
+  }
+  .closing-section .btn-ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .closing-section .btn-ghost::after { content: ''; }
+  .closing-section .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 640px) {
+    .quick-card { padding: 18px 18px; }
+    .closing-section { padding: 70px 24px; }
+    .compare-table table { font-size: 12.5px; }
+    .compare-table th, .compare-table td { padding: 10px 10px; }
+  }
+</style>
