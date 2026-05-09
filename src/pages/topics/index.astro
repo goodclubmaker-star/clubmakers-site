@@ -5,7 +5,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const pageTitle = "증상별 진단 — 골프 클럽 문제 해결 트리";
-const pageDescription = "슬라이스, 훅, 거리 부족, 탄도 문제, 후반 무너짐 — 골프에서 자주 만나는 증상을 원인부터 해결하는 9가지 진단 트리. 24년 클럽피팅 현장에서 정리.";
+const pageDescription = "슬라이스, 훅, 거리 부족, 탄도 문제, 후반 무너짐, 어프로치, 퍼팅 — 골프에서 자주 만나는 증상을 원인부터 해결하는 12가지 진단 트리. 24년 클럽피팅 현장에서 정리.";
 const pageKeywords = "골프 슬라이스, 훅, 거리 부족, 탄도, 클럽피팅, 진단, 증상, 클럽메이커스, 채기웅";
 ---
 
@@ -26,7 +26,7 @@ const pageKeywords = "골프 슬라이스, 훅, 거리 부족, 탄도, 클럽피
       </h1>
 
       <p class="topics-lead">
-        슬라이스, 훅, 거리 부족, 탄도 문제, 후반 무너짐 — 골프에서 자주 만나는 9가지 증상을
+        슬라이스, 훅, 거리 부족, 탄도 문제, 후반 무너짐, 어프로치, 퍼팅 — 골프에서 자주 만나는 12가지 증상을
         <strong>결과가 아니라 원인부터 추적</strong>하는 진단 트리. 책 『실제적인 클럽피팅』
         PART 11의 문제 해결 시스템을 검색자 관점에서 재구성했습니다.
       </p>
@@ -65,76 +65,230 @@ const pageKeywords = "골프 슬라이스, 훅, 거리 부족, 탄도, 클럽피
     </div>
   </section>
 
-  <!-- 9 TOPIC CARDS -->
+  <!-- STICKY INDEX BAR — 페이지 어디서든 카드로 점프 -->
+  <nav class="topics-sticky-bar" aria-label="증상 카드 색인">
+    <div class="container">
+      <div class="topics-sticky-list">
+        <a href="#card-01" class="topics-sticky-chip">01 · 방향</a>
+        <a href="#card-02" class="topics-sticky-chip">02 · 슬라이스·훅</a>
+        <a href="#card-03" class="topics-sticky-chip">03 · 타점</a>
+        <a href="#card-04" class="topics-sticky-chip">04 · 탄도·스핀</a>
+        <a href="#card-05" class="topics-sticky-chip">05 · 리듬·타이밍</a>
+        <a href="#card-06" class="topics-sticky-chip">06 · SW·MOI</a>
+        <a href="#card-07" class="topics-sticky-chip topics-sticky-chip-new">07 · 그린 사이드</a>
+        <a href="#card-08" class="topics-sticky-chip topics-sticky-chip-new">08 · 퍼팅</a>
+        <a href="#card-09" class="topics-sticky-chip topics-sticky-chip-new">09 · 클럽 자체</a>
+        <a href="#card-10" class="topics-sticky-chip">10 · 절대 금지</a>
+        <a href="#card-11" class="topics-sticky-chip">11 · 클럽별</a>
+        <a href="#card-12" class="topics-sticky-chip">12 · 복합 문제</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- TAG CLOUD — 친숙 표현 입구 -->
+  <section class="topics-tagcloud-section">
+    <div class="container narrow">
+      <p class="eyebrow">SYMPTOMS · 어떤 말이 가장 와닿으세요?</p>
+      <h2 class="section-title">손님이 자주 하시는 <em>말씀</em>에서 시작합니다</h2>
+      <p class="tagcloud-lead">
+        같은 증상이라도 원인은 분마다 다를 수 있습니다.
+        가장 비슷한 표현을 눌러보세요 — 진단 트리로 안내해드립니다.
+      </p>
+
+      <div class="topics-tagcloud">
+        <!-- 사장님 6개 표현 (별표) -->
+        <a href="#card-02" class="topics-tag topics-tag-star">"어처구니 없는 슬라이스"</a>
+        <a href="#card-04" class="topics-tag topics-tag-star">"쭉 뻗지 못하고 주저앉는 공"</a>
+        <a href="#card-05" class="topics-tag topics-tag-star">"필드만 가면 감겨요"</a>
+        <a href="#card-06" class="topics-tag topics-tag-star">"공이 날리는 느낌"</a>
+        <a href="#card-09" class="topics-tag topics-tag-star">"그립이 손에서 노는 느낌"</a>
+        <a href="#card-11" class="topics-tag topics-tag-star">"드라이버 거리 부족"</a>
+
+        <!-- 일반 표현 -->
+        <a href="#card-02" class="topics-tag">슬라이스</a>
+        <a href="#card-02" class="topics-tag">훅</a>
+        <a href="#card-01" class="topics-tag">푸시·풀</a>
+        <a href="#card-03" class="topics-tag">뒤땅·토핑</a>
+        <a href="#card-03" class="topics-tag">섕크</a>
+        <a href="#card-04" class="topics-tag">공이 안 떠요</a>
+        <a href="#card-04" class="topics-tag">거리 부족</a>
+        <a href="#card-05" class="topics-tag">후반 무너짐</a>
+        <a href="#card-05" class="topics-tag">들쭉날쭉</a>
+        <a href="#card-06" class="topics-tag">헤드 감각</a>
+        <a href="#card-07" class="topics-tag">어프로치 거리감</a>
+        <a href="#card-07" class="topics-tag">벙커샷</a>
+        <a href="#card-08" class="topics-tag">3퍼팅</a>
+        <a href="#card-08" class="topics-tag">짧은 퍼팅 미스</a>
+        <a href="#card-09" class="topics-tag">타구음 변화</a>
+        <a href="#card-09" class="topics-tag">팔에 무리</a>
+        <a href="#card-12" class="topics-tag">여러 증상 동시</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 TOPIC CARDS -->
   <section class="topics-grid-section">
     <div class="container">
       <div class="grid-head">
-        <p class="eyebrow">DIAGNOSE · 9가지 진단 트리</p>
+        <p class="eyebrow">DIAGNOSE · 12가지 진단 트리</p>
         <h2 class="section-title">증상에서 시작해 <em>원인</em>까지</h2>
+        <p class="grid-sub">고객님이 자주 하시는 말씀에서 시작합니다. 같은 표현이라도 원인은 분마다 다를 수 있습니다.</p>
       </div>
 
       <div class="topics-grid">
-        <a href="/topics/direction" class="topic-card">
+        <a href="/topics/direction" id="card-01" class="topic-card">
           <p class="topic-num">01</p>
           <h3 class="topic-card-label">방향 문제</h3>
           <p class="topic-card-title">출발이 한쪽으로 치우칠 때</p>
-          <p class="topic-card-desc">공이 항상 우측 또는 좌측으로 출발합니다. 페이스 앵글이 출발 방향의 약 85%를 결정합니다.</p>
+          <ul class="topic-card-quotes">
+            <li>"공이 자꾸 오른쪽으로 가요"</li>
+            <li>"왼쪽으로만 빠져요"</li>
+            <li>"푸시·풀 미스가 잦아요"</li>
+          </ul>
+          <p class="topic-card-desc">페이스 앵글이 출발 방향의 약 85%를 결정합니다.</p>
           <span class="topic-card-arrow">→</span>
         </a>
-        <a href="/topics/slice-hook" class="topic-card">
+
+        <a href="/topics/slice-hook" id="card-02" class="topic-card">
           <p class="topic-num">02</p>
           <h3 class="topic-card-label">슬라이스 · 훅</h3>
           <p class="topic-card-title">공이 휘는 진짜 이유</p>
+          <ul class="topic-card-quotes">
+            <li>"어처구니 없는 슬라이스가 나요"</li>
+            <li>"갈수록 훅이 나요"</li>
+            <li>"한 홀에 한 번씩 큰 미스"</li>
+          </ul>
           <p class="topic-card-desc">휘어짐은 페이스가 아니라 F2P(Face to Path)와 타점에서 만들어집니다.</p>
           <span class="topic-card-arrow">→</span>
         </a>
-        <a href="/topics/impact-location" class="topic-card">
+
+        <a href="/topics/impact-location" id="card-03" class="topic-card">
           <p class="topic-num">03</p>
           <h3 class="topic-card-label">타점 문제</h3>
           <p class="topic-card-title">모든 문제 해결의 출발점</p>
+          <ul class="topic-card-quotes">
+            <li>"공 맞는 느낌이 매번 달라요"</li>
+            <li>"뒤땅·토핑이 잦아요"</li>
+            <li>"섕크가 종종 나요"</li>
+          </ul>
           <p class="topic-card-desc">타점이 페이스 중심에서 벗어나면 방향·탄도·스핀이 동시에 흔들립니다.</p>
           <span class="topic-card-arrow">→</span>
         </a>
-        <a href="/topics/launch-spin" class="topic-card">
+
+        <a href="/topics/launch-spin" id="card-04" class="topic-card">
           <p class="topic-num">04</p>
           <h3 class="topic-card-label">탄도 · 스핀</h3>
           <p class="topic-card-title">너무 높거나 낮을 때</p>
+          <ul class="topic-card-quotes">
+            <li>"쭉 뻗지 못하고 주저앉는 공"</li>
+            <li>"드라이버가 안 떠요"</li>
+            <li>"아이언이 그린에서 안 멈춰요"</li>
+          </ul>
           <p class="topic-card-desc">드라이버는 거리, 아이언은 정지력. Dynamic Loft와 CG가 핵심 변수입니다.</p>
           <span class="topic-card-arrow">→</span>
         </a>
-        <a href="/topics/rhythm-timing" class="topic-card">
+
+        <a href="/topics/rhythm-timing" id="card-05" class="topic-card">
           <p class="topic-num">05</p>
           <h3 class="topic-card-label">리듬 · 타이밍</h3>
           <p class="topic-card-title">후반에 무너지는 이유</p>
-          <p class="topic-card-desc">잘 맞는 날과 아닌 날의 편차가 크다면 무게·CPM·EI를 봐야 합니다.</p>
+          <ul class="topic-card-quotes">
+            <li>"연습장은 잘 맞는데 필드만 가면 감겨요"</li>
+            <li>"라운드 후반만 되면 무너져요"</li>
+            <li>"들쭉날쭉해요"</li>
+          </ul>
+          <p class="topic-card-desc">편차가 크다면 무게·CPM·EI를 봐야 합니다.</p>
           <span class="topic-card-arrow">→</span>
         </a>
-        <a href="/topics/swing-weight-moi" class="topic-card">
+
+        <a href="/topics/swing-weight-moi" id="card-06" class="topic-card">
           <p class="topic-num">06</p>
           <h3 class="topic-card-label">SW · MOI</h3>
           <p class="topic-card-title">헤드 감각이 흔들릴 때</p>
+          <ul class="topic-card-quotes">
+            <li>"공이 날리는 느낌이에요"</li>
+            <li>"헤드가 너무 가벼워요"</li>
+            <li>"클럽이 묵직해서 부담돼요"</li>
+          </ul>
           <p class="topic-card-desc">헤드가 너무 가볍거나 무겁다면 SW·MOI를 봅니다. 어느 변수를 바꾸느냐가 중요.</p>
           <span class="topic-card-arrow">→</span>
         </a>
-        <a href="/topics/forbidden-rules" class="topic-card">
+
+        <a href="/topics/short-game" id="card-07" class="topic-card topic-card-new">
           <p class="topic-num">07</p>
+          <h3 class="topic-card-label">그린 사이드</h3>
+          <p class="topic-card-title">웨지·어프로치·벙커</p>
+          <ul class="topic-card-quotes">
+            <li>"어프로치 거리감이 안 잡혀요"</li>
+            <li>"벙커샷이 안 빠져요"</li>
+            <li>"칩샷할 때 자꾸 토핑이 나요"</li>
+          </ul>
+          <p class="topic-card-desc">바운스·그라인드·로프트 갭이 핵심. 웨지 4자루 구성도 함께 봅니다.</p>
+          <span class="topic-card-arrow">→</span>
+        </a>
+
+        <a href="/topics/putter" id="card-08" class="topic-card topic-card-new">
+          <p class="topic-num">08</p>
+          <h3 class="topic-card-label">퍼팅</h3>
+          <p class="topic-card-title">거리감 · 방향성</p>
+          <ul class="topic-card-quotes">
+            <li>"3퍼팅이 잦아요"</li>
+            <li>"롱 퍼팅이 짧게 멈춰요"</li>
+            <li>"짧은 퍼팅을 자꾸 놓쳐요"</li>
+          </ul>
+          <p class="topic-card-desc">퍼터 무게·길이·라이각, 그리고 스트로크 타입과의 매칭이 핵심.</p>
+          <span class="topic-card-arrow">→</span>
+        </a>
+
+        <a href="/topics/club-condition" id="card-09" class="topic-card topic-card-new">
+          <p class="topic-num">09</p>
+          <h3 class="topic-card-label">클럽 자체</h3>
+          <p class="topic-card-title">소리 · 진동 · 내구성</p>
+          <ul class="topic-card-quotes">
+            <li>"그립이 손에서 노는 느낌이에요"</li>
+            <li>"타구음이 전과 달라요"</li>
+            <li>"팔에 무리가 와요"</li>
+          </ul>
+          <p class="topic-card-desc">헤드 손상·접착 문제, 샤프트 피로, 그립 마모 — 클럽 자체 점검이 먼저.</p>
+          <span class="topic-card-arrow">→</span>
+        </a>
+
+        <a href="/topics/forbidden-rules" id="card-10" class="topic-card">
+          <p class="topic-num">10</p>
           <h3 class="topic-card-label">절대 금지</h3>
           <p class="topic-card-title">피해야 할 흔한 오판</p>
+          <ul class="topic-card-quotes">
+            <li>"샤프트만 바꾸면 슬라이스 잡히겠죠?"</li>
+            <li>"무게 늘리면 거리도 늘죠?"</li>
+            <li>"라이각만 맞추면 방향이 잡히죠?"</li>
+          </ul>
           <p class="topic-card-desc">타점 문제를 EI/토크로, 방향 문제를 무게로만 해결하려는 5가지 흔한 오류.</p>
           <span class="topic-card-arrow">→</span>
         </a>
-        <a href="/topics/by-club" class="topic-card">
-          <p class="topic-num">08</p>
+
+        <a href="/topics/by-club" id="card-11" class="topic-card">
+          <p class="topic-num">11</p>
           <h3 class="topic-card-label">클럽별</h3>
-          <p class="topic-card-title">드라이버·아이언·웨지·퍼터</p>
+          <p class="topic-card-title">드라이버 · 아이언 · 웨지 · 퍼터</p>
+          <ul class="topic-card-quotes">
+            <li>"아이언 거리에 비해 드라이버 거리 부족"</li>
+            <li>"드라이버만 안 맞아요"</li>
+            <li>"롱 아이언이 어려워요"</li>
+          </ul>
           <p class="topic-card-desc">같은 증상도 클럽이 다르면 원인이 다릅니다. 클럽마다 진단 우선순위가 다름.</p>
           <span class="topic-card-arrow">→</span>
         </a>
-        <a href="/topics/complex-problems" class="topic-card">
-          <p class="topic-num">09</p>
+
+        <a href="/topics/complex-problems" id="card-12" class="topic-card">
+          <p class="topic-num">12</p>
           <h3 class="topic-card-label">복합 문제</h3>
           <p class="topic-card-title">여러 증상이 동시에</p>
-          <p class="topic-card-desc">슬라이스 + 거리 부족, 훅 + 스핀 과다 — 증상을 분해해서 근본 원인부터.</p>
+          <ul class="topic-card-quotes">
+            <li>"슬라이스 나면서 거리도 안 나요"</li>
+            <li>"훅 나면서 스핀이 너무 많아요"</li>
+            <li>"한꺼번에 여러 문제가 생겼어요"</li>
+          </ul>
+          <p class="topic-card-desc">증상을 분해해서 근본 원인부터. 우선순위를 정하고 상위 구조부터 순차적으로.</p>
           <span class="topic-card-arrow">→</span>
         </a>
       </div>
@@ -344,11 +498,205 @@ const pageKeywords = "골프 슬라이스, 훅, 거리 부족, 탄도, 클럽피
     margin: 0 0 1.5rem;
     flex: 1;
   }
+  .topic-card-quotes {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+  }
+  .topic-card-quotes li {
+    font-family: var(--sans);
+    font-size: .8125rem;
+    line-height: 1.6;
+    color: var(--text-2);
+    padding: 4px 0 4px 14px;
+    position: relative;
+    font-style: italic;
+    opacity: 0.85;
+  }
+  .topic-card-quotes li::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: normal;
+  }
+  .topic-card-quotes li::after {
+    content: '"';
+    color: var(--accent);
+    font-weight: 700;
+    font-style: normal;
+    margin-left: 1px;
+  }
+  .topic-card-new {
+    position: relative;
+  }
+  .topic-card-new::after {
+    content: 'NEW';
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: var(--accent-2);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 3px 7px;
+    border-radius: 100px;
+  }
+  .grid-sub {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    max-width: 640px;
+    margin: 1rem auto 0;
+    text-align: center;
+  }
   .topic-card-arrow {
     font-size: 1.25rem;
     color: var(--accent-2);
     transition: color .25s, transform .25s;
     align-self: flex-start;
+  }
+
+  /* ============================================ */
+  /* STICKY INDEX BAR — 상단 고정 색인 */
+  /* ============================================ */
+  .topics-sticky-bar {
+    position: sticky;
+    top: 60px; /* Nav height */
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line, #EAE7E0);
+    border-top: 1px solid var(--line, #EAE7E0);
+  }
+  .topics-sticky-list {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .topics-sticky-list::-webkit-scrollbar { height: 4px; }
+  .topics-sticky-list::-webkit-scrollbar-thumb {
+    background: var(--line, #EAE7E0);
+    border-radius: 100px;
+  }
+  .topics-sticky-chip {
+    display: inline-block;
+    flex-shrink: 0;
+    font-family: var(--sans, sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-2, #5A5A57);
+    padding: 6px 12px;
+    border: 1px solid var(--line, #EAE7E0);
+    border-radius: 100px;
+    text-decoration: none;
+    background: var(--bg, #FFFFFF);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .topics-sticky-chip:hover {
+    background: var(--accent, #0F2922);
+    color: var(--bg, #FFFFFF);
+    border-color: var(--accent, #0F2922);
+    transform: translateY(-1px);
+  }
+  .topics-sticky-chip-new {
+    border-color: var(--accent-2, #B8985C);
+    color: var(--accent-2, #B8985C);
+  }
+  .topics-sticky-chip-new:hover {
+    background: var(--accent-2, #B8985C);
+    color: var(--bg, #FFFFFF);
+    border-color: var(--accent-2, #B8985C);
+  }
+
+  /* 모바일에서 sticky bar 위치 미세 조정 */
+  @media (max-width: 720px) {
+    .topics-sticky-bar { top: 56px; }
+    .topics-sticky-chip {
+      font-size: 11.5px;
+      padding: 5px 10px;
+    }
+    .topics-sticky-list { padding: 8px 0; gap: 5px; }
+  }
+
+  /* ============================================ */
+  /* TAG CLOUD — 친숙 표현 입구 */
+  /* ============================================ */
+  .topics-tagcloud-section {
+    padding: 64px 0;
+    background: var(--bg-soft, #FAFAF6);
+    border-bottom: 1px solid var(--line, #EAE7E0);
+  }
+  .topics-tagcloud-section .eyebrow {
+    margin-bottom: 0.5rem;
+  }
+  .topics-tagcloud-section .section-title {
+    margin-bottom: 1rem;
+  }
+  .tagcloud-lead {
+    font-family: var(--sans, sans-serif);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-2, #5A5A57);
+    margin: 0 0 2rem;
+    max-width: 580px;
+  }
+  .topics-tagcloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .topics-tag {
+    display: inline-block;
+    font-family: var(--sans, sans-serif);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text, #0F0F0E);
+    padding: 8px 14px;
+    border: 1px solid var(--line, #EAE7E0);
+    border-radius: 100px;
+    text-decoration: none;
+    background: var(--bg, #FFFFFF);
+    transition: all 0.15s;
+  }
+  .topics-tag:hover {
+    background: var(--accent, #0F2922);
+    color: var(--bg, #FFFFFF);
+    border-color: var(--accent, #0F2922);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15, 41, 34, 0.1);
+  }
+  .topics-tag-star {
+    background: var(--cream, #F8F2E5);
+    border-color: var(--accent-2, #B8985C);
+    color: var(--text, #0F0F0E);
+    font-weight: 600;
+    font-style: italic;
+  }
+  .topics-tag-star:hover {
+    background: var(--accent-2, #B8985C);
+    color: var(--bg, #FFFFFF);
+    border-color: var(--accent-2, #B8985C);
+  }
+
+  @media (max-width: 720px) {
+    .topics-tagcloud-section { padding: 48px 0; }
+    .topics-tag { font-size: 12.5px; padding: 7px 12px; }
+  }
+
+  /* 카드 점프 시 sticky bar에 가려지지 않게 */
+  .topic-card[id] {
+    scroll-margin-top: 130px;
   }
 
   /* CTA */
