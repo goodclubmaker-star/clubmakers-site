@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import MobileCTA from '../components/MobileCTA.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -124,6 +125,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
       <slot />
     </main>
     <Footer />
+    <MobileCTA />
   </body>
 </html>
 
