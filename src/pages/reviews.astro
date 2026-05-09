@@ -25,6 +25,15 @@ const aggregateRatingSchema = {
   },
 };
 
+// 닉네임 마스킹 — 개인정보 보호
+// 예: "대치아빠" → "대***", "WATARI" → "W*****", "단골 손님" → "단골 손님" (공백 포함은 그대로)
+function maskName(name: string): string {
+  if (!name) return name;
+  if (name.includes(' ')) return name;  // "단골 손님" 같은 익명 표현은 그대로
+  if (name.length <= 1) return name;
+  return name[0] + '*'.repeat(name.length - 1);
+}
+
 const reviews = [
   // ⭐ FEATURED — 자체 제품 (VERSUS·KRZ·DEFINE) 사용 후기
   {
@@ -228,7 +237,7 @@ const reviews = [
               <div class="review-avatar"></div>
               <div class="review-meta">
                 <p class="review-name">
-                  {review.name}
+                  {maskName(review.name)}
                   {review.isRegular && <span class="review-badge">단골</span>}
                 </p>
                 <p class="review-location">
