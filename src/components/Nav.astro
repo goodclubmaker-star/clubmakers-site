@@ -3,19 +3,24 @@
 const currentPath = Astro.url.pathname;
 
 // 새 메뉴 구조 (2026.05 업데이트)
-// 5개 메뉴 + 처음이세요? + 예약·문의 CTA
+// 6개 메뉴 + 처음이세요? + 예약·문의 CTA
 //
-// 처음이세요?    공작소 ▼      작업·가격 ▼     교육     자료실 ▼              [예약·문의 →]
-//                ├ 공작소장    ├ 공임 안내               ├ 책
-//                ├ 철학        ├ 수리 Q&A              ├ 증상별 진단
-//                ├ 시스템      └ 케이스 스터디           ├ 용어사전
-//                └ 자체 제품                              └ FAQ
+// 처음이세요?  증상·처방  공작소 ▼     작업·가격 ▼    교육     자료실 ▼              [예약·문의 →]
+//                          ├ 공작소장   ├ 공임 안내               ├ 책
+//                          ├ 철학       ├ 수리 Q&A              ├ 용어사전
+//                          ├ 시스템     └ 케이스 스터디          ├ 장비 규정
+//                          └ 자체 제품                            └ FAQ
 
 const menuGroups = [
   {
     label: '처음이세요?',
     paths: ['/first-visit'],
     href: '/first-visit',
+  },
+  {
+    label: '증상·처방',
+    paths: ['/topics'],
+    href: '/topics',
   },
   {
     label: '공작소',
@@ -43,10 +48,9 @@ const menuGroups = [
   },
   {
     label: '자료실',
-    paths: ['/book', '/topics', '/glossary', '/equipment-rules', '/faq'],
+    paths: ['/book', '/glossary', '/equipment-rules', '/faq'],
     items: [
       { href: '/book',     label: '책 『실제적인 클럽피팅』' },
-      { href: '/topics',   label: '증상별 진단' },
       { href: '/glossary', label: '용어사전 (109개)' },
       { href: '/equipment-rules', label: '장비 규정' },
       { href: '/faq',      label: '자주 묻는 질문' },
