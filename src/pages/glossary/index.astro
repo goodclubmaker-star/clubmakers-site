@@ -1,1 +1,443 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
+// 모든 용어 가져오기 (가나다순)
+const allTerms = await getCollection('glossary', ({ data }) => data.draft !== true);
+
+// 정렬 — 가나다 (letter) 후 한글 제목 순
+const KOREAN_ORDER = ['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const terms = allTerms.sort((a, b) => {
+  const aIdx = KOREAN_ORDER.indexOf(a.data.letter || '');
+  const bIdx = KOREAN_ORDER.indexOf(b.data.letter || '');
+  if (aIdx !== bIdx) return aIdx - bIdx;
+  return a.data.koreanTitle.localeCompare(b.data.koreanTitle, 'ko');
+});
+
+// letter별 그룹핑
+const grouped: Record<string, typeof terms> = {};
+for (const t of terms) {
+  const letter = t.data.letter || '?';
+  if (!grouped[letter]) grouped[letter] = [];
+  grouped[letter].push(t);
+}
+
+// 카테고리별 카운트
+const catCount: Record<string, number> = {};
+for (const t of terms) {
+  catCount[t.data.category] = (catCount[t.data.category] || 0) + 1;
+}
+
+// JSON-LD: DefinedTermSet
+const definedTermSetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  '@id': 'https://myclubmakers.com/glossary/#termset',
+  name: '클럽메이커스 골프 피팅 용어사전',
+  description: `클럽피팅·클럽메이킹 현장에서 정리한 ${terms.length}개 용어. 각 용어는 개별 페이지로 분리되어 AI 검색 인용 가능.`,
+  url: 'https://myclubmakers.com/glossary',
+  inLanguage: 'ko-KR',
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+  },
+  hasDefinedTerm: terms.map((t) => ({
+    '@type': 'DefinedTerm',
+    name: t.data.koreanTitle,
+    url: `https://myclubmakers.com/glossary/${t.slug}`,
+  })),
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  headline: '클럽메이커스 용어사전',
+  description: `라이각·MOI·CPM·트랙맨·키네마틱 시퀀스·제로토크 퍼터까지. 공작소가 정리한 ${terms.length}개 골프 피팅 용어 정의.`,
+  inLanguage: 'ko-KR',
+  author: { '@type': 'Person', name: '채기웅' },
+  publisher: { '@type': 'Organization', name: '클럽메이커스' },
+};
+---
+
+<BaseLayout
+  title={`용어사전 (${terms.length}개)`}
+  description={`클럽메이커스 골프 피팅 용어사전 ${terms.length}개. 라이각·MOI·CPM·트랙맨 데이터·키네마틱 시퀀스·제로토크 퍼터까지. 공작소가 정리한 클럽피팅·클럽메이킹 용어 정의. 각 용어 개별 페이지 제공.`}
+  schemaType="CollectionPage"
+  keywords="클럽피팅 용어, 골프 용어사전, 라이각, MOI, CPM, 토크, 스윙웨이트, 페이스앵글, 클럽패스, D-Plane, 트랙맨, kinematic sequence, club fitting glossary, 키네마틱 시퀀스, TPI, WTF, 제로토크 퍼터, LS 드라이버, FLO"
+  extraSchema={[definedTermSetSchema, articleSchema]}
+>
+
+  <!-- 1. Hero -->
+  <section class="page-hero glossary-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">GLOSSARY · 용어사전</div>
+      <h1>{terms.length}개 핵심 용어</h1>
+      <p class="page-hero-subtitle">
+        클럽메이커스 현장에서 정리한 클럽피팅·클럽메이킹 용어사전입니다.
+        <strong>각 용어는 개별 페이지</strong>로 분리되어 더 깊이 있게 정리됩니다.
+        골퍼와 피팅 전문가 양쪽이 모두 읽을 수 있도록, 첫 한 줄은 누구나 이해할 수 있게,
+        다음 단락은 깊이 있게 정리했습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. 검색 + 가나다 색인 -->
+  <section class="filter-section">
+    <div class="filter-bar">
+      <input
+        type="search"
+        id="glossary-search"
+        class="search-input"
+        placeholder="용어 검색 (예: 라이각, MOI, 트랙맨, 키네마틱)"
+        aria-label="용어 검색"
+      />
+
+      <div class="alphabet-index" id="alphabet-index">
+        <span class="alphabet-label">가나다</span>
+        {KOREAN_ORDER.map((letter) => (
+          grouped[letter] && grouped[letter].length > 0 ? (
+            <a href={`#letter-${letter}`} class="alphabet-letter">{letter}</a>
+          ) : (
+            <span class="alphabet-letter alphabet-disabled">{letter}</span>
+          )
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 가나다별 용어 그리드 -->
+  <section class="terms-section">
+    <div class="terms-container">
+      <p id="no-results-msg" class="no-results-msg" style="display:none;">
+        검색 결과가 없습니다. 다른 키워드로 시도해보세요.
+      </p>
+
+      {KOREAN_ORDER.map((letter) =>
+        grouped[letter] && grouped[letter].length > 0 ? (
+          <div class="letter-group" id={`letter-${letter}`} data-letter={letter}>
+            <h2 class="letter-heading">
+              <span class="letter-bubble">{letter}</span>
+              <span class="letter-count">{grouped[letter].length}개</span>
+            </h2>
+            <div class="terms-grid">
+              {grouped[letter].map((t) => (
+                <a href={`/glossary/${t.slug}`} class="term-card" data-term-title={t.data.koreanTitle.toLowerCase()} data-term-english={(t.data.englishTitle || '').toLowerCase()} data-term-def={(t.data.shortDef || '').toLowerCase()}>
+                  <p class="term-card-title">
+                    {t.data.koreanTitle}
+                    {t.data.emojis && t.data.emojis.map((em) => (
+                      <span class="term-card-emoji">{em}</span>
+                    ))}
+                  </p>
+                  {t.data.englishTitle && (
+                    <p class="term-card-english">{t.data.englishTitle}</p>
+                  )}
+                  {t.data.shortDef && (
+                    <p class="term-card-def">{t.data.shortDef}</p>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : null
+      )}
+    </div>
+  </section>
+
+  <!-- 4. CTA -->
+  <section class="section section-bg-green glossary-cta">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow apply-eyebrow">FROM THE BOOK · 책에서 더 자세히</p>
+      <h2 class="cta-h2">『실제적인 클럽피팅』<br/>부록 D · 용어 · 수치 참조표</h2>
+      <p class="cta-body">
+        이 사이트의 {terms.length}개 용어는 시작점입니다. 책에는 부록 D <strong>「용어 · 수치 참조표 (Glossary)」</strong>가
+        별도로 있어, 각 용어와 함께 현장 판단의 수치 기준이 정리되어 있습니다.
+      </p>
+      <div class="cta-actions">
+        <a href="/book" class="cta-btn cta-btn-primary">책 자세히 →</a>
+        <a href="/contact" class="cta-btn">예약·문의 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<script>
+  // 클라이언트 검색 — Astro 빌드 후 작동
+  const searchInput = document.getElementById('glossary-search') as HTMLInputElement | null;
+  const noResults = document.getElementById('no-results-msg');
+  const cards = document.querySelectorAll<HTMLElement>('.term-card');
+  const groups = document.querySelectorAll<HTMLElement>('.letter-group');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const q = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const title = card.dataset.termTitle || '';
+        const english = card.dataset.termEnglish || '';
+        const def = card.dataset.termDef || '';
+        const matches = !q || title.includes(q) || english.includes(q) || def.includes(q);
+        card.style.display = matches ? '' : 'none';
+        if (matches) visible++;
+      });
+
+      // 빈 그룹 숨김
+      groups.forEach((group) => {
+        const visibleCards = group.querySelectorAll<HTMLElement>('.term-card');
+        let groupVisible = 0;
+        visibleCards.forEach((c) => {
+          if (c.style.display !== 'none') groupVisible++;
+        });
+        group.style.display = groupVisible > 0 ? '' : 'none';
+      });
+
+      if (noResults) {
+        noResults.style.display = visible === 0 ? 'block' : 'none';
+      }
+    });
+  }
+</script>
+
+
+<style>
+  .glossary-hero { background: var(--bg-cream); border-bottom: none; }
+
+  /* ===== 검색·색인 ===== */
+  .filter-section {
+    position: sticky;
+    top: 60px;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 24px;
+  }
+  .filter-bar {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .search-input {
+    width: 100%;
+    padding: 13px 18px;
+    font-size: 15px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--bg-soft);
+    font-family: var(--font-sans);
+    color: var(--ink);
+    margin-bottom: 12px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .search-input:focus {
+    border-color: var(--green);
+    background: white;
+    outline: none;
+  }
+
+  .alphabet-index {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .alphabet-label {
+    font-size: 12px;
+    color: var(--grey);
+    font-weight: 600;
+    margin-right: 8px;
+  }
+  .alphabet-letter {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 700;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .alphabet-letter:hover {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+    transform: translateY(-1px);
+  }
+  .alphabet-disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ===== 용어 섹션 ===== */
+  .terms-section {
+    padding: 40px 24px 60px;
+  }
+  .terms-container {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .no-results-msg {
+    text-align: center;
+    padding: 48px 20px;
+    font-size: 15px;
+    color: var(--grey);
+    background: var(--bg-soft);
+    border-radius: 8px;
+  }
+
+  .letter-group {
+    margin-bottom: 40px;
+    scroll-margin-top: 200px;
+  }
+  .letter-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--line);
+  }
+  .letter-bubble {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 700;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--green);
+    color: var(--cream, #F8F2E5);
+    border-radius: 50%;
+  }
+  .letter-count {
+    font-size: 13px;
+    color: var(--grey);
+    font-weight: 500;
+  }
+
+  .terms-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 640px) {
+    .terms-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .terms-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .term-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    border-radius: 6px;
+    padding: 16px 18px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    display: block;
+  }
+  .term-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 41, 34, 0.08);
+    border-left-color: var(--gold);
+  }
+  .term-card-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+    line-height: 1.4;
+  }
+  .term-card-emoji {
+    font-size: 13px;
+    margin-left: 4px;
+  }
+  .term-card-english {
+    font-size: 12px;
+    color: var(--grey);
+    margin: 0 0 8px;
+    font-style: italic;
+  }
+  .term-card-def {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* CTA */
+  .glossary-cta {
+    text-align: center;
+  }
+  .apply-eyebrow {
+    color: var(--gold-soft, #D4B888) !important;
+  }
+  .cta-h2 {
+    color: var(--cream, #F8F2E5);
+    margin-bottom: 18px;
+  }
+  .cta-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 620px;
+    margin: 0 auto 28px;
+  }
+  .cta-body strong { color: var(--gold-soft, #D4B888); font-weight: 700; }
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .cta-btn {
+    display: inline-block;
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 13px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+  }
+  .cta-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  .cta-btn-primary {
+    background: var(--gold, #B8985C);
+    color: var(--ink, #0F0F0E);
+    border-color: var(--gold, #B8985C);
+  }
+  .cta-btn-primary:hover {
+    background: var(--gold-soft, #D4B888);
+    transform: translateX(2px);
+    color: var(--ink);
+    border-color: var(--gold-soft, #D4B888);
+  }
+
+  @media (max-width: 640px) {
+    .filter-section { padding: 12px 18px; }
+    .terms-section { padding: 28px 18px 50px; }
+    .letter-heading { gap: 10px; }
+    .letter-bubble { width: 36px; height: 36px; font-size: 19px; }
+  }
+</style>
