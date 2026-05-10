@@ -69,7 +69,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="geo.position" content="37.4707;127.0388" />
     <meta name="ICBM" content="37.4707, 127.0388" />
 
-    <!-- schema.org JSON-LD -->
+    <!-- schema.org JSON-LD : 페이지 메타 -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": schemaType,
@@ -78,39 +78,94 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
       "url": canonicalUrl,
       "publisher": {
         "@type": "LocalBusiness",
-        "name": "클럽메이커스",
-        "alternateName": ["골프채공작소", "Clubmakers Korea"],
-        "founder": {
-          "@type": "Person",
-          "name": "채기웅",
-          "jobTitle": "공작소장"
+        "@id": "https://myclubmakers.com/#localbusiness",
+        "name": "클럽메이커스"
+      }
+    })} />
+
+    <!-- schema.org JSON-LD : LocalBusiness (독립, AI 검색 최적화 - GEO) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://myclubmakers.com/#localbusiness",
+      "name": "클럽메이커스",
+      "alternateName": ["골프채공작소", "Clubmakers Korea"],
+      "description": "24년 경력 채기웅 공작소장의 클럽피팅·클럽메이킹 전문 공작소. 서울 서초구 양재동.",
+      "url": "https://myclubmakers.com",
+      "telephone": "+82-10-4363-5555",
+      "email": "clubmakers@naver.com",
+      "image": "https://myclubmakers.com/og-default.jpg",
+      "priceRange": "₩₩",
+      "founder": {
+        "@type": "Person",
+        "name": "채기웅",
+        "jobTitle": "공작소장",
+        "url": "https://myclubmakers.com/about"
+      },
+      "foundingDate": "1985",
+      "taxID": "813-01-03827",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "동산로2길 50, 가보빌딩 지하층",
+        "addressLocality": "서초구",
+        "addressRegion": "서울",
+        "postalCode": "06750",
+        "addressCountry": "KR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "37.4707",
+        "longitude": "127.0388"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "10:00",
+          "closes": "20:00"
         },
-        "foundingDate": "1985",
-        "taxID": "813-01-03827",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "동산로2길 50, 가보빌딩 지하층",
-          "addressLocality": "서초구",
-          "addressRegion": "서울",
-          "addressCountry": "KR"
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "10:00",
+          "closes": "17:00"
+        }
+      ],
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "37.4707",
+          "longitude": "127.0388"
         },
-        "telephone": "+82-10-4363-5555",
-        "email": "clubmakers@naver.com",
-        "url": "https://myclubmakers.com",
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "10:00",
-            "closes": "20:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Saturday",
-            "opens": "10:00",
-            "closes": "17:00"
-          }
-        ]
+        "geoRadius": "50000"
+      },
+      "knowsAbout": [
+        "클럽피팅",
+        "클럽메이킹",
+        "라이각 조정",
+        "리샤프트",
+        "MOI 매칭",
+        "키네마틱 시퀀스 분석",
+        "TrackMan 데이터 해석",
+        "K-Vest 분석",
+        "골프 샤프트 거동",
+        "드라이버 피팅",
+        "아이언 피팅",
+        "퍼터 피팅",
+        "웨지 피팅"
+      ],
+      "sameAs": [
+        "https://blog.naver.com/clubmakers",
+        "https://naver.me/GiyUpXkH",
+        "https://www.daangn.com/kr/local-profile/yyeaukav6525/"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "74",
+        "bestRating": "5",
+        "worstRating": "1"
       }
     })} />
 
