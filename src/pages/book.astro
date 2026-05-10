@@ -1,42 +1,58 @@
 ---
 // /src/pages/book.astro
-// 『실제적인 클럽피팅』 — 책 랜딩 (재구성)
-// 표지 + 14개 PART 카드 + 인용 4개 + 책 정보 + 대상 독자
+// 『실제적인 클럽피팅』 책 랜딩 페이지 (재구성)
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const pageTitle = "『실제적인 클럽피팅』 — 채기웅 저, 본문 14 PART · 부록 4 · 약 600페이지";
-const pageDescription = "클럽메이커스 채기웅 공작소장이 쓴 클럽피팅 안내서. 인터뷰부터 론치모니터까지, 결과가 아니라 원인부터 추적하는 피팅 시스템. 본문 14 PART, 부록 4, 약 600페이지.";
-const pageKeywords = "실제적인 클럽피팅, 클럽피팅 책, 채기웅, 클럽메이커스, 클럽피팅, 클럽메이킹, 골프 피팅 책";
+const pageTitle = "『실제적인 클럽피팅』 — 채기웅 저";
+const pageDescription = "24년 클럽피팅 현장에서 정리한 본문 14 PART, 약 600페이지의 클럽피팅 매뉴얼. 인터뷰부터 론치모니터, 통합 결정과 문제 해결까지. 클럽피터·클럽메이커·깊이 공부하는 골퍼를 위한 책.";
+const pageKeywords = "실제적인 클럽피팅, 채기웅, 클럽피팅 책, 클럽메이킹, 골프 피팅 매뉴얼, 클럽메이커스";
 
-// 14 PART 목차
 const parts = [
-  { num: 1,  title: "인터뷰",                         sub: "피팅이 시작되는 곳" },
-  { num: 2,  title: "판단 구조 시스템",                sub: "결과 중심 해석에서 원인 중심 해석으로" },
-  { num: 3,  title: "골퍼 구조 해석 시스템",            sub: "인터뷰 결과를 피팅 변수로 변환하기" },
-  { num: 4,  title: "볼 비행 구조",                    sub: "공이 왜 그렇게 날아가는가" },
-  { num: 5,  title: "타점 / CG / 기어이펙트",           sub: "충돌이 만드는 왜곡 구조" },
-  { num: 6,  title: "헤드 기하 구조",                   sub: "라이각 · 로프트 · 오프셋 · CG" },
-  { num: 7,  title: "MOI / 관성 구조",                 sub: "관성의 물리 원리와 피팅 적용" },
-  { num: 8,  title: "무게 / 총무게 / 스윙웨이트",       sub: "무게를 시간 구조로 이해하는 방법" },
-  { num: 9,  title: "샤프트 구조와 피팅 판단",          sub: "CPM · EI · 토크 · 스파인" },
-  { num: 10, title: "론치모니터 해석 시스템",           sub: "데이터를 언어로, 언어를 결정으로" },
-  { num: 11, title: "통합 결정과 문제 해결 시스템",     sub: "결정 흐름과 문제 해결 트리" },
-  { num: 12, title: "숏게임 — 웨지와 퍼터",             sub: "바운스 · 솔 그라인드 · 스트로크 매칭" },
-  { num: 13, title: "통합 케이스 스터디",               sub: "실전 피팅 사례 8개" },
-  { num: 14, title: "특수군 피팅 가이드",               sub: "시니어 · 여성 · 주니어" },
+  { num: 1,  title: "인터뷰",                    sub: "피팅이 시작되는 곳" },
+  { num: 2,  title: "판단 구조 시스템",          sub: "결과 중심에서 원인 중심으로" },
+  { num: 3,  title: "골퍼 구조 해석 시스템",     sub: "인터뷰 결과를 피팅 변수로" },
+  { num: 4,  title: "볼 비행 구조",              sub: "공이 왜 그렇게 날아가는가" },
+  { num: 5,  title: "타점 / CG / 기어이펙트",    sub: "충돌이 만드는 왜곡" },
+  { num: 6,  title: "헤드 기하 구조",            sub: "라이각·로프트·오프셋·CG" },
+  { num: 7,  title: "MOI / 관성 구조",           sub: "관성의 물리 원리" },
+  { num: 8,  title: "무게 / 총무게 / 스윙웨이트", sub: "무게를 시간 구조로" },
+  { num: 9,  title: "샤프트 구조와 피팅 판단",   sub: "CPM·EI·토크·스파인" },
+  { num: 10, title: "론치모니터 해석 시스템",    sub: "데이터를 언어로" },
+  { num: 11, title: "통합 결정과 문제 해결",     sub: "결정 흐름과 트러블슈팅 트리" },
+  { num: 12, title: "웨지와 퍼터",               sub: "숏게임 클럽 구조" },
+  { num: 13, title: "통합 케이스 스터디",        sub: "8개 실전 피팅 사례" },
+  { num: 14, title: "특수군 피팅 가이드",        sub: "시니어·여성·주니어" },
 ];
 
-// 인용 4개 — 책의 다른 측면
 const quotes = [
-  { text: "같은 증상이라도 원인이 다르면 개입이 다릅니다.", source: "PART 11 · 문제 해결 시스템" },
-  { text: "타점은 모든 문제 해결의 출발점입니다.",           source: "PART 5 · 타점 · 기어이펙트" },
-  { text: "데이터는 원인이 아니라 결과입니다.",             source: "PART 2 · 판단 구조 시스템" },
-  { text: "기준이 없으면 비교도 없습니다.",                  source: "PART 1 · 인터뷰" },
+  {
+    text: "데이터는 결과입니다.",
+    expand: "론치모니터에서 읽는 모든 수치는 이미 여러 조건이 결합된 이후의 출력값입니다. 원인을 모르는 상태에서 결과만 고치려는 시도는 구조적으로 오판을 만듭니다.",
+    source: "PART 2 · 판단 구조 시스템",
+    ref: "/book/part-2",
+  },
+  {
+    text: "평균이 아니라 최악을 봅니다.",
+    expand: "피팅의 진짜 질문은 \"이 세팅이 더 좋은 결과를 만드는가\"가 아닙니다. \"이 세팅은 스윙이 무너질 때 결과를 어디까지 제한하는가\"입니다.",
+    source: "PART 2 · 판단 구조 시스템",
+    ref: "/book/part-2",
+  },
+  {
+    text: "같은 증상도 원인이 다르면 처방이 다릅니다.",
+    expand: "슬라이스 하나에도 페이스 오픈, 힐 타점 기어이펙트, 릴리즈 지연 — 세 가지 다른 원인이 있습니다. 진단 없이 처방하면 같은 실수를 반복합니다.",
+    source: "PART 1 · 인터뷰",
+    ref: "/book/part-1",
+  },
+  {
+    text: "구조가 확인될 때까지 결론을 미룹니다.",
+    expand: "인터뷰 → 관찰 → 데이터 → 장비. 이 순서를 거꾸로 하면 이후의 모든 판단이 연쇄적으로 흔들립니다. 진단을 서두르지 않는 것이 가장 빠른 해결입니다.",
+    source: "PART 1 · 인터뷰",
+    ref: "/book/part-1",
+  },
 ];
 
-// 대상 독자
-const audience = [
+const audiences = [
   "클럽피팅을 체계적으로 공부하고 싶은 분",
   "피팅샵 운영자 또는 예비 창업자",
   "클럽메이킹 작업 기준을 배우고 싶은 분",
@@ -54,190 +70,192 @@ const audience = [
 
   <!-- ==================== HERO ==================== -->
   <section class="book-hero">
-    <div class="container">
-      <div class="hero-grid">
-        <!-- 표지 영역 (텍스트 표지) -->
-        <div class="cover-area">
-          <div class="cover">
-            <p class="cover-eyebrow">CLUBMAKERS BOOK · 2026</p>
-            <p class="cover-author">채기웅</p>
-            <h1 class="cover-title">실제적인 <br />클럽피팅</h1>
-            <p class="cover-en">Practical Clubfitting</p>
-            <div class="cover-foot">
-              <p>본문 14 PART · 부록 4</p>
-              <p>약 600페이지</p>
-            </div>
-          </div>
-        </div>
+    <div class="container narrow">
+      <p class="eyebrow">BOOK · 클럽메이커스, 2026</p>
 
-        <!-- 책 소개 -->
-        <div class="intro-area">
-          <p class="eyebrow">BOOK · 채기웅 저</p>
-          <h2 class="intro-title">
-            결과가 아니라 <em>원인</em>부터 <br />추적하는 피팅 시스템
-          </h2>
-          <p class="intro-lead">
-            클럽메이커스 채기웅 공작소장이 24년의 현장 경험을 정리한 클럽피팅 안내서.
-            인터뷰부터 론치모니터까지, 같은 증상도 원인이 다르면 처방이 다르다는 원칙을
-            <strong>14 PART의 구조 해석 시스템</strong>으로 풀어냅니다.
-          </p>
+      <h1 class="book-title">
+        실제적인 <br />
+        <em>클럽피팅</em>
+      </h1>
 
-          <div class="intro-meta">
-            <div class="meta-row">
-              <span class="meta-label">저자</span>
-              <span class="meta-value">채기웅 (클럽메이커스 공작소장)</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-label">구성</span>
-              <span class="meta-value">본문 14 PART · 부록 4 · 현장작업표준서 12종</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-label">분량</span>
-              <span class="meta-value">약 600페이지</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-label">발행</span>
-              <span class="meta-value">Clubmakers Korea, 2026</span>
-            </div>
-          </div>
+      <p class="book-en">A Practical Guide to Club Fitting</p>
 
-          <div class="intro-cta">
-            <a href="#contents" class="btn-primary">
-              <span>14 PART 보기</span>
-              <span>↓</span>
-            </a>
-            <a href="/contact" class="btn-secondary">구매·교육 문의 →</a>
-          </div>
-        </div>
+      <p class="book-author">
+        <span class="author-label">저자</span>
+        <span class="author-name">채기웅</span>
+        <span class="author-role">클럽메이커스 공작소장</span>
+      </p>
+
+      <p class="book-lead">
+        24년의 클럽피팅 현장에서 정리한 매뉴얼.
+        <strong>인터뷰부터 론치모니터, 통합 결정과 문제 해결까지</strong> —
+        피팅 판단의 기준을 구조로 정리했습니다.
+      </p>
+
+      <div class="book-meta-inline">
+        <span><strong>본문</strong> 14 PART</span>
+        <span class="dot"></span>
+        <span><strong>분량</strong> 약 600 페이지</span>
+        <span class="dot"></span>
+        <span><strong>발행</strong> 2026</span>
       </div>
     </div>
   </section>
 
   <!-- ==================== QUOTES ==================== -->
   <section class="quotes-section">
-    <div class="container narrow">
-      <p class="eyebrow">PHILOSOPHY · 책이 말하는 것</p>
-      <h2 class="section-title">
-        피팅에 대한 <em>다른 시선</em>
-      </h2>
+    <div class="container">
+      <div class="quotes-head">
+        <p class="eyebrow">PHILOSOPHY · 책의 철학</p>
+        <h2 class="section-title">
+          이 책이 <em>반복해서 말하는 것</em>
+        </h2>
+      </div>
 
-      <div class="quote-grid">
+      <div class="quotes-grid">
         {quotes.map((q, i) => (
-          <figure class="quote-card">
-            <p class="quote-num">{String(i + 1).padStart(2, '0')}</p>
-            <blockquote class="quote-text">{q.text}</blockquote>
-            <figcaption class="quote-source">— {q.source}</figcaption>
-          </figure>
+          <a href={q.ref} class="quote-card">
+            <p class="quote-num">{String(i + 1).padStart(2, "0")}</p>
+            <blockquote class="quote-text">"{q.text}"</blockquote>
+            <p class="quote-expand">{q.expand}</p>
+            <p class="quote-source">{q.source} →</p>
+          </a>
         ))}
       </div>
     </div>
   </section>
 
   <!-- ==================== TABLE OF CONTENTS ==================== -->
-  <section id="contents" class="contents-section">
+  <section class="toc-section">
     <div class="container">
       <div class="toc-head">
         <p class="eyebrow">CONTENTS · 본문 14 PART</p>
-        <h2 class="section-title">전체 <em>목차</em></h2>
+        <h2 class="section-title">
+          전체 <em>목차</em>
+        </h2>
         <p class="toc-lead">
-          각 PART는 독립된 장입니다. 관심 있는 PART부터 바로 들어갈 수 있습니다.
-          모든 PART는 학습 목표 → 본문 → 마무리 → 확인 문제 순으로 구성됩니다.
+          각 PART는 독립적으로 읽을 수 있도록 설계되어 있지만,
+          전체를 순서대로 읽으면 피팅의 사고 구조가 단계별로 쌓입니다.
         </p>
       </div>
 
-      <ol class="parts-grid">
+      <div class="parts-grid">
         {parts.map((p) => (
-          <li>
-            <a href={`/book/part-${p.num}`} class="part-card">
-              <div class="part-card-head">
-                <p class="part-card-num">PART {String(p.num).padStart(2, '0')}</p>
-                <span class="part-card-arrow">→</span>
-              </div>
-              <h3 class="part-card-title">{p.title}</h3>
-              <p class="part-card-sub">{p.sub}</p>
-            </a>
-          </li>
+          <a href={`/book/part-${p.num}`} class="part-card">
+            <p class="part-card-num">PART {String(p.num).padStart(2, "0")}</p>
+            <h3 class="part-card-title">{p.title}</h3>
+            <p class="part-card-sub">{p.sub}</p>
+            <span class="part-card-arrow">→</span>
+          </a>
         ))}
-      </ol>
-
-      <div class="appendix-card">
-        <p class="app-eyebrow">APPENDIX · 부록 4</p>
-        <p class="app-body">
-          부록 A 의사결정 트리 / 부록 B 다운스윙 정밀 분석 / 부록 C 샤프트 매트릭스 /
-          부록 D 용어·수치 참조표 — <em>현장에서 즉시 쓸 수 있는 도구</em>들로 구성됩니다.
-        </p>
       </div>
     </div>
   </section>
 
-  <!-- ==================== AUDIENCE ==================== -->
-  <section class="audience-section">
-    <div class="container narrow">
-      <p class="eyebrow">FOR · 대상 독자</p>
-      <h2 class="section-title">
-        이런 분께 <em>적합</em>합니다
-      </h2>
+  <!-- ==================== AUDIENCE & INFO ==================== -->
+  <section class="info-section">
+    <div class="container">
+      <div class="info-grid">
 
-      <ul class="audience-list">
-        {audience.map((a) => (
-          <li>
-            <span class="aud-mark">●</span>
-            <span class="aud-text">{a}</span>
-          </li>
-        ))}
-      </ul>
+        <div class="info-block">
+          <p class="eyebrow">FOR · 대상 독자</p>
+          <h2 class="section-title">
+            이런 분께 <br /><em>적합합니다</em>
+          </h2>
+          <ul class="audience-list">
+            {audiences.map((a) => (
+              <li>{a}</li>
+            ))}
+          </ul>
+        </div>
 
-      <p class="audience-foot">
-        클럽피팅을 처음 접하는 일반 골퍼에게도 일부 PART(1·4·5·11)는 충분히 접근 가능합니다.
-        다만 책 전체는 <strong>현장에서 결정을 내리는 사람</strong>의 시점에서 쓰여 있습니다.
-      </p>
-    </div>
-  </section>
+        <div class="info-block">
+          <p class="eyebrow">SPEC · 책 사양</p>
+          <h2 class="section-title">
+            책 <em>정보</em>
+          </h2>
+          <dl class="spec-list">
+            <div class="spec-row">
+              <dt>저자</dt>
+              <dd>채기웅 <span class="muted">(클럽메이커스 공작소장)</span></dd>
+            </div>
+            <div class="spec-row">
+              <dt>구성</dt>
+              <dd>본문 14 PART <span class="muted">(부록 별도)</span></dd>
+            </div>
+            <div class="spec-row">
+              <dt>분량</dt>
+              <dd>약 600 페이지</dd>
+            </div>
+            <div class="spec-row">
+              <dt>주요 PART</dt>
+              <dd>인터뷰 · 판단 구조 · 골퍼 해석 · 볼 비행 · 타점/CG · 헤드 기하 · MOI · 무게/SW · 샤프트 · 론치모니터 · 통합 결정 · 웨지/퍼터 · 케이스 스터디 · 특수군</dd>
+            </div>
+            <div class="spec-row">
+              <dt>발행</dt>
+              <dd>클럽메이커스, 2026</dd>
+            </div>
+            <div class="spec-row">
+              <dt>저자 약력</dt>
+              <dd>1985년 클럽메이킹 시작, <strong>24년 현장 경험</strong>. 클럽메이커스 공작소장.</dd>
+            </div>
+          </dl>
+        </div>
 
-  <!-- ==================== TOPICS BRIDGE ==================== -->
-  <section class="topics-bridge">
-    <div class="container narrow">
-      <p class="eyebrow">SHORTCUT · 증상부터 시작하고 싶다면</p>
-      <h2 class="section-title">
-        <em>증상별 진단 트리</em>로 가기
-      </h2>
-      <p class="bridge-lead">
-        책의 PART 11 문제 해결 시스템을 검색자 관점에서 재구성한 9개 페이지가 별도로 있습니다.
-        슬라이스, 훅, 거리 부족 같은 구체적 증상에서 시작해 책으로 들어가는 입구입니다.
-      </p>
-
-      <a href="/topics" class="bridge-card">
-        <p class="bridge-card-eyebrow">TOPICS · 증상별 진단</p>
-        <p class="bridge-card-title">9가지 진단 트리 보기</p>
-        <p class="bridge-card-desc">
-          방향 / 슬라이스 · 훅 / 타점 / 탄도 · 스핀 / 리듬 · 타이밍 /
-          SW · MOI / 절대 금지 / 클럽별 / 복합 문제
-        </p>
-        <span class="bridge-card-arrow">→</span>
-      </a>
+      </div>
     </div>
   </section>
 
   <!-- ==================== CTA ==================== -->
   <section class="cta-section">
     <div class="container narrow">
-      <p class="eyebrow">NEXT STEP · 책과 피팅</p>
+      <p class="eyebrow">NEXT STEP</p>
       <h2 class="section-title">
-        책을 읽고 <em>직접 진단</em>받기
+        책을 <em>현장에서 쓰는 도구</em>로
       </h2>
 
       <p class="cta-lead">
-        책은 <strong>구조와 원칙</strong>을 다룹니다. 실제 처방은 골퍼마다 다릅니다.
-        클럽메이커스에서는 책에서 다룬 시스템을 <strong>현장 측정과 함께</strong> 적용합니다.
+        책을 읽는 것과 직접 진단받는 것은 다릅니다. 책의 원칙을 바탕으로
+        <strong>실제 측정과 처방</strong>을 받아보고 싶다면, 또는 클럽피팅을 깊이 배우고
+        싶다면 — 다음 단계로 진행하실 수 있습니다.
       </p>
 
-      <div class="cta-buttons">
-        <a href="/contact" class="btn-primary">
-          <span>구매·교육 문의</span>
-          <span>→</span>
+      <div class="cta-grid">
+        <a href="/contact" class="cta-card cta-primary">
+          <p class="cta-card-label">PRIMARY</p>
+          <h3 class="cta-card-title">책 구매 · 피팅 문의</h3>
+          <p class="cta-card-desc">
+            책 구매 또는 피팅 예약을 위한 문의입니다.
+          </p>
+          <span class="cta-card-arrow">→</span>
         </a>
-        <a href="/system" class="btn-secondary">피팅 진행 과정 보기</a>
-        <a href="/topics" class="btn-secondary">증상별 진단 →</a>
+
+        <a href="/topics" class="cta-card">
+          <p class="cta-card-label">DIAGNOSE</p>
+          <h3 class="cta-card-title">증상별 진단 트리</h3>
+          <p class="cta-card-desc">
+            슬라이스 · 훅 · 거리 부족 등 9가지 증상별 진단.
+          </p>
+          <span class="cta-card-arrow">→</span>
+        </a>
+
+        <a href="/glossary" class="cta-card">
+          <p class="cta-card-label">REFERENCE</p>
+          <h3 class="cta-card-title">클럽피팅 용어사전</h3>
+          <p class="cta-card-desc">
+            책에서 사용한 109개 용어의 정의와 PART 참조.
+          </p>
+          <span class="cta-card-arrow">→</span>
+        </a>
+
+        <a href="/education" class="cta-card">
+          <p class="cta-card-label">LEARN</p>
+          <h3 class="cta-card-title">클럽피팅 · 클럽메이킹 교육</h3>
+          <p class="cta-card-desc">
+            책의 원칙을 현장에서 직접 배우는 교육 과정.
+          </p>
+          <span class="cta-card-arrow">→</span>
+        </a>
       </div>
     </div>
   </section>
@@ -268,490 +286,423 @@ const audience = [
     margin: 0 0 1.25rem;
   }
 
-  .section-title {
-    font-family: var(--serif);
-    font-size: clamp(1.75rem, 4.2vw, 2.625rem);
-    font-weight: 500;
-    line-height: 1.3;
-    letter-spacing: -.015em;
-    color: var(--text);
-    margin: 0 0 2rem;
-  }
-  .section-title em { font-style: normal; color: var(--accent); }
-
-  /* ================ HERO ================ */
+  /* HERO */
   .book-hero {
     background: var(--bg);
-    padding: 80px 0 96px;
+    padding: 96px 0 80px;
     border-bottom: 1px solid var(--rule);
   }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 56px;
-    align-items: center;
-  }
-  @media (min-width: 880px) {
-    .hero-grid { grid-template-columns: 380px 1fr; gap: 80px; }
-  }
-
-  /* COVER */
-  .cover-area { display: flex; justify-content: center; }
-  .cover {
-    background: linear-gradient(155deg, var(--text) 0%, #2a2520 100%);
-    color: var(--bg);
-    padding: 56px 40px 48px;
-    border-radius: 4px;
-    width: 100%;
-    max-width: 360px;
-    aspect-ratio: 3 / 4.4;
-    display: flex;
-    flex-direction: column;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.08) inset,
-      0 30px 60px rgba(31, 27, 22, .25),
-      0 12px 24px rgba(31, 27, 22, .15);
-    position: relative;
-    overflow: hidden;
-  }
-  .cover:before {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    left: 12px;
-    width: 1px;
-    background: rgba(135, 169, 155, .25);
-  }
-  .cover-eyebrow {
-    font-family: var(--sans);
-    font-size: .6875rem;
-    font-weight: 700;
-    letter-spacing: .25em;
-    color: var(--accent-2);
-    margin: 0 0 auto;
-    text-transform: uppercase;
-  }
-  .cover-author {
+  .book-title {
     font-family: var(--serif);
-    font-size: 1rem;
-    color: rgba(255,255,255,.7);
-    margin: 0 0 1.25rem;
-    letter-spacing: .04em;
-  }
-  .cover-title {
-    font-family: var(--serif);
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    font-weight: 600;
-    line-height: 1.1;
-    color: var(--bg);
+    font-size: clamp(3rem, 9vw, 6rem);
+    font-weight: 500;
+    line-height: 1.05;
+    color: var(--text);
     margin: 0 0 1rem;
-    letter-spacing: -.01em;
+    letter-spacing: -.025em;
   }
-  .cover-en {
+  .book-title em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .book-en {
     font-family: var(--sans);
-    font-size: .8125rem;
-    color: var(--accent-2);
-    letter-spacing: .12em;
-    margin: 0 0 auto;
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: .04em;
+    margin: 0 0 2rem;
     font-style: italic;
   }
-  .cover-foot {
+  .book-author {
     font-family: var(--sans);
-    font-size: .75rem;
-    color: rgba(255,255,255,.55);
-    letter-spacing: .04em;
-    border-top: 1px solid rgba(255,255,255,.12);
-    padding-top: 1.25rem;
-    margin-top: 2rem;
+    margin: 0 0 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .65rem 1rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
   }
-  .cover-foot p { margin: 0 0 .25rem; }
-
-  /* INTRO */
-  .intro-title {
+  .author-label {
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+  .author-name {
     font-family: var(--serif);
-    font-size: clamp(1.875rem, 4.5vw, 2.875rem);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .author-role {
+    font-size: .9375rem;
+    color: var(--muted);
+  }
+  .book-lead {
+    font-family: var(--sans);
+    font-size: 1.125rem;
+    line-height: 1.85;
+    color: var(--text-2);
+    max-width: 660px;
+    margin: 0 0 2rem;
+  }
+  .book-lead strong { color: var(--text); font-weight: 600; }
+  .book-meta-inline {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    color: var(--text-2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .65rem 1rem;
+  }
+  .book-meta-inline strong {
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: .35rem;
+    font-size: .75rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .book-meta-inline .dot {
+    width: 4px;
+    height: 4px;
+    background: var(--rule-2);
+    border-radius: 50%;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.875rem, 4.5vw, 2.75rem);
     font-weight: 500;
     line-height: 1.25;
     letter-spacing: -.02em;
     color: var(--text);
     margin: 0 0 1.5rem;
   }
-  .intro-title em { font-style: normal; color: var(--accent); }
-  .intro-lead {
-    font-family: var(--sans);
-    font-size: 1.0625rem;
-    line-height: 1.85;
-    color: var(--text-2);
-    margin: 0 0 2rem;
-  }
-  .intro-lead strong { color: var(--text); font-weight: 600; }
+  .section-title em { font-style: normal; color: var(--accent); }
 
-  .intro-meta {
-    background: var(--bg-elev);
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    padding: 6px 0;
-    margin: 0 0 2rem;
-  }
-  .meta-row {
-    display: grid;
-    grid-template-columns: 70px 1fr;
-    gap: 1rem;
-    padding: 12px 22px;
-    font-family: var(--sans);
-    font-size: .9375rem;
-    border-bottom: 1px solid var(--rule);
-  }
-  .meta-row:last-child { border-bottom: none; }
-  .meta-label {
-    color: var(--muted);
-    font-size: .75rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    align-self: center;
-  }
-  .meta-value { color: var(--text-2); font-weight: 500; }
-
-  .intro-cta { display: flex; flex-wrap: wrap; gap: 1rem; }
-
-  /* ================ QUOTES ================ */
+  /* QUOTES */
   .quotes-section {
     padding: 96px 0;
-    background: var(--bg);
-    border-top: 1px solid var(--rule);
+    background: var(--text);
+    color: var(--bg);
   }
-  .quote-grid {
+  .quotes-section .eyebrow { color: var(--accent-2); }
+  .quotes-section .section-title { color: var(--bg); }
+  .quotes-section .section-title em { color: var(--accent-2); }
+  .quotes-head {
+    max-width: 760px;
+    margin: 0 auto 4rem;
+    padding: 0 24px;
+  }
+  .quotes-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-top: 1.5rem;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
   }
-  @media (min-width: 720px) { .quote-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 720px) { .quotes-grid { grid-template-columns: 1fr 1fr; } }
 
   .quote-card {
-    margin: 0;
-    background: var(--bg-elev);
-    border: 1px solid var(--rule);
-    padding: 32px 32px 28px;
-    border-radius: 2px;
-    border-top: 3px solid var(--accent);
-    position: relative;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.1);
+    padding: 36px 32px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background .25s, border-color .25s, transform .25s;
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid var(--accent-2);
+  }
+  .quote-card:hover {
+    background: rgba(255,255,255,.06);
+    border-color: rgba(255,255,255,.2);
+    transform: translateY(-2px);
   }
   .quote-num {
     font-family: var(--serif);
-    font-size: .8125rem;
-    font-weight: 700;
-    letter-spacing: .15em;
+    font-size: .9375rem;
+    font-weight: 500;
     color: var(--accent-2);
-    margin: 0 0 1rem;
+    margin: 0 0 1.25rem;
+    letter-spacing: .1em;
   }
   .quote-text {
     font-family: var(--serif);
-    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    font-size: clamp(1.375rem, 3vw, 1.75rem);
     font-weight: 500;
-    line-height: 1.55;
-    color: var(--text);
+    color: white;
+    line-height: 1.4;
     margin: 0 0 1.5rem;
-    quotes: "\201C" "\201D";
-    position: relative;
-    padding-left: 1.5rem;
+    quotes: none;
   }
-  .quote-text:before {
-    content: '"';
-    position: absolute;
-    left: 0;
-    top: -.25rem;
-    font-size: 2rem;
-    color: var(--accent-2);
-    font-weight: 700;
-    line-height: 1;
+  .quote-expand {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,.75);
+    margin: 0 0 1.5rem;
+    flex: 1;
   }
   .quote-source {
     font-family: var(--sans);
     font-size: .8125rem;
-    color: var(--muted);
-    letter-spacing: .02em;
+    font-weight: 600;
+    color: var(--accent-2);
+    margin: 0;
     padding-top: 1rem;
-    border-top: 1px solid var(--rule);
+    border-top: 1px solid rgba(255,255,255,.08);
+    letter-spacing: .04em;
   }
 
-  /* ================ CONTENTS ================ */
-  .contents-section {
+  /* TOC */
+  .toc-section {
     padding: 96px 0;
+    background: var(--bg);
     border-top: 1px solid var(--rule);
   }
-  .toc-head { max-width: 760px; margin: 0 auto 3rem; padding: 0 24px; text-align: left; }
-  .toc-head .section-title { margin-bottom: 1.5rem; }
+  .toc-head {
+    max-width: 760px;
+    margin: 0 auto 4rem;
+    padding: 0 24px;
+  }
   .toc-lead {
     font-family: var(--sans);
-    font-size: 1rem;
+    font-size: 1.0625rem;
     line-height: 1.8;
     color: var(--text-2);
     margin: 0;
   }
-
   .parts-grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 1rem;
   }
   @media (min-width: 600px) { .parts-grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 960px) { .parts-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 920px) { .parts-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1200px) { .parts-grid { grid-template-columns: repeat(4, 1fr); } }
 
   .part-card {
-    display: block;
     background: var(--bg-elev);
     border: 1px solid var(--rule);
-    padding: 22px 24px;
+    padding: 24px 24px 20px;
     border-radius: 2px;
     text-decoration: none;
     color: var(--text);
     transition: transform .25s, border-color .25s, background .25s;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    min-height: 160px;
+    padding-right: 44px;
   }
   .part-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     border-color: var(--accent);
     background: var(--accent-soft);
-  }
-  .part-card:hover .part-card-arrow { color: var(--accent); transform: translateX(3px); }
-
-  .part-card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: .85rem;
   }
   .part-card-num {
     font-family: var(--sans);
     font-size: .6875rem;
     font-weight: 700;
-    letter-spacing: .2em;
     color: var(--accent);
-    margin: 0;
-  }
-  .part-card-arrow {
-    font-size: 1.0625rem;
-    color: var(--accent-2);
-    transition: color .25s, transform .25s;
+    letter-spacing: .2em;
+    margin: 0 0 .5rem;
   }
   .part-card-title {
     font-family: var(--serif);
-    font-size: 1.125rem;
+    font-size: 1.1875rem;
     font-weight: 500;
     color: var(--text);
     margin: 0 0 .35rem;
-    line-height: 1.4;
+    line-height: 1.35;
   }
   .part-card-sub {
     font-family: var(--sans);
     font-size: .8125rem;
-    color: var(--text-2);
+    color: var(--muted);
+    line-height: 1.5;
     margin: 0;
-    line-height: 1.55;
+    flex: 1;
   }
-
-  /* APPENDIX */
-  .appendix-card {
-    margin: 32px auto 0;
-    max-width: 760px;
-    background: var(--text);
-    color: var(--bg);
-    padding: 28px 32px;
-    border-radius: 2px;
-    border-left: 3px solid var(--accent-2);
-  }
-  .app-eyebrow {
-    font-family: var(--sans);
-    font-size: .75rem;
-    font-weight: 700;
-    letter-spacing: .15em;
+  .part-card-arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.125rem;
     color: var(--accent-2);
-    text-transform: uppercase;
-    margin: 0 0 .75rem;
+    transition: color .2s, transform .2s;
   }
-  .app-body {
-    font-family: var(--sans);
-    font-size: .9375rem;
-    line-height: 1.8;
-    color: rgba(255,255,255,.85);
-    margin: 0;
-  }
-  .app-body em { font-style: normal; font-weight: 600; color: var(--accent-2); background: none; padding: 0; }
+  .part-card:hover .part-card-arrow { color: var(--accent); transform: translateY(-50%) translateX(4px); }
 
-  /* ================ AUDIENCE ================ */
-  .audience-section {
+  /* INFO */
+  .info-section {
     padding: 96px 0;
-    background: var(--bg);
     border-top: 1px solid var(--rule);
   }
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  @media (min-width: 920px) { .info-grid { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+
   .audience-list {
     list-style: none;
     padding: 0;
-    margin: 2rem 0 2rem;
+    margin: 1rem 0 0;
   }
   .audience-list li {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    padding: .9rem 0;
-    border-bottom: 1px solid var(--rule);
-    font-family: var(--sans);
-  }
-  .audience-list li:last-child { border-bottom: none; }
-  .aud-mark {
-    color: var(--accent);
-    font-size: .65rem;
-    line-height: 1;
-    margin-top: .35rem;
-  }
-  .aud-text {
-    font-size: 1rem;
-    color: var(--text-2);
-    line-height: 1.6;
-  }
-  .audience-foot {
-    font-family: var(--sans);
-    font-size: .9375rem;
-    line-height: 1.8;
-    color: var(--muted);
-    padding: 1.25rem 0 0;
-    border-top: 1px solid var(--rule);
-    margin: 0;
-  }
-  .audience-foot strong { color: var(--text); font-weight: 600; }
-
-  /* ================ TOPICS BRIDGE ================ */
-  .topics-bridge {
-    padding: 96px 0;
-    border-top: 1px solid var(--rule);
-  }
-  .bridge-lead {
     font-family: var(--sans);
     font-size: 1.0625rem;
     line-height: 1.8;
     color: var(--text-2);
-    margin: 0 0 2rem;
-  }
-
-  .bridge-card {
-    display: block;
-    background: var(--text);
-    color: var(--bg);
-    padding: 32px 36px;
-    border-radius: 2px;
-    text-decoration: none;
-    transition: transform .25s, background .25s;
+    padding: .85rem 0 .85rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
     position: relative;
-    padding-right: 80px;
   }
-  .bridge-card:hover { background: var(--accent); transform: translateX(2px); }
-  .bridge-card:hover .bridge-card-arrow { transform: translateX(4px) translateY(-50%); }
-  .bridge-card-eyebrow {
+  .audience-list li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  .audience-list li:last-child { border-bottom: none; }
+
+  .spec-list { margin: 1rem 0 0; padding: 0; }
+  .spec-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .25rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
     font-family: var(--sans);
+  }
+  @media (min-width: 480px) {
+    .spec-row { grid-template-columns: 100px 1fr; gap: 1.5rem; align-items: baseline; }
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-row dt {
     font-size: .75rem;
     font-weight: 700;
-    letter-spacing: .15em;
-    color: var(--accent-2);
+    color: var(--accent);
+    letter-spacing: .12em;
     text-transform: uppercase;
-    margin: 0 0 .5rem;
-  }
-  .bridge-card-title {
-    font-family: var(--serif);
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--bg);
-    margin: 0 0 .5rem;
-    line-height: 1.3;
-  }
-  .bridge-card-desc {
-    font-family: var(--sans);
-    font-size: .875rem;
-    line-height: 1.65;
-    color: rgba(255,255,255,.7);
     margin: 0;
   }
-  .bridge-card-arrow {
-    position: absolute;
-    right: 32px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5rem;
-    color: var(--accent-2);
-    transition: transform .25s;
+  .spec-row dd {
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin: 0;
   }
+  .spec-row dd .muted {
+    color: var(--muted);
+    font-size: .875rem;
+  }
+  .spec-row dd strong { color: var(--text); font-weight: 600; }
 
-  /* ================ CTA ================ */
+  /* CTA */
   .cta-section {
-    background: var(--text);
-    color: var(--bg);
+    background: var(--bg);
     padding: 96px 0;
+    border-top: 1px solid var(--rule);
   }
-  .cta-section .eyebrow { color: var(--accent-2); }
-  .cta-section .section-title { color: var(--bg); }
-  .cta-section .section-title em { color: var(--accent-2); }
   .cta-lead {
     font-family: var(--sans);
     font-size: 1.0625rem;
     line-height: 1.85;
-    color: rgba(255,255,255,.85);
-    margin: 0 0 2.5rem;
+    color: var(--text-2);
+    margin: 0 0 3rem;
   }
-  .cta-lead strong { color: white; font-weight: 600; }
+  .cta-lead strong { color: var(--text); font-weight: 600; }
 
-  .cta-buttons {
-    display: flex;
-    flex-wrap: wrap;
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
-  .btn-primary, .btn-secondary {
-    font-family: var(--sans);
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 16px 28px;
+  @media (min-width: 600px) { .cta-grid { grid-template-columns: 1fr 1fr; } }
+
+  .cta-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--rule);
+    padding: 28px 28px 24px;
     border-radius: 2px;
     text-decoration: none;
-    transition: transform .2s, background .2s;
-    display: inline-flex;
-    align-items: center;
-    gap: .75rem;
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: white;
-    border: 1px solid var(--accent);
-  }
-  .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); transform: translateX(2px); }
-  .btn-secondary {
-    background: transparent;
     color: var(--text);
-    border: 1px solid var(--rule-2);
+    transition: transform .25s, border-color .25s, background .25s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-right: 56px;
+    min-height: 140px;
   }
-  .btn-secondary:hover { background: var(--bg-soft); border-color: var(--accent); color: var(--accent); }
+  .cta-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .cta-card:hover .cta-card-arrow { color: var(--accent); transform: translateY(-50%) translateX(4px); }
+  .cta-card.cta-primary {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+  .cta-card.cta-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .cta-card.cta-primary .cta-card-label { color: var(--accent-2); }
+  .cta-card.cta-primary .cta-card-title { color: var(--bg); }
+  .cta-card.cta-primary .cta-card-desc { color: rgba(255,255,255,.75); }
+  .cta-card.cta-primary .cta-card-arrow { color: var(--accent-2); }
 
-  /* CTA section의 secondary는 다크 톤 */
-  .cta-section .btn-secondary {
-    color: var(--accent-2);
-    border-color: rgba(255,255,255,.25);
+  .cta-card-label {
+    font-family: var(--sans);
+    font-size: .6875rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .2em;
+    margin: 0 0 .5rem;
   }
-  .cta-section .btn-secondary:hover {
-    background: rgba(255,255,255,.06);
-    color: white;
-    border-color: rgba(255,255,255,.4);
+  .cta-card-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 .5rem;
+    line-height: 1.4;
+  }
+  .cta-card-desc {
+    font-family: var(--sans);
+    font-size: .9375rem;
+    line-height: 1.6;
+    color: var(--text-2);
+    margin: 0;
+    flex: 1;
+  }
+  .cta-card-arrow {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: var(--accent-2);
+    transition: color .2s, transform .2s;
   }
 
   @media (max-width: 480px) {
-    .book-hero { padding: 56px 0 64px; }
-    .quotes-section, .contents-section, .audience-section, .topics-bridge, .cta-section { padding: 64px 0; }
-    .cover { padding: 36px 28px 32px; }
-    .quote-card { padding: 26px 24px 22px; }
-    .part-card { padding: 18px 20px; }
-    .bridge-card { padding: 26px 24px; padding-right: 60px; }
-    .meta-row { padding: 10px 16px; grid-template-columns: 60px 1fr; gap: .75rem; }
-    .appendix-card { padding: 22px 22px; }
+    .book-hero { padding: 64px 0 56px; }
+    .quotes-section, .toc-section, .info-section, .cta-section { padding: 64px 0; }
+    .quotes-head, .toc-head { margin-bottom: 2.5rem; }
+    .quote-card { padding: 28px 24px 22px; }
+    .part-card { padding: 22px 22px 18px; padding-right: 40px; min-height: 140px; }
+    .info-grid { gap: 3rem; }
+    .cta-card { padding: 24px 22px 20px; padding-right: 48px; }
   }
 </style>
