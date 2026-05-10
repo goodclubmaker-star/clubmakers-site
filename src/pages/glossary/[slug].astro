@@ -1,0 +1,554 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('glossary', ({ data }) => {
+    return data.draft !== true;
+  });
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'glossary'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// DefinedTerm JSON-LD schema (AI 검색 핵심)
+const definedTermSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTerm',
+  '@id': `https://myclubmakers.com/glossary/${entry.slug}/#term`,
+  name: entry.data.koreanTitle,
+  alternateName: entry.data.englishTitle ? [entry.data.englishTitle] : undefined,
+  description: entry.data.shortDef || entry.data.title,
+  inLanguage: 'ko-KR',
+  url: `https://myclubmakers.com/glossary/${entry.slug}`,
+  inDefinedTermSet: {
+    '@type': 'DefinedTermSet',
+    '@id': 'https://myclubmakers.com/glossary/#termset',
+    name: '클럽메이커스 용어사전',
+    url: 'https://myclubmakers.com/glossary',
+  },
+};
+
+// Article schema (보조)
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTerm',
+  headline: entry.data.title,
+  description: entry.data.shortDef,
+  inLanguage: 'ko-KR',
+  datePublished: entry.data.pubDate.toISOString(),
+  author: { '@type': 'Person', name: '채기웅', url: 'https://myclubmakers.com/about' },
+  publisher: {
+    '@type': 'Organization',
+    name: '클럽메이커스',
+    url: 'https://myclubmakers.com',
+  },
+};
+
+// 카테고리 라벨
+const categoryLabels: Record<string, { ko: string; emoji: string }> = {
+  workshop:  { ko: '공작소 작업',  emoji: '🛠️' },
+  data:      { ko: '측정·분석',    emoji: '📊' },
+  new:       { ko: '신규 개념',    emoji: '🆕' },
+  shaft:     { ko: '샤프트',       emoji: '🪝' },
+  head:      { ko: '헤드',         emoji: '⚙️' },
+  grip:      { ko: '그립',         emoji: '✊' },
+  'length-sw': { ko: '길이·SW',    emoji: '⚖️' },
+  'lie-loft': { ko: '라이·로프트', emoji: '📐' },
+  general:   { ko: '기타',         emoji: '📚' },
+};
+
+const cat = categoryLabels[entry.data.category] || categoryLabels.general;
+
+// 관련 용어 (같은 카테고리 또는 같은 letter)
+const allEntries = await getCollection('glossary', ({ data }) => data.draft !== true);
+const related = allEntries
+  .filter((e) => e.slug !== entry.slug)
+  .filter((e) =>
+    e.data.category === entry.data.category ||
+    e.data.letter === entry.data.letter
+  )
+  .slice(0, 6);
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.shortDef || `${entry.data.koreanTitle} — 클럽메이커스 용어사전`}
+  schemaType="Article"
+  keywords={`${entry.data.koreanTitle}, ${entry.data.englishTitle || ''}, 클럽피팅 용어, 골프 용어, ${cat.ko}`}
+  extraSchema={[definedTermSchema, articleSchema]}
+>
+
+  <article class="term-article">
+
+    <!-- 헤더 -->
+    <header class="term-header">
+      <a href="/glossary" class="term-back">← 용어사전으로</a>
+
+      <div class="term-meta">
+        <span class={`term-cat term-cat-${entry.data.category}`}>
+          {cat.emoji} {cat.ko}
+        </span>
+        {entry.data.letter && (
+          <span class="term-letter">{entry.data.letter}</span>
+        )}
+        {entry.data.emojis && entry.data.emojis.map((em) => (
+          <span class="term-emoji-badge">{em}</span>
+        ))}
+      </div>
+
+      <h1 class="term-title">
+        {entry.data.koreanTitle}
+        {entry.data.englishTitle && (
+          <span class="term-english"> ({entry.data.englishTitle})</span>
+        )}
+      </h1>
+
+      {entry.data.shortDef && (
+        <p class="term-shortdef">{entry.data.shortDef}</p>
+      )}
+    </header>
+
+    <!-- 본문 -->
+    <div class="term-body">
+      <Content />
+    </div>
+
+    <!-- 공작소 작업·시스템 링크 -->
+    {(entry.data.workshopLink || entry.data.systemLink) && (
+      <aside class="term-actions">
+        <p class="actions-eyebrow">CLUBMAKERS · 관련 작업·시스템</p>
+        <div class="actions-list">
+          {entry.data.workshopLink && (
+            <a href={entry.data.workshopLink.href} class="action-card action-workshop">
+              <span class="action-icon">🛠️</span>
+              <div class="action-body">
+                <p class="action-label">공작소 작업</p>
+                <p class="action-text">{entry.data.workshopLink.label}</p>
+              </div>
+              <span class="action-arrow">→</span>
+            </a>
+          )}
+          {entry.data.systemLink && (
+            <a href={entry.data.systemLink.href} class="action-card action-system">
+              <span class="action-icon">📊</span>
+              <div class="action-body">
+                <p class="action-label">공작소 시스템</p>
+                <p class="action-text">{entry.data.systemLink.label}</p>
+              </div>
+              <span class="action-arrow">→</span>
+            </a>
+          )}
+        </div>
+      </aside>
+    )}
+
+    <!-- 관련 용어 -->
+    {related.length > 0 && (
+      <aside class="related-terms">
+        <h2>관련 용어</h2>
+        <div class="related-grid">
+          {related.map((e) => (
+            <a href={`/glossary/${e.slug}`} class="related-term-card">
+              <p class="related-term-title">{e.data.koreanTitle}</p>
+              {e.data.englishTitle && (
+                <p class="related-term-english">{e.data.englishTitle}</p>
+              )}
+              {e.data.shortDef && (
+                <p class="related-term-def">{e.data.shortDef}</p>
+              )}
+            </a>
+          ))}
+        </div>
+      </aside>
+    )}
+
+    <!-- CTA -->
+    <aside class="term-cta">
+      <p class="cta-eyebrow">FROM THE BOOK · 책에서 더 자세히</p>
+      <h3>『실제적인 클럽피팅』<br/>부록 D · 용어 · 수치 참조표</h3>
+      <p class="cta-body">
+        이 용어를 포함한 109개 용어가 책 부록 D에서 현장 판단의 수치 기준과 함께 정리되어 있습니다.
+      </p>
+      <div class="cta-actions">
+        <a href="/glossary" class="cta-btn cta-btn-ghost">용어사전 전체 →</a>
+        <a href="/book" class="cta-btn cta-btn-primary">책 자세히 →</a>
+      </div>
+    </aside>
+
+  </article>
+
+</BaseLayout>
+
+
+<style>
+  .term-article {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+
+  /* 헤더 */
+  .term-header {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .term-back {
+    display: inline-block;
+    font-size: 13px;
+    color: var(--grey);
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+  }
+  .term-back:hover { color: var(--green); }
+
+  .term-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  .term-cat {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 100px;
+  }
+  .term-cat-workshop  { background: rgba(184, 152, 92, 0.15); color: var(--gold); }
+  .term-cat-data      { background: rgba(70, 110, 200, 0.10); color: #2E5BBA; }
+  .term-cat-new       { background: rgba(120, 60, 60, 0.10); color: #804040; }
+  .term-cat-shaft     { background: rgba(15, 41, 34, 0.08); color: var(--green); }
+  .term-cat-head      { background: rgba(15, 41, 34, 0.08); color: var(--green); }
+  .term-cat-grip      { background: rgba(15, 41, 34, 0.08); color: var(--green); }
+  .term-cat-length-sw { background: rgba(15, 41, 34, 0.08); color: var(--green); }
+  .term-cat-lie-loft  { background: rgba(15, 41, 34, 0.08); color: var(--green); }
+  .term-cat-general   { background: var(--bg-soft); color: var(--grey); }
+
+  .term-letter {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green);
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cream, #F8F2E5);
+    border: 1px solid var(--gold-soft, #D4B888);
+    border-radius: 50%;
+  }
+  .term-emoji-badge {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .term-title {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4.5vw, 38px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    margin: 0 0 14px;
+  }
+  .term-english {
+    font-size: 0.7em;
+    font-weight: 500;
+    color: var(--grey);
+  }
+  .term-shortdef {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--green);
+    background: var(--cream, #F8F2E5);
+    border-left: 3px solid var(--gold, #B8985C);
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 0;
+  }
+
+  /* 본문 */
+  .term-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+  }
+  .term-body :global(blockquote) {
+    /* shortDef와 중복되니 본문 첫 blockquote는 약간 흐리게 */
+    margin: 0 0 24px;
+    padding: 12px 18px;
+    background: var(--bg-soft);
+    border-left: 3px solid var(--line);
+    border-radius: 4px;
+    font-style: italic;
+    color: var(--grey);
+    font-size: 14px;
+  }
+  .term-body :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    line-height: 1.4;
+  }
+  .term-body :global(h3) {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 28px 0 10px;
+    line-height: 1.4;
+  }
+  .term-body :global(p) {
+    margin-bottom: 18px;
+  }
+  .term-body :global(strong) {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .term-body :global(ul),
+  .term-body :global(ol) {
+    margin: 0 0 18px;
+    padding-left: 1.5em;
+  }
+  .term-body :global(li) {
+    margin-bottom: 8px;
+    line-height: 1.8;
+  }
+  .term-body :global(a) {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .term-body :global(a:hover) { opacity: 0.7; }
+  .term-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .term-body :global(th),
+  .term-body :global(td) {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .term-body :global(th) {
+    background: var(--bg-soft);
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .term-body :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 28px 0;
+  }
+
+  /* 공작소 작업·시스템 액션 */
+  .term-actions {
+    margin: 36px 0;
+  }
+  .actions-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin: 0 0 12px;
+  }
+  .actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .action-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .action-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 41, 34, 0.06);
+  }
+  .action-workshop:hover { border-color: var(--gold, #B8985C); }
+  .action-system:hover { border-color: #2E5BBA; }
+  .action-icon { font-size: 22px; }
+  .action-body { flex: 1; }
+  .action-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+    margin: 0 0 2px;
+    text-transform: uppercase;
+  }
+  .action-text {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+  .action-arrow {
+    font-size: 18px;
+    color: var(--grey);
+    transition: transform 0.2s;
+  }
+  .action-card:hover .action-arrow {
+    transform: translateX(2px);
+    color: var(--green);
+  }
+
+  /* 관련 용어 */
+  .related-terms {
+    margin: 48px 0 32px;
+    padding: 28px;
+    background: var(--bg-soft);
+    border-radius: 8px;
+  }
+  .related-terms h2 {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  @media (min-width: 640px) {
+    .related-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .related-term-card {
+    display: block;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .related-term-card:hover {
+    transform: translateY(-1px);
+    border-color: var(--green);
+  }
+  .related-term-title {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 2px;
+    line-height: 1.3;
+  }
+  .related-term-english {
+    font-size: 11px;
+    color: var(--grey);
+    margin: 0 0 6px;
+  }
+  .related-term-def {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* CTA */
+  .term-cta {
+    background: var(--green, #0F2922);
+    color: var(--cream, #F8F2E5);
+    padding: 32px 28px;
+    border-radius: 8px;
+    margin-top: 36px;
+    text-align: center;
+  }
+  .cta-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--gold-soft, #D4B888);
+    margin: 0 0 8px;
+  }
+  .term-cta h3 {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    line-height: 1.4;
+    color: white;
+  }
+  .cta-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 480px;
+    margin: 0 auto 22px;
+  }
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .cta-btn {
+    display: inline-block;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 11px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .cta-btn-primary {
+    background: var(--gold, #B8985C);
+    color: var(--ink, #0F0F0E);
+  }
+  .cta-btn-primary:hover {
+    background: var(--gold-soft, #D4B888);
+    transform: translateX(2px);
+  }
+  .cta-btn-ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .cta-btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+  }
+
+  @media (max-width: 640px) {
+    .term-article { padding: 36px 18px 80px; }
+    .term-cta { padding: 24px 20px; }
+    .related-terms { padding: 20px; }
+  }
+</style>
