@@ -34,12 +34,13 @@ const menuGroups = [
   },
   {
     label: '작업·가격',
-    paths: ['/workshop', '/workshop-qna', '/case-studies', '/reviews'],
+    paths: ['/workshop', '/workshop-qna', '/case-studies', '/reviews', '/shipping'],
     items: [
       { href: '/workshop',      label: '공임 안내' },
       { href: '/workshop-qna',  label: '수리 Q&A' },
       { href: '/case-studies',  label: '케이스 스터디' },
       { href: '/reviews',       label: '손님 후기 (당근 ★4.9)' },
+      { href: '/shipping',      label: '택배 접수·발송 (NEW)' },
     ],
   },
   {
@@ -65,7 +66,7 @@ const isActive = (paths: string[]) =>
 ---
 
 <nav class="nav">
-  <a href="/" class="logo" aria-label="클럽메이커스 홈">
+  <a href="/" class="logo" aria-label="골프채공작소 클럽메이커스 홈">
     CLUBMAKERS
     <small>SINCE 1985 · 골프채공작소</small>
   </a>
