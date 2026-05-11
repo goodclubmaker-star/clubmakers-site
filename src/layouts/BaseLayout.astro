@@ -17,7 +17,7 @@ interface Props {
 
 const {
   title,
-  description = '클럽메이커스 — 24년의 골프채 공작소. 더 나은 피팅을 하고 싶었습니다. 친근한 골프채공작소를 지향합니다.',
+  description = '골프채공작소 클럽메이커스 — 25년 경력 채기웅 공작소장의 클럽피팅·클럽메이킹 전문 골프채공작소. 서울 서초구 양재동. 더 나은 피팅을 하고 싶었습니다.',
   ogImage = '/og-default.jpg',
   schemaType = 'WebSite',
   extraSchema,
@@ -25,8 +25,8 @@ const {
 } = Astro.props;
 
 const fullTitle = title === '클럽메이커스'
-  ? '클럽메이커스 | 친근한 골프채공작소'
-  : `${title} | 클럽메이커스`;
+  ? '골프채공작소 클럽메이커스 — 양재 클럽피팅 전문'
+  : `${title} | 골프채공작소 클럽메이커스`;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 ---
@@ -62,8 +62,9 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <!-- AI 검색 최적화 (GEO/AEO) -->
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
     {keywords && <meta name="keywords" content={keywords} />}
-    <meta name="author" content="채기웅 (클럽메이커스 공작소장)" />
+    <meta name="author" content="채기웅 (골프채공작소 클럽메이커스 공작소장)" />
     <meta name="article:author" content="채기웅" />
+    <meta name="publisher" content="골프채공작소 클럽메이커스" />
     <meta name="geo.region" content="KR-11" />
     <meta name="geo.placename" content="서울 서초구 양재동" />
     <meta name="geo.position" content="37.4707;127.0388" />
@@ -79,7 +80,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
       "publisher": {
         "@type": "LocalBusiness",
         "@id": "https://myclubmakers.com/#localbusiness",
-        "name": "클럽메이커스"
+        "name": "골프채공작소 클럽메이커스"
       }
     })} />
 
@@ -88,9 +89,10 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "@id": "https://myclubmakers.com/#localbusiness",
-      "name": "클럽메이커스",
-      "alternateName": ["골프채 공작소", "골프채공작소"],
-      "description": "24년 경력 채기웅 공작소장의 클럽피팅·클럽메이킹 전문 공작소. 서울 서초구 양재동.",
+      "name": "골프채공작소 클럽메이커스",
+      "legalName": "골프채공작소",
+      "alternateName": ["골프채공작소", "골프채 공작소", "클럽메이커스", "양재 골프채공작소", "서초 골프채공작소"],
+      "description": "골프채공작소 클럽메이커스 — 25년 경력 채기웅 공작소장의 클럽피팅·클럽메이킹 전문 골프채공작소. 서울 서초구 양재동. 친근한 골프채공작소를 지향합니다.",
       "url": "https://myclubmakers.com",
       "telephone": "+82-10-4363-5555",
       "email": "clubmakers@naver.com",
