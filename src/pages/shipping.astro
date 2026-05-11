@@ -1,0 +1,583 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "택배 접수·발송 안내 — 전국 어디서나 골프채공작소";
+const pageDescription = "골프채공작소 클럽메이커스 택배 접수·발송 안내. 직접 방문이 어려우신 분께도 골프채 수리·라이각 조정·샤프트 교체·그립 교체·길이 조정 작업을 받으실 수 있도록 안내합니다. 전국 택배 접수 가능.";
+const pageKeywords = "골프채공작소 택배, 골프채 수리 택배, 비대면 골프채 수리, 라이각 조정 택배, 샤프트 교체 택배, 그립 교체 택배, 전국 골프채 수리, 양재 골프채공작소, 클럽메이커스 택배, 골프채 수리 비대면, 골프채 픽업 수리";
+
+// 4단계 절차
+const steps = [
+  {
+    num: '01',
+    title: '전화 접수',
+    body: '먼저 전화로 연락주십시오. 어떤 클럽인지, 어떤 작업이 필요하신지 간단히 말씀해 주십시오. 받는 주소를 안내드립니다.',
+    icon: '📞',
+  },
+  {
+    num: '02',
+    title: '택배 발송',
+    body: '손님께서 직접 택배로 클럽을 발송해 주십시오. 발송 전 안전한 포장을 부탁드립니다. 어느 택배사를 이용하셔도 괜찮습니다.',
+    icon: '📦',
+  },
+  {
+    num: '03',
+    title: '직접 확인 · 견적 안내',
+    body: '클럽이 도착하면 사장님이 직접 받아 자세한 상태를 확인합니다. 어떤 수리·작업이 필요한지, 정확한 비용은 얼마인지 안내드립니다. 손님의 확인을 받은 후 작업을 시작합니다.',
+    icon: '🔍',
+  },
+  {
+    num: '04',
+    title: '작업 · 입금 확인 후 발송',
+    body: '수리 및 피팅 작업을 진행합니다. 작업이 완료되면 결과를 안내드리고, 작업비·택배비 입금이 확인되면 손님 주소로 택배 발송합니다.',
+    icon: '🚚',
+  },
+];
+
+// 택배 발송 시 주의사항
+const tips = [
+  {
+    title: '안전한 포장',
+    body: '에어캡(뽁뽁이) 또는 신문지로 클럽 한 자루씩 감싸주시고, 골프백 또는 골프 전용 박스에 넣어 주십시오. 헤드 부분에 충격이 가해지지 않도록 특히 신경 써 주세요.',
+  },
+  {
+    title: '여러 클럽 동시 발송',
+    body: '여러 클럽을 한꺼번에 발송하시면 택배비를 절약하실 수 있습니다. 골프백 통째로 발송하시는 것을 권장드립니다.',
+  },
+  {
+    title: '택배사 선택',
+    body: '편하신 택배사를 이용하시면 됩니다. 골프 전문 택배 서비스(골프카, 골프택배 등)도 있어 안전합니다. 일반 택배 이용 시 파손 보험(신고가) 가입을 권장드립니다.',
+  },
+  {
+    title: '받는 주소',
+    body: '서울 서초구 동산로2길 50, 가보빌딩 지하층. 받는 사람: 채기웅. 전화: 010-4363-5555.',
+  },
+];
+
+// SEO - LocalBusiness with shipping service
+const shippingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': 'https://myclubmakers.com/shipping/#service',
+  serviceType: '골프채 택배 수리 서비스',
+  name: '골프채공작소 택배 접수·발송',
+  description: '직접 방문이 어려우신 분께 골프채 수리·라이각 조정·샤프트 교체·그립 교체·길이 조정 등 모든 작업을 택배로 제공합니다. 전국 어디서나 가능.',
+  provider: {
+    '@type': 'LocalBusiness',
+    '@id': 'https://myclubmakers.com/#localbusiness',
+    name: '골프채공작소 클럽메이커스',
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: '대한민국',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: '택배 가능 작업',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '샤프트 교체 (리샤프트)' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '그립 교체' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '라이각 조정' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '로프트 조정' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '길이 조정' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '스윙웨이트 조정' } },
+    ],
+  },
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Service"
+  keywords={pageKeywords}
+  extraSchema={[shippingSchema]}
+>
+
+  <!-- 1. Hero -->
+  <section class="page-hero shipping-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">SHIPPING · 택배 접수·발송 안내</div>
+      <h1>직접 못 오셔도 괜찮습니다<br/><span class="h1-sub">택배로도 받아드립니다</span></h1>
+      <p class="page-hero-subtitle">
+        <strong>골프채공작소 클럽메이커스</strong>는 직접 방문이 우선입니다.
+        하지만 멀리 계셔서 양재까지 오시기 어려운 분께도 길을 열어두려고 합니다.<br/>
+        <strong>골프채 수리·라이각 조정·샤프트 교체·그립 교체·길이 조정</strong> 등 대부분의 작업을
+        <strong>택배로 받아드릴 수 있습니다</strong>. 도착한 클럽을 직접 받아 자세히 확인한 후 견적을 안내드리고, 손님의 확인을 받은 다음 작업을 시작합니다.
+      </p>
+
+      <div class="hero-cta">
+        <a href="tel:010-4363-5555" class="btn-primary">
+          <span>📞 010-4363-5555</span>
+          <span>→</span>
+        </a>
+        <a href="https://blog.naver.com/clubmakers" target="_blank" rel="noopener" class="btn-ghost-hero">
+          <span>네이버 블로그 문의</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 권장 안내 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <div class="notice-box">
+        <p class="notice-eyebrow">PRIORITY · 우선 안내</p>
+        <h2 class="notice-title">가능하시면 직접 방문이 좋습니다</h2>
+        <p class="notice-body">
+          클럽 작업은 손님의 스윙·체형·신체 조건을 고려해야 더 정확합니다.
+          직접 만나뵙고 측정·분석한 후 작업하는 것이 가장 좋은 결과를 가져옵니다.
+        </p>
+        <p class="notice-body">
+          <strong>택배 접수는</strong> 작업 내용이 명확한 경우 (그립 교체, 샤프트 교체, 길이 조정 등),
+          또는 거리가 멀어 직접 방문이 정말 어려우신 분께만 권장드립니다.
+          <strong>처음 피팅 받으시는 분</strong>은 직접 방문을 권장드립니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 4단계 절차 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">PROCESS · 진행 절차</p>
+      <h2>4단계로 간단합니다</h2>
+      <p class="section-body">
+        문의부터 받기까지 보통 <strong>3~7일</strong>이 걸립니다. 작업 종류와 부품 주문 상황에 따라 달라집니다.
+      </p>
+
+      <div class="steps-list">
+        {steps.map((step) => (
+          <div class="step-card">
+            <div class="step-num">{step.num}</div>
+            <div class="step-body">
+              <div class="step-header">
+                <span class="step-icon">{step.icon}</span>
+                <h3 class="step-title">{step.title}</h3>
+              </div>
+              <p class="step-text">{step.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 비용 안내 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">COSTS · 비용 안내</p>
+      <h2>작업비 + 택배비 (손님 부담)</h2>
+      <p class="section-body">
+        <strong>작업비</strong>는 직접 방문하시는 분과 동일합니다.
+        <a href="/workshop">공임 안내 페이지</a>에서 모든 작업의 공임을 확인하실 수 있습니다.
+        <strong>샤프트 교체, 그립 교체, 라이각 조정, 로프트 조정, 길이 조정, 스윙웨이트 조정</strong> 등
+        대부분의 작업이 택배로 가능합니다.
+      </p>
+      <p class="section-body">
+        <strong>택배비</strong>는 손님께서 부담해 주십시오.
+        받으실 때(반송) 택배비는 작업비에 포함해 함께 입금받습니다.
+        택배비는 보통 한 번에 <strong>5,000원~10,000원</strong> (지역·무게에 따라 다름).
+      </p>
+
+      <div class="cost-summary">
+        <table class="cost-table">
+          <tr>
+            <th>항목</th>
+            <th>비용</th>
+            <th>부담</th>
+          </tr>
+          <tr>
+            <td>작업비</td>
+            <td><a href="/workshop">공임표 참조</a></td>
+            <td>손님</td>
+          </tr>
+          <tr>
+            <td>발송 택배비 (손님 → 공작소)</td>
+            <td>5,000원~10,000원</td>
+            <td>손님 직접 결제</td>
+          </tr>
+          <tr>
+            <td>반송 택배비 (공작소 → 손님)</td>
+            <td>5,000원~10,000원</td>
+            <td>작업비와 함께 입금</td>
+          </tr>
+        </table>
+      </div>
+
+      <p class="cost-tip">
+        💡 <strong>여러 클럽을 한 번에 보내시면 택배비를 절약</strong>하실 수 있습니다.
+        14개 클럽 전체를 골프백 통째로 발송하시는 분도 많습니다.
+      </p>
+
+      <div class="not-available">
+        <p class="not-available-title">⚠️ 택배로 어려운 작업</p>
+        <p class="not-available-body">
+          <strong>스윙 분석·키네마틱 시퀀스 측정·종합 피팅</strong>은 K-Vest·TrackMan 장비로 직접 측정해야 합니다.
+          이 작업은 양재 공작소 직접 방문이 필요합니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 택배 발송 팁 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">TIPS · 택배 발송 팁</p>
+      <h2>안전하게 보내주세요</h2>
+
+      <div class="tips-list">
+        {tips.map((tip) => (
+          <div class="tip-card">
+            <h3 class="tip-title">{tip.title}</h3>
+            <p class="tip-body">{tip.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CTA -->
+  <section class="closing-section">
+    <div class="closing-content">
+      <p class="closing-eyebrow">CONTACT · 문의하기</p>
+      <h3>먼저 연락주십시오<br/>자세히 안내드리겠습니다</h3>
+      <p class="closing-body">
+        택배 작업도 직접 방문 작업과 같은 정성으로 진행합니다.
+        전화 또는 카카오톡으로 자세한 견적을 먼저 받아보십시오.
+      </p>
+
+      <div class="closing-contacts">
+        <a href="tel:010-4363-5555" class="closing-contact-card">
+          <div class="closing-contact-icon">📞</div>
+          <div class="closing-contact-body">
+            <p class="closing-contact-label">전화</p>
+            <p class="closing-contact-value">010-4363-5555</p>
+          </div>
+        </a>
+        <a href="https://blog.naver.com/clubmakers" target="_blank" rel="noopener" class="closing-contact-card">
+          <div class="closing-contact-icon">📝</div>
+          <div class="closing-contact-body">
+            <p class="closing-contact-label">네이버 블로그</p>
+            <p class="closing-contact-value">댓글 문의</p>
+          </div>
+        </a>
+        <a href="mailto:clubmakers@naver.com" class="closing-contact-card">
+          <div class="closing-contact-icon">✉️</div>
+          <div class="closing-contact-body">
+            <p class="closing-contact-label">이메일</p>
+            <p class="closing-contact-value">clubmakers@naver.com</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  .shipping-hero { background: var(--bg-cream); }
+  .page-hero h1 { margin-bottom: 1.5rem; line-height: 1.3; }
+  .h1-sub {
+    font-size: 0.7em;
+    color: var(--grey);
+    display: inline-block;
+    margin-top: 8px;
+  }
+  .page-hero-subtitle { margin-bottom: 2rem; }
+
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-cta .btn-primary, .hero-cta .btn-ghost-hero {
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 13px 22px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .hero-cta .btn-primary {
+    background: var(--ink);
+    color: white;
+  }
+  .hero-cta .btn-primary:hover {
+    background: var(--green);
+    transform: translateX(2px);
+  }
+  .hero-cta .btn-ghost-hero {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .hero-cta .btn-ghost-hero:hover {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  /* 우선 안내 박스 */
+  .notice-box {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold, #B8985C);
+    border-radius: 6px;
+    padding: 32px 36px;
+  }
+  .notice-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin: 0 0 8px;
+  }
+  .notice-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+  .notice-body {
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0 0 14px;
+  }
+  .notice-body:last-child { margin-bottom: 0; }
+  .notice-body strong { color: var(--ink); font-weight: 700; }
+
+  /* 절차 4단계 */
+  .section-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin-bottom: 28px;
+  }
+  .section-body strong { color: var(--ink); font-weight: 600; }
+  .section-body a { color: var(--green); border-bottom: 1px solid var(--green); text-decoration: none; }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .step-card {
+    display: flex;
+    gap: 20px;
+    padding: 24px 26px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .step-card:hover {
+    border-color: var(--green);
+    box-shadow: 0 4px 16px rgba(15, 41, 34, 0.06);
+  }
+  .step-num {
+    font-family: var(--font-serif);
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--gold, #B8985C);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .step-body { flex: 1; }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .step-icon { font-size: 20px; }
+  .step-title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+  .step-text {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* 택배 불가 작업 */
+  .not-available {
+    background: rgba(255, 235, 200, 0.4);
+    border: 1px solid rgba(184, 152, 92, 0.3);
+    border-left: 3px solid #B8985C;
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-top: 20px;
+  }
+  .not-available-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+  .not-available-body {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .not-available-body strong { color: var(--ink); font-weight: 700; }
+
+  /* 비용 표 */
+  .cost-summary { margin: 24px 0 16px; }
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  .cost-table th {
+    background: var(--bg-soft);
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+  }
+  .cost-table td {
+    padding: 14px 16px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-2);
+    vertical-align: middle;
+  }
+  .cost-table a { color: var(--green); }
+  .cost-tip {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--gold, #B8985C);
+    padding: 14px 18px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .cost-tip strong { color: var(--ink); font-weight: 700; }
+
+  /* 팁 카드 */
+  .tips-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 24px;
+  }
+  @media (min-width: 720px) {
+    .tips-list { grid-template-columns: repeat(2, 1fr); }
+  }
+  .tip-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 20px 22px;
+  }
+  .tip-title {
+    font-family: var(--font-serif);
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .tip-body {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* Closing */
+  .closing-section {
+    background: var(--ink);
+    padding: 90px 32px;
+    text-align: center;
+  }
+  .closing-content { max-width: 760px; margin: 0 auto; }
+  .closing-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--gold-soft, #D4B888);
+    margin: 0 0 12px;
+  }
+  .closing-section h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 4vw, 28px);
+    font-weight: 600;
+    color: white;
+    line-height: 1.5;
+    margin: 0 0 16px;
+  }
+  .closing-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 32px;
+  }
+
+  .closing-contacts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  @media (min-width: 640px) {
+    .closing-contacts { grid-template-columns: repeat(3, 1fr); }
+  }
+  .closing-contact-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.2s;
+  }
+  .closing-contact-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--gold-soft, #D4B888);
+    transform: translateY(-1px);
+  }
+  .closing-contact-icon { font-size: 22px; flex-shrink: 0; }
+  .closing-contact-body { text-align: left; flex: 1; }
+  .closing-contact-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gold-soft, #D4B888);
+    margin: 0 0 2px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .closing-contact-value {
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .notice-box { padding: 24px 22px; }
+    .step-card { gap: 14px; padding: 20px 18px; }
+    .step-num { font-size: 28px; }
+    .closing-section { padding: 60px 22px; }
+  }
+</style>
