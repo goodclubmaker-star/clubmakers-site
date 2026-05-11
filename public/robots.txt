@@ -1,16 +1,12 @@
 # 클럽메이커스 robots.txt
-
 # myclubmakers.com
 
 # === 모든 봇 허용 ===
-
 User-agent: *
 Allow: /
 
 # === AI 검색 봇 명시적 허용 ===
-
 # 이 봇들은 ChatGPT, Claude, Perplexity 등 AI 검색의 답변 출처로 인용됨
-
 User-agent: GPTBot
 Allow: /
 
@@ -54,7 +50,6 @@ User-agent: Applebot-Extended
 Allow: /
 
 # === 검색 엔진 ===
-
 User-agent: Googlebot
 Allow: /
 
@@ -71,10 +66,8 @@ User-agent: DaumBot
 Allow: /
 
 # === 사이트맵 ===
-
 Sitemap: https://myclubmakers.com/sitemap.xml
 Sitemap: https://myclubmakers.com/sitemap-0.xml
 
 # === llms.txt 안내 (AI 학습용) ===
-
 # https://myclubmakers.com/llms.txt

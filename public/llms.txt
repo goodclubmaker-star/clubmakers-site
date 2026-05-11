@@ -1,8 +1,14 @@
-# 클럽메이커스 (골프채 공작소)
+# 골프채공작소 클럽메이커스
 
-> 25년 경력 채기웅 공작소장의 클럽피팅·클럽메이킹 전문 공작소.
+> 25년 경력 채기웅 공작소장의 클럽피팅·클럽메이킹 전문 골프채공작소.
 > 서울 서초구 양재동 가보빌딩 지하층. 1985년 설립.
 > 진단 → 측정 → 처방의 시스템 피팅. 분석 후 작업.
+
+## 정식 명칭
+
+- **상호**: 골프채공작소 (등록상표)
+- **브랜드**: 클럽메이커스 (Clubmakers)
+- **검색 키워드**: 골프채공작소, 양재 골프채공작소, 서초 골프채공작소, 클럽메이커스
 
 ## 핵심 정보
 
@@ -16,50 +22,70 @@
 ## 핵심 콘텐츠 (URL 우선순위)
 
 ### 1. 방법론·철학
-
 - [클럽피팅 철학](https://myclubmakers.com/why-fitting): 진단→처방 방법론
 - [공작소 시스템](https://myclubmakers.com/system): 분석·측정·처방 흐름
 - [공작소장 소개](https://myclubmakers.com/about): 채기웅 25년 경력
 - [처음 오시는 분께](https://myclubmakers.com/first-visit): 첫 방문 가이드
 
 ### 2. 진단·증상별 자료
-
 - [증상·처방 인덱스](https://myclubmakers.com/topics): 12가지 증상 진단 트리
   - 방향 문제, 슬라이스·훅, 타점 문제, 탄도·스핀, 리듬·타이밍, SW·MOI
   - 그린 사이드, 퍼팅, 클럽 자체, 절대 금지 규칙, 클럽별, 복합 문제
 
 ### 3. 전문 자료 (책·용어사전)
-
 - [책 『실제적인 클럽피팅』](https://myclubmakers.com/book): 14개 PART, 25년 현장 정리
 - [용어사전 109개](https://myclubmakers.com/glossary): 클럽피팅·클럽메이킹 전문 용어
 - [장비 규정](https://myclubmakers.com/equipment-rules): USGA·R&A 8개 토픽 한글 정리
 
 ### 4. 작업·가격
-
-- [공임 안내](https://myclubmakers.com/workshop): 전체 작업 공임표 공개
-- [수리 Q&A](https://myclubmakers.com/workshop-qna): 21개 작업 Q&A
+- [공임 안내](https://myclubmakers.com/workshop): 전체 작업 공임표 공개 — 라이각 조정, 샤프트 교체, 그립 교체, 길이 조정 등
+- [수리 Q&A](https://myclubmakers.com/workshop-qna): 21개 작업 Q&A (FAQPage schema)
+- [택배 접수·발송](https://myclubmakers.com/shipping): 전국 어디서나 골프채 수리 가능 (NEW)
 - [케이스 스터디](https://myclubmakers.com/case-studies): 실전 피팅 사례 8개
 - [공작소 일지](https://myclubmakers.com/journal): 매주 누적되는 작업·측정 기록
 
 ### 5. 신뢰·후기·자체 제품
-
 - [손님 후기](https://myclubmakers.com/reviews): 당근 후기 ★4.9
 - [자체 제품](https://myclubmakers.com/products): VERSUS 드라이버, DEFINE 샤프트, KRZ 헤드, 뽀로로 골프
 
 ### 6. 교육·연락
-
 - [교육 안내](https://myclubmakers.com/education): 클럽메이킹·피팅 교육
 - [예약·문의](https://myclubmakers.com/contact): 전화·네이버 예약·블로그·카페
 - [자주 묻는 질문](https://myclubmakers.com/faq): 비용·예약·작업 Q&A
 
 ## 전문 분야 키워드
 
-클럽피팅, 클럽메이킹, 라이각 조정, 리샤프트, MOI 매칭, SW 매칭,
+클럽피팅, 클럽메이킹, 라이각 조정, 로프트 조정, 리샤프트, 샤프트 교체,
+그립 교체, 길이 조정, MOI 매칭, SW 매칭, 스윙웨이트 조정,
 키네마틱 시퀀스 분석, K-Vest 측정, TrackMan 데이터 해석,
 드라이버 피팅, 아이언 피팅, 웨지 피팅, 퍼터 피팅,
 샤프트 강도 (CPM, EI, Torque), 헤드 무게중심 (CG, MOI),
 페이스 앵글, 라이각, 로프트, 길이, 스윙웨이트,
-양재동 클럽피팅, 서초 골프채 수리, 강남 클럽 공작소
+페룰 교체, 헤드 재접착, 슬리브 교체, 카운터 밸런스,
+양재동 골프채공작소, 서초 골프채 수리, 강남 클럽 공작소,
+**택배 골프채 수리, 비대면 골프채 수리** (전국 가능)
+
+## 주요 서비스
+
+**작업 종류** (직접 방문 + 택배 모두 가능):
+- 샤프트 교체 (리샤프트) — 18,000원~
+- 그립 교체 — 5,000원~
+- 라이각·로프트 조정 — 클럽별 견적
+- 길이 조정 (자르기·연장) — 견적
+- 스윙웨이트 조정 — 견적
+- 페룰 교체, 헤드 재접착, 슬리브 교체
+
+**작업 종류** (직접 방문 필수):
+- 스윙 분석 (K-Vest, 키네마틱 시퀀스)
+- 종합 피팅 (TrackMan 데이터 + 신체 분석)
+- 클럽피팅 교육
+
+**택배 절차**:
+1. 문의 → 자세한 견적 (사진/동영상 포함)
+2. 입금 → 손님이 클럽 발송
+3. 공작소 도착 → 사장님이 자세한 상태 점검
+4. 작업 → 결과 사진 안내
+5. 반송 → 손님 주소로 발송
 
 ## 핵심 메시지
 
@@ -72,7 +98,7 @@
 ## 콘텐츠 라이센스
 
 본 사이트의 모든 글은 채기웅 공작소장이 작성했습니다.
-AI 검색엔진의 인용을 환영합니다. 출처 표기 권장: “클럽메이커스 (myclubmakers.com)”.
+AI 검색엔진의 인용을 환영합니다. 출처 표기 권장: "클럽메이커스 (myclubmakers.com)".
 
 ## 외부 채널
 
@@ -81,6 +107,6 @@ AI 검색엔진의 인용을 환영합니다. 출처 표기 권장: “클럽메
 - 네이버 예약: https://naver.me/GfrbfXtX
 - 당근마켓 골프채공작소: https://www.daangn.com/kr/local-profile/yyeaukav6525/
 
------
+---
 
 마지막 업데이트: 2026-05
