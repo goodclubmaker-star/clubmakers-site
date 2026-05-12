@@ -1,0 +1,96 @@
+# PagesCMS 설정 파일
+# 클럽메이커스 공작소 일지 (journal) 관리용
+# 참고: https://pagescms.org/docs
+
+# ===== 미디어 (이미지 업로드 위치) =====
+media:
+  input: public/images/journal
+  output: /images/journal
+
+# ===== 콘텐츠 정의 =====
+content:
+  # 공작소 일지 컬렉션
+  - name: journal
+    label: 공작소 일지
+    type: collection
+    path: src/content/journal
+    view:
+      fields: [title, pubDate, category, draft]
+      sort: [pubDate]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - name: title
+        label: 제목
+        type: string
+        required: true
+        description: "예: 60대 골퍼 — 드라이버 슬라이스 라이각 조정"
+
+      - name: description
+        label: 한 줄 요약
+        type: string
+        description: "검색 결과에 표시되는 요약. SEO에 중요. 100자 이내 권장"
+
+      - name: pubDate
+        label: 작성일
+        type: date
+        required: true
+        options:
+          format: "yyyy-MM-dd"
+
+      - name: updatedDate
+        label: 수정일
+        type: date
+        description: "글을 수정할 때 입력 (선택)"
+        options:
+          format: "yyyy-MM-dd"
+
+      - name: category
+        label: 분류
+        type: select
+        default: log
+        options:
+          values:
+            - { value: log, label: "🔨 일지 (작업 사례)" }
+            - { value: review, label: "⭐ 리뷰 (제품·장비)" }
+            - { value: trends, label: "📰 트렌드 (업계 동향)" }
+            - { value: data, label: "📊 데이터 (측정·분석)" }
+
+      - name: tags
+        label: 태그
+        type: string
+        list: true
+        description: "예: 라이각, 슬라이스, 드라이버"
+
+      - name: clubType
+        label: 클럽 종류
+        type: select
+        description: "관련 클럽 (선택)"
+        options:
+          values:
+            - { value: "", label: "선택 안 함" }
+            - { value: driver, label: "드라이버" }
+            - { value: fairway, label: "페어웨이 우드" }
+            - { value: hybrid, label: "하이브리드" }
+            - { value: iron, label: "아이언" }
+            - { value: wedge, label: "웨지" }
+            - { value: putter, label: "퍼터" }
+            - { value: mixed, label: "복합/세트" }
+
+      - name: relatedSymptom
+        label: 관련 증상
+        type: string
+        description: "예: 슬라이스, 거리 부족 (선택)"
+
+      - name: draft
+        label: 초안
+        type: boolean
+        default: false
+        description: "체크하면 사이트에 발행되지 않음 (작성 중일 때 사용)"
+
+      - name: body
+        label: 본문
+        type: rich-text
+        required: true
+        description: "이미지 드래그앤드롭 가능"
