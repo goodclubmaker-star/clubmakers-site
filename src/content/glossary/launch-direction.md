@@ -17,7 +17,7 @@ pubDate: 2026-05-10
 
 페이스 앵글에 의해 80~85% 결정됩니다.
 
-📊 트랙맨 데이터 (Launch) / 연관: Face Angle
+📊 론치모니터 데이터 (Launch) / 연관: Face Angle
 
 
 

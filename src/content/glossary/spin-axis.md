@@ -22,7 +22,7 @@ pubDate: 2026-05-10
 
 페이스 앵글과 클럽 패스의 조합이 Spin Axis를 결정합니다. **Spin Axis는 결과**입니다 — 원인은 Face to Path.
 
-📊 트랙맨 데이터 (Launch) / 연관: Face Angle, Club Path, Face to Path
+📊 론치모니터 데이터 (Launch) / 연관: Face Angle, Club Path, Face to Path
 
 
 

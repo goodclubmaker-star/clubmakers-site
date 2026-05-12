@@ -29,7 +29,7 @@ pubDate: 2026-05-10
 
 Spin Loft를 줄이려면 디로프트(볼을 눌러치기)를 잘해야 합니다. **PGA 투어가 일반 골퍼보다 4° 낮은 이유.**
 
-📊 트랙맨 데이터 (Club) / 연관: Dynamic Loft, Attack Angle, Smash Factor, Spin Rate
+📊 론치모니터 데이터 (Club) / 연관: Dynamic Loft, Attack Angle, Smash Factor, Spin Rate
 
 
 

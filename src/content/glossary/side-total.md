@@ -18,7 +18,7 @@ pubDate: 2026-05-10
 - **Curve**: 출발 방향(Launch Direction) 기준 휨
 - **Side**: 타깃 라인 기준 좌우 거리
 
-📊 트랙맨 데이터 (Flight)
+📊 론치모니터 데이터 (Flight)
 
 
 

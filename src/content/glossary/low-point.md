@@ -16,7 +16,7 @@ pubDate: 2026-05-10
 
 볼을 올려치는지, 내려치는지 직관적으로 보여줍니다.
 
-📊 트랙맨 데이터 (Club) / 연관: Attack Angle
+📊 론치모니터 데이터 (Club) / 연관: Attack Angle
 
 
 

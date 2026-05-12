@@ -35,7 +35,7 @@ pubDate: 2026-05-10
 
 LS 드라이버는 이 스핀율을 낮추기 위한 설계입니다.
 
-📊 트랙맨 데이터 (Launch) / 연관: Spin Loft, Swing Speed, Impact Position
+📊 론치모니터 데이터 (Launch) / 연관: Spin Loft, Swing Speed, Impact Position
 
 
 
