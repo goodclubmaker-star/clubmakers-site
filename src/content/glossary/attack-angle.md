@@ -29,7 +29,7 @@ pubDate: 2026-05-10
 
 볼이 지면에 있는 경우, 마이너스 Attack Angle로 쳐야 최적 탄도가 나옵니다.
 
-📊 트랙맨 데이터 (Club) / 연관: Spin Loft, Club Path, Low Point
+📊 론치모니터 데이터 (Club) / 연관: Spin Loft, Club Path, Low Point
 
 
 

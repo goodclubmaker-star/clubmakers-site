@@ -26,7 +26,7 @@ pubDate: 2026-05-10
 
 Dynamic Loft가 너무 낮으면 탄도가 부족하고 런이 많아져 거리 조절이 어려워집니다. **디로프트(볼을 눌러치기)가 잘 되는지의 지표.**
 
-📊 트랙맨 데이터 (Club) / 연관: Launch Angle, Smash Factor, Spin Loft
+📊 론치모니터 데이터 (Club) / 연관: Launch Angle, Smash Factor, Spin Loft
 
 
 

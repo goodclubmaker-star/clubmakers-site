@@ -32,7 +32,7 @@ pubDate: 2026-05-10
 | LPGA (218야드) | +2° | — | 14야드 우측 |
 | LPGA (218야드) | -5° | — | 32야드 좌측 |
 
-📊 트랙맨 데이터 (Club) / 연관: Face Angle, Club Path, Spin Axis
+📊 론치모니터 데이터 (Club) / 연관: Face Angle, Club Path, Spin Axis
 
 
 
