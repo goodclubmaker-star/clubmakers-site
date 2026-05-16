@@ -97,6 +97,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
       "telephone": "+82-10-4363-5555",
       "email": "clubmakers@naver.com",
       "image": "https://myclubmakers.com/og-default.jpg",
+      "logo": "https://myclubmakers.com/logo.png",
       "priceRange": "₩₩",
       "founder": {
         "@type": "Person",
@@ -168,6 +169,57 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
         "reviewCount": "74",
         "bestRating": "5",
         "worstRating": "1"
+      }
+    })} />
+
+    <!-- schema.org JSON-LD : Organization (검색 결과 로고·사이트명 표시) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://myclubmakers.com/#organization",
+      "name": "골프채공작소 클럽메이커스",
+      "alternateName": ["골프채공작소", "클럽메이커스"],
+      "url": "https://myclubmakers.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://myclubmakers.com/logo.png",
+        "width": 600,
+        "height": 600,
+        "caption": "골프채공작소 클럽메이커스"
+      },
+      "image": "https://myclubmakers.com/og-default.jpg",
+      "founder": {
+        "@type": "Person",
+        "name": "채기웅"
+      },
+      "foundingDate": "1985",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+82-10-4363-5555",
+        "email": "clubmakers@naver.com",
+        "contactType": "customer service",
+        "areaServed": "KR",
+        "availableLanguage": "Korean"
+      },
+      "sameAs": [
+        "https://blog.naver.com/clubmakers",
+        "https://naver.me/GiyUpXkH",
+        "https://www.daangn.com/kr/local-profile/yyeaukav6525/"
+      ]
+    })} />
+
+    <!-- schema.org JSON-LD : WebSite (사이트 본체 인식 + 사이트명) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://myclubmakers.com/#website",
+      "url": "https://myclubmakers.com",
+      "name": "골프채공작소 클럽메이커스",
+      "alternateName": "Clubmakers",
+      "description": "골프채공작소 클럽메이커스 — 25년 경력 채기웅 공작소장의 클럽피팅·클럽메이킹 전문 골프채공작소",
+      "inLanguage": "ko-KR",
+      "publisher": {
+        "@id": "https://myclubmakers.com/#organization"
       }
     })} />
 
