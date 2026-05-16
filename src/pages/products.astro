@@ -1,530 +1,914 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = '자체 제품 — VERSUS 드라이버 · KRZ 203H 하이브리드 · 뽀로로 라이센스 — 골프채공작소 클럽메이커스';
+const description = '공작소가 직접 설계하고 만든 제품들입니다. VERSUS 맞춤 드라이버(헤드·샤프트·그립·피팅·제작 포함 65만원), KRZ 203H 하이브리드(MOI 2,468 g·cm²), 뽀로로 라이센스 헤드커버. 박희영·김효주 프로가 LPGA 우승 시 사용한 뽀로로·크롱 헤드커버를 만든 곳입니다.';
 ---
 
-<BaseLayout
-  title="자체 제품 — VERSUS · KRZ · PORORO"
-  description="골프채공작소 클럽메이커스의 자체 R&D 제품. VERSUS 샤프트와 드라이버 헤드, KRZ 203H 하이브리드, LPGA 박희영·김효주·안신애 프로가 사용한 PORORO 헤드커버. 1985년부터 25년 직접 만들어온 한 자루의 골프 장비."
-  schemaType="CollectionPage"
-  keywords="클럽메이커스 자체 제품, VERSUS 샤프트, VERSUS 드라이버, KRZ 하이브리드, 뽀로로 헤드커버, 박희영 뽀로로, 김효주 뽀로로, 안신애 뽀로로, 팀 신지애 클럽피팅"
->
+<BaseLayout title={title} description={description}>
 
+  <!-- ============================================================
+       HERO — 직접 만든, 한 자루
+       ============================================================ -->
   <section class="page-hero products-hero">
     <div class="page-hero-content">
       <div class="page-hero-eyebrow">PRODUCTS · 자체 제품</div>
-      <h1>직접 만든,<br/>한 자루.</h1>
+      <h1>직접 만든, 한 자루</h1>
       <p class="page-hero-subtitle">
-        남이 만든 클럽을 단순히 조립하지 않습니다.
-        <strong>샤프트, 헤드, 헤드커버</strong> — 25년 현장에서 본 부족함을 채우기 위해
-        클럽메이커스가 직접 설계하고 제작한 자체 제품을 소개합니다.
+        공작소가 설계하고 깎고 조립한 제품들입니다.
+        VERSUS 맞춤 드라이버를 중심으로,
+        KRZ 203H 하이브리드, 그리고 LPGA 투어 현장에서 선수들이 함께한 뽀로로 라이센스 라인업이 한자리에 있습니다.
       </p>
+      <p class="page-hero-meta">1985년부터 25년 — 채기웅 공작소장 제작</p>
     </div>
   </section>
 
-  <section class="anchor-nav-section">
-    <nav class="anchor-nav">
-      <a href="#versus" class="anchor-link"><span class="ae">VERSUS</span><span class="at">자체 드라이버·샤프트</span></a>
-      <a href="#krz" class="anchor-link"><span class="ae">KRZ</span><span class="at">자체 하이브리드</span></a>
-      <a href="#shinjiyai" class="anchor-link"><span class="ae">팀 신지애</span><span class="at">클럽피팅 파트너십</span></a>
-      <a href="#pororo" class="anchor-link"><span class="ae">PORORO</span><span class="at">LPGA 프로들의 선택</span></a>
-    </nav>
-  </section>
-
-  <section class="section product-section" id="versus">
-    <div class="section-content">
-      <p class="section-eyebrow">VERSUS · 자체 R&D</p>
-      <h2 class="section-h2">VERSUS 드라이버 · 샤프트</h2>
-      <p class="section-lead">
-        클럽메이커스가 직접 설계한 드라이버 헤드와 샤프트입니다.
-        로프트 10.5°, Mid Kick-point 설계, Custom Fit을 위한 최적 프로파일.
-        한국 골퍼의 스윙 템포에 맞춘 무게·강도 라인업을 갖추고 있습니다.
+  <!-- ============================================================
+       SECTION 01 — VERSUS 드라이버
+       ============================================================ -->
+  <section class="section section-versus">
+    <div class="section-inner">
+      <p class="section-eyebrow">SECTION 01 · VERSUS 드라이버</p>
+      <h2 class="section-title">검정 무광, 0.5° 훅페이스</h2>
+      <p class="section-lede">
+        딥페이스와 샬로우의 중간 타입입니다.
+        체격·스윙·임팩트 패턴이 다른 골퍼들이 들어와도 헤드가 자연스럽게 적응하도록 설계했습니다.
+        헤드·샤프트·그립·피팅·제작까지 한 자루로 묶어 65만원입니다.
       </p>
-      <div class="product-grid-2">
-        <figure class="product-photo">
-          <img src="/images/products/versus-head-1.jpg" alt="VERSUS 드라이버 헤드 — 10.5° 로프트, 자체 R&D" loading="lazy"/>
-          <figcaption>VERSUS 드라이버 헤드 · 10.5°</figcaption>
-        </figure>
-        <figure class="product-photo">
-          <img src="/images/products/versus-shaft-1.jpg" alt="VERSUS 55MS 샤프트 — Mid Kick-point, Stiff Flex" loading="lazy"/>
-          <figcaption>VERSUS 55MS · Mid Kick-point</figcaption>
-        </figure>
-      </div>
-      <dl class="spec-list">
-        <div class="spec-row"><dt>샤프트 모델</dt><dd>55MS · 65MS (Stiff Flex)</dd></div>
-        <div class="spec-row"><dt>특징</dt><dd>Optimized Profile For Custom Fit · Crafted By Clubmakers</dd></div>
-        <div class="spec-row"><dt>구성</dt><dd>VERSUS 헤드 · 샤프트 · 그립 · 피팅 · 제작 일체 포함</dd></div>
-        <div class="spec-row spec-row-price"><dt>맞춤 드라이버</dt><dd><strong>650,000원</strong></dd></div>
-      </dl>
-      <div class="cta-row">
-        <a href="/contact" class="btn-primary">제품 문의</a>
-        <a href="tel:01043635555" class="btn-secondary">010-4363-5555</a>
-      </div>
-    </div>
-  </section>
 
-  <section class="section product-section product-section-alt" id="krz">
-    <div class="section-content">
-      <p class="section-eyebrow">KRZ · CAD 자체 설계</p>
-      <h2 class="section-h2">KRZ 203H 하이브리드</h2>
-      <p class="section-lead">
-        아이언의 정확성과 우드의 거리를 동시에 잡기 위해 CAD로 자체 설계한
-        하이브리드 헤드입니다. 일반 시판 하이브리드와 달리, 클럽메이커스의
-        피팅 철학(타점 안정 + MOI 매칭)에 맞춰 무게중심·솔 디자인을 직접 설계했습니다.
-      </p>
-      <div class="product-grid-3">
-        <figure class="product-photo">
-          <img src="/images/products/krz-hybrid-1.jpg" alt="KRZ 203H 하이브리드 헤드 (정면)" loading="lazy"/>
-          <figcaption>KRZ 203H · 정면</figcaption>
+      <div class="versus-grid">
+        <figure class="vp vp-tall">
+          <img src="/images/products/versus-head-1.jpg" alt="VERSUS 드라이버 헤드 정면 — 검정 무광 0.5° 훅페이스"
+               width="1081" height="1440" loading="lazy" decoding="async" />
+          <figcaption>VERSUS 헤드 · 정면</figcaption>
         </figure>
-        <figure class="product-photo">
-          <img src="/images/products/krz-hybrid-2.jpg" alt="KRZ 하이브리드 솔 디자인" loading="lazy"/>
-          <figcaption>솔 디자인</figcaption>
+        <figure class="vp vp-tall">
+          <img src="/images/products/versus-head-2.jpg" alt="VERSUS 드라이버 헤드 측면 — 솔과 페이스 각도"
+               width="1081" height="1440" loading="lazy" decoding="async" />
+          <figcaption>VERSUS 헤드 · 측면</figcaption>
         </figure>
-        <figure class="product-photo">
-          <img src="/images/products/krz-hybrid-3.jpg" alt="KRZ 헤드 단면 — 무게중심 설계" loading="lazy"/>
-          <figcaption>단면 · 무게중심</figcaption>
+        <figure class="vp vp-wide">
+          <img src="/images/products/versus-shaft-1.jpg" alt="VERSUS 샤프트 — 55MS 그라파이트"
+               width="1200" height="843" loading="lazy" decoding="async" />
+          <figcaption>VERSUS 샤프트 · 55MS</figcaption>
+        </figure>
+        <figure class="vp vp-wide">
+          <img src="/images/products/versus-shaft-2.jpg" alt="VERSUS 샤프트 — 65MS 그라파이트"
+               width="1200" height="674" loading="lazy" decoding="async" />
+          <figcaption>VERSUS 샤프트 · 65MS</figcaption>
         </figure>
       </div>
-      <div class="spec-table">
-        <table>
-          <thead>
-            <tr><th>모델</th><th>로프트</th><th>라이</th><th>길이</th><th>무게(SW)</th><th>킥포인트</th><th>헤드 MOI</th></tr>
-          </thead>
+
+      <div class="spec-block">
+        <h3>VERSUS 스펙</h3>
+        <table class="spec-table">
           <tbody>
-            <tr><td>19°</td><td>19°</td><td>59°</td><td>39.75″</td><td>345g (D2)</td><td>MID</td><td>2,468 g·cm²</td></tr>
-            <tr><td>23°</td><td>23°</td><td>59.5°</td><td>39.25″</td><td>347g (D2)</td><td>MID</td><td>2,270 g·cm²</td></tr>
+            <tr><th>헤드</th><td>10.5° 로프트 · 검정 무광 · 0.5° 훅페이스</td></tr>
+            <tr><th>샤프트</th><td>VERSUS 55MS / 65MS (Mid Kick-point, Stiff Flex)</td></tr>
+            <tr><th>구성</th><td>헤드 + 샤프트 + 그립 + 피팅 + 제작</td></tr>
+            <tr><th>가격</th><td><strong>650,000원</strong> (한 자루 완성가)</td></tr>
           </tbody>
         </table>
-        <p class="spec-note">매칭 샤프트: <strong>DEFINE 635VTM</strong> · 68g (40″) · Torque 3.3~3.5 · Regular / Stiff</p>
-      </div>
-      <div class="cta-row">
-        <a href="/contact" class="btn-primary">KRZ 문의</a>
-        <a href="tel:01043635555" class="btn-secondary">010-4363-5555</a>
+        <div class="cta-row">
+          <a href="/contact" class="btn-primary">VERSUS 상담 예약</a>
+          <a href="/workshop" class="btn-ghost">작업 안내 보기</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section partnership-section" id="shinjiyai">
-    <div class="section-content">
-      <p class="section-eyebrow">PARTNERSHIP · 팀 신지애</p>
-      <h2 class="section-h2 light">세계 톱랭커의 <span class="accent">클럽피팅 파트너</span></h2>
-      <p class="section-lead light">
-        2008년, 클럽메이커스는 세계 톱랭커 신지애 선수가 이끄는 「팀 신지애」의
-        공식 클럽피팅 파트너로 함께했습니다. 서울경제 골프매거진 2008년 11월호에
-        「피팅은 우리가 책임진다」는 기사로 소개되었습니다.
+  <!-- ============================================================
+       SECTION 02 — KRZ 203H 하이브리드
+       ============================================================ -->
+  <section class="section section-krz">
+    <div class="section-inner">
+      <p class="section-eyebrow">SECTION 02 · KRZ 203H 하이브리드</p>
+      <h2 class="section-title">긴 아이언이 어렵게 느껴질 때</h2>
+      <p class="section-lede">
+        3·4번 아이언 자리를 대체하는 하이브리드입니다.
+        DEFINE 635VTM 샤프트를 매칭해 토크 3.3~3.5로 안정적인 임팩트를 잡습니다.
+        로프트와 길이 두 가지 옵션으로 자신의 거리 공백을 정확히 메우실 수 있습니다.
       </p>
-      <figure class="partnership-board">
-        <img src="/images/products/team-shinjiyai-board.jpg" alt="팀 신지애 클럽피팅 파트너십 — 서울경제 골프매거진 2008년 11월호" loading="lazy"/>
-        <figcaption>서울경제 골프매거진 2008년 11월호 · 「피팅은 우리가 책임진다」</figcaption>
+
+      <div class="krz-grid">
+        <figure class="vp vp-tall">
+          <img src="/images/products/krz-hybrid-1.jpg" alt="KRZ 203H 하이브리드 헤드 정면"
+               width="454" height="675" loading="lazy" decoding="async" />
+          <figcaption>KRZ 203H · 정면</figcaption>
+        </figure>
+        <figure class="vp vp-square">
+          <img src="/images/products/krz-hybrid-2.jpg" alt="KRZ 203H 하이브리드 솔"
+               width="454" height="452" loading="lazy" decoding="async" />
+          <figcaption>KRZ 203H · 솔</figcaption>
+        </figure>
+        <figure class="vp vp-wide">
+          <img src="/images/products/krz-hybrid-3.jpg" alt="KRZ 203H 하이브리드 — 작업 단계"
+               width="730" height="557" loading="lazy" decoding="async" />
+          <figcaption>KRZ 203H · 어드레스</figcaption>
+        </figure>
+      </div>
+
+      <div class="spec-block">
+        <h3>KRZ 203H 정밀 스펙</h3>
+        <table class="spec-table spec-table-2col">
+          <thead>
+            <tr><th></th><th>19° 모델</th><th>23° 모델</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>로프트</th><td>19°</td><td>23°</td></tr>
+            <tr><th>라이</th><td>59°</td><td>59.5°</td></tr>
+            <tr><th>길이</th><td>39.75″</td><td>39.25″</td></tr>
+            <tr><th>무게</th><td>345g (D2)</td><td>347g (D2)</td></tr>
+            <tr><th>MOI</th><td>2,468 g·cm²</td><td>2,270 g·cm²</td></tr>
+          </tbody>
+        </table>
+        <p class="spec-foot">
+          매칭 샤프트 · <strong>DEFINE 635VTM</strong> 68g · Torque 3.3~3.5 · Regular / Stiff
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 03 — 공작소 작업 흐름
+       ============================================================ -->
+  <section class="section section-work">
+    <div class="section-inner">
+      <p class="section-eyebrow">SECTION 03 · 어떻게 만들어집니까</p>
+      <h2 class="section-title">측정에서 한 자루까지</h2>
+      <p class="section-lede">
+        제품 한 자루는 네 단계를 거칩니다.
+        퍼스널 인터뷰로 골퍼의 습관과 목표를 듣고, 라이각·스윙웨이트를 측정하고, 부품을 골라 직접 조립합니다.
+        모든 단계가 데이터로 남습니다.
+      </p>
+
+      <div class="work-grid">
+        <figure class="vp vp-wide">
+          <img src="/images/products/work-interview.jpg" alt="공작소 — 퍼스널 인터뷰"
+               width="1200" height="798" loading="lazy" decoding="async" />
+          <figcaption>01 · 퍼스널 인터뷰</figcaption>
+        </figure>
+        <figure class="vp vp-wide">
+          <img src="/images/products/work-lie-angle.jpg" alt="공작소 — Maltby 라이보드 라이각 측정"
+               width="1200" height="798" loading="lazy" decoding="async" />
+          <figcaption>02 · 라이각 측정 (Maltby 라이보드)</figcaption>
+        </figure>
+        <figure class="vp vp-wide">
+          <img src="/images/products/work-swing-weight.jpg" alt="공작소 — 스윙웨이트 스케일 측정"
+               width="1200" height="800" loading="lazy" decoding="async" />
+          <figcaption>03 · 스윙웨이트 측정</figcaption>
+        </figure>
+        <figure class="vp vp-tall">
+          <img src="/images/products/work-fitting.jpg" alt="공작소 — 피팅 및 조립 작업"
+               width="1200" height="1800" loading="lazy" decoding="async" />
+          <figcaption>04 · 피팅 · 조립</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 04 — 팀 신지애
+       ============================================================ -->
+  <section class="section section-shinjiyai">
+    <div class="section-inner shinjiyai-layout">
+      <figure class="shinjiyai-board">
+        <img src="/images/products/team-shinjiyai-board.jpg" alt="팀 신지애 파트너십 — 서울경제 골프매거진 2008.11"
+             width="1080" height="1920" loading="lazy" decoding="async" />
       </figure>
+      <div class="shinjiyai-text">
+        <p class="section-eyebrow ink-eyebrow">SECTION 04 · 팀 신지애 클럽피팅 파트너</p>
+        <h2 class="section-title light">피팅은 우리가 책임진다</h2>
+        <blockquote class="quote-large">
+          <p>피팅은 우리가 책임진다.</p>
+          <footer>— 서울경제 골프매거진 2008.11, 「팀 신지애 클럽피팅 파트너」</footer>
+        </blockquote>
+        <p class="shinjiyai-body">
+          신지애 선수와의 파트너십 자료입니다.
+          공작소의 클럽피팅이 투어 현장에서 검증받은 한 시기를 기록합니다.
+        </p>
+      </div>
     </div>
   </section>
 
-  <section class="section pororo-section" id="pororo">
-    <div class="section-content">
-      <p class="section-eyebrow">PORORO HEROES · 투어 현장에서 함께한</p>
-      <h2 class="section-h2 light">LPGA 선수들도 사랑한<br/><span class="accent">뽀로로 헤드커버</span></h2>
-      <p class="section-lead light">
-        뽀로로 헤드커버는 클럽메이커스가 제작했습니다.
-        박희영, 김효주, 안신애 프로 등 여러 LPGA·KLPGA 선수들이
-        투어 현장에서 사용해 온 25년 공작소의 헤드커버입니다.
+  <!-- ============================================================
+       SECTION 05 — PORORO HEROES (핵심)
+       ============================================================ -->
+  <section class="section section-pororo">
+    <div class="section-inner">
+      <p class="section-eyebrow gold-eyebrow">SECTION 05 · PORORO HEROES</p>
+      <h2 class="section-title light">투어 현장에서, 선수들의 선택</h2>
+      <p class="section-lede light">
+        뽀로로 헤드커버는 클럽메이커스가 라이센스 계약으로 만든 제품입니다.
+        LPGA·KLPGA 투어에서 선수들이 사용하는 헤드커버 가운데 뽀로로·크롱 라이센스 라인을 공급한 곳입니다.
       </p>
 
-      <div class="pororo-player">
-        <h3 class="player-name">박희영 프로</h3>
-        <p class="player-meta">LPGA 투어 · 우리투자증권 / KEB하나은행</p>
-        <div class="player-gallery">
-          <figure class="pororo-photo"><img src="/images/products/pororo-park-1.jpg" alt="박희영 프로 · 투어 현장 (바하마)" loading="lazy"/></figure>
-          <figure class="pororo-photo"><img src="/images/products/pororo-park-2.jpg" alt="박희영 프로 · 골프카트" loading="lazy"/></figure>
-          <figure class="pororo-photo"><img src="/images/products/pororo-park-3.jpg" alt="박희영 프로 · 뽀로로 헤드커버 들어올림" loading="lazy"/></figure>
-          <figure class="pororo-photo"><img src="/images/products/pororo-park-4.jpg" alt="박희영 프로 · 티 박스" loading="lazy"/></figure>
-          <figure class="pororo-photo pororo-photo-wide"><img src="/images/products/pororo-park-5.jpg" alt="박희영 프로 · 라운드 중" loading="lazy"/></figure>
+      <!-- 핵심 매체 인용 -->
+      <blockquote class="pororo-pullquote">
+        <p>
+          “국내의 한 제조회사가 정식 라이선스 계약을 통해
+          뽀로로를 필드로 끌어 들였고, 김효주에게도 헤드커버를 선물했다.
+          박희영은 LPGA 매뉴라이프클래식 우승 당시 뽀로로 헤드커버로
+          전 세계 골프팬들의 시선을 끌었다.”
+        </p>
+        <footer>— 아시아경제 2014.10.30, 「효주는 크롱을 사랑해」</footer>
+      </blockquote>
+
+      <!-- 박희영 갤러리 (5장 — 우승 강조) -->
+      <article class="player-section">
+        <header class="player-header">
+          <h3 class="player-name">박희영 프로</h3>
+          <p class="player-caption">LPGA 매뉴라이프 파이낸셜 클래식 2013 우승 · 뽀로로 헤드커버</p>
+        </header>
+        <div class="player-gallery park-gallery">
+          <figure class="vp">
+            <img src="/images/products/park-1-winner-lpga.jpg" alt="박희영 — LPGA 매뉴라이프클래식 2013 우승 영문 기사"
+                 width="700" height="509" loading="lazy" decoding="async" />
+            <figcaption>Hee Young Park wins Canada LPGA · 2013.07.14</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/park-2-winner-mk.jpg" alt="박희영 — 매뉴라이프 우승 MK스포츠 기사 (뽀로로 헤드커버 화제)"
+                 width="954" height="717" loading="lazy" decoding="async" />
+            <figcaption>MK스포츠 · 매뉴라이프 우승 화제</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/park-3-beach.jpg" alt="박희영 프로 — 바하마 라운드, 뽀로로 헤드커버"
+                 width="650" height="866" loading="lazy" decoding="async" />
+            <figcaption>바하마 라운드</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/park-4-cart.jpg" alt="박희영 프로 — 카트 위 뽀로로 헤드커버"
+                 width="960" height="720" loading="lazy" decoding="async" />
+            <figcaption>코스 이동 중</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/park-5-raise.jpg" alt="박희영 프로 — 뽀로로 헤드커버 들어 보이기 (Newsen)"
+                 width="450" height="640" loading="lazy" decoding="async" />
+            <figcaption>Newsen 인터뷰</figcaption>
+          </figure>
         </div>
-      </div>
+      </article>
 
-      <div class="pororo-player">
-        <h3 class="player-name">김효주 프로</h3>
-        <p class="player-meta">LPGA 투어 · 롯데마트 / LOTTE · 크롱 헤드커버</p>
-        <div class="player-gallery">
-          <figure class="pororo-photo"><img src="/images/products/pororo-kim-1.jpg" alt="김효주 프로 · 그린 위에서" loading="lazy"/></figure>
-          <figure class="pororo-photo"><img src="/images/products/pororo-kim-2.jpg" alt="김효주 프로 · 캐디와" loading="lazy"/></figure>
-          <figure class="pororo-photo"><img src="/images/products/pororo-kim-3.jpg" alt="김효주 프로 · 페어웨이" loading="lazy"/></figure>
-          <figure class="pororo-photo"><img src="/images/products/pororo-kim-4.jpg" alt="김효주 프로 · 라운드 중" loading="lazy"/></figure>
-          <figure class="pororo-photo pororo-photo-wide"><img src="/images/products/pororo-kim-5.jpg" alt="김효주 프로 · 헤드커버와 함께" loading="lazy"/></figure>
+      <!-- 김효주 갤러리 (4장 — 크롱 헤드커버) -->
+      <article class="player-section">
+        <header class="player-header">
+          <h3 class="player-name">김효주 프로</h3>
+          <p class="player-caption">크롱 헤드커버 · KLPGA·LPGA 다승 · 「효주는 크롱을 사랑해」 (아시아경제)</p>
+        </header>
+        <div class="player-gallery kim-gallery">
+          <figure class="vp">
+            <img src="/images/products/kim-1-smile.jpg" alt="김효주 프로 — 크롱 헤드커버"
+                 width="500" height="750" loading="lazy" decoding="async" />
+            <figcaption>Mania Report</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/kim-2-caddy.jpg" alt="김효주 프로 — 캐디와 함께, 크롱 헤드커버"
+                 width="500" height="750" loading="lazy" decoding="async" />
+            <figcaption>캐디백 · 크롱</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/kim-3-shot.jpg" alt="김효주 프로 — 코스 위에서"
+                 width="540" height="746" loading="lazy" decoding="async" />
+            <figcaption>코스 위에서</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/kim-4-round.jpg" alt="김효주 프로 — 라운드 중"
+                 width="429" height="435" loading="lazy" decoding="async" />
+            <figcaption>라운드 중</figcaption>
+          </figure>
         </div>
-      </div>
+      </article>
 
-      <div class="pororo-player">
-        <h3 class="player-name">안신애 프로</h3>
-        <p class="player-meta">KLPGA 투어 · 우리투자증권</p>
-        <div class="player-gallery">
-          <figure class="pororo-photo"><img src="/images/products/pororo-ahn-1.jpg" alt="안신애 프로 · 뽀로로 헤드커버" loading="lazy"/></figure>
-          <figure class="pororo-photo"><img src="/images/products/pororo-ahn-2.jpg" alt="안신애 프로 · 뽀로로 팬" loading="lazy"/></figure>
-          <figure class="pororo-photo"><img src="/images/products/pororo-ahn-3.jpg" alt="안신애 프로 · 그린 위" loading="lazy"/></figure>
+      <!-- 콜라주: 그 외 많은 프로들 -->
+      <article class="player-section">
+        <header class="player-header">
+          <h3 class="player-name pros-name">이 외에도 많은 프로들이</h3>
+          <p class="player-caption">고진영·안신애 프로 등, 투어 캐디백 위에서 뽀로로·크롱이 함께해 왔습니다.</p>
+        </header>
+        <div class="player-gallery pros-collage">
+          <figure class="vp">
+            <img src="/images/products/pros-1-ko.jpg" alt="고진영 프로 — 크롱·뽀로로 헤드커버 (엑스포츠뉴스 2014)"
+                 width="821" height="734" loading="lazy" decoding="async" />
+            <figcaption>고진영 프로 · 엑스포츠뉴스 2014</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/pros-2-ahn.jpg" alt="안신애 프로 — 뽀로로 헤드커버 (마니아리포트)"
+                 width="766" height="1326" loading="lazy" decoding="async" />
+            <figcaption>안신애 프로 · 마니아리포트</figcaption>
+          </figure>
         </div>
-      </div>
+      </article>
 
-      <div class="pororo-product-grid">
-        <figure class="pororo-photo">
-          <img src="/images/products/pororo-collection.jpg" alt="뽀로로 헤드커버 컬렉션" loading="lazy"/>
-          <figcaption>뽀로로 컬렉션</figcaption>
-        </figure>
-        <figure class="pororo-photo">
-          <img src="/images/products/pororo-trio.jpg" alt="뽀로로 3총사 헤드커버" loading="lazy"/>
-          <figcaption>3총사 — 드라이버·우드·하이브리드</figcaption>
-        </figure>
-      </div>
-
-      <p class="pororo-note">
-        ※ 갤러리의 프로 사진은 클럽메이커스가 공식 협찬·파트너로 함께한 시기의 보도 자료입니다. 사진 출처는 각 매체(Newsen, OSEN, 엑스포츠뉴스, 마니아리포트 등)에 있습니다.
-      </p>
+      <!-- 뽀로로 제품 자체 -->
+      <article class="player-section">
+        <header class="player-header">
+          <h3 class="player-name">제품 라인업</h3>
+          <p class="player-caption">드라이버·우드·하이브리드용 헤드커버. 메트로신문 보도 기준 7만원 라인.</p>
+        </header>
+        <div class="player-gallery pororo-products">
+          <figure class="vp">
+            <img src="/images/products/pororo-collection.jpg" alt="뽀로로 헤드커버 컬렉션"
+                 width="800" height="886" loading="lazy" decoding="async" />
+            <figcaption>뽀로로 컬렉션</figcaption>
+          </figure>
+          <figure class="vp">
+            <img src="/images/products/pororo-trio.jpg" alt="뽀로로 3총사 — 드라이버·우드·하이브리드 헤드커버"
+                 width="540" height="505" loading="lazy" decoding="async" />
+            <figcaption>3총사 · 드라이버 · 우드 · 하이브리드</figcaption>
+          </figure>
+        </div>
+        <blockquote class="metro-quote">
+          <p>“뽀로로 헤드커버는 클럽메이커스에서 7만 원에 판매되고 있다.”</p>
+          <footer>— 메트로신문 보도</footer>
+        </blockquote>
+      </article>
     </div>
   </section>
 
-  <section class="section closing-section">
-    <div class="section-content-narrow">
-      <p class="closing-eyebrow">CONTACT · 제품 문의</p>
-      <h2 class="closing-h2">자체 제품에 대해 더 알고 싶으시다면</h2>
-      <p class="closing-text">
-        VERSUS 샤프트 모델 차이, KRZ 하이브리드 맞춤 옵션,
-        뽀로로 헤드커버 구매 가능 여부 등 직접 연락 부탁드립니다.
-      </p>
-      <div class="closing-cta">
-        <a href="/contact" class="btn-primary-large">예약·문의 페이지</a>
-        <a href="tel:01043635555" class="btn-secondary-large">010-4363-5555</a>
+  <!-- ============================================================
+       SECTION 06 — 공작소장
+       ============================================================ -->
+  <section class="section section-master">
+    <div class="section-inner master-layout">
+      <figure class="master-board">
+        <img src="/images/products/master-profile-board.jpg" alt="채기웅 공작소장 — 자격증·특허·TPI 인증"
+             width="1080" height="1920" loading="lazy" decoding="async" />
+      </figure>
+      <div class="master-text">
+        <p class="section-eyebrow">SECTION 06 · 이 제품을 만든 사람</p>
+        <h2 class="section-title">채기웅 공작소장</h2>
+        <p class="master-lede">
+          1985년부터 25년, 한 자루씩 직접 깎고 조립해 왔습니다.
+          제품은 만드는 사람의 시간과 같습니다.
+        </p>
+        <ul class="master-creds">
+          <li>TPI 인증 3단계</li>
+          <li>특허 3건 (10-1084295 · 10-0963427 · 10-1059933)</li>
+          <li>K-VEST Golf Instructor LEVEL 2</li>
+          <li>골프 인스트럭터 LEVEL 2</li>
+          <li>주니어 코치 LEVEL 2 · 골프 메카닉 LEVEL 2</li>
+          <li>2008·2009년 후지쿠라 베스트클럽메이커</li>
+          <li>등록상표 「골프채공작소」</li>
+        </ul>
       </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CLOSING CTA
+       ============================================================ -->
+  <section class="section section-cta">
+    <div class="section-inner cta-inner">
+      <h2 class="cta-title">직접 보러 오세요</h2>
+      <p class="cta-lede">
+        제품은 사진보다 손에 들었을 때 더 정확합니다.
+        예약 후 방문하시면 헤드 무게·샤프트 휨·그립 두께를 직접 비교하실 수 있습니다.
+      </p>
+      <div class="cta-row">
+        <a href="/contact" class="btn-primary">방문 예약</a>
+        <a href="/first-visit" class="btn-ghost">처음 방문 안내</a>
+      </div>
+      <p class="cta-meta">
+        서울 서초구 동산로2길 50, 가보빌딩 지하층 · 010-4363-5555 · clubmakers@naver.com
+      </p>
     </div>
   </section>
 
 </BaseLayout>
 
 <style>
-  .products-hero { background: var(--ink); color: var(--cream); }
-  .products-hero .page-hero-eyebrow { color: var(--gold); }
-  .products-hero h1 { color: var(--cream); }
+  /* ============================================================
+     공통 토큰 보강 (BaseLayout 글로벌에 이미 있을 것이나, 안전을 위해)
+     ============================================================ */
+  :root {
+    --ink: #0F0F0E;
+    --green: #0F2922;
+    --gold: #B8985C;
+    --cream: #F8F2E5;
+    --grey-line: rgba(15, 15, 14, 0.12);
+    --grey-line-light: rgba(248, 242, 229, 0.18);
+  }
 
-  .anchor-nav-section {
-    background: var(--cream);
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid rgba(15,41,34,0.1);
+  /* ============================================================
+     HERO — 검정 배경
+     ============================================================ */
+  .products-hero {
+    background: var(--ink);
+    color: var(--cream);
+    padding: clamp(5rem, 12vw, 9rem) 1.5rem clamp(4rem, 10vw, 7rem);
   }
-  .anchor-nav {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.8rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .anchor-link {
-    text-decoration: none;
-    text-align: center;
-    padding: 0.7rem;
-    background: #fff;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .anchor-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
-  .anchor-link .ae {
-    color: var(--gold);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  .anchor-link .at { color: var(--ink); font-size: 0.85rem; }
-
-  .section { padding: 5rem 0; }
-  .section-content, .section-content-narrow {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-  .section-content-narrow { max-width: 720px; }
-  .section-eyebrow {
-    color: var(--gold);
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  .section-h2 {
+  .products-hero h1 {
     font-family: 'Noto Serif KR', serif;
-    font-size: 2.2rem;
+    font-weight: 600;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0.4rem 0 1.4rem;
+  }
+  .page-hero-eyebrow {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .page-hero-subtitle {
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.75;
+    max-width: 38em;
+    color: rgba(248, 242, 229, 0.85);
+    margin: 0;
+  }
+  .page-hero-meta {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.86rem;
+    color: var(--gold);
+    margin: 1.6rem 0 0;
+    letter-spacing: 0.05em;
+  }
+
+  /* ============================================================
+     공통 section helpers
+     ============================================================ */
+  .section {
+    padding: clamp(4rem, 9vw, 7rem) 1.5rem;
+  }
+  .section-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 0 0 0.6rem;
+  }
+  .ink-eyebrow { color: var(--gold); }
+  .gold-eyebrow { color: var(--gold); }
+
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     color: var(--ink);
     margin: 0 0 1.2rem;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
   }
-  .section-h2.light { color: var(--cream); }
-  .section-h2 .accent { color: var(--gold); }
-  .section-lead {
-    color: var(--ink);
-    font-size: 1.05rem;
-    line-height: 1.9;
-    max-width: 720px;
-    margin-bottom: 2.5rem;
-  }
-  .section-lead.light { color: var(--cream); opacity: 0.92; }
+  .section-title.light { color: var(--cream); }
 
-  .product-section { background: #fff; }
-  .product-section-alt { background: var(--cream); }
-  .product-grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-    margin-bottom: 2rem;
+  .section-lede {
+    font-family: 'Pretendard', sans-serif;
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    line-height: 1.8;
+    max-width: 42em;
+    color: rgba(15, 15, 14, 0.78);
+    margin: 0 0 2.6rem;
   }
-  .product-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.2rem;
-    margin-bottom: 2rem;
-  }
-  .product-photo {
+  .section-lede.light { color: rgba(248, 242, 229, 0.82); }
+
+  /* ============================================================
+     이미지 — 절대 짤리지 않게 (핵심 규칙)
+     ============================================================ */
+  .vp {
     margin: 0;
-    background: #fff;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    background: transparent;
   }
-  .product-photo img {
+  .vp img {
     width: 100%;
-    height: 280px;
-    object-fit: cover;
+    height: auto;        /* ← 핵심: 비율 보존 */
     display: block;
+    border-radius: 2px;
   }
-  .product-photo figcaption {
-    padding: 0.7rem 1rem;
-    font-size: 0.85rem;
-    color: var(--ink);
-    text-align: center;
+  .vp figcaption {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.82rem;
+    color: rgba(15, 15, 14, 0.6);
+    margin-top: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* ============================================================
+     SECTION 01 — VERSUS
+     ============================================================ */
+  .section-versus {
     background: #fff;
   }
-  .spec-list {
-    border-top: 1px solid var(--gold);
-    margin: 0 0 2rem;
-    padding-top: 0;
-  }
-  .spec-row {
+  .versus-grid {
     display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 1rem;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid rgba(15,41,34,0.1);
-    font-size: 0.95rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.6rem;
+    align-items: start;     /* ← 비율 다른 사진 허용 */
+    margin: 0 0 3rem;
   }
-  .spec-row dt { color: var(--green); font-weight: 600; }
-  .spec-row dd { color: var(--ink); margin: 0; }
-  .spec-row-price dd { font-size: 1.15rem; }
-  .spec-row-price dd strong { color: var(--green); }
 
-  .spec-table { margin-bottom: 2rem; overflow-x: auto; }
-  .spec-table table {
+  /* spec block 공통 */
+  .spec-block {
+    background: var(--cream);
+    padding: clamp(1.6rem, 3vw, 2.6rem);
+    border-left: 3px solid var(--gold);
+    margin-top: 1.4rem;
+  }
+  .spec-block h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0 0 1.2rem;
+    color: var(--ink);
+  }
+  .spec-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
-    min-width: 600px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.96rem;
   }
-  .spec-table thead { background: var(--ink); color: var(--cream); }
-  .spec-table th { padding: 0.7rem; text-align: center; font-weight: 500; }
+  .spec-table th,
   .spec-table td {
-    padding: 0.7rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(15,41,34,0.1);
-    color: var(--ink);
+    padding: 0.85rem 0.9rem;
+    border-top: 1px solid var(--grey-line);
+    text-align: left;
+    vertical-align: top;
   }
-  .spec-table tbody tr:nth-child(even) { background: rgba(184,152,92,0.05); }
-  .spec-note {
-    margin: 1rem 0 0;
-    font-size: 0.9rem;
-    color: var(--ink);
-    opacity: 0.85;
-    text-align: center;
+  .spec-table th {
+    width: 28%;
+    color: rgba(15, 15, 14, 0.55);
+    font-weight: 500;
+    letter-spacing: 0.02em;
   }
+  .spec-table td { color: var(--ink); }
+  .spec-table tr:last-child th,
+  .spec-table tr:last-child td { border-bottom: 1px solid var(--grey-line); }
 
-  .partnership-section { background: var(--ink); color: var(--cream); }
-  .partnership-section .section-eyebrow { color: var(--gold); }
-  .partnership-board {
-    margin: 2rem auto 0;
-    max-width: 600px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .partnership-board img { width: 100%; height: auto; display: block; }
-  .partnership-board figcaption {
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: var(--cream);
-    opacity: 0.85;
-    text-align: center;
-  }
-
-  .pororo-section { background: var(--green); color: var(--cream); }
-  .pororo-section .section-eyebrow { color: var(--gold); }
-  .pororo-player {
-    margin: 3rem 0;
-    padding-top: 2.5rem;
-    border-top: 1px solid rgba(184,152,92,0.3);
-  }
-  .pororo-player:first-of-type {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: none;
-  }
-  .player-name {
+  .spec-table-2col thead th {
+    color: var(--ink);
     font-family: 'Noto Serif KR', serif;
-    color: var(--gold);
-    font-size: 1.6rem;
-    margin: 0 0 0.3rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--grey-line);
+    background: transparent;
   }
-  .player-meta {
-    color: var(--cream);
-    opacity: 0.7;
-    font-size: 0.9rem;
-    margin: 0 0 1.5rem;
+  .spec-table-2col tbody th { width: 22%; }
+  .spec-table-2col td {
+    font-variant-numeric: tabular-nums;
   }
-  .player-gallery {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.8rem;
-  }
-  .pororo-photo {
-    margin: 0;
-    background: rgba(255,255,255,0.05);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .pororo-photo img {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    display: block;
-  }
-  .pororo-photo-wide { grid-column: span 4; }
-  .pororo-photo-wide img { height: 380px; }
-  .pororo-photo figcaption {
-    padding: 0.6rem 0.8rem;
-    font-size: 0.85rem;
-    color: var(--cream);
-    text-align: center;
-    opacity: 0.85;
-  }
-  .pororo-product-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-    margin-top: 3rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid rgba(184,152,92,0.3);
-  }
-  .pororo-note {
-    font-size: 0.8rem;
-    color: var(--cream);
-    opacity: 0.55;
-    margin: 2.5rem 0 0;
-    text-align: center;
-    line-height: 1.7;
+  .spec-foot {
+    margin: 1.3rem 0 0;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.92rem;
+    color: rgba(15, 15, 14, 0.7);
   }
 
-  .cta-row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.6rem;
+  }
+  .btn-primary,
+  .btn-ghost {
+    display: inline-block;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.85rem 1.6rem;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+  }
   .btn-primary {
     background: var(--ink);
     color: var(--cream);
-    padding: 0.7rem 1.4rem;
-    border-radius: 2px;
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: background 0.2s;
   }
-  .btn-primary:hover { background: var(--green); }
-  .btn-secondary {
+  .btn-primary:hover {
+    background: var(--green);
+  }
+  .btn-ghost {
     background: transparent;
     color: var(--ink);
     border: 1px solid var(--ink);
-    padding: 0.7rem 1.4rem;
-    border-radius: 2px;
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
   }
-
-  .closing-section { background: var(--cream); text-align: center; }
-  .closing-eyebrow {
-    color: var(--gold);
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  .closing-h2 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 2rem;
-    color: var(--ink);
-    margin: 0 0 1rem;
-  }
-  .closing-text {
-    color: var(--ink);
-    font-size: 1.05rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .closing-cta {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn-primary-large {
+  .btn-ghost:hover {
     background: var(--ink);
     color: var(--cream);
-    padding: 0.9rem 1.8rem;
-    border-radius: 2px;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  .btn-secondary-large {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--ink);
-    padding: 0.9rem 1.8rem;
-    border-radius: 2px;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
   }
 
-  @media (max-width: 1024px) {
-    .player-gallery { grid-template-columns: repeat(2, 1fr); }
-    .pororo-photo-wide { grid-column: span 2; }
-    .anchor-nav { grid-template-columns: repeat(2, 1fr); }
+  /* ============================================================
+     SECTION 02 — KRZ
+     ============================================================ */
+  .section-krz {
+    background: var(--cream);
   }
-  @media (max-width: 640px) {
-    .section { padding: 3.5rem 0; }
-    .section-h2 { font-size: 1.7rem; }
-    .product-grid-2, .product-grid-3 { grid-template-columns: 1fr; }
-    .product-photo img { height: 240px; }
-    .anchor-nav { grid-template-columns: 1fr; }
-    .player-gallery { grid-template-columns: 1fr; }
-    .pororo-photo-wide { grid-column: span 1; }
-    .pororo-photo img { height: 320px; }
-    .pororo-product-grid { grid-template-columns: 1fr; }
-    .spec-row { grid-template-columns: 100px 1fr; gap: 0.5rem; font-size: 0.9rem; }
-    .closing-cta, .cta-row { flex-direction: column; }
-    .btn-primary, .btn-secondary,
-    .btn-primary-large, .btn-secondary-large { text-align: center; }
+  .krz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.6rem;
+    align-items: start;
+    margin: 0 0 3rem;
+  }
+  .section-krz .spec-block {
+    background: #fff;
+  }
+
+  /* ============================================================
+     SECTION 03 — 작업 흐름
+     ============================================================ */
+  .section-work {
+    background: #fff;
+  }
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.6rem;
+    align-items: start;
+  }
+
+  /* ============================================================
+     SECTION 04 — 팀 신지애 (검정 배경)
+     ============================================================ */
+  .section-shinjiyai {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .shinjiyai-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .shinjiyai-board img {
+    border-radius: 2px;
+  }
+  .shinjiyai-text { padding: 0; }
+  .quote-large {
+    margin: 1.4rem 0 1.8rem;
+    padding: 1.4rem 1.6rem;
+    border-left: 3px solid var(--gold);
+    background: rgba(248, 242, 229, 0.04);
+  }
+  .quote-large p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    line-height: 1.5;
+    color: var(--cream);
+    margin: 0 0 0.6rem;
+    font-style: normal;
+  }
+  .quote-large footer {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(184, 152, 92, 0.85);
+    letter-spacing: 0.04em;
+  }
+  .shinjiyai-body {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(248, 242, 229, 0.78);
+  }
+
+  @media (max-width: 760px) {
+    .shinjiyai-layout { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     SECTION 05 — PORORO HEROES (녹색 배경, 핵심)
+     ============================================================ */
+  .section-pororo {
+    background: var(--green);
+    color: var(--cream);
+  }
+  .section-pororo .section-eyebrow { color: var(--gold); }
+
+  /* 핵심 매체 인용 — 풀쿼트 */
+  .pororo-pullquote {
+    margin: 0 0 4rem;
+    padding: clamp(1.8rem, 4vw, 2.6rem);
+    background: rgba(248, 242, 229, 0.06);
+    border-left: 3px solid var(--gold);
+    max-width: 48em;
+  }
+  .pororo-pullquote p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.7;
+    color: var(--cream);
+    margin: 0 0 1rem;
+    text-indent: 0;
+    quotes: "“" "”";
+  }
+  .pororo-pullquote footer {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.88rem;
+    color: rgba(184, 152, 92, 0.95);
+    letter-spacing: 0.04em;
+  }
+
+  /* 선수별 섹션 */
+  .player-section {
+    margin: 0 0 clamp(3rem, 6vw, 5rem);
+  }
+  .player-header {
+    margin: 0 0 1.6rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(248, 242, 229, 0.16);
+  }
+  .player-name {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    color: var(--cream);
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .pros-name {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .player-caption {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(248, 242, 229, 0.78);
+    margin: 0;
+  }
+
+  /* 핵심 그리드 — auto-fit, align-items: start (얼굴 짤림 방지) */
+  .player-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
+    align-items: start;       /* ← 핵심 */
+  }
+  .player-gallery .vp img {
+    border-radius: 2px;
+  }
+  .player-gallery figcaption {
+    color: rgba(248, 242, 229, 0.65);
+    font-size: 0.78rem;
+  }
+
+  /* 박희영 갤러리 — 5장 (기사 2 + 인물 3) */
+  .park-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  /* 김효주 갤러리 — 4장 */
+  .kim-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  /* 콜라주 — 2장 (사이니지 톤) */
+  .pros-collage {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  /* 뽀로로 제품 — 2장 */
+  .pororo-products {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  /* 메트로 인용 — 작은 보조 인용 */
+  .metro-quote {
+    margin: 2rem 0 0;
+    padding: 1rem 1.4rem;
+    border-left: 2px solid rgba(184, 152, 92, 0.6);
+    background: transparent;
+  }
+  .metro-quote p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(248, 242, 229, 0.92);
+    margin: 0 0 0.4rem;
+  }
+  .metro-quote footer {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.82rem;
+    color: rgba(184, 152, 92, 0.85);
+  }
+
+  /* ============================================================
+     SECTION 06 — 공작소장
+     ============================================================ */
+  .section-master {
+    background: var(--cream);
+  }
+  .master-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .master-board img {
+    border-radius: 2px;
+    box-shadow: 0 18px 50px -22px rgba(15, 15, 14, 0.45);
+  }
+  .master-lede {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: rgba(15, 15, 14, 0.78);
+    margin: 0 0 1.6rem;
+    max-width: 36em;
+  }
+  .master-creds {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.96rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .master-creds li {
+    padding: 0.7rem 0;
+    border-top: 1px solid var(--grey-line);
+    position: relative;
+    padding-left: 1.3rem;
+  }
+  .master-creds li::before {
+    content: '·';
+    position: absolute;
+    left: 0.2rem;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1;
+    top: 0.55rem;
+  }
+  .master-creds li:last-child {
+    border-bottom: 1px solid var(--grey-line);
+  }
+
+  @media (max-width: 760px) {
+    .master-layout { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     CLOSING CTA
+     ============================================================ */
+  .section-cta {
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+  }
+  .cta-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cta-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    color: var(--cream);
+    margin: 0 0 1rem;
+  }
+  .cta-lede {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(248, 242, 229, 0.8);
+    margin: 0 0 2rem;
+  }
+  .section-cta .cta-row { justify-content: center; }
+  .section-cta .btn-ghost {
+    color: var(--cream);
+    border-color: rgba(248, 242, 229, 0.4);
+  }
+  .section-cta .btn-ghost:hover {
+    background: var(--cream);
+    color: var(--ink);
+  }
+  .cta-meta {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 0.86rem;
+    color: rgba(184, 152, 92, 0.85);
+    margin: 2rem 0 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* ============================================================
+     모바일 추가 조정
+     ============================================================ */
+  @media (max-width: 560px) {
+    .player-gallery {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .pros-collage,
+    .pororo-products {
+      grid-template-columns: 1fr;
+    }
+    .versus-grid,
+    .krz-grid,
+    .work-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
   }
 </style>
