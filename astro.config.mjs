@@ -1,9 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://myclubmakers.com',
-  // integrations: [sitemap()],  // 페이지 추가 후 활성화
+  integrations: [sitemap()],
   build: {
     format: 'directory',
   },
