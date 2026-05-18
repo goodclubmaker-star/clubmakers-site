@@ -1,0 +1,1429 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// TPI Big12 — 12가지 신체 제한 평가 (개요)
+const tpiBig12 = [
+  { no: '01', name: 'Pelvic Tilt',          ko: '골반 기울기',         hint: '골반 회전 가동범위' },
+  { no: '02', name: 'Pelvic Rotation',       ko: '골반 회전',           hint: '하체 분리 능력' },
+  { no: '03', name: 'Torso Rotation',        ko: '몸통 회전',           hint: '상체 가동범위' },
+  { no: '04', name: 'Overhead Deep Squat',   ko: '오버헤드 딥 스쿼트',   hint: '전신 가동·균형' },
+  { no: '05', name: 'Toe Touch',             ko: '토 터치',             hint: '햄스트링·허리 유연성' },
+  { no: '06', name: '90/90',                 ko: '90/90 어깨 회전',     hint: '어깨 외회전' },
+  { no: '07', name: 'Single Leg Balance',    ko: '한 발 균형',          hint: '코어·발목' },
+  { no: '08', name: 'Lat Test',              ko: '광배근 가동',         hint: '어깨 위 가동' },
+  { no: '09', name: 'Lower Quarter Rotation', ko: '하체 회전',           hint: '고관절 회전' },
+  { no: '10', name: 'Seated Trunk Rotation', ko: '앉은 자세 몸통 회전', hint: '척추 회전' },
+  { no: '11', name: 'Bridge with Leg Ext.',  ko: '브릿지 + 다리 신장',   hint: '둔근·코어' },
+  { no: '12', name: 'Cervical Rotation',     ko: '경추 회전',           hint: '시야 확보' },
+];
+
+// 트랜지션 (전환) — 4가지 다운스윙 스타일
+const transitionTypes = [
+  { type: '손·팔 사용형',  en: 'Hand-Arm Driven', signal: '손이 먼저 움직임. 클럽헤드 조기 풀림(early release).', shaft: '하이킥 / 팁 단단' },
+  { type: '몸통 주도형',    en: 'Body Driven',     signal: '하체·몸통 먼저 회전. 지연 릴리즈(late release).',     shaft: '로우킥 / 팁 부드러움' },
+  { type: '부드러운 템포',   en: 'Smooth Tempo',    signal: '백스윙→다운스윙 전환이 천천히, 리듬감 있음.',         shaft: '미드킥 / 토크 약간 높음' },
+  { type: '급격한 전환',    en: 'Aggressive',      signal: '백스윙 탑에서 쏘듯 다운스윙으로 전환. 상체 급동작.',     shaft: '하이킥 / 토크 낮음' },
+];
+
+// 손목고리(Wrist Hinge) — 코킹 패턴
+const wristHinges = [
+  { name: '얼리 코킹',  en: 'Early Hinge',  effect: '백스윙 초기에 손목 꺾임 → 레깅 형성 어려움',  fit: '단단한 팁 / 무거운 헤드 / 높은 MOI' },
+  { name: '미드 코킹',  en: 'Mid Hinge',    effect: '백스윙 중반 자연스럽게 코킹 → 일반적',         fit: '범용 — 미드킥 / 표준 MOI' },
+  { name: '레이트 코킹', en: 'Late Hinge',   effect: '백스윙 후반 또는 다운스윙 초기에 코킹 → 레깅 강함', fit: '부드러운 팁 / 가벼운 헤드' },
+];
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: '클럽메이커스의 피팅 시스템 — 인터뷰부터 처방까지',
+  description: '클럽메이커스의 클럽피팅 처방 시스템. 인터뷰 3단계, TPI Big12 신체 평가, 4가지 다운스윙 스타일, 손목고리(코킹), 처방 경로. 운동역학 기반 25년 노하우.',
+  author: {
+    '@type': 'Person',
+    name: '채기웅',
+    url: 'https://myclubmakers.com/about',
+  },
+  publisher: { '@type': 'Organization', name: '클럽메이커스' },
+  inLanguage: 'ko-KR',
+  about: [
+    { '@type': 'Thing', name: 'TPI Screen' },
+    { '@type': 'Thing', name: '키네마틱 시퀀스 (Kinematic Sequence)' },
+    { '@type': 'Thing', name: '클럽피팅 시스템' },
+  ],
+};
+---
+
+<BaseLayout
+  title="공작소의 시스템"
+  description="골프채공작소 클럽메이커스의 피팅 처방 시스템 — 인터뷰 3단계, TPI Big12 신체 평가, 4가지 다운스윙 스타일, 손목고리, 처방 경로. 운동역학 기반 25년 노하우의 정리."
+  schemaType="Article"
+  keywords="골프채공작소, 양재 골프채공작소, 클럽피팅 시스템, 피팅 절차, 클럽피팅 순서, TPI Big12, 키네마틱 시퀀스, kinematic sequence, 다운스윙 스타일, 손목 코킹, wrist hinge, 트랜지션, transition, 클럽 처방, 클럽피팅 인터뷰, level 3 fitting"
+  extraSchema={articleSchema}
+>
+
+  <!-- 4-1. 히어로 -->
+  <article>
+  <section class="page-hero system-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">SYSTEM · 공작소의 시스템</div>
+      <h1>차근차근,<br>고객님의 클럽을 개선합니다</h1>
+      <p class="page-hero-subtitle">
+        25년 동안 다듬은 6단계 시스템이 큰 틀입니다. 매 세션은 <strong>고객님의 목표와 문제에 맞춰</strong> 진행하면서 — 한꺼번에 결정하지 않고, 한 단계씩 함께 확인하며 클럽을 조정해 갑니다.<br/>
+        <span class="hero-sub-light">— 큰 틀은 같지만, 세션은 고객님께 맞춥니다.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 4-1.5. [NEW] 측정 도구 — K-VEST + 론치모니터 -->
+  <section class="section section-tools">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">TOOLS · 측정 도구</p>
+      <h2>추측하지 않습니다. 측정합니다.</h2>
+      <p class="section-lead">
+        골프채공작소의 피팅은 두 가지 정밀 장비로 시작됩니다.
+        몸의 움직임은 <strong>K-VEST</strong>로, 클럽의 결과는 <strong>론치모니터</strong>로 봅니다.
+        두 데이터가 만날 때 처방이 시작됩니다.
+      </p>
+
+      <div class="tools-grid">
+        <div class="tool-card">
+          <p class="tool-name">K-VEST</p>
+          <p class="tool-tag">3D 키네마틱 시퀀스</p>
+          <p class="tool-body">
+            골반·몸통·팔·클럽 4개 분절의 회전 속도·각도를 1초에 수백 번 측정합니다.
+          </p>
+          <ul class="tool-metrics">
+            <li>X-factor</li>
+            <li>Pelvis &amp; Upper Body Turn</li>
+            <li>Pelvic Bend</li>
+            <li>Wrist Hinge</li>
+            <li>지면 반력</li>
+          </ul>
+        </div>
+
+        <div class="tool-card">
+          <p class="tool-name">론치모니터</p>
+          <p class="tool-tag">도플러 레이더</p>
+          <p class="tool-body">
+            임팩트 순간의 클럽과 볼의 물리량을 잡습니다.
+          </p>
+          <ul class="tool-metrics">
+            <li>V-plane</li>
+            <li>Club Speed · Path</li>
+            <li>Dynamic Loft</li>
+            <li>Angle of Attack</li>
+            <li>Spin · Spin Axis</li>
+            <li>Smash Factor</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4-2. 일반/전문가 토글 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <div class="audience-toggle">
+        <a href="#general" class="audience-tab" data-tab="general">고객님께 (간단히)</a>
+        <a href="#expert" class="audience-tab" data-tab="expert">피터·전문가께 (자세히)</a>
+      </div>
+
+      <!-- 일반 고객 영역 -->
+      <div id="general" class="audience-section">
+        <p class="section-eyebrow">FOR EVERYONE · 처음 오시는 분께</p>
+        <h2>피팅, 어떻게 진행되나요?</h2>
+        <p class="section-lead">
+          공작소의 분석 프로그램은 <strong>약 40~60분, 1:1 맞춤</strong>으로 진행됩니다.
+          어렵게 느끼지 않으셔도 됩니다. 시험 보는 자리가 아니라, 함께 들여다보는 자리입니다.
+        </p>
+
+        <div class="step-flow">
+          <div class="step-card">
+            <div class="step-num">01</div>
+            <h3 class="step-title">인터뷰</h3>
+            <p class="step-body">
+              어떤 클럽이 가장 편하신지, 어디서 미스가 나오는지, 후반엔 어떻게 무너지는지.
+              먼저 이야기를 듣습니다.
+            </p>
+            <div class="step-time">10~15분</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">02</div>
+            <h3 class="step-title">신체·스윙 측정</h3>
+            <p class="step-body">
+              키, 손목-바닥 거리(WTF), 손 크기, 악력, 그리고 스윙 영상.
+              필요시 TPI Screen 일부를 진행합니다.
+            </p>
+            <div class="step-time">15~20분</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">03</div>
+            <h3 class="step-title">클럽 측정·시타</h3>
+            <p class="step-body">
+              현재 클럽의 라이각·로프트·CPM·SW를 측정합니다.
+              필요시 시타로 검증합니다.
+            </p>
+            <div class="step-time">15~20분</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">04</div>
+            <h3 class="step-title">처방·상담</h3>
+            <p class="step-body">
+              결과를 함께 보면서 다음 단계를 의논합니다.
+              <strong>지금 바꾸지 않아도 되는 것</strong>도 분명히 말씀드립니다.
+            </p>
+            <div class="step-time">10분</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p>
+            <strong>"이 정도 일로 와도 될까"</strong> 망설이지 않으셔도 됩니다.
+            그립이 미끄러지는 작은 문제부터, 새 클럽을 골라야 하는 큰 결정까지 — 어떤 단계라도 환영합니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- 전문가 영역 -->
+      <div id="expert" class="audience-section expert-section">
+        <p class="section-eyebrow">FOR FITTERS · 피터·전문가께</p>
+        <h2>처방의 6단계 시스템</h2>
+        <p class="section-lead">
+          클럽메이커스는 <strong>인터뷰 → 신체 → 스윙 → 데이터 → 클럽 → 처방</strong>의 6단계
+          시스템으로 피팅을 진행합니다. 책 『실제적인 클럽피팅』의 PART 1~11에 해당합니다.
+        </p>
+
+        <table class="table system-table">
+          <thead>
+            <tr>
+              <th style="width: 60px;">단계</th>
+              <th>핵심 작업</th>
+              <th>판단 변수</th>
+              <th>책 PART</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1</strong></td><td>인터뷰 — 골퍼 언어 → 피팅 변수 매핑</td><td>주관 데이터, 우선순위</td><td>PART 1</td></tr>
+            <tr><td><strong>2</strong></td><td>신체 (스테틱) — 키·WTF·손·악력</td><td>길이, 그립 사이즈, 무게 등급</td><td>PART 3</td></tr>
+            <tr><td><strong>3</strong></td><td>스윙 (다이나믹) — 키네마틱 시퀀스</td><td>전환 속도, 릴리즈, 손목고리</td><td>PART 3·9</td></tr>
+            <tr><td><strong>4</strong></td><td>데이터 — 론치모니터·타점</td><td>D-Plane, Spin Loft, 타점 분포</td><td>PART 4·5·10</td></tr>
+            <tr><td><strong>5</strong></td><td>클럽 측정 — 현재 클럽 스펙 확인</td><td>라이·로프트·CPM·SW·MOI</td><td>PART 6·7·8</td></tr>
+            <tr><td><strong>6</strong></td><td>처방 — 통합 결정과 보정</td><td>총무게→MOI→SW 순서</td><td>PART 11</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-cite">
+          <p class="cite-text">
+            "실제적인 피팅의 판단 순서 (기본 원칙)<br/><br/>
+            <strong>인터뷰 → 관찰 → 데이터 → 장비</strong><br/><br/>
+            이 순서를 거꾸로 하면, 이후의 모든 판단이 연쇄적으로 흔들립니다."
+          </p>
+          <p class="cite-source">
+            — <cite>『실제적인 클럽피팅』</cite> <a href="/book/part-1" class="cite-link">PART 1 1절 →</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="deeper-box">
+        <p class="deeper-label">처방 시스템의 디테일은 책에서</p>
+        <div class="deeper-links">
+          <a href="/book/part-2" class="deeper-link">PART 2 · 판단 구조 시스템 — 결과 중심에서 원인 중심으로 →</a>
+          <a href="/book/part-3" class="deeper-link">PART 3 · 골퍼 구조 해석 시스템 — 인터뷰 결과를 피팅 변수로 →</a>
+          <a href="/book/part-11" class="deeper-link">PART 11 · 통합 결정과 문제 해결 시스템 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4-2.5. [NEW] 3D 키네마틱 시퀀스 분석 (핵심) -->
+  <section class="section section-kinematic">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">KINEMATIC SEQUENCE · 3D 운동역학 분석</p>
+      <h2>스윙은 순서로 만들어집니다.</h2>
+      <p class="section-lead">
+        효율적인 스윙은 정확한 순서를 가집니다.
+      </p>
+      <p class="kinematic-flow">
+        하체 <span class="flow-arrow">→</span> 상체 <span class="flow-arrow">→</span> 팔 <span class="flow-arrow">→</span> 클럽
+      </p>
+
+      <figure class="kinematic-figure">
+        <img src="/images/system/kinematic-diagram.svg"
+             alt="키네마틱 시퀀스 4분절 도식 — 하체에서 클럽으로 에너지가 전달되는 순서"
+             loading="lazy" />
+      </figure>
+
+      <p class="section-lead">
+        큰 분절이 먼저 가속하고 감속하면서 다음 분절로 에너지가 전달됩니다.
+        각 분절의 피크 속도가 계단형으로 나타나야 동일한 힘으로 더 빠른 헤드스피드,
+        더 안정된 방향성을 만듭니다.
+      </p>
+
+      <figure class="kinematic-figure">
+        <img src="/images/system/kinematic-graph.jpg"
+             alt="효율적인 키네마틱 시퀀스 그래프 — 하체·상체·팔·클럽의 피크 속도가 계단형으로 나타나는 패턴"
+             loading="lazy" />
+        <figcaption>효율적인 시퀀스 — 4분절의 피크 속도가 계단형으로 형성됩니다 (K-VEST 측정 화면)</figcaption>
+      </figure>
+
+      <h3 class="kinematic-h3">4가지 측정 항목</h3>
+      <ol class="kinematic-list">
+        <li><strong>피크 시퀀스</strong> — 분절별 가속·감속 순서</li>
+        <li><strong>X-factor stretch</strong> — 다운스윙 초기 5° 이상의 회전차</li>
+        <li><strong>Pelvic Bend</strong> — 임팩트 구간의 자세 일정성</li>
+        <li><strong>Pelvis &amp; Upper Body Turn</strong> — Top·Impact 시점 회전각</li>
+      </ol>
+
+      <h3 class="kinematic-h3">키네마틱 분석이 클럽피팅에 들어가는 의미</h3>
+      <p class="kinematic-body">
+        스윙웨이트만 보고 무게를 결정하면 위험합니다. 같은 헤드스피드라도 시퀀스가 다르면 필요한 클럽이 다릅니다.
+      </p>
+      <ul class="kinematic-rules">
+        <li><strong>클럽 주도 패턴</strong> → 무게감 먼저 올려 시퀀스 안정화</li>
+        <li><strong>상체 주도 패턴</strong> → 강도보다 분리 동작 우선</li>
+        <li><strong>트랜지션 지연</strong> → 토크 낮은 샤프트</li>
+        <li><strong>X-factor 부족</strong> → 라이각·길이 함께 검토</li>
+      </ul>
+
+      <aside class="case-box">
+        <p class="case-eyebrow">사례 — 라이각 점검을 위해 방문하신 분</p>
+        <p class="case-body">
+          V-plane 편차가 컸습니다. 측정 결과만 보면 라이각을 조정해도 결과가 안정될지 확신하기 어려웠습니다.
+          이번 분석의 결론은 라이각 자체가 아니라,
+          <strong>라이각 문제처럼 보이게 만든 스윙 원인을 먼저 정리하는 것</strong>이었습니다.
+        </p>
+        <figure class="case-figure">
+          <img src="/images/system/vplane-comparison.jpg"
+               alt="V-plane 편차 비교 — 66.3° (편차 큼) vs 45.3° (편차 작음)"
+               loading="lazy" />
+          <figcaption>V-plane 편차 — 같은 의도로 스윙해도 실제 클럽이 들어오는 방식이 다르다는 측정 결과</figcaption>
+        </figure>
+      </aside>
+
+      <h3 class="kinematic-h3">3D 키네마틱 시퀀스, 한국 클럽피팅 현장의 첫 도입</h3>
+      <p class="kinematic-body">
+        골프채공작소는 청와대 출장 이후 객관적 분석에 대한 갈증을 안고 운동역학 공부를 시작했습니다.
+        2007년부터 여러 분석 도구를 공부했고, <strong>2008년 K-VEST를 처음 도입해 클럽피팅 분석에 활용</strong>해 왔습니다.
+      </p>
+      <p class="kinematic-body">
+        3D 키네마틱 시퀀스 분석 장비를 보유한 골프 시설은 한국에도 있지만,
+        측정 결과를 <strong>클럽피팅 처방까지 연결하는 곳은 거의 없습니다.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- 4-3. TPI Big12 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">TPI BIG 12 · 신체 평가</p>
+      <h2>TPI 12 평가 항목</h2>
+      <p class="section-lead">
+        Titleist Performance Institute가 정리한 <strong>12가지 신체 평가</strong>입니다.
+        이 평가는 골퍼가 "할 수 있는 스윙"과 "하면 안 되는 스윙"을 구분하는 출발점입니다.
+        몸이 안 되는 동작을 강요하는 클럽은 부상을 만듭니다.
+      </p>
+      <p class="section-lead">
+        공작소장은 <strong>TPI Certified</strong> (Level 1 · Junior Level 2 · Golf Level 2) 인증을 보유하고 있습니다.
+        모든 분께 12가지를 다 진행하지는 않습니다. 인터뷰 결과에 따라 필요한 평가만 선별해 진행합니다.
+      </p>
+
+      <div class="tpi-grid">
+        {tpiBig12.map((item) => (
+          <div class="tpi-card">
+            <div class="tpi-no">{item.no}</div>
+            <div>
+              <h3 class="tpi-name">{item.name}</h3>
+              <p class="tpi-ko">{item.ko}</p>
+              <p class="tpi-hint">{item.hint}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p class="tpi-link-note">
+        TPI 평가는 <a href="https://www.mytpi.com" target="_blank" rel="noopener">mytpi.com</a>에서
+        Level 1~3 인증 과정을 운영하고 있으며, 클럽메이커스 공작소장은 Level 1, Junior Level 2, Golf Level 2 인증을 보유하고 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4-4. 트랜지션 (다운스윙 4유형) -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">TRANSITION · 다운스윙 전환 4유형</p>
+      <h2>선수의 트랜지션은<br>어떤 유형일까요?</h2>
+      <p class="section-lead">
+        같은 헤드스피드라도 <strong>다운스윙의 전환(Transition)</strong>이 다르면
+        맞는 샤프트가 달라집니다. 키네마틱 시퀀스를 보면 선수가 어느 유형인지 보입니다.
+      </p>
+
+      <table class="table transition-table">
+        <thead>
+          <tr>
+            <th>유형</th>
+            <th>비디오에서 보이는 신호</th>
+            <th>맞는 샤프트 방향</th>
+          </tr>
+        </thead>
+        <tbody>
+          {transitionTypes.map((t) => (
+            <tr>
+              <td>
+                <strong>{t.type}</strong><br/>
+                <span class="table-en">{t.en}</span>
+              </td>
+              <td>{t.signal}</td>
+              <td><span class="shaft-tag">{t.shaft}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div class="deeper-box">
+        <p class="deeper-label">샤프트 매칭의 디테일은 책에서</p>
+        <div class="deeper-links">
+          <a href="/book/part-9" class="deeper-link">PART 9 · 샤프트 구조와 피팅 판단 — CPM·EI·토크 →</a>
+          <a href="/book/part-3" class="deeper-link">PART 3 · 골퍼 구조 해석 시스템 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4-5. 손목고리 (코킹 패턴) -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">WRIST HINGE · 손목고리(코킹) 패턴</p>
+      <h2>손목고리 — 레깅을 만드는<br>가장 중요한 변수</h2>
+      <p class="section-lead">
+        손목 코킹의 시점이 다운스윙의 레깅(Lag)과 임팩트 시점의 헤드 가속도를 결정합니다.
+        같은 클럽이라도 코킹 패턴에 따라 다르게 반응합니다.
+      </p>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>코킹 유형</th>
+            <th>특성</th>
+            <th>맞는 클럽 방향</th>
+          </tr>
+        </thead>
+        <tbody>
+          {wristHinges.map((w) => (
+            <tr>
+              <td>
+                <strong>{w.name}</strong><br/>
+                <span class="table-en">{w.en}</span>
+              </td>
+              <td>{w.effect}</td>
+              <td>{w.fit}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div class="deeper-box">
+        <p class="deeper-label">레깅과 샤프트 강도의 디테일은 책에서</p>
+        <div class="deeper-links">
+          <a href="/book/part-9" class="deeper-link">PART 9 · 샤프트 구조 — Tip Soft / Tip Stiff와 ROC →</a>
+          <a href="/book/part-3" class="deeper-link">PART 3 · 골퍼 구조 해석 — 다운스윙 분류 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4-6. 처방 경로 (어디로 들어오시든) -->
+  <section class="section paths-section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">PATHS · 처방 경로</p>
+      <h2>어디로 들어오시든<br>같은 곳에 도착합니다</h2>
+      <p class="section-lead">
+        고객님이 다른 입구로 들어오셔도 — "거리가 안 나요" "방향이 흔들려요" "후반에 무너져요" —
+        결국 우리는 같은 시스템 안에서 답을 찾습니다.
+      </p>
+
+      <div class="paths-grid">
+        <div class="path-card">
+          <div class="path-symptom">"거리가 안 나요"</div>
+          <div class="path-arrow">→</div>
+          <div class="path-check">
+            <strong>먼저 확인할 것</strong>
+            <ul>
+              <li>타점 분포 (스매시 팩터)</li>
+              <li>Attack Angle (어택 앵글)</li>
+              <li>Spin Loft (스핀 로프트)</li>
+              <li>그 다음에야 헤드·샤프트</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="path-card">
+          <div class="path-symptom">"방향이 흔들려요"</div>
+          <div class="path-arrow">→</div>
+          <div class="path-check">
+            <strong>먼저 확인할 것</strong>
+            <ul>
+              <li>타점 (힐·토 분포)</li>
+              <li>라이각 (Dynamic Lie)</li>
+              <li>Face-to-Path 차이</li>
+              <li>그 다음에야 페이스 앵글·오프셋</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="path-card">
+          <div class="path-symptom">"후반에 무너져요"</div>
+          <div class="path-arrow">→</div>
+          <div class="path-check">
+            <strong>먼저 확인할 것</strong>
+            <ul>
+              <li>총무게 (지구력 한계)</li>
+              <li>샤프트 무게 등급</li>
+              <li>그립 사이즈 (피로 누적)</li>
+              <li>그 다음에야 SW·MOI</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="path-card">
+          <div class="path-symptom">"잘 맞을 때와 아닐 때 차이가 커요"</div>
+          <div class="path-arrow">→</div>
+          <div class="path-check">
+            <strong>먼저 확인할 것</strong>
+            <ul>
+              <li>편차 (평균이 아니라 최악)</li>
+              <li>MOI 매칭 (관용성)</li>
+              <li>총무게 안정화</li>
+              <li>그 다음에야 추가 변수</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="deeper-box deeper-box-topics">
+        <p class="deeper-label">증상별 진단을 더 자세히</p>
+        <p class="deeper-intro">
+          위의 처방 경로를 9가지 증상으로 나누어 정리한 페이지가 있습니다. 슬라이스, 훅, 거리 부족, 후반 무너짐 등 — 자기 상황과 가까운 항목부터 보실 수 있습니다.
+        </p>
+        <div class="deeper-links">
+          <a href="/topics" class="deeper-link"><strong>증상별 진단 9가지 →</strong></a>
+          <a href="/topics/slice-hook" class="deeper-link">슬라이스 · 훅 — 공이 휘는 진짜 이유 →</a>
+          <a href="/topics/launch-spin" class="deeper-link">탄도 · 스핀 — 너무 높거나 낮을 때 →</a>
+          <a href="/topics/rhythm-timing" class="deeper-link">리듬 · 타이밍 — 후반에 무너지는 이유 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4-6.5. [NEW] 분석 레포트 -->
+  <section class="section section-report">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">REPORT · 분석 결과는 문서로 남습니다</p>
+      <h2>측정으로 끝나지 않습니다.</h2>
+      <p class="section-lead">
+        모든 분석은 PDF 레포트로 정리되어 고객님께 전달됩니다.
+        프로 선수도, 입문자도 같은 형식의 정밀 레포트를 받습니다.
+      </p>
+
+      <figure class="report-figure">
+        <img src="/images/system/report-pages.jpg"
+             alt="피팅 분석 레포트 예시 — 표지, 퍼스널 인터뷰, 4단계 전략, 요약"
+             loading="lazy" />
+        <figcaption>레포트 예시 — 표지·인터뷰·전략·요약 (개인정보 익명 처리)</figcaption>
+      </figure>
+
+      <h3 class="report-h3">레포트 구성</h3>
+      <ol class="report-list">
+        <li>퍼스널 인터뷰 + TPI 신체 평가 결과</li>
+        <li>키네마틱 시퀀스 분석 — 4분절 피크 패턴 + 해석</li>
+        <li>X-factor 그래프 — Stretch 구간 분석</li>
+        <li>골반·상체 회전각 — Top·Impact PGA Range 비교</li>
+        <li>골반 굽힘 + 지면 반력</li>
+        <li>4단계 전략 — Swing Cue / Motor Skill / Body Prep / Equipment Fitting</li>
+        <li>요약 및 다음 단계 — 재측정 시점, 우선순위</li>
+      </ol>
+
+      <h3 class="report-h3">레포트의 가치</h3>
+      <ul class="report-value">
+        <li>그날의 인상이 아니라 측정값으로 남습니다</li>
+        <li>다음 방문 때 변화를 비교할 기준이 됩니다</li>
+        <li>레슨 프로·트레이너와 공유 가능합니다</li>
+        <li>클럽 처방의 근거가 됩니다</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4-6.7. [NEW] 4단계 처방 프레임워크 -->
+  <section class="section section-strategy">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">STRATEGY · 측정에서 처방으로 가는 4단계</p>
+      <h2>골프채공작소의 독보적인 서비스</h2>
+      <p class="section-lead">
+        피팅의 <strong>단기 전략과 장기 전략</strong>,
+        <strong>스윙 개선 큐(Swing Cue)</strong>,
+        <strong>바디 프렙(Body Prep)</strong>,
+        <strong>모터 스킬(Motor Skill)</strong>을
+        종합적으로 분석해서 제공하는 서비스는 골프채공작소의 독보적인 서비스입니다.
+      </p>
+      <p class="section-lead">
+        측정값을 단순히 보여드리는 것이 아니라, 측정으로 발견한 문제를
+        <strong>어떤 순서로, 어떻게</strong> 풀어갈지까지 함께 설계합니다.
+      </p>
+
+      <div class="strategy-grid">
+        <div class="strategy-card">
+          <p class="strategy-num">01</p>
+          <h3 class="strategy-name">SWING CUE</h3>
+          <p class="strategy-ko">스윙 보완 큐</p>
+          <p class="strategy-body">즉각 적용 가능한 동작 신호</p>
+          <p class="strategy-example">예: "백스윙 크기를 줄이고 리듬 유지"</p>
+        </div>
+        <div class="strategy-card">
+          <p class="strategy-num">02</p>
+          <h3 class="strategy-name">MOTOR SKILL</h3>
+          <p class="strategy-ko">모터 스킬</p>
+          <p class="strategy-body">분리 동작·드릴 반복 연습</p>
+          <p class="strategy-example">예: "하체 먼저, 상체는 늦게 따라오기"</p>
+        </div>
+        <div class="strategy-card">
+          <p class="strategy-num">03</p>
+          <h3 class="strategy-name">BODY PREP</h3>
+          <p class="strategy-ko">바디 프렙</p>
+          <p class="strategy-body">가동성·안정성 운동</p>
+          <p class="strategy-example">예: "고관절 회전 가동성 / 코어 안정화"</p>
+        </div>
+        <div class="strategy-card">
+          <p class="strategy-num">04</p>
+          <h3 class="strategy-name">EQUIPMENT FITTING</h3>
+          <p class="strategy-ko">클럽 처방</p>
+          <p class="strategy-body">무게·강도·MOI·라이각</p>
+          <p class="strategy-example">예: "1차 SW D2 테스트 → 시퀀스 안정 후 강도 상승"</p>
+        </div>
+      </div>
+
+      <h3 class="strategy-h3">단기 전략과 장기 전략의 분리</h3>
+      <ul class="strategy-timeline">
+        <li>
+          <strong>단기</strong> — 지금 클럽으로 잡을 수 있는 것:
+          무게·MOI·스윙웨이트·라이·로프트·길이
+        </li>
+        <li>
+          <strong>장기</strong> — 신체 변화와 스윙 발전에 맞춘 처방 갱신:
+          정기 재측정, 세트 흐름 재정렬, 다음 단계
+        </li>
+      </ul>
+      <p class="strategy-foot">
+        처방은 한 번이 아닙니다. 사람도 클럽도 변화합니다.
+        단기와 장기를 함께 설계하는 것이 핵심입니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4-7. 마침표 -->
+  <section class="section closing-bottom">
+    <div class="section-content-narrow">
+      <p class="closing-quote">
+        "도구만으로 피팅이 완성되지 않습니다.<br/>
+        골퍼마다 다른 우선순위를 읽어내는 눈,<br/>
+        그것이 피팅을 완성합니다."
+      </p>
+      <p class="closing-meta">— 채기웅, <cite>『실제적인 클럽피팅』</cite> <a href="/book" class="cite-link">서문 →</a></p>
+
+      <div class="closing-actions">
+        <a href="/contact" class="btn-primary">분석 예약 →</a>
+        <a href="/why-fitting" class="btn-ghost">공작소의 철학 →</a>
+        <a href="/book" class="btn-ghost">책으로 더 자세히 →</a>
+      </div>
+    </div>
+  </section>
+  </article>
+
+  <!-- AEO: FAQ -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FREQUENTLY ASKED</p>
+      <h2>자주 묻는 질문</h2>
+      <details class="faq-detail">
+        <summary>피팅 분석은 얼마나 걸리나요?</summary>
+        <p>일반적으로 40~60분 진행됩니다. 인터뷰 10~15분, 신체·스윙 측정 15~20분, 클럽 측정·시타 15~20분, 처방 상담 10분 정도입니다.</p>
+      </details>
+      <details class="faq-detail">
+        <summary>TPI Big12는 무엇인가요?</summary>
+        <p>Titleist Performance Institute가 정리한 12가지 신체 평가입니다. 골반 회전, 몸통 회전, 햄스트링 유연성 등을 평가해 골퍼가 할 수 있는 스윙과 하면 안 되는 스윙을 구분합니다. 채기웅 공작소장은 TPI Certified (Level 1·Junior 2·Golf 2) 인증을 보유하고 있습니다.</p>
+      </details>
+      <details class="faq-detail">
+        <summary>키네마틱 시퀀스가 뭔가요?</summary>
+        <p>다운스윙에서 하체→몸통→팔→손이 순차적으로 가속도가 최고점에 도달하는 구조입니다. 이 구조를 분석하면 같은 헤드스피드라도 어떤 샤프트가 맞는지 결정할 수 있습니다. 클럽메이커스는 2008년 한국 현장에 도입했습니다.</p>
+      </details>
+      <details class="faq-detail">
+        <summary>K-VEST가 뭔가요?</summary>
+        <p>3D 운동역학 분석 장비입니다. 몸에 IMU 센서를 부착해 골반·몸통·팔·클럽 4개 분절의 회전 속도·각도를 1초에 수백 번 측정합니다. 미국 PGA Tour 선수들이 사용하는 장비입니다. 골프채공작소는 청와대 출장 이후 객관적 분석에 대한 갈증으로 2007년부터 운동역학 공부를 시작했고, <strong>2008년 K-VEST를 처음 도입</strong>해 클럽피팅 분석에 활용해 왔습니다.</p>
+      </details>
+      <details class="faq-detail">
+        <summary>키네마틱 시퀀스 분석이 다른 곳과 무엇이 다른가요?</summary>
+        <p>3D 키네마틱 시퀀스 분석 장비를 보유한 골프 시설은 한국에도 있지만, <strong>측정 결과를 클럽피팅 처방까지 연결하는 곳은 거의 없습니다.</strong> 골프채공작소는 2008년부터 키네마틱 측정값을 클럽 변수(무게·강도·MOI·라이각)로 변환하는 자체 시스템을 발전시켜 왔습니다.</p>
+      </details>
+      <details class="faq-detail">
+        <summary>처음 오는데 무엇을 준비해야 하나요?</summary>
+        <p>현재 사용 중인 클럽 세트를 가져오시면 됩니다(드라이버·아이언·웨지·퍼터). 가장 편한 클럽이 무엇인지 미리 생각해두시면 인터뷰가 수월합니다. 시험 보는 자리가 아니니 편하게 오시면 됩니다.</p>
+      </details>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: '피팅 분석은 얼마나 걸리나요?',
+      acceptedAnswer: { '@type': 'Answer', text: '일반적으로 40~60분 진행됩니다. 인터뷰 10~15분, 신체·스윙 측정 15~20분, 클럽 측정·시타 15~20분, 처방 상담 10분 정도입니다.' }
+    },
+    {
+      '@type': 'Question',
+      name: 'TPI Big12는 무엇인가요?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Titleist Performance Institute가 정리한 12가지 신체 평가입니다. 골반 회전, 몸통 회전, 햄스트링 유연성 등을 평가해 골퍼가 할 수 있는 스윙과 하면 안 되는 스윙을 구분합니다. 채기웅 공작소장은 TPI Certified (Level 1·Junior 2·Golf 2) 인증을 보유하고 있습니다.' }
+    },
+    {
+      '@type': 'Question',
+      name: '키네마틱 시퀀스가 뭔가요?',
+      acceptedAnswer: { '@type': 'Answer', text: '다운스윙에서 하체→몸통→팔→손이 순차적으로 가속도가 최고점에 도달하는 구조입니다. 이 구조를 분석하면 같은 헤드스피드라도 어떤 샤프트가 맞는지 결정할 수 있습니다. 클럽메이커스는 2008년 한국 현장에 도입했습니다.' }
+    },
+    {
+      '@type': 'Question',
+      name: 'K-VEST가 뭔가요?',
+      acceptedAnswer: { '@type': 'Answer', text: '3D 운동역학 분석 장비입니다. 몸에 IMU 센서를 부착해 골반·몸통·팔·클럽 4개 분절의 회전 속도·각도를 1초에 수백 번 측정합니다. 미국 PGA Tour 선수들이 사용하는 장비입니다. 골프채공작소는 청와대 출장 이후 객관적 분석에 대한 갈증으로 2007년부터 운동역학 공부를 시작했고, 2008년 K-VEST를 처음 도입해 클럽피팅 분석에 활용해 왔습니다.' }
+    },
+    {
+      '@type': 'Question',
+      name: '키네마틱 시퀀스 분석이 다른 곳과 무엇이 다른가요?',
+      acceptedAnswer: { '@type': 'Answer', text: '3D 키네마틱 시퀀스 분석 장비를 보유한 골프 시설은 한국에도 있지만, 측정 결과를 클럽피팅 처방까지 연결하는 곳은 거의 없습니다. 골프채공작소는 2008년부터 키네마틱 측정값을 클럽 변수(무게·강도·MOI·라이각)로 변환하는 자체 시스템을 발전시켜 왔습니다.' }
+    },
+    {
+      '@type': 'Question',
+      name: '처음 오는데 무엇을 준비해야 하나요?',
+      acceptedAnswer: { '@type': 'Answer', text: '현재 사용 중인 클럽 세트를 가져오시면 됩니다(드라이버·아이언·웨지·퍼터). 가장 편한 클럽이 무엇인지 미리 생각해두시면 인터뷰가 수월합니다. 시험 보는 자리가 아니니 편하게 오시면 됩니다.' }
+    }
+  ]
+})} />
+
+<style>
+  /* ============================================================
+     [NEW] 신규 섹션 CSS — Tools / Kinematic / Report / Strategy
+     ============================================================ */
+
+  /* 4-1.5 · 측정 도구 (Tools) */
+  .section-tools {
+    background: var(--bg-soft);
+  }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .tool-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    padding: 32px 28px;
+  }
+  .tool-name {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--ink);
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .tool-tag {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin: 0 0 16px;
+    text-transform: uppercase;
+  }
+  .tool-body {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+  .tool-metrics {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+  }
+  .tool-metrics li {
+    font-size: 12.5px;
+    background: var(--bg-soft);
+    color: var(--grey);
+    padding: 5px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.01em;
+  }
+  @media (max-width: 720px) {
+    .tools-grid { grid-template-columns: 1fr; }
+  }
+
+  /* 4-2.5 · 3D 키네마틱 시퀀스 (핵심) */
+  .section-kinematic {
+    background: var(--bg-cream);
+  }
+  .kinematic-flow {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(20px, 3.2vw, 32px);
+    font-weight: 700;
+    text-align: center;
+    margin: 32px 0;
+    color: var(--green);
+    letter-spacing: 0.02em;
+  }
+  .flow-arrow {
+    color: var(--gold);
+    margin: 0 8px;
+    font-weight: 400;
+  }
+  .kinematic-h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 40px 0 16px;
+    padding-left: 12px;
+    border-left: 3px solid var(--gold);
+  }
+  .kinematic-list,
+  .kinematic-rules {
+    padding-left: 0;
+    list-style: none;
+  }
+  .kinematic-list li,
+  .kinematic-rules li {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink);
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .kinematic-list li:last-child,
+  .kinematic-rules li:last-child { border-bottom: none; }
+  .kinematic-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+
+  /* 사례 박스 */
+  .case-box {
+    background: #fff;
+    border-left: 3px solid var(--green);
+    padding: 20px 24px;
+    margin: 32px 0;
+  }
+  .case-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin: 0 0 10px;
+    text-transform: uppercase;
+  }
+  .case-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+    margin: 0;
+    font-style: normal;
+  }
+  .case-figure {
+    margin: 20px 0 0;
+  }
+  .case-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2px;
+  }
+  .case-figure figcaption {
+    font-size: 12.5px;
+    color: var(--grey);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  /* figure — 키네마틱 도식·그래프 */
+  .kinematic-figure {
+    margin: 28px 0;
+    text-align: center;
+  }
+  .kinematic-figure img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+  .kinematic-figure figcaption {
+    font-size: 13px;
+    color: var(--grey);
+    margin-top: 12px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* figure — 레포트 그리드 */
+  .report-figure {
+    margin: 28px 0 36px;
+    text-align: center;
+  }
+  .report-figure img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 12px 32px -16px rgba(15, 15, 14, 0.25);
+  }
+  .report-figure figcaption {
+    font-size: 13px;
+    color: var(--grey);
+    margin-top: 14px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* 4-6.5 · 분석 레포트 */
+  .section-report {
+    background: var(--bg-soft);
+  }
+  .report-h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 16px;
+    padding-left: 12px;
+    border-left: 3px solid var(--gold);
+  }
+  .report-list {
+    padding-left: 24px;
+    margin: 0;
+  }
+  .report-list li {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink);
+    padding: 4px 0;
+  }
+  .report-value {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .report-value li {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+    padding: 8px 0 8px 22px;
+    position: relative;
+  }
+  .report-value li::before {
+    content: '·';
+    position: absolute;
+    left: 6px;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1;
+    top: 6px;
+  }
+
+  /* 4-6.7 · 4단계 처방 프레임워크 */
+  .section-strategy {
+    background: var(--bg-cream);
+  }
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 36px 0 16px;
+  }
+  .strategy-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    padding: 24px;
+  }
+  .strategy-num {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 0 0 8px;
+    letter-spacing: 0.02em;
+  }
+  .strategy-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+    letter-spacing: 0.02em;
+  }
+  .strategy-ko {
+    font-size: 13px;
+    color: var(--gold);
+    margin: 0 0 12px;
+    letter-spacing: 0.05em;
+  }
+  .strategy-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .strategy-example {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--grey);
+    margin: 0;
+    font-style: normal;
+  }
+  .strategy-h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 40px 0 16px;
+    padding-left: 12px;
+    border-left: 3px solid var(--gold);
+  }
+  .strategy-timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .strategy-timeline li {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink);
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .strategy-timeline li:last-child { border-bottom: none; }
+  .strategy-foot {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+    margin: 20px 0 0;
+    font-style: normal;
+  }
+  @media (max-width: 720px) {
+    .strategy-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     기존 CSS는 아래
+     ============================================================ */
+  .system-hero {
+    background: var(--bg-cream);
+    border-bottom: none;
+  }
+  .hero-sub-light { color: var(--grey); font-size: 14px; }
+
+  /* ===== 일반/전문가 토글 ===== */
+  .audience-toggle {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 50px;
+  }
+  .audience-tab {
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--grey);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .audience-tab:hover { color: var(--green); border-bottom-color: var(--gold-soft); }
+  .audience-section { margin-bottom: 80px; }
+  .expert-section { padding-top: 60px; border-top: 1px solid var(--line); }
+
+  .section-lead {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--grey);
+    margin-bottom: 32px;
+    max-width: 660px;
+  }
+  .section-lead strong { color: var(--ink); font-weight: 700; }
+
+  /* ===== 처방 단계 ===== */
+  .step-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 36px 0;
+  }
+  .step-card {
+    background: var(--bg-soft);
+    padding: 28px 24px;
+    border-top: 3px solid var(--green);
+    position: relative;
+  }
+  .step-num {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .step-title {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+    letter-spacing: -0.015em;
+  }
+  .step-body {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--grey);
+    margin-bottom: 16px;
+  }
+  .step-body strong { color: var(--ink); font-weight: 700; }
+  .step-time {
+    display: inline-block;
+    background: white;
+    border: 1px solid var(--line);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    color: var(--green);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== 시스템 표 ===== */
+  .system-table th { background: var(--ink); color: var(--cream); font-size: 12px; padding: 12px 16px; }
+  .system-table td { font-size: 14px; padding: 14px 16px; }
+  .table-en {
+    font-size: 11.5px;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .shaft-tag {
+    display: inline-block;
+    background: var(--green);
+    color: var(--cream);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* ===== 책 인용 박스 ===== */
+  .callout-cite {
+    background: var(--ink);
+    color: var(--cream);
+    border-left-color: var(--gold);
+    padding: 32px 36px;
+  }
+  .cite-text {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--cream);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .cite-text strong { color: var(--gold-soft); font-weight: 700; }
+  .cite-source {
+    font-size: 13px;
+    color: var(--gold-soft);
+    border-top: 1px solid rgba(212, 184, 136, 0.2);
+    padding-top: 12px;
+  }
+
+  /* ===== TPI Big12 ===== */
+  .tpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 32px 0;
+  }
+  .tpi-card {
+    background: white;
+    padding: 20px 22px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .tpi-no {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    color: var(--gold);
+    font-weight: 700;
+    min-width: 36px;
+  }
+  .tpi-name {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .tpi-ko {
+    font-size: 13px;
+    color: var(--green);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .tpi-hint {
+    font-size: 12px;
+    color: var(--grey);
+  }
+  .tpi-link-note {
+    font-size: 13px;
+    color: var(--grey);
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    line-height: 1.7;
+  }
+  .tpi-link-note a {
+    color: var(--green);
+    border-bottom: 1px solid var(--green);
+    padding-bottom: 1px;
+  }
+
+  /* ===== 트랜지션 표 ===== */
+  .transition-table td:nth-child(1) { width: 25%; }
+  .transition-table td:nth-child(3) { width: 28%; }
+
+  /* ===== 처방 경로 ===== */
+  .paths-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .path-card {
+    background: var(--bg-soft);
+    border-top: 3px solid var(--gold);
+    padding: 28px 24px;
+  }
+  .path-symptom {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+  .path-arrow {
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .path-check strong {
+    display: block;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .path-check ul {
+    list-style: none;
+    padding: 0;
+  }
+  .path-check li {
+    padding: 6px 0 6px 18px;
+    font-size: 14px;
+    color: var(--ink-2);
+    position: relative;
+    line-height: 1.5;
+  }
+  .path-check li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    color: var(--gold);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* ===== 마침표 ===== */
+  .closing-bottom {
+    text-align: center;
+    background: var(--green);
+    color: var(--cream);
+  }
+  .closing-quote {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    line-height: 1.55;
+    color: var(--cream);
+    letter-spacing: -0.015em;
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .closing-meta {
+    font-size: 13px;
+    color: var(--gold-soft);
+    margin-bottom: 36px;
+    letter-spacing: 0.03em;
+  }
+  .closing-meta cite { font-style: italic; }
+  .closing-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .closing-bottom .btn-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+  }
+  .closing-bottom .btn-primary:hover { background: var(--gold-soft); }
+  .closing-bottom .btn-ghost {
+    color: var(--cream);
+    border-color: var(--cream);
+  }
+  .closing-bottom .btn-ghost:hover {
+    background: var(--cream);
+    color: var(--green);
+  }
+
+  /* ===== FAQ details ===== */
+  .faq-detail {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .faq-detail[open] { border-color: var(--green); }
+  .faq-detail summary {
+    padding: 20px 24px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+    font-size: 15px;
+    position: relative;
+    padding-right: 50px;
+  }
+  .faq-detail summary::after {
+    content: '+';
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: var(--gold);
+    transition: transform 0.2s;
+  }
+  .faq-detail[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .faq-detail summary::-webkit-details-marker { display: none; }
+  .faq-detail p {
+    padding: 0 24px 24px;
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: var(--ink-2);
+  }
+
+  /* ===== 모바일 ===== */
+  @media (max-width: 968px) {
+    .step-flow { grid-template-columns: 1fr 1fr; }
+    .tpi-grid { grid-template-columns: 1fr; }
+    .paths-grid { grid-template-columns: 1fr; }
+    .closing-quote { font-size: 20px; }
+    .audience-toggle { flex-direction: column; gap: 0; }
+    .audience-tab { text-align: center; padding: 14px; }
+  }
+
+  /* ===== 더 깊이 박스 (책 PART / 토픽 링크) ===== */
+  .deeper-box {
+    margin-top: 36px;
+    padding: 24px 28px;
+    background: var(--bg-elev, #FFFFFF);
+    border: 1px solid var(--line, #E2DACA);
+    border-left: 3px solid var(--gold, #C19A4F);
+    border-radius: 4px;
+  }
+  .section-bg-soft .deeper-box {
+    background: var(--bg, #F8F5EE);
+  }
+  .deeper-box-topics {
+    border-left-color: var(--green, #2C5F4F);
+  }
+  .deeper-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold, #C19A4F);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .deeper-box-topics .deeper-label {
+    color: var(--green, #2C5F4F);
+  }
+  .deeper-intro {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-2, var(--ink, #1F1B16));
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line, #E2DACA);
+  }
+  .deeper-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .deeper-link {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 15px;
+    color: var(--ink, #1F1B16);
+    text-decoration: none;
+    line-height: 1.6;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--line-2, #D2C9B5);
+    transition: color 0.2s, padding-left 0.2s, border-color 0.2s;
+  }
+  .deeper-link:last-child { border-bottom: none; }
+  .deeper-link:hover {
+    color: var(--green, #2C5F4F);
+    padding-left: 6px;
+    border-color: var(--green, #2C5F4F);
+  }
+  .deeper-link strong { font-weight: 700; }
+
+  /* ===== Cite 인용 출처 링크 ===== */
+  .cite-link {
+    color: var(--gold, #C19A4F);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--gold, #C19A4F);
+    font-weight: 600;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .cite-link:hover {
+    color: var(--green, #2C5F4F);
+    border-color: var(--green, #2C5F4F);
+  }
+</style>
