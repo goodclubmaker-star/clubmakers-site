@@ -4,13 +4,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // 41년 헤리티지 표 (1985 → 2026)
 const heritage = [
   { year: '1985', label: '경인골프 출발', body: '부친 운영. 우드 1번이 실제 우드 재질이던 시절. 골프 장비 변천사의 출발점.' },
-  { year: '2002~', label: '클럽메이커스 시작', body: '공작소장 채기웅 본격 클럽피팅·메이킹 시작. 24년 현장 데이터 누적의 시작.' },
+  { year: '2002~', label: '클럽메이커스 시작', body: '공작소장 채기웅 본격 클럽피팅·메이킹 시작. 25년 현장 데이터 누적의 시작.' },
   { year: '2008', label: '운동역학 도입', body: '국내 클럽피팅 현장에 키네마틱 시퀀스(Kinematic Sequence) 분석 도입.' },
   { year: '2010~', label: 'KLPGA · LPGA 투어 지원', body: '박희영·김효주 등 투어 선수들의 클럽 분석·피팅 진행. 뽀로로 헤드커버 멘탈 파트너 동행.' },
   { year: '2012', label: 'KIPO 특허 3종', body: '클럽피팅 관련 한국 특허청 등록 특허 3종 보유.' },
   { year: '2011~2013', label: 'TPI 인증', body: 'TPI(Titleist Performance Institute) Level 1 (2011), Junior Level 2 (2012), Golf Level 2 (2013) 인증. K-VEST Level 2 수료.' },
   { year: '2020~', label: '자체 R&D 제품 출시', body: 'VERSUS 드라이버, KRZ 203H 하이브리드, DEFINE 샤프트 자체 설계·출시.' },
-  { year: '2026', label: '책 『실제적인 클럽피팅』 출간', body: '24년 현장 노하우의 정리. 본문 15 PART · 부록 4 · 현장작업표준서 12종.' },
+  { year: '2026', label: '책 『실제적인 클럽피팅』 출간', body: '25년 현장 노하우의 정리. 본문 15 PART · 부록 4 · 현장작업표준서 12종.' },
 ];
 
 // 피팅에서 다루는 11가지 변수
@@ -36,7 +36,7 @@ const personSchema = {
   name: '채기웅',
   alternateName: 'Chae Ki-Woong',
   jobTitle: '공작소장 (Master Clubmaker)',
-  description: '클럽메이커스 공작소장. 24년 클럽피팅·클럽메이킹 현장 경력. TPI Certified (Level 1·Junior 2·Golf 2). KIPO 특허 3종. 책 『실제적인 클럽피팅』 저자.',
+  description: '클럽메이커스 공작소장. 25년 클럽피팅·클럽메이킹 현장 경력. TPI Certified (Level 1·Junior 2·Golf 2). KIPO 특허 3종. 책 『실제적인 클럽피팅』 저자.',
   image: 'https://myclubmakers.com/images/master-profile.jpg',
   worksFor: {
     '@type': 'LocalBusiness',
@@ -60,8 +60,8 @@ const personSchema = {
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
-  name: '공작소장 소개 — 채기웅의 24년',
-  description: '클럽메이커스 공작소장 채기웅의 24년 클럽피팅·클럽메이킹 이야기. 1985년 경인골프부터 2026년까지 41년 헤리티지. TPI Certified, KIPO 특허 3종, 청와대 일화, 11가지 피팅 변수.',
+  name: '공작소장 소개 — 채기웅의 25년',
+  description: '클럽메이커스 공작소장 채기웅의 25년 클럽피팅·클럽메이킹 이야기. 1985년 경인골프부터 2026년까지 41년 헤리티지. TPI Certified, KIPO 특허 3종, 청와대 일화, 11가지 피팅 변수.',
   author: { '@id': 'https://myclubmakers.com/about#person' },
   mainEntity: { '@id': 'https://myclubmakers.com/about#person' },
   inLanguage: 'ko-KR',
@@ -70,9 +70,9 @@ const articleSchema = {
 
 <BaseLayout
   title="공작소장 소개"
-  description="골프채공작소 클럽메이커스 공작소장 채기웅의 24년 이야기. 1985년 경인골프부터 41년 헤리티지. TPI Certified, KIPO 특허 3종, 책 『실제적인 클럽피팅』 저자. 운동역학 기반 클럽피팅."
+  description="골프채공작소 클럽메이커스 공작소장 채기웅의 25년 이야기. 1985년 경인골프부터 41년 헤리티지. TPI Certified, KIPO 특허 3종, 책 『실제적인 클럽피팅』 저자. 운동역학 기반 클럽피팅."
   schemaType="AboutPage"
-  keywords="골프채공작소, 양재 골프채공작소, 클럽메이커스, 채기웅, 공작소장, 클럽피팅, 24년 클럽피팅, TPI Certified, TPI Level 2, KIPO 특허, 한국 클럽피팅, 골프채 공작소, 클럽메이킹, 운동역학, kinematic sequence, club fitting Korea, master clubmaker"
+  keywords="골프채공작소, 양재 골프채공작소, 클럽메이커스, 채기웅, 공작소장, 클럽피팅, 25년 클럽피팅, TPI Certified, TPI Level 2, KIPO 특허, 한국 클럽피팅, 골프채 공작소, 클럽메이킹, 운동역학, kinematic sequence, club fitting Korea, master clubmaker"
   extraSchema={[personSchema, articleSchema]}
 >
 
@@ -81,7 +81,7 @@ const articleSchema = {
   <section class="page-hero about-hero">
     <div class="page-hero-content">
       <div class="page-hero-eyebrow">ABOUT · 공작소장 소개</div>
-      <h1>24년의 기록</h1>
+      <h1>25년의 기록</h1>
       <p class="page-hero-subtitle">
         <strong>채기웅 공작소장</strong> · 골프채공작소 클럽메이커스
       </p>
@@ -105,7 +105,7 @@ const articleSchema = {
         </p>
         <p>
           본격적으로 클럽피팅 일을 시작한 것은 2002년경이었습니다.
-          <strong>그때부터 24년</strong>, 저는 매일 같은 질문 앞에 섰습니다.
+          <strong>그때부터 25년</strong>, 저는 매일 같은 질문 앞에 섰습니다.
           "이 고객님께 정말 맞는 클럽은 무엇인가."
         </p>
         <p>
@@ -218,7 +218,7 @@ const articleSchema = {
       <p class="section-eyebrow">SECTION 04 · 41년 헤리티지</p>
       <h2>1985년부터 2026년까지</h2>
       <p class="section-lead">
-        부친의 경인골프(1985)에서 시작한 41년의 흐름. 클럽메이커스가 본격 운영된 24년 동안의 주요 기록입니다.
+        부친의 경인골프(1985)에서 시작한 41년의 흐름. 클럽메이커스가 본격 운영된 25년 동안의 주요 기록입니다.
       </p>
 
       <div class="timeline">
@@ -272,7 +272,7 @@ const articleSchema = {
           <h3 class="credential-title">『실제적인 클럽피팅』 (2026)</h3>
           <p class="credential-body">
             <strong>본문 15 PART · 부록 4 · 현장작업표준서 12종.</strong>
-            24년 동안 인터뷰하고 처방하고 수정해온 판단 기준의 정리. 피터를 위한 책.
+            25년 동안 인터뷰하고 처방하고 수정해온 판단 기준의 정리. 피터를 위한 책.
           </p>
           <a href="/book" class="credential-link">책 자세히 →</a>
         </div>
@@ -331,7 +331,7 @@ const articleSchema = {
         "친근한 골프채공작소를 지향합니다."
       </p>
       <p class="closing-body">
-        24년 동안 쌓인 것은 데이터와 케이스만이 아닙니다.
+        25년 동안 쌓인 것은 데이터와 케이스만이 아닙니다.
         고객님 한 분 한 분의 이야기와, 그분들이 더 좋은 골프를 만나는 순간들이었습니다.
       </p>
       <div class="closing-actions">
@@ -351,11 +351,11 @@ const articleSchema = {
       <h2>이 페이지에 자주 묻는 질문</h2>
       <details class="faq-detail">
         <summary>채기웅 공작소장은 어떤 자격을 갖고 있나요?</summary>
-        <p>TPI(Titleist Performance Institute) Certified — Level 1, Junior Level 2, Golf Level 2 인증. 대한민국 특허청(KIPO) 등록 특허 3종. 책 『실제적인 클럽피팅』 저자. 24년 클럽피팅·클럽메이킹 현장 경력.</p>
+        <p>TPI(Titleist Performance Institute) Certified — Level 1, Junior Level 2, Golf Level 2 인증. 대한민국 특허청(KIPO) 등록 특허 3종. 책 『실제적인 클럽피팅』 저자. 25년 클럽피팅·클럽메이킹 현장 경력.</p>
       </details>
       <details class="faq-detail">
         <summary>클럽메이커스는 언제부터 운영되었나요?</summary>
-        <p>부친의 경인골프(1985년 시작)를 모태로, 채기웅 공작소장이 2002년부터 본격 클럽피팅·메이킹을 진행했습니다. 통산 41년 헤리티지, 24년 클럽메이커스 운영.</p>
+        <p>부친의 경인골프(1985년 시작)를 모태로, 채기웅 공작소장이 2002년부터 본격 클럽피팅·메이킹을 진행했습니다. 통산 41년 헤리티지, 25년 클럽메이커스 운영.</p>
       </details>
       <details class="faq-detail">
         <summary>운동역학 기반 클럽피팅은 무엇인가요?</summary>
@@ -380,7 +380,7 @@ const articleSchema = {
       name: '채기웅 공작소장은 어떤 자격을 갖고 있나요?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'TPI(Titleist Performance Institute) Certified — Level 1, Junior Level 2, Golf Level 2 인증. 대한민국 특허청(KIPO) 등록 특허 3종. 책 『실제적인 클럽피팅』 저자. 24년 클럽피팅·클럽메이킹 현장 경력.'
+        text: 'TPI(Titleist Performance Institute) Certified — Level 1, Junior Level 2, Golf Level 2 인증. 대한민국 특허청(KIPO) 등록 특허 3종. 책 『실제적인 클럽피팅』 저자. 25년 클럽피팅·클럽메이킹 현장 경력.'
       }
     },
     {
@@ -388,7 +388,7 @@ const articleSchema = {
       name: '클럽메이커스는 언제부터 운영되었나요?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: '부친의 경인골프(1985년 시작)를 모태로, 채기웅 공작소장이 2002년부터 본격 클럽피팅·메이킹을 진행했습니다. 통산 41년 헤리티지, 24년 클럽메이커스 운영.'
+        text: '부친의 경인골프(1985년 시작)를 모태로, 채기웅 공작소장이 2002년부터 본격 클럽피팅·메이킹을 진행했습니다. 통산 41년 헤리티지, 25년 클럽메이커스 운영.'
       }
     },
     {
