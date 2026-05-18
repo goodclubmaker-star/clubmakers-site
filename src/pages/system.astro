@@ -245,11 +245,25 @@ const articleSchema = {
       <p class="kinematic-flow">
         하체 <span class="flow-arrow">→</span> 상체 <span class="flow-arrow">→</span> 팔 <span class="flow-arrow">→</span> 클럽
       </p>
+
+      <figure class="kinematic-figure">
+        <img src="/images/system/kinematic-diagram.svg"
+             alt="키네마틱 시퀀스 4분절 도식 — 하체에서 클럽으로 에너지가 전달되는 순서"
+             loading="lazy" />
+      </figure>
+
       <p class="section-lead">
         큰 분절이 먼저 가속하고 감속하면서 다음 분절로 에너지가 전달됩니다.
         각 분절의 피크 속도가 계단형으로 나타나야 동일한 힘으로 더 빠른 헤드스피드,
         더 안정된 방향성을 만듭니다.
       </p>
+
+      <figure class="kinematic-figure">
+        <img src="/images/system/kinematic-graph.jpg"
+             alt="효율적인 키네마틱 시퀀스 그래프 — 하체·상체·팔·클럽의 피크 속도가 계단형으로 나타나는 패턴"
+             loading="lazy" />
+        <figcaption>효율적인 시퀀스 — 4분절의 피크 속도가 계단형으로 형성됩니다 (K-VEST 측정 화면)</figcaption>
+      </figure>
 
       <h3 class="kinematic-h3">4가지 측정 항목</h3>
       <ol class="kinematic-list">
@@ -277,6 +291,12 @@ const articleSchema = {
           이번 분석의 결론은 라이각 자체가 아니라,
           <strong>라이각 문제처럼 보이게 만든 스윙 원인을 먼저 정리하는 것</strong>이었습니다.
         </p>
+        <figure class="case-figure">
+          <img src="/images/system/vplane-comparison.jpg"
+               alt="V-plane 편차 비교 — 66.3° (편차 큼) vs 45.3° (편차 작음)"
+               loading="lazy" />
+          <figcaption>V-plane 편차 — 같은 의도로 스윙해도 실제 클럽이 들어오는 방식이 다르다는 측정 결과</figcaption>
+        </figure>
       </aside>
 
       <h3 class="kinematic-h3">3D 키네마틱 시퀀스, 한국 클럽피팅 현장의 첫 도입</h3>
@@ -502,6 +522,13 @@ const articleSchema = {
         모든 분석은 PDF 레포트로 정리되어 고객님께 전달됩니다.
         프로 선수도, 입문자도 같은 형식의 정밀 레포트를 받습니다.
       </p>
+
+      <figure class="report-figure">
+        <img src="/images/system/report-pages.jpg"
+             alt="피팅 분석 레포트 예시 — 표지, 퍼스널 인터뷰, 4단계 전략, 요약"
+             loading="lazy" />
+        <figcaption>레포트 예시 — 표지·인터뷰·전략·요약 (개인정보 익명 처리)</figcaption>
+      </figure>
 
       <h3 class="report-h3">레포트 구성</h3>
       <ol class="report-list">
@@ -811,6 +838,62 @@ const articleSchema = {
     color: var(--ink);
     margin: 0;
     font-style: normal;
+  }
+  .case-figure {
+    margin: 20px 0 0;
+  }
+  .case-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2px;
+  }
+  .case-figure figcaption {
+    font-size: 12.5px;
+    color: var(--grey);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  /* figure — 키네마틱 도식·그래프 */
+  .kinematic-figure {
+    margin: 28px 0;
+    text-align: center;
+  }
+  .kinematic-figure img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+  .kinematic-figure figcaption {
+    font-size: 13px;
+    color: var(--grey);
+    margin-top: 12px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* figure — 레포트 그리드 */
+  .report-figure {
+    margin: 28px 0 36px;
+    text-align: center;
+  }
+  .report-figure img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 12px 32px -16px rgba(15, 15, 14, 0.25);
+  }
+  .report-figure figcaption {
+    font-size: 13px;
+    color: var(--grey);
+    margin-top: 14px;
+    line-height: 1.6;
+    text-align: center;
   }
 
   /* 4-6.5 · 분석 레포트 */
