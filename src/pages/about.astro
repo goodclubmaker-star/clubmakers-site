@@ -287,6 +287,92 @@ const articleSchema = {
           <a href="/products" class="credential-link">제품 라인 →</a>
         </div>
       </div>
+
+      <!-- 증서 갤러리: 특허 3종 + TPI 3종 -->
+      <div class="credentials-gallery">
+        <h3 class="gallery-h3">KIPO 등록 특허 3종</h3>
+        <p class="gallery-sub">대한민국 특허청 등록 — 골프클럽 피팅 관련 자체 R&D 특허 (개인정보 비공개 처리)</p>
+        <div class="cert-grid">
+          <figure class="cert-item">
+            <a href="/images/credentials/patent-1.jpg" target="_blank" rel="noopener">
+              <img src="/images/credentials/patent-1.jpg"
+                   alt="KIPO 특허 제10-1084295호 — 골프클럽 피팅 어셈블리, 이를 포함한 골프클럽 및 이를 이용한 골프클럽 피팅방법 (2011년 11월 10일 등록)"
+                   loading="lazy" />
+            </a>
+            <figcaption>
+              <strong>제10-1084295호</strong><br/>
+              골프클럽 피팅 어셈블리<br/>
+              <span class="cert-date">2011.11.10 등록</span>
+            </figcaption>
+          </figure>
+          <figure class="cert-item">
+            <a href="/images/credentials/patent-2.jpg" target="_blank" rel="noopener">
+              <img src="/images/credentials/patent-2.jpg"
+                   alt="KIPO 특허 제10-0963427호 — 스크린골프장과 연계된 골프클럽 피팅 시스템 (2010년 6월 4일 등록)"
+                   loading="lazy" />
+            </a>
+            <figcaption>
+              <strong>제10-0963427호</strong><br/>
+              스크린골프장 연계 피팅 시스템<br/>
+              <span class="cert-date">2010.06.04 등록</span>
+            </figcaption>
+          </figure>
+          <figure class="cert-item">
+            <a href="/images/credentials/patent-3.jpg" target="_blank" rel="noopener">
+              <img src="/images/credentials/patent-3.jpg"
+                   alt="KIPO 특허 제10-1059933호 — 골프 클럽 피팅 서비스 제공 및 골프 용품 판매 시스템 (2011년 8월 22일 등록)"
+                   loading="lazy" />
+            </a>
+            <figcaption>
+              <strong>제10-1059933호</strong><br/>
+              피팅 서비스·판매 시스템<br/>
+              <span class="cert-date">2011.08.22 등록</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <h3 class="gallery-h3 gallery-h3-second">TPI Certified 인증서</h3>
+        <p class="gallery-sub">Titleist Performance Institute — 골프 스윙·신체·건강 분석 자격 체계</p>
+        <div class="cert-grid">
+          <figure class="cert-item">
+            <a href="/images/credentials/tpi-level1-2011.jpg" target="_blank" rel="noopener">
+              <img src="/images/credentials/tpi-level1-2011-thumb.jpg"
+                   alt="TPI Level 1 Certified — 채기웅 (2011년 8월 16일)"
+                   loading="lazy" />
+            </a>
+            <figcaption>
+              <strong>TPI Level 1</strong><br/>
+              Certified — Kiwoong Chai<br/>
+              <span class="cert-date">2011.08.16</span>
+            </figcaption>
+          </figure>
+          <figure class="cert-item">
+            <a href="/images/credentials/tpi-junior2-2012.jpg" target="_blank" rel="noopener">
+              <img src="/images/credentials/tpi-junior2-2012-thumb.jpg"
+                   alt="TPI Junior Level 2 Certified — 채기웅 (2012년 11월 4일)"
+                   loading="lazy" />
+            </a>
+            <figcaption>
+              <strong>TPI Junior Level 2</strong><br/>
+              Certified — Kiwoong Chai<br/>
+              <span class="cert-date">2012.11.04</span>
+            </figcaption>
+          </figure>
+          <figure class="cert-item">
+            <a href="/images/credentials/tpi-golf2-2013.jpg" target="_blank" rel="noopener">
+              <img src="/images/credentials/tpi-golf2-2013-thumb.jpg"
+                   alt="TPI Golf Level 2 Certified — 채기웅 (2013년 2월 25일)"
+                   loading="lazy" />
+            </a>
+            <figcaption>
+              <strong>TPI Golf Level 2</strong><br/>
+              Certified — Kiwoong Chai<br/>
+              <span class="cert-date">2013.02.25</span>
+            </figcaption>
+          </figure>
+        </div>
+        <p class="gallery-note">이미지를 클릭하면 크게 볼 수 있습니다.</p>
+      </div>
     </div>
   </section>
 
@@ -485,6 +571,92 @@ const articleSchema = {
     margin-bottom: 36px;
     max-width: 660px;
   }
+
+  /* ===== 증서 갤러리 ===== */
+  .credentials-gallery {
+    margin-top: 56px;
+    padding-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+  .gallery-h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .gallery-h3-second {
+    margin-top: 56px;
+  }
+  .gallery-sub {
+    font-size: 14px;
+    color: var(--grey);
+    margin: 0 0 24px;
+    line-height: 1.6;
+  }
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 8px;
+  }
+  .cert-item {
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 12px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .cert-item:hover {
+    box-shadow: 0 12px 32px -16px rgba(15, 15, 14, 0.25);
+    transform: translateY(-2px);
+  }
+  .cert-item a {
+    display: block;
+    text-decoration: none;
+  }
+  .cert-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: var(--bg-soft);
+  }
+  .cert-item figcaption {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-top: 12px;
+    padding: 0 4px;
+  }
+  .cert-item figcaption strong {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .cert-date {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+  }
+  .gallery-note {
+    font-size: 12.5px;
+    color: var(--grey);
+    margin: 24px 0 0;
+    font-style: italic;
+  }
+  @media (max-width: 720px) {
+    .cert-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+  }
+  @media (max-width: 480px) {
+    .cert-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .variable-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
