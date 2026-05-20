@@ -39,6 +39,9 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- 검색엔진 사이트 소유확인 -->
+    <meta name="naver-site-verification" content="30ec15f63a0cfe37bff617de977ca0fb6a3a0aad" />
+
     <!-- SEO -->
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
