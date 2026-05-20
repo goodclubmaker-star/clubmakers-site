@@ -1,7 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// 공임표 — 카테고리별 묶음
+// ============================================================
+// 공임표 — 단일 출처 (Single Source of Truth)
+// 이 데이터만 수정하면 공임표 + 견적 계산기에 자동 반영됩니다.
+//   label : 작업 이름
+//   price : 표시용 가격 문자열 (예: '18,000')
+//   qty   : true면 개수 선택(스테퍼), 없으면 체크박스
+// ============================================================
 const priceGroups = [
   {
     title: '헤드 · 샤프트',
@@ -21,9 +27,9 @@ const priceGroups = [
     title: '그립',
     anchor: 'grip',
     items: [
-      { label: '그립 장착 (고객님이 그립을 가져오실 시)', price: '5,000' },
-      { label: '그립 추출', price: '5,000' },
-      { label: '퍼터 그립', price: '7,000' },
+      { label: '그립 장착 (고객님이 그립을 가져오실 시)', price: '5,000', qty: true },
+      { label: '그립 추출', price: '5,000', qty: true },
+      { label: '퍼터 그립', price: '7,000', qty: true },
     ],
   },
   {
@@ -45,6 +51,15 @@ const priceGroups = [
     ],
   },
 ];
+
+// 가격 문자열 → 숫자 (계산기용). '18,000' → 18000
+const priceNum = (p) => parseInt(String(p).replace(/[^0-9]/g, ''), 10) || 0;
+
+// 계산기용 항목 ID 부여 (그룹index-항목index)
+const estimateGroups = priceGroups.map((g, gi) => ({
+  ...g,
+  items: g.items.map((it, ii) => ({ ...it, id: `est-${gi}-${ii}`, value: priceNum(it.price) })),
+}));
 ---
 
 <BaseLayout
@@ -198,7 +213,60 @@ const priceGroups = [
     </div>
   </section>
 
-  <!-- 8-5.5. 부품 단가 안내 -->
+  <!-- 8-5.3. [NEW] 예상 견적 계산기 -->
+  <section class="section estimate-section" id="estimate">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">ESTIMATE · 예상 견적 계산기</p>
+      <h2>공임을 미리 계산해 보세요</h2>
+      <p class="estimate-intro">
+        원하시는 작업을 선택하면 <strong>예상 공임</strong>이 자동으로 계산됩니다.
+        부품비(샤프트·그립·헤드 등)는 별도이며, 정확한 견적은 클럽을 직접 보고 안내드립니다.
+      </p>
+
+      <div class="estimate-tool">
+        {estimateGroups.map((group) => (
+          <div class="est-group">
+            <p class="est-group-title">{group.title}</p>
+            {group.items.map((item) => (
+              item.qty ? (
+                <div class="est-qty-row">
+                  <span class="est-label">{item.label}</span>
+                  <span class="est-unit">{item.price}원/개</span>
+                  <span class="est-stepper">
+                    <button type="button" class="est-minus" data-qty={item.id}>−</button>
+                    <span class="est-count" id={`qty-${item.id}`} data-price={item.value}>0</span>
+                    <button type="button" class="est-plus" data-qty={item.id} data-price={item.value}>+</button>
+                  </span>
+                </div>
+              ) : (
+                <label class="est-item">
+                  <input type="checkbox" data-price={item.value} />
+                  <span class="est-label">{item.label}</span>
+                  <span class="est-price">{item.price}원</span>
+                </label>
+              )
+            ))}
+          </div>
+        ))}
+
+        <!-- 합계 -->
+        <div class="est-total-box">
+          <div class="est-total-row">
+            <span class="est-total-label">예상 공임 합계</span>
+            <span class="est-total-value"><span id="est-total">0</span>원</span>
+          </div>
+          <p class="est-total-note">
+            부품비(샤프트·그립·헤드 등)는 별도입니다. 위 금액은 <strong>작업 공임 예상치</strong>이며,
+            클럽 상태에 따라 달라질 수 있습니다. 정확한 견적은 클럽 확인 후 확정됩니다.
+          </p>
+          <div class="est-cta">
+            <a href="https://open.kakao.com/o/sLAG3lbb" target="_blank" rel="noopener" class="est-btn est-btn-kakao">카카오톡으로 견적 문의</a>
+            <a href="tel:010-4363-5555" class="est-btn est-btn-call">전화 문의 010-4363-5555</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="section section-bg-soft parts-section">
     <div class="section-content-narrow">
       <p class="section-eyebrow">PARTS · 부품 단가 안내</p>
@@ -339,9 +407,226 @@ const priceGroups = [
     </div>
   </section>
 
+<script is:inline>
+  (function () {
+    function won(n) { return n.toLocaleString('ko-KR'); }
+
+    function recalc() {
+      var total = 0;
+      // 체크박스 항목
+      document.querySelectorAll('.estimate-tool input[type="checkbox"]').forEach(function (cb) {
+        if (cb.checked) total += parseInt(cb.getAttribute('data-price'), 10) || 0;
+      });
+      // 개수 항목
+      document.querySelectorAll('.est-count').forEach(function (el) {
+        var qty = parseInt(el.textContent, 10) || 0;
+        var price = parseInt(el.getAttribute('data-price'), 10) || 0;
+        total += qty * price;
+      });
+      var out = document.getElementById('est-total');
+      if (out) out.textContent = won(total);
+    }
+
+    function initEstimate() {
+      var tool = document.querySelector('.estimate-tool');
+      if (!tool) return;
+
+      // 체크박스
+      tool.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+        cb.addEventListener('change', recalc);
+      });
+
+      // 스테퍼 (+/-)
+      tool.querySelectorAll('.est-plus').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var key = btn.getAttribute('data-qty');
+          var el = document.getElementById('qty-' + key);
+          if (!el) return;
+          el.textContent = (parseInt(el.textContent, 10) || 0) + 1;
+          recalc();
+        });
+      });
+      tool.querySelectorAll('.est-minus').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var key = btn.getAttribute('data-qty');
+          var el = document.getElementById('qty-' + key);
+          if (!el) return;
+          var cur = parseInt(el.textContent, 10) || 0;
+          if (cur > 0) el.textContent = cur - 1;
+          recalc();
+        });
+      });
+
+      recalc();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initEstimate);
+    } else {
+      initEstimate();
+    }
+  })();
+</script>
+
 </BaseLayout>
 
 <style>
+  /* ===== 견적 계산기 ===== */
+  .estimate-section {
+    background: var(--bg-cream, #F8F2E5);
+  }
+  .estimate-intro {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ink, #0F0F0E);
+    margin: 0 0 32px;
+    max-width: 660px;
+  }
+  .estimate-intro strong { font-weight: 700; }
+  .estimate-tool {
+    background: #fff;
+    border: 1px solid var(--line, #E5DED1);
+    padding: 8px 0;
+  }
+  .est-group {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--line, #E5DED1);
+  }
+  .est-group-title {
+    font-family: var(--font-serif, 'Noto Serif KR', serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold, #B8985C);
+    margin: 0 0 16px;
+    letter-spacing: 0.02em;
+  }
+  /* 체크박스 항목 */
+  .est-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--ink, #0F0F0E);
+  }
+  .est-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--green, #0F2922);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .est-item .est-label { flex: 1; line-height: 1.5; }
+  .est-item .est-price {
+    color: var(--grey, #666);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  /* 개수 선택 항목 */
+  .est-qty-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    font-size: 15px;
+    color: var(--ink, #0F0F0E);
+    flex-wrap: wrap;
+  }
+  .est-qty-row .est-label { flex: 1; min-width: 140px; }
+  .est-qty-row .est-unit {
+    color: var(--grey, #666);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .est-stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--line, #E5DED1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .est-stepper button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: var(--bg-soft, #F4EFE6);
+    color: var(--ink, #0F0F0E);
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+    transition: background 0.15s ease;
+  }
+  .est-stepper button:hover { background: var(--gold, #B8985C); color: #fff; }
+  .est-count {
+    width: 44px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink, #0F0F0E);
+  }
+  /* 합계 박스 */
+  .est-total-box {
+    padding: 28px;
+    background: var(--green, #0F2922);
+    color: #fff;
+  }
+  .est-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .est-total-label {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .est-total-value {
+    font-family: var(--font-serif, 'Noto Serif KR', serif);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--gold, #B8985C);
+  }
+  .est-total-note {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    margin: 0 0 24px;
+  }
+  .est-total-note strong { color: #fff; font-weight: 700; }
+  .est-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .est-btn {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .est-btn:hover { transform: translateY(-1px); opacity: 0.92; }
+  .est-btn-kakao {
+    background: #FEE500;
+    color: #3C1E1E;
+  }
+  .est-btn-call {
+    background: #fff;
+    color: var(--green, #0F2922);
+  }
+  @media (max-width: 560px) {
+    .est-group { padding: 20px 18px; }
+    .est-total-box { padding: 22px 18px; }
+    .est-total-value { font-size: 26px; }
+    .est-btn { min-width: 100%; }
+  }
+
   .workshop-hero {
     background: var(--bg-soft);
   }
