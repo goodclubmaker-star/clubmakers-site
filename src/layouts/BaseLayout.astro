@@ -29,6 +29,11 @@ const fullTitle = title === '클럽메이커스'
   : `${title} | 골프채공작소 클럽메이커스`;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+// 플로팅 카카오 챗봇 버튼: 가격표 등 '도착지' 페이지에선 숨김
+// (챗봇은 콘텐츠 페이지 → 사이트로 유입시키는 입구 역할이므로)
+const hideChatPaths = ['/price'];
+const showKakaoChat = !hideChatPaths.some((p) => Astro.url.pathname.startsWith(p));
 ---
 
 <!doctype html>
@@ -238,11 +243,48 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
     </main>
     <Footer />
     <MobileCTA />
+
+    {showKakaoChat && (
+      <div class="kfab" id="kfab">
+        <span class="kfab-label">무엇이든 물어보세요</span>
+        <a class="kfab-btn" href="https://pf.kakao.com/_JSVDn/chat" target="_blank" rel="noopener" aria-label="카카오톡 챗봇 상담">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7-.2.7-.7 2.6-.8 3-.1.5.2.5.4.4.2-.1 2.6-1.8 3.6-2.5.7.1 1.4.2 2.1.2 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>
+        </a>
+      </div>
+    )}
   </body>
 </html>
 
 <style>
   main {
     min-height: 60vh;
+  }
+
+  /* 플로팅 카카오 챗봇 버튼 */
+  .kfab {
+    position: fixed; right: 18px; bottom: 20px; z-index: 50;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+  }
+  .kfab-label {
+    background: #fff; border: 1px solid #E5DED1; color: #0F0F0E;
+    font-size: 12.5px; font-weight: 600; padding: 8px 13px; border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.10); white-space: nowrap;
+  }
+  .kfab-btn {
+    width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer;
+    background: #FEE500; color: #3C1E1E;
+    box-shadow: 0 6px 20px rgba(0,0,0,.18);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .15s; text-decoration: none;
+  }
+  .kfab-btn:hover { transform: scale(1.06); }
+  .kfab-btn svg { width: 30px; height: 30px; }
+
+  /* 모바일: MobileCTA 바와 겹치지 않게 위로 올리고, 라벨은 숨겨 깔끔하게 */
+  @media (max-width: 768px) {
+    .kfab { right: 14px; bottom: 84px; }
+    .kfab-label { display: none; }
+    .kfab-btn { width: 52px; height: 52px; }
+    .kfab-btn svg { width: 26px; height: 26px; }
   }
 </style>
