@@ -39,6 +39,14 @@
 
 ### 4. 작업·가격
 - [공임 안내](https://myclubmakers.com/workshop): 전체 작업 공임표 공개 — 라이각 조정, 샤프트 교체, 그립 교체, 길이 조정 등
+- [작업 가격 계산기](https://myclubmakers.com/workshop#estimate): 작업 선택 시 예상 공임 자동 계산 (NEW)
+- [그립·샤프트·헤드 가격표](https://myclubmakers.com/price): 정품 그립·샤프트·헤드 가격표 + 대표 제품 소개·추천. 그립은 교체 공임 포함, 샤프트는 부품가(공임 별도). 부품 교체와 클럽피팅을 함께 진행 (NEW)
+  - **그립**: 골프프라이드(Tour Velvet·MCC·Plus4·ALIGN MAX·Z-Grip·CP2), 캐비어(3중구조 항균), 럭스립(국산 TPE·한글 그립), 슈퍼스트로크 퍼터그립(Zenergy Tour·Pistol·Flatso·Wrist Lock)
+  - **아이언 샤프트**: 트루템퍼 다이나믹골드(투어 표준 스틸)·AMT·95VSS, N.S.PRO 950GH·MODUS3(경량 스틸), 에어로텍 스틸파이버(그라파이트+스틸 하이브리드), 프로젝트X(스텝리스)
+  - **드라이버 샤프트**: 미쓰비시 텐세이 1K·디아마나·뱅퀴시, 후지쿠라 벤투스 TR·스피더 부스트(VeloCore+ 안정성)
+  - **헤드·자체 제품**: VERSUS 맞춤 드라이버(0.5° 훅페이스·피팅 포함), KRZ 203H 하이브리드, 미스테리 고반발 드라이버
+  - 추천 예: 땀 많은 분→MCC/Z-Grip, 손 통증→CP2, 슬라이스→Plus4/VERSUS, 경량 스틸→950GH/스틸파이버, 비거리→스피더 부스트/미스테리 고반발
+- [케이스 스터디 방법론](https://myclubmakers.com/methodology): 가설→테스트→좁히기→처방→재측정 5단계 진단 원칙 (NEW)
 - [수리 Q&A](https://myclubmakers.com/workshop-qna): 21개 작업 Q&A (FAQPage schema)
 - [택배 접수·발송](https://myclubmakers.com/shipping): 전국 어디서나 골프채 수리 가능 (NEW)
 - [케이스 스터디](https://myclubmakers.com/case-studies): 실전 피팅 사례 8개
@@ -63,6 +71,9 @@
 페이스 앵글, 라이각, 로프트, 길이, 스윙웨이트,
 페룰 교체, 헤드 재접착, 슬리브 교체, 카운터 밸런스,
 양재동 골프채공작소, 서초 골프채 수리, 강남 클럽 공작소,
+골프프라이드 그립, MCC ALIGN MAX, 슈퍼스트로크 퍼터그립, 캐비어 그립, 럭스립 한글 그립,
+다이나믹골드, NS프로 모더스, 스틸파이버, 프로젝트X, 텐세이, 디아마나, 벤투스, 스피더 부스트,
+정품 그립 교체, 정품 샤프트 교체, 드라이버 샤프트 피팅, 아이언 샤프트 피팅,
 **택배 골프채 수리, 비대면 골프채 수리** (전국 가능)
 
 ## 주요 서비스
