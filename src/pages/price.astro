@@ -1,0 +1,1354 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "그립·샤프트 가격표 | 양재 클럽피팅 골프채공작소 클럽메이커스";
+const pageDescription = "양재 골프채공작소 클럽메이커스의 그립·샤프트 가격표. 골프프라이드·트루템퍼 다이나믹골드·N.S.PRO·스틸파이버·프로젝트X·미쓰비시·후지쿠라 정품 취급. 부품 교체와 클럽피팅을 함께 진행합니다. 표시가는 부품가이며 장착 공임은 별도입니다.";
+const pageKeywords = "골프 그립 가격, 골프 샤프트 가격, 골프프라이드 그립, 트루템퍼 다이나믹골드, NS프로 모더스, 스틸파이버, 프로젝트X, 미쓰비시 텐세이, 후지쿠라 벤투스, 양재 골프 그립 교체, 양재 샤프트 교체, 클럽피팅, 골프채공작소, 클럽메이커스, 정품 그립 샤프트";
+
+const priceData = [
+  {
+    category: '그립',
+    brands: [
+      {
+        brand: '골프프라이드',
+        items: [
+          { name: 'Tour Velvet (VTM/VTL)', price: 18000 },
+          { name: 'Tour Velvet 주니어 (TVJ)', price: 18000 },
+          { name: 'Tour Velvet 미드 (VMM)', price: 18000 },
+          { name: 'Tour Velvet Plus4 (VT4S)', price: 18000 },
+          { name: 'Tour Velvet Plus4 미드 (VT4M)', price: 18000 },
+          { name: 'Tour Velvet Lite (LTM)', price: 20000 },
+          { name: 'Tour Velvet 360 블랙 (GTSS)', price: 22000 },
+          { name: 'Tour Velvet 360 화이트 (GTS1)', price: 22000 },
+          { name: 'Tour Velvet 360 미드 화이트 (GTMM)', price: 22000 },
+          { name: 'Tour Velvet 360 Lite (GTLS)', price: 22000 },
+          { name: 'TWPS / TWPU 블랙, 화이트, 블루, 레드', price: 22000 },
+          { name: 'VDRC 59X 블랙, 블루, 핑크 (여성용)', price: 22000 },
+          { name: 'FRC 59X 핑크, 라벤더 (블랙니온)', price: 22000 },
+          { name: 'E860 블랙', price: 22000 },
+          { name: 'EL50 (여성용)', price: 22000 },
+          { name: 'CPXS / CPXU (스탠다드, 언더사이즈)', price: 25000 },
+          { name: 'CP2 (스탠다드, 언더사이즈)', price: 25000 },
+          { name: 'CP2 미드', price: 25000 },
+          { name: 'Tour 25 (LTTS)', price: 27000 },
+          { name: 'Multi / Whiteout / PLUS4 / TEAM', price: 30000 },
+          { name: 'Multi / Whiteout / PLUS4 / TEAM 미드', price: 30000 },
+          { name: 'Z - GRIP (GRSC)', price: 30000 },
+          { name: 'Tour Velvet ALIGN (VTXS)', price: 30000 },
+          { name: 'Tour Velvet ALIGN 미드 (VTXM)', price: 30000 },
+          { name: 'MCC ALIGN', price: 30000 },
+          { name: 'MCC ALIGN 미드', price: 30000 },
+          { name: 'Z - GRIP ALIGN (GRXS)', price: 30000 },
+          { name: 'Z - GRIP ALIGN 미드 (GRXM)', price: 30000 },
+          { name: 'MCC ALIGN MAX', price: 35000 },
+          { name: 'MCC ALIGN MAX MID', price: 35000 },
+          { name: 'PRO ONLY RED (72cc)', price: 35000 },
+          { name: 'PRO ONLY BLUE (81cc)', price: 35000 },
+          { name: 'PRO ONLY GREEN (88cc)', price: 35000 },
+          { name: 'PRO ONLY CORD RED (72cc)', price: 40000 },
+          { name: 'PRO ONLY CORD BLUE (81cc)', price: 40000 },
+          { name: 'PRO ONLY CORD GREEN (88cc)', price: 40000 },
+          { name: 'REVERSE TAPER FLAT / ROUND / PISTOL (S,M,L)', price: 50000 },
+          { name: 'ZERO TAPER BLACK (M,L) / BLUE (M) / RED (M)', price: 50000 },
+        ],
+      },
+      {
+        brand: '슈퍼스트로크',
+        items: [
+          { name: '슈퍼스트로크 한정판 2026 PGA 챔피언십 투어 2.0/3.0', price: 63000 },
+          { name: '슈퍼스트로크 한정판 RED WHITE BLUE TIE DYE 투어/피스톨 2.0', price: 63000 },
+          { name: '슈퍼스트로크 Zenergy Pistol Lock 2.0 (60g)', price: 63000 },
+          { name: '슈퍼스트로크 Zenergy Pistol Lock 1.0 (103g)', price: 63000 },
+          { name: '슈퍼스트로크 Zenergy 2.0PT (60g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy Tour 5.0', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy 1.0P 21" (147g)', price: 59000 },
+          { name: '슈퍼스트로크 Zenergy OFF THE TRUCK 1.0P 17" (142g)', price: 59000 },
+          { name: '슈퍼스트로크 Zenergy Tour 1.0 (71g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy XL Plus 2.0 (77g)', price: 54000 },
+          { name: '슈퍼스트로크 Zenergy Claw 2.0 (63g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy Claw 1.0 (50g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy 1.0PT (60g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy Wrist Lock (75g)', price: 54000 },
+          { name: '슈퍼스트로크 Zenergy Pistol GT 2.0 (51g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy Pistol GT 1.0 (82g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy Pistol GT Tour (69g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy Flatso 2.0 (50g)', price: 50000 },
+          { name: '슈퍼스트로크 Zenergy Flatso 1.0 (87g)', price: 50000 },
+        ],
+      },
+      {
+        brand: '럭스립',
+        items: [
+          { name: '럭스립 위닝스트로크 2.8 (퍼터그립)', price: 45000 },
+          { name: '럭스립 위닝스트로크 2.0 (퍼터그립)', price: 45000 },
+          { name: '럭스립 세븐그립 (블랙/51g/스탠다드)', price: 16000 },
+          { name: '럭스립 한글 그립 (블랙/50g/라운드)', price: 25000 },
+          { name: '럭스립 엘레강스 그립 (여성용/36g/경량라운드)', price: 27000 },
+          { name: '럭스립 타이푼 그립 (남녀혼용/42g/언더립)', price: 27000 },
+          { name: '럭스립 스컬 스노우스타 그립 (45g/스탠다드라운드)', price: 27000 },
+          { name: '럭스립 스타 플레이어 그립 (45g/스탠다드립)', price: 27000 },
+          { name: '럭스립 크로크다일 그립 (47g/오버립)', price: 27000 },
+        ],
+      },
+      {
+        brand: '캐비어',
+        items: [
+          { name: '캐비어 싸이클론 S 토크 미드사이즈 (50/54-라운드)', price: 27000 },
+          { name: '캐비어 싸이클론 R 토크 그립', price: 27000 },
+          { name: '캐비어 싸이클론 S 토크 그립', price: 27000 },
+          { name: '캐비어 아보카도 S5 언더사이즈 (32/36g/립)', price: 23000 },
+          { name: '캐비어 엑스퍼트 V10 (38~50g/라운드)', price: 23000 },
+        ],
+      },
+    ],
+  },
+  {
+    category: '샤프트',
+    brands: [
+      {
+        brand: 'TRUE TEMPER',
+        items: [
+          { name: 'Dynamic Gold Tour Issue Spinner VSS 115 Tour WEDGE (.355)', price: 90000 },
+          { name: 'Dynamic Gold Tour Issue LA Blue 한정판 (아이언샤프트)', price: 108000 },
+          { name: 'Dynamic Gold S AMT 화이트 시리즈 WHITE (테이퍼 .355)', price: 81000 },
+          { name: 'Dynamic Gold S AMT 실버 시리즈 SILVER (테이퍼 .355)', price: 81000 },
+          { name: 'Dynamic Gold S AMT 블랙 시리즈 BLACK (테이퍼 .355)', price: 81000 },
+          { name: 'Dynamic Gold S AMT 레드 시리즈 RED (테이퍼 .355)', price: 81000 },
+          { name: 'Dynamic Gold 투어이슈 120 아이언 샤프트 (.355)', price: 108000 },
+          { name: 'Dynamic Gold 미드 115 아이언 샤프트', price: 72000 },
+          { name: 'Dynamic Gold 미드 95 투어이슈 아이언 샤프트', price: 90000 },
+          { name: 'Dynamic Gold 미드 130 투어이슈 아이언 샤프트', price: 90000 },
+          { name: 'Dynamic Gold S400 아이언 샤프트 (테이퍼 .355)', price: 70000 },
+          { name: 'Dynamic Gold 투어이슈 105 아이언 샤프트 (테이퍼 .355)', price: 126000 },
+          { name: '뉴 Dynamic Gold HT 아이언 샤프트', price: 63000 },
+          { name: '뉴 Dynamic Gold 95VSS PRO 아이언 샤프트', price: 81000 },
+          { name: '뉴 Dynamic Gold 85 아이언 샤프트', price: 72000 },
+          { name: '뉴 Dynamic Gold EX 투어이슈 아이언 샤프트', price: 90000 },
+          { name: 'Dynamic Gold 105 오닉스 블랙 아이언 샤프트', price: 108000 },
+          { name: 'Dynamic Gold R300/S200/X100 아이언 샤프트 (테이퍼 .355)', price: 63000 },
+          { name: 'Dynamic Gold 120 아이언 샤프트', price: 72000 },
+          { name: 'Dynamic Gold 105 R300/S200/X100 아이언 샤프트', price: 72000 },
+          { name: 'Dynamic Gold 95 아이언 샤프트', price: 81000 },
+          { name: 'Dynamic Gold S300 스틸 샤프트 (테이퍼 .355) [일시품절]', price: 72000 },
+          { name: 'Dynamic Gold 투어이슈 S400/X100 아이언 샤프트 [일시품절]', price: 108000 },
+        ],
+      },
+      {
+        brand: 'N.S.PRO',
+        items: [
+          { name: 'N.S.PRO MODUS3 LUXURY BLACK TOUR 120 아이언', price: 90000 },
+          { name: 'N.S.PRO MODUS3 LUXURY BLACK TOUR 105 아이언', price: 90000 },
+          { name: 'N.S.PRO 750GH NEO 아이언', price: 63000 },
+          { name: 'N.S.PRO 850GH NEO 아이언', price: 59000 },
+          { name: 'N.S.PRO MODUS3 Tour115 아이언 (.355)', price: 81000 },
+          { name: 'N.S.PRO MODUS3 Tour130 아이언 (.355)', price: 81000 },
+          { name: 'N.S.PRO MODUS3 Tour125 아이언 (.355)', price: 81000 },
+          { name: 'N.S.PRO 950GH NEO 아이언', price: 59000 },
+          { name: 'N.S.PRO 750 아이언', price: 81000 },
+          { name: 'N.S.PRO ZELOS 8 아이언 (.355)', price: 63000 },
+          { name: 'N.S.PRO ZELOS 7 아이언 (.355)', price: 81000 },
+          { name: 'N.S.PRO MODUS3 TOUR 120 아이언 (.355)', price: 81000 },
+          { name: 'N.S.PRO MODUS Tour105 아이언 (.355)', price: 81000 },
+          { name: 'N.S.PRO 850GH 아이언 (.355)', price: 68000 },
+          { name: 'N.S.PRO 950GH 아이언 (.370)', price: 50000 },
+          { name: 'N.S.PRO 950GH 아이언 (.355)', price: 50000 },
+          { name: 'N.S.PRO 1050 아이언 (.355)', price: 63000 },
+          { name: 'N.S.PRO ZELOS 6 아이언 (.355)', price: 81000 },
+        ],
+      },
+      {
+        brand: 'AEROTECH (스틸파이버)',
+        items: [
+          { name: '스틸파이버 i110 아이언 (페러럴 .370)', price: 135000 },
+          { name: '스틸파이버 i60 아이언 (페러럴 .370)', price: 135000 },
+          { name: '스틸파이버 골드 리저브 아이언', price: 162000 },
+          { name: '스틸파이버 FC90 아이언 (페러럴)', price: 135000 },
+          { name: '스틸파이버 FC80 아이언 (페러럴)', price: 135000 },
+          { name: '스틸파이버 FC70 아이언 (페러럴)', price: 135000 },
+          { name: '스틸파이버 블랙라벨 리저브 아이언', price: 162000 },
+          { name: '스틸파이버 FC115 아이언 (테이퍼)', price: 135000 },
+          { name: '스틸파이버 i110CW 아이언 (.355)', price: 135000 },
+          { name: '스틸파이버 FC90CW 아이언 (.355)', price: 135000 },
+          { name: '스틸파이버 H투어 시리즈 [IR/UT]', price: 162000 },
+          { name: '스틸파이버 H플러스 시리즈 [IR/UT]', price: 162000 },
+          { name: '스틸파이버 i95 아이언 (페러럴 .370)', price: 135000 },
+          { name: '스틸파이버 i80 아이언 (페러럴 .370)', price: 135000 },
+          { name: '스틸파이버 i70 아이언 (페러럴 .370)', price: 135000 },
+          { name: '스틸파이버 i95CW 아이언 (테이퍼 .355)', price: 135000 },
+          { name: '스틸파이버 i80CW 아이언 (테이퍼 .355)', price: 135000 },
+          { name: '스틸파이버 i70CW 아이언 (테이퍼 .355)', price: 135000 },
+          { name: '스틸파이버 J시리즈 70g [IR]', price: 135000 },
+          { name: '2025 블랙워리어 아이언 BLACK', price: 162000 },
+          { name: '스틸파이버 Premiere 시리즈 [IR/UT]', price: 162000 },
+        ],
+      },
+      {
+        brand: 'PROJECT X',
+        items: [
+          { name: 'PROJECT X RED 6.5 (테이퍼 .355)', price: 99000 },
+          { name: 'PROJECT X RED 6.0 (테이퍼 .355)', price: 99000 },
+          { name: 'PROJECT X RED 5.5 (테이퍼 .355)', price: 99000 },
+          { name: '프로젝트-X LZ 6.0 아이언', price: 108000 },
+          { name: '프로젝트-X LZ 5.5 아이언', price: 108000 },
+          { name: '프로젝트-X LZ 5.0 아이언', price: 108000 },
+          { name: '프로젝트X-IO 6.0 아이언', price: 108000 },
+          { name: '프로젝트 X 6.5 아이언', price: 108000 },
+          { name: '프로젝트 X 6.0 아이언', price: 108000 },
+          { name: '프로젝트 X 5.5 아이언', price: 108000 },
+        ],
+      },
+      {
+        brand: 'MITSUBISHI (드라이버)',
+        items: [
+          { name: 'TENSEI 1K Pro RED 드라이버 샤프트', price: 585000 },
+          { name: 'TENSEI 1K Pro Core Black 드라이버 샤프트', price: 585000 },
+          { name: '뱅퀴시 VV (VANQUISH-VV) 드라이버 샤프트', price: 540000 },
+          { name: '디아마나 WS 드라이버 샤프트', price: 540000 },
+          { name: '디아마나 RB 드라이버 샤프트', price: 540000 },
+          { name: '디아마나 BB 드라이버 샤프트', price: 540000 },
+          { name: '디아마나 WB 드라이버 샤프트', price: 540000 },
+          { name: 'TENSEI 1K Pro Blue 드라이버 샤프트', price: 585000 },
+          { name: '그랜드바사라 (GRAND BASSARA)', price: 585000 },
+          { name: '디아마나 GT 시리즈 드라이버 샤프트', price: 540000 },
+          { name: 'NEW VANQUISH 시리즈 드라이버 샤프트', price: 531000 },
+          { name: 'TENSEI 1K Pro Orange 드라이버 샤프트', price: 585000 },
+          { name: 'TENSEI Pro White 1K 드라이버 샤프트', price: 585000 },
+          { name: 'Diamana TB 시리즈 드라이버 샤프트', price: 495000 },
+          { name: 'Diamana D-LIMITED 시리즈 드라이버 샤프트', price: 585000 },
+        ],
+      },
+      {
+        brand: 'FUJIKURA',
+        items: [
+          { name: '[후지쿠라] SPEEDER BOOST 스피더 부스트 드라이버 샤프트', price: 495000 },
+          { name: '[후지쿠라] 26 벤투스 TR BLUE VeloCore+ 드라이버 샤프트', price: 495000 },
+          { name: '[후지쿠라] SPEEDER NX GOLD 스피더NX골드 드라이버 샤프트', price: 495000 },
+          { name: '[후지쿠라] 벤투스 화이트 드라이버 샤프트 VENTUS WH', price: 495000 },
+          { name: '[후지쿠라] DIAMOND 2 SPEEDER 다이아몬드 스피더 드라이버 샤프트', price: 720000 },
+          { name: '[후지쿠라] SPEEDER NX VIOLET 스피더 NX 바이올렛 드라이버 샤프트', price: 495000 },
+          { name: '[후지쿠라] 24 벤투스 블랙 드라이버 샤프트 24 VENTUS BK', price: 495000 },
+          { name: '[후지쿠라] 24 벤투스 레드 드라이버 샤프트 24 VENTUS RED', price: 495000 },
+          { name: '[후지쿠라] 24 벤투스 블루 드라이버 샤프트 24 VENTUS BLUE', price: 495000 },
+          { name: '[후지쿠라] SPEEDER NX BLACK 스피더 NX 블랙 드라이버 샤프트', price: 495000 },
+          { name: '[후지쿠라] NEW AIR SPEEDER 뉴 에어스피더 드라이버 샤프트', price: 594000 },
+          { name: '[후지쿠라] 슈퍼스타(핑크) 드라이버 샤프트', price: 450000 },
+          { name: '[후지쿠라] 벤투스 TR 레드 드라이버 샤프트 VENTUS TR RED', price: 495000 },
+          { name: '[후지쿠라] 벤투스 TR 블랙 드라이버 샤프트 VENTUS TR BLACK', price: 495000 },
+          { name: '[후지쿠라] SPEEDER NX GREEN 스피더NX그린 드라이버 샤프트', price: 495000 },
+          { name: '[후지쿠라] DAYTONA SPEEDER X 데이토나 스피더X 드라이버 샤프트', price: 900000 },
+          { name: '[후지쿠라] 벤투스 TR 블루 드라이버 샤프트 VENTUS TR BLUE', price: 495000 },
+          { name: '[후지쿠라] DAYTONA SPEEDER LS 데이토나 스피더 LS 드라이버 샤프트', price: 900000 },
+          { name: '[후지쿠라] 플래티넘2 스피더 드라이버 샤프트', price: 648000 },
+          { name: '[후지쿠라] TEMPEST W 템페스트 드라이버 샤프트', price: 648000 },
+          { name: '[후지쿠라] NEW 스피더 에볼루션7 드라이버 샤프트', price: 347000 },
+          { name: '[후지쿠라] 슈퍼스타 드라이버 샤프트', price: 450000 },
+          { name: '[후지쿠라] DAYTONA 데이토나 드라이버 샤프트', price: 900000 },
+          { name: '[후지쿠라] 스피더 TR 드라이버 샤프트', price: 495000 },
+          { name: '[후지쿠라] SPEEDER NX 우드 샤프트', price: 324000 },
+          { name: '[후지쿠라] DIAMOND 2 SPEEDER 다이아몬드 스피더2 우드 샤프트', price: 414000 },
+          { name: '[후지쿠라] NEW AIR SPEEDER 뉴 에어스피더 우드 샤프트', price: 324000 },
+          { name: '[후지쿠라] 슈퍼스타(핑크) 우드 샤프트', price: 288000 },
+          { name: '[후지쿠라] 템페스트 우드 전용 샤프트', price: 414000 },
+          { name: '[후지쿠라] MCF 우드 샤프트', price: 315000 },
+          { name: '[후지쿠라] 슈퍼스타 우드 샤프트', price: 288000 },
+          { name: '[후지쿠라] 에어 스피더 플러스 페어웨이 우드 샤프트', price: 259000 },
+          { name: '[후지쿠라] 에어 스피더 페어웨이 우드 샤프트', price: 259000 },
+          { name: '[후지쿠라] 에어 스피더 페어웨이 우드(FW) 샤프트', price: 259000 },
+          { name: '[후지쿠라] SPEEDER NX 유틸리티 하이브리드 샤프트', price: 288000 },
+          { name: '[후지쿠라] 25 벤투스 VeloCore+ 하이브리드 샤프트 BLACK', price: 288000 },
+          { name: '[후지쿠라] 25 벤투스 VeloCore+ 하이브리드 샤프트 BLUE', price: 288000 },
+          { name: '[후지쿠라] DIAMOND 2 SPEEDER 다이아몬드2 스피더 유틸리티 하이브리드 샤프트', price: 288000 },
+          { name: '[후지쿠라] NEW AIR SPEEDER 뉴 에어스피더 유틸리티 샤프트', price: 252000 },
+          { name: '[후지쿠라] 벤투스 하이브리드 샤프트 (블루/블랙)', price: 252000 },
+          { name: '[후지쿠라] 스피더 TR 하이브리드 유틸리티 샤프트', price: 216000 },
+          { name: '[후지쿠라] MCH 유틸리티 샤프트', price: 180000 },
+          { name: '[후지쿠라] MCI PRACTICE 연습용 아이언 샤프트', price: 144000 },
+          { name: '[후지쿠라] DIAMOND 2 SPEEDER 다이아몬드2 스피더 아이언 샤프트', price: 198000 },
+          { name: '[후지쿠라] SPARK 스파크 아이언 샤프트', price: 162000 },
+          { name: '[후지쿠라] TRAVIL 트라빌 아이언 샤프트', price: 180000 },
+          { name: '[후지쿠라] NEW AIR SPEEDER 뉴 에어스피더 아이언 샤프트', price: 162000 },
+          { name: '[후지쿠라] 슈퍼스타(핑크) 아이언 샤프트', price: 126000 },
+          { name: '[후지쿠라] TEMPEST 템페스트 아이언 샤프트', price: 180000 },
+          { name: '[후지쿠라] 슈퍼스타 아이언 샤프트', price: 126000 },
+          { name: '[후지쿠라] 에어 스피더 플러스 아이언 샤프트', price: 130000 },
+          { name: '[후지쿠라] MCI 90, 100 아이언 샤프트', price: 144000 },
+          { name: '[후지쿠라] MCI 50, 60, 70, 80 아이언 샤프트', price: 144000 },
+          { name: '[후지쿠라] MCI 블랙 아이언 샤프트', price: 144000 },
+          { name: '[후지쿠라] MCI SOLID/MILD WEDGE 웨지 샤프트', price: 144000 },
+          { name: '[후지쿠라] MC 125 (SOLID/MILD) 웨지 샤프트', price: 162000 },
+          { name: '[후지쿠라] MC PUTTER 퍼터 샤프트', price: 288000 },
+          { name: '[후지쿠라] MC PUTTER 퍼터 샤프트', price: 288000 },
+        ],
+      },
+      {
+        brand: 'VESUS',
+        items: [
+          { name: 'VESUS 샤프트', price: 330000 },
+          { name: 'VESUS 드라이버 헤드', price: 330000 },
+        ],
+      },
+      {
+        brand: 'DEFINE',
+        items: [
+          { name: 'Define 샤프트', price: 170000 },
+        ],
+      },
+      {
+        brand: 'KRZ',
+        items: [
+          { name: 'KRZ 유틸 헤드 (23도)', price: 170000 },
+        ],
+      },
+    ],
+  },
+  {
+    category: '헤드',
+    brands: [
+      {
+        brand: 'MYSTERY (드라이버)',
+        items: [
+          { name: '미스테리 MYSTERY D-CF-455 HC M-LINE 버건디 고반발 드라이버 <완성채> 여성용', price: 1650000 },
+          { name: '미스테리 MYSTERY CF-455 고반발 여성용 좌타 드라이버 헤드', price: 1100000 },
+          { name: '미스테리 MYSTERY CF-455 플로라 고반발 여성용 드라이버 헤드', price: 1200000 },
+          { name: '미스테리 MYSTERY CF-455 PINK 고반발 여성용 드라이버 헤드', price: 1200000 },
+          { name: '미스테리 MYSTERY CF-455 GREEN 고반발 여성용 드라이버 헤드', price: 1200000 },
+          { name: '미스테리 MYSTERY CF-455 민트 고반발 여성용 드라이버 헤드', price: 1200000 },
+          { name: '미스테리 MYSTERY 엠라인 PINK 고반발 여성용 드라이버 헤드', price: 1100000 },
+          { name: '미스테리 MYSTERY 알라인 BLUE 고반발 여성용 드라이버 헤드', price: 1100000 },
+          { name: '미스테리 MYSTERY CF-455 블랙 고반발 여성용 드라이버 헤드', price: 1200000 },
+          { name: '미스테리 MYSTERY CF-435 민트 고반발 여성용 드라이버 헤드', price: 1200000 },
+          { name: '미스테리 MYSTERY CF-435 TOUR BLACK 공인 드라이버 헤드', price: 1200000 },
+          { name: '미스테리 MYSTERY 디알라인 D-R LINE 드라이버 <완성채>', price: 1150000 },
+          { name: '미스테리 MYSTERY 디알라인 D-R LINE Hi-COR 드라이버 <완성채>', price: 1350000 },
+          { name: '미스테리 MYSTERY CF-455 TOUR 드라이버 헤드 (10.5도)', price: 1000000 },
+          { name: '미스테리 MYSTERY CF-455 TOUR 드라이버 헤드 (9.5도)', price: 1100000 },
+          { name: '미스테리 MYSTERY CF-455 TOUR 드라이버 헤드 (8.5도)', price: 1100000 },
+        ],
+      },
+    ],
+  },
+];
+// 카테고리별 가격 포맷
+const fmt = (n) => n.toLocaleString('ko-KR');
+
+// 취급 브랜드 (스키마·노출용) — 새 브랜드는 priceData에서 자동 반영
+const allBrands = [...new Set(priceData.flatMap((c) => c.brands.map((b) => b.brand)))];
+
+const priceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: '그립·샤프트 가격표 — 골프채공작소 클럽메이커스',
+  description: '양재 골프채공작소에서 주문·장착 가능한 그립과 샤프트 가격. 부품 교체와 클럽피팅을 함께 진행합니다.',
+  url: 'https://myclubmakers.com/price',
+  inLanguage: 'ko-KR',
+  isPartOf: { '@type': 'WebSite', name: '골프채공작소 클럽메이커스', url: 'https://myclubmakers.com' },
+  about: [
+    { '@type': 'Thing', name: '골프 그립 교체' },
+    { '@type': 'Thing', name: '골프 샤프트 교체' },
+    { '@type': 'Thing', name: '클럽피팅' },
+  ],
+  provider: {
+    '@type': 'LocalBusiness',
+    name: '골프채공작소 클럽메이커스',
+    address: { '@type': 'PostalAddress', streetAddress: '서초구 동산로2길 50 가보빌딩 지하층', addressLocality: '서울', addressCountry: 'KR' },
+    telephone: '+82-10-4363-5555',
+    brand: allBrands.map((b) => ({ '@type': 'Brand', name: b })),
+  },
+};
+
+// ── 대표 제품 소개 (단일 데이터 → 카드 + Product 스키마 + 본문 텍스트) ──
+// 검색·교차검증으로 채운 정보. 무게·스펙은 사장님 사실 확인 후 게시.
+// 후지쿠라는 가격 엑셀 입고 후 priceData·productInfo에 함께 추가 예정.
+const productInfo = [
+  // ───── 그립: 골프프라이드 ─────
+  {
+    category: '그립', brand: '골프프라이드', model: 'Tour Velvet', isNew: false,
+    type: '러버 그립', tag: '러버', usage: '그립', tags: ['그립', '초보용', '대중적'], weight: '약 50g', priceFrom: 18000,
+    summary: '전 세계 투어 최다 사용·최다 우승 그립. 미디엄-펌 감각.',
+    features: '투어 대회 사용률·점유율 1위의 표준 그립입니다. 부담 없는 감각과 내구성의 균형이 좋아, 클럽 제조사 기본 장착으로도 가장 널리 쓰입니다. 입문부터 상급자까지 무난합니다.',
+    recommendedFor: '처음 그립을 고르는 분, 무난하고 검증된 표준을 원하는 분',
+    officialUrl: 'https://www.golfpride.com/us/en-us/swing-grips/tour-velvet-collection/tour-velvet.html', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'Tour Velvet Plus4', isNew: false,
+    type: '러버 그립', tag: '러버', usage: '그립', tags: ['그립', '파워', '그립압력완화', '훅방지'], weight: '약 52g', priceFrom: 18000,
+    summary: 'Tour Velvet에 Plus4 기술. 아랫손이 더 두꺼워 파워↑.',
+    features: '아랫손 직경을 키워 테이프 4겹을 감은 효과를 냅니다. 테이퍼가 줄어 그립을 꽉 쥐지 않게 되고, 손 긴장이 풀려 스윙이 부드러워지고 파워가 살아납니다. 감각은 Tour Velvet 그대로입니다.',
+    recommendedFor: '그립을 너무 꽉 쥐는 분, 손 긴장을 풀고 파워를 더 내고 싶은 분',
+    officialUrl: 'https://www.golfpride.com/us/en-us/swing-grips/tour-velvet-collection/tour-velvet-plus4.html', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'Tour Velvet 360', isNew: false,
+    type: '러버 그립', tag: '러버', usage: '그립', tags: ['그립', '드라이버용', '조절식클럽'], weight: '약 50g', priceFrom: 22000,
+    summary: '조절식 드라이버·우드·하이브리드 전용. 360도 균일 텍스처.',
+    features: 'Tour Velvet의 미끄럼 방지 표면을 360도 균일하게 적용해, 샤프트를 어느 방향으로 끼워도 무늬가 일정합니다. 헤드 각도를 조절하는 드라이버·우드·하이브리드에 특히 잘 맞습니다.',
+    recommendedFor: '조절식(어저스터블) 드라이버·우드·하이브리드를 쓰는 분',
+    officialUrl: 'https://www.golfpride.com/us/en-us/swing-grips/tour-velvet-collection/tour-velvet-360.html', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'MCC (멀티컴파운드)', isNew: false,
+    type: '하이브리드 그립', tag: '하이브리드', usage: '그립', tags: ['그립', '땀많은분'], weight: '약 46.5~50g', priceFrom: 30000,
+    summary: '베스트셀러 하이브리드. 윗손 코드(컨트롤) + 아랫손 러버(감각).',
+    features: '윗손은 브러시드 코튼 코드로 습기를 관리하고 미끄러짐을 잡아주며, 아랫손은 러버로 부드러운 타구감을 줍니다. 투어에서 Tour Velvet 다음으로 인기 있는 모델입니다.',
+    recommendedFor: '컨트롤과 감각을 모두 원하는 분, 땀이 많은 분, 상급자',
+    officialUrl: 'https://www.golfpride.com/us/en-us/swing-grips/mcc-collection/mcc.html', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'MCC Plus4', isNew: false,
+    type: '하이브리드 그립', tag: '하이브리드', usage: '그립', tags: ['그립', '땀많은분', '파워', '그립압력완화', '훅방지'], weight: '약 50g', priceFrom: 30000,
+    summary: 'MCC 하이브리드에 Plus4. 아랫손 직경 4.6%↑로 더 부드럽게.',
+    features: 'MCC의 코드+러버 구조에 Plus4를 적용해 아랫손을 키웠습니다(기존 MCC 대비 직경 4.6%↑). 아랫손 러버는 더 부드러운 컴파운드라, 그립압력을 낮추면서 코드의 컨트롤도 살립니다.',
+    recommendedFor: '땀이 많으면서 아랫손을 두껍게·부드럽게 쥐고 싶은 분',
+    officialUrl: 'https://www.golfpride.com/us/en-us/swing-grips/mcc-collection/mcc-plus4.html', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'MCC ALIGN MAX', isNew: true,
+    type: '하이브리드 그립', tag: '하이브리드', usage: '그립', tags: ['그립', '방향성', '땀많은분'], weight: '약 50g', priceFrom: 35000,
+    summary: '신제품. MCC 하이브리드 + ALIGN MAX 리지(손 위치 고정).',
+    features: 'MCC의 코드+러버에 ALIGN 기술을 더한 모델입니다. 뒷면 리지가 손 위치를 잡아 어드레스·임팩트에서 페이스를 스퀘어하게 정렬해 줍니다. 리지 높이는 기존보다 25% 높습니다(USGA 최대).',
+    recommendedFor: '그립 일관성·페이스 정렬이 필요한 분, 땀이 많은 분',
+    officialUrl: 'https://www.golfpride.com/', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'MCC Plus4 ALIGN MAX', isNew: true,
+    type: '하이브리드 그립', tag: '하이브리드', usage: '그립', tags: ['그립', '방향성', '땀많은분', '파워', '그립압력완화', '훅방지'], weight: '49.5g(스탠다드) / 67g(미드)', priceFrom: 35000,
+    summary: '신제품. MCC 하이브리드 + Plus4 + ALIGN MAX 기술 결합.',
+    features: 'MCC의 코드+러버에 더해, 아랫손을 테이프 4겹 효과로 두껍게 해 그립 압력과 손 긴장을 줄이고(Plus4), 뒷면 리지로 손 위치를 잡아 페이스를 스퀘어하게 정렬합니다(ALIGN). 리지 높이는 기존보다 25% 높습니다(USGA 최대).',
+    recommendedFor: '땀이 많은 분, 일관된 그립 위치가 필요한 분, 그립 압력을 낮춰 비거리 손실을 줄이고 싶은 분',
+    officialUrl: 'https://www.golfpride.com/', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'CP2 (Pro / Wrap)', isNew: false,
+    type: '러버 그립', tag: '러버', usage: '그립', tags: ['그립', '손통증·관절', '쫀득함'], weight: '약 52g', priceFrom: 25000,
+    summary: '가장 부드러운 고성능 그립. 컨트롤코어가 토크 41% 감소.',
+    features: '내부 2.5인치 컨트롤코어가 토크를 약 41% 줄여 클럽 컨트롤을 돕고, 부드러운 러버가 진동을 흡수합니다. 골프프라이드 고성능 그립 중 가장 부드럽고 손에 착 붙는 느낌입니다.',
+    recommendedFor: '손 통증·관절염이 있는 분, 충격 흡수와 부드러운 감각을 우선하는 분',
+    officialUrl: 'https://www.golfpride.com/', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'Z-Grip Cord', isNew: false,
+    type: '풀코드 그립', tag: '풀코드', usage: '그립', tags: ['그립', '땀많은분', '상급자'], weight: '약 50g', priceFrom: 30000,
+    summary: '골프프라이드 가장 단단한 풀코드 그립. 깊은 Z 텍스처.',
+    features: '그립 전체가 브러시드 코튼 코드로 덮여 있고 깊은 Z자 텍스처가 세로로 새겨져, 어떤 습한 환경에서도 미끄러지지 않는 최대 그립력을 줍니다. 임팩트 피드백이 가장 강합니다.',
+    recommendedFor: '땀이 아주 많거나 글러브를 안 끼는 분, 강한 피드백을 원하는 상급자·빠른 스윙',
+    officialUrl: 'https://www.golfpride.com/us/en-us/swing-grips/zgrip-collection/zgrip-cord.html', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'Z-Grip ALIGN', isNew: false,
+    type: '풀코드 그립', tag: '풀코드', usage: '그립', tags: ['그립', '방향성', '땀많은분', '상급자'], weight: '약 50g', priceFrom: 30000,
+    summary: 'Z-Grip 풀코드 + ALIGN. ALIGN 제품군 중 가장 단단.',
+    features: '풀코드의 강한 그립력에 ALIGN 리지를 더해, 단단한 감각과 손 위치 일관성을 함께 줍니다. ALIGN 라인업 중 가장 단단한 모델입니다.',
+    recommendedFor: '강한 그립력과 페이스 정렬을 모두 원하는 상급자',
+    officialUrl: 'https://www.golfpride.com/', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'Tour Velvet ALIGN', isNew: false,
+    type: '러버 그립', tag: '러버', usage: '그립', tags: ['그립', '방향성'], weight: '약 50g', priceFrom: 30000,
+    summary: 'Tour Velvet에 ALIGN 리지. 무난한 러버 + 손 위치 고정.',
+    features: '가장 대중적인 Tour Velvet의 감각에 뒷면 ALIGN 리지를 더해, 손 위치를 일정하게 잡아주고 페이스 정렬을 돕습니다. ALIGN 입문에 적합합니다.',
+    recommendedFor: '익숙한 러버 감각에 페이스 정렬 기능을 더하고 싶은 분',
+    officialUrl: 'https://www.golfpride.com/', image: null,
+  },
+  {
+    category: '그립', brand: '골프프라이드', model: 'Multi / Whiteout / PLUS4 / TEAM', isNew: false,
+    type: '러버 그립', tag: '러버', usage: '그립', tags: ['그립', '디자인'], weight: '약 50g', priceFrom: 30000,
+    summary: 'MCC 컬러·디자인 변형군(화이트아웃·팀 컬러 등).',
+    features: 'MCC 하이브리드 구조를 기반으로 한 컬러·디자인 변형 라인입니다. 성능은 MCC 계열과 같고, 화이트아웃·팀 컬러 등 외관 선택지가 넓습니다. 미드 사이즈도 있습니다.',
+    recommendedFor: 'MCC 성능에 원하는 컬러·디자인을 더하고 싶은 분',
+    officialUrl: 'https://www.golfpride.com/', image: null,
+  },
+  // ───── 그립: 캐비어 ─────
+  {
+    category: '그립', brand: '캐비어', model: '익스퍼트 V10', isNew: false,
+    type: '엘라스토머 그립 (3중구조)', tag: '엘라스토머', usage: '그립', tags: ['그립', '항균'], weight: '38/42/46/50g', priceFrom: 20000,
+    summary: '세계 최초 3중구조 그립. V라인 락 타입. 99.9% 항균 엘라스토머.',
+    features: 'V라인 락 구조로 손목 회전이 원활하고 탑오버스윙에서도 클럽이 빠지지 않습니다. 라운드 타입에 5가지 컬러, 무게 선택 폭이 넓습니다.',
+    recommendedFor: '항균·위생을 중시하는 분, 다양한 무게로 맞추고 싶은 분',
+    officialUrl: null, image: null,
+  },
+  {
+    category: '그립', brand: '캐비어', model: '사이클론 트리플렉스', isNew: false,
+    type: '엘라스토머 그립 (3중구조)', tag: '엘라스토머', usage: '그립', tags: ['그립', '뒤틀림방지'], weight: '39/42/46/50g', priceFrom: 25000,
+    summary: '뒤틀림 방지 3중구조. R/S 토크 선택. TPR 소재.',
+    features: '토크(R/S)를 선택할 수 있어 스윙 성향에 맞출 수 있고, 3중구조로 뒤틀림을 잡아 방향성에 도움을 줍니다.',
+    recommendedFor: '토크를 골라 맞추고 싶은 분, 뒤틀림 없는 안정감을 원하는 분',
+    officialUrl: null, image: null,
+  },
+  {
+    category: '그립', brand: '캐비어', model: '아보카도 S5 (여성용)', isNew: false,
+    type: '엘라스토머 그립 (3중구조)', tag: '엘라스토머', usage: '그립', tags: ['그립', '여성용', '경량', '쫀득함', '항균'], weight: '약 32g (언더사이즈)', priceFrom: 20000,
+    summary: '여성·언더사이즈 전용 초경량 그립. 부드럽고 쫀득한 감각.',
+    features: '여성 골퍼를 위한 약 32g 초경량 언더사이즈 그립입니다. 2층으로 쌓은 아일랜드 엠보싱이 미끄러지지 않으면서도 부드럽게 스윙되도록 돕고, 엘라스토머 특유의 쫀득한 그립감을 줍니다. 캐비어 공통의 V라인 락·항균 구조가 적용됩니다. 7가지 색상.',
+    recommendedFor: '가벼운 언더사이즈 그립이 필요한 여성 골퍼, 부드럽고 쫀득한 감각을 원하는 분',
+    officialUrl: null, image: null,
+  },
+  // ───── 그립: 슈퍼스트로크 (퍼터) ─────
+  {
+    category: '그립', brand: '슈퍼스트로크', model: 'Zenergy Tour (1.0 / 2.0 / 3.0 / 5.0)', isNew: false,
+    type: '퍼터 그립', tag: '퍼터', usage: '퍼터 그립', tags: ['퍼터 그립', '대중적'], weight: '사이즈별', priceFrom: 50000,
+    summary: '논테이퍼 퍼터 그립의 표준. 상하 균일 형태. 투어 최다 사용.',
+    features: '위아래 굵기가 균일한 가장 전통적인 형태로, No Taper(논테이퍼) 기술이 양손 그립압력을 고르게 해 손목 움직임을 줄여줍니다. 밑면 SPYNE 리지가 페이스를 스퀘어로 정렬합니다. 1.0(가늘다)부터 5.0(아주 굵다)까지 있고, 2.0이 투어에서 가장 많이 쓰입니다.',
+    recommendedFor: '논테이퍼 퍼터그립을 처음 쓰는 분, 무난한 표준을 원하는 분(2.0 추천)',
+    officialUrl: 'https://superstrokeusa.com/collections/putter-grips', image: null,
+  },
+  {
+    category: '그립', brand: '슈퍼스트로크', model: 'Zenergy Pistol (Lock / GT / 1.0 / 2.0)', isNew: false,
+    type: '퍼터 그립', tag: '퍼터', usage: '퍼터 그립', tags: ['퍼터 그립', '방향성'], weight: '사이즈별', priceFrom: 50000,
+    summary: '윗손을 잡아주는 피스톨(곡선) 형태. 전통적 퍼터 그립 감각.',
+    features: '윗부분이 곡선으로 솟은 피스톨 형태로 윗손을 안정적으로 잡아줍니다. 논테이퍼·SPYNE는 그대로 적용됩니다. Pistol Lock은 더 강하게 손을 고정하는 상위 옵션입니다. 전통적인 퍼터 그립 감각을 선호하는 분께 맞습니다.',
+    recommendedFor: '전통적인 피스톨 형태와 윗손 안정감을 원하는 분',
+    officialUrl: 'https://superstrokeusa.com/collections/putter-grips', image: null,
+  },
+  {
+    category: '그립', brand: '슈퍼스트로크', model: 'Zenergy Flatso (1.0 / 2.0)', isNew: false,
+    type: '퍼터 그립', tag: '퍼터', usage: '퍼터 그립', tags: ['퍼터 그립', '방향성'], weight: '사이즈별', priceFrom: 50000,
+    summary: '오각형 + 넓은 평면 앞면. 페이스 회전을 줄여줌.',
+    features: '오각형 단면에 앞면이 넓고 평평해, 손 정렬이 쉽고 퍼팅 중 페이스 회전을 줄여줍니다. 직선적인 스트로크를 원하는 분께 맞습니다.',
+    recommendedFor: '페이스 회전을 줄이고 직선 스트로크를 원하는 분',
+    officialUrl: 'https://superstrokeusa.com/collections/putter-grips', image: null,
+  },
+  {
+    category: '그립', brand: '슈퍼스트로크', model: 'Zenergy Wrist Lock', isNew: false,
+    type: '퍼터 그립', tag: '퍼터', usage: '퍼터 그립', tags: ['퍼터 그립', '손목고정'], weight: '약 75g', priceFrom: 54000,
+    summary: '표준보다 길고 굵은 버트로 손목을 고정. USGA 적합.',
+    features: '일반 그립보다 약 3인치 길고 버트(끝부분)가 굵어, 그립을 앞팔에 대고 손목을 고정하는 퍼팅에 맞습니다. 좌·우타 모두 사용 가능하며 USGA 적합입니다.',
+    recommendedFor: '퍼팅 시 손목 움직임을 잡고 싶은 분, 손목 고정 스타일',
+    officialUrl: 'https://superstrokeusa.com/collections/putter-grips', image: null,
+  },
+  {
+    category: '그립', brand: '슈퍼스트로크', model: '한정판 (2026 PGA / Tie Dye)', isNew: true,
+    type: '퍼터 그립', tag: '퍼터', usage: '퍼터 그립', tags: ['퍼터 그립', '디자인'], weight: '사이즈별', priceFrom: 63000,
+    summary: '한정판 컬러·디자인. 투어/피스톨 2.0·3.0 등.',
+    features: '2026 PGA 챔피언십 기념판, 타이다이(Tie Dye) 등 한정 컬러 라인입니다. 성능은 Zenergy 계열과 같고 외관이 특별합니다.',
+    recommendedFor: '한정판 디자인·컬러를 원하는 분',
+    officialUrl: 'https://superstrokeusa.com/collections/putter-grips', image: null,
+  },
+  // ───── 샤프트: TRUE TEMPER ─────
+  {
+    category: '샤프트', brand: 'TRUE TEMPER', model: '다이나믹골드 (오리지널)', isNew: false,
+    type: '스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '저탄도', '대중적'], weight: 'S200 127g / S300 130g / S400 134g / X100 130g', priceFrom: 63000,
+    summary: '저탄도·저스핀·하이킥. 스틸 샤프트의 표준 기준점.',
+    features: 'PGA 투어에서 가장 많이 쓰이는 투어 스탠다드입니다. S300이 기준이고 S200·S400은 무게 공차로 나눈 사실상 같은 샤프트입니다. 낮고 꿰뚫는 탄도와 견고한 타구감이 특징입니다.',
+    recommendedFor: '스윙이 강하고 낮은 탄도·투어급 컨트롤을 원하는 싱글 골퍼',
+    officialUrl: 'https://www.truetemper.com/products/dynamic-gold/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'TRUE TEMPER', model: '다이나믹골드 투어이슈', isNew: false,
+    type: '스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '저탄도', '상급자'], weight: 'S400 132g / X100 130g', priceFrom: 108000,
+    summary: '오리지널 다골의 정밀 선별판. 무게 공차 ±0.5g.',
+    features: '오리지널 다골을 ±0.5g(스틸 한계 수준)으로 더 정밀하게 골라낸 버전입니다. 타이거 우즈·브룩스 켑카 등 투어 정상급이 사용하며, S400·X100 두 플렉스로 나옵니다.',
+    recommendedFor: '클럽 간 편차를 최소화하고 싶은 상급자, 투어 정밀도를 원하는 분',
+    officialUrl: 'https://www.truetemper.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'TRUE TEMPER', model: '다이나믹골드 120', isNew: false,
+    type: '스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '저탄도'], weight: '약 118~120g', priceFrom: 72000,
+    summary: '다골의 안정성은 유지하고 무게만 낮춘 경량판(뉴다골).',
+    features: '표준 다골 대비 약 10~14g 가볍지만, 특히 팁 쪽 안정성은 그대로 유지합니다. 다골 느낌은 원하되 무게 부담을 덜고 싶은 분께 맞습니다.',
+    recommendedFor: '다골 느낌은 원하지만 오리지널 무게가 부담스러운 분',
+    officialUrl: 'https://www.truetemper.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'TRUE TEMPER', model: '다이나믹골드 105', isNew: false,
+    type: '스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '경량', '저탄도'], weight: '약 105g', priceFrom: 72000,
+    summary: '다골 무게 라인 중 중경량. 저탄도·중저스핀.',
+    features: '120보다 더 가벼우면서 다골 특유의 낮은 탄도·컨트롤 성향을 유지합니다. 플렉스 감각이 약간 부드러워, 기존 R을 쓰던 분은 S를 고려하면 좋습니다.',
+    recommendedFor: '다골 성향을 원하지만 120g대도 부담스러운 분',
+    officialUrl: 'https://www.truetemper.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'TRUE TEMPER', model: '다이나믹골드 95 VSS PRO', isNew: false,
+    type: '경량 스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '경량', '고탄도', '진동감소'], weight: '약 95g', priceFrom: 81000,
+    summary: '다골 중 가장 가볍고 가장 부드러운 스틸. VSS 진동저감.',
+    features: '다골 라인에서 가장 가벼운 일정중량 모델이자 가장 유연한 스틸입니다. VSS Pro 기술로 임팩트 진동을 줄여 손이 편하고, 탄도와 스핀은 높은 편입니다.',
+    recommendedFor: '부드러운 템포의 골퍼, 가벼운 스틸로 탄도를 높이고 진동을 줄이고 싶은 분',
+    officialUrl: 'https://www.truetemper.com/products/iron-shafts-dynamic-gold-95-vss-pro/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'TRUE TEMPER', model: 'AMT', isNew: false,
+    type: '스틸 아이언 샤프트 (가변중량)', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트'], weight: '롱→숏 갈수록 3g씩 증가', priceFrom: 81000,
+    summary: '롱아이언 가볍게(거리) + 숏아이언 무겁게(컨트롤).',
+    features: 'Ascending Mass Technology로 세트 안에서 무게가 점진적으로 늘어납니다. 롱아이언은 속도와 거리, 숏아이언은 컨트롤에 유리합니다. 화이트·실버·블랙·레드 등 라인이 있습니다.',
+    recommendedFor: '롱아이언 거리와 숏아이언 정확도를 동시에 잡고 싶은 분',
+    officialUrl: 'https://www.truetemper.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'TRUE TEMPER', model: '다이나믹골드 투어이슈 Spinner (웨지)', isNew: false,
+    type: '스틸 웨지 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '웨지', '스핀'], weight: '약 128g', priceFrom: 90000,
+    summary: '웨지 전용. 길고 활발한 팁으로 스핀·정지력 극대화.',
+    features: '투어 주력 다골 S400 대비 약 5% 가볍고, 팁이 더 길고 활발해 웨지 샷의 스핀과 그린에서의 정지력을 끌어올립니다. 웨지에만 사용합니다.',
+    recommendedFor: '웨지에서 더 많은 스핀과 멈춤(정지력)을 원하는 분',
+    officialUrl: 'https://www.truetemper.com/', image: null,
+  },
+  // ───── 샤프트: N.S.PRO ─────
+  {
+    category: '샤프트', brand: 'N.S.PRO', model: '950GH (오리지널)', isNew: false,
+    type: '경량 스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '경량', '대중적'], weight: 'R 94.5g / S 98g / X 104g', priceFrom: 50000,
+    summary: '경량 스틸의 표준. 가장 대중적이고 검증된 베스트셀러.',
+    features: '1999년 출시 이후 누적 4천만 개 이상 판매되고 250명 넘는 프로 우승자가 사용한, 경량 스틸 샤프트의 기준이 되는 모델입니다. 다루기 쉽고 방향성이 좋아 가장 폭넓게 선택됩니다.',
+    recommendedFor: '경량 스틸의 표준을 원하는 분, 무난하고 검증된 베스트셀러를 찾는 분',
+    officialUrl: 'https://nipponshaft.com/product/steel/steel_950gh.php', image: null,
+  },
+  {
+    category: '샤프트', brand: 'N.S.PRO', model: '950GH neo', isNew: false,
+    type: '경량 스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '경량', '고탄도'], weight: 'R 94.5g / S 98g / X 104g', priceFrom: 59000,
+    summary: '950GH의 후속 개량형. 요즘 스트롱로프트 아이언에 맞춰 잘 띄워줌.',
+    features: '950GH의 핸들링과 방향성은 유지하면서, MODUS3의 특허 공정으로 중간부를 더 단단하게 하고 팁을 더 휘게 다듬었습니다. 스트롱로프트의 저스핀 아이언에서도 부드럽게 떨어지는 탄도를 만들어 줍니다.',
+    recommendedFor: '요즘 스트롱로프트(저스핀) 아이언을 쓰는 분, 띄워주는 탄도가 필요한 분',
+    officialUrl: 'https://nipponshaft.com/product/steel/steel_950gh_neo.php', image: null,
+  },
+  {
+    category: '샤프트', brand: 'N.S.PRO', model: 'MODUS3 Tour 120', isNew: false,
+    type: '스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트'], weight: 'S 114g / X 120g', priceFrom: 81000,
+    summary: '투어 MODUS3 중 사용률 1위. 탄도·거리·분산 최적화.',
+    features: '팁은 단단하게(탄도 안정), 미드와 버트는 유연하게 설계해 부드러운 감각과 컨트롤을 함께 잡았습니다.',
+    recommendedFor: '투어급 스틸 특성과 부드러운 감각을 원하는 상급자',
+    officialUrl: 'https://nipponshaft.com/product/steel/steel_modus_120.php', image: null,
+  },
+  {
+    category: '샤프트', brand: 'N.S.PRO', model: 'MODUS3 Tour 105', isNew: false,
+    type: '스틸 아이언 샤프트', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '경량'], weight: 'R 103g / S 106.5g', priceFrom: 81000,
+    summary: '투어 검증 경량 모델. 팁 강성↑ + 미드 유연.',
+    features: '2010년 투어 출시 즉시 성과를 낸 경량 모델로, 가벼우면서도 투어급 성능을 냅니다.',
+    recommendedFor: '투어급 느낌을 원하지만 120g대가 무거운 분',
+    officialUrl: 'https://nipponshaft.com/product/steel/steel_modus_105.php', image: null,
+  },
+  // ───── 샤프트: AEROTECH 스틸파이버 ─────
+  {
+    category: '샤프트', brand: 'AEROTECH', model: '스틸파이버 i시리즈', isNew: false,
+    type: '그라파이트+스틸 하이브리드 아이언 샤프트', tag: '스틸+카본', usage: '아이언 샤프트', tags: ['아이언 샤프트', '진동감소', '손통증·관절'], weight: 'i55 55g / i70 74g / i80 85g / i95 95g / i110 110g', priceFrom: 135000,
+    summary: '국내 유통 주력·대표 라인. 라인 중 가장 강하고 좌측 미스가 적음.',
+    features: '그라파이트 코어에 스틸 섬유를 감은 하이브리드로, 진동을 줄이면서 방향성을 잡아줍니다. i55는 LPGA·KLPGA 여성 투어 프로가 다수 사용하고, i95는 국내 남성 아마추어에게 가장 인기입니다. 팁은 일반(패러럴)과 CW(테이퍼) 중 선택할 수 있습니다.',
+    recommendedFor: '스틸이 무겁게 느껴지는 분, 진동·충격을 줄이고 싶은 분, 손·팔꿈치 부담이 있는 분',
+    officialUrl: null, image: null,
+  },
+  {
+    category: '샤프트', brand: 'AEROTECH', model: '스틸파이버 FC시리즈', isNew: false,
+    type: '그라파이트+스틸 하이브리드 아이언 샤프트', tag: '스틸+카본', usage: '아이언 샤프트', tags: ['아이언 샤프트', '진동감소'], weight: 'FC70 / FC80 / FC90 등', priceFrom: 135000,
+    summary: 'i시리즈 다음으로 강한 라인. 플라이트 컨트롤(탄도 조절) 성향.',
+    features: 'i시리즈보다 약간 부드럽지만 탄도를 컨트롤하는 성향입니다. 롱아이언 탄도가 다소 낮게 형성될 수 있습니다.',
+    recommendedFor: 'i시리즈는 부담스럽지만 탄도 컨트롤을 원하는 중·상급자',
+    officialUrl: null, image: null,
+  },
+  {
+    category: '샤프트', brand: 'AEROTECH', model: '스틸파이버 H시리즈', isNew: false,
+    type: '그라파이트+스틸 하이브리드 아이언 샤프트', tag: '스틸+카본', usage: '아이언 샤프트', tags: ['아이언 샤프트', '고탄도'], weight: 'H-Plus 55·65·75g / H-Tour 75·90·105·120g', priceFrom: 162000,
+    summary: '라인 중 가장 부드러움(팁이 낭창함). 높은 탄도 성향.',
+    features: 'i·FC보다 강도가 약하고 팁이 부드러워 탄도가 높게 형성됩니다. 깊은 다운블로 스윙어에겐 팁이 약하게 느껴질 수 있습니다.',
+    recommendedFor: '부드러운 팁과 높은 탄도를 원하는 분, 근력이 약하거나 공을 띄우기 어려운 분',
+    officialUrl: null, image: null,
+  },
+  // ───── 샤프트: PROJECT X ─────
+  {
+    category: '샤프트', brand: 'PROJECT X', model: 'Rifle (오리지널)', isNew: false,
+    type: '스틸 아이언 샤프트 (스텝리스)', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '저탄도', '상급자'], weight: '5.0 110g / 5.5 115g / 6.0 120g / 6.5 125g / 7.0 130g', priceFrom: 108000,
+    summary: '저탄도·저스핀. 라인 중 가장 단단한 원조 스텝리스 스틸.',
+    features: '스텝(마디) 없는 일자 디자인으로, 그립부터 팁까지 강성이 고르게 분포해 샷마다 일관된 휨을 줍니다. 본래 로얄프리시즌(Royal Precision)이 만든 라이플(Rifle)이 뿌리이며, 지금은 트루템퍼 산하에서 이어지고 있습니다. 단단하지만 정타 보상이 확실합니다. 플렉스는 5.0=R, 5.5=R+, 6.0=S, 6.5=X 입니다.',
+    recommendedFor: '스윙 속도가 빠르고 공격적 템포의 싱글 골퍼, 낮고 꿰뚫는 탄도를 원하는 분',
+    officialUrl: 'https://www.truetempersports.com/en-us/project-x-steel-iron-golf-shaft.html', image: null,
+  },
+  {
+    category: '샤프트', brand: 'PROJECT X', model: 'LZ', isNew: false,
+    type: '스틸 아이언 샤프트 (스텝리스)', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '대중적'], weight: '5.0 110g / 5.5 115g / 6.0 120g / 6.5 125g', priceFrom: 108000,
+    summary: '로딩존(LZ) 기술로 에너지 전달 7%↑·볼스피드 향상. 라인 중 가장 넓은 골퍼층.',
+    features: '벽 두께를 3단으로 나눈 로딩존(Loading Zone) 기술로, 에너지가 모이는 구간을 강화해 볼스피드를 약 2~3mph 높입니다. 오리지널보다 팁이 활발해 탄도가 약간 높고 감각이 부드러워, 프로젝트X 라인 중 가장 폭넓게 쓰입니다.',
+    recommendedFor: 'Project X 느낌을 원하지만 탄도·감각이 더 부드럽길 바라는 분, 중·상급자',
+    officialUrl: 'https://www.truetempersports.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'PROJECT X', model: 'IO', isNew: false,
+    type: '스틸 아이언 샤프트 (스텝리스)', tag: '스틸', usage: '아이언 샤프트', tags: ['아이언 샤프트', '경량', '고탄도'], weight: '4번 약 95g → PW 약 115g (가변)', priceFrom: 108000,
+    summary: '프로젝트X 중 가장 높은 탄도. 팁이 부드럽고 가변중량.',
+    features: '구형 PXi의 후속으로, 표준 프로젝트X보다 팁이 부드러워 탄도가 높게 형성됩니다. 롱아이언은 약 95g, 숏아이언은 약 115g으로 무게가 점증해, 표준 라인보다 10~15g 가볍습니다.',
+    recommendedFor: '프로젝트X 감각은 좋지만 더 가볍고 높은 탄도를 원하는 분',
+    officialUrl: 'https://www.truetempersports.com/', image: null,
+  },
+  // ───── 샤프트: MITSUBISHI (드라이버) ─────
+  {
+    category: '샤프트', brand: 'MITSUBISHI', model: '텐세이 1K Pro Orange', isNew: false,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '훅방지', '슬라이스방지', '방향성', '텐세이'], weight: '50~70g대 (스펙별)', priceFrom: 585000,
+    summary: '저스핀·방향성·안정성. 팁 강성 높은 하이킥. 국내 커스텀 주력.',
+    features: '1K 카본과 Xlink Tech로 토크를 억제해 좌우 흔들림과 사이드스핀을 줄입니다. 비거리보다 페어웨이 안착에 강점이 있습니다.',
+    recommendedFor: '훅·슬라이스를 줄이고 페어웨이 적중률을 높이고 싶은 분',
+    officialUrl: 'https://mitsubishigolf.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'MITSUBISHI', model: '텐세이 1K Pro White', isNew: false,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '저스핀', '텐세이'], weight: '50~70g대 (스펙별)', priceFrom: 585000,
+    summary: '화이트 계열 최고 강성. 저스핀·강한 탄도. 빠른 스윙 전용.',
+    features: '팁이 매우 단단해 임팩트 시 헤드 흐림을 줄입니다. 저스핀의 강한 탄도로 최대 안정성을 추구합니다.',
+    recommendedFor: '헤드스피드가 매우 빠른 싱글 골퍼',
+    officialUrl: 'https://mitsubishigolf.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'MITSUBISHI', model: '텐세이 1K Pro Blue', isNew: false,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '대중적', '텐세이'], weight: '50~70g대 (스펙별)', priceFrom: 585000,
+    summary: '미드 탄도·미드스핀. 부드러운 감각과 안정성의 균형.',
+    features: '오렌지보다 부드러운 감각에 미드 탄도·미드스핀으로, 텐세이 1K 라인 중 가장 폭넓은 골퍼층에 맞습니다. 안정성과 다루기 쉬움의 균형이 좋습니다.',
+    recommendedFor: '부드러운 감각과 무난한 탄도를 원하는 중·상급자',
+    officialUrl: 'https://mitsubishigolf.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'MITSUBISHI', model: '텐세이 1K Pro Red', isNew: false,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '고탄도', '텐세이'], weight: '50~70g대 (스펙별)', priceFrom: 585000,
+    summary: '미드~미드하이 탄도·미드스핀. 발사각을 높여줌.',
+    features: '레드 계열답게 활발한 팁으로 발사각을 높여, 탄도가 낮거나 캐리를 늘리고 싶은 분께 맞습니다. 헤드스피드가 아주 빠르지 않아도 다루기 쉽습니다.',
+    recommendedFor: '탄도를 높이거나 캐리 거리를 늘리고 싶은 분',
+    officialUrl: 'https://mitsubishigolf.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'MITSUBISHI', model: '디아마나 6세대 (WB·BB·RB)', isNew: false,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트'], weight: '43~83 시리즈 (스펙별)', priceFrom: 540000,
+    summary: '신형 6세대 보드 시리즈. 컬러로 탄도 성향 구분(화이트<블루<레드).',
+    features: '디아마나의 클래식 보드 시리즈를 최신 소재로 되살린 6세대입니다. WB(화이트보드)는 저탄도·저스핀으로 가장 단단하고, BB(블루보드)는 미드 탄도로 가장 무난하며, RB(레드보드)는 활발한 팁으로 가장 높은 탄도를 냅니다. 무게·플렉스를 바꿔도 감각이 일정해(Consistent Feel) 피팅에 유리합니다.',
+    recommendedFor: 'WB → 빠른 스윙·탄도 억제 / BB → 무난한 미드 탄도 / RB → 탄도를 높이고 싶은 분',
+    officialUrl: 'https://mitsubishigolf.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'MITSUBISHI', model: '뱅퀴시 VV (그린)', isNew: true,
+    type: '경량 드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '경량'], weight: '3번대 36~43g 등 (스펙별)', priceFrom: 540000,
+    summary: '신제품. 오리지널보다 높은 킥포인트·낮은 발사. 경량 유지.',
+    features: '뱅퀴시의 활발한 팁은 유지하되 킥포인트를 올려 탄도를 낮춘 두 번째 프로파일입니다. 경량과 저탄도를 동시에 원하는 분께 맞습니다.',
+    recommendedFor: '뱅퀴시 경량은 좋지만 탄도를 더 낮추고 싶은 분',
+    officialUrl: 'https://mitsubishigolf.com/products/vanquish-vv', image: null,
+  },
+  {
+    category: '샤프트', brand: 'MITSUBISHI', model: '뱅퀴시 (오리지널)', isNew: false,
+    type: '경량 드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '경량', '시니어·여성'], weight: '3번대 36~43g / 4번대 47~52g / 5번대 53~59g', priceFrom: 531000,
+    summary: '경량 전용 라인. 가볍지만 경도 유지. 3번대 초경량 인기.',
+    features: '바사라 계보의 초경량 설계에 고성능 카본으로 토크를 관리해, 가벼운데도 솔리드한 감각을 냅니다.',
+    recommendedFor: '스윙 스피드 부담 없이 비거리를 원하는 분, 시니어·여성',
+    officialUrl: 'https://mitsubishigolf.com/products/vanquish', image: null,
+  },
+  // ───── 샤프트: FUJIKURA (드라이버·우드·하이브리드) ─────
+  {
+    category: '샤프트', brand: 'FUJIKURA', model: '스피더 부스트 (SPEEDER BOOST)', isNew: true,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '고탄도', '경량'], weight: '40~60g대 (스펙별)', priceFrom: 495000,
+    summary: '2026 최신. "더블 킥" 설계로 휨을 극대화해 비거리·높은 탄도.',
+    features: '핸들과 팁을 모두 부드럽게 만들어 샤프트가 크게 휘었다 펴지는 "더블 킥"으로 비거리를 끌어냅니다. 보통 이렇게 부드러우면 흔들리기 쉽지만, NX 계열의 VTC(가변 토크 코어)로 비틀림을 잡아 임팩트에서 헤드를 안정시킵니다. 부드러운 로딩감과 높은 탄도를 동시에 주는 후지쿠라의 가장 새로운 샤프트입니다.',
+    recommendedFor: '샤프트가 휘는 감각을 즐기며 비거리·탄도를 높이고 싶은 분, 스윙 스피드가 아주 빠르지 않은 분',
+    officialUrl: 'https://fujikuragolf.com/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'FUJIKURA', model: '26 벤투스 TR Blue VeloCore+', isNew: true,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '대중적', '저스핀', '벤투스'], weight: '50~90g대 (스펙별)', priceFrom: 495000,
+    summary: '2026 신형. VeloCore+ 적용. 벤투스 블루와 블랙의 중간, 미드탄도·저스핀.',
+    features: '미드섹션의 Spread Tow 소재로 표준 벤투스보다 비틀림 강성이 약 10% 높고, 2024년부터 적용된 VeloCore+로 미스히트에도 방향성과 볼스피드를 지킵니다. 2025년 메이저 4개 대회 드라이버 샤프트를 모두 석권한 벤투스 라인의 최신 블루 프로파일입니다.',
+    recommendedFor: '안정성과 컨트롤의 균형을 원하는 중·상급자, 임팩트에서 샤프트를 강하게 누르는 분',
+    officialUrl: 'https://fujikuragolf.com/woods/ventus-tr/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'FUJIKURA', model: '벤투스 TR Black', isNew: true,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '저탄도', '저스핀', '상급자', '벤투스'], weight: '50~90g대 (스펙별)', priceFrom: 495000,
+    summary: 'VeloCore+ TR 라인 중 가장 단단. 저탄도·저스핀.',
+    features: '팁·핸들이 가장 단단한 프로파일로, 강한 임팩트에도 흔들림이 적어 낮고 강한 직진성 탄도를 냅니다. TR 라인 중 가장 단단합니다.',
+    recommendedFor: '헤드스피드가 빠르고 낮고 강한 탄도·최대 직진성을 원하는 싱글 골퍼',
+    officialUrl: 'https://fujikuragolf.com/woods/ventus-tr/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'FUJIKURA', model: '벤투스 TR Red', isNew: true,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '고탄도', '벤투스'], weight: '50~90g대 (스펙별)', priceFrom: 495000,
+    summary: 'VeloCore+ TR 라인 중 가장 높은 탄도·스핀. 안정성은 유지.',
+    features: '활발한 팁으로 발사각과 스핀을 높이면서도 VeloCore+의 안정성은 유지합니다. 탄도가 낮거나 캐리를 늘리고 싶은 분께 맞습니다.',
+    recommendedFor: '안정성을 유지하면서 탄도·캐리를 더 높이고 싶은 분',
+    officialUrl: 'https://fujikuragolf.com/woods/ventus-tr/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'FUJIKURA', model: '24 벤투스 (블루·블랙·레드)', isNew: false,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '대중적', '벤투스'], weight: '50~70g대 (스펙별)', priceFrom: 495000,
+    summary: '표준 벤투스 VeloCore+. 컬러로 탄도 구분(블루<블랙 저탄도 / 레드 고탄도).',
+    features: '벤투스의 표준 프로파일로, VeloCore+가 미스히트에도 방향성과 볼스피드를 지킵니다. 블루는 안정·미드탄도, 블랙은 저탄도·직진성, 레드는 높은 탄도로 나뉩니다.',
+    recommendedFor: '블루 → 안정·균형 / 블랙 → 빠른 스윙·직진성 / 레드 → 탄도 높이고 싶은 분',
+    officialUrl: 'https://fujikuragolf.com/woods/ventus/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'FUJIKURA', model: '벤투스 화이트 (VENTUS WH)', isNew: false,
+    type: '경량 드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '경량', '시니어·여성', '벤투스'], weight: '약 50g대 (초경량)', priceFrom: 495000,
+    summary: '벤투스 경량 모델. 가볍지만 VeloCore+ 안정성 유지.',
+    features: '벤투스 라인의 경량 옵션으로, 무게를 낮추면서도 VeloCore+ 안정성을 적용했습니다. 중·저속 스윙에서도 다루기 쉽습니다.',
+    recommendedFor: '시니어·여성, 드라이버 샤프트 무게가 부담스러운 분',
+    officialUrl: 'https://fujikuragolf.com/woods/ventus/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'FUJIKURA', model: '스피더 NX (블랙·바이올렛·그린·골드)', isNew: false,
+    type: '드라이버·우드 그라파이트 샤프트', tag: '그라파이트', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '고탄도', '경량'], weight: '40~60g대 (스펙별)', priceFrom: 495000,
+    summary: '후지쿠라 경량·고반발 라인. 벤투스보다 활발하고 탄도가 높음.',
+    features: '벤투스가 안정성 중심이라면 스피더 NX는 반발·비거리 중심입니다. 활발한 거동으로 볼스피드와 탄도를 끌어올리며, 컬러별로 성향이 나뉩니다(블랙=저스핀·강함 / 바이올렛·그린=중탄도 / 골드=프리미엄).',
+    recommendedFor: '비거리·탄도를 더 원하는 분, 부드럽게 감기는 감각을 선호하는 분',
+    officialUrl: 'https://fujikuragolf.com/woods/', image: null,
+  },
+  {
+    category: '샤프트', brand: 'FUJIKURA', model: '25 벤투스 VeloCore+ 하이브리드 (블루·블랙)', isNew: false,
+    type: '하이브리드·유틸 그라파이트 샤프트', tag: '그라파이트', usage: '유틸 샤프트', tags: ['유틸 샤프트', '드라이버용', '벤투스'], weight: '하이브리드용 (스펙별)', priceFrom: 288000,
+    summary: '벤투스 안정성을 하이브리드/유틸에 적용. VeloCore+.',
+    features: '드라이버용 벤투스의 안정성을 유틸리티·하이브리드 길이에 맞춰 설계했습니다. 블루는 안정·미드탄도, 블랙은 저탄도·직진성입니다. 드라이버를 벤투스로 쓰는 분이 세트 흐름을 맞출 때 좋습니다.',
+    recommendedFor: '드라이버와 같은 벤투스 계열로 유틸·하이브리드를 맞추고 싶은 분',
+    officialUrl: 'https://fujikuragolf.com/', image: null,
+  },
+  // ───── 자체 제품 (VERSUS · KRZ · DEFINE) ─────
+  {
+    category: '헤드', brand: 'VERSUS', model: 'VERSUS 맞춤 드라이버 (완성)', isNew: false,
+    type: '맞춤 드라이버 (헤드+샤프트+그립+피팅+제작)', tag: '자체제품', usage: '헤드', tags: ['헤드', '드라이버용', '자체제품', '훅방지', '피팅'], weight: '맞춤', priceFrom: 650000,
+    summary: '공작소가 직접 설계한 맞춤 드라이버. 헤드·샤프트·그립·피팅·제작 포함.',
+    features: '10.5° 로프트의 검정 무광 헤드에 0.5° 훅페이스를 적용해 슬라이스를 잡아줍니다. 딥페이스와 샬로우의 중간 타입이라 체격·스윙·임팩트 패턴이 다른 골퍼도 자연스럽게 적응합니다. VERSUS 55MS / 65MS 샤프트(미드 킥, 스티프)를 매칭하며, 헤드·샤프트·그립·피팅·제작을 한 자루로 묶은 완성가입니다.',
+    recommendedFor: '슬라이스를 줄이고 싶은 분, 피팅까지 한 번에 맞춘 드라이버를 원하는 분',
+    officialUrl: '/products', image: null,
+  },
+  {
+    category: '헤드', brand: 'VERSUS', model: 'VERSUS 드라이버 헤드', isNew: false,
+    type: '드라이버 헤드', tag: '자체제품', usage: '헤드', tags: ['헤드', '드라이버용', '자체제품', '훅방지'], weight: '10.5°', priceFrom: 330000,
+    summary: '검정 무광 · 0.5° 훅페이스. 딥/샬로우 중간 타입.',
+    features: '10.5° 로프트, 검정 무광 마감에 0.5° 훅페이스로 좌우 분산 중 슬라이스를 억제합니다. 딥페이스와 샬로우의 중간 형상이라 다양한 스윙에 폭넓게 맞습니다. 헤드 단품 가격입니다.',
+    recommendedFor: '헤드만 교체·조립하려는 분, 슬라이스 억제 헤드를 원하는 분',
+    officialUrl: '/products', image: null,
+  },
+  {
+    category: '샤프트', brand: 'VERSUS', model: 'VERSUS 샤프트 (55MS / 65MS)', isNew: false,
+    type: '드라이버 그라파이트 샤프트', tag: '자체제품', usage: '드라이버 샤프트', tags: ['드라이버 샤프트', '자체제품'], weight: '55g / 65g대', priceFrom: 330000,
+    summary: 'VERSUS 드라이버용 그라파이트 샤프트. 미드 킥·스티프.',
+    features: '미드 킥포인트에 스티프 플렉스로, 안정적인 거동과 무난한 탄도를 냅니다. 55MS(경량)·65MS(표준) 두 무게로 체격과 스윙에 맞춰 선택합니다.',
+    recommendedFor: 'VERSUS 헤드에 매칭하거나 미드 킥 스티프 샤프트를 찾는 분',
+    officialUrl: '/products', image: null,
+  },
+  {
+    category: '헤드', brand: 'KRZ', model: 'KRZ 203H 하이브리드 헤드', isNew: false,
+    type: '하이브리드(유틸) 헤드', tag: '자체제품', usage: '헤드', tags: ['헤드', '유틸용', '자체제품', '관용성'], weight: '345~347g (D2)', priceFrom: 170000,
+    summary: '3·4번 아이언을 대체하는 하이브리드. 높은 MOI로 관용성↑.',
+    features: '긴 아이언이 어렵게 느껴질 때 그 자리를 메우는 하이브리드입니다. 19° 모델은 MOI 2,468 g·cm²로 관용성이 높고, 23° 모델(2,270)과 함께 로프트·길이 두 옵션으로 거리 공백을 정확히 메웁니다. DEFINE 635VTM 샤프트를 매칭해 토크 3.3~3.5의 안정적인 임팩트를 냅니다.',
+    recommendedFor: '롱아이언이 어려운 분, 띄우기 쉽고 관용성 높은 유틸을 원하는 분',
+    officialUrl: '/products', image: null,
+  },
+  {
+    category: '샤프트', brand: 'DEFINE', model: 'DEFINE 635VTM 샤프트', isNew: false,
+    type: '하이브리드·아이언 그라파이트 샤프트', tag: '자체제품', usage: '유틸 샤프트', tags: ['유틸 샤프트', '아이언용', '자체제품'], weight: '68g', priceFrom: 170000,
+    summary: '하이브리드·아이언용 그라파이트 샤프트. 토크 3.3~3.5로 안정적.',
+    features: '무게 68g, 토크 3.3~3.5로 가벼우면서도 비틀림을 잡아 안정적인 임팩트를 만듭니다. Regular/Stiff 플렉스가 있고, KRZ 203H 하이브리드의 매칭 샤프트로 쓰입니다. 하이브리드와 아이언 모두에 사용할 수 있습니다.',
+    recommendedFor: '하이브리드·유틸이나 아이언에 가벼운 그라파이트를 매칭하려는 분',
+    officialUrl: '/products', image: null,
+  },
+  // ───── 헤드: MYSTERY (미스테리) ─────
+  {
+    category: '헤드', brand: 'MYSTERY', model: '미스테리 CF-455 고반발 드라이버 헤드', isNew: false,
+    type: '고반발 드라이버 헤드', tag: '미스테리', usage: '헤드', tags: ['헤드', '드라이버용', '고반발', '비거리'], weight: '460cc', priceFrom: 1000000,
+    summary: '일본 미스테리의 고반발 드라이버 헤드. 비거리 특화.',
+    features: '일본 미스테리의 460cc 고반발 헤드로, 반발을 극대화해 같은 스윙에서 더 먼 거리를 냅니다. 컬러(블랙·민트·핑크·그린·플로라)와 로프트 옵션이 다양합니다. CF-455 TOUR(8.5·9.5·10.5°)는 공인(룰 적합) 모델이고, 그 외 고반발 라인은 비거리 중심입니다.',
+    recommendedFor: '비거리를 최대로 늘리고 싶은 분, 헤드스피드 보강이 필요한 분',
+    officialUrl: 'https://mysterygolf.net/', image: null,
+  },
+  {
+    category: '헤드', brand: 'MYSTERY', model: '미스테리 고반발 드라이버 (여성용)', isNew: false,
+    type: '고반발 드라이버 헤드·완성 (여성용)', tag: '미스테리', usage: '헤드', tags: ['헤드', '드라이버용', '고반발', '여성용', '비거리'], weight: '460cc', priceFrom: 1100000,
+    summary: '여성 골퍼용 고반발 드라이버. 가벼운 스윙으로 비거리.',
+    features: '여성 골퍼를 위한 고반발 헤드·완성채 라인입니다. 가벼운 경량 샤프트(아시안 스펙)와 매칭해 느린 스윙에서도 반발로 거리를 끌어냅니다. D-CF-455 HC M-LINE(완성채)·엠라인·알라인 등 컬러·구성 옵션이 있습니다.',
+    recommendedFor: '비거리를 늘리고 싶은 여성 골퍼, 가벼운 고반발 드라이버를 원하는 분',
+    officialUrl: 'https://mysterygolf.net/', image: null,
+  },
+  // ───── 그립: 럭스립 (LUXRIP, 국내 브랜드) ─────
+  {
+    category: '그립', brand: '럭스립', model: '위닝스트로크 (2.0 / 2.8)', isNew: false,
+    type: '퍼터 그립', tag: '퍼터', usage: '퍼터 그립', tags: ['퍼터 그립', '국산'], weight: '사이즈별', priceFrom: 45000,
+    summary: '국산 럭스립의 퍼터 그립. 2.0·2.8 두 사이즈, 7컬러.',
+    features: 'TPE 엘라스토머에 독자 컴파운드 기술로 만든 국내생산(Made in Korea) 퍼터 그립입니다. 2.0과 2.8 두께를 선택할 수 있고, 7가지 색상으로 나옵니다. 남녀 공용입니다.',
+    recommendedFor: '국산 퍼터 그립을 원하는 분, 두께·컬러를 골라 맞추고 싶은 분',
+    officialUrl: 'https://luxrip.com/product', image: null,
+  },
+  {
+    category: '그립', brand: '럭스립', model: '한글 그립 / 디자인 그립', isNew: false,
+    type: '러버 그립 (TPE 엘라스토머)', tag: '러버', usage: '그립', tags: ['그립', '국산', '디자인'], weight: '45~51g (모델별)', priceFrom: 16000,
+    summary: '한글 해례본·스컬·악어 등 독창 디자인. 국내생산 TPE.',
+    features: '한글 해례본을 모티프로 한 한글 그립을 비롯해 스컬 스노우스타·스타플레이어·크로크다일 등 디자인 라인입니다. TPE 엘라스토머 소재로 사이즈·중량·경도를 세분화했고, 디자인 정체성이 강합니다.',
+    recommendedFor: '개성 있는 디자인 그립을 원하는 분, 국산 브랜드를 선호하는 분',
+    officialUrl: 'https://luxrip.com/product', image: null,
+  },
+  {
+    category: '그립', brand: '럭스립', model: '엘레강스 / 타이푼 (여성·언더)', isNew: false,
+    type: '러버 그립 (TPE 엘라스토머)', tag: '러버', usage: '그립', tags: ['그립', '국산', '여성용', '경량'], weight: '36~42g (경량)', priceFrom: 27000,
+    summary: '여성·언더사이즈용 경량 라인. 엘레강스(36g)·타이푼(42g).',
+    features: '엘레강스는 약 36g 경량 라운드(여성용), 타이푼은 약 42g 언더립(남녀혼용)입니다. TPE 엘라스토머로 가벼우면서 부드러운 그립감을 줍니다.',
+    recommendedFor: '가벼운 언더사이즈·경량 그립이 필요한 여성 골퍼',
+    officialUrl: 'https://luxrip.com/product', image: null,
+  },
+];
+
+// productInfo → Product 스키마 (ItemList). 단일 데이터에서 자동 생성.
+const productListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: '대표 그립·샤프트 제품 소개 — 골프채공작소 클럽메이커스',
+  itemListElement: productInfo.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Product',
+      name: `${p.brand} ${p.model}`,
+      category: p.type,
+      description: p.summary,
+      brand: { '@type': 'Brand', name: p.brand },
+      ...(p.priceFrom
+        ? {
+            offers: {
+              '@type': 'Offer',
+              priceCurrency: 'KRW',
+              price: p.priceFrom,
+              availability: 'https://schema.org/InStock',
+              seller: { '@type': 'LocalBusiness', name: '골프채공작소 클럽메이커스' },
+            },
+          }
+        : {}),
+    },
+  })),
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} keywords={pageKeywords} schemaType="CollectionPage" extraSchema={priceSchema}>
+
+  <!-- 히어로 -->
+  <section class="page-hero price-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">PRICE · 부품 가격표</div>
+      <h1>그립 · 샤프트 가격표</h1>
+      <p class="page-hero-subtitle">
+        골프채공작소에서 주문·장착 가능한 그립과 샤프트 가격입니다.
+        대부분 주문 시 총판을 통해 준비해 드립니다.
+      </p>
+      <p class="price-hero-positioning">
+        단순 부품 교체가 아니라, <strong>25년 경력의 클럽피팅과 함께</strong> 진행합니다.
+        같은 샤프트도 사용자의 스윙에 맞춰 길이·강도·밸런스를 잡아야 제 성능이 나옵니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 안내 박스 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <aside class="price-notice">
+        <p class="price-notice-title">표시 가격 안내</p>
+        <ul class="price-notice-list">
+          <li><strong>그립</strong>은 표시 금액에 <strong>교체 공임이 포함</strong>되어 있습니다.</li>
+          <li><strong>샤프트</strong>는 표시 금액이 <strong>부품 가격</strong>이며, <strong>장착·교체 공임은 별도</strong>입니다.</li>
+          <li>대부분의 제품은 <strong>주문 시 총판을 통해 준비</strong>해 드립니다. 재고 보유 여부는 문의 부탁드립니다.</li>
+          <li>샤프트 공임은 <a href="/workshop#estimate">작업 가격 계산기</a>에서 확인하실 수 있습니다.</li>
+          <li>가격은 변동될 수 있으니, 정확한 안내는 문의 부탁드립니다.</li>
+        </ul>
+        <div class="price-notice-cta">
+          <a href="https://open.kakao.com/o/sLAG3lbb" target="_blank" rel="noopener" class="price-btn price-btn-kakao">카카오톡 문의</a>
+          <a href="tel:010-4363-5555" class="price-btn price-btn-call">전화 010-4363-5555</a>
+        </div>
+      </aside>
+
+      <!-- 대표 제품 소개 카드 (productInfo → 카드 + 스키마 + 본문 동시 출력) -->
+      <div class="product-intro">
+        <h2 class="product-intro-title">대표 제품 소개</h2>
+        <p class="product-intro-desc">
+          자주 찾으시는 대표 모델의 특징과 추천 대상입니다. 아래 태그를 누르면 해당 제품이 강조됩니다. 전체 목록·가격은 하단 표에서 확인하실 수 있습니다.
+        </p>
+
+        <!-- 상단 태그(한 줄 전체). 누르면 해당 태그 카드 강조 + 첫 카드로 이동 -->
+        <nav class="product-tags" aria-label="태그로 보기">
+          <button class="product-tag is-active" data-tag="" type="button">전체</button>
+          {[...new Set(productInfo.flatMap((p) => p.tags))].map((tag) => (
+            <button class="product-tag" data-tag={tag} type="button">{tag}</button>
+          ))}
+        </nav>
+
+        {[...new Set(productInfo.map((p) => p.usage))].map((usage) => {
+          const slug = usage.replace(/\s+/g, '-');
+          const brandsInUsage = [...new Set(productInfo.filter((p) => p.usage === usage).map((p) => p.brand))];
+          return (
+            <div class="product-intro-cat" id={`u-${slug}`}>
+              <h3 class="product-intro-cat-title">{usage}</h3>
+              {brandsInUsage.map((b) => (
+                <div class="product-brand-block">
+                  <h4 class="product-brand-label">{b}</h4>
+                  <div class="product-grid">
+                    {productInfo.filter((p) => p.usage === usage && p.brand === b).map((p) => (
+                      <article
+                        class="product-card"
+                        data-name={(p.brand + ' ' + p.model).toLowerCase()}
+                        data-brand-name={p.brand.toLowerCase()}
+                        data-tags={p.tags.join('|')}
+                      >
+                        {p.image
+                          ? <img class="product-card-img" src={p.image} alt={p.brand + ' ' + p.model} loading="lazy" />
+                          : null}
+                        <div class="product-card-body">
+                          <div class="product-card-head">
+                            <span class="product-card-tag">{p.tag}</span>
+                            {p.isNew && <span class="product-card-new">신제품</span>}
+                          </div>
+                          <h5 class="product-card-model">{p.model}</h5>
+                          <p class="product-card-spec">{p.weight}</p>
+                          <p class="product-card-summary">{p.summary}</p>
+                          <p class="product-card-features">{p.features}</p>
+                          <div class="product-card-rec">
+                            <span class="product-card-rec-label">이런 분께 추천</span>
+                            <span class="product-card-rec-text">{p.recommendedFor}</span>
+                          </div>
+                          <div class="product-card-chips">
+                            {p.tags.map((t) => (<span class="product-card-chip" data-chip={t}>{t}</span>))}
+                          </div>
+                          <div class="product-card-foot">
+                            <span class="product-card-price">
+                              {fmt(p.priceFrom)}원~ <em>{p.category === '그립' ? '교체비 포함' : '부품가 · 공임 별도'}</em>
+                            </span>
+                            {p.officialUrl && <a class="product-card-link" href={p.officialUrl} target="_blank" rel="noopener">공식 정보 ↗</a>}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+        <p class="product-intro-empty" id="cardEmpty" style="display:none;">
+          검색과 일치하는 대표 제품 소개가 없습니다. 아래 전체 가격표를 확인해 주세요.
+        </p>
+      </div>
+
+      <!-- 대표 제품 Product 스키마 -->
+      <script type="application/ld+json" set:html={JSON.stringify(productListSchema)} />
+
+      <!-- 검색 -->
+      <div class="price-search-wrap">
+        <input type="text" id="priceSearch" class="price-search" placeholder="제품명·브랜드 검색 (예: 텐세이, 다이나믹골드, MCC)" />
+        <p class="price-search-hint" id="searchHint"></p>
+      </div>
+
+      <!-- 가격표 -->
+      {priceData.map((cat) => (
+        <div class="price-category" data-category={cat.category}>
+          <h2 class="price-cat-title">{cat.category}</h2>
+          {cat.brands.map((br) => (
+            <div class="price-brand" data-brand={br.brand}>
+              <h3 class="price-brand-title">{br.brand}</h3>
+              <table class="price-table">
+                <tbody>
+                  {br.items.map((item) => (
+                    <tr class="price-row" data-name={item.name.toLowerCase()} data-brand-name={br.brand.toLowerCase()}>
+                      <td class="price-name">{item.name}</td>
+                      <td class="price-value">{fmt(item.price)}원</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
+      ))}
+
+      <p class="price-footer-note">
+        ※ 그립 가격은 교체 공임 포함, 샤프트 가격은 부품가이며 장착 공임은 별도입니다.
+        대부분 주문 시 총판을 통해 준비해 드리며, 가격은 변동될 수 있습니다. 정확한 견적은 클럽을 직접 보고 안내드립니다.
+      </p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var input = document.getElementById('priceSearch');
+    var hint = document.getElementById('searchHint');
+    if (!input) return;
+
+    function normalize(s) { return (s || '').toLowerCase().replace(/\s+/g, ''); }
+
+    input.addEventListener('input', function () {
+      var q = normalize(input.value);
+      var rows = document.querySelectorAll('.price-row');
+      var shown = 0;
+
+      rows.forEach(function (row) {
+        var name = (row.getAttribute('data-name') || '').replace(/\s+/g, '');
+        var brand = (row.getAttribute('data-brand-name') || '').replace(/\s+/g, '');
+        var match = !q || name.indexOf(q) > -1 || brand.indexOf(q) > -1;
+        row.style.display = match ? '' : 'none';
+        if (match) shown++;
+      });
+
+      // 빈 브랜드·카테고리 숨기기
+      document.querySelectorAll('.price-brand').forEach(function (bd) {
+        var visible = bd.querySelectorAll('.price-row:not([style*="none"])').length;
+        bd.style.display = visible ? '' : 'none';
+      });
+      document.querySelectorAll('.price-category').forEach(function (ct) {
+        var visible = ct.querySelectorAll('.price-row:not([style*="none"])').length;
+        ct.style.display = visible ? '' : 'none';
+      });
+
+      // 대표 제품 소개 카드도 함께 필터
+      var cards = document.querySelectorAll('.product-card');
+      var cardShown = 0;
+      cards.forEach(function (card) {
+        var name = (card.getAttribute('data-name') || '').replace(/\s+/g, '');
+        var brand = (card.getAttribute('data-brand-name') || '').replace(/\s+/g, '');
+        var match = !q || name.indexOf(q) > -1 || brand.indexOf(q) > -1;
+        card.style.display = match ? '' : 'none';
+        if (match) cardShown++;
+      });
+      document.querySelectorAll('.product-brand-block').forEach(function (bb) {
+        var visible = bb.querySelectorAll('.product-card:not([style*="none"])').length;
+        bb.style.display = visible ? '' : 'none';
+      });
+      document.querySelectorAll('.product-intro-cat').forEach(function (cc) {
+        var visible = cc.querySelectorAll('.product-card:not([style*="none"])').length;
+        cc.style.display = visible ? '' : 'none';
+      });
+      var cardEmpty = document.getElementById('cardEmpty');
+      if (cardEmpty) cardEmpty.style.display = (q && cardShown === 0) ? '' : 'none';
+
+      hint.textContent = q ? (shown + '개 제품 검색됨') : '';
+    });
+  })();
+</script>
+
+<script is:inline>
+  // 상단 태그 → 해당 태그 카드 강조(숨기지 않음) + 첫 카드로 부드럽게 이동
+  (function () {
+    var tagBtns = document.querySelectorAll('.product-tag');
+    if (!tagBtns.length) return;
+    var activeTag = '';
+
+    function apply(tag) {
+      var cards = document.querySelectorAll('.product-card');
+      cards.forEach(function (card) {
+        var tags = (card.getAttribute('data-tags') || '').split('|');
+        var on = tag && tags.indexOf(tag) > -1;
+        card.classList.remove('is-revealed'); // 새 태그 선택 시 개별 선명화 초기화
+        card.classList.toggle('is-highlight', !!on);
+        card.classList.toggle('is-dim', !!tag && !on);
+        // 카드 안 칩도 해당 태그 강조
+        card.querySelectorAll('.product-card-chip').forEach(function (chip) {
+          chip.classList.toggle('is-on', tag && chip.getAttribute('data-chip') === tag);
+        });
+      });
+      // 첫 강조 카드로 스크롤
+      if (tag) {
+        var first = document.querySelector('.product-card.is-highlight');
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    tagBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var tag = btn.getAttribute('data-tag') || '';
+        // 같은 태그 다시 누르면 해제(전체로)
+        if (tag && tag === activeTag) { tag = ''; }
+        activeTag = tag;
+        tagBtns.forEach(function (b) {
+          b.classList.toggle('is-active', (b.getAttribute('data-tag') || '') === tag);
+        });
+        apply(tag);
+      });
+    });
+
+    // 카드 안의 칩을 눌러도 같은 태그로 강조
+    document.querySelectorAll('.product-card-chip').forEach(function (chip) {
+      chip.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var tag = chip.getAttribute('data-chip') || '';
+        var btn = document.querySelector('.product-tag[data-tag="' + tag + '"]');
+        if (btn) btn.click();
+      });
+    });
+
+    // 흐려진 카드를 직접 탭하면 그 카드만 선명하게(흐림 해제)
+    document.querySelectorAll('.product-card').forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        // 카드 안 링크(공식 정보)는 그대로 동작
+        if (e.target.closest('a')) return;
+        if (card.classList.contains('is-dim')) {
+          card.classList.remove('is-dim');
+          card.classList.add('is-revealed');
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .price-hero { background: var(--bg-cream, #F8F2E5); border-bottom: 1px solid var(--line, #E5DED1); }
+  .price-hero-positioning {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--green, #0F2922);
+    margin: 16px 0 0;
+    max-width: 600px;
+  }
+  .price-hero-positioning strong { font-weight: 700; }
+
+  .price-notice {
+    background: #fff;
+    border: 1px solid var(--line, #E5DED1);
+    border-left: 3px solid var(--gold, #B8985C);
+    padding: 24px 28px;
+    margin-bottom: 32px;
+  }
+  .price-notice-title {
+    font-family: var(--font-serif, 'Noto Serif KR', serif);
+    font-size: 16px; font-weight: 700; color: var(--ink, #0F0F0E);
+    margin: 0 0 12px;
+  }
+  .price-notice-list { margin: 0 0 18px; padding-left: 18px; }
+  .price-notice-list li {
+    font-size: 14.5px; line-height: 1.85; color: var(--ink, #0F0F0E);
+  }
+  .price-notice-list strong { font-weight: 700; }
+  .price-notice-list a { color: var(--green, #0F2922); border-bottom: 1px solid var(--gold, #B8985C); text-decoration: none; font-weight: 600; }
+  .price-notice-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+  .price-btn {
+    padding: 11px 20px; font-size: 14px; font-weight: 700;
+    text-decoration: none; border-radius: 2px;
+  }
+  .price-btn-kakao { background: #FEE500; color: #3C1E1E; }
+  .price-btn-call { background: var(--green, #0F2922); color: #fff; }
+
+  .price-search-wrap { margin-bottom: 32px; }
+  .price-search {
+    width: 100%; padding: 14px 18px; font-size: 15px;
+    border: 1px solid var(--line, #E5DED1); border-radius: 2px;
+    background: #fff; color: var(--ink, #0F0F0E);
+    box-sizing: border-box;
+  }
+  .price-search:focus { outline: none; border-color: var(--gold, #B8985C); }
+  .price-search-hint { font-size: 13px; color: var(--grey, #666); margin: 8px 0 0; }
+
+  /* ── 대표 제품 소개 카드 ── */
+  .product-intro { margin-bottom: 40px; }
+  .product-intro-title {
+    font-family: var(--font-serif, 'Noto Serif KR', serif);
+    font-size: 22px; font-weight: 700; color: var(--ink, #0F0F0E);
+    margin: 0 0 6px;
+  }
+  .product-intro-desc {
+    font-size: 14px; line-height: 1.7; color: var(--grey, #666);
+    margin: 0 0 20px;
+  }
+
+  /* 상단 태그(한 줄 전체) */
+  .product-tags {
+    display: flex; flex-wrap: wrap; gap: 7px;
+    background: #fff; border: 1px solid var(--line, #E5DED1);
+    border-radius: 4px; padding: 14px 16px; margin-bottom: 28px;
+  }
+  .product-tag {
+    font-size: 12.5px; font-weight: 600; color: var(--green, #0F2922);
+    background: var(--bg-cream, #F8F2E5); border: 1px solid var(--line, #E5DED1);
+    padding: 6px 13px; border-radius: 16px; cursor: pointer;
+    white-space: nowrap; font-family: inherit; transition: all 0.15s;
+  }
+  .product-tag:hover { border-color: var(--gold, #B8985C); color: var(--gold, #B8985C); }
+  .product-tag.is-active { background: var(--green, #0F2922); color: #fff; border-color: var(--green, #0F2922); }
+
+  /* 용도 섹션 / 브랜드 블록 */
+  .product-intro-cat { margin-bottom: 36px; }
+  .product-intro-cat-title {
+    font-family: var(--font-serif, 'Noto Serif KR', serif);
+    font-size: 18px; font-weight: 700; color: var(--ink, #0F0F0E);
+    margin: 0 0 16px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--green, #0F2922);
+  }
+  .product-brand-block { margin-bottom: 22px; }
+  .product-brand-label {
+    font-size: 13px; font-weight: 700; color: var(--gold, #B8985C);
+    letter-spacing: 0.03em; margin: 0 0 12px;
+  }
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .product-card {
+    display: flex; flex-direction: column;
+    background: #fff; border: 1px solid var(--line, #E5DED1);
+    border-radius: 4px; overflow: hidden; transition: all 0.2s;
+  }
+  /* 태그 강조/흐림 */
+  .product-card.is-highlight {
+    border-color: var(--gold, #B8985C); box-shadow: 0 0 0 2px var(--gold, #B8985C);
+  }
+  .product-card.is-dim { opacity: 0.45; cursor: pointer; }
+  .product-card.is-dim:hover { opacity: 0.8; }
+  .product-card.is-revealed { opacity: 1; }
+  .product-card-img { width: 100%; height: 150px; object-fit: contain; background: var(--bg-cream, #F8F2E5); }
+  .product-card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
+  .product-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .product-card-tag {
+    font-size: 11px; font-weight: 700; color: var(--green, #0F2922);
+    background: var(--bg-cream, #F8F2E5); border: 1px solid var(--line, #E5DED1);
+    padding: 3px 9px; border-radius: 10px; letter-spacing: 0.02em;
+  }
+  .product-card-new {
+    font-size: 11px; font-weight: 700; color: #fff;
+    background: var(--green, #0F2922); padding: 3px 8px; border-radius: 10px;
+  }
+  .product-card-model {
+    font-family: var(--font-serif, 'Noto Serif KR', serif);
+    font-size: 17px; font-weight: 700; color: var(--ink, #0F0F0E); margin: 0 0 3px;
+  }
+  .product-card-spec { font-size: 12.5px; color: var(--grey, #666); margin: 0 0 10px; }
+  .product-card-summary { font-size: 13.5px; line-height: 1.6; color: var(--ink, #0F0F0E); font-weight: 600; margin: 0 0 8px; }
+  .product-card-features { font-size: 13px; line-height: 1.7; color: var(--grey, #444); margin: 0 0 12px; }
+  .product-card-rec {
+    background: var(--bg-cream, #F8F2E5); border-left: 2px solid var(--gold, #B8985C);
+    padding: 9px 12px; margin: 0 0 12px; border-radius: 0 2px 2px 0;
+  }
+  .product-card-rec-label { display: block; font-size: 11px; font-weight: 700; color: var(--green, #0F2922); margin-bottom: 3px; }
+  .product-card-rec-text { font-size: 12.5px; line-height: 1.6; color: var(--ink, #0F0F0E); }
+  /* 카드 안 태그 칩 (클릭 가능) */
+  .product-card-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 14px; }
+  .product-card-chip {
+    font-size: 11px; color: var(--grey, #666); background: #fff;
+    border: 1px solid var(--line, #E5DED1); padding: 2px 8px; border-radius: 10px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .product-card-chip:hover { border-color: var(--gold, #B8985C); color: var(--gold, #B8985C); }
+  .product-card-chip.is-on { background: var(--gold, #B8985C); color: #fff; border-color: var(--gold, #B8985C); }
+  .product-card-foot {
+    margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line, #E5DED1);
+    display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  }
+  .product-card-price { font-size: 15px; font-weight: 700; color: var(--green, #0F2922); }
+  .product-card-price em { font-size: 11px; font-weight: 400; font-style: normal; color: var(--grey, #888); }
+  .product-card-link { font-size: 12px; font-weight: 600; color: var(--gold, #B8985C); text-decoration: none; white-space: nowrap; }
+  .product-card-link:hover { text-decoration: underline; }
+  .product-intro-empty { font-size: 14px; color: var(--grey, #666); padding: 16px 0; }
+
+
+  .price-category { margin-bottom: 48px; }
+  .price-cat-title {
+    font-family: var(--font-serif, 'Noto Serif KR', serif);
+    font-size: 24px; font-weight: 700; color: var(--ink, #0F0F0E);
+    margin: 0 0 20px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--green, #0F2922);
+  }
+  .price-brand { margin-bottom: 28px; }
+  .price-brand-title {
+    font-size: 15px; font-weight: 700; color: var(--gold, #B8985C);
+    margin: 0 0 10px; letter-spacing: 0.02em;
+  }
+  .price-table { width: 100%; border-collapse: collapse; background: #fff; }
+  .price-row { border-bottom: 1px solid var(--line, #E5DED1); }
+  .price-row:hover { background: var(--bg-cream, #F8F2E5); }
+  .price-name {
+    padding: 11px 14px; font-size: 14px; line-height: 1.5;
+    color: var(--ink, #0F0F0E);
+  }
+  .price-value {
+    padding: 11px 14px; font-size: 14px; font-weight: 700;
+    color: var(--green, #0F2922); text-align: right; white-space: nowrap;
+    width: 110px;
+  }
+  .price-footer-note {
+    font-size: 13px; color: var(--grey, #666); line-height: 1.7;
+    margin: 32px 0 0; padding-top: 20px;
+    border-top: 1px solid var(--line, #E5DED1);
+  }
+  @media (max-width: 560px) {
+    .price-name { font-size: 13px; }
+    .price-value { font-size: 13px; width: 90px; }
+    .product-grid { grid-template-columns: 1fr; gap: 14px; }
+    .product-intro-title { font-size: 20px; }
+  }
+</style>
