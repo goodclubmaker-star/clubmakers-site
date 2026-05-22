@@ -73,52 +73,6 @@ const articleSchema = {
     </div>
   </section>
 
-  <!-- 4-1.5. [NEW] 측정 도구 — K-VEST + 론치모니터 -->
-  <section class="section section-tools">
-    <div class="section-content-narrow">
-      <p class="section-eyebrow">TOOLS · 측정 도구</p>
-      <h2>추측하지 않습니다. 측정합니다.</h2>
-      <p class="section-lead">
-        골프채공작소의 피팅은 두 가지 정밀 장비로 시작됩니다.
-        몸의 움직임은 <strong>K-VEST</strong>로, 클럽의 결과는 <strong>론치모니터</strong>로 봅니다.
-        두 데이터가 만날 때 처방이 시작됩니다.
-      </p>
-
-      <div class="tools-grid">
-        <div class="tool-card">
-          <p class="tool-name">K-VEST</p>
-          <p class="tool-tag">3D 키네마틱 시퀀스</p>
-          <p class="tool-body">
-            골반·몸통·팔·클럽 4개 분절의 회전 속도·각도를 1초에 수백 번 측정합니다.
-          </p>
-          <ul class="tool-metrics">
-            <li>X-factor</li>
-            <li>Pelvis &amp; Upper Body Turn</li>
-            <li>Pelvic Bend</li>
-            <li>Wrist Hinge</li>
-            <li>지면 반력</li>
-          </ul>
-        </div>
-
-        <div class="tool-card">
-          <p class="tool-name">론치모니터</p>
-          <p class="tool-tag">도플러 레이더</p>
-          <p class="tool-body">
-            임팩트 순간의 클럽과 볼의 물리량을 잡습니다.
-          </p>
-          <ul class="tool-metrics">
-            <li>V-plane</li>
-            <li>Club Speed · Path</li>
-            <li>Dynamic Loft</li>
-            <li>Angle of Attack</li>
-            <li>Spin · Spin Axis</li>
-            <li>Smash Factor</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- 4-2. 일반/전문가 토글 -->
   <section class="section">
     <div class="section-content-narrow">
@@ -181,6 +135,91 @@ const articleSchema = {
             그립이 미끄러지는 작은 문제부터, 새 클럽을 골라야 하는 큰 결정까지 — 어떤 단계라도 환영합니다.
           </p>
         </div>
+
+        <!-- 전체 진단 흐름 다이어그램 (7단계 → 전략 → 순환) -->
+        <div class="process-diagram">
+          <div class="pd-head">
+            <p class="section-eyebrow">FITTING PROCESS · 전체 진단 흐름</p>
+            <h2>측정하고 분석한 뒤에<br>처방합니다</h2>
+            <p class="pd-lead">같은 증상도 사람마다 원인이 다릅니다. 아래는 정밀 세션의 전체 흐름입니다.</p>
+          </div>
+
+          <div class="pd-flow">
+            <div class="pd-step">
+              <div class="pd-num">1</div>
+              <div class="pd-body">
+                <h3>인터뷰 <span class="pd-en">INTERVIEW</span></h3>
+                <p>고민·목표·플레이 스타일을 듣고 방향을 잡습니다.</p>
+              </div>
+            </div>
+            <div class="pd-step">
+              <div class="pd-num">2</div>
+              <div class="pd-body">
+                <h3>현재 클럽 진단 <span class="pd-en">CLUB DIAGNOSIS</span></h3>
+                <p>지금 쓰는 클럽의 스펙(라이각·로프트·길이·SW·샤프트)을 실측합니다.</p>
+              </div>
+            </div>
+            <div class="pd-step">
+              <div class="pd-num">3</div>
+              <div class="pd-body">
+                <h3>론치모니터 측정 <span class="pd-en">LAUNCH MONITOR</span></h3>
+                <p>볼스피드·발사각·스핀·분산 등 실제 타구 데이터를 측정합니다.</p>
+              </div>
+            </div>
+            <div class="pd-step pd-optional">
+              <div class="pd-num">4</div>
+              <div class="pd-body">
+                <h3>블라인드 테스트 <span class="pd-en">BLIND TEST</span> <span class="pd-badge">필요시</span></h3>
+                <p>선입견 없이 여러 조합을 비교해 가장 잘 맞는 것을 찾습니다.</p>
+              </div>
+            </div>
+            <div class="pd-step">
+              <div class="pd-num">5</div>
+              <div class="pd-body">
+                <h3>TPI 신체 검진 <span class="pd-en">TPI SCREEN</span></h3>
+                <p>가동성·안정성 등 신체 특성을 검사해 스윙의 제약을 파악합니다.</p>
+              </div>
+            </div>
+            <div class="pd-step">
+              <div class="pd-num">6</div>
+              <div class="pd-body">
+                <h3>키네마틱 체인 분석 <span class="pd-en">KINEMATIC CHAIN</span></h3>
+                <p>K-Vest로 몸의 에너지 전달 순서를 분석해 스윙의 원인을 짚습니다.</p>
+              </div>
+            </div>
+            <div class="pd-step">
+              <div class="pd-num">7</div>
+              <div class="pd-body">
+                <h3>결론 리포트 제공 <span class="pd-en">REPORT</span></h3>
+                <p>측정·분석을 종합해 진단 리포트로 정리해 드립니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pd-report">
+            <span class="pd-en">REPORT → STRATEGY</span>
+            <h3>리포트를 바탕으로 전략을 세웁니다</h3>
+          </div>
+
+          <div class="pd-strategies">
+            <div class="pd-strat">
+              <span class="pd-term">SHORT-TERM</span>
+              <h4>단기 전략</h4>
+              <p>지금 클럽에서 바로 조정할 수 있는 부분(그립·라이각·길이 등)으로 빠르게 개선합니다.</p>
+            </div>
+            <div class="pd-strat">
+              <span class="pd-term">LONG-TERM</span>
+              <h4>장기 전략</h4>
+              <p>신체·스윙 변화에 맞춰 세트 전체를 단계적으로 맞춰 나갑니다.</p>
+            </div>
+          </div>
+
+          <div class="pd-loop">
+            <span class="pd-loop-icon">↻</span>
+            <strong>점검 및 보완</strong>
+            <span class="pd-loop-sub">— 라운드·연습 결과를 다시 측정해 계속 다듬습니다.</span>
+          </div>
+        </div>
       </div>
 
       <!-- 전문가 영역 -->
@@ -231,83 +270,6 @@ const articleSchema = {
           <a href="/book/part-11" class="deeper-link">PART 11 · 통합 결정과 문제 해결 시스템 →</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- 4-2.5. [NEW] 3D 키네마틱 시퀀스 분석 (핵심) -->
-  <section class="section section-kinematic">
-    <div class="section-content-narrow">
-      <p class="section-eyebrow">KINEMATIC SEQUENCE · 3D 운동역학 분석</p>
-      <h2>스윙은 순서로 만들어집니다.</h2>
-      <p class="section-lead">
-        효율적인 스윙은 정확한 순서를 가집니다.
-      </p>
-      <p class="kinematic-flow">
-        하체 <span class="flow-arrow">→</span> 상체 <span class="flow-arrow">→</span> 팔 <span class="flow-arrow">→</span> 클럽
-      </p>
-
-      <figure class="kinematic-figure">
-        <img src="/images/system/kinematic-diagram.svg"
-             alt="키네마틱 시퀀스 4분절 도식 — 하체에서 클럽으로 에너지가 전달되는 순서"
-             loading="lazy" />
-      </figure>
-
-      <p class="section-lead">
-        큰 분절이 먼저 가속하고 감속하면서 다음 분절로 에너지가 전달됩니다.
-        각 분절의 피크 속도가 계단형으로 나타나야 동일한 힘으로 더 빠른 헤드스피드,
-        더 안정된 방향성을 만듭니다.
-      </p>
-
-      <figure class="kinematic-figure">
-        <img src="/images/system/kinematic-graph.jpg"
-             alt="효율적인 키네마틱 시퀀스 그래프 — 하체·상체·팔·클럽의 피크 속도가 계단형으로 나타나는 패턴"
-             loading="lazy" />
-        <figcaption>효율적인 시퀀스 — 4분절의 피크 속도가 계단형으로 형성됩니다 (K-VEST 측정 화면)</figcaption>
-      </figure>
-
-      <h3 class="kinematic-h3">4가지 측정 항목</h3>
-      <ol class="kinematic-list">
-        <li><strong>피크 시퀀스</strong> — 분절별 가속·감속 순서</li>
-        <li><strong>X-factor stretch</strong> — 다운스윙 초기 5° 이상의 회전차</li>
-        <li><strong>Pelvic Bend</strong> — 임팩트 구간의 자세 일정성</li>
-        <li><strong>Pelvis &amp; Upper Body Turn</strong> — Top·Impact 시점 회전각</li>
-      </ol>
-
-      <h3 class="kinematic-h3">키네마틱 분석이 클럽피팅에 들어가는 의미</h3>
-      <p class="kinematic-body">
-        스윙웨이트만 보고 무게를 결정하면 위험합니다. 같은 헤드스피드라도 시퀀스가 다르면 필요한 클럽이 다릅니다.
-      </p>
-      <ul class="kinematic-rules">
-        <li><strong>클럽 주도 패턴</strong> → 무게감 먼저 올려 시퀀스 안정화</li>
-        <li><strong>상체 주도 패턴</strong> → 강도보다 분리 동작 우선</li>
-        <li><strong>트랜지션 지연</strong> → 토크 낮은 샤프트</li>
-        <li><strong>X-factor 부족</strong> → 라이각·길이 함께 검토</li>
-      </ul>
-
-      <aside class="case-box">
-        <p class="case-eyebrow">사례 — 라이각 점검을 위해 방문하신 분</p>
-        <p class="case-body">
-          V-plane 편차가 컸습니다. 측정 결과만 보면 라이각을 조정해도 결과가 안정될지 확신하기 어려웠습니다.
-          이번 분석의 결론은 라이각 자체가 아니라,
-          <strong>라이각 문제처럼 보이게 만든 스윙 원인을 먼저 정리하는 것</strong>이었습니다.
-        </p>
-        <figure class="case-figure">
-          <img src="/images/system/vplane-comparison.jpg"
-               alt="V-plane 편차 비교 — 66.3° (편차 큼) vs 45.3° (편차 작음)"
-               loading="lazy" />
-          <figcaption>V-plane 편차 — 같은 의도로 스윙해도 실제 클럽이 들어오는 방식이 다르다는 측정 결과</figcaption>
-        </figure>
-      </aside>
-
-      <h3 class="kinematic-h3">3D 키네마틱 시퀀스, 한국 클럽피팅 현장의 첫 도입</h3>
-      <p class="kinematic-body">
-        골프채공작소는 청와대 출장 이후 객관적 분석에 대한 갈증을 안고 운동역학 공부를 시작했습니다.
-        2007년부터 여러 분석 도구를 공부했고, <strong>2008년 K-VEST를 처음 도입해 클럽피팅 분석에 활용</strong>해 왔습니다.
-      </p>
-      <p class="kinematic-body">
-        3D 키네마틱 시퀀스 분석 장비를 보유한 골프 시설은 한국에도 있지만,
-        측정 결과를 <strong>클럽피팅 처방까지 연결하는 곳은 거의 없습니다.</strong>
-      </p>
     </div>
   </section>
 
@@ -513,110 +475,6 @@ const articleSchema = {
     </div>
   </section>
 
-  <!-- 4-6.5. [NEW] 분석 레포트 -->
-  <section class="section section-report">
-    <div class="section-content-narrow">
-      <p class="section-eyebrow">REPORT · 분석 결과는 문서로 남습니다</p>
-      <h2>측정으로 끝나지 않습니다.</h2>
-      <p class="section-lead">
-        모든 분석은 PDF 레포트로 정리되어 고객님께 전달됩니다.
-        프로 선수도, 입문자도 같은 형식의 정밀 레포트를 받습니다.
-      </p>
-
-      <figure class="report-figure">
-        <img src="/images/system/report-pages.jpg"
-             alt="피팅 분석 레포트 예시 — 표지, 퍼스널 인터뷰, 4단계 전략, 요약"
-             loading="lazy" />
-        <figcaption>레포트 예시 — 표지·인터뷰·전략·요약 (개인정보 익명 처리)</figcaption>
-      </figure>
-
-      <h3 class="report-h3">레포트 구성</h3>
-      <ol class="report-list">
-        <li>퍼스널 인터뷰 + TPI 신체 평가 결과</li>
-        <li>키네마틱 시퀀스 분석 — 4분절 피크 패턴 + 해석</li>
-        <li>X-factor 그래프 — Stretch 구간 분석</li>
-        <li>골반·상체 회전각 — Top·Impact PGA Range 비교</li>
-        <li>골반 굽힘 + 지면 반력</li>
-        <li>4단계 전략 — Swing Cue / Motor Skill / Body Prep / Equipment Fitting</li>
-        <li>요약 및 다음 단계 — 재측정 시점, 우선순위</li>
-      </ol>
-
-      <h3 class="report-h3">레포트의 가치</h3>
-      <ul class="report-value">
-        <li>그날의 인상이 아니라 측정값으로 남습니다</li>
-        <li>다음 방문 때 변화를 비교할 기준이 됩니다</li>
-        <li>레슨 프로·트레이너와 공유 가능합니다</li>
-        <li>클럽 처방의 근거가 됩니다</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 4-6.7. [NEW] 4단계 처방 프레임워크 -->
-  <section class="section section-strategy">
-    <div class="section-content-narrow">
-      <p class="section-eyebrow">STRATEGY · 측정에서 처방으로 가는 4단계</p>
-      <h2>골프채공작소의 독보적인 서비스</h2>
-      <p class="section-lead">
-        피팅의 <strong>단기 전략과 장기 전략</strong>,
-        <strong>스윙 개선 큐(Swing Cue)</strong>,
-        <strong>바디 프렙(Body Prep)</strong>,
-        <strong>모터 스킬(Motor Skill)</strong>을
-        종합적으로 분석해서 제공하는 서비스는 골프채공작소의 독보적인 서비스입니다.
-      </p>
-      <p class="section-lead">
-        측정값을 단순히 보여드리는 것이 아니라, 측정으로 발견한 문제를
-        <strong>어떤 순서로, 어떻게</strong> 풀어갈지까지 함께 설계합니다.
-      </p>
-
-      <div class="strategy-grid">
-        <div class="strategy-card">
-          <p class="strategy-num">01</p>
-          <h3 class="strategy-name">SWING CUE</h3>
-          <p class="strategy-ko">스윙 보완 큐</p>
-          <p class="strategy-body">즉각 적용 가능한 동작 신호</p>
-          <p class="strategy-example">예: "백스윙 크기를 줄이고 리듬 유지"</p>
-        </div>
-        <div class="strategy-card">
-          <p class="strategy-num">02</p>
-          <h3 class="strategy-name">MOTOR SKILL</h3>
-          <p class="strategy-ko">모터 스킬</p>
-          <p class="strategy-body">분리 동작·드릴 반복 연습</p>
-          <p class="strategy-example">예: "하체 먼저, 상체는 늦게 따라오기"</p>
-        </div>
-        <div class="strategy-card">
-          <p class="strategy-num">03</p>
-          <h3 class="strategy-name">BODY PREP</h3>
-          <p class="strategy-ko">바디 프렙</p>
-          <p class="strategy-body">가동성·안정성 운동</p>
-          <p class="strategy-example">예: "고관절 회전 가동성 / 코어 안정화"</p>
-        </div>
-        <div class="strategy-card">
-          <p class="strategy-num">04</p>
-          <h3 class="strategy-name">EQUIPMENT FITTING</h3>
-          <p class="strategy-ko">클럽 처방</p>
-          <p class="strategy-body">무게·강도·MOI·라이각</p>
-          <p class="strategy-example">예: "1차 SW D2 테스트 → 시퀀스 안정 후 강도 상승"</p>
-        </div>
-      </div>
-
-      <h3 class="strategy-h3">단기 전략과 장기 전략의 분리</h3>
-      <ul class="strategy-timeline">
-        <li>
-          <strong>단기</strong> — 지금 클럽으로 잡을 수 있는 것:
-          무게·MOI·스윙웨이트·라이·로프트·길이
-        </li>
-        <li>
-          <strong>장기</strong> — 신체 변화와 스윙 발전에 맞춘 처방 갱신:
-          정기 재측정, 세트 흐름 재정렬, 다음 단계
-        </li>
-      </ul>
-      <p class="strategy-foot">
-        처방은 한 번이 아닙니다. 사람도 클럽도 변화합니다.
-        단기와 장기를 함께 설계하는 것이 핵심입니다.
-      </p>
-    </div>
-  </section>
-
   <!-- 4-7. 마침표 -->
   <section class="section closing-bottom">
     <div class="section-content-narrow">
@@ -654,14 +512,6 @@ const articleSchema = {
         <p>다운스윙에서 하체→몸통→팔→손이 순차적으로 가속도가 최고점에 도달하는 구조입니다. 이 구조를 분석하면 같은 헤드스피드라도 어떤 샤프트가 맞는지 결정할 수 있습니다. 클럽메이커스는 2008년 한국 현장에 도입했습니다.</p>
       </details>
       <details class="faq-detail">
-        <summary>K-VEST가 뭔가요?</summary>
-        <p>3D 운동역학 분석 장비입니다. 몸에 IMU 센서를 부착해 골반·몸통·팔·클럽 4개 분절의 회전 속도·각도를 1초에 수백 번 측정합니다. 미국 PGA Tour 선수들이 사용하는 장비입니다. 골프채공작소는 청와대 출장 이후 객관적 분석에 대한 갈증으로 2007년부터 운동역학 공부를 시작했고, <strong>2008년 K-VEST를 처음 도입</strong>해 클럽피팅 분석에 활용해 왔습니다.</p>
-      </details>
-      <details class="faq-detail">
-        <summary>키네마틱 시퀀스 분석이 다른 곳과 무엇이 다른가요?</summary>
-        <p>3D 키네마틱 시퀀스 분석 장비를 보유한 골프 시설은 한국에도 있지만, <strong>측정 결과를 클럽피팅 처방까지 연결하는 곳은 거의 없습니다.</strong> 골프채공작소는 2008년부터 키네마틱 측정값을 클럽 변수(무게·강도·MOI·라이각)로 변환하는 자체 시스템을 발전시켜 왔습니다.</p>
-      </details>
-      <details class="faq-detail">
         <summary>처음 오는데 무엇을 준비해야 하나요?</summary>
         <p>현재 사용 중인 클럽 세트를 가져오시면 됩니다(드라이버·아이언·웨지·퍼터). 가장 편한 클럽이 무엇인지 미리 생각해두시면 인터뷰가 수월합니다. 시험 보는 자리가 아니니 편하게 오시면 됩니다.</p>
       </details>
@@ -691,16 +541,6 @@ const articleSchema = {
     },
     {
       '@type': 'Question',
-      name: 'K-VEST가 뭔가요?',
-      acceptedAnswer: { '@type': 'Answer', text: '3D 운동역학 분석 장비입니다. 몸에 IMU 센서를 부착해 골반·몸통·팔·클럽 4개 분절의 회전 속도·각도를 1초에 수백 번 측정합니다. 미국 PGA Tour 선수들이 사용하는 장비입니다. 골프채공작소는 청와대 출장 이후 객관적 분석에 대한 갈증으로 2007년부터 운동역학 공부를 시작했고, 2008년 K-VEST를 처음 도입해 클럽피팅 분석에 활용해 왔습니다.' }
-    },
-    {
-      '@type': 'Question',
-      name: '키네마틱 시퀀스 분석이 다른 곳과 무엇이 다른가요?',
-      acceptedAnswer: { '@type': 'Answer', text: '3D 키네마틱 시퀀스 분석 장비를 보유한 골프 시설은 한국에도 있지만, 측정 결과를 클럽피팅 처방까지 연결하는 곳은 거의 없습니다. 골프채공작소는 2008년부터 키네마틱 측정값을 클럽 변수(무게·강도·MOI·라이각)로 변환하는 자체 시스템을 발전시켜 왔습니다.' }
-    },
-    {
-      '@type': 'Question',
       name: '처음 오는데 무엇을 준비해야 하나요?',
       acceptedAnswer: { '@type': 'Answer', text: '현재 사용 중인 클럽 세트를 가져오시면 됩니다(드라이버·아이언·웨지·퍼터). 가장 편한 클럽이 무엇인지 미리 생각해두시면 인터뷰가 수월합니다. 시험 보는 자리가 아니니 편하게 오시면 됩니다.' }
     }
@@ -708,327 +548,80 @@ const articleSchema = {
 })} />
 
 <style>
-  /* ============================================================
-     [NEW] 신규 섹션 CSS — Tools / Kinematic / Report / Strategy
-     ============================================================ */
+  /* ===== 전체 진단 흐름 다이어그램 ===== */
+  .process-diagram { margin: 56px 0 8px; }
+  .pd-head { text-align: center; margin-bottom: 36px; }
+  .pd-head h2 { font-size: 24px; line-height: 1.35; margin: 6px 0 10px; }
+  .pd-lead { font-size: 14px; color: var(--grey, #666); margin: 0 auto; max-width: 460px; line-height: 1.7; }
 
-  /* 4-1.5 · 측정 도구 (Tools) */
-  .section-tools {
-    background: var(--bg-soft);
+  .pd-flow { position: relative; max-width: 600px; margin: 0 auto; }
+  .pd-flow::before {
+    content: ''; position: absolute; left: 27px; top: 24px; bottom: 30px;
+    width: 2px; background: linear-gradient(var(--gold, #B8985C), var(--line, #E5DED1));
   }
-  .tools-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 32px;
+  .pd-step { position: relative; display: flex; gap: 18px; align-items: flex-start; padding-bottom: 22px; }
+  .pd-num {
+    flex: 0 0 56px; width: 56px; height: 56px; border-radius: 50%;
+    background: var(--green, #0F2922); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700; position: relative; z-index: 2;
+    box-shadow: 0 4px 14px rgba(15,41,34,.18);
   }
-  .tool-card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--gold);
-    padding: 32px 28px;
+  .pd-optional .pd-num {
+    background: var(--bg-cream, #F8F2E5); color: var(--gold, #B8985C);
+    border: 2px dashed var(--gold, #B8985C); box-shadow: none;
   }
-  .tool-name {
-    font-family: 'Noto Serif KR', serif;
-    font-weight: 700;
-    font-size: 24px;
-    color: var(--ink);
-    margin: 0 0 4px;
-    letter-spacing: -0.01em;
+  .pd-body {
+    flex: 1; background: #fff; border: 1px solid var(--line, #E5DED1);
+    border-radius: 10px; padding: 15px 18px; margin-top: 3px;
   }
-  .tool-tag {
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    color: var(--gold);
-    margin: 0 0 16px;
-    text-transform: uppercase;
-  }
-  .tool-body {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--ink);
-    margin: 0 0 18px;
-  }
-  .tool-metrics {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 8px;
-  }
-  .tool-metrics li {
-    font-size: 12.5px;
-    background: var(--bg-soft);
-    color: var(--grey);
-    padding: 5px 10px;
-    border-radius: 2px;
-    letter-spacing: 0.01em;
-  }
-  @media (max-width: 720px) {
-    .tools-grid { grid-template-columns: 1fr; }
+  .pd-optional .pd-body { background: var(--bg-cream, #F8F2E5); border-style: dashed; }
+  .pd-body h3 { margin: 0 0 4px; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .pd-en { font-size: 11px; font-weight: 600; color: var(--gold, #B8985C); letter-spacing: .04em; }
+  .pd-body p { margin: 0; font-size: 13px; color: var(--grey, #666); line-height: 1.7; }
+  .pd-badge {
+    font-size: 10.5px; font-weight: 700; color: var(--gold, #B8985C);
+    background: #fff; border: 1px solid var(--gold, #B8985C); padding: 2px 8px; border-radius: 10px;
   }
 
-  /* 4-2.5 · 3D 키네마틱 시퀀스 (핵심) */
-  .section-kinematic {
-    background: var(--bg-cream);
+  .pd-report {
+    max-width: 600px; margin: 6px auto 0; margin-left: auto;
+    background: var(--green, #0F2922); color: #fff; border-radius: 10px;
+    padding: 16px 20px; text-align: center; box-shadow: 0 6px 20px rgba(15,41,34,.22);
   }
-  .kinematic-flow {
-    font-family: 'Noto Serif KR', serif;
-    font-size: clamp(20px, 3.2vw, 32px);
-    font-weight: 700;
-    text-align: center;
-    margin: 32px 0;
-    color: var(--green);
-    letter-spacing: 0.02em;
+  .pd-report .pd-en { color: var(--gold, #B8985C); }
+  .pd-report h3 { margin: 4px 0 0; font-size: 17px; }
+
+  .pd-strategies {
+    max-width: 600px; margin: 18px auto 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
   }
-  .flow-arrow {
-    color: var(--gold);
-    margin: 0 8px;
-    font-weight: 400;
+  .pd-strat {
+    background: #fff; border: 1px solid var(--line, #E5DED1);
+    border-top: 3px solid var(--gold, #B8985C); border-radius: 10px; padding: 18px;
   }
-  .kinematic-h3 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 40px 0 16px;
-    padding-left: 12px;
-    border-left: 3px solid var(--gold);
+  .pd-term { font-size: 11px; color: var(--gold, #B8985C); font-weight: 700; letter-spacing: .04em; }
+  .pd-strat h4 { margin: 4px 0 6px; font-size: 15px; font-weight: 700; }
+  .pd-strat p { margin: 0; font-size: 12.5px; color: var(--grey, #666); line-height: 1.7; }
+
+  .pd-loop {
+    max-width: 600px; margin: 18px auto 0;
+    display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+    background: var(--bg-cream, #F8F2E5); border: 1px dashed var(--gold, #B8985C);
+    border-radius: 40px; padding: 14px 24px; text-align: center;
   }
-  .kinematic-list,
-  .kinematic-rules {
-    padding-left: 0;
-    list-style: none;
-  }
-  .kinematic-list li,
-  .kinematic-rules li {
-    font-size: 15px;
-    line-height: 1.85;
-    color: var(--ink);
-    padding: 6px 0;
-    border-bottom: 1px dashed var(--line);
-  }
-  .kinematic-list li:last-child,
-  .kinematic-rules li:last-child { border-bottom: none; }
-  .kinematic-body {
-    font-size: 15px;
-    line-height: 1.85;
-    color: var(--ink);
-    margin: 0 0 16px;
+  .pd-loop-icon { font-size: 18px; color: var(--gold, #B8985C); }
+  .pd-loop strong { font-size: 14px; }
+  .pd-loop-sub { font-size: 12.5px; color: var(--grey, #666); }
+
+  @media (max-width: 600px) {
+    .pd-head h2 { font-size: 21px; }
+    .pd-num { flex-basis: 46px; width: 46px; height: 46px; font-size: 17px; }
+    .pd-flow::before { left: 22px; }
+    .pd-strategies { grid-template-columns: 1fr; }
+    .pd-loop { flex-direction: column; gap: 4px; border-radius: 16px; }
   }
 
-  /* 사례 박스 */
-  .case-box {
-    background: #fff;
-    border-left: 3px solid var(--green);
-    padding: 20px 24px;
-    margin: 32px 0;
-  }
-  .case-eyebrow {
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    color: var(--gold);
-    margin: 0 0 10px;
-    text-transform: uppercase;
-  }
-  .case-body {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--ink);
-    margin: 0;
-    font-style: normal;
-  }
-  .case-figure {
-    margin: 20px 0 0;
-  }
-  .case-figure img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 2px;
-  }
-  .case-figure figcaption {
-    font-size: 12.5px;
-    color: var(--grey);
-    margin-top: 8px;
-    line-height: 1.6;
-  }
-
-  /* figure — 키네마틱 도식·그래프 */
-  .kinematic-figure {
-    margin: 28px 0;
-    text-align: center;
-  }
-  .kinematic-figure img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    border-radius: 2px;
-  }
-  .kinematic-figure figcaption {
-    font-size: 13px;
-    color: var(--grey);
-    margin-top: 12px;
-    line-height: 1.6;
-    text-align: center;
-  }
-
-  /* figure — 레포트 그리드 */
-  .report-figure {
-    margin: 28px 0 36px;
-    text-align: center;
-  }
-  .report-figure img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    border-radius: 2px;
-    box-shadow: 0 12px 32px -16px rgba(15, 15, 14, 0.25);
-  }
-  .report-figure figcaption {
-    font-size: 13px;
-    color: var(--grey);
-    margin-top: 14px;
-    line-height: 1.6;
-    text-align: center;
-  }
-
-  /* 4-6.5 · 분석 레포트 */
-  .section-report {
-    background: var(--bg-soft);
-  }
-  .report-h3 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 36px 0 16px;
-    padding-left: 12px;
-    border-left: 3px solid var(--gold);
-  }
-  .report-list {
-    padding-left: 24px;
-    margin: 0;
-  }
-  .report-list li {
-    font-size: 15px;
-    line-height: 1.85;
-    color: var(--ink);
-    padding: 4px 0;
-  }
-  .report-value {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .report-value li {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--ink);
-    padding: 8px 0 8px 22px;
-    position: relative;
-  }
-  .report-value li::before {
-    content: '·';
-    position: absolute;
-    left: 6px;
-    color: var(--gold);
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 1;
-    top: 6px;
-  }
-
-  /* 4-6.7 · 4단계 처방 프레임워크 */
-  .section-strategy {
-    background: var(--bg-cream);
-  }
-  .strategy-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 36px 0 16px;
-  }
-  .strategy-card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--green);
-    padding: 24px;
-  }
-  .strategy-num {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--gold);
-    margin: 0 0 8px;
-    letter-spacing: 0.02em;
-  }
-  .strategy-name {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 0 0 4px;
-    letter-spacing: 0.02em;
-  }
-  .strategy-ko {
-    font-size: 13px;
-    color: var(--gold);
-    margin: 0 0 12px;
-    letter-spacing: 0.05em;
-  }
-  .strategy-body {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--ink);
-    margin: 0 0 8px;
-  }
-  .strategy-example {
-    font-size: 12.5px;
-    line-height: 1.6;
-    color: var(--grey);
-    margin: 0;
-    font-style: normal;
-  }
-  .strategy-h3 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 40px 0 16px;
-    padding-left: 12px;
-    border-left: 3px solid var(--gold);
-  }
-  .strategy-timeline {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .strategy-timeline li {
-    font-size: 15px;
-    line-height: 1.85;
-    color: var(--ink);
-    padding: 10px 0;
-    border-bottom: 1px dashed var(--line);
-  }
-  .strategy-timeline li:last-child { border-bottom: none; }
-  .strategy-foot {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--ink);
-    margin: 20px 0 0;
-    font-style: normal;
-  }
-  @media (max-width: 720px) {
-    .strategy-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ============================================================
-     기존 CSS는 아래
-     ============================================================ */
   .system-hero {
     background: var(--bg-cream);
     border-bottom: none;
