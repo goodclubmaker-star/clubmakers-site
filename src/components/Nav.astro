@@ -24,12 +24,13 @@ const menuGroups = [
   },
   {
     label: '공작소',
-    paths: ['/about', '/why-fitting', '/system', '/products'],
+    paths: ['/about', '/why-fitting', '/system', '/products', '/partners'],
     items: [
       { href: '/about',       label: '공작소장' },
       { href: '/why-fitting', label: '클럽피팅 철학' },
       { href: '/system',      label: '시스템' },
       { href: '/products',    label: '자체 제품' },
+      { href: '/partners',    label: '협력 파트너 (NEW)' },
     ],
   },
   {
@@ -69,7 +70,8 @@ const isActive = (paths: string[]) =>
 
 <nav class="nav">
   <a href="/" class="logo" aria-label="골프채공작소 클럽메이커스 홈">
-    <img src="/logo.png" alt="골프채공작소" class="logo-img" width="1200" height="268" />
+    CLUBMAKERS
+    <small>SINCE 1985 · 골프채공작소</small>
   </a>
 
   <ul class="nav-menu">
@@ -165,15 +167,34 @@ const isActive = (paths: string[]) =>
     gap: 24px;
   }
   .logo {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--ink);
     display: flex;
     align-items: center;
+    gap: 10px;
     flex-shrink: 0;
     text-decoration: none;
   }
-  .logo-img {
-    height: 38px;
-    width: auto;
-    display: block;
+  .logo::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .logo small {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--grey-2);
+    letter-spacing: 0.08em;
+    margin-left: 6px;
+    padding-left: 8px;
+    border-left: 1px solid var(--line);
   }
 
   .nav-menu {
@@ -403,6 +424,7 @@ const isActive = (paths: string[]) =>
     .nav { padding: 16px 32px; gap: 16px; }
     .nav-menu { font-size: 13.5px; }
     .nav-link { padding: 10px 11px; }
+    .logo small { display: none; }
   }
 
   @media (max-width: 968px) {
@@ -411,7 +433,8 @@ const isActive = (paths: string[]) =>
     }
     .nav-menu { display: none; }
     .nav-cta { display: none; }
-    .logo-img { height: 32px; }
+    .logo small { display: none; }
+    .logo { font-size: 18px; }
     .nav-mobile-toggle { display: flex; }
   }
 </style>
