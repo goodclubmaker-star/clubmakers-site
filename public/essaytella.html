@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESSAYTELLA — 에쎄이텔라</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1a17; --paper:#f0ebe1; --card:#faf7f0;
+    --accent:#7a5c3e; --accent-soft:#c9a678;
+    --line:#d2c6b2; --muted:#8a7f6e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 10% -5%, rgba(201,166,120,0.15), transparent 60%),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Noto Serif KR','Noto Serif JP','Noto Serif CJK KR',Georgia,serif;
+    min-height:100vh;
+  }
+  .frame{max-width:780px;margin:0 auto;padding:34px 22px 90px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:30px;}
+  .wordmark{display:flex;align-items:center;gap:12px;}
+  .wordmark svg{display:block;}
+  .wordmark .wm{font-family:Georgia,serif;font-size:18px;font-weight:700;letter-spacing:0.2em;}
+  .langs{display:flex;gap:6px;}
+  .lang-btn{
+    padding:6px 12px;background:transparent;border:1px solid var(--line);border-radius:16px;
+    font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--muted);cursor:pointer;
+  }
+  .lang-btn.on{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+  .tabbar{display:flex;gap:8px;margin-bottom:34px;border-bottom:1px solid var(--line);}
+  .tab{
+    padding:12px 18px;background:transparent;border:none;cursor:pointer;
+    font-family:'Noto Sans KR',sans-serif;font-size:14.5px;font-weight:700;color:var(--muted);
+    border-bottom:3px solid transparent;margin-bottom:-1px;
+  }
+  .tab.on{color:var(--accent);border-bottom-color:var(--accent);}
+  .pane{display:none;}
+  .pane.on{display:block;}
+  .eyebrow{
+    font-family:'Noto Sans KR',sans-serif;font-size:12px;letter-spacing:0.3em;
+    font-weight:700;color:var(--accent);margin-bottom:18px;
+  }
+  h1{font-size:34px;line-height:1.36;font-weight:900;letter-spacing:-0.01em;}
+  h1 .u{color:var(--accent);box-shadow:inset 0 -10px 0 rgba(201,166,120,0.4);}
+  .manifesto{margin-top:20px;padding-left:22px;border-left:3px solid var(--accent-soft);}
+  .manifesto p{font-size:16px;line-height:1.95;font-weight:500;color:#3d372f;}
+  .manifesto .close{margin-top:8px;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--muted);}
+  .card{
+    background:var(--card);border:1px solid #ddd3c2;border-radius:5px;
+    padding:24px 22px;margin-top:20px;
+  }
+  .card-label{
+    font-family:'Noto Sans KR',sans-serif;font-size:12px;letter-spacing:0.18em;
+    color:var(--accent);font-weight:700;display:block;margin-bottom:16px;
+  }
+  .card-label .opt{color:var(--muted);letter-spacing:0;font-weight:500;}
+  input[type=text],input[type=password],textarea{
+    width:100%;padding:12px 14px;font-size:15px;
+    font-family:'Noto Sans KR',sans-serif;border:1px solid #cabfad;border-radius:4px;
+    background:#fff;outline:none;color:var(--ink);
+  }
+  textarea{resize:vertical;line-height:1.7;font-family:'Noto Serif KR','Noto Serif JP',serif;font-size:15.5px;}
+  input:focus,textarea:focus{border-color:var(--accent-soft);}
+  .type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px;}
+  @media (max-width:560px){.type-grid{grid-template-columns:repeat(2,1fr);}}
+  .type-btn{
+    padding:13px 10px;background:#fff;border:1px solid var(--line);border-radius:4px;
+    cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:3px;
+    font-family:'Noto Sans KR',sans-serif;transition:all .15s;
+  }
+  .type-btn:hover{border-color:var(--accent-soft);}
+  .type-btn.on{background:var(--accent);border-color:var(--accent);}
+  .type-btn.on .t-main,.type-btn.on .t-hint{color:#fff;}
+  .t-main{font-size:14px;font-weight:700;color:var(--ink);}
+  .t-hint{font-size:11px;color:var(--muted);}
+  .kw-row{display:flex;gap:10px;}
+  .kw-row input{flex:1;}
+  .add-btn{
+    padding:0 20px;background:var(--ink);color:var(--paper);border:none;border-radius:4px;
+    font-size:14px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;font-weight:600;
+  }
+  .chosen{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .chosen-chip{
+    background:var(--accent);color:#fff;padding:7px 14px;border-radius:20px;font-size:13.5px;
+    font-family:'Noto Sans KR',sans-serif;cursor:pointer;font-weight:500;border:none;
+  }
+  .chosen-chip span{opacity:0.7;margin-left:4px;}
+  .helper-toggle{
+    margin-top:16px;background:transparent;border:none;color:var(--muted);
+    font-family:'Noto Sans KR',sans-serif;font-size:13px;cursor:pointer;padding:0;
+    text-decoration:underline;text-underline-offset:3px;
+  }
+  .helper{display:none;margin-top:14px;border-top:1px dashed var(--line);padding-top:14px;}
+  .helper.show{display:block;}
+  .helper p{
+    font-family:'Noto Sans KR',sans-serif;font-size:13.5px;color:#6b6254;
+    line-height:1.7;padding:5px 0;
+  }
+  .helper p b{color:var(--accent);font-weight:700;}
+  .hint{
+    font-family:'Noto Sans KR',sans-serif;font-size:12.5px;color:var(--muted);
+    margin-top:10px;line-height:1.6;
+  }
+  .sub-label{
+    font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--muted);
+    font-weight:700;margin:18px 0 10px;letter-spacing:0.08em;
+  }
+  .sub-label.first{margin-top:0;}
+  .chip-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{
+    padding:9px 16px;background:#fff;border:1px solid var(--line);border-radius:22px;
+    font-family:'Noto Sans KR',sans-serif;font-size:13.5px;color:#5c554b;cursor:pointer;
+    transition:all .15s;
+  }
+  .chip b{color:var(--accent);}
+  .chip:hover{border-color:var(--accent-soft);}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+  .chip.on b{color:var(--accent-soft);}
+  .chip .dot{
+    display:inline-block;width:6px;height:6px;border-radius:50%;
+    background:var(--accent-soft);margin-left:6px;vertical-align:middle;
+  }
+  .gen-btn{
+    width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:5px;
+    font-size:16.5px;font-family:'Noto Serif KR','Noto Serif JP',serif;font-weight:700;cursor:pointer;
+    letter-spacing:0.04em;margin-top:22px;transition:background .15s;
+  }
+  .gen-btn:hover{background:#6a4e33;}
+  .gen-btn:disabled{opacity:0.6;cursor:default;}
+  .loading-line{
+    font-family:'Noto Sans KR',sans-serif;font-size:13.5px;color:var(--accent);
+    text-align:center;margin-top:16px;display:none;
+  }
+  .loading-line.show{display:block;}
+  .error{
+    margin-top:14px;color:#a1442f;font-family:'Noto Sans KR',sans-serif;
+    font-size:14px;text-align:center;line-height:1.6;
+  }
+  .keybox{display:none;margin-top:16px;}
+  .keybox.show{display:block;}
+  .result{margin-top:28px;display:none;}
+  .result.show{display:block;}
+  .style-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+  .regen-btn{
+    padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:22px;
+    font-family:'Noto Sans KR',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;
+  }
+  .regen-btn:disabled{opacity:0.6;cursor:default;}
+  .final{background:#fff;border:1px solid #ddd3c2;border-radius:5px;padding:28px 26px;}
+  .final-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;gap:10px;flex-wrap:wrap;}
+  .final-label{
+    font-family:'Noto Sans KR',sans-serif;font-size:12px;letter-spacing:0.18em;
+    color:var(--accent);font-weight:700;
+  }
+  .char-count{font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--muted);}
+  .final-text{font-size:16px;line-height:2;white-space:pre-wrap;-webkit-user-select:text;user-select:text;cursor:text;}
+  .final-text .blank{
+    background:rgba(201,166,120,0.25);border-bottom:2px solid var(--accent-soft);
+    padding:0 6px;font-weight:700;color:var(--accent);
+  }
+  .dict-hint{margin-top:14px;font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--muted);}
+  .act-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+  .act-btn{
+    padding:10px 20px;background:transparent;border:1px solid var(--line);
+    border-radius:4px;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:#5c554b;
+    cursor:pointer;
+  }
+  .act-btn:hover{border-color:var(--accent-soft);color:var(--accent);}
+  .dict-pop{
+    position:fixed;z-index:50;max-width:320px;
+    background:var(--ink);color:var(--paper);border-radius:8px;
+    padding:14px 16px;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;line-height:1.7;
+    box-shadow:0 8px 30px rgba(28,26,23,0.35);display:none;
+  }
+  .dict-pop.show{display:block;}
+  .dict-pop .dw{color:var(--accent-soft);font-weight:700;margin-bottom:4px;font-size:14px;}
+  .mode-desc{
+    font-family:'Noto Sans KR',sans-serif;font-size:13.5px;color:#6b6254;line-height:1.7;
+    margin-top:10px;
+  }
+  .tr-stage{margin-top:20px;}
+  .compare{display:flex;flex-direction:column;gap:14px;margin-top:18px;}
+  .cmp-box{background:#fff;border:1px solid #ddd3c2;border-radius:5px;padding:22px 22px;}
+  .cmp-box.mine{border-left:4px solid var(--accent-soft);}
+  .cmp-box.ai{border-left:4px solid var(--accent);}
+  .cmp-label{
+    font-family:'Noto Sans KR',sans-serif;font-size:11.5px;letter-spacing:0.16em;
+    color:var(--accent);font-weight:700;margin-bottom:10px;
+  }
+  .cmp-text{font-size:15.5px;line-height:1.95;white-space:pre-wrap;}
+  .obs-box{
+    background:rgba(201,166,120,0.10);border:1px dashed var(--accent-soft);border-radius:5px;
+    padding:20px 22px;margin-top:14px;
+  }
+  .obs-box .cmp-label{color:var(--muted);}
+  .obs-box .cmp-text{font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.8;color:#4a4237;}
+  .streak{
+    font-family:'Noto Sans KR',sans-serif;font-size:12.5px;color:var(--muted);
+    margin-top:8px;
+  }
+  .streak b{color:var(--accent);}
+  .lib-title{
+    font-family:'Noto Sans KR',sans-serif;font-size:12px;letter-spacing:0.24em;
+    color:var(--muted);font-weight:700;margin-bottom:12px;
+  }
+  .lib-empty{
+    font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--muted);
+    border:1px dashed var(--line);border-radius:5px;padding:18px;text-align:center;line-height:1.7;
+  }
+  .lib-item{
+    background:var(--card);border:1px solid #ddd3c2;border-radius:5px;
+    padding:14px 18px;margin-bottom:10px;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  }
+  .lib-item:hover{border-color:var(--accent-soft);}
+  .lib-name{font-size:15px;font-weight:600;}
+  .lib-meta{font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--muted);flex-shrink:0;}
+  .lib-view{margin-top:18px;display:none;}
+  .lib-view.show{display:block;}
+  .set-block{margin-bottom:8px;}
+  .about{
+    font-family:'Noto Sans KR',sans-serif;font-size:13.5px;color:#6b6254;line-height:1.8;
+  }
+  footer{
+    margin-top:60px;text-align:center;font-family:'Noto Sans KR',sans-serif;
+    font-size:12.5px;color:#9a8f7e;line-height:1.7;
+  }
+  footer .fm{font-family:'Noto Serif KR','Noto Serif JP',serif;font-size:14px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="topbar">
+    <div class="wordmark">
+      <svg width="32" height="32" viewBox="0 0 34 34">
+        <g stroke="#7a5c3e" stroke-width="1.1" fill="none">
+          <line x1="6" y1="24" x2="14" y2="10"/><line x1="14" y1="10" x2="22" y2="17"/><line x1="22" y1="17" x2="29" y2="7"/><line x1="14" y1="10" x2="17" y2="27"/>
+        </g>
+        <g fill="#7a5c3e">
+          <circle cx="6" cy="24" r="2.2"/><circle cx="14" cy="10" r="2.8"/><circle cx="22" cy="17" r="2.2"/><circle cx="29" cy="7" r="2.5"/><circle cx="17" cy="27" r="2"/>
+        </g>
+      </svg>
+      <span class="wm">ESSAYTELLA</span>
+    </div>
+    <div class="langs" id="langRow"></div>
+  </div>
+
+  <div class="tabbar" id="tabbar"></div>
+
+  <!-- ============ 탭 1: 엮기 ============ -->
+  <div class="pane on" id="pane0">
+    <div class="eyebrow" id="tEyebrow"></div>
+    <h1 id="tTitle"></h1>
+    <div class="manifesto">
+      <p id="tManifesto"></p>
+      <div class="close" id="tManifestoClose"></div>
+    </div>
+
+    <section class="card">
+      <label class="card-label" id="tCard1"></label>
+      <div class="type-grid" id="typeGrid"></div>
+      <input type="text" id="title" placeholder="">
+    </section>
+
+    <section class="card">
+      <label class="card-label"><span id="tCard2"></span> <span class="opt" id="tCard2Opt"></span></label>
+      <div class="kw-row">
+        <input type="text" id="kwInput" placeholder="">
+        <button class="add-btn" id="tAddBtn" onclick="addKw()"></button>
+      </div>
+      <div class="chosen" id="chosen"></div>
+      <button class="helper-toggle" id="tHelperToggle" onclick="toggleHelper()"></button>
+      <div class="helper" id="helper"></div>
+    </section>
+
+    <section class="card">
+      <label class="card-label" id="tCard3"></label>
+      <div class="sub-label first" id="tSubPlatform"></div>
+      <div class="chip-row" id="platformRow"></div>
+    </section>
+
+    <button class="gen-btn" id="genBtn" onclick="generate(null)"></button>
+    <div class="loading-line" id="loadingLine"></div>
+    <div class="error" id="errorBox"></div>
+
+    <div class="result" id="result">
+      <div class="sub-label" id="tSubStyle"></div>
+      <div class="style-bar">
+        <span id="styleTabs" style="display:contents;"></span>
+        <button class="regen-btn" id="regenBtn" onclick="regen()"></button>
+      </div>
+      <div class="final">
+        <div class="final-head">
+          <div class="final-label" id="finalLabel"></div>
+          <div class="char-count" id="charCount"></div>
+        </div>
+        <div class="final-text" id="finalText"></div>
+        <div class="dict-hint" id="tDictHint"></div>
+        <div class="act-row">
+          <button class="act-btn" id="copyBtn" onclick="copyText()"></button>
+          <button class="act-btn" id="saveBtn" onclick="saveToLibrary()"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 탭 2: 트레이닝 ============ -->
+  <div class="pane" id="pane1">
+    <div class="eyebrow" id="trEyebrow"></div>
+    <h1 id="trTitleH"></h1>
+    <div class="streak" id="trStreak"></div>
+
+    <section class="card">
+      <label class="card-label" id="trModeLabel"></label>
+      <div class="chip-row" id="trModeRow"></div>
+      <p class="mode-desc" id="trModeDesc"></p>
+    </section>
+
+    <section class="card">
+      <label class="card-label" id="trWorkLabel"></label>
+      <input type="text" id="trTitle" placeholder="">
+      <input type="text" id="trKw" placeholder="" style="margin-top:10px;">
+    </section>
+
+    <div class="tr-stage" id="trStage"></div>
+    <div class="loading-line" id="trLoading"></div>
+    <div class="error" id="trError"></div>
+  </div>
+
+  <!-- ============ 탭 3: 서재 ============ -->
+  <div class="pane" id="pane2">
+    <div class="lib-title" id="tLibTitle"></div>
+    <div id="libList"></div>
+    <div class="lib-view" id="libView">
+      <div class="final">
+        <div class="final-head">
+          <div class="final-label" id="libViewLabel"></div>
+        </div>
+        <div class="final-text" id="libViewText"></div>
+        <div class="act-row">
+          <button class="act-btn" id="libCopyBtn" onclick="libCopy()"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 탭 4: 설정 ============ -->
+  <div class="pane" id="pane3">
+    <section class="card set-block">
+      <label class="card-label" id="setLangLabel"></label>
+      <div class="chip-row" id="setLangRow"></div>
+    </section>
+    <section class="card set-block">
+      <label class="card-label" id="setKeyLabel"></label>
+      <input type="password" id="apiKey" placeholder="sk-ant-…">
+      <p class="hint" id="setKeyHint"></p>
+    </section>
+    <section class="card set-block">
+      <label class="card-label" id="setAboutLabel"></label>
+      <p class="about" id="setAboutText"></p>
+    </section>
+  </div>
+
+  <div class="keybox" id="keyBox">
+    <div class="card">
+      <label class="card-label" id="tKeyLabel"></label>
+      <p class="hint" id="tKeyHint"></p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="fm" id="tMotto"></div>
+    <div style="margin-top:6px;letter-spacing:0.2em;">ESSAYTELLA</div>
+  </footer>
+</div>
+
+<div class="dict-pop" id="dictPop"></div>
+
+<script>
+/* ============ i18n ============ */
+const I18N = {
+  ko: {
+    langLabel:"한국어", outputLang:"한국어",
+    tabs:["엮기","트레이닝","서재","설정"],
+    eyebrow:"감상문 쓰기 트레이닝",
+    title:'어렴풋한 단어 몇 개가,<br><span class="u">평론의 문장</span>이 됩니다.',
+    manifesto:"방대한 지식을 쌓고 싶지만, 늘 정리가 안 된다.<br>읽고 본 것은 많은데, 문장 앞에서 흩어진다.<br>아는 한도 안에서, 조금 더 잘 엮고 싶다.",
+    manifestoClose:"— 이 마음 하나에서 시작한 앱입니다.",
+    card1:"01  무엇을 감상하셨나요?",
+    types:[
+      {label:"책 · 글", value:"책", hint:"소설·시·에세이·논픽션"},
+      {label:"영화 · 영상", value:"영화", hint:"영화·드라마·다큐"},
+      {label:"미술 · 전시", value:"미술", hint:"그림·조각·전시·사진"},
+      {label:"음악 · 공연", value:"음악", hint:"곡·앨범·콘서트·연주"},
+      {label:"음식 · 미각", value:"음식", hint:"요리·식당·차·술"},
+      {label:"그 밖의 체험", value:"체험", hint:"여행·장소·사람·순간"}
+    ],
+    titlePh:"작품·대상의 이름 — 예: 데미안, 퍼펙트 데이즈, 이중섭 전시",
+    card2:"02  떠오른 키워드", card2Opt:"— 하나면 충분합니다",
+    kwPh:"예: 에반게리온 …  엔터로 추가", addBtn:"추가",
+    helperToggle:"키워드가 생각나지 않으세요? 질문 도움말 열기",
+    helperQs:["보고 나서 가장 오래 남은 장면·문장·소리는?","보는 동안 떠오른 다른 작품, 사람, 기억은?","어딘가 불편하거나 걸렸던 지점은?","한 단어로 줄인다면? (감정이어도, 개념이어도)"],
+    helperHint:"답이 떠오르면 그 단어를 그대로 키워드로 넣으세요. 문장일 필요 없습니다.",
+    card3:"03  용도 · 분량", subPlatform:"용도 · 분량", subStyle:"문체 — 골라서 다시 보기",
+    platforms:[
+      {label:"논술 · 서평", desc:"1,600자", spec:"1600자 내외 (한글 기준, ±15%)"},
+      {label:"블로그", desc:"1,000자", spec:"1000자 내외 (한글 기준, ±15%)"},
+      {label:"인스타", desc:"300자", spec:"300자 내외"},
+      {label:"쓰레드", desc:"500자", spec:"500자 내외"},
+      {label:"X", desc:"280자", spec:"280자 이내"}
+    ],
+    styles:[
+      {key:"비평", hint:"근거를 들어 평가하는 본격 비평. (기본)", rule:"숙련된 평론가의 본격 비평문. 주장과 근거의 구조가 분명하고, 형식·구조를 분석하며, 비판적 거리를 유지한다. 경구처럼 남는 압축 문장을 최소 하나."},
+      {key:"담백", hint:"군더더기 없이 정확하게.", rule:"군더더기 없는 담백한 문체. 짧고 정확한 단문 중심. 수사를 아끼고 사실과 판단을 또렷하게."},
+      {key:"서정", hint:"이미지와 리듬을 살려. 감정 토로 없이.", rule:"이미지와 리듬을 살린 서정적 문체. 단, 감정 토로가 아니라 묘사의 정확성으로 정서를 만든다."},
+      {key:"칼럼", hint:"작품을 우리 시대·사회와 잇는 시선.", rule:"신문 문화면 칼럼의 문체. 작품을 지금 이 시대의 현상·사회와 연결하는 시사적 시선."},
+      {key:"에세이", hint:"사유의 흐름을 따라 걷는 산문.", rule:"사색적 에세이의 문체. 사유가 걷는 속도로 전개하되, 감정 토로가 아니라 생각의 밀도로 끌고 갈 것."},
+      {key:"학술", hint:"개념을 정밀하게. 논증의 단단함.", rule:"학술적 문체. 개념어를 정확히 정의하며 쓰고, 주장-근거 구조를 분명히."},
+      {key:"위트", hint:"경쾌한 아이러니. 그러나 가볍지 않게.", rule:"위트 있는 문체. 경쾌한 아이러니와 재치 있는 비유. 유머는 통찰을 나르는 수단."}
+    ],
+    genBtn:"감상평 완성하기", regenBtn:"이 문체로 다시 보기",
+    loading:"조각들 사이의 연결을 찾는 중…",
+    errNoKw:"키워드를 하나 이상 넣어 주세요. 어렴풋한 단어면 충분합니다.",
+    errNoTitle:"작품 제목을 먼저 넣어 주세요.",
+    errNeedKey:"AI 서버에 연결하지 못했습니다. 설정 탭에서 API 키를 넣고 다시 시도해 주세요.",
+    errFail:"생성에 실패했습니다. 잠시 후 다시 시도해 주세요.",
+    keyLabel:"연결 안내", keyHint:"서버 연결이 불가한 환경입니다. 설정 탭에 Claude API 키를 넣으면 이 화면에서만 사용됩니다.",
+    finalLabel:"완성된 감상평", target:"목표", copyBtn:"본문 복사", copied:"복사되었습니다", saveBtn:"서재에 저장", saved:"저장되었습니다",
+    dictHint:"모르는 단어는 길게 누르면 설명해 드립니다.",
+    dictLoading:"찾아보는 중…", dictFail:"설명을 가져오지 못했습니다.",
+    trEyebrow:"트레이닝 코스",
+    trTitle:'평론가의 문장은<br>재능이 아니라, <span class="u">훈련</span>입니다.',
+    trStreak:"이번 세션 훈련 <b>{n}</b>회",
+    trModeLabel:"훈련 방법",
+    trModes:[
+      {key:"따라 쓰기", desc:"AI 샘플에서 핵심 문장 하나가 비워집니다. 빈칸을 당신의 문장으로 채운 뒤, 원문과 나란히 견줍니다. 연결의 구조를 몸에 익히는 단계."},
+      {key:"비틀어 쓰기", desc:"이 작품에 대한 '흔한 평가'와 그것을 비트는 지시를 받습니다. 지시대로 직접 쓰면, AI의 시범과 관찰이 돌아옵니다."},
+      {key:"홀로 쓰기", desc:"도움 없이 한 편을 완성합니다. 제출한 뒤에야 AI 시범이 공개되어, 내 글과 나란히 놓입니다."}
+    ],
+    trWorkLabel:"훈련 대상",
+    trTitlePh:"작품 제목 — 예: 데미안",
+    trKwPh:"키워드 (선택) — 예: 에반게리온",
+    trStart:["샘플 받기","지시 받기","바로 쓰기"],
+    trBlankGuide:"비워진 자리에 들어갈 문장을 당신의 언어로 써 보세요.",
+    trTwistGuide:"위 지시대로, 300자 내외로 써 보세요.",
+    trSoloGuide:"이 작품에 대한 감상평을 300~500자로 써 보세요. 제출 전에는 AI가 개입하지 않습니다.",
+    trSubmit:"원문과 견주기", trSubmit2:"AI 시범과 견주기", trSubmit3:"제출하고 견주기",
+    trMine:"나의 문장", trOrig:"원문의 문장", trAI:"AI의 시범", trObs:"관찰",
+    trCommon:"흔한 평가", trDirective:"비틀기 지시",
+    trAgain:"다른 훈련 한 번 더",
+    trWriteFirst:"먼저 당신의 문장을 써 주세요.",
+    libTitle:"나의 서재 · 이번 세션",
+    libEmpty:"아직 저장된 글이 없습니다. 엮기 탭에서 완성한 감상평을 서재에 담아 두면 여기에 쌓입니다.",
+    untitled:"(제목 없음)",
+    setLang:"언어 / Language / 言語",
+    setKey:"Claude API 키 (선택)",
+    setKeyHint:"기본적으로는 에쎄이텔라 서버를 통해 키 없이 동작합니다. 서버 연결이 안 되는 환경에서만 키가 사용되며, 저장되지 않습니다.",
+    setAbout:"소개",
+    aboutText:"에쎄이텔라(ESSAYTELLA)는 essay(에세이)와 stella(별)를 이은 이름입니다. 흩어진 별을 이으면 별자리가 되듯, 흩어진 지식과 감정을 이으면 에세이가 됩니다. 감상 흉내는 내지 않습니다 — 담백하고 지적인 연결만. 보는 눈을 기르고, 쓰는 손을 벼립니다.",
+    motto:"보는 눈을 기르고, 쓰는 손을 벼리다",
+    charUnit:"자"
+  },
+  en: {
+    langLabel:"English", outputLang:"English",
+    tabs:["Weave","Training","Library","Settings"],
+    eyebrow:"CRITICAL WRITING TRAINER",
+    title:'A few vague words become<br><span class="u">a critic’s sentences</span>.',
+    manifesto:"You want to build vast knowledge, but it never gets organized.<br>You’ve read and seen so much — it scatters before the sentence.<br>Within what you know, you want to weave it better.",
+    manifestoClose:"— This app began with that one feeling.",
+    card1:"01  WHAT DID YOU EXPERIENCE?",
+    types:[
+      {label:"Book · Text", value:"book", hint:"fiction·poetry·essay·nonfiction"},
+      {label:"Film · Video", value:"film", hint:"film·series·documentary"},
+      {label:"Art · Exhibit", value:"art", hint:"painting·sculpture·photo"},
+      {label:"Music · Live", value:"music", hint:"track·album·concert"},
+      {label:"Food · Taste", value:"food", hint:"dish·restaurant·tea·wine"},
+      {label:"Other", value:"experience", hint:"travel·place·person·moment"}
+    ],
+    titlePh:"Title — e.g. Demian, Everything Everywhere All at Once",
+    card2:"02  WORDS THAT CAME TO MIND", card2Opt:"— one is enough",
+    kwPh:"e.g. Evangelion …  press Enter to add", addBtn:"Add",
+    helperToggle:"Nothing comes to mind? Open helper questions",
+    helperQs:["What scene, line, or sound stayed with you longest?","What other works, people, or memories surfaced?","Where did it bother or snag you?","If you had to reduce it to one word — feeling or concept?"],
+    helperHint:"When an answer surfaces, drop the word in as a keyword. No sentences needed.",
+    card3:"03  FORMAT · LENGTH", subPlatform:"Format · Length", subStyle:"Style — pick and rewrite",
+    platforms:[
+      {label:"Essay · Review", desc:"~700 words", spec:"about 700 words (±15%)"},
+      {label:"Blog", desc:"~450 words", spec:"about 450 words (±15%)"},
+      {label:"Instagram", desc:"~120 words", spec:"about 120 words"},
+      {label:"Threads", desc:"500 chars", spec:"under 500 characters"},
+      {label:"X", desc:"280 chars", spec:"under 280 characters"}
+    ],
+    styles:[
+      {key:"Critical", hint:"Full criticism, argued with evidence. (default)", rule:"A seasoned critic's full review: clear claim-evidence structure, formal/structural analysis, critical distance. At least one compressed, aphoristic sentence."},
+      {key:"Plain", hint:"Precise, no excess.", rule:"A plain, economical voice. Short precise sentences; spare rhetoric; facts and judgments stated cleanly."},
+      {key:"Lyric", hint:"Image and cadence — never gushing.", rule:"A lyrical voice built on precise imagery and rhythm, never on emotional outpouring."},
+      {key:"Column", hint:"Ties the work to our times.", rule:"A culture-columnist's voice, connecting the work to present-day society."},
+      {key:"Essay", hint:"Prose at the pace of thought.", rule:"A contemplative essayist's voice, driven by density of thought."},
+      {key:"Academic", hint:"Precise concepts, solid argument.", rule:"An academic voice: define concepts precisely; keep a clear claim-evidence structure."},
+      {key:"Wit", hint:"Light irony — never lightweight.", rule:"A witty voice: playful irony and sharp analogies; humor carries insight."}
+    ],
+    genBtn:"Weave my review", regenBtn:"Rewrite in this style",
+    loading:"Finding the connections between your fragments…",
+    errNoKw:"Add at least one keyword. A vague word is enough.",
+    errNoTitle:"Enter the work's title first.",
+    errNeedKey:"Couldn't reach the AI server. Add an API key in Settings and retry.",
+    errFail:"Generation failed. Please try again shortly.",
+    keyLabel:"Connection notice", keyHint:"The server is unreachable here. Add a Claude API key in Settings; it is used only on this screen.",
+    finalLabel:"FINISHED REVIEW", target:"target", copyBtn:"Copy text", copied:"Copied", saveBtn:"Save to library", saved:"Saved",
+    dictHint:"Press and hold any word for a quick explanation.",
+    dictLoading:"Looking it up…", dictFail:"Couldn't fetch an explanation.",
+    trEyebrow:"TRAINING COURSE",
+    trTitle:'A critic’s sentences are<br>not talent — they’re <span class="u">training</span>.',
+    trStreak:"Sessions this visit: <b>{n}</b>",
+    trModeLabel:"Training method",
+    trModes:[
+      {key:"Emulate", desc:"One key sentence in an AI sample is blanked out. Fill it in your own words, then compare with the original — internalizing the structure of connection."},
+      {key:"Twist", desc:"Receive the 'common take' on the work and an instruction to twist it. Write it yourself; the AI's version and observations come back."},
+      {key:"Solo", desc:"Write a full piece unaided. Only after submitting does the AI's version appear beside yours."}
+    ],
+    trWorkLabel:"Training subject",
+    trTitlePh:"Title — e.g. Demian",
+    trKwPh:"Keyword (optional) — e.g. Evangelion",
+    trStart:["Get sample","Get directive","Start writing"],
+    trBlankGuide:"Write the missing sentence in your own words.",
+    trTwistGuide:"Follow the directive above, in ~100 words.",
+    trSoloGuide:"Write a 150–250 word review. The AI stays out until you submit.",
+    trSubmit:"Compare with original", trSubmit2:"Compare with AI", trSubmit3:"Submit and compare",
+    trMine:"MY SENTENCE", trOrig:"THE ORIGINAL", trAI:"AI'S VERSION", trObs:"OBSERVATIONS",
+    trCommon:"COMMON TAKE", trDirective:"TWIST DIRECTIVE",
+    trAgain:"One more round",
+    trWriteFirst:"Write your sentence first.",
+    libTitle:"MY LIBRARY · THIS SESSION",
+    libEmpty:"Nothing saved yet. Reviews you save in the Weave tab pile up here.",
+    untitled:"(untitled)",
+    setLang:"언어 / Language / 言語",
+    setKey:"Claude API key (optional)",
+    setKeyHint:"By default Essaytella works key-free through its server. The key is used only when the server is unreachable, and is never stored.",
+    setAbout:"About",
+    aboutText:"ESSAYTELLA joins essay and stella (Latin for star). Connect scattered stars and you get a constellation; connect scattered knowledge and you get an essay. No fake feelings — only restrained, intellectual connections. Train the eye; temper the writing hand.",
+    motto:"Train the eye. Temper the writing hand.",
+    charUnit:" chars"
+  },
+  ja: {
+    langLabel:"日本語", outputLang:"日本語",
+    tabs:["編む","トレーニング","書斎","設定"],
+    eyebrow:"感想文トレーニング",
+    title:'おぼろげな単語のいくつかが、<br><span class="u">批評の文章</span>になります。',
+    manifesto:"膨大な知識を積みたいのに、いつも整理できない。<br>読んだもの、観たものは多いのに、文章の前で散らばる。<br>知っている範囲で、もう少しうまく編みたい。",
+    manifestoClose:"— この気持ちひとつから始まったアプリです。",
+    card1:"01  何を鑑賞しましたか？",
+    types:[
+      {label:"本 · 文章", value:"本", hint:"小説·詩·エッセイ"},
+      {label:"映画 · 映像", value:"映画", hint:"映画·ドラマ·ドキュメンタリー"},
+      {label:"美術 · 展示", value:"美術", hint:"絵画·彫刻·写真"},
+      {label:"音楽 · 公演", value:"音楽", hint:"曲·アルバム·コンサート"},
+      {label:"食 · 味覚", value:"食", hint:"料理·店·茶·酒"},
+      {label:"その他の体験", value:"体験", hint:"旅·場所·人·瞬間"}
+    ],
+    titlePh:"作品名 — 例：デミアン、パーフェクト・デイズ",
+    card2:"02  浮かんだキーワード", card2Opt:"— ひとつで十分です",
+    kwPh:"例：エヴァンゲリオン …  Enterで追加", addBtn:"追加",
+    helperToggle:"キーワードが浮かびませんか？ヒントの質問を開く",
+    helperQs:["最も長く残った場面・台詞・音は？","鑑賞中に浮かんだ別の作品や人、記憶は？","どこか引っかかった点は？","一語に縮めるなら？（感情でも概念でも）"],
+    helperHint:"答えが浮かんだら、その単語をそのままキーワードに。文章である必要はありません。",
+    card3:"03  用途 · 分量", subPlatform:"用途 · 分量", subStyle:"文体 — 選んで書き直す",
+    platforms:[
+      {label:"小論文 · 書評", desc:"1,600字", spec:"1600字前後（±15%）"},
+      {label:"ブログ", desc:"1,000字", spec:"1000字前後（±15%）"},
+      {label:"インスタ", desc:"300字", spec:"300字前後"},
+      {label:"スレッズ", desc:"500字", spec:"500字以内"},
+      {label:"X", desc:"140字", spec:"140字以内"}
+    ],
+    styles:[
+      {key:"批評", hint:"根拠を挙げて評する本格批評。（基本）", rule:"熟練した批評家の本格的な批評文。主張と根拠の構造が明確で、形式・構造を分析し、批評的距離を保つ。警句のように残る圧縮された文章を最低ひとつ。"},
+      {key:"淡白", hint:"無駄なく正確に。", rule:"無駄のない淡白な文体。短く正確な文が中心。"},
+      {key:"抒情", hint:"イメージと律動を生かして。", rule:"イメージと律動を生かした抒情的文体。感情の吐露ではなく、描写の正確さで情感を作る。"},
+      {key:"コラム", hint:"作品をいまの時代につなぐ視線。", rule:"文化面コラムの文体。作品を現代の現象・社会と結びつける。"},
+      {key:"エッセイ", hint:"思索の歩幅で進む散文。", rule:"思索的エッセイの文体。思考の密度で進める。"},
+      {key:"学術", hint:"概念を精密に。", rule:"学術的文体。概念語を正確に定義し、主張と根拠の構造を明確に。"},
+      {key:"ウィット", hint:"軽快なアイロニー。", rule:"ウィットのある文体。ユーモアは洞察を運ぶ手段。"}
+    ],
+    genBtn:"感想文を編む", regenBtn:"この文体で書き直す",
+    loading:"かけらの間の連結を探しています…",
+    errNoKw:"キーワードを一つ以上入れてください。",
+    errNoTitle:"まず作品名を入れてください。",
+    errNeedKey:"AIサーバーに接続できません。設定タブでAPIキーを入れて再試行してください。",
+    errFail:"生成に失敗しました。しばらくしてからもう一度。",
+    keyLabel:"接続のご案内", keyHint:"サーバーに接続できない環境です。設定タブにClaude APIキーを入れるとこの画面でのみ使用されます。",
+    finalLabel:"完成した感想文", target:"目標", copyBtn:"本文をコピー", copied:"コピーしました", saveBtn:"書斎に保存", saved:"保存しました",
+    dictHint:"知らない単語は長押しすると説明が出ます。",
+    dictLoading:"調べています…", dictFail:"説明を取得できませんでした。",
+    trEyebrow:"トレーニングコース",
+    trTitle:'批評家の文章は<br>才能ではなく、<span class="u">訓練</span>です。',
+    trStreak:"今回の訓練 <b>{n}</b> 回",
+    trModeLabel:"訓練方法",
+    trModes:[
+      {key:"なぞり書き", desc:"AIサンプルの核心文がひとつ空欄になります。自分の言葉で埋め、原文と並べて比べます。"},
+      {key:"ひねり書き", desc:"作品への『よくある評価』とそれをひねる指示を受け、自分で書くと、AIの手本と観察が返ってきます。"},
+      {key:"ひとり書き", desc:"助けなしで一編を完成。提出後にはじめてAIの手本が現れ、並べて比べます。"}
+    ],
+    trWorkLabel:"訓練の対象",
+    trTitlePh:"作品名 — 例：デミアン",
+    trKwPh:"キーワード（任意）— 例：エヴァンゲリオン",
+    trStart:["サンプルを受け取る","指示を受け取る","すぐ書く"],
+    trBlankGuide:"空欄に入る文章を、自分の言葉で書いてみてください。",
+    trTwistGuide:"上の指示に従い、150字前後で書いてください。",
+    trSoloGuide:"この作品への感想文を200〜300字で。提出まではAIは関与しません。",
+    trSubmit:"原文と見比べる", trSubmit2:"AIの手本と見比べる", trSubmit3:"提出して見比べる",
+    trMine:"わたしの文章", trOrig:"原文の文章", trAI:"AIの手本", trObs:"観察",
+    trCommon:"よくある評価", trDirective:"ひねりの指示",
+    trAgain:"もう一回",
+    trWriteFirst:"まず自分の文章を書いてください。",
+    libTitle:"わたしの書斎 · 今回のセッション",
+    libEmpty:"まだ保存された文章はありません。『編む』タブで完成した感想文がここに積まれます。",
+    untitled:"（無題）",
+    setLang:"언어 / Language / 言語",
+    setKey:"Claude APIキー（任意）",
+    setKeyHint:"基本的にはサーバー経由でキーなしで動作します。サーバーに接続できない場合のみ使用され、保存されません。",
+    setAbout:"紹介",
+    aboutText:"ESSAYTELLAはessay（エッセイ）とstella（ラテン語で星）をつないだ名前です。散らばった星をつなげば星座に、散らばった知識をつなげばエッセイになります。感想の真似はしません — 淡白で知的な連結だけ。見る目を育て、書く手を研ぎます。",
+    motto:"見る目を育て、書く手を研ぐ",
+    charUnit:"字"
+  }
+};
+
+let lang="ko", curTab=0, selPlatform=1, selType="", keywords=[], cache={}, activeStyle=0, library=[], hasResult=false;
+let trMode=0, trPhase=0, trData={}, trainCount=0;
+const $=(id)=>document.getElementById(id);
+const T=()=>I18N[lang];
+
+/* ---- 언어 스위처 (상단 + 설정) ---- */
+function buildLangRows(){
+  ["langRow","setLangRow"].forEach(rowId=>{
+    const row=$(rowId); row.innerHTML="";
+    Object.keys(I18N).forEach(code=>{
+      const b=document.createElement("button");
+      b.className=(rowId==="langRow"?"lang-btn":"chip")+(code===lang?" on":"");
+      b.textContent=I18N[code].langLabel;
+      b.onclick=()=>{lang=code;cache={};hasResult=false;$("result").classList.remove("show");resetTrain();applyLang();};
+      row.appendChild(b);
+    });
+  });
+}
+
+/* ---- 탭 ---- */
+function buildTabs(){
+  const bar=$("tabbar"); bar.innerHTML="";
+  T().tabs.forEach((label,i)=>{
+    const b=document.createElement("button");
+    b.className="tab"+(i===curTab?" on":"");
+    b.textContent=label;
+    b.onclick=()=>{curTab=i;
+      [...bar.children].forEach((x,j)=>x.classList.toggle("on",j===i));
+      for(let j=0;j<4;j++)$("pane"+j).classList.toggle("on",j===i);
+    };
+    bar.appendChild(b);
+  });
+}
+
+function applyLang(){
+  const t=T();
+  buildLangRows(); buildTabs();
+  $("tEyebrow").textContent=t.eyebrow;
+  $("tTitle").innerHTML=t.title;
+  $("tManifesto").innerHTML=t.manifesto;
+  $("tManifestoClose").textContent=t.manifestoClose;
+  $("tCard1").textContent=t.card1;
+  $("title").placeholder=t.titlePh;
+  $("tCard2").textContent=t.card2;
+  $("tCard2Opt").textContent=t.card2Opt;
+  $("kwInput").placeholder=t.kwPh;
+  $("tAddBtn").textContent=t.addBtn;
+  $("tHelperToggle").textContent=t.helperToggle;
+  $("helper").innerHTML=t.helperQs.map(q=>`<p><b>Q.</b> ${q}</p>`).join("")+`<p class="hint">${t.helperHint}</p>`;
+  $("tCard3").textContent=t.card3;
+  $("tSubPlatform").textContent=t.subPlatform;
+  $("tSubStyle").textContent=t.subStyle;
+  $("genBtn").textContent=t.genBtn;
+  $("regenBtn").textContent=t.regenBtn;
+  $("loadingLine").textContent=t.loading;
+  $("trLoading").textContent=t.loading;
+  $("tKeyLabel").textContent=t.keyLabel;
+  $("tKeyHint").textContent=t.keyHint;
+  $("copyBtn").textContent=t.copyBtn;
+  $("saveBtn").textContent=t.saveBtn;
+  $("libCopyBtn").textContent=t.copyBtn;
+  $("tDictHint").textContent=t.dictHint;
+  $("tLibTitle").textContent=t.libTitle;
+  $("tMotto").textContent=t.motto;
+  $("trEyebrow").textContent=t.trEyebrow;
+  $("trTitleH").innerHTML=t.trTitle;
+  $("trModeLabel").textContent=t.trModeLabel;
+  $("trWorkLabel").textContent=t.trWorkLabel;
+  $("trTitle").placeholder=t.trTitlePh;
+  $("trKw").placeholder=t.trKwPh;
+  updateStreak(); buildModeRow(); renderTrainStage();
+  $("setLangLabel").textContent=t.setLang;
+  $("setKeyLabel").textContent=t.setKey;
+  $("setKeyHint").textContent=t.setKeyHint;
+  $("setAboutLabel").textContent=t.setAbout;
+  $("setAboutText").textContent=t.aboutText;
+  if(selPlatform>=t.platforms.length)selPlatform=0;
+  activeStyle=0; selType="";
+  buildTypeGrid(); buildPlatformRow(); renderLibrary();
+}
+
+function buildTypeGrid(){
+  const t=T(), grid=$("typeGrid"); grid.innerHTML="";
+  t.types.forEach(ty=>{
+    const b=document.createElement("button");
+    b.className="type-btn"+(selType===ty.value?" on":"");
+    b.innerHTML=`<span class="t-main">${ty.label}</span><span class="t-hint">${ty.hint}</span>`;
+    b.onclick=()=>{
+      selType=(selType===ty.value)?"":ty.value;
+      [...grid.children].forEach(x=>x.classList.remove("on"));
+      if(selType)b.classList.add("on");
+      cache={};
+    };
+    grid.appendChild(b);
+  });
+}
+
+function buildPlatformRow(){
+  const t=T(), row=$("platformRow"); row.innerHTML="";
+  t.platforms.forEach((p,i)=>{
+    const c=document.createElement("button");
+    c.className="chip"+(i===selPlatform?" on":"");
+    c.innerHTML=`<b>${p.label}</b> ${p.desc}`;
+    c.onclick=()=>{selPlatform=i;[...row.children].forEach(x=>x.classList.remove("on"));c.classList.add("on");cache={};};
+    row.appendChild(c);
+  });
+}
+function buildStyleTabs(){
+  const t=T(), box=$("styleTabs"); box.innerHTML="";
+  t.styles.forEach((s,i)=>{
+    const c=document.createElement("button");
+    c.className="chip"+(i===activeStyle?" on":"");
+    c.innerHTML=s.key+(cache[s.key]?'<span class="dot"></span>':"");
+    c.title=s.hint;
+    c.onclick=()=>{activeStyle=i;if(cache[s.key]){showText(cache[s.key]);}buildStyleTabs();};
+    box.appendChild(c);
+  });
+}
+
+/* ---- 키워드 ---- */
+$("kwInput").addEventListener("keydown",e=>{if(e.key==="Enter")addKw();});
+function addKw(){
+  const v=$("kwInput").value.trim();
+  if(v&&!keywords.includes(v)){keywords.push(v);renderKw();cache={};}
+  $("kwInput").value="";
+}
+function removeKw(k){keywords=keywords.filter(x=>x!==k);renderKw();cache={};}
+function renderKw(){
+  const box=$("chosen"); box.innerHTML="";
+  keywords.forEach(k=>{
+    const b=document.createElement("button");
+    b.className="chosen-chip"; b.innerHTML=`${k}<span>×</span>`;
+    b.onclick=()=>removeKw(k);
+    box.appendChild(b);
+  });
+}
+function toggleHelper(){$("helper").classList.toggle("show");}
+
+/* ---- AI 호출 (프록시 → 아티팩트 → 사용자 키) ---- */
+const PROXY_URL="https://kxvngoyvwtumdnczwyxs.supabase.co/functions/v1/essaytella-generate";
+const PROXY_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4dm5nb3l2d3R1bWRuY3p3eXhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzMDk5NDIsImV4cCI6MjA5OTg4NTk0Mn0.9S4E47Z4n0wGA3gP2Dz9wrkRSbE1pmfHNuVI-5IrEIo";
+
+async function ai(prompt,maxTokens){
+  maxTokens=maxTokens||3000;
+  try{
+    const r=await fetch(PROXY_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+PROXY_ANON,"apikey":PROXY_ANON},
+      body:JSON.stringify({prompt, max_tokens:maxTokens})});
+    if(r.ok){const d=await r.json();if(d.text)return d.text;}
+  }catch(e){}
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:maxTokens,messages:[{role:"user",content:prompt}]})});
+    if(r.ok){const d=await r.json();return d.content.filter(i=>i.type==="text").map(i=>i.text).join("\n").trim();}
+  }catch(e){}
+  const key=$("apiKey").value.trim();
+  if(!key){$("keyBox").classList.add("show");throw new Error("NEED_KEY");}
+  const r2=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","x-api-key":key,
+      "anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+    body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:maxTokens,messages:[{role:"user",content:prompt}]})});
+  if(!r2.ok)throw new Error("API_FAIL");
+  const d2=await r2.json();
+  return d2.content.filter(i=>i.type==="text").map(i=>i.text).join("\n").trim();
+}
+
+const STYLE_COMMON=(t,s)=>`문체 규정 (위반 금지):
+- 선택된 문체: ${s.key} — ${s.rule}
+- 1인칭 감상·감정 토로 절대 금지("나는 감동했다", "눈물이 났다" 류). 감상 흉내는 AI의 일이 아니다.
+- 감상적 수사·과장·감탄 배제. 정확한 개념어와 절제된 문장.
+- 경구처럼 남는 압축 문장을 최소 하나 벼릴 것.
+- 뻔한 줄거리 요약 금지. 뜻밖의 연결을 최소 하나 발견해 보여줄 것.
+- 작품에 대한 사실은 잘 알려진 것에 근거하고, 확실치 않으면 단정하지 말 것.`;
+
+function buildPrompt(styleIdx){
+  const t=T(), p=t.platforms[selPlatform], s=t.styles[styleIdx];
+  const title=$("title").value.trim();
+  return `당신은 감상문 쓰기를 가르치는 문장 코치이자 뛰어난 평론가입니다.
+
+출력 언어: 반드시 본문 전체를 ${t.outputLang}로 작성할 것.
+
+감상 분류: ${selType||"(미지정)"}
+대상: ${title||"(제목 미기재 — 키워드로 미루어 짐작하되 단정하지 말 것)"}
+사용자가 던진 키워드: ${keywords.join(", ")}
+${selType?`이 글은 ${selType}에 대한 감상평이다. 해당 장르·감각에 맞는 어휘와 관점으로 쓸 것 (예: 음식이면 맛·향·식감·공간, 음악이면 소리·구조·리듬).`:""}
+
+이 흩어진 조각들을 속으로 질문·연결하여(과정은 보이지 말 것), 접합부가 보이지 않는 잘 연결된 감상평 한 편으로 완성하십시오.
+
+${STYLE_COMMON(t,s)}
+
+분량: ${p.spec}. 용도: ${p.label}.
+
+출력: 제목·머리말·설명 없이 본문만.`;
+}
+
+async function generate(styleIdx){
+  const t=T(), err=$("errorBox");
+  err.textContent="";
+  if(keywords.length===0){err.textContent=t.errNoKw;return;}
+  const idx=(styleIdx==null)?activeStyle:styleIdx;
+  $("genBtn").disabled=true;$("regenBtn").disabled=true;$("loadingLine").classList.add("show");
+  try{
+    const text=await ai(buildPrompt(idx));
+    cache[t.styles[idx].key]=text;
+    activeStyle=idx; hasResult=true;
+    showText(text); buildStyleTabs();
+    $("keyBox").classList.remove("show");
+    const r=$("result");
+    if(!r.classList.contains("show")){r.classList.add("show");}
+    r.scrollIntoView({behavior:"smooth",block:"nearest"});
+  }catch(e){
+    err.textContent=(e.message==="NEED_KEY")?t.errNeedKey:t.errFail;
+  }finally{
+    $("genBtn").disabled=false;$("regenBtn").disabled=false;$("loadingLine").classList.remove("show");
+  }
+}
+function regen(){generate(activeStyle);}
+
+function showText(text){
+  const t=T(), p=t.platforms[selPlatform];
+  $("finalText").textContent=text;
+  $("finalLabel").textContent=`${t.finalLabel} · ${t.styles[activeStyle].key} · ${p.label}`;
+  $("charCount").textContent=`${text.replace(/\s/g,"").length}${t.charUnit} (${t.target} ${p.desc})`;
+}
+
+/* ============ 트레이닝 ============ */
+function buildModeRow(){
+  const t=T(), row=$("trModeRow"); row.innerHTML="";
+  t.trModes.forEach((m,i)=>{
+    const c=document.createElement("button");
+    c.className="chip"+(i===trMode?" on":"");
+    c.textContent=m.key;
+    c.onclick=()=>{trMode=i;resetTrain();buildModeRow();renderTrainStage();};
+    row.appendChild(c);
+  });
+  $("trModeDesc").textContent=t.trModes[trMode].desc;
+}
+function resetTrain(){trPhase=0;trData={};}
+function updateStreak(){
+  $("trStreak").innerHTML=T().trStreak.replace("{n}",trainCount);
+}
+function trainSubject(){
+  return {title:$("trTitle").value.trim(), kw:$("trKw").value.trim()};
+}
+function renderTrainStage(){
+  const t=T(), st=$("trStage");
+  st.innerHTML="";
+  if(trPhase===0){
+    if(trMode===2){
+      st.innerHTML=`
+        <div class="card">
+          <p class="mode-desc" style="margin-top:0;">${t.trSoloGuide}</p>
+          <textarea id="trAnswer" rows="8" style="margin-top:12px;"></textarea>
+          <button class="gen-btn" onclick="trSubmitSolo()">${t.trSubmit3}</button>
+        </div>`;
+    }else{
+      st.innerHTML=`<button class="gen-btn" onclick="trStart()">${t.trStart[trMode]}</button>`;
+    }
+  }
+  else if(trPhase===1){
+    if(trMode===0){
+      st.innerHTML=`
+        <div class="final" style="margin-top:6px;">
+          <div class="cmp-label">${t.trAI}</div>
+          <div class="final-text" id="trSampleText"></div>
+        </div>
+        <div class="card">
+          <p class="mode-desc" style="margin-top:0;">${t.trBlankGuide}</p>
+          <textarea id="trAnswer" rows="3" style="margin-top:12px;"></textarea>
+          <button class="gen-btn" onclick="trReveal()">${t.trSubmit}</button>
+        </div>`;
+      renderBlanked();
+    }else if(trMode===1){
+      st.innerHTML=`
+        <div class="obs-box" style="margin-top:6px;">
+          <div class="cmp-label">${t.trCommon}</div>
+          <div class="cmp-text">${esc(trData.common)}</div>
+        </div>
+        <div class="obs-box">
+          <div class="cmp-label">${t.trDirective}</div>
+          <div class="cmp-text">${esc(trData.directive)}</div>
+        </div>
+        <div class="card">
+          <p class="mode-desc" style="margin-top:0;">${t.trTwistGuide}</p>
+          <textarea id="trAnswer" rows="6" style="margin-top:12px;"></textarea>
+          <button class="gen-btn" onclick="trSubmitTwist()">${t.trSubmit2}</button>
+        </div>`;
+    }
+  }
+  else if(trPhase===2){
+    if(trMode===0){
+      st.innerHTML=`
+        <div class="compare">
+          <div class="cmp-box mine"><div class="cmp-label">${t.trMine}</div><div class="cmp-text">${esc(trData.answer)}</div></div>
+          <div class="cmp-box ai"><div class="cmp-label">${t.trOrig}</div><div class="cmp-text">${esc(trData.hidden)}</div></div>
+        </div>
+        <div class="final" style="margin-top:14px;">
+          <div class="cmp-label">${t.trAI}</div>
+          <div class="final-text">${esc(trData.fullText)}</div>
+        </div>
+        <button class="gen-btn" onclick="resetTrain();renderTrainStage();">${t.trAgain}</button>`;
+    }else{
+      st.innerHTML=`
+        <div class="compare">
+          <div class="cmp-box mine"><div class="cmp-label">${t.trMine}</div><div class="cmp-text">${esc(trData.answer)}</div></div>
+          <div class="cmp-box ai"><div class="cmp-label">${t.trAI}</div><div class="cmp-text">${esc(trData.aiText)}</div></div>
+        </div>
+        <div class="obs-box">
+          <div class="cmp-label">${t.trObs}</div>
+          <div class="cmp-text">${esc(trData.obs)}</div>
+        </div>
+        <button class="gen-btn" onclick="resetTrain();renderTrainStage();">${t.trAgain}</button>`;
+    }
+  }
+}
+function esc(s){const d=document.createElement("div");d.textContent=s||"";return d.innerHTML.replace(/\n/g,"<br>");}
+function renderBlanked(){
+  const el=$("trSampleText");
+  if(!el||!trData.fullText)return;
+  const parts=trData.fullText.split(trData.hidden);
+  el.innerHTML=esc(parts[0])+`<span class="blank">＿＿＿＿＿＿＿＿＿＿</span>`+esc(parts.slice(1).join(trData.hidden));
+}
+
+async function trStart(){
+  const t=T(), s=trainSubject(), err=$("trError");
+  err.textContent="";
+  if(!s.title){err.textContent=t.errNoTitle;return;}
+  $("trLoading").classList.add("show");
+  try{
+    if(trMode===0){
+      const txt=await ai(`당신은 감상문 쓰기 코치입니다. 출력 언어: ${t.outputLang}.
+작품: ${s.title}${s.kw?` / 키워드: ${s.kw}`:""}
+이 작품에 대한 400자 내외의 평론 샘플을 쓰되, 글의 핵심이 되는 경구적 문장 '하나'를 반드시 《 》로 감싸 표시하라.
+1인칭 감상·감정 토로 금지. 담백하고 지적인 연결. 뜻밖의 연결 하나 포함.
+출력: 본문만.`,1500);
+      const m=txt.match(/《(.+?)》/s);
+      if(!m)throw new Error("PARSE");
+      trData.hidden=m[1].trim();
+      trData.fullText=txt.replace(/《|》/g,"");
+      trPhase=1; renderTrainStage();
+    }else if(trMode===1){
+      const txt=await ai(`당신은 감상문 쓰기 코치입니다. 출력 언어: ${t.outputLang}.
+작품: ${s.title}${s.kw?` / 키워드: ${s.kw}`:""}
+이 작품에 대해 아래 형식으로만 출력하라.
+[통념]
+(이 작품에 대한 가장 흔한 평가를 한두 문장으로)
+[지시]
+(그 통념을 비틀어 다시 보게 하는 훈련 지시 한 문장 — 예: "반대 입장에서 근거를 들어 평가하라", "주변 인물의 시선으로 다시 읽어라")`,600);
+      const c=txt.match(/\[통념\]([\s\S]*?)\[지시\]/), d=txt.match(/\[지시\]([\s\S]*)$/);
+      trData.common=(c?c[1]:"").trim(); trData.directive=(d?d[1]:"").trim();
+      trPhase=1; renderTrainStage();
+    }
+  }catch(e){
+    err.textContent=(e.message==="NEED_KEY")?t.errNeedKey:t.errFail;
+  }finally{$("trLoading").classList.remove("show");}
+}
+
+function trReveal(){
+  const t=T(), ans=($("trAnswer")?.value||"").trim();
+  if(!ans){$("trError").textContent=t.trWriteFirst;return;}
+  $("trError").textContent="";
+  trData.answer=ans; trPhase=2; trainCount++; updateStreak();
+  renderTrainStage();
+}
+
+async function trSubmitTwist(){
+  const t=T(), s=trainSubject(), ans=($("trAnswer")?.value||"").trim(), err=$("trError");
+  if(!ans){err.textContent=t.trWriteFirst;return;}
+  err.textContent="";
+  $("trLoading").classList.add("show");
+  try{
+    const txt=await ai(`당신은 감상문 쓰기 코치입니다. 출력 언어: ${t.outputLang}.
+작품: ${s.title} / 비틀기 지시: ${trData.directive}
+학습자가 지시에 따라 쓴 글:
+"""${ans}"""
+아래 형식으로만 출력하라.
+[시범]
+(같은 지시에 대한 당신의 300자 내외 시범 — 1인칭 감상 금지, 경구 하나 포함)
+[관찰]
+(학습자의 글에 대한 관찰 2~3문장. 점수·칭찬·질책 금지. 연결의 방식이 어떻게 다른지, 어떤 문장이 살아 있는지, 어디를 비틀면 더 멀리 가는지만 담백하게.)`,1500);
+    const sm=txt.match(/\[시범\]([\s\S]*?)\[관찰\]/), o=txt.match(/\[관찰\]([\s\S]*)$/);
+    trData.answer=ans;
+    trData.aiText=(sm?sm[1]:txt).trim();
+    trData.obs=(o?o[1]:"").trim();
+    trPhase=2; trainCount++; updateStreak();
+    renderTrainStage();
+  }catch(e){
+    err.textContent=(e.message==="NEED_KEY")?t.errNeedKey:t.errFail;
+  }finally{$("trLoading").classList.remove("show");}
+}
+
+async function trSubmitSolo(){
+  const t=T(), s=trainSubject(), ans=($("trAnswer")?.value||"").trim(), err=$("trError");
+  if(!s.title){err.textContent=t.errNoTitle;return;}
+  if(!ans){err.textContent=t.trWriteFirst;return;}
+  err.textContent="";
+  $("trLoading").classList.add("show");
+  try{
+    const txt=await ai(`당신은 감상문 쓰기 코치입니다. 출력 언어: ${t.outputLang}.
+작품: ${s.title}${s.kw?` / 키워드: ${s.kw}`:""}
+학습자가 도움 없이 쓴 감상평:
+"""${ans}"""
+아래 형식으로만 출력하라.
+[시범]
+(같은 작품에 대한 당신의 시범 한 편 — 학습자 글과 비슷한 분량, 1인칭 감상 금지, 경구 하나 포함)
+[관찰]
+(학습자의 글에 대한 관찰 2~3문장. 점수·칭찬·질책 금지. 학습자의 시선 중 살릴 것 하나와, 연결을 더 밀고 나갈 지점 하나만 담백하게.)`,2000);
+    const sm=txt.match(/\[시범\]([\s\S]*?)\[관찰\]/), o=txt.match(/\[관찰\]([\s\S]*)$/);
+    trData.answer=ans;
+    trData.aiText=(sm?sm[1]:txt).trim();
+    trData.obs=(o?o[1]:"").trim();
+    trPhase=2; trainCount++; updateStreak();
+    renderTrainStage();
+  }catch(e){
+    err.textContent=(e.message==="NEED_KEY")?t.errNeedKey:t.errFail;
+  }finally{$("trLoading").classList.remove("show");}
+}
+
+/* ---- 단어 길게 누르면 설명 ---- */
+let pressTimer=null;
+document.addEventListener("pointerdown",e=>{
+  const host=e.target.closest(".final-text,.cmp-text");
+  if(host){pressTimer=setTimeout(()=>lookupWordAt(e.clientX,e.clientY),550);}
+  if(!$("dictPop").contains(e.target)){$("dictPop").classList.remove("show");}
+});
+["pointerup","pointercancel"].forEach(ev=>document.addEventListener(ev,()=>{clearTimeout(pressTimer);pressTimer=null;}));
+
+function wordAtPoint(x,y){
+  let range=null;
+  if(document.caretRangeFromPoint){range=document.caretRangeFromPoint(x,y);}
+  else if(document.caretPositionFromPoint){
+    const pos=document.caretPositionFromPoint(x,y);
+    if(pos){range=document.createRange();range.setStart(pos.offsetNode,pos.offset);}
+  }
+  if(!range||range.startContainer.nodeType!==3)return null;
+  const txt=range.startContainer.textContent, i=range.startOffset;
+  const isW=(ch)=>/[\p{L}\p{N}·]/u.test(ch);
+  if(i>=txt.length||!isW(txt[i]||""))return null;
+  let s=i,e=i;
+  while(s>0&&isW(txt[s-1]))s--;
+  while(e<txt.length&&isW(txt[e]))e++;
+  return txt.slice(s,e);
+}
+
+async function lookupWordAt(x,y){
+  const t=T(), word=wordAtPoint(x,y);
+  if(!word||word.length<2)return;
+  const pop=$("dictPop");
+  pop.innerHTML=`<div class="dw">${esc(word)}</div>${t.dictLoading}`;
+  pop.style.left=Math.min(x,window.innerWidth-340)+"px";
+  pop.style.top=(y+18)+"px";
+  pop.classList.add("show");
+  try{
+    const text=await ai(`단어 "${word}"를 ${t.outputLang}로 두세 문장으로 쉽게 설명하라. 정의만, 다른 말 없이.`,300);
+    pop.innerHTML=`<div class="dw">${esc(word)}</div>${esc(text)}`;
+  }catch(e){
+    pop.innerHTML=`<div class="dw">${esc(word)}</div>${t.dictFail}`;
+  }
+}
+
+/* ---- 복사·서재 ---- */
+function copyText(){
+  const t=T();
+  navigator.clipboard.writeText($("finalText").textContent).then(()=>{
+    $("copyBtn").textContent=t.copied;
+    setTimeout(()=>$("copyBtn").textContent=t.copyBtn,1500);
+  });
+}
+function saveToLibrary(){
+  const t=T();
+  if(!hasResult)return;
+  const title=$("title").value.trim()||t.untitled;
+  library.unshift({
+    title, keywords:[...keywords],
+    style:t.styles[activeStyle].key,
+    platform:t.platforms[selPlatform].label,
+    text:$("finalText").textContent
+  });
+  renderLibrary();
+  $("saveBtn").textContent=t.saved;
+  setTimeout(()=>$("saveBtn").textContent=t.saveBtn,1500);
+}
+function renderLibrary(){
+  const t=T(), list=$("libList");
+  list.innerHTML="";
+  if(library.length===0){
+    list.innerHTML=`<div class="lib-empty">${t.libEmpty}</div>`;
+    $("libView").classList.remove("show");
+    return;
+  }
+  library.forEach((item)=>{
+    const d=document.createElement("div");
+    d.className="lib-item";
+    d.innerHTML=`<span class="lib-name">${esc(item.title)}</span><span class="lib-meta">${esc(item.style)} · ${esc(item.platform)}</span>`;
+    d.onclick=()=>{
+      $("libViewLabel").textContent=`${item.title} · ${item.style} · ${item.platform}`;
+      $("libViewText").textContent=item.text;
+      $("libView").classList.add("show");
+      $("libView").scrollIntoView({behavior:"smooth",block:"nearest"});
+    };
+    list.appendChild(d);
+  });
+}
+function libCopy(){
+  const t=T();
+  navigator.clipboard.writeText($("libViewText").textContent).then(()=>{
+    $("libCopyBtn").textContent=t.copied;
+    setTimeout(()=>$("libCopyBtn").textContent=t.copyBtn,1500);
+  });
+}
+
+applyLang();
+</script>
+</body>
+</html>
