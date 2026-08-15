@@ -3,8 +3,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
+  // 목록과 동일한 조건을 써야 한다. 여기서 빠뜨리면 목록에는 안 보이는데
+  // 주소를 아는 사람은 예약된 글을 미리 읽을 수 있다.
+  const now = new Date();
   const entries = await getCollection('journal', ({ data }) => {
-    return data.draft !== true;
+    return data.draft !== true && data.pubDate <= now;
   });
   return entries.map((entry) => ({
     params: { slug: entry.slug },

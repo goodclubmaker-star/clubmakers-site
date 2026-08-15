@@ -52,6 +52,14 @@ const showKakaoChat = !hideChatPaths.some((p) => Astro.url.pathname.startsWith(p
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
 
+    <!-- RSS -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="공작소 일지 | 골프채공작소 클럽메이커스"
+      href="/rss.xml"
+    />
+
     <!-- Open Graph -->
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />

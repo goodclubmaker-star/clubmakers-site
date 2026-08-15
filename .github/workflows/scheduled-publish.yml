@@ -1,0 +1,39 @@
+name: 예약 발행 재빌드
+
+# pubDate가 미래인 저널 글은 빌드 시점에 제외된다.
+# 이 워크플로가 정해진 시각에 Cloudflare Pages 재빌드를 요청하면,
+# 그 시점에 발행일이 지난 글이 자동으로 사이트에 나타난다.
+#
+# ── 사전 준비 (한 번만) ──────────────────────────────────────────
+# 1. Cloudflare 대시보드 → Workers & Pages → clubmakers-site
+#    → Settings → Builds & deployments → Deploy hooks → "Add deploy hook"
+#    이름: scheduled-publish / 브랜치: main → URL 복사
+# 2. GitHub 저장소 → Settings → Secrets and variables → Actions
+#    → New repository secret
+#    이름: CF_DEPLOY_HOOK / 값: 위에서 복사한 URL
+# ────────────────────────────────────────────────────────────────
+#
+# ⚠ Cloudflare Pages 무료 플랜은 월 500회 빌드가 한도입니다.
+#   하루 3회 = 월 90회. 글 작성 커밋까지 합쳐도 넉넉합니다.
+#   빈도를 늘리더라도 하루 6회(월 180회)를 넘기지 마십시오.
+
+on:
+  schedule:
+    # cron은 UTC 기준 — 아래는 한국시간(KST = UTC+9) 환산값입니다.
+    - cron: '0 22 * * *' # KST 익일 07:00
+    - cron: '0 3 * * *' # KST 12:00
+    - cron: '0 10 * * *' # KST 19:00
+  workflow_dispatch: # Actions 탭에서 버튼으로 즉시 실행
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloudflare Pages 재빌드 요청
+        run: |
+          if [ -z "${{ secrets.CF_DEPLOY_HOOK }}" ]; then
+            echo "::error::CF_DEPLOY_HOOK 시크릿이 설정되지 않았습니다. 위 주석의 사전 준비를 참고하세요."
+            exit 1
+          fi
+          curl -fsS -X POST "${{ secrets.CF_DEPLOY_HOOK }}"
+          echo "재빌드를 요청했습니다."

@@ -2,9 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// 모든 일지 가져오기 (draft 제외, 최신순 정렬)
+// 모든 일지 가져오기 (draft 제외 + 예약 발행, 최신순 정렬)
+// pubDate가 미래인 글은 빌드 시점에 제외 → 예약 발행.
+// 시각이 지난 뒤 재빌드되면 자동으로 나타난다 (.github/workflows/scheduled-publish.yml)
+const now = new Date();
 const allEntries = await getCollection('journal', ({ data }) => {
-  return data.draft !== true;
+  return data.draft !== true && data.pubDate <= now;
 });
 
 const entries = allEntries.sort(
