@@ -25,7 +25,7 @@
 import { writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import {
-  VOICE, ask, gather, loadGlossary, linkGlossary, vocabHint, buildMarkdown, slugify,
+  VOICE, ask, gather, loadGlossary, linkGlossary, vocabHint, principlesHint, buildMarkdown, slugify,
   ymd, existingPosts, readJSON, log, JOURNAL_DIR, DATA_DIR,
 } from './lib.mjs';
 
@@ -240,7 +240,7 @@ async function main() {
   log(`줄기: ${kind}${DRY ? ' (연습 — 파일을 쓰지 않습니다)' : ''}\n`);
 
   const terms = await loadGlossary();
-  const vocab = vocabHint(terms);
+  const vocab = [vocabHint(terms), await principlesHint()].filter(Boolean).join('\n\n');
 
   const out = kind === 'book' ? await sourceBook(vocab) : await sourceExternal(kind, vocab);
   if (!out) return;

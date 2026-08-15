@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { postsUsingTerm } from '../../lib/related';
 
 export async function getStaticPaths() {
   const entries = await getCollection('glossary', ({ data }) => {
@@ -67,6 +68,10 @@ const categoryLabels: Record<string, { ko: string; emoji: string }> = {
 };
 
 const cat = categoryLabels[entry.data.category] || categoryLabels.general;
+
+// 이 용어를 실제로 다룬 저널 글 — 이론(용어) ↔ 실제 작업을 잇는 고리
+const journalEntries = await getCollection('journal');
+const usedIn = postsUsingTerm(entry.slug, journalEntries, 4);
 
 // 관련 용어 (같은 카테고리 또는 같은 letter)
 const allEntries = await getCollection('glossary', ({ data }) => data.draft !== true);
@@ -147,6 +152,23 @@ const related = allEntries
               <span class="action-arrow">→</span>
             </a>
           )}
+        </div>
+      </aside>
+    )}
+
+    <!-- 이 용어가 나오는 일지 -->
+    {usedIn.length > 0 && (
+      <aside class="related-terms">
+        <h2>이 용어가 나오는 일지</h2>
+        <div class="related-grid">
+          {usedIn.map((e) => (
+            <a href={`/journal/${e.slug}`} class="related-term-card">
+              <p class="related-term-title">{e.data.title}</p>
+              {e.data.description && (
+                <p class="related-term-def">{e.data.description}</p>
+              )}
+            </a>
+          ))}
         </div>
       </aside>
     )}

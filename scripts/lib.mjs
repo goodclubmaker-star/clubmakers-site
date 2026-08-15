@@ -35,6 +35,27 @@ export const VOICE = `
 독자는 자기 클럽에 문제를 느끼는 아마추어 골퍼입니다.
 `.trim();
 
+
+/**
+ * 공작소 판단 원칙 — principles.json을 프롬프트용 문단으로.
+ *
+ * "공작소 관점으로 써라"는 막연한 지시로는 AI가 일반론을 씁니다.
+ * 실제 판단 기준을 주면 그 안에서 쓰게 됩니다.
+ */
+export async function principlesHint() {
+  const data = await readJSON(path.join(DATA_DIR, 'principles.json'), null);
+  if (!data?.principles?.length) return '';
+  const lines = data.principles
+    .map((p, i) => `${i + 1}. ${p.rule}\n   — ${p.why}`)
+    .join('\n');
+  return `
+공작소의 판단 원칙 — 글의 관점은 여기서 나와야 합니다
+${lines}
+
+이 원칙과 어긋나는 주장을 하지 마십시오.
+원칙을 그대로 나열하지도 마십시오. 글 속에 자연스럽게 배어 있어야 합니다.`.trim();
+}
+
 /* ══ OpenAI ════════════════════════════════════════════════ */
 
 export async function ask(system, user, { retries = 3 } = {}) {

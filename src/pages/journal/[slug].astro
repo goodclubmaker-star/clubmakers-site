@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { relatedPosts } from '../../lib/related';
 
 export async function getStaticPaths() {
   // 목록과 동일한 조건을 써야 한다. 여기서 빠뜨리면 목록에는 안 보이는데
@@ -68,16 +69,10 @@ const articleSchema = {
   },
 };
 
-// 다른 일지 (관련 글) — 같은 카테고리 또는 같은 클럽 종류
-const allEntries = await getCollection('journal', ({ data }) => data.draft !== true);
-const related = allEntries
-  .filter((e) => e.slug !== entry.slug)
-  .filter((e) =>
-    e.data.category === entry.data.category ||
-    (entry.data.clubType && e.data.clubType === entry.data.clubType)
-  )
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+// 같이 읽으면 좋은 글 — 태그·증상·클럽·공유 용어·같은 PART를 대조해 점수순으로.
+// published()가 예약된 미래 글을 걸러 준다. 이게 없으면 아직 없는 페이지로 링크가 걸린다.
+const allEntries = await getCollection('journal');
+const related = relatedPosts(entry, allEntries, 4);
 ---
 
 <BaseLayout
@@ -139,7 +134,7 @@ const related = allEntries
     <!-- 관련 일지 -->
     {related.length > 0 && (
       <aside class="related-entries">
-        <h2>관련 일지</h2>
+        <h2>같이 읽으면 좋은 글</h2>
         <div class="related-list">
           {related.map((e) => {
             const rcat = categoryLabels[e.data.category];
