@@ -1,0 +1,93 @@
+name: 공작소 일지 자동 발행
+
+# 요일별로 다른 줄기의 글을 한 편 써서 커밋합니다.
+# 커밋되면 Cloudflare Pages가 자동으로 빌드·배포합니다.
+#
+#   월 책 연재 · 화 신제품 · 수 골프뉴스 · 목 책 연재 · 금 우승자클럽 · 토 해외논평 · 일 휴식
+#
+# ── 사전 준비 (한 번만) ──────────────────────────────────────
+# 저장소 Settings → Secrets and variables → Actions → New repository secret
+#   이름: OPENAI_API_KEY   값: sk-... (본인 OpenAI 키)
+# 선택: Variables 탭에 OPENAI_MODEL 을 두면 모델을 바꿀 수 있습니다 (기본 gpt-4o).
+# ─────────────────────────────────────────────────────────────
+#
+# 처음에는 반드시 «연습 실행»으로 결과물을 먼저 보십시오.
+#   Actions 탭 → 이 워크플로 → Run workflow → dry 를 true 로
+
+on:
+  schedule:
+    # UTC 기준. 아래는 한국시간 오전 8시(= UTC 23:00 전날)입니다.
+    - cron: '0 23 * * 0,1,2,3,4,5'
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: '줄기 (비우면 요일에 따라 자동)'
+        required: false
+        type: choice
+        options: ['', 'book', 'product', 'news', 'witb', 'commentary']
+        default: ''
+      dry:
+        description: '연습 실행 — 파일을 쓰지 않고 결과만 보여 줍니다'
+        required: false
+        type: boolean
+        default: true
+      offset:
+        description: '며칠 뒤로 예약할지 (0이면 오늘)'
+        required: false
+        default: '0'
+
+# 커밋 권한
+permissions:
+  contents: write
+
+# 동시에 두 번 돌면 충돌하므로 하나씩만
+concurrency:
+  group: auto-write
+  cancel-in-progress: false
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 글 작성
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          PUBLISH_OFFSET: ${{ inputs.offset || '0' }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::OPENAI_API_KEY 시크릿이 없습니다. 위 주석의 사전 준비를 참고하세요."
+            exit 1
+          fi
+          node scripts/auto-write.mjs ${{ inputs.kind }} ${{ inputs.dry && '--dry' || '' }}
+
+      # 연습 실행이 아니고 실제로 파일이 생겼을 때만 빌드·커밋
+      - name: 빌드 확인
+        if: ${{ !inputs.dry }}
+        run: |
+          if [ -z "$(git status --porcelain src/content/journal)" ]; then
+            echo "새 글이 없습니다. 여기서 끝냅니다."
+            exit 0
+          fi
+          npm ci
+          npm run build
+
+      - name: 커밋
+        if: ${{ !inputs.dry }}
+        run: |
+          if [ -z "$(git status --porcelain src/content/journal scripts/data/state.json)" ]; then
+            echo "커밋할 것이 없습니다."
+            exit 0
+          fi
+          git config user.name  "clubmakers-bot"
+          git config user.email "action@github.com"
+          git add src/content/journal scripts/data/state.json
+          NEW=$(git diff --cached --name-only --diff-filter=A -- src/content/journal | head -1)
+          git commit -m "post: $(basename "${NEW:-새 글}" .md)" -m "자동 발행 (scripts/auto-write.mjs)"
+          git push

@@ -1,0 +1,51 @@
+{
+  "_주석": [
+    "출처 목록입니다. 스크립트가 실행할 때마다 각 주소를 확인하고, 죽은 곳은 건너뜁니다.",
+    "그러니 안 되는 주소가 섞여 있어도 발행은 계속됩니다. 로그에 ✗ 로 표시됩니다.",
+    "쓸 만한 곳을 찾으면 아래 배열에 주소만 추가하시면 됩니다."
+  ],
+
+  "product": {
+    "라벨": "신제품·장비",
+    "urls": [
+      "https://mygolfspy.com/feed/",
+      "https://golfwrx.com/feed/",
+      "https://www.golfmonthly.com/feeds/all",
+      "https://www.bunkered.co.uk/feed",
+      "https://www.golf.com/feed/"
+    ],
+    "키워드": ["driver", "iron", "shaft", "wedge", "putter", "ball", "launch", "release", "new", "review", "hot list", "fitting"]
+  },
+
+  "news": {
+    "라벨": "골프 뉴스",
+    "urls": [
+      "https://www.pgatour.com/news/rss.xml",
+      "https://www.golfchannel.com/feed",
+      "https://www.golf.com/feed/",
+      "https://www.golfmonthly.com/feeds/all"
+    ],
+    "키워드": []
+  },
+
+  "witb": {
+    "라벨": "우승자 클럽",
+    "urls": [
+      "https://golfwrx.com/feed/",
+      "https://www.golf.com/feed/",
+      "https://mygolfspy.com/feed/"
+    ],
+    "키워드": ["witb", "what's in the bag", "whats in the bag", "winning bag", "winner's bag", "wins with", "victory", "bag"]
+  },
+
+  "commentary": {
+    "라벨": "해외 블로그 논평",
+    "urls": [
+      "https://mygolfspy.com/feed/",
+      "https://golfwrx.com/feed/",
+      "https://practical-golf.com/feed/",
+      "https://thegolfingmachine.com/feed/"
+    ],
+    "키워드": ["shaft", "fitting", "loft", "lie", "spin", "launch", "cpm", "swing weight", "moi", "data", "test", "myth"]
+  }
+}
