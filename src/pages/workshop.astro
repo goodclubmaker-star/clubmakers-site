@@ -154,6 +154,7 @@ const estimateGroups = priceGroups.map((g, gi) => ({
         <p>
           지금 내 스윙이 어떤 상태인지, 클럽이 무엇을 돕고 무엇을 방해하는지 —
           정확히 아는 것부터 시작합니다.
+          <a href="/swing-analysis" class="analysis-inline-link">스윙분석은 어떻게 진행되나 →</a>
         </p>
       </div>
 
@@ -719,6 +720,8 @@ const estimateGroups = priceGroups.map((g, gi) => ({
   .reserve-notice-body a:hover { color: var(--green-2); }
 
   /* ===== 8-4 ANALYSIS ===== */
+  .analysis-inline-link { display: inline-block; margin-top: 8px; font-size: 14px; font-weight: 700; color: var(--gold-soft, #D4B888); border-bottom: 1px solid rgba(212,184,136,0.4); text-decoration: none; }
+  .analysis-inline-link:hover { border-color: var(--gold-soft, #D4B888); }
   .analysis-section {
     position: relative;
   }
