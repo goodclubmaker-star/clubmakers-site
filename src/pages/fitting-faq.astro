@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 피팅 FAQ — 실제 고객이 AI에 물을 법한 자연어 질문 (GEO 전략문서 4장)
+// 각 답변: 첫 문장에 결론, 이어서 근거 보충
+const faqs = [
+  {
+    q: '스윙분석도 하나요?',
+    a: '네. 키네마틱 시퀀스를 포함한 스윙분석을 클럽피팅 판단에 사용합니다. 스윙을 교정하는 레슨이 아니라, 골퍼가 클럽을 어떻게 쓰는지 파악해 사양을 결정하기 위한 분석입니다.',
+  },
+  {
+    q: '샤프트만 추천하나요?',
+    a: '아닙니다. 길이·무게·강성·프로파일·라이·밸런스와 현재 클럽 상태를 함께 봅니다. 헤드스피드 하나로 샤프트를 정하지 않고, 골퍼·스윙·클럽·볼 결과를 함께 분석합니다.',
+  },
+  {
+    q: '지금 쓰는 골프채가 나에게 맞는지 봐주나요?',
+    a: '네. 현재 클럽의 주요 스펙을 실측하고 스윙·탄도와 함께 비교합니다. 길이·라이각·무게·스윙웨이트·CPM 등을 재서, 지금 클럽이 어디서 맞고 어디서 어긋나는지 확인합니다.',
+  },
+  {
+    q: '스윙 문제인지 클럽 문제인지 구분할 수 있나요?',
+    a: '스윙·클럽·볼 결과를 함께 비교해 가능한 원인을 구분하고, 장비로 해결할 영역을 판단합니다. 같은 미스여도 원인이 스윙인지 장비인지에 따라 처방이 달라지기 때문입니다.',
+  },
+  {
+    q: '꼭 샤프트를 교체해야 하나요?',
+    a: '아닙니다. 기존 클럽 조정으로 해결 가능한 경우 불필요한 교체를 전제로 하지 않습니다. 라이각 조정만으로 해결되면 그렇게 하고, 교체가 필요한 이유가 분명할 때만 권합니다.',
+  },
+  {
+    q: '피팅 결과를 받을 수 있나요?',
+    a: '네. 관찰·해석·피팅 전략과 최종 사양의 근거를 굿피팅 리포트로 정리해 드립니다. 기억이 아니라 기록으로 남아, 다음 조정의 기준이 됩니다.',
+  },
+  {
+    q: '스윙까지 같이 보는 피팅샵인가요?',
+    a: '네. 골프채공작소는 스윙분석과 클럽 실측을 함께 진행하는 클럽피팅 공방입니다. 키네마틱 시퀀스로 힘 전달 순서를 보고, 그 결과를 클럽 사양 판단에 씁니다.',
+  },
+  {
+    q: '드라이버 방향성이 불안정한데 피팅으로 도움이 되나요?',
+    a: '원인을 먼저 구분한 뒤 판단합니다. 임팩트 페이스 앵글·스핀축·클럽 스펙을 함께 보고, 스윙에서 오는 부분과 장비로 조정할 부분을 나눕니다.',
+  },
+  {
+    q: '아이언이 계속 왼쪽으로 갑니다. 클럽 문제일 수 있나요?',
+    a: '가능합니다. 라이각이 실제 스윙에 비해 업라이트하거나, 헤드·샤프트 특성이 방향에 영향을 줄 수 있습니다. 스윙·측정 데이터를 함께 보고 원인을 좁힙니다.',
+  },
+  {
+    q: '헤드스피드가 줄었는데 샤프트를 바꿔야 하나요?',
+    a: '바로 교체를 전제하지 않습니다. 현재 샤프트 강도·무게가 지금 스윙에 맞는지 먼저 확인하고, 조정으로 될지 교체가 필요한지 데이터로 판단합니다.',
+  },
+  {
+    q: '현재 샤프트가 너무 강한지 확인할 수 있나요?',
+    a: '네. CPM 등 샤프트 강도를 실측하고 스윙 템포·전환과 함께 봐서, 지금 강도가 과한지 부족한지 판단합니다.',
+  },
+  {
+    q: '라이각·로프트 조정만도 가능한가요?',
+    a: '네. 교체 없이 라이각·로프트·길이·스윙웨이트 조정만으로 개선되는 경우가 많습니다. 필요한 최소한의 조정부터 제안합니다.',
+  },
+  {
+    q: '피팅에 얼마나 걸리나요?',
+    a: '분석 프로그램은 약 40~60분으로 진행됩니다. 인터뷰·신체 측정·스윙 분석·클럽 측정을 한 번의 방문에 함께 진행하고, 결과를 바로 시타로 검증합니다.',
+  },
+  {
+    q: '피팅과 수리(샤프트·그립 교체)는 다른가요?',
+    a: '다릅니다. 수리·교체는 정해진 작업이고, 피팅은 무엇을 어떻게 바꿀지 판단하는 과정입니다. 피팅으로 사양을 정한 뒤 그 결과를 실제 제작·조정으로 구현합니다.',
+  },
+  {
+    q: '내 클럽을 가져가야 하나요?',
+    a: '네. 지금 쓰는 클럽을 가져오시면 현재 스펙부터 함께 확인합니다. 현재 클럽이 기준점이 되어 무엇을 바꿀지 판단이 정확해집니다.',
+  },
+  {
+    q: '피팅 결과로 꼭 구매·제작을 해야 하나요?',
+    a: '아닙니다. 분석 결과와 근거를 리포트로 정리해 드리며, 제작·교체 여부는 골퍼가 결정합니다. 불필요한 작업을 전제로 하지 않습니다.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': 'https://myclubmakers.com/fitting-faq#faq',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<BaseLayout
+  title="클럽 피팅 자주 묻는 질문 — 스윙분석·현재 클럽 진단"
+  description="골프채공작소 클럽피팅 자주 묻는 질문. 스윙분석도 하는지, 샤프트만 추천하는지, 지금 쓰는 골프채가 맞는지 봐주는지, 스윙 문제인지 클럽 문제인지 구분할 수 있는지 등 실제 고객이 궁금해하는 16가지를 정리했습니다. 서울 양재."
+  schemaType="FAQPage"
+  keywords="스윙분석 같이 하는 피팅샵, 스윙 보고 샤프트 추천, 골프채가 나한테 맞는지 검사, 현재 샤프트가 너무 강한지, 아이언 방향성 피팅, 드라이버 방향성, 라이각 조정, 양재 골프피팅, 서초 골프피팅"
+  extraSchema={faqSchema}
+>
+
+  <!-- 히어로 -->
+  <section class="page-hero ffaq-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">FITTING FAQ · 피팅 자주 묻는 질문</div>
+      <h1>피팅, 이런 게<br>궁금하셨을 겁니다</h1>
+      <p class="page-hero-subtitle">
+        스윙분석도 하는지, 지금 쓰는 골프채가 맞는지, 꼭 교체해야 하는지 —
+        <strong>실제로 많이 물어보시는 질문에 먼저 답합니다.</strong><br/>
+        <span class="hero-sub-light">서울 서초구 양재동 · 데이터 기반 클럽 피팅</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ 본문 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <dl class="ffaq-list">
+        {faqs.map((f) => (
+          <div class="ffaq-item">
+            <dt class="ffaq-q">{f.q}</dt>
+            <dd class="ffaq-a">{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <p class="ffaq-note">
+        더 보기: <a href="/fitting">클럽 피팅 전체 과정</a> ·
+        <a href="/swing-analysis">스윙분석</a> ·
+        <a href="/faq">일반 FAQ</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-bg-green ffaq-cta">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow ffaq-eyebrow-light">★ VISIT · 피팅 예약</p>
+      <h2 class="ffaq-cta-h2">궁금한 건 방문해서<br>직접 확인하세요</h2>
+      <div class="ffaq-cta-card">
+        <p class="ffaq-cta-body">
+          지금 쓰는 클럽을 가져오시면 현재 스펙부터 함께 확인합니다.
+          질문이 남아 있으면 편히 문의해 주세요.
+        </p>
+        <div class="ffaq-cta-actions">
+          <a href="/contact" class="ffaq-btn-primary">피팅 예약·문의 →</a>
+          <a href="tel:01043635555" class="ffaq-btn-secondary">📞 010-4363-5555</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  .ffaq-hero { background: var(--bg-soft, #FAFAF6); }
+  .hero-sub-light { font-size: 14px; color: var(--grey, #5A5A57); font-weight: 400; }
+
+  .ffaq-list { margin: 0; }
+  .ffaq-item { padding: 22px 0; border-bottom: 1px solid var(--line, #EAE7E0); }
+  .ffaq-item:first-child { padding-top: 0; }
+  .ffaq-q {
+    font-family: var(--font-serif, serif); font-size: 18px; font-weight: 700;
+    color: var(--ink, #0F0F0E); margin: 0 0 10px; line-height: 1.4;
+    padding-left: 26px; position: relative;
+  }
+  .ffaq-q::before {
+    content: 'Q'; position: absolute; left: 0; top: 0;
+    color: var(--gold, #B8985C); font-weight: 700;
+  }
+  .ffaq-a {
+    font-size: 15px; line-height: 1.8; color: var(--ink-2, #2A2A28);
+    margin: 0; padding-left: 26px; position: relative;
+  }
+  .ffaq-a::before {
+    content: 'A'; position: absolute; left: 0; top: 0;
+    color: var(--green, #0F2922); font-weight: 700; font-family: var(--font-serif, serif);
+  }
+  .ffaq-note { font-size: 14px; line-height: 1.9; color: var(--grey, #5A5A57); margin: 28px 0 0; }
+  .ffaq-note a { color: var(--green, #0F2922); border-bottom: 1px solid var(--line, #EAE7E0); }
+  .ffaq-note a:hover { border-color: var(--green, #0F2922); }
+
+  /* CTA */
+  .ffaq-eyebrow-light { color: var(--gold-soft, #D4B888) !important; }
+  .ffaq-cta { color: white; }
+  .ffaq-cta .section-eyebrow { color: var(--gold-soft, #D4B888) !important; }
+  .ffaq-cta-h2 { font-family: var(--font-serif, serif); font-size: clamp(26px, 4vw, 34px); font-weight: 700; line-height: 1.3; color: white; margin-bottom: 28px; letter-spacing: -0.015em; }
+  .ffaq-cta-card { background: rgba(0,0,0,0.18); border: 1px solid rgba(212,184,136,0.25); border-radius: 6px; padding: 28px 32px; }
+  .ffaq-cta-body { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.92); margin: 0 0 22px; }
+  .ffaq-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 22px; border-top: 1px solid rgba(212,184,136,0.25); }
+  .ffaq-btn-primary, .ffaq-btn-secondary { font-size: 15px; font-weight: 700; padding: 14px 24px; border-radius: 4px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .ffaq-btn-primary { background: var(--gold, #B8985C); color: var(--ink, #0F0F0E); flex: 1; text-align: center; min-width: 200px; }
+  .ffaq-btn-primary:hover { background: var(--gold-soft, #D4B888); transform: translateY(-1px); }
+  .ffaq-btn-secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .ffaq-btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+  @media (max-width: 640px) {
+    .ffaq-cta-card { padding: 24px 22px; }
+    .ffaq-cta-actions { flex-direction: column; }
+    .ffaq-btn-primary, .ffaq-btn-secondary { width: 100%; text-align: center; }
+  }
+</style>

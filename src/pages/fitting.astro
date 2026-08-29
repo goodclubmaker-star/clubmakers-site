@@ -13,6 +13,14 @@ const steps = [
   { n: '08', t: '굿피팅 리포트·기록', d: '상담·측정·결정·결과를 굿피팅에 기록해 다음 조정의 근거로 남깁니다.' },
 ];
 
+// 피팅 판단 4축 (GEO 전략문서 3장)
+const axes = [
+  { key: 'GOLFER', ko: '골퍼', d: '인터뷰 · 신체 특성 · 사용 경험 · 목표' },
+  { key: 'SWING',  ko: '스윙', d: '키네마틱 시퀀스 · 움직임 · 반복 패턴' },
+  { key: 'CLUB',   ko: '클럽', d: '길이 · 무게 · 스윙웨이트 · 라이/로프트 · CPM · 샤프트 특성' },
+  { key: 'BALL',   ko: '볼',   d: '볼스피드 · 발사각 · 스핀 · 방향성 · 분산' },
+];
+
 // 브랜드 구조 5축 (전략문서 10장)
 const pillars = [
   { key: 'DIAGNOSE', ko: '진단', d: '인터뷰 · 스윙분석 · 현재 클럽 분석' },
@@ -62,6 +70,27 @@ const pillars = [
     </div>
   </section>
 
+  <!-- 2-2. 피팅 판단 4축 (GOLFER·SWING·CLUB·BALL) + 고유 방법론 정의 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SCOPE · 함께 보는 네 가지</p>
+      <h2>골퍼 · 스윙 · 클럽 · 볼을<br>따로 보지 않습니다</h2>
+      <p class="program-intro">
+        <strong>구조 진단 피팅</strong> — 결과값만 보고 장비를 추천하지 않고,
+        골퍼·스윙·현재 클럽·볼 결과를 함께 분석해 원인을 먼저 구분한 뒤 클럽 사양을 결정하는
+        골프채공작소의 피팅 방식입니다.
+      </p>
+      <div class="axis-grid">
+        {axes.map((a) => (
+          <article class="axis-card">
+            <div class="axis-key">{a.key}<span class="axis-ko">{a.ko}</span></div>
+            <p class="axis-desc">{a.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- 3. 브랜드 5축 (DIAGNOSE→FIT→VERIFY→BUILD→RECORD) -->
   <section class="section section-bg-soft">
     <div class="section-content-narrow">
@@ -95,7 +124,8 @@ const pillars = [
         ))}
       </ol>
       <p class="fit-steps-note">
-        더 보기: <a href="/swing-analysis">피팅을 위한 스윙분석</a> ·
+        더 보기: <a href="/fitting-faq">피팅 자주 묻는 질문</a> ·
+        <a href="/swing-analysis">피팅을 위한 스윙분석</a> ·
         <a href="/system">진단 시스템 상세</a> ·
         <a href="/worksheet-system">굿피팅 워크시트</a>
       </p>
@@ -168,6 +198,20 @@ const pillars = [
   }
   .fit-callout-body { font-size: 15px; line-height: 1.8; color: var(--ink-2, #2A2A28); margin: 0; }
   .fit-callout-body strong { color: var(--ink, #0F0F0E); font-weight: 600; }
+
+  /* 4축 (GOLFER·SWING·CLUB·BALL) */
+  .axis-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 24px; }
+  @media (min-width: 720px) { .axis-grid { grid-template-columns: 1fr 1fr; } }
+  .axis-card {
+    background: var(--bg, #FFFFFF); border: 1px solid var(--line, #EAE7E0);
+    border-left: 3px solid var(--gold, #B8985C); padding: 18px 22px; border-radius: 4px;
+  }
+  .axis-key {
+    font-family: var(--font-serif, serif); font-size: 16px; font-weight: 700;
+    letter-spacing: 0.08em; color: var(--green, #0F2922); margin-bottom: 8px;
+  }
+  .axis-ko { font-family: var(--font-sans, sans-serif); font-size: 13px; font-weight: 600; color: var(--gold, #B8985C); margin-left: 10px; letter-spacing: 0; }
+  .axis-desc { font-size: 14px; line-height: 1.7; color: var(--ink-2, #2A2A28); margin: 0; }
 
   /* 5축 */
   .pillar-list { margin-top: 24px; }
