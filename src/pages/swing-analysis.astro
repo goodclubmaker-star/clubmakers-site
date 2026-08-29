@@ -1,0 +1,296 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 스윙분석 → 클럽 변수 연결 매핑 (리포트 3-2 구조)
+const measures = [
+  { what: '정면·측면 스윙 영상', read: '자세·타이밍·임팩트의 반복 패턴' },
+  { what: '키네마틱 시퀀스', read: '하체→몸통→팔→클럽으로 힘이 전달되는 순서' },
+  { what: '론치 데이터', read: '스핀·발사각·페이스 앵글 등 임팩트 결과값' },
+  { what: '현재 클럽 스펙', read: '길이·총무게·SW/MOI·CPM/EI·라이·로프트' },
+];
+
+const connects = [
+  '길이 · 총무게',
+  'SW / MOI',
+  'CPM / EI (샤프트 강도)',
+  '라이 · 로프트',
+];
+---
+
+<BaseLayout
+  title="골프 스윙분석 · 키네마틱 시퀀스 기반 클럽피팅"
+  description="골프채공작소의 스윙분석은 자세 교정이 아니라 피팅 판단을 위한 운동역학 분석입니다. 키네마틱 시퀀스·론치 데이터·현재 클럽 스펙을 함께 보고 길이·무게·밸런스·샤프트 강도·라이·로프트를 판단합니다. 서울 양재. 스윙과 장비가 어디서 맞고 어디서 충돌하는지 확인합니다."
+  schemaType="Service"
+  keywords="양재 골프 스윙분석, 서초 골프 스윙분석, 서울 골프 스윙분석, 골프 스윙 영상 분석, 골프 스윙 분석 피팅, 스윙분석 후 샤프트 추천, 키네마틱 시퀀스 골프, K-VEST 스윙 분석, 골프 스윙 운동역학 분석, 얼리 익스텐션 피팅, 캐스팅 샤프트 피팅"
+>
+
+  <!-- 1. 히어로 -->
+  <section class="page-hero swing-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">SWING ANALYSIS · 스윙분석</div>
+      <h1>스윙을 보고<br>클럽까지 연결합니다</h1>
+      <p class="page-hero-subtitle">
+        골프채공작소의 스윙분석은 자세를 평가하는 데서 끝나지 않습니다.
+        <strong>키네마틱 시퀀스와 론치 데이터를 현재 클럽의 스펙과 함께</strong> 보며,
+        스윙과 장비가 어디에서 맞고 어디에서 충돌하는지 확인합니다.<br/>
+        <span class="hero-sub-light">서울 서초구 양재동 · 방문 분석 · 키네마틱 시퀀스 결합</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. 포지셔닝 (같은 미스, 다른 원인) -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">POSITION · 이 분석의 관점</p>
+      <h2>같은 미스라도<br>원인은 다릅니다</h2>
+      <p class="program-intro">
+        스윙을 고치기 전에, <strong>스윙이 클럽과 어떻게 상호작용하는지</strong> 봅니다.
+        같은 슬라이스여도 원인이 스윙에 있는지 장비에 있는지에 따라 처방이 완전히 달라집니다.
+        키네마틱 시퀀스·론치 데이터·현재 클럽 스펙을 함께 놓고,
+        길이·무게·밸런스·강도·라이·로프트를 판단합니다.
+      </p>
+      <div class="callout swing-callout">
+        <p class="swing-callout-body">
+          이것은 <strong>레슨을 위한 자세 교정이 아니라, 피팅 판단을 위한 운동역학 분석</strong>입니다.
+          스윙 결점 하나만 보고 곧바로 샤프트나 헤드를 팔지 않습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 무엇을 측정하고 무엇을 읽는가 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">MEASURE · 무엇을 보는가</p>
+      <h2>네 가지를 함께 봅니다</h2>
+      <div class="measure-grid">
+        {measures.map((m) => (
+          <article class="measure-card">
+            <h3 class="measure-what">{m.what}</h3>
+            <p class="measure-read">{m.read}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 무엇과 연결하는가 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">CONNECT · 클럽 변수로 연결</p>
+      <h2>분석은 곧<br>클럽 변수 판단으로</h2>
+      <p class="program-intro">
+        분석에서 확인한 힘 전달 순서와 임팩트 결과는, 그대로 다음의 클럽 변수 판단으로 이어집니다.
+      </p>
+      <div class="connect-tags">
+        {connects.map((c) => <span class="connect-tag">{c}</span>)}
+      </div>
+      <p class="connect-note">
+        관련 상세: <a href="/fitting">클럽 피팅 전체 과정</a> ·
+        <a href="/book/part-9">샤프트 구조 — CPM·EI·토크</a> ·
+        <a href="/system">공작소의 진단 시스템</a> ·
+        <a href="/workshop">작업·공임 안내</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. 하지 않는 것 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">PRINCIPLE · 하지 않는 것</p>
+      <h2>스윙을 억지로<br>클럽에 맞추지 않습니다</h2>
+      <ul class="principle-list">
+        <li>스윙 결점 하나만 보고 곧바로 샤프트나 헤드를 판매하지 않습니다.</li>
+        <li>교체가 필요 없으면 교체하지 않습니다. 라이각 조정만으로 해결되면 그렇게 합니다.</li>
+        <li>분석 결과는 설명으로 끝내지 않고, 필요 시 시타·미세조정으로 검증합니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. 흐름 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FLOW · 분석의 흐름</p>
+      <h2>분석 → 설명 → 검증</h2>
+      <ol class="flow-list">
+        <li><span class="flow-step">01</span><div><strong>측정</strong><p>영상·키네마틱 시퀀스·론치 데이터·현재 클럽 스펙을 수집합니다.</p></div></li>
+        <li><span class="flow-step">02</span><div><strong>판단</strong><p>반복되는 미스의 구조를 읽고, 원인이 스윙인지 장비인지 나눕니다.</p></div></li>
+        <li><span class="flow-step">03</span><div><strong>설명</strong><p>왜 이런 결과가 나오는지, 어떤 클럽 변수가 맞물리는지 설명합니다.</p></div></li>
+        <li><span class="flow-step">04</span><div><strong>검증</strong><p>필요하면 시타·미세조정, 또는 피팅 처방으로 실제로 확인합니다.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 7. CTA (그린 배경) -->
+  <section class="section section-bg-green swing-cta-section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow program-eyebrow-light">★ VISIT · 방문 안내</p>
+      <h2 class="cta-h2">스윙분석은<br>방문으로 진행합니다</h2>
+      <div class="cta-card">
+        <p class="cta-body">
+          스윙분석은 영상·장비 측정이 함께 필요해 <strong>직접 방문</strong>으로 진행합니다.
+          (택배 작업은 수리·조정만 가능) 일정과 소요 시간은 편히 문의해 주세요.
+        </p>
+        <div class="cta-actions">
+          <a href="/contact" class="price-btn-primary">분석 예약·문의 →</a>
+          <a href="tel:01043635555" class="price-btn-secondary">📞 010-4363-5555</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 마침표 -->
+  <section class="section closing-section">
+    <div class="closing-content">
+      <h3>스윙을 억지로 클럽에 맞추지 않습니다.<br>스윙을 읽고, 클럽으로 답합니다.</h3>
+      <p class="closing-meta">— 골프채공작소 클럽메이커스</p>
+      <div class="closing-actions">
+        <a href="/contact" class="btn-primary">분석 예약·문의 →</a>
+        <a href="/system" class="btn-ghost">진단 시스템 →</a>
+        <a href="/about" class="btn-ghost">공작소장 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  .swing-hero { background: var(--bg-soft, #FAFAF6); }
+  .hero-sub-light { font-size: 14px; color: var(--grey, #5A5A57); font-weight: 400; }
+
+  .program-intro {
+    font-size: 16px; line-height: 1.85; color: var(--ink-2, #2A2A28); margin-bottom: 0;
+  }
+  .program-intro strong { color: var(--ink, #0F0F0E); font-weight: 600; }
+
+  .swing-callout {
+    margin-top: 28px; padding: 22px 26px;
+    background: var(--bg-soft, #FAFAF6);
+    border: 1px solid var(--line, #EAE7E0);
+    border-left: 3px solid var(--gold, #B8985C);
+    border-radius: 4px;
+  }
+  .swing-callout-body { font-size: 15px; line-height: 1.8; color: var(--ink-2, #2A2A28); margin: 0; }
+  .swing-callout-body strong { color: var(--ink, #0F0F0E); font-weight: 600; }
+
+  /* 측정 카드 */
+  .measure-grid {
+    display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px;
+  }
+  @media (min-width: 720px) { .measure-grid { grid-template-columns: 1fr 1fr; } }
+  .measure-card {
+    background: var(--bg, #FFFFFF);
+    border: 1px solid var(--line, #EAE7E0);
+    border-top: 3px solid var(--green, #0F2922);
+    padding: 24px 26px; border-radius: 4px;
+  }
+  .measure-what {
+    font-family: var(--font-serif, serif); font-size: 19px; font-weight: 700;
+    color: var(--ink, #0F0F0E); margin: 0 0 10px; line-height: 1.35;
+    padding-bottom: 10px; border-bottom: 1px solid var(--line, #EAE7E0);
+  }
+  .measure-read { font-size: 14.5px; line-height: 1.7; color: var(--ink-2, #2A2A28); margin: 0; }
+
+  /* 연결 태그 */
+  .connect-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 20px; }
+  .connect-tag {
+    font-family: var(--font-serif, serif);
+    font-size: 15px; font-weight: 700; color: var(--green, #0F2922);
+    background: var(--line-soft, #F2EFE8);
+    padding: 10px 18px; border-radius: 4px;
+    border: 1px solid var(--line, #EAE7E0);
+  }
+  .connect-note { font-size: 14px; line-height: 1.9; color: var(--grey, #5A5A57); margin: 0; }
+  .connect-note a { color: var(--green, #0F2922); border-bottom: 1px solid var(--line, #EAE7E0); }
+  .connect-note a:hover { border-color: var(--green, #0F2922); }
+
+  /* 원칙 리스트 */
+  .principle-list { list-style: none; padding: 0; margin: 24px 0 0; }
+  .principle-list li {
+    position: relative; padding: 14px 0 14px 28px;
+    font-size: 16px; line-height: 1.75; color: var(--ink-2, #2A2A28);
+    border-bottom: 1px solid var(--line, #EAE7E0);
+  }
+  .principle-list li:last-child { border-bottom: none; }
+  .principle-list li::before {
+    content: '·'; position: absolute; left: 6px; top: 10px;
+    color: var(--gold, #B8985C); font-size: 24px; font-weight: 700;
+  }
+
+  /* 흐름 */
+  .flow-list { list-style: none; padding: 0; margin: 24px 0 0; }
+  .flow-list li {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 18px 0; border-bottom: 1px solid var(--line, #EAE7E0);
+  }
+  .flow-list li:last-child { border-bottom: none; }
+  .flow-step {
+    flex: 0 0 auto; font-family: var(--font-serif, serif);
+    font-size: 15px; font-weight: 700; color: var(--gold, #B8985C);
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--gold, #B8985C);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .flow-list strong { display: block; font-size: 17px; color: var(--ink, #0F0F0E); margin-bottom: 4px; }
+  .flow-list p { font-size: 14.5px; line-height: 1.7; color: var(--ink-2, #2A2A28); margin: 0; }
+
+  /* CTA 그린 */
+  .program-eyebrow-light { color: var(--gold-soft, #D4B888) !important; }
+  .swing-cta-section { color: white; }
+  .swing-cta-section .section-eyebrow { color: var(--gold-soft, #D4B888) !important; }
+  .cta-h2 {
+    font-family: var(--font-serif, serif); font-size: clamp(28px, 4vw, 38px);
+    font-weight: 700; line-height: 1.3; color: white; margin-bottom: 32px; letter-spacing: -0.015em;
+  }
+  .cta-card {
+    background: rgba(0,0,0,0.18); border: 1px solid rgba(212,184,136,0.25);
+    border-radius: 6px; padding: 30px 34px;
+  }
+  .cta-body { font-size: 15.5px; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0 0 24px; }
+  .cta-body strong { color: var(--gold-soft, #D4B888); font-weight: 700; }
+  .cta-actions {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    padding-top: 24px; border-top: 1px solid rgba(212,184,136,0.25);
+  }
+  .price-btn-primary, .price-btn-secondary {
+    font-size: 15px; font-weight: 700; padding: 14px 24px; border-radius: 4px;
+    text-decoration: none; transition: background 0.2s, transform 0.2s;
+  }
+  .price-btn-primary {
+    background: var(--gold, #B8985C); color: var(--ink, #0F0F0E);
+    flex: 1; text-align: center; min-width: 200px;
+  }
+  .price-btn-primary:hover { background: var(--gold-soft, #D4B888); transform: translateY(-1px); }
+  .price-btn-secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .price-btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+  /* 마침표 */
+  .closing-section { background: var(--ink, #0F0F0E); padding: 100px 80px; text-align: center; }
+  .closing-content { max-width: 720px; margin: 0 auto; }
+  .closing-section h3 {
+    font-family: var(--font-serif, serif); font-size: clamp(24px, 4vw, 32px);
+    line-height: 1.5; font-weight: 600; color: white; letter-spacing: -0.015em; margin-bottom: 20px;
+  }
+  .closing-meta {
+    font-size: 12px; color: var(--gold-soft, #D4B888);
+    letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 36px;
+  }
+  .closing-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .closing-section .btn-primary, .closing-section .btn-ghost {
+    font-size: 15px; font-weight: 600; padding: 14px 26px; border-radius: 4px;
+    text-decoration: none; transition: background 0.2s, transform 0.2s;
+  }
+  .closing-section .btn-primary { background: var(--gold, #B8985C); color: var(--ink, #0F0F0E); }
+  .closing-section .btn-primary:hover { background: var(--gold-soft, #D4B888); transform: translateX(2px); }
+  .closing-section .btn-ghost { background: transparent; color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.25); }
+  .closing-section .btn-ghost:hover { background: rgba(255,255,255,0.06); color: white; border-color: rgba(255,255,255,0.4); }
+
+  @media (max-width: 640px) {
+    .measure-card { padding: 20px 20px; }
+    .cta-card { padding: 24px 22px; }
+    .cta-actions { flex-direction: column; }
+    .price-btn-primary, .price-btn-secondary { width: 100%; text-align: center; }
+    .closing-section { padding: 70px 24px; }
+  }
+</style>
