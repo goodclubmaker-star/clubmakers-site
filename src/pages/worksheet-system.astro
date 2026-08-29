@@ -1,0 +1,445 @@
+---
+// /src/pages/worksheet-system.astro
+// 『실제적인 클럽피팅』 서문 발췌 — 워크시트의 중요성 + 굿피팅 프로그램 실제 화면
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "워크시트, 시스템이 되는 것";
+const pageDescription = "『실제적인 클럽피팅』 서문 발췌 — 피팅은 기억이 아니라 기록으로 한다. 인터뷰·측정·조정·다이나믹 테스트·권고·클럽메이킹까지, 워크시트가 왜 시스템이 되는가. 굿피팅 프로그램의 실제 워크시트 화면으로 확인합니다.";
+const pageKeywords = "클럽피팅 워크시트, 피팅 기록, 굿피팅 프로그램, 라이로프트 차트, 스윙웨이트, MOI, 헤드무게, 리샤프팅 작업시트, 클럽메이커스, 실제적인 클럽피팅";
+
+// 6가지 워크시트 — 피팅 플로우
+const worksheets = [
+  { step: "01", name: "인터뷰 기록 워크시트",            note: "피팅이 시작되는 곳. 골퍼의 목표·이력·증상을 구조화" },
+  { step: "02", name: "현재 클럽 스펙 측정 워크시트",     note: "지금 쓰는 클럽의 헤드무게·길이·SW·라이/로프트 실측" },
+  { step: "03", name: "라이 / 로프트 조정 워크시트",       note: "원래 값 → 목표 값 → 실제 조정 값을 한 눈에" },
+  { step: "04", name: "론치모니터 등 다이나믹 테스트 워크시트", note: "볼스피드·스핀·발사각 등 동적 데이터 기록" },
+  { step: "05", name: "권고 사항 정리 워크시트",          note: "측정과 데이터를 근거로 한 처방을 문서화" },
+  { step: "06", name: "클럽메이킹 작업 기록 워크시트",     note: "실제 작업 값(추가 무게·SW·MOI·CPM)을 기록·재현" },
+];
+
+// 굿피팅 프로그램 실제 화면 — 이론 → 실제 도구
+const screens = [
+  {
+    img: "/images/worksheet/worksheet-grid.png",
+    tag: "클럽메이킹 작업 기록",
+    title: "세트 그리드 입력 — 헤드무게 · SW · MOI · CPM",
+    desc: "한 세트의 클럽별 값을 한 화면에서 빠르게 입력·저장하고, 스윙웨이트와 MOI를 그래프로 이어 봅니다. ‘맨손 판단’ 대신 세트 전체의 흐름을 수치로 확인합니다.",
+  },
+  {
+    img: "/images/worksheet/worksheet-report.png",
+    tag: "현재 클럽 측정 · 작업 기록",
+    title: "리샤프팅 작업시트 — 이미지로 저장되는 리포트",
+    desc: "헤드무게·길이·스윙웨이트를 정리한 작업시트가 그대로 고객용 리포트가 됩니다. 기록이 곧 결과물이 되는 구조입니다.",
+  },
+  {
+    img: "/images/worksheet/worksheet-lieloft-input.png",
+    tag: "라이 / 로프트 조정",
+    title: "라이·로프트 차트 입력 — 원래 값과 목표 값",
+    desc: "Originally 로프트/라이, 조정 목표, 실제 조정 값을 클럽별로 입력합니다. 조정의 근거와 결과가 한 표 안에 남습니다.",
+  },
+  {
+    img: "/images/worksheet/worksheet-lieloft-chart.png",
+    tag: "라이 / 로프트 조정 결과",
+    title: "Loft / Lie Chart — 완성된 조정 기록",
+    desc: "입력한 워크시트가 공작소 로고가 들어간 깔끔한 차트로 출력됩니다. 고객에게 전달하고, 다음 방문 때 다시 꺼내 보는 기준이 됩니다.",
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Article"
+  keywords={pageKeywords}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="ws-hero">
+    <div class="container narrow">
+      <p class="eyebrow">BOOK · 서문 발췌</p>
+
+      <h1 class="ws-title">
+        워크시트,<br />
+        <em>시스템이 되는 것</em>
+      </h1>
+
+      <p class="ws-source">『실제적인 클럽피팅』 서문 발췌 · 채기웅</p>
+
+      <blockquote class="ws-hero-quote">
+        피팅은 <em>기억이 아니라 기록</em>으로 한다.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ==================== CONCLUSION FIRST ==================== -->
+  <section class="ws-lead-section">
+    <div class="container narrow">
+      <div class="ws-callout">
+        <p class="ws-callout-label">결론부터</p>
+        <p class="ws-callout-text">
+          실제 선수를 포함해 모든 프로세스 중에서 <strong>인터뷰의 비중이 가장 높습니다.</strong>
+          그리고 그 인터뷰를 포함한 전 과정을 흔들림 없이 반복하게 해 주는 것이 <strong>워크시트</strong>입니다.
+        </p>
+      </div>
+
+      <p class="ws-para">
+        각 단계에 맞는 워크시트를 준비하면, 견고한 시스템 안에서 실수 없이 고객(선수)을
+        점검하고 좋은 결과를 재현할 수 있습니다. 워크시트는 다음과 같이 준비해 두면 좋습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== 6 WORKSHEETS ==================== -->
+  <section class="ws-list-section">
+    <div class="container">
+      <div class="ws-head">
+        <p class="eyebrow">FLOW · 피팅 플로우에 따른 워크시트</p>
+        <h2 class="section-title">
+          여섯 장의 <em>워크시트</em>
+        </h2>
+      </div>
+
+      <div class="ws-grid">
+        {worksheets.map((w) => (
+          <div class="ws-card">
+            <p class="ws-card-step">{w.step}</p>
+            <h3 class="ws-card-name">{w.name}</h3>
+            <p class="ws-card-note">{w.note}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="ws-para ws-para-center">
+        모두가 똑같은 양식(form)을 써야 할 필요는 없습니다. 중요한 것만 모아 한 장에 전 과정을
+        담아도 되고, 더 꼼꼼히 쓰려면 각 과정을 따로 시트로 만들어도 됩니다.
+        <strong>여러분의 기준에 맞게 양식을 변형해 쓰면 됩니다.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== PRINCIPLE ==================== -->
+  <section class="ws-principle">
+    <div class="container narrow">
+      <p class="eyebrow">PRINCIPLE · 원칙</p>
+      <p class="ws-principle-text">
+        중요한 것은 <em>‘맨손으로 판단하지 않는다’</em>는 원칙입니다.
+        기록이 쌓이면 패턴이 보이고, 패턴이 보이면 처방이 단순해집니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== REAL PROGRAM SCREENS ==================== -->
+  <section class="ws-screens-section">
+    <div class="container">
+      <div class="ws-head">
+        <p class="eyebrow">IN PRACTICE · 굿피팅 프로그램</p>
+        <h2 class="section-title">
+          서문의 원칙을 <em>실제 도구</em>로
+        </h2>
+        <p class="section-lead">
+          클럽메이커스의 굿피팅 프로그램은 이 워크시트들을 그대로 화면으로 옮긴 것입니다.
+          입력한 기록이 곧 고객용 리포트가 되고, 다음 방문의 기준이 됩니다.
+        </p>
+      </div>
+
+      <div class="ws-screens">
+        {screens.map((s) => (
+          <figure class="ws-screen">
+            <div class="ws-screen-img">
+              <img src={s.img} alt={s.title} loading="lazy" />
+            </div>
+            <figcaption class="ws-screen-cap">
+              <span class="ws-screen-tag">{s.tag}</span>
+              <h3 class="ws-screen-title">{s.title}</h3>
+              <p class="ws-screen-desc">{s.desc}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <figure class="ws-screen-wide">
+        <div class="ws-screen-img">
+          <img src="/images/worksheet/worksheet-report-set.png" alt="세트 리샤프팅 피팅 리포트 — 스윙웨이트 세트 흐름 그래프" loading="lazy" />
+        </div>
+        <figcaption class="ws-screen-cap">
+          <span class="ws-screen-tag">완성 리포트</span>
+          <h3 class="ws-screen-title">세트 리샤프팅 리포트 — 스윙웨이트 세트 흐름까지</h3>
+          <p class="ws-screen-desc">
+            클럽별 헤드무게·길이·가조립/최종 스윙웨이트를 기록하고, 세트 전체의
+            스윙웨이트 흐름을 그래프로 확인합니다. “세트 전체가 완만한 흐름을 이루는 게
+            이상적 — 한 클럽만 튀면 그 클럽을 점검한다”는 판단이 한 장에 담깁니다.
+          </p>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ==================== BOOK REFERENCE ==================== -->
+  <section class="ws-ref-section">
+    <div class="container narrow">
+      <p class="eyebrow">IN THE BOOK · 관련 본문 위치</p>
+      <ul class="ws-ref-list">
+        <li>
+          <span class="ws-ref-part">PART 3 · 11절</span>
+          <span class="ws-ref-desc">골퍼 구조 해석 워크시트 — 1페이지 실전 양식</span>
+        </li>
+        <li>
+          <span class="ws-ref-part">부록 A</span>
+          <span class="ws-ref-desc">피팅 실행 도구 — 의사결정 트리와 워크시트</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="ws-cta">
+    <div class="container narrow">
+      <p class="eyebrow">NEXT STEP</p>
+      <h2 class="ws-cta-title">
+        기록이 곧 <em>실력</em>입니다
+      </h2>
+      <p class="ws-cta-lead">
+        책 『실제적인 클럽피팅』은 전체 내용을 온라인에서 무료로 열람하실 수 있습니다.
+        피팅 상담이나 굿피팅 프로그램이 궁금하시면 문의해 주세요.
+      </p>
+      <div class="ws-cta-btns">
+        <a href="/book" class="btn-primary"><span>책 보기</span><span>→</span></a>
+        <a href="/contact" class="btn-ghost"><span>피팅 문의</span><span>→</span></a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+
+  .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: .75rem; font-weight: 600; letter-spacing: .15em;
+    color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.875rem, 4.5vw, 2.875rem);
+    font-weight: 500; line-height: 1.2; letter-spacing: -.02em;
+    color: var(--text); margin: 0 0 1.25rem;
+  }
+  .section-title em { font-style: normal; color: var(--accent); }
+  .section-lead {
+    font-family: var(--sans); font-size: 1.0625rem; line-height: 1.8;
+    color: var(--text-2); max-width: 620px; margin: 0;
+  }
+
+  /* HERO */
+  .ws-hero {
+    background: var(--text); color: var(--bg);
+    padding: 104px 0 88px;
+  }
+  .ws-hero .eyebrow { color: var(--accent-2); }
+  .ws-title {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 500; line-height: 1.12; letter-spacing: -.025em;
+    color: #fff; margin: 0 0 1.5rem;
+  }
+  .ws-title em { font-style: normal; color: var(--accent-2); font-weight: 600; }
+  .ws-source {
+    font-family: var(--sans); font-size: .9375rem;
+    color: rgba(255,255,255,.6); margin: 0 0 2.5rem;
+    letter-spacing: .02em;
+  }
+  .ws-hero-quote {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 500; line-height: 1.4; color: #fff;
+    margin: 0; padding: 1.75rem 0 0; border-top: 1px solid rgba(255,255,255,.18);
+    max-width: 620px;
+  }
+  .ws-hero-quote em { font-style: normal; color: var(--accent-2); font-weight: 600; }
+
+  /* LEAD / CONCLUSION */
+  .ws-lead-section { padding: 80px 0 0; background: var(--bg); }
+  .ws-callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 1.5rem 1.75rem; margin: 0 0 2.5rem;
+  }
+  .ws-callout-label {
+    font-family: var(--sans); font-size: .6875rem; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase; color: var(--accent);
+    margin: 0 0 .6rem;
+  }
+  .ws-callout-text {
+    font-family: var(--sans); font-size: 1.0625rem; line-height: 1.8;
+    color: var(--text-2); margin: 0;
+  }
+  .ws-callout-text strong { color: var(--accent); font-weight: 700; }
+  .ws-para {
+    font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85;
+    color: var(--text-2); margin: 0;
+  }
+  .ws-para strong { color: var(--text); font-weight: 600; }
+  .ws-para-center { max-width: 720px; margin: 2.5rem auto 0; text-align: center; }
+
+  /* 6 WORKSHEETS */
+  .ws-list-section { padding: 80px 0; background: var(--bg); }
+  .ws-head { max-width: 760px; margin: 0 auto 3rem; padding: 0 24px; }
+  .ws-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1.25rem;
+  }
+  @media (min-width: 600px) { .ws-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 960px) { .ws-grid { grid-template-columns: repeat(3, 1fr); } }
+  .ws-card {
+    background: var(--bg-elev); border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent-2);
+    border-radius: 2px; padding: 28px 26px;
+  }
+  .ws-card-step {
+    font-family: var(--serif); font-size: 1.5rem; font-weight: 500;
+    color: var(--accent); opacity: .5; margin: 0 0 1rem; line-height: 1;
+  }
+  .ws-card-name {
+    font-family: var(--serif); font-size: 1.1875rem; font-weight: 500;
+    color: var(--text); margin: 0 0 .6rem; line-height: 1.4;
+  }
+  .ws-card-note {
+    font-family: var(--sans); font-size: .9375rem; line-height: 1.65;
+    color: var(--text-2); margin: 0;
+  }
+
+  /* PRINCIPLE */
+  .ws-principle {
+    padding: 80px 0; background: var(--bg-soft);
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    text-align: center;
+  }
+  .ws-principle-text {
+    font-family: var(--serif);
+    font-size: clamp(1.375rem, 3vw, 1.875rem);
+    font-weight: 500; line-height: 1.5; color: var(--text);
+    margin: 1rem auto 0; max-width: 640px;
+  }
+  .ws-principle-text em { font-style: normal; color: var(--accent); font-weight: 600; }
+
+  /* SCREENS */
+  .ws-screens-section { padding: 88px 0; background: var(--bg); }
+  .ws-screens {
+    display: grid; grid-template-columns: 1fr; gap: 2.5rem;
+  }
+  @media (min-width: 860px) {
+    .ws-screens { grid-template-columns: 1fr 1fr; gap: 2.5rem 2rem; }
+  }
+  .ws-screen {
+    margin: 0; background: var(--bg-elev);
+    border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .ws-screen-img {
+    background: var(--bg-soft); border-bottom: 1px solid var(--rule);
+    padding: 14px;
+  }
+  .ws-screen-img img {
+    display: block; width: 100%; height: auto; border-radius: 2px;
+  }
+  .ws-screen-cap { padding: 22px 24px 26px; }
+  .ws-screen-tag {
+    display: inline-block; font-family: var(--sans);
+    font-size: .6875rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: #fff; background: var(--accent);
+    padding: .3rem .5rem; border-radius: 3px; margin-bottom: .85rem;
+  }
+  .ws-screen-title {
+    font-family: var(--serif); font-size: 1.1875rem; font-weight: 500;
+    color: var(--text); margin: 0 0 .6rem; line-height: 1.4;
+  }
+  .ws-screen-desc {
+    font-family: var(--sans); font-size: .9375rem; line-height: 1.7;
+    color: var(--text-2); margin: 0;
+  }
+  .ws-screen-wide {
+    margin: 2.5rem 0 0; background: var(--bg-elev);
+    border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+    display: grid; grid-template-columns: 1fr;
+  }
+  @media (min-width: 860px) {
+    .ws-screen-wide { grid-template-columns: 1fr 1fr; align-items: center; }
+  }
+  .ws-screen-wide .ws-screen-img {
+    padding: 18px; max-height: 620px; overflow: hidden;
+    display: flex; align-items: flex-start; justify-content: center;
+  }
+  .ws-screen-wide .ws-screen-img img { max-width: 480px; width: 100%; }
+
+  /* BOOK REFERENCE */
+  .ws-ref-section {
+    padding: 72px 0; background: var(--bg-soft);
+    border-top: 1px solid var(--rule);
+  }
+  .ws-ref-list { list-style: none; padding: 0; margin: 0; }
+  .ws-ref-list li {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem;
+    padding: 1.1rem 0; border-bottom: 1px solid var(--rule);
+  }
+  .ws-ref-list li:last-child { border-bottom: none; }
+  .ws-ref-part {
+    font-family: var(--sans); font-size: .8125rem; font-weight: 700;
+    letter-spacing: .05em; color: var(--accent);
+    background: var(--accent-soft); padding: .3rem .6rem; border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .ws-ref-desc {
+    font-family: var(--sans); font-size: 1rem; color: var(--text-2);
+  }
+
+  /* CTA */
+  .ws-cta {
+    padding: 96px 0; background: var(--text); color: var(--bg);
+    text-align: center;
+  }
+  .ws-cta .eyebrow { color: var(--accent-2); }
+  .ws-cta-title {
+    font-family: var(--serif);
+    font-size: clamp(1.875rem, 4.5vw, 2.75rem);
+    font-weight: 500; line-height: 1.25; color: #fff; margin: 0 0 1.25rem;
+  }
+  .ws-cta-title em { font-style: normal; color: var(--accent-2); font-weight: 600; }
+  .ws-cta-lead {
+    font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85;
+    color: rgba(255,255,255,.78); margin: 0 auto 2.5rem; max-width: 560px;
+  }
+  .ws-cta-btns {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+  }
+  .btn-primary, .btn-ghost {
+    font-family: var(--sans); font-size: 1rem; font-weight: 600;
+    padding: 15px 30px; border-radius: 2px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: .75rem;
+    transition: background .25s, border-color .25s, transform .25s, color .25s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+  .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); transform: translateX(2px); }
+  .btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35); }
+  .btn-ghost:hover { border-color: #fff; transform: translateX(2px); }
+
+  @media (max-width: 480px) {
+    .ws-hero { padding: 72px 0 56px; }
+    .ws-lead-section { padding: 56px 0 0; }
+    .ws-list-section, .ws-screens-section { padding: 56px 0; }
+    .ws-principle, .ws-ref-section { padding: 56px 0; }
+    .ws-cta { padding: 72px 0; }
+  }
+</style>
