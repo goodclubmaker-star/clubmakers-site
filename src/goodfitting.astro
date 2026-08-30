@@ -1,0 +1,202 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 굿피팅이 기록·관리하는 흐름 (전략문서 2·3장)
+const records = [
+  { t: '고객 인터뷰', d: '골프 이력·목표·현재 불편을 구조화해 기록합니다.' },
+  { t: '현재 클럽 실측', d: '길이·라이각·무게·SW/MOI·CPM 등 지금 클럽의 실제 스펙.' },
+  { t: '스윙·론치 데이터', d: '키네마틱 시퀀스와 볼 결과(스피드·발사각·스핀·분산).' },
+  { t: '샤프트·사양 후보', d: '가설에 맞는 후보 사양을 좁혀 비교한 기록.' },
+  { t: '블라인드 시타', d: '선입견을 배제한 시타 결과와 골퍼 반응.' },
+  { t: '최종 사양·작업', d: '확정 사양과 리샤프팅·조립·조정 등 작업 내역.' },
+  { t: '고객 피팅 리포트', d: '관찰·해석·판단 근거를 고객용 리포트로 정리.' },
+];
+
+// 굿피팅 페이지 JSON-LD — SoftwareApplication + 개발 주체 관계
+const goodfittingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  '@id': 'https://myclubmakers.com/goodfitting#software',
+  name: '굿피팅 (GoodFitting)',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description: '굿피팅(GoodFitting)은 골프채공작소가 실제 클럽피팅 현장에서 사용하기 위해 개발한 골프 피팅·공방 관리 시스템. 고객 인터뷰, 현재 클럽 실측, 스윙·론치 데이터, 샤프트 추천, 블라인드 시타, 최종 사양, 작업 기록과 고객용 피팅 리포트를 하나의 흐름으로 관리한다.',
+  url: 'https://goodfitting.myclubmakers.com',
+  author: {
+    '@type': 'Organization',
+    name: '골프채공작소 클럽메이커스',
+    url: 'https://myclubmakers.com',
+  },
+  offers: { '@type': 'Offer', category: '골프 클럽피팅·공방 관리 시스템' },
+};
+---
+
+<BaseLayout
+  title="굿피팅 GoodFitting — 골프채공작소가 만든 클럽피팅 시스템"
+  description="굿피팅(GoodFitting)은 골프채공작소가 실제 클럽피팅 현장에서 사용하기 위해 개발한 골프 피팅·공방 관리 시스템입니다. 고객 인터뷰, 현재 클럽 실측, 스윙·론치 데이터, 샤프트 추천, 블라인드 시타, 최종 사양, 작업 기록과 고객용 피팅 리포트를 하나의 흐름으로 관리합니다. 서울 양재."
+  schemaType="Service"
+  keywords="굿피팅, GoodFitting, 굿피팅 골프, 골프 피팅 프로그램, 클럽피팅 프로그램, 골프 피팅샵 고객관리, 골프공방 관리 프로그램, 피팅 작업관리, 골프 피팅 리포트 프로그램, 샤프트 추천 프로그램, 클럽 스펙 관리, 피팅 데이터 관리"
+  extraSchema={goodfittingSchema}
+>
+
+  <!-- 1. 히어로 -->
+  <section class="page-hero gf-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">GOODFITTING · 자체 피팅 시스템</div>
+      <h1>골프채공작소가 만든<br>클럽피팅 시스템</h1>
+      <p class="page-hero-subtitle">
+        <strong>굿피팅(GoodFitting)은 골프채공작소가 실제 클럽피팅 현장에서 사용하기 위해 개발한 골프 피팅·공방 관리 시스템입니다.</strong>
+        고객 인터뷰, 현재 클럽 실측, 스윙·론치 데이터, 샤프트 추천, 블라인드 시타, 최종 사양, 작업 기록과 고객용 피팅 리포트를 하나의 흐름으로 관리합니다.<br/>
+        <span class="hero-sub-light">서울 서초구 양재동 골프채공작소 현장 개발</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. 왜 만들었는가 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">WHY · 왜 만들었는가</p>
+      <h2>피팅 현장에서<br>시작한 시스템입니다</h2>
+      <p class="program-intro">
+        굿피팅은 기능을 먼저 만든 SaaS가 아닙니다.
+        <strong>골프채공작소의 실제 피팅 업무 흐름을 기록하고 반복 가능하게 만들기 위해</strong> 시작했습니다.
+        현장에서 인터뷰·측정·시타·작업·리포트가 서로 흩어지면, 다음 조정의 근거가 사람의 기억에 의존하게 됩니다.
+        굿피팅은 이 분산된 흐름을 하나의 워크플로로 묶습니다.
+      </p>
+      <div class="callout gf-callout">
+        <p class="gf-callout-body">
+          피팅은 기억이 아니라 기록으로 합니다. <strong>판단의 근거가 데이터로 남아야</strong>
+          다음 방문에서도, 세트 전체에서도 일관된 결정을 내릴 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 무엇을 기록하는가 -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">RECORD · 무엇을 기록하는가</p>
+      <h2>한 번의 피팅을<br>한 흐름으로 남깁니다</h2>
+      <ol class="gf-record-list">
+        {records.map((r, i) => (
+          <li class="gf-record">
+            <span class="gf-record-n">{String(i + 1).padStart(2, '0')}</span>
+            <div class="gf-record-body">
+              <h3>{r.t}</h3>
+              <p>{r.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4. 실제 화면·리포트 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">IN PRACTICE · 실제 화면</p>
+      <h2>실제 워크시트와<br>완성 리포트</h2>
+      <p class="program-intro">
+        굿피팅의 워크시트와 완성된 피팅 리포트 실제 화면은 워크시트 페이지에서 보실 수 있습니다.
+        스윙웨이트 세트 흐름 그래프, 라이·로프트 차트 등 현장에서 쓰는 화면 그대로입니다.
+      </p>
+      <p class="gf-note">
+        <a href="/worksheet-system">굿피팅 워크시트·리포트 실제 화면 →</a>
+        &nbsp; · &nbsp;
+        <a href="https://goodfitting.myclubmakers.com" target="_blank" rel="noopener">굿피팅 사이트 바로가기 →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. 현장 연결 -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">FIELD · 현장과의 연결</p>
+      <h2>피팅의 마지막 단계,<br>RECORD를 담당합니다</h2>
+      <p class="program-intro">
+        골프채공작소의 클럽 피팅은 진단 → 설계 → 검증 → 제작 → <strong>기록(RECORD)</strong>으로 이어집니다.
+        굿피팅은 그 마지막 기록 단계를 맡아, 이번 피팅의 판단 근거를 다음으로 잇습니다.
+      </p>
+      <p class="gf-note">
+        <a href="/fitting">클럽 피팅 전체 과정 →</a>
+        &nbsp; · &nbsp;
+        <a href="/case-studies">피팅 사례 →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 6. CTA -->
+  <section class="section section-bg-green gf-cta">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow gf-eyebrow-light">★ VISIT · 피팅 문의</p>
+      <h2 class="gf-cta-h2">기록으로 남는<br>피팅을 경험하세요</h2>
+      <div class="gf-cta-card">
+        <p class="gf-cta-body">
+          굿피팅으로 기록되는 피팅은 골프채공작소 현장에서 진행됩니다.
+          피팅 상담이나 굿피팅이 궁금하시면 문의해 주세요.
+        </p>
+        <div class="gf-cta-actions">
+          <a href="https://goodfitting.myclubmakers.com" class="gf-btn-primary" target="_blank" rel="noopener">굿피팅 바로가기 →</a>
+          <a href="/contact" class="gf-btn-secondary">피팅 문의 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  .gf-hero { background: var(--bg-soft, #FAFAF6); }
+  .hero-sub-light { font-size: 14px; color: var(--grey, #5A5A57); font-weight: 400; }
+
+  .program-intro { font-size: 16px; line-height: 1.85; color: var(--ink-2, #2A2A28); margin-bottom: 0; }
+  .program-intro strong { color: var(--ink, #0F0F0E); font-weight: 600; }
+
+  .gf-callout {
+    margin-top: 28px; padding: 22px 26px;
+    background: var(--bg-soft, #FAFAF6); border: 1px solid var(--line, #EAE7E0);
+    border-left: 3px solid var(--gold, #B8985C); border-radius: 4px;
+  }
+  .gf-callout-body { font-size: 15px; line-height: 1.8; color: var(--ink-2, #2A2A28); margin: 0; }
+  .gf-callout-body strong { color: var(--ink, #0F0F0E); font-weight: 600; }
+
+  /* 기록 흐름 */
+  .gf-record-list { list-style: none; padding: 0; margin: 24px 0 0; }
+  .gf-record {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 16px 0; border-bottom: 1px solid var(--line, #EAE7E0);
+  }
+  .gf-record:last-child { border-bottom: none; }
+  .gf-record-n {
+    flex: 0 0 auto; font-family: var(--font-serif, serif); font-size: 14px; font-weight: 700;
+    color: var(--gold, #B8985C); width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid var(--gold, #B8985C); display: flex; align-items: center; justify-content: center;
+  }
+  .gf-record-body h3 { font-size: 16px; color: var(--ink, #0F0F0E); margin: 0 0 3px; }
+  .gf-record-body p { font-size: 14px; line-height: 1.65; color: var(--ink-2, #2A2A28); margin: 0; }
+
+  .gf-note { font-size: 14px; line-height: 1.9; color: var(--grey, #5A5A57); margin: 20px 0 0; }
+  .gf-note a { color: var(--green, #0F2922); border-bottom: 1px solid var(--line, #EAE7E0); }
+  .gf-note a:hover { border-color: var(--green, #0F2922); }
+
+  /* CTA */
+  .gf-eyebrow-light { color: var(--gold-soft, #D4B888) !important; }
+  .gf-cta { color: white; }
+  .gf-cta .section-eyebrow { color: var(--gold-soft, #D4B888) !important; }
+  .gf-cta-h2 { font-family: var(--font-serif, serif); font-size: clamp(26px, 4vw, 34px); font-weight: 700; line-height: 1.3; color: white; margin-bottom: 28px; letter-spacing: -0.015em; }
+  .gf-cta-card { background: rgba(0,0,0,0.18); border: 1px solid rgba(212,184,136,0.25); border-radius: 6px; padding: 28px 32px; }
+  .gf-cta-body { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.92); margin: 0 0 22px; }
+  .gf-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 22px; border-top: 1px solid rgba(212,184,136,0.25); }
+  .gf-btn-primary, .gf-btn-secondary { font-size: 15px; font-weight: 700; padding: 14px 24px; border-radius: 4px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .gf-btn-primary { background: var(--gold, #B8985C); color: var(--ink, #0F0F0E); flex: 1; text-align: center; min-width: 200px; }
+  .gf-btn-primary:hover { background: var(--gold-soft, #D4B888); transform: translateY(-1px); }
+  .gf-btn-secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .gf-btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+  @media (max-width: 640px) {
+    .gf-cta-card { padding: 24px 22px; }
+    .gf-cta-actions { flex-direction: column; }
+    .gf-btn-primary, .gf-btn-secondary { width: 100%; text-align: center; }
+  }
+</style>

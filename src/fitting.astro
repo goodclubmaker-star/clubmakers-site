@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 피팅 8단계 흐름 (전략문서 4장)
+const steps = [
+  { n: '01', t: '인터뷰',            d: '골프 이력·목표·현재 불편, 자주 나오는 미스를 듣습니다.' },
+  { n: '02', t: '현재 클럽 측정',    d: '길이·라이각·무게·SW/MOI·CPM/EI 등 지금 쓰는 클럽의 실제 스펙을 잽니다.' },
+  { n: '03', t: '스윙·론치 데이터 분석', d: '키네마틱 시퀀스와 론치 데이터로 힘 전달과 임팩트 결과를 봅니다.' },
+  { n: '04', t: '문제 정의',         d: '반복되는 미스의 원인이 스윙인지 장비인지 나눠 가설을 세웁니다.' },
+  { n: '05', t: '후보 헤드·샤프트 비교', d: '가설에 맞는 후보 사양을 좁히고 서로 비교합니다.' },
+  { n: '06', t: '최종 사양 결정',    d: '길이·무게·강도·라이·로프트·밸런스까지 사양을 확정합니다.' },
+  { n: '07', t: '제작·조정',         d: '리샤프팅·조립·조정으로 결정한 사양을 실제 클럽으로 구현합니다.' },
+  { n: '08', t: '굿피팅 리포트·기록', d: '상담·측정·결정·결과를 굿피팅에 기록해 다음 조정의 근거로 남깁니다.' },
+];
+
+// 피팅 판단 4축 (GEO 전략문서 3장)
+const axes = [
+  { key: 'GOLFER', ko: '골퍼', d: '인터뷰 · 신체 특성 · 사용 경험 · 목표' },
+  { key: 'SWING',  ko: '스윙', d: '키네마틱 시퀀스 · 움직임 · 반복 패턴' },
+  { key: 'CLUB',   ko: '클럽', d: '길이 · 무게 · 스윙웨이트 · 라이/로프트 · CPM · 샤프트 특성' },
+  { key: 'BALL',   ko: '볼',   d: '볼스피드 · 발사각 · 스핀 · 방향성 · 분산' },
+];
+
+// 브랜드 구조 5축 (전략문서 10장)
+const pillars = [
+  { key: 'DIAGNOSE', ko: '진단', d: '인터뷰 · 스윙분석 · 현재 클럽 분석' },
+  { key: 'FIT',      ko: '설계', d: '헤드 · 샤프트 · 무게 · 강도 · 길이 · 라이 · 밸런스' },
+  { key: 'VERIFY',   ko: '검증', d: '시타 · 론치 데이터 · 블라인드 비교' },
+  { key: 'BUILD',    ko: '제작', d: '리샤프팅 · 조립 · 조정 · 최종 스펙 구현' },
+  { key: 'RECORD',   ko: '기록', d: '굿피팅 리포트 · 작업기록 · 고객관리' },
+];
+---
+
+<BaseLayout
+  title="골프 클럽 피팅 — 서울·양재 데이터 기반 피팅 전문"
+  description="골프채공작소는 서울 양재의 데이터 기반 골프 클럽 피팅 전문 공방입니다. 스윙과 측정 데이터를 분석해 클럽을 진단하고, 샤프트·길이·라이각·스윙웨이트를 설계한 뒤 실제 제작·조정까지 한 곳에서 완결합니다. 어떤 샤프트가 좋은가가 아니라, 왜 이 골퍼에게 이 사양이 필요한가로 접근합니다."
+  schemaType="Service"
+  keywords="양재 골프피팅, 서초 골프피팅, 서울 골프피팅, 골프피팅 전문점, 데이터 기반 골프피팅, 스윙분석 골프피팅, 드라이버 피팅 서울, 아이언 피팅 서울, 샤프트 피팅 서울, 클럽 설계, 골프채가 나한테 맞는지, 스윙분석 후 샤프트 추천"
+>
+
+  <!-- 1. 히어로 -->
+  <section class="page-hero fit-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">CLUB FITTING · 클럽 피팅</div>
+      <h1>데이터로 진단하고<br>클럽으로 구현합니다</h1>
+      <p class="page-hero-subtitle">
+        스윙을 보고, 데이터를 측정하고, 클럽을 설계합니다.
+        <strong>피팅부터 샤프트 선정·조립·세팅까지 한 곳에서 완성</strong>합니다.<br/>
+        <span class="hero-sub-light">서울 서초구 양재동 · 데이터 기반 클럽 피팅 전문 공방</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. 관점: 샤프트 추천이 아니라 클럽 설계 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">APPROACH · 이 피팅의 관점</p>
+      <h2>"어떤 샤프트가 좋은가"가 아니라<br>"왜 이 사양이 필요한가"</h2>
+      <p class="program-intro">
+        헤드스피드 하나로 샤프트를 추천하는 방식이 아닙니다.
+        <strong>골퍼 → 인터뷰 → 스윙 → 현재 클럽 → 볼 결과 → 원인 가설 → 사양 변경 → 시타 검증 → 제작</strong> —
+        움직임과 데이터를 함께 읽고, 그 골퍼에게 왜 그 사양이 필요한지부터 설계합니다.
+      </p>
+      <div class="callout fit-callout">
+        <p class="fit-callout-body">
+          그래서 결론은 <strong>무엇을 교체했는가가 아니라 왜 그렇게 피팅했는가</strong>입니다.
+          제품명은 이유가 정리된 뒤 마지막에 등장합니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2-2. 피팅 판단 4축 (GOLFER·SWING·CLUB·BALL) + 고유 방법론 정의 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">SCOPE · 함께 보는 네 가지</p>
+      <h2>골퍼 · 스윙 · 클럽 · 볼을<br>따로 보지 않습니다</h2>
+      <p class="program-intro">
+        <strong>구조 진단 피팅</strong> — 결과값만 보고 장비를 추천하지 않고,
+        골퍼·스윙·현재 클럽·볼 결과를 함께 분석해 원인을 먼저 구분한 뒤 클럽 사양을 결정하는
+        골프채공작소의 피팅 방식입니다.
+      </p>
+      <div class="axis-grid">
+        {axes.map((a) => (
+          <article class="axis-card">
+            <div class="axis-key">{a.key}<span class="axis-ko">{a.ko}</span></div>
+            <p class="axis-desc">{a.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 브랜드 5축 (DIAGNOSE→FIT→VERIFY→BUILD→RECORD) -->
+  <section class="section section-bg-soft">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">STRUCTURE · 피팅의 다섯 축</p>
+      <h2>진단부터 기록까지<br>한 곳에서 완결</h2>
+      <div class="pillar-list">
+        {pillars.map((p) => (
+          <article class="pillar-card">
+            <div class="pillar-key">{p.key}<span class="pillar-ko">{p.ko}</span></div>
+            <p class="pillar-desc">{p.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 피팅 8단계 흐름 -->
+  <section class="section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">PROCESS · 피팅 진행 8단계</p>
+      <h2>한 번의 방문에<br>이 과정을 함께 진행합니다</h2>
+      <ol class="fit-steps">
+        {steps.map((s) => (
+          <li class="fit-step">
+            <span class="fit-step-n">{s.n}</span>
+            <div class="fit-step-body">
+              <h3>{s.t}</h3>
+              <p>{s.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="fit-steps-note">
+        더 보기: <a href="/fitting-faq">피팅 자주 묻는 질문</a> ·
+        <a href="/swing-analysis">피팅을 위한 스윙분석</a> ·
+        <a href="/system">진단 시스템 상세</a> ·
+        <a href="/worksheet-system">굿피팅 워크시트</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. 굿피팅 = 자체 피팅 OS -->
+  <section class="section section-bg-cream">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow">GOODFITTING · 자체 피팅 시스템</p>
+      <h2>피팅 방법론을<br>시스템으로 만들었습니다</h2>
+      <p class="program-intro">
+        골프채공작소는 상담·측정·클럽 분석·샤프트 선정·시타 결과·최종 사양을
+        <strong>자체 개발한 굿피팅(GoodFitting) 시스템으로 기록하고 분석</strong>합니다.
+        피팅은 기억이 아니라 기록으로 합니다 — 다음 조정의 근거가 사람의 인상이 아니라 데이터로 남습니다.
+      </p>
+      <p class="fit-steps-note">
+        <a href="/goodfitting">굿피팅이란 — 시스템 소개 →</a>
+        &nbsp; · &nbsp;
+        <a href="/worksheet-system">굿피팅 워크시트 실제 화면 →</a>
+        &nbsp; · &nbsp;
+        <a href="https://goodfitting.myclubmakers.com" target="_blank" rel="noopener">굿피팅 사이트 →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 6. CTA (그린) -->
+  <section class="section section-bg-green fit-cta-section">
+    <div class="section-content-narrow">
+      <p class="section-eyebrow program-eyebrow-light">★ VISIT · 피팅 예약</p>
+      <h2 class="cta-h2">지금 클럽이<br>맞는지부터 봅니다</h2>
+      <div class="cta-card">
+        <p class="cta-body">
+          클럽 피팅은 측정·시타가 함께 필요해 <strong>방문</strong>으로 진행합니다.
+          지금 쓰는 클럽을 가져오시면 현재 스펙부터 함께 확인합니다.
+        </p>
+        <div class="cta-actions">
+          <a href="/contact" class="price-btn-primary">피팅 예약·문의 →</a>
+          <a href="tel:01043635555" class="price-btn-secondary">📞 010-4363-5555</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 마침표 -->
+  <section class="section closing-section">
+    <div class="closing-content">
+      <h3>무엇을 교체했는가보다,<br>왜 그렇게 피팅했는가를 먼저 봅니다.</h3>
+      <p class="closing-meta">— 골프채공작소 클럽메이커스</p>
+      <div class="closing-actions">
+        <a href="/contact" class="btn-primary">피팅 예약·문의 →</a>
+        <a href="/swing-analysis" class="btn-ghost">스윙분석 →</a>
+        <a href="/case-studies" class="btn-ghost">피팅 사례 →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  .fit-hero { background: var(--bg-soft, #FAFAF6); }
+  .hero-sub-light { font-size: 14px; color: var(--grey, #5A5A57); font-weight: 400; }
+
+  .program-intro { font-size: 16px; line-height: 1.85; color: var(--ink-2, #2A2A28); margin-bottom: 0; }
+  .program-intro strong { color: var(--ink, #0F0F0E); font-weight: 600; }
+
+  .fit-callout {
+    margin-top: 28px; padding: 22px 26px;
+    background: var(--bg-soft, #FAFAF6); border: 1px solid var(--line, #EAE7E0);
+    border-left: 3px solid var(--gold, #B8985C); border-radius: 4px;
+  }
+  .fit-callout-body { font-size: 15px; line-height: 1.8; color: var(--ink-2, #2A2A28); margin: 0; }
+  .fit-callout-body strong { color: var(--ink, #0F0F0E); font-weight: 600; }
+
+  /* 4축 (GOLFER·SWING·CLUB·BALL) */
+  .axis-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 24px; }
+  @media (min-width: 720px) { .axis-grid { grid-template-columns: 1fr 1fr; } }
+  .axis-card {
+    background: var(--bg, #FFFFFF); border: 1px solid var(--line, #EAE7E0);
+    border-left: 3px solid var(--gold, #B8985C); padding: 18px 22px; border-radius: 4px;
+  }
+  .axis-key {
+    font-family: var(--font-serif, serif); font-size: 16px; font-weight: 700;
+    letter-spacing: 0.08em; color: var(--green, #0F2922); margin-bottom: 8px;
+  }
+  .axis-ko { font-family: var(--font-sans, sans-serif); font-size: 13px; font-weight: 600; color: var(--gold, #B8985C); margin-left: 10px; letter-spacing: 0; }
+  .axis-desc { font-size: 14px; line-height: 1.7; color: var(--ink-2, #2A2A28); margin: 0; }
+
+  /* 5축 */
+  .pillar-list { margin-top: 24px; }
+  .pillar-card {
+    display: grid; grid-template-columns: 160px 1fr; gap: 20px; align-items: baseline;
+    padding: 18px 0; border-bottom: 1px solid var(--line, #EAE7E0);
+  }
+  .pillar-card:last-child { border-bottom: none; }
+  .pillar-key {
+    font-family: var(--font-serif, serif); font-size: 16px; font-weight: 700;
+    letter-spacing: 0.08em; color: var(--green, #0F2922);
+  }
+  .pillar-ko { font-family: var(--font-sans, sans-serif); font-size: 13px; font-weight: 600; color: var(--gold, #B8985C); margin-left: 10px; letter-spacing: 0; }
+  .pillar-desc { font-size: 15px; line-height: 1.7; color: var(--ink-2, #2A2A28); margin: 0; }
+  @media (max-width: 640px) {
+    .pillar-card { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  /* 8단계 */
+  .fit-steps { list-style: none; padding: 0; margin: 24px 0 0; counter-reset: none; }
+  .fit-step {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 18px 0; border-bottom: 1px solid var(--line, #EAE7E0);
+  }
+  .fit-step:last-child { border-bottom: none; }
+  .fit-step-n {
+    flex: 0 0 auto; font-family: var(--font-serif, serif); font-size: 14px; font-weight: 700;
+    color: var(--gold, #B8985C); width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--gold, #B8985C); display: flex; align-items: center; justify-content: center;
+  }
+  .fit-step-body h3 { font-size: 17px; color: var(--ink, #0F0F0E); margin: 0 0 4px; }
+  .fit-step-body p { font-size: 14.5px; line-height: 1.7; color: var(--ink-2, #2A2A28); margin: 0; }
+
+  .fit-steps-note { font-size: 14px; line-height: 1.9; color: var(--grey, #5A5A57); margin: 20px 0 0; }
+  .fit-steps-note a { color: var(--green, #0F2922); border-bottom: 1px solid var(--line, #EAE7E0); }
+  .fit-steps-note a:hover { border-color: var(--green, #0F2922); }
+
+  /* CTA 그린 */
+  .program-eyebrow-light { color: var(--gold-soft, #D4B888) !important; }
+  .fit-cta-section { color: white; }
+  .fit-cta-section .section-eyebrow { color: var(--gold-soft, #D4B888) !important; }
+  .cta-h2 { font-family: var(--font-serif, serif); font-size: clamp(28px, 4vw, 38px); font-weight: 700; line-height: 1.3; color: white; margin-bottom: 32px; letter-spacing: -0.015em; }
+  .cta-card { background: rgba(0,0,0,0.18); border: 1px solid rgba(212,184,136,0.25); border-radius: 6px; padding: 30px 34px; }
+  .cta-body { font-size: 15.5px; line-height: 1.85; color: rgba(255,255,255,0.92); margin: 0 0 24px; }
+  .cta-body strong { color: var(--gold-soft, #D4B888); font-weight: 700; }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 24px; border-top: 1px solid rgba(212,184,136,0.25); }
+  .price-btn-primary, .price-btn-secondary { font-size: 15px; font-weight: 700; padding: 14px 24px; border-radius: 4px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .price-btn-primary { background: var(--gold, #B8985C); color: var(--ink, #0F0F0E); flex: 1; text-align: center; min-width: 200px; }
+  .price-btn-primary:hover { background: var(--gold-soft, #D4B888); transform: translateY(-1px); }
+  .price-btn-secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .price-btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+  /* 마침표 */
+  .closing-section { background: var(--ink, #0F0F0E); padding: 100px 80px; text-align: center; }
+  .closing-content { max-width: 720px; margin: 0 auto; }
+  .closing-section h3 { font-family: var(--font-serif, serif); font-size: clamp(24px, 4vw, 32px); line-height: 1.5; font-weight: 600; color: white; letter-spacing: -0.015em; margin-bottom: 20px; }
+  .closing-meta { font-size: 12px; color: var(--gold-soft, #D4B888); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 36px; }
+  .closing-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .closing-section .btn-primary, .closing-section .btn-ghost { font-size: 15px; font-weight: 600; padding: 14px 26px; border-radius: 4px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .closing-section .btn-primary { background: var(--gold, #B8985C); color: var(--ink, #0F0F0E); }
+  .closing-section .btn-primary:hover { background: var(--gold-soft, #D4B888); transform: translateX(2px); }
+  .closing-section .btn-ghost { background: transparent; color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.25); }
+  .closing-section .btn-ghost:hover { background: rgba(255,255,255,0.06); color: white; border-color: rgba(255,255,255,0.4); }
+
+  @media (max-width: 640px) {
+    .cta-card { padding: 24px 22px; }
+    .cta-actions { flex-direction: column; }
+    .price-btn-primary, .price-btn-secondary { width: 100%; text-align: center; }
+    .closing-section { padding: 70px 24px; }
+  }
+</style>
