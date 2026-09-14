@@ -65,9 +65,8 @@ Allow: /
 User-agent: DaumBot
 Allow: /
 
-# === 사이트맵 ===
-Sitemap: https://myclubmakers.com/sitemap.xml
-Sitemap: https://myclubmakers.com/sitemap-0.xml
+# === 사이트맵 (@astrojs/sitemap 생성: sitemap-index.xml) ===
+Sitemap: https://myclubmakers.com/sitemap-index.xml
 
 # === llms.txt 안내 (AI 학습용) ===
 # https://myclubmakers.com/llms.txt
