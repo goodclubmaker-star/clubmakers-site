@@ -10,6 +10,10 @@
     .cutEditTools{display:flex;gap:7px;flex-wrap:wrap;margin:-2px 0 13px;padding-bottom:12px;border-bottom:1px dashed #b8ad9b}
     .cutEditTools button{border:1px solid #8e8371;border-radius:999px;background:#fffaf0;color:#25221d;padding:6px 10px;cursor:pointer;font-weight:700}
     .cutEditTools button:disabled{opacity:.35;cursor:not-allowed}
+    .spread.cutHidden{outline:2px dashed #a44249;outline-offset:-2px;opacity:.58}
+    .spread.cutHidden .cutEditTools:after{content:'콘티북에서 숨김';margin-left:auto;align-self:center;color:#a44249;font-size:12px;font-weight:800}
+    .cutEditTools .hideCutBtn{border-color:#a44249;color:#8c343a}
+    .cutEditTools .restoreCutBtn{border-color:#47705c;color:#356149}
     .action[contenteditable="true"]{min-height:92px;padding:12px 13px;border:2px solid #c89a52;border-radius:6px;background:#fffdf7;outline:none;white-space:pre-wrap}
     .action[contenteditable="true"]:focus{border-color:#b84348;box-shadow:0 0 0 3px #b8434820}
     .action[contenteditable="true"]:empty:before{content:attr(data-placeholder);color:#9c9488}
@@ -43,7 +47,8 @@
       savedAt: new Date().toISOString(),
       scenes: Object.fromEntries(scenes.map((scene) => [scene.n, {
         order: scene.cuts.map((cut) => cut.id),
-        actions: Object.fromEntries(scene.cuts.map((cut) => [cut.id, cut.action || '']))
+        actions: Object.fromEntries(scene.cuts.map((cut) => [cut.id, cut.action || ''])),
+        hidden: scene.cuts.filter((cut) => cut.hidden).map((cut) => cut.id)
       }]))
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -62,6 +67,8 @@
           if (Object.prototype.hasOwnProperty.call(sceneSaved.actions, cut.id)) cut.action = sceneSaved.actions[cut.id];
         }
       }
+      const hidden = new Set(Array.isArray(sceneSaved.hidden) ? sceneSaved.hidden : []);
+      for (const cut of scene.cuts) cut.hidden = hidden.has(cut.id);
       if (Array.isArray(sceneSaved.order)) {
         const rank = new Map(sceneSaved.order.map((id, index) => [id, index]));
         scene.cuts.sort((a, b) => (rank.get(a.id) ?? 9999) - (rank.get(b.id) ?? 9999));
@@ -145,6 +152,14 @@
     rerender(cutId);
   }
 
+  function toggleCutHidden(sceneNo, cutId) {
+    const cut = findCut(sceneNo, cutId);
+    if (!cut) return;
+    cut.hidden = !cut.hidden;
+    saveEdits();
+    rerender(cutId);
+  }
+
   function decorateEditor() {
     const editButton = document.getElementById('editStoryboardBtn');
     const exportButton = document.getElementById('exportStoryboardBtn');
@@ -173,6 +188,8 @@
       const cut = findCut(sceneNo, id);
       if (!scene || !cut) continue;
       spread.dataset.cut = id;
+      spread.hidden = Boolean(cut.hidden && !editMode);
+      spread.classList.toggle('cutHidden', Boolean(cut.hidden));
       const page = spread.querySelector('.page');
       const formattedAction = page.querySelector('.action');
       if (!editMode) {
@@ -182,9 +199,12 @@
       const index = scene.cuts.findIndex((item) => item.id === id);
       const controls = document.createElement('div');
       controls.className = 'cutEditTools';
+      const hideButton = makeButton(cut.hidden ? '컷 복원' : '컷 숨기기', () => toggleCutHidden(sceneNo, id));
+      hideButton.classList.add(cut.hidden ? 'restoreCutBtn' : 'hideCutBtn');
       controls.append(
         makeButton('↑ 앞 컷으로', () => moveCut(sceneNo, id, -1), index === 0),
-        makeButton('↓ 뒤 컷으로', () => moveCut(sceneNo, id, 1), index === scene.cuts.length - 1)
+        makeButton('↓ 뒤 컷으로', () => moveCut(sceneNo, id, 1), index === scene.cuts.length - 1),
+        hideButton
       );
       page.prepend(controls);
 
