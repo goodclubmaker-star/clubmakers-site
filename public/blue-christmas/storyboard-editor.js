@@ -27,6 +27,7 @@
     .captionCue{color:#775c86}
     .captionLine{color:#614d6d}
     .scriptGap{display:block;height:.72em}
+    .cinematicCaption{position:absolute;left:50%;bottom:8%;z-index:3;max-width:88%;transform:translateX(-50%);padding:.48em .88em;border-radius:4px;background:#0a0d12a6;color:#fff5df;font-family:"Noto Sans KR","Malgun Gothic",sans-serif;font-size:clamp(15px,2.1vw,28px);font-weight:600;letter-spacing:.045em;line-height:1.45;text-align:center;text-shadow:0 2px 8px #000,0 1px 2px #000;white-space:nowrap}
     .tools .editorBtn.active{border-color:#d9b779;background:#d9b779;color:#13161b}
     @media(max-width:700px){.editNotice{border-radius:0;margin-bottom:12px}.cutEditTools{margin-top:0}.action[contenteditable="true"]{min-height:120px}}
     @media print{.editNotice,.cutEditTools,.editorBtn,.editOnly{display:none!important}}
@@ -190,6 +191,14 @@
       spread.dataset.cut = id;
       spread.hidden = Boolean(cut.hidden && !editMode);
       spread.classList.toggle('cutHidden', Boolean(cut.hidden));
+      const visual = spread.querySelector('.visual');
+      visual?.querySelector('.cinematicCaption')?.remove();
+      if (cut.overlayCaption && visual) {
+        const caption = document.createElement('div');
+        caption.className = 'cinematicCaption';
+        caption.textContent = cut.overlayCaption;
+        visual.appendChild(caption);
+      }
       const page = spread.querySelector('.page');
       const formattedAction = page.querySelector('.action');
       if (!editMode) {
