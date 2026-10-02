@@ -173,15 +173,13 @@
       const cut = findCut(sceneNo, id);
       if (!scene || !cut) continue;
       spread.dataset.cut = id;
-      if (!editMode) continue;
-
       const page = spread.querySelector('.page');
-      const index = scene.cuts.findIndex((item) => item.id === id);
       const formattedAction = page.querySelector('.action');
       if (!editMode) {
         formatScriptText(formattedAction, cut.action || '');
         continue;
       }
+      const index = scene.cuts.findIndex((item) => item.id === id);
       const controls = document.createElement('div');
       controls.className = 'cutEditTools';
       controls.append(
