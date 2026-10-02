@@ -54,7 +54,11 @@
         hidden: scene.cuts.filter((cut) => cut.hidden).map((cut) => cut.id)
       }]))
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch {
+      // The editor should still work for the current session when storage is blocked.
+    }
     return payload;
   }
 
