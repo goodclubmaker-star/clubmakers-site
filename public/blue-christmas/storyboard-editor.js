@@ -3,6 +3,7 @@
   const STRUCTURAL_ACTION_MIGRATIONS = new Set(['S20-C10', 'S20-C11']);
   const originalScenes = JSON.parse(JSON.stringify(scenes));
   let editMode = false;
+  let showHiddenCuts = false;
 
   const style = document.createElement('style');
   style.textContent = `
@@ -171,6 +172,23 @@
     const editButton = document.getElementById('editStoryboardBtn');
     const exportButton = document.getElementById('exportStoryboardBtn');
     const resetButton = document.getElementById('resetS07Btn');
+    const tools = document.querySelector('.tools');
+    let hiddenCutsButton = document.getElementById('showHiddenCutsBtn');
+    if (!hiddenCutsButton && tools) {
+      hiddenCutsButton = document.createElement('button');
+      hiddenCutsButton.id = 'showHiddenCutsBtn';
+      hiddenCutsButton.className = 'editorBtn editOnly';
+      hiddenCutsButton.type = 'button';
+      hiddenCutsButton.addEventListener('click', () => {
+        showHiddenCuts = !showHiddenCuts;
+        rerender();
+      });
+      tools.insertBefore(hiddenCutsButton, exportButton || tools.firstChild);
+    }
+    const hiddenCutCount = scenes.reduce(
+      (count, scene) => count + scene.cuts.filter((cut) => cut.hidden).length,
+      0
+    );
     if (editButton) {
       editButton.textContent = editMode ? '편집 완료' : '편집';
       editButton.classList.toggle('active', editMode);
@@ -178,12 +196,19 @@
     }
     if (exportButton) exportButton.hidden = !editMode;
     if (resetButton) resetButton.hidden = !editMode;
+    if (hiddenCutsButton) {
+      hiddenCutsButton.hidden = !editMode || hiddenCutCount === 0;
+      hiddenCutsButton.textContent = showHiddenCuts
+        ? `숨긴 컷 닫기 (${hiddenCutCount})`
+        : `숨긴 컷 보기 (${hiddenCutCount})`;
+      hiddenCutsButton.classList.toggle('active', showHiddenCuts);
+    }
 
     if (editMode) {
       const book = document.getElementById('book');
       const notice = document.createElement('div');
       notice.className = 'editNotice';
-      notice.innerHTML = '<b>온라인 편집 모드</b><br>지문은 직접 눌러 수정하고, 각 컷의 버튼으로 순서를 바꾸세요. 변경 내용은 이 브라우저에 자동 저장됩니다.';
+      notice.innerHTML = '<b>온라인 편집 모드</b><br>숨긴 컷은 즉시 화면에서 사라집니다. 복원하려면 상단의 <b>숨긴 컷 보기</b>를 누르세요. 변경 내용은 이 브라우저에 자동 저장됩니다.';
       book.prepend(notice);
     }
 
@@ -195,7 +220,7 @@
       const cut = findCut(sceneNo, id);
       if (!scene || !cut) continue;
       spread.dataset.cut = id;
-      spread.hidden = Boolean(cut.hidden && !editMode);
+      spread.hidden = Boolean(cut.hidden && (!editMode || !showHiddenCuts));
       spread.classList.toggle('cutHidden', Boolean(cut.hidden));
       const visual = spread.querySelector('.visual');
       visual?.querySelector('.cinematicCaption')?.remove();
@@ -256,6 +281,7 @@
 
   window.toggleStoryboardEdit = () => {
     editMode = !editMode;
+    if (!editMode) showHiddenCuts = false;
     rerender();
   };
 
