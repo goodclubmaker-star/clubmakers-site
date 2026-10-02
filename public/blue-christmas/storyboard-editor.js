@@ -1,5 +1,6 @@
 (() => {
   const STORAGE_KEY = 'blue-christmas-storyboard-edits-v1';
+  const STRUCTURAL_ACTION_MIGRATIONS = new Set(['S20-C10', 'S20-C11']);
   const originalScenes = JSON.parse(JSON.stringify(scenes));
   let editMode = false;
 
@@ -44,7 +45,7 @@
 
   function saveEdits() {
     const payload = {
-      version: 1,
+      version: 2,
       savedAt: new Date().toISOString(),
       scenes: Object.fromEntries(scenes.map((scene) => [scene.n, {
         order: scene.cuts.map((cut) => cut.id),
@@ -60,12 +61,16 @@
     let saved;
     try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return; }
     if (!saved?.scenes) return;
+    const savedVersion = Number(saved.version || 1);
     for (const scene of scenes) {
       const sceneSaved = saved.scenes[String(scene.n)];
       if (!sceneSaved) continue;
       if (sceneSaved.actions) {
         for (const cut of scene.cuts) {
-          if (Object.prototype.hasOwnProperty.call(sceneSaved.actions, cut.id)) cut.action = sceneSaved.actions[cut.id];
+          const isMigratedEndingCut = savedVersion < 2 && STRUCTURAL_ACTION_MIGRATIONS.has(cut.id);
+          if (!isMigratedEndingCut && Object.prototype.hasOwnProperty.call(sceneSaved.actions, cut.id)) {
+            cut.action = sceneSaved.actions[cut.id];
+          }
         }
       }
       const hidden = new Set(Array.isArray(sceneSaved.hidden) ? sceneSaved.hidden : []);
@@ -75,6 +80,7 @@
         scene.cuts.sort((a, b) => (rank.get(a.id) ?? 9999) - (rank.get(b.id) ?? 9999));
       }
     }
+    if (savedVersion < 2) saveEdits();
   }
 
   function makeButton(label, onClick, disabled = false) {
