@@ -13,6 +13,16 @@
     .action[contenteditable="true"]{min-height:92px;padding:12px 13px;border:2px solid #c89a52;border-radius:6px;background:#fffdf7;outline:none;white-space:pre-wrap}
     .action[contenteditable="true"]:focus{border-color:#b84348;box-shadow:0 0 0 3px #b8434820}
     .action[contenteditable="true"]:empty:before{content:attr(data-placeholder);color:#9c9488}
+    .scriptLine{display:block}
+    .directionLine{margin:.22em 0;color:#6e675e;font-style:italic;text-align:left}
+    .speakerLine{margin:1.05em auto .28em;color:#a44249;font-weight:800;letter-spacing:.08em;text-align:center}
+    .dialogueLine{max-width:760px;margin:.18em auto;color:#263f59;font-style:normal;text-align:center}
+    .dialogueAside{color:#82766a;font-size:.9em;font-style:italic}
+    .narrationCue{color:#45637f}
+    .narrationLine{color:#4c6176}
+    .captionCue{color:#775c86}
+    .captionLine{color:#614d6d}
+    .scriptGap{display:block;height:.72em}
     .tools .editorBtn.active{border-color:#d9b779;background:#d9b779;color:#13161b}
     @media(max-width:700px){.editNotice{border-radius:0;margin-bottom:12px}.cutEditTools{margin-top:0}.action[contenteditable="true"]{min-height:120px}}
     @media print{.editNotice,.cutEditTools,.editorBtn,.editOnly{display:none!important}}
@@ -68,6 +78,61 @@
     return button;
   }
 
+  function cueType(line) {
+    const text = line.trim();
+    if (/^(산타|루돌프|혁|지민)$/.test(text)) return 'dialogue';
+    if (text === '짧은 자막') return 'caption';
+    if ((text.includes('나레이션') || text.includes('목소리')) && text.length < 48) return 'narration';
+    return '';
+  }
+
+  function appendLine(container, className, text) {
+    const line = document.createElement('span');
+    line.className = `scriptLine ${className}`;
+    line.textContent = text;
+    container.appendChild(line);
+    return line;
+  }
+
+  function formatScriptText(element, text) {
+    if (!element) return;
+    element.replaceChildren();
+    let mode = '';
+    for (const rawLine of String(text || '').split('\n')) {
+      const trimmed = rawLine.trim();
+      if (!trimmed) {
+        const gap = document.createElement('span');
+        gap.className = 'scriptGap';
+        element.appendChild(gap);
+        mode = '';
+        continue;
+      }
+      const nextMode = cueType(trimmed);
+      if (nextMode) {
+        mode = nextMode;
+        const cueClass = nextMode === 'narration' ? 'speakerLine narrationCue' : nextMode === 'caption' ? 'speakerLine captionCue' : 'speakerLine';
+        appendLine(element, cueClass, trimmed);
+        continue;
+      }
+      if (mode) {
+        const lineClass = mode === 'narration' ? 'dialogueLine narrationLine' : mode === 'caption' ? 'dialogueLine captionLine' : 'dialogueLine';
+        const line = appendLine(element, lineClass, '');
+        const aside = trimmed.match(/^\(([^)]+)\)\s*(.*)$/);
+        if (aside) {
+          const direction = document.createElement('span');
+          direction.className = 'dialogueAside';
+          direction.textContent = `(${aside[1]})`;
+          line.appendChild(direction);
+          if (aside[2]) line.append(` ${aside[2]}`);
+        } else {
+          line.textContent = trimmed;
+        }
+      } else {
+        appendLine(element, 'directionLine', rawLine);
+      }
+    }
+  }
+
   function moveCut(sceneNo, cutId, delta) {
     const scene = findScene(sceneNo);
     if (!scene) return;
@@ -112,6 +177,11 @@
 
       const page = spread.querySelector('.page');
       const index = scene.cuts.findIndex((item) => item.id === id);
+      const formattedAction = page.querySelector('.action');
+      if (!editMode) {
+        formatScriptText(formattedAction, cut.action || '');
+        continue;
+      }
       const controls = document.createElement('div');
       controls.className = 'cutEditTools';
       controls.append(
@@ -133,6 +203,7 @@
         action.className = 'action';
         page.insertBefore(action, page.querySelector('.folio'));
       }
+      action.textContent = cut.action || '';
       action.contentEditable = 'true';
       action.spellcheck = false;
       action.dataset.placeholder = '이 컷의 지문이나 대사를 입력하세요.';
