@@ -13,6 +13,7 @@
     .cutEditTools button{border:1px solid #8e8371;border-radius:999px;background:#fffaf0;color:#25221d;padding:6px 10px;cursor:pointer;font-weight:700}
     .cutEditTools button:disabled{opacity:.35;cursor:not-allowed}
     .spread.cutHidden{outline:2px dashed #a44249;outline-offset:-2px;opacity:.58}
+    .spread[hidden]{display:none!important}
     .spread.cutHidden .cutEditTools:after{content:'콘티북에서 숨김';margin-left:auto;align-self:center;color:#a44249;font-size:12px;font-weight:800}
     .cutEditTools .hideCutBtn{border-color:#a44249;color:#8c343a}
     .cutEditTools .restoreCutBtn{border-color:#47705c;color:#356149}
@@ -224,7 +225,9 @@
       const cut = findCut(sceneNo, id);
       if (!scene || !cut) continue;
       spread.dataset.cut = id;
-      spread.hidden = Boolean(cut.hidden && (!editMode || !showHiddenCuts));
+      const shouldHideCut = Boolean(cut.hidden && (!editMode || !showHiddenCuts));
+      spread.hidden = shouldHideCut;
+      spread.style.display = shouldHideCut ? 'none' : '';
       spread.classList.toggle('cutHidden', Boolean(cut.hidden));
       const visual = spread.querySelector('.visual');
       visual?.querySelector('.cinematicCaption')?.remove();
