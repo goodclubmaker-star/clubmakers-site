@@ -1,10 +1,14 @@
 (() => {
   const STORAGE_KEY = 'blue-christmas-storyboard-edits-v1';
+  const PRODUCTION_DB = 'blue-christmas-production-v1';
+  const SAMPLE_STORE = 'samples';
   const STRUCTURAL_ACTION_MIGRATIONS = new Set(['S20-C10', 'S20-C11']);
   const originalScenes = JSON.parse(JSON.stringify(scenes));
   let editMode = false;
   let showHiddenCuts = false;
   let saveStatus = '';
+  let productionDbPromise;
+  const sampleObjectUrls = new Set();
 
   const style = document.createElement('style');
   style.textContent = `
@@ -35,7 +39,25 @@
     .tools .editorBtn.active{border-color:#d9b779;background:#d9b779;color:#13161b}
     .tools .saveState{border-color:#47705c;color:#dff5e6}
     .tools .saveState.saved{background:#47705c;color:#fff}
-    @media(max-width:700px){.editNotice{border-radius:0;margin-bottom:12px}.cutEditTools{margin-top:0}.action[contenteditable="true"]{min-height:120px}}
+    .videoStatusBadge{position:absolute;top:12px;right:12px;z-index:4;padding:7px 10px;border-radius:999px;background:#2f7658e8;color:#fff;font:800 11px ui-monospace,monospace;letter-spacing:.04em;box-shadow:0 3px 12px #0007}
+    .sceneProgress{display:inline-flex;margin-top:9px;padding:5px 9px;border:1px solid #566170;border-radius:999px;color:#cfd7e2;font:700 11px ui-monospace,monospace}
+    .sceneProgress.complete{border-color:#69a884;background:#2f765844;color:#dcf8e8}
+    .sampleSection{padding:14px 18px 16px;background:#11161e;color:#eef2f7;border-top:1px solid #303947}
+    .sampleHeader{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .sampleHeader b{font-size:13px;letter-spacing:.04em}
+    .sampleHeader span{color:#98a5b5;font-size:11px}
+    .sampleTrack{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+    .sampleCard{position:relative;flex:0 0 min(270px,72vw);border:1px solid #485363;border-radius:7px;overflow:hidden;background:#090d12}
+    .sampleCard img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#05070a;cursor:zoom-in}
+    .sampleNo{position:absolute;top:6px;left:6px;padding:4px 7px;border-radius:999px;background:#090d12d9;color:#fff;font:800 10px ui-monospace,monospace}
+    .sampleName{padding:7px 9px;color:#b8c2cf;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sampleTools{display:flex;gap:5px;padding:0 7px 8px}
+    .sampleTools button,.sampleUploadBtn{border:1px solid #536071;border-radius:999px;background:#1c2430;color:#edf1f6;padding:5px 8px;cursor:pointer;font-size:11px}
+    .sampleTools button:disabled{opacity:.3;cursor:not-allowed}
+    .sampleEmpty{padding:18px;border:1px dashed #46515f;border-radius:6px;color:#8794a5;text-align:center;font-size:12px}
+    .cutEditTools .videoDoneBtn{border-color:#4c8063;color:#356149}
+    .cutEditTools .videoDoneBtn.active{background:#356149;color:#fff}
+    @media(max-width:700px){.editNotice{border-radius:0;margin-bottom:12px}.cutEditTools{margin-top:0}.action[contenteditable="true"]{min-height:120px}.videoStatusBadge{top:8px;right:8px}.sampleSection{padding:12px 11px}.sceneProgress{margin-top:6px}}
     @media print{.editNotice,.cutEditTools,.editorBtn,.editOnly{display:none!important}}
   `;
   document.head.appendChild(style);
@@ -95,14 +117,91 @@
     return null;
   }
 
+  function openProductionDb() {
+    if (productionDbPromise) return productionDbPromise;
+    productionDbPromise = new Promise((resolve, reject) => {
+      if (!window.indexedDB) return reject(new Error('IndexedDB unavailable'));
+      const request = indexedDB.open(PRODUCTION_DB, 1);
+      request.addEventListener('upgradeneeded', () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains(SAMPLE_STORE)) {
+          const store = db.createObjectStore(SAMPLE_STORE, { keyPath: 'id' });
+          store.createIndex('cutId', 'cutId', { unique: false });
+        }
+      });
+      request.addEventListener('success', () => resolve(request.result));
+      request.addEventListener('error', () => reject(request.error));
+    });
+    return productionDbPromise;
+  }
+
+  async function listSamples(cutId) {
+    const db = await openProductionDb();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(SAMPLE_STORE, 'readonly');
+      const request = tx.objectStore(SAMPLE_STORE).index('cutId').getAll(cutId);
+      request.addEventListener('success', () => resolve(request.result.sort((a, b) => a.order - b.order)));
+      request.addEventListener('error', () => reject(request.error));
+    });
+  }
+
+  async function addSampleFiles(cutId, files) {
+    const accepted = [...files].filter((file) => file.type.startsWith('image/'));
+    if (!accepted.length) return;
+    const current = await listSamples(cutId);
+    const db = await openProductionDb();
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction(SAMPLE_STORE, 'readwrite');
+      const store = tx.objectStore(SAMPLE_STORE);
+      accepted.forEach((file, index) => store.put({
+        id: `${cutId}-${Date.now()}-${index}-${crypto.randomUUID?.() || Math.random().toString(36).slice(2)}`,
+        cutId,
+        order: current.length + index,
+        name: file.name,
+        type: file.type,
+        blob: file,
+        createdAt: new Date().toISOString(),
+      }));
+      tx.addEventListener('complete', resolve);
+      tx.addEventListener('error', () => reject(tx.error));
+    });
+  }
+
+  async function saveSampleOrder(samples) {
+    const db = await openProductionDb();
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction(SAMPLE_STORE, 'readwrite');
+      const store = tx.objectStore(SAMPLE_STORE);
+      samples.forEach((sample, order) => store.put({ ...sample, order }));
+      tx.addEventListener('complete', resolve);
+      tx.addEventListener('error', () => reject(tx.error));
+    });
+  }
+
+  async function deleteSample(sampleId) {
+    const db = await openProductionDb();
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction(SAMPLE_STORE, 'readwrite');
+      tx.objectStore(SAMPLE_STORE).delete(sampleId);
+      tx.addEventListener('complete', resolve);
+      tx.addEventListener('error', () => reject(tx.error));
+    });
+  }
+
+  function releaseSampleObjectUrls() {
+    for (const url of sampleObjectUrls) URL.revokeObjectURL(url);
+    sampleObjectUrls.clear();
+  }
+
   function saveEdits(announce = false) {
     const payload = {
-      version: 4,
+      version: 5,
       savedAt: new Date().toISOString(),
       scenes: Object.fromEntries(scenes.map((scene) => [scene.n, {
         visualOrder: ensureVisualOrder(scene),
         actions: Object.fromEntries(scene.cuts.map((cut) => [cut.id, cut.action || ''])),
-        hidden: scene.cuts.filter((cut) => cut.hidden).map((cut) => cut.id)
+        hidden: scene.cuts.filter((cut) => cut.hidden).map((cut) => cut.id),
+        videoProduced: scene.cuts.filter((cut) => cut.videoProduced).map((cut) => cut.id)
       }]))
     };
     const storage = writeSavedPayload(payload);
@@ -130,6 +229,8 @@
       }
       const hidden = new Set(Array.isArray(sceneSaved.hidden) ? sceneSaved.hidden : []);
       for (const cut of scene.cuts) cut.hidden = hidden.has(cut.id);
+      const produced = new Set(Array.isArray(sceneSaved.videoProduced) ? sceneSaved.videoProduced : []);
+      for (const cut of scene.cuts) cut.videoProduced = produced.has(cut.id);
       // v1-v3 stored the order of whole cards.  Migrate that order into an
       // image-only sequence so the original scenario slots never move.
       scene.visualOrder = normalizedVisualOrder(
@@ -274,6 +375,115 @@
     rerender(cutId);
   }
 
+  function toggleVideoProduced(sceneNo, cutId) {
+    const cut = findCut(sceneNo, cutId);
+    if (!cut) return;
+    cut.videoProduced = !cut.videoProduced;
+    saveEdits();
+    rerender(cutId);
+  }
+
+  async function moveSample(cutId, index, delta) {
+    const samples = await listSamples(cutId);
+    const next = index + delta;
+    if (next < 0 || next >= samples.length) return;
+    [samples[index], samples[next]] = [samples[next], samples[index]];
+    await saveSampleOrder(samples);
+    rerender(cutId);
+  }
+
+  async function renderSamplesForCut(spread, cut) {
+    const page = spread.querySelector('.page');
+    if (!page) return;
+    const section = document.createElement('section');
+    section.className = 'sampleSection';
+    section.innerHTML = '<div class="sampleHeader"><b>영상 제작 샘플</b><span>불러오는 중…</span></div>';
+    spread.insertBefore(section, page);
+    try {
+      const samples = await listSamples(cut.id);
+      if (!section.isConnected) return;
+      if (!samples.length && !editMode) {
+        section.remove();
+        return;
+      }
+      section.replaceChildren();
+      const header = document.createElement('div');
+      header.className = 'sampleHeader';
+      const title = document.createElement('b');
+      title.textContent = '영상 제작 샘플';
+      const count = document.createElement('span');
+      count.textContent = `${samples.length}장 · 표시 순서대로`;
+      header.append(title, count);
+      if (editMode) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.multiple = true;
+        input.hidden = true;
+        input.addEventListener('change', async () => {
+          try {
+            await addSampleFiles(cut.id, input.files || []);
+            rerender(cut.id);
+          } catch {
+            alert('샘플 이미지를 저장하지 못했습니다. 파일 크기나 브라우저 저장 공간을 확인해 주세요.');
+          }
+        });
+        const upload = document.createElement('button');
+        upload.type = 'button';
+        upload.className = 'sampleUploadBtn';
+        upload.textContent = '＋ 샘플 이미지 올리기';
+        upload.addEventListener('click', () => input.click());
+        header.append(input, upload);
+      }
+      section.appendChild(header);
+      if (!samples.length) {
+        const empty = document.createElement('div');
+        empty.className = 'sampleEmpty';
+        empty.textContent = '아직 등록된 영상 제작 샘플이 없습니다.';
+        section.appendChild(empty);
+        return;
+      }
+      const track = document.createElement('div');
+      track.className = 'sampleTrack';
+      samples.forEach((sample, index) => {
+        const card = document.createElement('article');
+        card.className = 'sampleCard';
+        const url = URL.createObjectURL(sample.blob);
+        sampleObjectUrls.add(url);
+        const image = document.createElement('img');
+        image.src = url;
+        image.alt = `${cut.id} 샘플 ${index + 1}`;
+        image.addEventListener('click', () => openImage(url));
+        const number = document.createElement('span');
+        number.className = 'sampleNo';
+        number.textContent = `SAMPLE ${String(index + 1).padStart(2, '0')}`;
+        const name = document.createElement('div');
+        name.className = 'sampleName';
+        name.textContent = sample.name;
+        card.append(image, number, name);
+        if (editMode) {
+          const tools = document.createElement('div');
+          tools.className = 'sampleTools';
+          tools.append(
+            makeButton('←', () => moveSample(cut.id, index, -1), index === 0),
+            makeButton('→', () => moveSample(cut.id, index, 1), index === samples.length - 1),
+            makeButton('삭제', async () => {
+              if (!confirm('이 샘플 이미지를 목록에서 삭제할까요?')) return;
+              await deleteSample(sample.id);
+              rerender(cut.id);
+            })
+          );
+          card.appendChild(tools);
+        }
+        track.appendChild(card);
+      });
+      section.appendChild(track);
+    } catch {
+      if (!section.isConnected) return;
+      section.querySelector('span').textContent = '브라우저 저장소 사용 불가';
+    }
+  }
+
   function decorateEditor() {
     const editButton = document.getElementById('editStoryboardBtn');
     const exportButton = document.getElementById('exportStoryboardBtn');
@@ -344,8 +554,19 @@
       const book = document.getElementById('book');
       const notice = document.createElement('div');
       notice.className = 'editNotice';
-      notice.innerHTML = '<b>온라인 편집 모드</b><br><b>앞/뒤 컷</b>은 이미지만 이동하며 원본 시나리오 순서는 고정됩니다. 지문·숨김도 자동 저장됩니다. 끝날 때 상단의 <b>저장</b> 또는 <b>편집 완료</b>를 누르세요. 다른 브라우저에서도 쓰려면 <b>백업</b> 파일을 내려받으세요.';
+      notice.innerHTML = '<b>온라인 제작 모드</b><br><b>앞/뒤 컷</b>은 이미지만 이동하며 원본 시나리오 순서는 고정됩니다. 영상 완료·지문·숨김은 자동 저장됩니다. <b>샘플 이미지</b>는 해당 브라우저에 저장되고 표시 순서를 바꿀 수 있습니다.';
       book.prepend(notice);
+    }
+
+    for (const scene of scenes) {
+      const intro = document.getElementById(`scene-${scene.n}`);
+      if (!intro) continue;
+      const done = scene.cuts.filter((cut) => !cut.hidden && cut.videoProduced).length;
+      const visible = scene.cuts.filter((cut) => !cut.hidden).length;
+      const progress = document.createElement('span');
+      progress.className = `sceneProgress${visible > 0 && done === visible ? ' complete' : ''}`;
+      progress.textContent = `VIDEO ${done} / ${visible}`;
+      intro.querySelector('div:last-child')?.appendChild(progress);
     }
 
     for (const spread of document.querySelectorAll('.spread')) {
@@ -364,6 +585,13 @@
       const index = scene.cuts.findIndex((item) => item.id === id);
       const visualCut = visualCutAt(scene, index);
       renderVisualForSlot(visual, cut, visualCut);
+      visual?.querySelector('.videoStatusBadge')?.remove();
+      if (cut.videoProduced && visual) {
+        const badge = document.createElement('span');
+        badge.className = 'videoStatusBadge';
+        badge.textContent = 'VIDEO ✓';
+        visual.appendChild(badge);
+      }
       visual?.querySelector('.cinematicCaption')?.remove();
       if (visualCut?.overlayCaption && visual) {
         const caption = document.createElement('div');
@@ -372,6 +600,7 @@
         visual.appendChild(caption);
       }
       const page = spread.querySelector('.page');
+      renderSamplesForCut(spread, cut);
       const formattedAction = page.querySelector('.action');
       if (!editMode) {
         formatScriptText(formattedAction, cut.action || '');
@@ -381,9 +610,13 @@
       controls.className = 'cutEditTools';
       const hideButton = makeButton(cut.hidden ? '컷 복원' : '컷 숨기기', () => toggleCutHidden(sceneNo, id));
       hideButton.classList.add(cut.hidden ? 'restoreCutBtn' : 'hideCutBtn');
+      const videoButton = makeButton(cut.videoProduced ? '✓ 영상 제작됨' : '영상 제작 완료', () => toggleVideoProduced(sceneNo, id));
+      videoButton.classList.add('videoDoneBtn');
+      videoButton.classList.toggle('active', Boolean(cut.videoProduced));
       controls.append(
         makeButton('↑ 앞 컷으로', () => moveCut(sceneNo, id, -1), index === 0),
         makeButton('↓ 뒤 컷으로', () => moveCut(sceneNo, id, 1), index === scene.cuts.length - 1),
+        videoButton,
         hideButton
       );
       page.prepend(controls);
@@ -413,6 +646,7 @@
   }
 
   function rerender(focusId) {
+    releaseSampleObjectUrls();
     render();
     document.querySelectorAll('.sceneIntro').forEach((node) => io.observe(node));
     decorateEditor();
