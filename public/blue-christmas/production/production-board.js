@@ -62,15 +62,27 @@
   function visibleStoryCuts() {
     let storySaved = null;
     try { storySaved = JSON.parse(localStorage.getItem(STORY_STORAGE_KEY) || 'null'); } catch {}
-    const sceneSavedMap = new Map((storySaved?.scenes || []).map((item) => [Number(item.n), item]));
+    const savedScenes = storySaved?.scenes;
+    const sceneSavedMap = new Map(
+      Array.isArray(savedScenes)
+        ? savedScenes.map((item) => [Number(item.n), item])
+        : Object.entries(savedScenes || {}).map(([sceneNo, item]) => [Number(sceneNo), item])
+    );
     return scenes.flatMap((scene) => {
       const saved = sceneSavedMap.get(scene.n);
       const hidden = new Set(saved?.hidden || []);
+      const produced = new Set(saved?.videoProduced || []);
       const savedOrder = Array.isArray(saved?.visualOrder) ? saved.visualOrder : saved?.order;
       const source = Array.isArray(savedOrder)
         ? [...savedOrder.map((id) => scene.cuts.find((cut) => cut.id === id)).filter(Boolean), ...scene.cuts.filter((cut) => !savedOrder.includes(cut.id))]
         : scene.cuts;
-      return source.filter((cut) => !hidden.has(cut.id)).map((cut) => ({ ...cut, sceneNo: scene.n, sceneTitle: scene.title }));
+      return source.filter((cut) => !hidden.has(cut.id)).map((cut) => ({
+        ...cut,
+        action: saved?.actions && Object.prototype.hasOwnProperty.call(saved.actions, cut.id) ? saved.actions[cut.id] : cut.action,
+        videoProduced: produced.has(cut.id),
+        sceneNo: scene.n,
+        sceneTitle: scene.title
+      }));
     });
   }
 
@@ -79,7 +91,7 @@
     const cutOrders = Object.fromEntries(LOCATION_DEFS.map((location) => [location.id, []]));
     visibleStoryCuts().forEach((cut) => {
       const locationId = inferLocation(cut.sceneNo, cut.id);
-      cuts[cut.id] = { locationId, status: 'ready', note: '' };
+      cuts[cut.id] = { locationId, status: cut.videoProduced ? 'video' : 'ready', note: '' };
       cutOrders[locationId].push(cut.id);
     });
     return { version: 1, locationOrder: LOCATION_DEFS.map((item) => item.id), cutOrders, cuts };
