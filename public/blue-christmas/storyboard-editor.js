@@ -4,6 +4,7 @@
   const originalScenes = JSON.parse(JSON.stringify(scenes));
   let editMode = false;
   let showHiddenCuts = false;
+  let saveStatus = '';
 
   const style = document.createElement('style');
   style.textContent = `
@@ -32,6 +33,8 @@
     .scriptGap{display:block;height:.72em}
     .cinematicCaption{position:absolute;left:50%;bottom:8%;z-index:3;max-width:88%;transform:translateX(-50%);padding:.48em .88em;border-radius:4px;background:#0a0d12a6;color:#fff5df;font-family:"Noto Sans KR","Malgun Gothic",sans-serif;font-size:clamp(15px,2.1vw,28px);font-weight:600;letter-spacing:.045em;line-height:1.45;text-align:center;text-shadow:0 2px 8px #000,0 1px 2px #000;white-space:nowrap}
     .tools .editorBtn.active{border-color:#d9b779;background:#d9b779;color:#13161b}
+    .tools .saveState{border-color:#47705c;color:#dff5e6}
+    .tools .saveState.saved{background:#47705c;color:#fff}
     @media(max-width:700px){.editNotice{border-radius:0;margin-bottom:12px}.cutEditTools{margin-top:0}.action[contenteditable="true"]{min-height:120px}}
     @media print{.editNotice,.cutEditTools,.editorBtn,.editOnly{display:none!important}}
   `;
@@ -45,9 +48,35 @@
     return findScene(sceneNo)?.cuts.find((cut) => cut.id === cutId);
   }
 
-  function saveEdits() {
+  function writeSavedPayload(payload) {
+    const serialized = JSON.stringify(payload);
+    try {
+      localStorage.setItem(STORAGE_KEY, serialized);
+      if (localStorage.getItem(STORAGE_KEY) === serialized) return 'browser';
+    } catch {}
+    try {
+      sessionStorage.setItem(STORAGE_KEY, serialized);
+      if (sessionStorage.getItem(STORAGE_KEY) === serialized) return 'session';
+    } catch {}
+    return '';
+  }
+
+  function readSavedPayload() {
+    const storages = [];
+    try { storages.push(localStorage); } catch {}
+    try { storages.push(sessionStorage); } catch {}
+    for (const storage of storages) {
+      try {
+        const raw = storage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch {}
+    }
+    return null;
+  }
+
+  function saveEdits(announce = false) {
     const payload = {
-      version: 2,
+      version: 3,
       savedAt: new Date().toISOString(),
       scenes: Object.fromEntries(scenes.map((scene) => [scene.n, {
         order: scene.cuts.map((cut) => cut.id),
@@ -55,17 +84,16 @@
         hidden: scene.cuts.filter((cut) => cut.hidden).map((cut) => cut.id)
       }]))
     };
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-    } catch {
-      // The editor should still work for the current session when storage is blocked.
+    const storage = writeSavedPayload(payload);
+    if (announce) {
+      saveStatus = storage === 'browser' ? '저장됨' : storage === 'session' ? '세션 저장됨' : '저장 실패 · 백업 필요';
+      updateSaveButton();
     }
     return payload;
   }
 
   function applySavedEdits() {
-    let saved;
-    try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return; }
+    const saved = readSavedPayload();
     if (!saved?.scenes) return;
     const savedVersion = Number(saved.version || 1);
     for (const scene of scenes) {
@@ -82,11 +110,38 @@
       const hidden = new Set(Array.isArray(sceneSaved.hidden) ? sceneSaved.hidden : []);
       for (const cut of scene.cuts) cut.hidden = hidden.has(cut.id);
       if (Array.isArray(sceneSaved.order)) {
-        const rank = new Map(sceneSaved.order.map((id, index) => [id, index]));
-        scene.cuts.sort((a, b) => (rank.get(a.id) ?? 9999) - (rank.get(b.id) ?? 9999));
+        const byId = new Map(scene.cuts.map((cut) => [cut.id, cut]));
+        const ordered = sceneSaved.order.map((id) => byId.get(id)).filter(Boolean);
+        const orderedIds = new Set(ordered.map((cut) => cut.id));
+        ordered.push(...scene.cuts.filter((cut) => !orderedIds.has(cut.id)));
+        scene.cuts.splice(0, scene.cuts.length, ...ordered);
       }
     }
-    if (savedVersion < 2) saveEdits();
+    if (savedVersion < 3) saveEdits();
+  }
+
+  function updateSaveButton() {
+    const button = document.getElementById('saveStoryboardBtn');
+    if (!button) return;
+    button.textContent = saveStatus || '저장';
+    button.classList.toggle('saved', saveStatus === '저장됨' || saveStatus === '세션 저장됨');
+  }
+
+  function importStoryboardEdits(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      try {
+        const imported = JSON.parse(String(reader.result || ''));
+        if (!imported?.scenes) throw new Error('invalid storyboard backup');
+        const storage = writeSavedPayload(imported);
+        if (!storage) throw new Error('storage unavailable');
+        location.reload();
+      } catch {
+        alert('백업 파일을 읽지 못했습니다. 콘티북에서 내려받은 JSON 파일인지 확인해 주세요.');
+      }
+    });
+    reader.readAsText(file);
   }
 
   function makeButton(label, onClick, disabled = false) {
@@ -178,6 +233,31 @@
     const exportButton = document.getElementById('exportStoryboardBtn');
     const resetButton = document.getElementById('resetS07Btn');
     const tools = document.querySelector('.tools');
+    let saveButton = document.getElementById('saveStoryboardBtn');
+    if (!saveButton && tools) {
+      saveButton = document.createElement('button');
+      saveButton.id = 'saveStoryboardBtn';
+      saveButton.className = 'editorBtn editOnly saveState';
+      saveButton.type = 'button';
+      saveButton.addEventListener('click', () => saveEdits(true));
+      tools.insertBefore(saveButton, exportButton || tools.firstChild);
+    }
+    let importButton = document.getElementById('importStoryboardBtn');
+    if (!importButton && tools) {
+      importButton = document.createElement('button');
+      importButton.id = 'importStoryboardBtn';
+      importButton.className = 'editorBtn editOnly';
+      importButton.type = 'button';
+      importButton.textContent = '백업 불러오기';
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'application/json,.json';
+      fileInput.hidden = true;
+      fileInput.addEventListener('change', () => importStoryboardEdits(fileInput.files?.[0]));
+      importButton.addEventListener('click', () => fileInput.click());
+      tools.insertBefore(fileInput, exportButton || tools.firstChild);
+      tools.insertBefore(importButton, exportButton || tools.firstChild);
+    }
     let hiddenCutsButton = document.getElementById('showHiddenCutsBtn');
     if (!hiddenCutsButton && tools) {
       hiddenCutsButton = document.createElement('button');
@@ -201,6 +281,11 @@
     }
     if (exportButton) exportButton.hidden = !editMode;
     if (resetButton) resetButton.hidden = !editMode;
+    if (saveButton) {
+      saveButton.hidden = !editMode;
+      updateSaveButton();
+    }
+    if (importButton) importButton.hidden = !editMode;
     if (hiddenCutsButton) {
       hiddenCutsButton.hidden = !editMode || hiddenCutCount === 0;
       hiddenCutsButton.textContent = showHiddenCuts
@@ -213,7 +298,7 @@
       const book = document.getElementById('book');
       const notice = document.createElement('div');
       notice.className = 'editNotice';
-      notice.innerHTML = '<b>온라인 편집 모드</b><br>숨긴 컷은 즉시 화면에서 사라집니다. 복원하려면 상단의 <b>숨긴 컷 보기</b>를 누르세요. 변경 내용은 이 브라우저에 자동 저장됩니다.';
+      notice.innerHTML = '<b>온라인 편집 모드</b><br>순서·지문·숨김은 자동 저장됩니다. 끝날 때 상단의 <b>저장</b> 또는 <b>편집 완료</b>를 누르면 현재 순서를 다시 확정합니다. 다른 브라우저에서도 쓰려면 <b>백업</b> 파일을 내려받으세요.';
       book.prepend(notice);
     }
 
@@ -287,13 +372,14 @@
   }
 
   window.toggleStoryboardEdit = () => {
+    if (editMode) saveEdits(true);
     editMode = !editMode;
     if (!editMode) showHiddenCuts = false;
     rerender();
   };
 
   window.exportStoryboardEdits = () => {
-    const payload = saveEdits();
+    const payload = saveEdits(true);
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
@@ -301,6 +387,11 @@
     link.click();
     setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   };
+
+  window.addEventListener('pagehide', () => saveEdits());
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') saveEdits();
+  });
 
   window.resetSceneSeven = () => {
     if (!confirm('S07의 컷 순서와 지문을 공개 원본 상태로 되돌릴까요?')) return;
