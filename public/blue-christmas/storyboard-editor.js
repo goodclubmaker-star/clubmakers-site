@@ -48,6 +48,27 @@
     return findScene(sceneNo)?.cuts.find((cut) => cut.id === cutId);
   }
 
+  function normalizedVisualOrder(scene, savedOrder) {
+    const validIds = new Set(scene.cuts.map((cut) => cut.id));
+    const order = Array.isArray(savedOrder)
+      ? savedOrder.filter((id, index, items) => validIds.has(id) && items.indexOf(id) === index)
+      : [];
+    for (const cut of scene.cuts) {
+      if (!order.includes(cut.id)) order.push(cut.id);
+    }
+    return order;
+  }
+
+  function ensureVisualOrder(scene) {
+    scene.visualOrder = normalizedVisualOrder(scene, scene.visualOrder);
+    return scene.visualOrder;
+  }
+
+  function visualCutAt(scene, index) {
+    const visualId = ensureVisualOrder(scene)[index];
+    return scene.cuts.find((cut) => cut.id === visualId) || scene.cuts[index];
+  }
+
   function writeSavedPayload(payload) {
     const serialized = JSON.stringify(payload);
     try {
@@ -76,10 +97,10 @@
 
   function saveEdits(announce = false) {
     const payload = {
-      version: 3,
+      version: 4,
       savedAt: new Date().toISOString(),
       scenes: Object.fromEntries(scenes.map((scene) => [scene.n, {
-        order: scene.cuts.map((cut) => cut.id),
+        visualOrder: ensureVisualOrder(scene),
         actions: Object.fromEntries(scene.cuts.map((cut) => [cut.id, cut.action || ''])),
         hidden: scene.cuts.filter((cut) => cut.hidden).map((cut) => cut.id)
       }]))
@@ -109,15 +130,14 @@
       }
       const hidden = new Set(Array.isArray(sceneSaved.hidden) ? sceneSaved.hidden : []);
       for (const cut of scene.cuts) cut.hidden = hidden.has(cut.id);
-      if (Array.isArray(sceneSaved.order)) {
-        const byId = new Map(scene.cuts.map((cut) => [cut.id, cut]));
-        const ordered = sceneSaved.order.map((id) => byId.get(id)).filter(Boolean);
-        const orderedIds = new Set(ordered.map((cut) => cut.id));
-        ordered.push(...scene.cuts.filter((cut) => !orderedIds.has(cut.id)));
-        scene.cuts.splice(0, scene.cuts.length, ...ordered);
-      }
+      // v1-v3 stored the order of whole cards.  Migrate that order into an
+      // image-only sequence so the original scenario slots never move.
+      scene.visualOrder = normalizedVisualOrder(
+        scene,
+        Array.isArray(sceneSaved.visualOrder) ? sceneSaved.visualOrder : sceneSaved.order
+      );
     }
-    if (savedVersion < 3) saveEdits();
+    if (savedVersion < 4) saveEdits();
   }
 
   function updateSaveButton() {
@@ -214,10 +234,36 @@
     const index = scene.cuts.findIndex((cut) => cut.id === cutId);
     const next = index + delta;
     if (index < 0 || next < 0 || next >= scene.cuts.length) return;
-    const [cut] = scene.cuts.splice(index, 1);
-    scene.cuts.splice(next, 0, cut);
+    const visualOrder = ensureVisualOrder(scene);
+    [visualOrder[index], visualOrder[next]] = [visualOrder[next], visualOrder[index]];
     saveEdits();
-    rerender(cutId);
+    rerender(scene.cuts[next].id);
+  }
+
+  function renderVisualForSlot(visual, slotCut, visualCut) {
+    if (!visual || !visualCut) return;
+    let image = visual.querySelector('img');
+    let missing = visual.querySelector('.missing');
+    if (visualCut.img) {
+      if (!image) {
+        image = document.createElement('img');
+        image.loading = 'lazy';
+        image.addEventListener('click', () => openImage(image.src));
+        visual.appendChild(image);
+      }
+      image.setAttribute('src', encodeURI(visualCut.img));
+      image.alt = slotCut.id;
+      missing?.remove();
+    } else {
+      image?.remove();
+      if (!missing) {
+        missing = document.createElement('div');
+        missing.className = 'missing';
+        visual.appendChild(missing);
+      }
+      missing.textContent = '이미지 미제작';
+    }
+    visual.dataset.visualSource = visualCut.id;
   }
 
   function toggleCutHidden(sceneNo, cutId) {
@@ -298,7 +344,7 @@
       const book = document.getElementById('book');
       const notice = document.createElement('div');
       notice.className = 'editNotice';
-      notice.innerHTML = '<b>온라인 편집 모드</b><br>순서·지문·숨김은 자동 저장됩니다. 끝날 때 상단의 <b>저장</b> 또는 <b>편집 완료</b>를 누르면 현재 순서를 다시 확정합니다. 다른 브라우저에서도 쓰려면 <b>백업</b> 파일을 내려받으세요.';
+      notice.innerHTML = '<b>온라인 편집 모드</b><br><b>앞/뒤 컷</b>은 이미지만 이동하며 원본 시나리오 순서는 고정됩니다. 지문·숨김도 자동 저장됩니다. 끝날 때 상단의 <b>저장</b> 또는 <b>편집 완료</b>를 누르세요. 다른 브라우저에서도 쓰려면 <b>백업</b> 파일을 내려받으세요.';
       book.prepend(notice);
     }
 
@@ -315,11 +361,14 @@
       spread.style.display = shouldHideCut ? 'none' : '';
       spread.classList.toggle('cutHidden', Boolean(cut.hidden));
       const visual = spread.querySelector('.visual');
+      const index = scene.cuts.findIndex((item) => item.id === id);
+      const visualCut = visualCutAt(scene, index);
+      renderVisualForSlot(visual, cut, visualCut);
       visual?.querySelector('.cinematicCaption')?.remove();
-      if (cut.overlayCaption && visual) {
+      if (visualCut?.overlayCaption && visual) {
         const caption = document.createElement('div');
         caption.className = 'cinematicCaption';
-        caption.textContent = cut.overlayCaption;
+        caption.textContent = visualCut.overlayCaption;
         visual.appendChild(caption);
       }
       const page = spread.querySelector('.page');
@@ -328,7 +377,6 @@
         formatScriptText(formattedAction, cut.action || '');
         continue;
       }
-      const index = scene.cuts.findIndex((item) => item.id === id);
       const controls = document.createElement('div');
       controls.className = 'cutEditTools';
       const hideButton = makeButton(cut.hidden ? '컷 복원' : '컷 숨기기', () => toggleCutHidden(sceneNo, id));
@@ -399,6 +447,7 @@
     const current = findScene(7);
     if (!original || !current) return;
     current.cuts = JSON.parse(JSON.stringify(original.cuts));
+    current.visualOrder = current.cuts.map((cut) => cut.id);
     saveEdits();
     rerender('S07-I01');
   };
