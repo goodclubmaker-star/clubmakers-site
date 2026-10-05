@@ -98,8 +98,63 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     return 'Animate only the action explicitly visible or described for this cut. Keep motion economical and readable, with no invented event.';
   }
 
+  function shortAction(cut) {
+    const text = String(cut?.action || 'No additional scripted action.').replace(/\s+/g, ' ').trim();
+    return text.length > 260 ? `${text.slice(0, 257)}...` : text;
+  }
+
+  function storyNeighbors(cut) {
+    const sequence = visibleStoryCuts();
+    const index = sequence.findIndex((item) => item.id === cut.id);
+    return {
+      previous: index > 0 ? sequence[index - 1] : null,
+      next: index >= 0 && index < sequence.length - 1 ? sequence[index + 1] : null
+    };
+  }
+
+  function continuityContext(cut) {
+    const { previous, next } = storyNeighbors(cut);
+    const currentLocation = state?.cuts?.[cut.id]?.locationId || inferLocation(cut.sceneNo, cut.id);
+    const previousLocation = previous ? (state?.cuts?.[previous.id]?.locationId || inferLocation(previous.sceneNo, previous.id)) : null;
+    const nextLocation = next ? (state?.cuts?.[next.id]?.locationId || inferLocation(next.sceneNo, next.id)) : null;
+    const previousSameScene = Boolean(previous && previous.sceneNo === cut.sceneNo);
+    const nextSameScene = Boolean(next && next.sceneNo === cut.sceneNo);
+    const previousConnected = Boolean(previous && (previousSameScene || previousLocation === currentLocation));
+    const nextConnected = Boolean(next && (nextSameScene || nextLocation === currentLocation));
+
+    let incoming = 'This is the opening production shot. Establish the location, light direction, screen geography, costume state, and prop positions clearly for the following cuts.';
+    if (previous && previousSameScene && previousLocation === currentLocation) {
+      incoming = `Direct continuation from ${previous.id}. Previous action: ${shortAction(previous)} Begin on the same character position, costume state, injury state, eyeline, hand-to-prop relationship, lighting direction, weather, and screen direction established at the end of that shot. Do not reset the performance.`;
+    } else if (previous && previousSameScene) {
+      incoming = `Intentional within-scene transition from ${previous.id}. Previous action: ${shortAction(previous)} Carry the dominant movement direction, emotional energy, and one visual bridge such as light, foreground motion, or a matching gesture into the new location, but do not import background objects from the previous place.`;
+    } else if (previous && previousLocation === currentLocation) {
+      incoming = `Same-location return after ${previous.id}. Reuse the exact architecture, spatial geography, lens character, weather, and light direction, while following the current scene's character and prop state.`;
+    } else if (previous) {
+      incoming = `Hard scene transition after ${previous.id}. Do not carry the previous location or unrelated characters into this shot; establish the current scene cleanly.`;
+    }
+
+    let outgoing = 'End on a stable readable composition with no morphing or sudden camera move.';
+    if (next && nextSameScene && nextLocation === currentLocation) {
+      outgoing = `Prepare a direct handoff to ${next.id}. Next action: ${shortAction(next)} Finish with the correct eyeline, screen direction, body orientation, prop position, and movement momentum so the next keyframe can cut seamlessly.`;
+    } else if (next && nextSameScene) {
+      outgoing = `Prepare the within-scene transition to ${next.id}. Next action: ${shortAction(next)} End on a clean directional movement, foreground wipe, light cue, or matching gesture that can bridge to the next location.`;
+    } else if (next && nextLocation === currentLocation) {
+      outgoing = `Preserve the location layout, weather, and light state for the later same-location shot ${next.id}; end without changing permanent background elements.`;
+    } else if (next) {
+      outgoing = `Finish cleanly before the hard cut to ${next.id}; do not begin the next scene inside this generation.`;
+    }
+
+    return { previous, next, previousConnected, nextConnected, incoming, outgoing };
+  }
+
   function videoPrompt(cut) {
-    if (PROMPT_OVERRIDES[cut.id]) return PROMPT_OVERRIDES[cut.id];
+    const continuity = continuityContext(cut);
+    if (PROMPT_OVERRIDES[cut.id]) {
+      return PROMPT_OVERRIDES[cut.id].replace(
+        '\n\nNEGATIVE PROMPT',
+        `\n\nCONTINUITY IN\n${continuity.incoming}\n\nEND-FRAME HANDOFF\n${continuity.outgoing}\n\nNEGATIVE PROMPT`
+      );
+    }
     const shot = shotProfile(cut);
     const locationId = state?.cuts?.[cut.id]?.locationId || inferLocation(cut.sceneNo, cut.id);
     const locationName = LOCATION_MAP[locationId]?.name || cut.sceneTitle;
@@ -111,7 +166,7 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       insert: 'A precise detail shot with a very slow macro push-in and shallow depth separation.',
       transition: 'A smooth, deliberate transition move with no sudden acceleration or camera shake.'
     }[shot.id];
-    return `IMAGE-TO-VIDEO PROMPT\nCreate a 6-second cinematic image-to-video shot for ${cut.id}, set in winter Seoul, 2023. Use the provided keyframe as the absolute first-frame reference. Preserve the exact characters, faces, body proportions, costumes, props, architecture, composition, color palette, and hand-painted cinematic animation style.\n\nLOCATION\n${locationName}. ${environmentDirection(locationId)}\n\nSTORY ACTION\n${cut.action || 'Hold the scene with restrained natural environmental motion.'}\n\nMOTION DIRECTION\n${actionDirection(cut)} Add only subtle secondary motion appropriate to the image: breathing, gentle fabric or hair movement, soft practical-light variation, restrained background movement, and atmospheric depth.\n\nCAMERA\n${camera} Continuous single shot, no cut, no scene change. Keep the first-frame identity stable throughout.\n\nNEGATIVE PROMPT\nNo character redesign, no face change, no body-type change, no costume change, no missing or extra props, no extra limbs or fingers, no duplicated people, no morphing, no melting architecture, no new signs or readable text, no camera shake, no fast zoom, no fisheye distortion, no style shift, no photorealistic conversion, no 3D CGI conversion, no flicker, no watermark, no logo, no subtitles.`;
+    return `IMAGE-TO-VIDEO PROMPT\nCreate a 6-second cinematic image-to-video shot for ${cut.id}, set in winter Seoul, 2023. Use the provided keyframe as the absolute first-frame reference. Preserve the exact characters, faces, body proportions, costumes, props, architecture, composition, color palette, and hand-painted cinematic animation style.\n\nCONTINUITY IN\n${continuity.incoming}\n\nLOCATION\n${locationName}. ${environmentDirection(locationId)}\n\nSTORY ACTION\n${cut.action || 'Hold the scene with restrained natural environmental motion.'}\n\nMOTION DIRECTION\n${actionDirection(cut)} Add only subtle secondary motion appropriate to the image: breathing, gentle fabric or hair movement, soft practical-light variation, restrained background movement, and atmospheric depth.\n\nCAMERA\n${camera} Continuous single shot, no cut, no scene change. Keep the first-frame identity stable throughout.\n\nEND-FRAME HANDOFF\n${continuity.outgoing}\n\nNEGATIVE PROMPT\nNo character redesign, no face change, no body-type change, no costume change, no injury-state change, no screen-direction reversal, no costume or prop teleport, no missing or extra props, no extra limbs or fingers, no duplicated people, no morphing, no melting architecture, no new signs or readable text, no camera shake, no fast zoom, no fisheye distortion, no style shift, no photorealistic conversion, no 3D CGI conversion, no flicker, no watermark, no logo, no subtitles.`;
   }
 
   function sortStateForProduction(target) {
@@ -292,6 +347,7 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       :root{--bg:#090d13;--panel:#121923;--panel2:#18212d;--ink:#eef2f6;--muted:#97a5b6;--line:#334151;--paper:#f4efe6;--paperInk:#1d2025;--amber:#ddb76d;--red:#c05b62;--green:#65a982;--blue:#6f9fcd}
       *{box-sizing:border-box}html{scroll-behavior:smooth}.productionBody{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif}.prodTop{position:sticky;top:0;z-index:40;padding:13px 18px 12px;background:#0d131ceF;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}.prodBrand{display:inline-flex;flex-direction:column;vertical-align:middle}.prodBrand b{font-size:18px}.prodBrand span{margin-top:3px;color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:.12em}.prodActions{float:right;display:flex;align-items:center;gap:7px}.prodActions button,.prodActions a,.filterRow button{border:1px solid #4b5a6c;border-radius:999px;background:#182231;color:#eff3f7;padding:7px 11px;text-decoration:none;cursor:pointer;font-size:12px}.saveFlag{color:#8f9baa;font-size:11px}.saveFlag.saved{color:#8ed0a9}.progressHeader{clear:both;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding-top:12px;font-size:12px}.progressRail,.locationRail{height:7px;border-radius:99px;background:#283341;overflow:hidden}.progressRail i,.locationRail i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--amber),var(--green))}.filterRow{display:grid;grid-template-columns:minmax(200px,320px) minmax(180px,1fr) auto;gap:8px;margin-top:10px}.filterRow select,.filterRow input{min-width:0;border:1px solid #405064;border-radius:7px;background:#111923;color:#e8edf3;padding:8px 10px}.productionBook{max-width:1320px;margin:0 auto;padding:24px 18px 90px}.locationSection{margin-bottom:34px;scroll-margin-top:170px}.locationHead{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin-bottom:12px;padding:13px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}.locationNo{color:var(--amber);font:800 20px ui-monospace,monospace}.locationHead h2{margin:0 0 3px;font-size:21px}.locationHint{color:var(--muted);font-size:12px}.locationStats{min-width:210px;text-align:right}.locationStats b{display:block;margin-bottom:6px;font:800 12px ui-monospace,monospace}.locationControls{display:flex;gap:5px;margin-top:8px;justify-content:flex-end}.iconBtn{width:29px;height:29px;padding:0;border:1px solid #48586a;border-radius:7px;background:#1b2634;color:#fff;cursor:pointer}.iconBtn:disabled{opacity:.25}.cutGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.productionCard{overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:0 10px 28px #0004}.productionCard[data-status="video"],.productionCard[data-status="approved"]{border-color:#4e8367}.keyframe{position:relative;display:flex;align-items:center;justify-content:center;min-height:210px;background:#05080c}.keyframe img{display:block;width:100%;max-height:440px;object-fit:contain;cursor:zoom-in}.keyframe .missing{padding:80px 20px;color:#8491a1}.orderBadge,.statusBadge{position:absolute;top:10px;z-index:2;padding:6px 9px;border-radius:999px;font:800 10px ui-monospace,monospace;box-shadow:0 3px 10px #0008}.orderBadge{left:10px;background:#090d13dd;color:#fff}.statusBadge{right:10px;background:#263444e8;color:#dce4ed}.shotBadge{display:inline-flex;margin-top:6px;padding:4px 7px;border:1px solid #3b4a5d;border-radius:999px;color:#aebccc;background:#101720;font:800 9px ui-monospace,monospace;letter-spacing:.04em}.productionCard[data-status="keyframe"] .statusBadge{background:#7a5d2d}.productionCard[data-status="generating"] .statusBadge{background:#385e82}.productionCard[data-status="video"] .statusBadge{background:#397052}.productionCard[data-status="approved"] .statusBadge{background:#256746}.cardBody{padding:14px}.cardTop{display:flex;justify-content:space-between;gap:10px}.cutIdentity{font:800 13px ui-monospace,monospace;color:var(--amber)}.sceneTitle{margin-top:3px;color:var(--muted);font-size:12px}.moveTools{display:flex;gap:4px}.generatorTools{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.generatorTools a,.generatorTools button{border:1px solid #4a5b6e;border-radius:999px;background:#14202d;color:#edf3f8;padding:6px 9px;text-decoration:none;cursor:pointer;font:800 10px inherit}.generatedClip{margin-top:10px;border:1px solid #35465a;border-radius:7px;overflow:hidden;background:#05080c}.generatedClip video{display:block;width:100%;max-height:360px;background:#000}.generatedClip b{display:block;padding:7px 9px;color:#8ed0a9;font-size:11px}.scenario{margin:13px 0 0;padding:12px 13px;border-radius:7px;background:var(--paper);color:var(--paperInk);white-space:pre-line;font-size:13px;line-height:1.65;max-height:180px;overflow:auto}.scenario:empty{display:none}.productionFields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{color:#9eabba;font-size:10px;font-weight:800;letter-spacing:.06em}.field select,.field textarea{width:100%;border:1px solid #3b4a5b;border-radius:6px;background:#0e151e;color:#edf1f5;padding:8px;font:12px inherit}.field textarea{min-height:66px;resize:vertical}.sampleSection{padding:0 14px 14px}.sampleTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.sampleTop b{font-size:12px}.sampleUpload{border:1px solid #53657a;border-radius:999px;background:#1a2634;color:#fff;padding:6px 9px;cursor:pointer;font-size:11px}.sampleTrack{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px}.sampleCard{position:relative;flex:0 0 170px;overflow:hidden;border:1px solid #3b4959;border-radius:7px;background:#080c11}.sampleCard img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;cursor:zoom-in}.sampleIndex{position:absolute;top:5px;left:5px;padding:3px 6px;border-radius:99px;background:#080c11dd;font:800 9px ui-monospace,monospace}.sampleName{padding:6px 7px;color:#9da9b7;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sampleBtns{display:flex;gap:3px;padding:0 5px 6px}.sampleBtns button{flex:1;border:1px solid #405063;border-radius:5px;background:#17212d;color:#fff;padding:4px;cursor:pointer;font-size:10px}.sampleEmpty{width:100%;padding:14px;border:1px dashed #3f4d5d;border-radius:6px;color:#7f8c9c;text-align:center;font-size:11px}.prodModal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:22px;background:#030507f2}.prodModal.open{display:flex}.prodModal img{max-width:96vw;max-height:94vh;object-fit:contain}.prodModal button{position:absolute;right:16px;top:10px;border:0;background:none;color:#fff;font-size:36px}.emptyResult{padding:80px 20px;text-align:center;color:#8c99a8}
       .promptDetails{margin-top:8px;border:1px solid #33465a;border-radius:7px;background:#0b1119}.promptDetails summary{padding:8px 10px;color:#b8c6d5;cursor:pointer;font-size:11px;font-weight:800}.promptDetails pre{max-height:310px;margin:0;padding:11px;border-top:1px solid #2d3b4a;color:#dce6ef;white-space:pre-wrap;overflow:auto;font:11px/1.55 ui-monospace,"Malgun Gothic",monospace}
+      .continuityLine{margin-top:8px;padding:7px 9px;border-left:3px solid #6f9fcd;background:#101923;color:#aebdcd;font:10px/1.45 ui-monospace,"Malgun Gothic",monospace}.continuityLine b{color:#dce8f3}
       @media(max-width:820px){.prodTop{padding:10px}.prodBrand b{font-size:15px}.prodActions{float:none;margin-top:9px;overflow-x:auto}.progressHeader{grid-template-columns:auto 1fr}.progressHeader .progressDetail{grid-column:1/-1}.filterRow{grid-template-columns:1fr auto}.filterRow select{grid-column:1/-1}.productionBook{padding:15px 0 60px}.locationSection{margin-bottom:22px}.locationHead{border-radius:0;border-left:0;border-right:0;grid-template-columns:auto 1fr;padding:12px 11px}.locationHead h2{font-size:17px}.locationStats{grid-column:1/-1;min-width:0;text-align:left}.locationControls{justify-content:flex-start}.cutGrid{display:block}.productionCard{border-radius:0;border-left:0;border-right:0;margin-bottom:12px}.keyframe{min-height:0}.keyframe img{max-height:none}.productionFields{grid-template-columns:1fr}.field.full{grid-column:auto}.scenario{max-height:none}.sampleCard{flex-basis:150px}}
       @media print{.prodTop{position:static}.prodActions,.filterRow,.locationControls,.moveTools,.productionFields,.sampleUpload,.sampleBtns{display:none!important}.productionBook{max-width:none;padding:0}.locationSection{break-before:page}.productionCard{break-inside:avoid}.cutGrid{display:block}.productionCard{margin-bottom:10mm}.keyframe img{max-height:120mm}.sampleSection{display:none}}
     `;
@@ -314,6 +370,14 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     const clip = GENERATED_CLIPS[cut.id];
     const extension = (cut.img || '').split('.').pop() || 'png';
     const prompt = videoPrompt(cut);
+    const continuity = continuityContext(cut);
+    const previousExtension = (continuity.previous?.img || '').split('.').pop() || 'png';
+    const nextExtension = (continuity.next?.img || '').split('.').pop() || 'png';
+    const previousReference = continuity.previousConnected && continuity.previous?.img
+      ? `<a href="${encodeURI(continuity.previous.img)}" download="${esc(continuity.previous.id)}_previous-reference.${esc(previousExtension)}">이전컷 참고 다운로드</a>` : '';
+    const nextReference = continuity.nextConnected && continuity.next?.img
+      ? `<a href="${encodeURI(continuity.next.img)}" download="${esc(continuity.next.id)}_next-reference.${esc(nextExtension)}">다음컷 참고 다운로드</a>` : '';
+    const continuityLabel = `${continuity.previousConnected ? continuity.previous.id : '새 장면'} → ${cut.id} → ${continuity.nextConnected ? continuity.next.id : '컷 종료'}`;
     return `<article class="productionCard" id="production-${esc(cut.id)}" data-cut="${esc(cut.id)}" data-status="${esc(cutState.status)}">
       <div class="keyframe">
         <span class="orderBadge">${String(orderIndex + 1).padStart(2, '0')} · ${esc(cut.id)}</span>
@@ -322,7 +386,8 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       </div>
       <div class="cardBody">
         <div class="cardTop"><div><div class="cutIdentity">${sceneId(cut.sceneNo)} · ${esc(cut.id)}</div><div class="sceneTitle">${esc(cut.sceneTitle)}</div><span class="shotBadge">${esc(shot.label)}</span></div><div class="moveTools"><button class="iconBtn" type="button" title="앞으로" onclick="productionBoard.moveCut('${esc(locationId)}','${esc(cut.id)}',-1)"${orderIndex === 0 ? ' disabled' : ''}>↑</button><button class="iconBtn" type="button" title="뒤로" onclick="productionBoard.moveCut('${esc(locationId)}','${esc(cut.id)}',1)"${orderIndex === state.cutOrders[locationId].length - 1 ? ' disabled' : ''}>↓</button></div></div>
-        <div class="generatorTools">${cut.img ? `<a href="${encodeURI(cut.img)}" download="${esc(cut.id)}_keyframe.${esc(extension)}">키프레임 다운로드</a>` : ''}<button type="button" onclick="productionBoard.copyPrompt('${esc(cut.id)}')">영상 프롬프트 복사</button>${clip ? `<a href="${encodeURI(clip)}" download>생성 영상 다운로드</a>` : ''}</div>
+        <div class="generatorTools">${cut.img ? `<a href="${encodeURI(cut.img)}" download="${esc(cut.id)}_keyframe.${esc(extension)}">키프레임 다운로드</a>` : ''}${previousReference}${nextReference}<button type="button" onclick="productionBoard.copyPrompt('${esc(cut.id)}')">영상 프롬프트 복사</button>${clip ? `<a href="${encodeURI(clip)}" download>생성 영상 다운로드</a>` : ''}</div>
+        <div class="continuityLine"><b>연결 기준</b> ${esc(continuityLabel)}</div>
         <details class="promptDetails"><summary>이 컷의 영상 프롬프트 보기</summary><pre>${esc(prompt)}</pre></details>
         ${clip ? `<div class="generatedClip"><b>AI 생성 영상 · ${esc(cut.id)}</b><video controls playsinline preload="metadata" src="${encodeURI(clip)}"></video></div>` : ''}
         <div class="scenario">${esc(cut.action || '')}</div>
