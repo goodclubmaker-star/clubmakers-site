@@ -13,7 +13,7 @@
     ['approved', '최종 승인']
   ];
   const LOCATION_DEFS = [
-    { id: 'dept-front', name: '백화점 전면 · 도심 광장', hint: 'S03 · S11 · S19 / 전광판·연말 군중·백화점 정면' },
+    { id: 'dept-front', name: '백화점 전면 · 도심 광장', hint: 'S03 · S11 · S16 · S19 / 전광판·연말 군중·백화점 정면' },
     { id: 'stall', name: '지하도 입구 · 혁의 가판대', hint: 'S05 · S07 · S13 / 가판대·기둥·보행 동선' },
     { id: 'alley', name: '막다른 골목 · 주택가', hint: 'S08 · S13 · S14 / 추격·대치·한적한 골목' },
     { id: 'underpass', name: '잠수교 지하통로', hint: 'S15 · S16 / 기둥 사이 트래킹·울리는 대화' },
@@ -35,6 +35,17 @@
   const STATUS_MAP = Object.fromEntries(STATUSES);
   const GENERATED_CLIPS = {
     'S03-C01': 'clips/S03-C01_generated_v001.mp4'
+  };
+  const PROMPT_OVERRIDES = {
+    'S16-C02': `IMAGE-TO-VIDEO PROMPT
+Create a 6-second cinematic image-to-video shot in winter Seoul, 2023, directly in front of the established Christmas department-store exterior from the location reference. Rudolf must keep exactly the same cute, round-bodied character design, face, aviator headgear, bulky winter outfit, colors, and proportions shown in the character reference.
+
+Rudolf stands alone near the edge of the busy department-store plaza, holding the same old, worn, repeatedly folded paper street map with both hands. Christmas crowds stream past him without paying attention. He studies the map, turns it slightly as if the orientation is wrong, looks up toward the light-polluted sky but cannot see any stars, compares the department-store facade with the map, tilts his head in confusion, then takes two hesitant steps toward screen-left and stops because he is still lost.
+
+Camera: begin in a medium-wide shot and make a slow lateral tracking move through soft foreground pedestrians while keeping Rudolf visually isolated near the center. Preserve screen direction. The department-store display, Christmas lights, wet pavement reflections, and distant traffic move only subtly. Continuous single shot, restrained limited animation, warm Christmas lights against a cold blue night, gently comic but lonely.
+
+NEGATIVE PROMPT
+No traffic island, no palace gate, no road-center staging, no cars passing close to Rudolf, no location change, no new character, no character redesign, no thin body, no altered costume, no clean or modern map, no map text becoming readable, no extra fingers, no morphing hands, no duplicated pedestrians, no melting architecture, no camera shake, no fast zoom, no fisheye distortion, no subtitles, no generated letters, no logo, no watermark, no style shift, no photorealistic or 3D CGI conversion.`
   };
   const objectUrls = new Set();
   let dbPromise;
@@ -58,8 +69,40 @@
     return { rank: 20, id: 'action', label: '액션·연결' };
   }
 
+  function environmentDirection(locationId) {
+    return {
+      'dept-front': 'Use the established Christmas department-store exterior. Keep the LED facade, seasonal trees, pedestrian density, wet-pavement reflections, and spatial geography stable.',
+      terrace: 'Use the established quiet service terrace and bench. Keep the distance between the benches and the department-store service wall consistent.',
+      breakroom: 'Use the established department-store break room. Preserve the bright window backlight and the simple staff-room geography.',
+      stall: 'Use the established modest street stall by the underpass entrance. Preserve the pillars, stall bag, small accessories, and pedestrian route.',
+      alley: 'Use the established separated residential alley or dead end. Keep it ordinary and slightly isolated, never a slum.',
+      underpass: 'Use the established pedestrian underpass with repeating concrete pillars and warm practical lights. No cars inside the passage.',
+      playground: 'Use the established nighttime playground and bench with restrained distant city lights.',
+      hanriver: 'Use the established hillside view toward the Han River and Seoul skyline. Preserve the exact river and city geography.',
+      rooftop: 'Use the established building rooftop and the same Seoul skyline. Preserve roof edges, access structures, and character scale.',
+      city: 'Use a dense, bright Seoul night street with Christmas-season crowds and layered traffic, while keeping the featured character clearly readable.',
+      space: 'Use the established deep-blue illustrated space, asteroid, star-field, and title-sequence visual language.'
+    }[locationId] || 'Preserve the exact established location and spatial geography from the keyframe.';
+  }
+
+  function actionDirection(cut) {
+    const text = `${cut.id} ${cut.action || ''}`;
+    if (/지도/.test(text)) return 'Keep the paper map physically consistent. Let the character adjust or unfold it once, compare it with the surroundings, and react with restrained confusion; fingers and map folds must remain stable.';
+    if (/풍선/.test(text)) return 'Animate the balloon with believable buoyancy, a gentle string delay, and light winter wind; keep its color, size, and position continuity exact.';
+    if (/담배|라이터|불을 붙/.test(text)) return 'Use small, precise hand acting around the cigarette or lighter. Preserve bare-hand continuity where established and keep the flame brief and physically believable.';
+    if (/쫓|도망|달려|뛰쳐/.test(text)) return 'Prioritize clear screen direction and readable pursuit action. Use one controlled tracking move; preserve every character and carried prop without deformation.';
+    if (/걷|걸어|종종/.test(text)) return 'Animate a natural restrained walk with stable clothing, body proportions, carried props, and screen direction.';
+    if (/말한다|묻|대화|목소리|\n산타|\n루돌프|\n혁|\n지민/.test(text)) return 'Treat dialogue as performance timing only: subtle eye-line, breath, and one small facial reaction. Do not generate subtitles or visible dialogue text.';
+    if (/자동차|차가|전동차|오토바이/.test(text)) return 'Move vehicles on fixed paths with stable shapes and restrained motion blur; reflections may glide across the wet ground.';
+    if (/별|우주|소행성|꽝/.test(text)) return 'Animate depth through layered star parallax and one clearly staged impact or transition while keeping silhouettes crisp.';
+    return 'Animate only the action explicitly visible or described for this cut. Keep motion economical and readable, with no invented event.';
+  }
+
   function videoPrompt(cut) {
+    if (PROMPT_OVERRIDES[cut.id]) return PROMPT_OVERRIDES[cut.id];
     const shot = shotProfile(cut);
+    const locationId = state?.cuts?.[cut.id]?.locationId || inferLocation(cut.sceneNo, cut.id);
+    const locationName = LOCATION_MAP[locationId]?.name || cut.sceneTitle;
     const camera = {
       anchor: 'A very slow cinematic push-in with subtle natural parallax and a stable horizon.',
       action: 'A controlled cinematic tracking move that follows the action without camera shake.',
@@ -68,7 +111,7 @@
       insert: 'A precise detail shot with a very slow macro push-in and shallow depth separation.',
       transition: 'A smooth, deliberate transition move with no sudden acceleration or camera shake.'
     }[shot.id];
-    return `IMAGE-TO-VIDEO PROMPT\nCreate a 6-second cinematic shot based strictly on the provided keyframe. Preserve the exact characters, facial features, body proportions, costumes, architecture, composition, color palette, and hand-painted cinematic animation style. Scene: ${cut.sceneTitle}. Action: ${cut.action || 'Hold the scene with restrained natural environmental motion.'} ${camera} Add only subtle natural motion appropriate to the image: gentle fabric and hair movement, soft practical-light variation, restrained background movement, and atmospheric depth. Keep the first-frame identity stable throughout. Continuous single shot, no cut, no scene change.\n\nNEGATIVE PROMPT\nNo character redesign, no face change, no costume change, no extra limbs or fingers, no duplicated people, no morphing, no melting architecture, no new signs or readable text, no camera shake, no fast zoom, no fisheye distortion, no style shift, no photorealistic conversion, no 3D CGI conversion, no flicker, no watermark, no logo, no subtitles.`;
+    return `IMAGE-TO-VIDEO PROMPT\nCreate a 6-second cinematic image-to-video shot for ${cut.id}, set in winter Seoul, 2023. Use the provided keyframe as the absolute first-frame reference. Preserve the exact characters, faces, body proportions, costumes, props, architecture, composition, color palette, and hand-painted cinematic animation style.\n\nLOCATION\n${locationName}. ${environmentDirection(locationId)}\n\nSTORY ACTION\n${cut.action || 'Hold the scene with restrained natural environmental motion.'}\n\nMOTION DIRECTION\n${actionDirection(cut)} Add only subtle secondary motion appropriate to the image: breathing, gentle fabric or hair movement, soft practical-light variation, restrained background movement, and atmospheric depth.\n\nCAMERA\n${camera} Continuous single shot, no cut, no scene change. Keep the first-frame identity stable throughout.\n\nNEGATIVE PROMPT\nNo character redesign, no face change, no body-type change, no costume change, no missing or extra props, no extra limbs or fingers, no duplicated people, no morphing, no melting architecture, no new signs or readable text, no camera shake, no fast zoom, no fisheye distortion, no style shift, no photorealistic conversion, no 3D CGI conversion, no flicker, no watermark, no logo, no subtitles.`;
   }
 
   function sortStateForProduction(target) {
@@ -89,12 +132,13 @@
       });
       target.cutOrders[location.id] = ids;
     });
-    target.version = 2;
+    target.version = 3;
     return target;
   }
 
   function inferLocation(sceneNo, cutId) {
     const numeric = Number((cutId.match(/(?:C|KF|I)(\d+)/i) || [])[1] || 1);
+    if (cutId === 'S16-C02') return 'dept-front';
     if (sceneNo === 1) return numeric <= 3 ? 'rooftop' : 'city';
     if (sceneNo === 2 || sceneNo === 25) return 'space';
     if ([3, 11, 19].includes(sceneNo)) return 'dept-front';
@@ -106,7 +150,7 @@
     if (sceneNo === 12) return 'breakroom';
     if (sceneNo === 13) return numeric <= 4 ? 'alley' : 'stall';
     if (sceneNo === 15) return 'underpass';
-    if (sceneNo === 16) return /^(S16-C0[1-3]|S16-C04[ABC]?)$/i.test(cutId) ? 'city' : 'underpass';
+    if (sceneNo === 16) return /^(S16-C0[13]|S16-C04[ABC]?)$/i.test(cutId) ? 'city' : 'underpass';
     if (sceneNo === 18) return 'playground';
     if (sceneNo === 22) return 'rooftop';
     if (sceneNo === 24) return numeric <= 4 ? 'rooftop' : 'space';
@@ -148,7 +192,7 @@
       cuts[cut.id] = { locationId, status: cut.videoProduced ? 'video' : 'ready', note: '' };
       cutOrders[locationId].push(cut.id);
     });
-    return sortStateForProduction({ version: 2, locationOrder: PRODUCTION_LOCATION_ORDER.slice(), cutOrders, cuts });
+    return sortStateForProduction({ version: 3, locationOrder: PRODUCTION_LOCATION_ORDER.slice(), cutOrders, cuts });
   }
 
   function normalizeState(candidate) {
@@ -175,7 +219,11 @@
       if (!fresh.cutOrders[locationId].includes(cut.id)) fresh.cutOrders[locationId].push(cut.id);
     }
     fresh.version = Number(candidate.version || 1);
-    return fresh.version < 2 ? sortStateForProduction(fresh) : fresh;
+    if (fresh.version < 3) {
+      if (fresh.cuts['S16-C02']?.locationId === 'city') fresh.cuts['S16-C02'].locationId = 'dept-front';
+      return sortStateForProduction(fresh);
+    }
+    return fresh;
   }
 
   function loadState() {
@@ -243,6 +291,7 @@
     style.textContent = `
       :root{--bg:#090d13;--panel:#121923;--panel2:#18212d;--ink:#eef2f6;--muted:#97a5b6;--line:#334151;--paper:#f4efe6;--paperInk:#1d2025;--amber:#ddb76d;--red:#c05b62;--green:#65a982;--blue:#6f9fcd}
       *{box-sizing:border-box}html{scroll-behavior:smooth}.productionBody{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif}.prodTop{position:sticky;top:0;z-index:40;padding:13px 18px 12px;background:#0d131ceF;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}.prodBrand{display:inline-flex;flex-direction:column;vertical-align:middle}.prodBrand b{font-size:18px}.prodBrand span{margin-top:3px;color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:.12em}.prodActions{float:right;display:flex;align-items:center;gap:7px}.prodActions button,.prodActions a,.filterRow button{border:1px solid #4b5a6c;border-radius:999px;background:#182231;color:#eff3f7;padding:7px 11px;text-decoration:none;cursor:pointer;font-size:12px}.saveFlag{color:#8f9baa;font-size:11px}.saveFlag.saved{color:#8ed0a9}.progressHeader{clear:both;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding-top:12px;font-size:12px}.progressRail,.locationRail{height:7px;border-radius:99px;background:#283341;overflow:hidden}.progressRail i,.locationRail i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--amber),var(--green))}.filterRow{display:grid;grid-template-columns:minmax(200px,320px) minmax(180px,1fr) auto;gap:8px;margin-top:10px}.filterRow select,.filterRow input{min-width:0;border:1px solid #405064;border-radius:7px;background:#111923;color:#e8edf3;padding:8px 10px}.productionBook{max-width:1320px;margin:0 auto;padding:24px 18px 90px}.locationSection{margin-bottom:34px;scroll-margin-top:170px}.locationHead{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin-bottom:12px;padding:13px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}.locationNo{color:var(--amber);font:800 20px ui-monospace,monospace}.locationHead h2{margin:0 0 3px;font-size:21px}.locationHint{color:var(--muted);font-size:12px}.locationStats{min-width:210px;text-align:right}.locationStats b{display:block;margin-bottom:6px;font:800 12px ui-monospace,monospace}.locationControls{display:flex;gap:5px;margin-top:8px;justify-content:flex-end}.iconBtn{width:29px;height:29px;padding:0;border:1px solid #48586a;border-radius:7px;background:#1b2634;color:#fff;cursor:pointer}.iconBtn:disabled{opacity:.25}.cutGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.productionCard{overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:0 10px 28px #0004}.productionCard[data-status="video"],.productionCard[data-status="approved"]{border-color:#4e8367}.keyframe{position:relative;display:flex;align-items:center;justify-content:center;min-height:210px;background:#05080c}.keyframe img{display:block;width:100%;max-height:440px;object-fit:contain;cursor:zoom-in}.keyframe .missing{padding:80px 20px;color:#8491a1}.orderBadge,.statusBadge{position:absolute;top:10px;z-index:2;padding:6px 9px;border-radius:999px;font:800 10px ui-monospace,monospace;box-shadow:0 3px 10px #0008}.orderBadge{left:10px;background:#090d13dd;color:#fff}.statusBadge{right:10px;background:#263444e8;color:#dce4ed}.shotBadge{display:inline-flex;margin-top:6px;padding:4px 7px;border:1px solid #3b4a5d;border-radius:999px;color:#aebccc;background:#101720;font:800 9px ui-monospace,monospace;letter-spacing:.04em}.productionCard[data-status="keyframe"] .statusBadge{background:#7a5d2d}.productionCard[data-status="generating"] .statusBadge{background:#385e82}.productionCard[data-status="video"] .statusBadge{background:#397052}.productionCard[data-status="approved"] .statusBadge{background:#256746}.cardBody{padding:14px}.cardTop{display:flex;justify-content:space-between;gap:10px}.cutIdentity{font:800 13px ui-monospace,monospace;color:var(--amber)}.sceneTitle{margin-top:3px;color:var(--muted);font-size:12px}.moveTools{display:flex;gap:4px}.generatorTools{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.generatorTools a,.generatorTools button{border:1px solid #4a5b6e;border-radius:999px;background:#14202d;color:#edf3f8;padding:6px 9px;text-decoration:none;cursor:pointer;font:800 10px inherit}.generatedClip{margin-top:10px;border:1px solid #35465a;border-radius:7px;overflow:hidden;background:#05080c}.generatedClip video{display:block;width:100%;max-height:360px;background:#000}.generatedClip b{display:block;padding:7px 9px;color:#8ed0a9;font-size:11px}.scenario{margin:13px 0 0;padding:12px 13px;border-radius:7px;background:var(--paper);color:var(--paperInk);white-space:pre-line;font-size:13px;line-height:1.65;max-height:180px;overflow:auto}.scenario:empty{display:none}.productionFields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{color:#9eabba;font-size:10px;font-weight:800;letter-spacing:.06em}.field select,.field textarea{width:100%;border:1px solid #3b4a5b;border-radius:6px;background:#0e151e;color:#edf1f5;padding:8px;font:12px inherit}.field textarea{min-height:66px;resize:vertical}.sampleSection{padding:0 14px 14px}.sampleTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.sampleTop b{font-size:12px}.sampleUpload{border:1px solid #53657a;border-radius:999px;background:#1a2634;color:#fff;padding:6px 9px;cursor:pointer;font-size:11px}.sampleTrack{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px}.sampleCard{position:relative;flex:0 0 170px;overflow:hidden;border:1px solid #3b4959;border-radius:7px;background:#080c11}.sampleCard img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;cursor:zoom-in}.sampleIndex{position:absolute;top:5px;left:5px;padding:3px 6px;border-radius:99px;background:#080c11dd;font:800 9px ui-monospace,monospace}.sampleName{padding:6px 7px;color:#9da9b7;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sampleBtns{display:flex;gap:3px;padding:0 5px 6px}.sampleBtns button{flex:1;border:1px solid #405063;border-radius:5px;background:#17212d;color:#fff;padding:4px;cursor:pointer;font-size:10px}.sampleEmpty{width:100%;padding:14px;border:1px dashed #3f4d5d;border-radius:6px;color:#7f8c9c;text-align:center;font-size:11px}.prodModal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:22px;background:#030507f2}.prodModal.open{display:flex}.prodModal img{max-width:96vw;max-height:94vh;object-fit:contain}.prodModal button{position:absolute;right:16px;top:10px;border:0;background:none;color:#fff;font-size:36px}.emptyResult{padding:80px 20px;text-align:center;color:#8c99a8}
+      .promptDetails{margin-top:8px;border:1px solid #33465a;border-radius:7px;background:#0b1119}.promptDetails summary{padding:8px 10px;color:#b8c6d5;cursor:pointer;font-size:11px;font-weight:800}.promptDetails pre{max-height:310px;margin:0;padding:11px;border-top:1px solid #2d3b4a;color:#dce6ef;white-space:pre-wrap;overflow:auto;font:11px/1.55 ui-monospace,"Malgun Gothic",monospace}
       @media(max-width:820px){.prodTop{padding:10px}.prodBrand b{font-size:15px}.prodActions{float:none;margin-top:9px;overflow-x:auto}.progressHeader{grid-template-columns:auto 1fr}.progressHeader .progressDetail{grid-column:1/-1}.filterRow{grid-template-columns:1fr auto}.filterRow select{grid-column:1/-1}.productionBook{padding:15px 0 60px}.locationSection{margin-bottom:22px}.locationHead{border-radius:0;border-left:0;border-right:0;grid-template-columns:auto 1fr;padding:12px 11px}.locationHead h2{font-size:17px}.locationStats{grid-column:1/-1;min-width:0;text-align:left}.locationControls{justify-content:flex-start}.cutGrid{display:block}.productionCard{border-radius:0;border-left:0;border-right:0;margin-bottom:12px}.keyframe{min-height:0}.keyframe img{max-height:none}.productionFields{grid-template-columns:1fr}.field.full{grid-column:auto}.scenario{max-height:none}.sampleCard{flex-basis:150px}}
       @media print{.prodTop{position:static}.prodActions,.filterRow,.locationControls,.moveTools,.productionFields,.sampleUpload,.sampleBtns{display:none!important}.productionBook{max-width:none;padding:0}.locationSection{break-before:page}.productionCard{break-inside:avoid}.cutGrid{display:block}.productionCard{margin-bottom:10mm}.keyframe img{max-height:120mm}.sampleSection{display:none}}
     `;
@@ -264,6 +313,7 @@
     const statusOptions = STATUSES.map(([id, name]) => `<option value="${id}"${id === cutState.status ? ' selected' : ''}>${name}</option>`).join('');
     const clip = GENERATED_CLIPS[cut.id];
     const extension = (cut.img || '').split('.').pop() || 'png';
+    const prompt = videoPrompt(cut);
     return `<article class="productionCard" id="production-${esc(cut.id)}" data-cut="${esc(cut.id)}" data-status="${esc(cutState.status)}">
       <div class="keyframe">
         <span class="orderBadge">${String(orderIndex + 1).padStart(2, '0')} · ${esc(cut.id)}</span>
@@ -273,6 +323,7 @@
       <div class="cardBody">
         <div class="cardTop"><div><div class="cutIdentity">${sceneId(cut.sceneNo)} · ${esc(cut.id)}</div><div class="sceneTitle">${esc(cut.sceneTitle)}</div><span class="shotBadge">${esc(shot.label)}</span></div><div class="moveTools"><button class="iconBtn" type="button" title="앞으로" onclick="productionBoard.moveCut('${esc(locationId)}','${esc(cut.id)}',-1)"${orderIndex === 0 ? ' disabled' : ''}>↑</button><button class="iconBtn" type="button" title="뒤로" onclick="productionBoard.moveCut('${esc(locationId)}','${esc(cut.id)}',1)"${orderIndex === state.cutOrders[locationId].length - 1 ? ' disabled' : ''}>↓</button></div></div>
         <div class="generatorTools">${cut.img ? `<a href="${encodeURI(cut.img)}" download="${esc(cut.id)}_keyframe.${esc(extension)}">키프레임 다운로드</a>` : ''}<button type="button" onclick="productionBoard.copyPrompt('${esc(cut.id)}')">영상 프롬프트 복사</button>${clip ? `<a href="${encodeURI(clip)}" download>생성 영상 다운로드</a>` : ''}</div>
+        <details class="promptDetails"><summary>이 컷의 영상 프롬프트 보기</summary><pre>${esc(prompt)}</pre></details>
         ${clip ? `<div class="generatedClip"><b>AI 생성 영상 · ${esc(cut.id)}</b><video controls playsinline preload="metadata" src="${encodeURI(clip)}"></video></div>` : ''}
         <div class="scenario">${esc(cut.action || '')}</div>
         <div class="productionFields">
@@ -485,7 +536,7 @@
       area.value = prompt; area.style.position = 'fixed'; area.style.opacity = '0';
       document.body.appendChild(area); area.select(); document.execCommand('copy'); area.remove();
     }
-    const flag = document.getElementById('productionSaveFlag');
+    const flag = document.getElementById('saveFlag');
     flag.textContent = `${cutId} 프롬프트 복사됨`; flag.classList.add('saved');
     setTimeout(() => { flag.textContent = '자동 저장'; flag.classList.remove('saved'); }, 1800);
   }
