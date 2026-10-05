@@ -47,6 +47,24 @@ Camera: begin in a medium-wide shot and make a slow lateral tracking move throug
 NEGATIVE PROMPT
 No traffic island, no palace gate, no road-center staging, no cars passing close to Rudolf, no location change, no new character, no character redesign, no thin body, no altered costume, no clean or modern map, no map text becoming readable, no extra fingers, no morphing hands, no duplicated pedestrians, no melting architecture, no camera shake, no fast zoom, no fisheye distortion, no subtitles, no generated letters, no logo, no watermark, no style shift, no photorealistic or 3D CGI conversion.`
   };
+  const CHARACTER_REFERENCES = [
+    { id: 'rudolf', name: '루돌프', version: 'FINAL LOCK v001', file: 'production-references/characters/rudolf_final_v001.webp', lock: '30대 초반의 인간 남성. 크고 둥글며 튼튼한 체형, 갈색 빈티지 귀덮개 항공모와 큰 고글, 올리브 패딩, 붉은 목도리, 낡은 지도와 배낭. 뿔·동물 귀·빨간 코 금지.' },
+    { id: 'santa', name: '산타', version: 'FINAL LOCK v003', file: 'production-references/characters/santa_final_v003.webp', lock: '작고 슬림한 성인 체형과 순진한 어린 얼굴. 빨간 비니, 네이비 롱패딩, 청회색 목도리, 낡은 여행가방을 고정.' },
+    { id: 'hyeok', name: '혁', version: 'FINAL LOCK v001', file: 'production-references/characters/hyeok_final_v001.webp', lock: '마른 체형, 헝클어진 검은 머리, 차콜 패딩과 회색 후디. 안경 없음. 담배·라이터 장면에서는 맨손 연속성 유지.' },
+    { id: 'jimin', name: '지민', version: 'FINAL LOCK v003', file: 'production-references/characters/jimin_final_v003.webp', lock: '슬림한 체형과 긴 검은 머리, 검은 롱코트, 회색 목도리, 이어폰. S19 이후 당일 장면에서만 얇은 산타복 레이어 사용.' }
+  ];
+  const LOCATION_REFERENCES = [
+    { id: 'seoul-master', name: '서울 2023 마스터', version: 'MASTER GUIDE v001', file: 'production-references/locations/seoul_2023_master_v001.webp', lock: '백화점 전면, 가판대, 골목, 지하통로, 놀이터, 한강과 서울 조망을 포함한 전체 공간·색감 기준.' },
+    { id: 'backstreet', name: 'S20·S21 백화점 뒤편', version: 'FINAL LOCATION v003', file: 'production-references/locations/s20_s21_backstreet_v003.webp', lock: '혁·산타 구역과 지민 벤치 구역은 떨어져 있다. 세 인물을 한 프레임에 모으지 않으며 원 콘티 공간 관계를 우선.' },
+    { id: 'bench', name: 'S20 벤치 디자인 앵커', version: 'BENCH ANCHOR v001', file: 'production-references/locations/s20_bench_anchor_v001.webp', lock: '벤치 재질과 디자인 참고용. 전체 공간 배치는 S20·S21 뒤편 v003을 우선.' }
+  ];
+  const CHARACTER_REFERENCE_MAP = Object.fromEntries(CHARACTER_REFERENCES.map((item) => [item.id, item]));
+  const LOCATION_REFERENCE_MAP = Object.fromEntries(LOCATION_REFERENCES.map((item) => [item.id, item]));
+  const LOCATION_REFERENCE_BY_PRODUCTION = {
+    terrace: 'backstreet',
+    'dept-front': 'seoul-master', stall: 'seoul-master', alley: 'seoul-master', underpass: 'seoul-master',
+    playground: 'seoul-master', hanriver: 'seoul-master', rooftop: 'seoul-master', city: 'seoul-master', breakroom: 'seoul-master'
+  };
   const objectUrls = new Set();
   let dbPromise;
   let state = loadState();
@@ -96,6 +114,29 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     if (/자동차|차가|전동차|오토바이/.test(text)) return 'Move vehicles on fixed paths with stable shapes and restrained motion blur; reflections may glide across the wet ground.';
     if (/별|우주|소행성|꽝/.test(text)) return 'Animate depth through layered star parallax and one clearly staged impact or transition while keeping silhouettes crisp.';
     return 'Animate only the action explicitly visible or described for this cut. Keep motion economical and readable, with no invented event.';
+  }
+
+  function characterIdsForCut(cut) {
+    const text = `${cut.id} ${cut.img || ''} ${cut.sceneTitle || ''} ${cut.action || ''}`.toLowerCase();
+    const ids = [];
+    if (/루돌프|rudolf/.test(text)) ids.push('rudolf');
+    if (/산타|santa/.test(text)) ids.push('santa');
+    if (/혁|hyeok/.test(text)) ids.push('hyeok');
+    if (/지민|jimin/.test(text)) ids.push('jimin');
+    return ids;
+  }
+
+  function characterReferenceDirection(cut) {
+    const ids = characterIdsForCut(cut);
+    if (!ids.length) return 'No principal character turnaround is required for this environment or insert shot.';
+    const lines = ids.map((id) => {
+      const reference = CHARACTER_REFERENCE_MAP[id];
+      return `${reference.name}: attach ${reference.file.split('/').pop()} as an additional identity reference. ${reference.lock}`;
+    });
+    if (ids.includes('rudolf')) {
+      lines.push('Mandatory Rudolf identity phrase: human Korean man, no antlers, no animal ears, no red nose, brown vintage aviator trapper cap with large goggles resting on top. Do not rely on prompt text alone; the official Rudolf turnaround must be attached.');
+    }
+    return lines.join('\n');
   }
 
   function shortAction(cut) {
@@ -152,7 +193,7 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     if (PROMPT_OVERRIDES[cut.id]) {
       return PROMPT_OVERRIDES[cut.id].replace(
         '\n\nNEGATIVE PROMPT',
-        `\n\nCONTINUITY IN\n${continuity.incoming}\n\nEND-FRAME HANDOFF\n${continuity.outgoing}\n\nNEGATIVE PROMPT`
+        `\n\nCHARACTER REFERENCE — REQUIRED\n${characterReferenceDirection(cut)}\n\nCONTINUITY IN\n${continuity.incoming}\n\nEND-FRAME HANDOFF\n${continuity.outgoing}\n\nNEGATIVE PROMPT`
       );
     }
     const shot = shotProfile(cut);
@@ -166,7 +207,7 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       insert: 'A precise detail shot with a very slow macro push-in and shallow depth separation.',
       transition: 'A smooth, deliberate transition move with no sudden acceleration or camera shake.'
     }[shot.id];
-    return `IMAGE-TO-VIDEO PROMPT\nCreate a 6-second cinematic image-to-video shot for ${cut.id}, set in winter Seoul, 2023. Use the provided keyframe as the absolute first-frame reference. Preserve the exact characters, faces, body proportions, costumes, props, architecture, composition, color palette, and hand-painted cinematic animation style.\n\nCONTINUITY IN\n${continuity.incoming}\n\nLOCATION\n${locationName}. ${environmentDirection(locationId)}\n\nSTORY ACTION\n${cut.action || 'Hold the scene with restrained natural environmental motion.'}\n\nMOTION DIRECTION\n${actionDirection(cut)} Add only subtle secondary motion appropriate to the image: breathing, gentle fabric or hair movement, soft practical-light variation, restrained background movement, and atmospheric depth.\n\nCAMERA\n${camera} Continuous single shot, no cut, no scene change. Keep the first-frame identity stable throughout.\n\nEND-FRAME HANDOFF\n${continuity.outgoing}\n\nNEGATIVE PROMPT\nNo character redesign, no face change, no body-type change, no costume change, no injury-state change, no screen-direction reversal, no costume or prop teleport, no missing or extra props, no extra limbs or fingers, no duplicated people, no morphing, no melting architecture, no new signs or readable text, no camera shake, no fast zoom, no fisheye distortion, no style shift, no photorealistic conversion, no 3D CGI conversion, no flicker, no watermark, no logo, no subtitles.`;
+    return `IMAGE-TO-VIDEO PROMPT\nCreate a 6-second cinematic image-to-video shot for ${cut.id}, set in winter Seoul, 2023. Use the provided keyframe as the absolute first-frame reference. Preserve the exact characters, faces, body proportions, costumes, props, architecture, composition, color palette, and hand-painted cinematic animation style.\n\nCHARACTER REFERENCE — REQUIRED\n${characterReferenceDirection(cut)}\n\nCONTINUITY IN\n${continuity.incoming}\n\nLOCATION\n${locationName}. ${environmentDirection(locationId)}\n\nSTORY ACTION\n${cut.action || 'Hold the scene with restrained natural environmental motion.'}\n\nMOTION DIRECTION\n${actionDirection(cut)} Add only subtle secondary motion appropriate to the image: breathing, gentle fabric or hair movement, soft practical-light variation, restrained background movement, and atmospheric depth.\n\nCAMERA\n${camera} Continuous single shot, no cut, no scene change. Keep the first-frame identity stable throughout.\n\nEND-FRAME HANDOFF\n${continuity.outgoing}\n\nNEGATIVE PROMPT\nNo character redesign, no face change, no body-type change, no costume change, no injury-state change, no screen-direction reversal, no costume or prop teleport, no missing or extra props, no extra limbs or fingers, no duplicated people, no morphing, no melting architecture, no new signs or readable text, no camera shake, no fast zoom, no fisheye distortion, no style shift, no photorealistic conversion, no 3D CGI conversion, no flicker, no watermark, no logo, no subtitles.`;
   }
 
   function sortStateForProduction(target) {
@@ -317,6 +358,24 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     return { total: ids.length, done, approved, percent: ids.length ? Math.round(done / ids.length * 100) : 0 };
   }
 
+  function referenceCardMarkup(item, kind) {
+    return `<article class="referenceCard" data-reference-kind="${kind}" data-reference-id="${esc(item.id)}">
+      <button class="referencePreview" type="button" onclick="productionBoard.openImage('${encodeURI(item.file)}')"><img loading="lazy" src="${encodeURI(item.file)}" alt="${esc(item.name)}"></button>
+      <div class="referenceCardBody"><b>${esc(item.name)}</b><span>${esc(item.version)}</span><p>${esc(item.lock)}</p><div><button type="button" onclick="productionBoard.openImage('${encodeURI(item.file)}')">크게 보기</button><a href="${encodeURI(item.file)}" download>다운로드</a></div></div>
+    </article>`;
+  }
+
+  function referenceLibraryMarkup() {
+    return `<div class="referenceModal" id="referenceModal" aria-hidden="true">
+      <div class="referenceDialog">
+        <header><div><b>제작 기준 시트</b><span>FINAL CHARACTER LOCK · LOCATION LOCK</span></div><button type="button" onclick="productionBoard.closeReferenceLibrary()">×</button></header>
+        <nav><button type="button" onclick="productionBoard.filterReferences('all')">전체</button><button type="button" onclick="productionBoard.filterReferences('character')">캐릭터·턴어라운드</button><button type="button" onclick="productionBoard.filterReferences('location')">로케이션</button></nav>
+        <section class="referenceWarning"><b>루돌프 생성 필수</b> 시작 키프레임만 넣지 말고 루돌프 FINAL 턴어라운드를 캐릭터 참조 슬롯에 함께 첨부할 것. 뿔·동물 귀·빨간 코·동물형 얼굴 금지.</section>
+        <div class="referenceGrid">${CHARACTER_REFERENCES.map((item) => referenceCardMarkup(item, 'character')).join('')}${LOCATION_REFERENCES.map((item) => referenceCardMarkup(item, 'location')).join('')}</div>
+      </div>
+    </div>`;
+  }
+
   function injectShell() {
     const storyHref = location.protocol === 'file:' ? '우울폭주_전체_콘티북_S01-S25.html' : '../';
     document.title = '우울폭주 성탄절 · 로케이션별 제작 콘티';
@@ -326,6 +385,8 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
         <div class="prodBrand"><b>우울폭주 성탄절 · 제작 콘티</b><span>LOCATION-BASED PRODUCTION BOARD</span></div>
         <div class="prodActions">
           <span id="saveFlag" class="saveFlag">자동 저장</span>
+          <button type="button" onclick="productionBoard.openReferenceLibrary('character')">캐릭터 시트</button>
+          <button type="button" onclick="productionBoard.openReferenceLibrary('location')">로케이션 시트</button>
           <button type="button" onclick="productionBoard.applyRecommendedOrder()">추천 제작순서</button>
           <button type="button" onclick="productionBoard.exportData()">백업</button>
           <button type="button" onclick="productionBoard.importData()">불러오기</button>
@@ -340,6 +401,7 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       </header>
       <main class="productionBook" id="productionBook"></main>
       <div class="prodModal" id="prodModal" onclick="this.classList.remove('open')"><button type="button">×</button><img id="prodModalImg" alt="확대 이미지"></div>
+      ${referenceLibraryMarkup()}
       <input id="productionImport" type="file" accept="application/json" hidden>
     `;
     const style = document.createElement('style');
@@ -348,7 +410,8 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       *{box-sizing:border-box}html{scroll-behavior:smooth}.productionBody{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif}.prodTop{position:sticky;top:0;z-index:40;padding:13px 18px 12px;background:#0d131ceF;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}.prodBrand{display:inline-flex;flex-direction:column;vertical-align:middle}.prodBrand b{font-size:18px}.prodBrand span{margin-top:3px;color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:.12em}.prodActions{float:right;display:flex;align-items:center;gap:7px}.prodActions button,.prodActions a,.filterRow button{border:1px solid #4b5a6c;border-radius:999px;background:#182231;color:#eff3f7;padding:7px 11px;text-decoration:none;cursor:pointer;font-size:12px}.saveFlag{color:#8f9baa;font-size:11px}.saveFlag.saved{color:#8ed0a9}.progressHeader{clear:both;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding-top:12px;font-size:12px}.progressRail,.locationRail{height:7px;border-radius:99px;background:#283341;overflow:hidden}.progressRail i,.locationRail i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--amber),var(--green))}.filterRow{display:grid;grid-template-columns:minmax(200px,320px) minmax(180px,1fr) auto;gap:8px;margin-top:10px}.filterRow select,.filterRow input{min-width:0;border:1px solid #405064;border-radius:7px;background:#111923;color:#e8edf3;padding:8px 10px}.productionBook{max-width:1320px;margin:0 auto;padding:24px 18px 90px}.locationSection{margin-bottom:34px;scroll-margin-top:170px}.locationHead{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin-bottom:12px;padding:13px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}.locationNo{color:var(--amber);font:800 20px ui-monospace,monospace}.locationHead h2{margin:0 0 3px;font-size:21px}.locationHint{color:var(--muted);font-size:12px}.locationStats{min-width:210px;text-align:right}.locationStats b{display:block;margin-bottom:6px;font:800 12px ui-monospace,monospace}.locationControls{display:flex;gap:5px;margin-top:8px;justify-content:flex-end}.iconBtn{width:29px;height:29px;padding:0;border:1px solid #48586a;border-radius:7px;background:#1b2634;color:#fff;cursor:pointer}.iconBtn:disabled{opacity:.25}.cutGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.productionCard{overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:0 10px 28px #0004}.productionCard[data-status="video"],.productionCard[data-status="approved"]{border-color:#4e8367}.keyframe{position:relative;display:flex;align-items:center;justify-content:center;min-height:210px;background:#05080c}.keyframe img{display:block;width:100%;max-height:440px;object-fit:contain;cursor:zoom-in}.keyframe .missing{padding:80px 20px;color:#8491a1}.orderBadge,.statusBadge{position:absolute;top:10px;z-index:2;padding:6px 9px;border-radius:999px;font:800 10px ui-monospace,monospace;box-shadow:0 3px 10px #0008}.orderBadge{left:10px;background:#090d13dd;color:#fff}.statusBadge{right:10px;background:#263444e8;color:#dce4ed}.shotBadge{display:inline-flex;margin-top:6px;padding:4px 7px;border:1px solid #3b4a5d;border-radius:999px;color:#aebccc;background:#101720;font:800 9px ui-monospace,monospace;letter-spacing:.04em}.productionCard[data-status="keyframe"] .statusBadge{background:#7a5d2d}.productionCard[data-status="generating"] .statusBadge{background:#385e82}.productionCard[data-status="video"] .statusBadge{background:#397052}.productionCard[data-status="approved"] .statusBadge{background:#256746}.cardBody{padding:14px}.cardTop{display:flex;justify-content:space-between;gap:10px}.cutIdentity{font:800 13px ui-monospace,monospace;color:var(--amber)}.sceneTitle{margin-top:3px;color:var(--muted);font-size:12px}.moveTools{display:flex;gap:4px}.generatorTools{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.generatorTools a,.generatorTools button{border:1px solid #4a5b6e;border-radius:999px;background:#14202d;color:#edf3f8;padding:6px 9px;text-decoration:none;cursor:pointer;font:800 10px inherit}.generatedClip{margin-top:10px;border:1px solid #35465a;border-radius:7px;overflow:hidden;background:#05080c}.generatedClip video{display:block;width:100%;max-height:360px;background:#000}.generatedClip b{display:block;padding:7px 9px;color:#8ed0a9;font-size:11px}.scenario{margin:13px 0 0;padding:12px 13px;border-radius:7px;background:var(--paper);color:var(--paperInk);white-space:pre-line;font-size:13px;line-height:1.65;max-height:180px;overflow:auto}.scenario:empty{display:none}.productionFields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{color:#9eabba;font-size:10px;font-weight:800;letter-spacing:.06em}.field select,.field textarea{width:100%;border:1px solid #3b4a5b;border-radius:6px;background:#0e151e;color:#edf1f5;padding:8px;font:12px inherit}.field textarea{min-height:66px;resize:vertical}.sampleSection{padding:0 14px 14px}.sampleTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.sampleTop b{font-size:12px}.sampleUpload{border:1px solid #53657a;border-radius:999px;background:#1a2634;color:#fff;padding:6px 9px;cursor:pointer;font-size:11px}.sampleTrack{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px}.sampleCard{position:relative;flex:0 0 170px;overflow:hidden;border:1px solid #3b4959;border-radius:7px;background:#080c11}.sampleCard img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;cursor:zoom-in}.sampleIndex{position:absolute;top:5px;left:5px;padding:3px 6px;border-radius:99px;background:#080c11dd;font:800 9px ui-monospace,monospace}.sampleName{padding:6px 7px;color:#9da9b7;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sampleBtns{display:flex;gap:3px;padding:0 5px 6px}.sampleBtns button{flex:1;border:1px solid #405063;border-radius:5px;background:#17212d;color:#fff;padding:4px;cursor:pointer;font-size:10px}.sampleEmpty{width:100%;padding:14px;border:1px dashed #3f4d5d;border-radius:6px;color:#7f8c9c;text-align:center;font-size:11px}.prodModal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:22px;background:#030507f2}.prodModal.open{display:flex}.prodModal img{max-width:96vw;max-height:94vh;object-fit:contain}.prodModal button{position:absolute;right:16px;top:10px;border:0;background:none;color:#fff;font-size:36px}.emptyResult{padding:80px 20px;text-align:center;color:#8c99a8}
       .promptDetails{margin-top:8px;border:1px solid #33465a;border-radius:7px;background:#0b1119}.promptDetails summary{padding:8px 10px;color:#b8c6d5;cursor:pointer;font-size:11px;font-weight:800}.promptDetails pre{max-height:310px;margin:0;padding:11px;border-top:1px solid #2d3b4a;color:#dce6ef;white-space:pre-wrap;overflow:auto;font:11px/1.55 ui-monospace,"Malgun Gothic",monospace}
       .continuityLine{margin-top:8px;padding:7px 9px;border-left:3px solid #6f9fcd;background:#101923;color:#aebdcd;font:10px/1.45 ui-monospace,"Malgun Gothic",monospace}.continuityLine b{color:#dce8f3}
-      @media(max-width:820px){.prodTop{padding:10px}.prodBrand b{font-size:15px}.prodActions{float:none;margin-top:9px;overflow-x:auto}.progressHeader{grid-template-columns:auto 1fr}.progressHeader .progressDetail{grid-column:1/-1}.filterRow{grid-template-columns:1fr auto}.filterRow select{grid-column:1/-1}.productionBook{padding:15px 0 60px}.locationSection{margin-bottom:22px}.locationHead{border-radius:0;border-left:0;border-right:0;grid-template-columns:auto 1fr;padding:12px 11px}.locationHead h2{font-size:17px}.locationStats{grid-column:1/-1;min-width:0;text-align:left}.locationControls{justify-content:flex-start}.cutGrid{display:block}.productionCard{border-radius:0;border-left:0;border-right:0;margin-bottom:12px}.keyframe{min-height:0}.keyframe img{max-height:none}.productionFields{grid-template-columns:1fr}.field.full{grid-column:auto}.scenario{max-height:none}.sampleCard{flex-basis:150px}}
+      .referenceModal{position:fixed;inset:0;z-index:80;display:none;padding:24px;background:#05080deb;overflow:auto}.referenceModal.open{display:block}.referenceDialog{max-width:1280px;margin:auto;border:1px solid #3c4a5b;border-radius:12px;background:#0f1721;box-shadow:0 20px 80px #000b}.referenceDialog>header{position:sticky;top:-24px;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #344253;background:#101923f2;backdrop-filter:blur(12px)}.referenceDialog>header b{display:block;font-size:18px}.referenceDialog>header span{display:block;margin-top:3px;color:#92a2b4;font:10px ui-monospace,monospace;letter-spacing:.08em}.referenceDialog>header button{border:0;background:none;color:#fff;font-size:30px;cursor:pointer}.referenceDialog>nav{display:flex;gap:7px;padding:12px 14px 0}.referenceDialog>nav button,.referenceCardBody button,.referenceCardBody a{border:1px solid #506176;border-radius:999px;background:#172333;color:#f1f5f8;padding:7px 10px;text-decoration:none;cursor:pointer;font-size:11px}.referenceWarning{margin:12px 14px 0;padding:11px 13px;border:1px solid #8a5f45;border-radius:8px;background:#2a1d18;color:#f1d5bc;font-size:12px;line-height:1.6}.referenceWarning b{color:#ffbe83}.referenceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:14px}.referenceCard{overflow:hidden;border:1px solid #334254;border-radius:9px;background:#131d29}.referenceCard.hidden{display:none}.referencePreview{display:block;width:100%;padding:0;border:0;background:#070b10;cursor:zoom-in}.referencePreview img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain}.referenceCardBody{padding:11px}.referenceCardBody>b{font-size:14px}.referenceCardBody>span{margin-left:8px;color:#d9b86f;font:10px ui-monospace,monospace}.referenceCardBody p{min-height:38px;margin:7px 0 10px;color:#aebaca;font-size:11px;line-height:1.55}.referenceCardBody div{display:flex;gap:6px}
+      @media(max-width:820px){.prodTop{padding:10px}.prodBrand b{font-size:15px}.prodActions{float:none;margin-top:9px;overflow-x:auto}.progressHeader{grid-template-columns:auto 1fr}.progressHeader .progressDetail{grid-column:1/-1}.filterRow{grid-template-columns:1fr auto}.filterRow select{grid-column:1/-1}.productionBook{padding:15px 0 60px}.locationSection{margin-bottom:22px}.locationHead{border-radius:0;border-left:0;border-right:0;grid-template-columns:auto 1fr;padding:12px 11px}.locationHead h2{font-size:17px}.locationStats{grid-column:1/-1;min-width:0;text-align:left}.locationControls{justify-content:flex-start}.cutGrid{display:block}.productionCard{border-radius:0;border-left:0;border-right:0;margin-bottom:12px}.keyframe{min-height:0}.keyframe img{max-height:none}.productionFields{grid-template-columns:1fr}.field.full{grid-column:auto}.scenario{max-height:none}.sampleCard{flex-basis:150px}.referenceModal{padding:0}.referenceDialog{border:0;border-radius:0}.referenceDialog>header{top:0}.referenceGrid{grid-template-columns:1fr;padding:10px}.referenceDialog>nav{overflow-x:auto}.referenceWarning{margin:10px}.referenceCardBody p{min-height:0}}
       @media print{.prodTop{position:static}.prodActions,.filterRow,.locationControls,.moveTools,.productionFields,.sampleUpload,.sampleBtns{display:none!important}.productionBook{max-width:none;padding:0}.locationSection{break-before:page}.productionCard{break-inside:avoid}.cutGrid{display:block}.productionCard{margin-bottom:10mm}.keyframe img{max-height:120mm}.sampleSection{display:none}}
     `;
     document.head.appendChild(style);
@@ -378,6 +441,9 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     const nextReference = continuity.nextConnected && continuity.next?.img
       ? `<a href="${encodeURI(continuity.next.img)}" download="${esc(continuity.next.id)}_next-reference.${esc(nextExtension)}">다음컷 참고 다운로드</a>` : '';
     const continuityLabel = `${continuity.previousConnected ? continuity.previous.id : '새 장면'} → ${cut.id} → ${continuity.nextConnected ? continuity.next.id : '컷 종료'}`;
+    const characterReferenceButtons = characterIdsForCut(cut).map((id) => `<button type="button" onclick="productionBoard.openReferenceLibrary('character','${id}')">${esc(CHARACTER_REFERENCE_MAP[id].name)} 시트</button>`).join('');
+    const locationReferenceId = LOCATION_REFERENCE_BY_PRODUCTION[locationId];
+    const locationReferenceButton = locationReferenceId ? `<button type="button" onclick="productionBoard.openReferenceLibrary('location','${locationReferenceId}')">로케이션 시트</button>` : '';
     return `<article class="productionCard" id="production-${esc(cut.id)}" data-cut="${esc(cut.id)}" data-status="${esc(cutState.status)}">
       <div class="keyframe">
         <span class="orderBadge">${String(orderIndex + 1).padStart(2, '0')} · ${esc(cut.id)}</span>
@@ -386,7 +452,7 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       </div>
       <div class="cardBody">
         <div class="cardTop"><div><div class="cutIdentity">${sceneId(cut.sceneNo)} · ${esc(cut.id)}</div><div class="sceneTitle">${esc(cut.sceneTitle)}</div><span class="shotBadge">${esc(shot.label)}</span></div><div class="moveTools"><button class="iconBtn" type="button" title="앞으로" onclick="productionBoard.moveCut('${esc(locationId)}','${esc(cut.id)}',-1)"${orderIndex === 0 ? ' disabled' : ''}>↑</button><button class="iconBtn" type="button" title="뒤로" onclick="productionBoard.moveCut('${esc(locationId)}','${esc(cut.id)}',1)"${orderIndex === state.cutOrders[locationId].length - 1 ? ' disabled' : ''}>↓</button></div></div>
-        <div class="generatorTools">${cut.img ? `<a href="${encodeURI(cut.img)}" download="${esc(cut.id)}_keyframe.${esc(extension)}">키프레임 다운로드</a>` : ''}${previousReference}${nextReference}<button type="button" onclick="productionBoard.copyPrompt('${esc(cut.id)}')">영상 프롬프트 복사</button>${clip ? `<a href="${encodeURI(clip)}" download>생성 영상 다운로드</a>` : ''}</div>
+        <div class="generatorTools">${cut.img ? `<a href="${encodeURI(cut.img)}" download="${esc(cut.id)}_keyframe.${esc(extension)}">키프레임 다운로드</a>` : ''}${characterReferenceButtons}${locationReferenceButton}${previousReference}${nextReference}<button type="button" onclick="productionBoard.copyPrompt('${esc(cut.id)}')">영상 프롬프트 복사</button>${clip ? `<a href="${encodeURI(clip)}" download>생성 영상 다운로드</a>` : ''}</div>
         <div class="continuityLine"><b>연결 기준</b> ${esc(continuityLabel)}</div>
         <details class="promptDetails"><summary>이 컷의 영상 프롬프트 보기</summary><pre>${esc(prompt)}</pre></details>
         ${clip ? `<div class="generatedClip"><b>AI 생성 영상 · ${esc(cut.id)}</b><video controls playsinline preload="metadata" src="${encodeURI(clip)}"></video></div>` : ''}
@@ -591,6 +657,31 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     document.getElementById('prodModal').classList.add('open');
   }
 
+  function filterReferences(kind = 'all', focusId = '') {
+    document.querySelectorAll('.referenceCard').forEach((card) => {
+      card.classList.toggle('hidden', kind !== 'all' && card.dataset.referenceKind !== kind);
+      card.style.outline = card.dataset.referenceId === focusId ? '2px solid #ddb76d' : '';
+    });
+    if (focusId) {
+      requestAnimationFrame(() => document.querySelector(`[data-reference-id="${CSS.escape(focusId)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    }
+  }
+
+  function openReferenceLibrary(kind = 'all', focusId = '') {
+    const modal = document.getElementById('referenceModal');
+    filterReferences(kind, focusId);
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReferenceLibrary() {
+    const modal = document.getElementById('referenceModal');
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
   async function copyPrompt(cutId) {
     const cut = visibleStoryCuts().find((item) => item.id === cutId);
     if (!cut) return;
@@ -628,6 +719,6 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     event.target.value = '';
   });
   window.addEventListener('beforeunload', () => objectUrls.forEach((url) => URL.revokeObjectURL(url)));
-  window.productionBoard = { moveLocation, moveCut, applyRecommendedOrder, changeLocation, setStatus, setNote, resetFilters, uploadSamples, moveSample, deleteSample, openImage, copyPrompt, exportData, importData };
+  window.productionBoard = { moveLocation, moveCut, applyRecommendedOrder, changeLocation, setStatus, setNote, resetFilters, uploadSamples, moveSample, deleteSample, openImage, openReferenceLibrary, closeReferenceLibrary, filterReferences, copyPrompt, exportData, importData };
   render();
 })();
