@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="인생4초 지원"
+  description="인생4초(Life 4 Seconds) 지원 페이지. 앱 사용, 저장·공유, 위치 권한, PLUS 평생 이용권 및 구매 복원 안내."
+  keywords="인생4초,Life 4 Seconds,지원,고객지원,PLUS,구매 복원"
+>
+  <main class="support-wrap">
+    <section class="support-card">
+      <p class="eyebrow">인생4초 · LIFE 4 SECONDS</p>
+      <h1>인생4초 지원</h1>
+      <p class="lead">사진 한 장 앞뒤의 4초까지 함께 남기는 카메라 앱입니다.</p>
+
+      <div class="grid">
+        <article>
+          <h2>앱 사용</h2>
+          <p>셔터를 한 번 누르면 촬영 순간을 기준으로 앞 2초와 뒤 2초를 함께 기록합니다.</p>
+        </article>
+        <article>
+          <h2>사진·영상 저장</h2>
+          <p>완성된 순간은 사진 앱에 저장하거나 iOS 공유 시트를 통해 다른 앱으로 공유할 수 있습니다.</p>
+        </article>
+        <article>
+          <h2>위치 표시</h2>
+          <p>사용자가 허용한 경우에만 촬영 순간에 장소 이름을 붙일 수 있습니다. 위치 권한이 없어도 주요 촬영 기능은 사용할 수 있습니다.</p>
+        </article>
+        <article>
+          <h2>인생4초 PLUS</h2>
+          <p>PLUS는 한 번 구매하면 계속 사용하는 평생 이용권입니다. 앱의 PLUS 화면에서 가격 확인, 구입, 구매 복원을 할 수 있습니다.</p>
+        </article>
+      </div>
+
+      <h2>구매 복원</h2>
+      <p>
+        이미 인생4초 PLUS를 구매했다면 앱의 PLUS 화면에서 <strong>구매 복원</strong>을 눌러 다시 활성화할 수 있습니다.
+        App Store에서 사용한 동일한 Apple 계정으로 로그인되어 있어야 합니다.
+      </p>
+
+      <h2>문의</h2>
+      <p>
+        앱 사용 중 문제가 있거나 도움이 필요하면 아래 이메일로 문의해 주세요.<br />
+        <a href="mailto:clubmakers@naver.com">clubmakers@naver.com</a>
+      </p>
+      <p class="small">문의 시 iPhone 모델, iOS 버전, 문제가 발생한 화면과 상황을 함께 적어주시면 확인에 도움이 됩니다.</p>
+
+      <div class="links">
+        <a href="/life4sec-privacy">개인정보 처리방침</a>
+        <a href="/contact">클럽메이커스 연락처</a>
+      </div>
+
+      <hr />
+
+      <h1>Life 4 Seconds Support</h1>
+      <p class="lead">Capture the 2 seconds before and the 2 seconds after the shutter.</p>
+
+      <h2>Using the App</h2>
+      <p>Press the shutter once to capture a 4-second moment around the shot.</p>
+
+      <h2>Saving and Sharing</h2>
+      <p>Finished moments can be saved to your iOS Photos library or shared using the standard iOS share sheet.</p>
+
+      <h2>Location</h2>
+      <p>Location is used only when you explicitly allow it, to add a place name to a captured moment. Core capture features work without location permission.</p>
+
+      <h2>Life 4 Seconds PLUS</h2>
+      <p>PLUS is a one-time lifetime purchase. Open the PLUS screen in the App to view the current App Store price, purchase, or restore your purchase.</p>
+
+      <h2>Restore Purchases</h2>
+      <p>If you previously purchased PLUS, open the PLUS screen and tap <strong>Restore Purchases</strong> while signed in with the same Apple account used for the original purchase.</p>
+
+      <h2>Contact</h2>
+      <p>For support, email <a href="mailto:clubmakers@naver.com">clubmakers@naver.com</a>.</p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .support-wrap { background:#f5efe7; padding:72px 20px 96px; min-height:70vh; }
+  .support-card { max-width:900px; margin:0 auto; background:#fffaf3; border:1px solid #dfd3c8; border-radius:22px; padding:42px 36px; color:#3a2e28; box-shadow:0 12px 34px rgba(58,46,40,.08); }
+  .eyebrow { font-size:12px; font-weight:800; letter-spacing:.16em; color:#8a7468; margin:0 0 12px; }
+  h1 { font-size:34px; line-height:1.25; margin:0 0 8px; }
+  h2 { font-size:20px; margin:30px 0 10px; }
+  p { font-size:15px; line-height:1.75; }
+  .lead { font-size:18px; color:#6c5a50; margin:0 0 30px; }
+  .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:26px 0 8px; }
+  .grid article { background:#f5ede4; border:1px solid #e2d6ca; border-radius:16px; padding:18px; }
+  .grid h2 { margin:0 0 7px; font-size:17px; }
+  .grid p { margin:0; font-size:14px; }
+  a { color:#b52a21; text-decoration:underline; text-underline-offset:3px; }
+  .small { font-size:13px; color:#7b6a60; }
+  .links { display:flex; flex-wrap:wrap; gap:14px; margin-top:28px; }
+  hr { border:0; border-top:1px solid #dfd3c8; margin:44px 0; }
+  @media (max-width:640px) {
+    .support-wrap { padding:32px 14px 64px; }
+    .support-card { padding:28px 20px; border-radius:18px; }
+    h1 { font-size:28px; }
+    .grid { grid-template-columns:1fr; }
+  }
+</style>
