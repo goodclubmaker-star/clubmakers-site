@@ -1,41 +1,162 @@
 ---
 ---
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>사투링고</title>
-<style>
-body{margin:0;background:#f4f1e9;color:#151515;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}.app{max-width:520px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;padding:8px 2px 16px}.logo{font-size:26px;font-weight:900;letter-spacing:-2px}.brand{font-size:10px;font-weight:900}.hero,.card{border-radius:24px;margin-bottom:12px}.hero{background:#151515;color:white;padding:22px}.hero b{color:#caff3d;font-size:11px}.hero h1{font-size:29px;line-height:1.1;letter-spacing:-2px}.hero p{color:#bbb;font-size:13px}.card{background:white;border:1px solid #ddd9d0;padding:18px}.pill{background:#f0eee7;border-radius:20px;padding:7px 10px;font-size:12px;font-weight:900}.phrase{font-size:32px;font-weight:950;letter-spacing:-2px;margin:20px 0 8px}.meaning{font-size:13px;color:#777;margin-bottom:14px}.row{display:flex;gap:8px}.btn{border:0;border-radius:15px;padding:13px 15px;font-weight:900}.dark{background:#151515;color:white}.green{background:#caff3d}.light{background:#eeeae1}.record{width:100%;margin-top:9px;font-size:16px}.status{font-size:12px;color:#888;margin-top:8px;min-height:18px}.mine,.friends,.invite,.result{display:none}.mine{background:#f7f5ef;border-radius:16px;padding:13px;margin-top:12px}.mine audio,.person audio{width:100%;margin-top:8px}.friends h3{margin-bottom:5px}.person{border-top:1px solid #eee;padding:12px 0}.personHead{display:flex;align-items:center;gap:7px}.info{flex:1}.name{font-weight:900;font-size:13px}.small{font-size:11px;color:#999}.votes{display:flex;gap:5px;margin-top:8px}.vote{border:1px solid #ddd;background:white;border-radius:10px;padding:7px 10px;font-weight:800}.vote:disabled{opacity:.45}.selected{background:#151515!important;color:white}.result{background:#151515;color:white;border-radius:17px;padding:14px;margin-top:10px}.share{width:100%;margin-top:8px}.footer{text-align:center;color:#999;font-size:10px;padding:10px}.waiting{padding:12px 0;color:#777;font-size:13px}.count{font-size:11px;color:#777;margin-left:3px}.phase{display:none;background:#151515;color:#fff;border-radius:18px;padding:15px;margin:12px 0}.phase b{display:block;font-size:18px;margin-bottom:5px}.phase span{font-size:12px;color:#bbb}.kakaoGate{display:none;background:#fff3cf;border:1px solid #e9c95e;border-radius:16px;padding:14px;margin:10px 0}.kakaoGate b{display:block;margin-bottom:5px}.kakaoGate p{font-size:12px;line-height:1.55;margin:0 0 10px;color:#665719}.slot{padding:12px;border:1px dashed #d9d5cc;border-radius:14px;margin-top:8px;color:#888;font-size:13px}
-</style></head><body><main class="app">
-<div class="top"><div class="logo">사투링고</div><div class="brand">낭만공작소</div></div>
-<section class="hero"><b>JUST FOR FUN</b><h1>한마디 던지고<br>친구 목소리 들어보자.</h1><p>설치도 가입도 필요 없음.<br>듣고 · 녹음하고 · 웃고 · 바로 공유.</p></section>
-<section class="card"><span class="pill" id="from">🎙️ 오늘의 한마디</span><div class="phrase" id="phrase">이마트 에브리데이</div><div class="meaning" id="meaning">억양이 잘 드러나는 말</div>
-<div class="row"><button class="btn light" id="example">▶️ 예시 듣기</button><button class="btn dark" id="send">😈 친구한테 시키기</button></div>
-<button class="btn green record" id="record">🎙️ 한 번만 녹음</button><div class="kakaoGate" id="kakaoGate"><b>카카오톡 안에서는 마이크 녹음이 제한될 수 있어요.</b><p>링크를 Safari 또는 Chrome에서 열면 바로 녹음할 수 있습니다.</p><div class="row"><button class="btn dark" id="openExternal" style="flex:1">브라우저로 열기</button><button class="btn light" id="copyExternal" style="flex:1">링크 복사</button></div></div><div class="status" id="status">녹음은 한 번만 가능합니다.</div>
-<div class="mine" id="mine"><b>내 녹음</b><audio id="audio" controls></audio><div class="row" style="margin-top:9px"><button class="btn light" id="retryRecord" style="flex:1">↻ 다시 녹음</button><button class="btn green" id="confirmRecord" style="flex:1">이대로 보내기</button></div></div>
-<div class="phase" id="playPhase"><b>🎙️ 전송 완료!</b><span>이제 다른 익명 친구 목소리를 기다렸다가 듣고 투표하세요.</span></div>
-<div class="friends" id="friends"><h3>익명 친구 녹음</h3><div class="small">최대 3명 · 서로 이름 비공개 · 자기 녹음 투표 불가</div><div id="friendList" class="waiting">아직 녹음이 없습니다.</div>
-<div class="result" id="result"><h2 id="resultTitle">투표 중 😂🔥👍</h2><p id="resultText">친구들의 반응이 모이고 있습니다.</p><button class="btn light share" id="share">📤 결과 공유</button><button class="btn green share" id="counter">😈 니도 해봐라</button></div></div>
-<div class="invite" id="invite"><b>😈 바로 던지기</b><p class="small" id="inviteText">카톡으로 링크 하나만 보내세요.</p><div class="row"><button class="btn green" id="shareInvite">💬 카톡으로 보내기</button><button class="btn light" id="copy">링크 복사</button></div></div></section>
-<section class="card" id="chooser"><div class="row"><button class="btn light" id="another" style="flex:1">🎲 다른 한마디</button><button class="btn dark" id="custom" style="flex:1">✏️ 직접 던지기</button></div><button class="btn green" id="suggest" style="width:100%;margin-top:9px">📍 로컬인 도전 문장 제보</button><div class="small" style="margin-top:7px">부산·대구·광주·충청 등 로컬이 아는 진짜 걸리는 문장을 받아요.</div></section>
-<div class="footer">사투링고 · 낭만공작소</div></main>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#C7FF3D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="사투링고">
+  <link rel="manifest" href="/satulinggo.webmanifest">
+  <title>사투링고</title>
+  <style>
+    :root{--ink:#171717;--lime:#c7ff3d;--paper:#f6f3eb;--muted:#78746b;--line:#dedad0;--white:#fff;--red:#ff4d4f}
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+    button{font:inherit}.app{max-width:520px;margin:0 auto;padding:14px 18px calc(32px + env(safe-area-inset-bottom))}
+    .top{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 14px}.logo{font-size:27px;font-weight:950;letter-spacing:-2px}.brand{font-size:10px;font-weight:900;letter-spacing:.2px;color:#6f6b62}
+    .progress{display:flex;gap:5px;align-items:center}.dot{width:7px;height:7px;border-radius:50%;background:#d3cfc5}.dot.on{width:22px;border-radius:99px;background:var(--ink)}
+    .stage{background:var(--white);border:1px solid var(--line);border-radius:28px;padding:18px;overflow:hidden}.eyebrow{display:flex;align-items:center;justify-content:space-between;gap:8px}.tag{display:inline-flex;align-items:center;gap:5px;background:#f0ede5;border-radius:99px;padding:7px 10px;font-size:12px;font-weight:900}.tiny{font-size:11px;color:var(--muted);font-weight:700}
+    .phrase{font-size:34px;line-height:1.06;font-weight:950;letter-spacing:-2.2px;text-align:center;margin:20px 6px 8px;word-break:keep-all}.hint{text-align:center;color:var(--muted);font-size:13px;font-weight:650;min-height:19px}
+    .mascotWrap{position:relative;height:246px;display:grid;place-items:center;margin-top:2px}.halo{position:absolute;width:210px;height:210px;border-radius:50%;background:#f2f3eb}
+    .mascot{position:relative;width:154px;height:154px;border-radius:46% 54% 48% 52%/53% 46% 54% 47%;background:var(--lime);border:3px solid var(--ink);transform-origin:50% 85%;transition:.2s}.mascot.listening{animation:breathe .65s ease-in-out infinite alternate}
+    .ear{position:absolute;width:38px;height:52px;background:var(--lime);border:3px solid var(--ink);border-radius:55% 45% 55% 45%;top:45px;z-index:-1}.ear.l{left:-25px;transform:rotate(-22deg)}.ear.r{right:-25px;transform:scaleX(-1) rotate(-22deg)}
+    .eye{position:absolute;width:13px;height:17px;background:var(--ink);border-radius:50%;top:52px}.eye.l{left:47px}.eye.r{right:47px}.mouth{position:absolute;width:38px;height:11px;border-bottom:5px solid var(--ink);border-radius:50%;left:58px;top:89px}
+    .mic{position:absolute;right:-35px;bottom:-22px;width:58px;height:116px;transform:rotate(-18deg);filter:drop-shadow(0 6px 0 rgba(0,0,0,.08))}.micHead{width:42px;height:58px;border-radius:22px;background:var(--ink);border:3px solid var(--ink);position:absolute;left:8px;top:0}.micHead:after{content:"";position:absolute;left:9px;top:10px;width:18px;height:30px;border:2px solid rgba(255,255,255,.35);border-radius:12px}.micStem{position:absolute;left:25px;top:53px;width:8px;height:48px;border-radius:6px;background:var(--ink)}.micBase{position:absolute;left:11px;bottom:4px;width:36px;height:8px;border-radius:8px;background:var(--ink)}
+    .wave{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);display:flex;gap:4px;height:30px;align-items:center}.wave i{display:block;width:4px;height:7px;border-radius:4px;background:#cbc7be}.recording .wave i{background:var(--ink);animation:wave .55s ease-in-out infinite alternate}.recording .wave i:nth-child(2n){animation-delay:.14s}.recording .wave i:nth-child(3n){animation-delay:.28s}
+    @keyframes wave{to{height:28px}}@keyframes breathe{to{transform:translateY(-4px) rotate(1deg)}}
+    .recordBtn{width:100%;border:0;border-radius:19px;padding:17px 16px;background:var(--lime);color:var(--ink);font-size:17px;font-weight:950;display:flex;justify-content:center;align-items:center;gap:9px;box-shadow:0 4px 0 var(--ink);cursor:pointer}.recordBtn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--ink)}.recordBtn.rec{background:var(--red);color:#fff;box-shadow:0 4px 0 #8b2527}
+    .subactions{display:flex;gap:8px;margin-top:10px}.btn{border:1px solid var(--line);border-radius:15px;padding:12px 13px;font-weight:900;background:#f1eee7;color:var(--ink);cursor:pointer}.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}.btn.lime{background:var(--lime);border-color:var(--lime)}.btn:disabled{opacity:.45}.grow{flex:1}.status{text-align:center;min-height:19px;margin-top:11px;color:var(--muted);font-size:12px;font-weight:650}
+    .review,.kakao,.social,.invite,.result{display:none}.review{margin-top:14px;padding:14px;background:#f7f5ef;border-radius:18px}.reviewTitle{font-weight:950;margin-bottom:9px}.review audio,.person audio{width:100%}.review .subactions{margin-top:10px}
+    .kakao{margin-top:14px;background:#fff3cc;border:1px solid #e8cb66;border-radius:18px;padding:14px}.kakao b{display:block;margin-bottom:5px}.kakao p{margin:0 0 10px;font-size:12px;line-height:1.5;color:#665819}
+    .post{margin-top:12px}.social{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:16px}.socialHead{display:flex;align-items:end;justify-content:space-between;margin-bottom:6px}.socialHead h3{margin:0;font-size:18px}.slot{padding:13px;border:1px dashed #d3cfc4;border-radius:14px;margin-top:8px;color:var(--muted);font-size:13px}.person{border-top:1px solid #eeeae2;padding:13px 0}.person:first-of-type{border-top:0}.personHead{display:flex;align-items:center;gap:9px}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;font-size:15px}.info{flex:1}.name{font-size:13px;font-weight:950}.small{font-size:11px;color:#918d84}.votes{display:flex;gap:6px;margin-top:8px}.vote{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 8px;font-weight:900}.result{background:var(--ink);color:#fff;border-radius:18px;padding:14px;margin-top:10px}.result h3{margin:0 0 5px}.result p{margin:0 0 9px;color:#c8c8c8;font-size:12px}
+    .invite{margin-top:12px;padding:14px;border-radius:18px;background:#f1eee7}.invite b{display:block;margin-bottom:4px}
+    .chooser{margin-top:12px;background:transparent;border:0;padding:0}.chooser .subactions{margin-top:0}.suggest{width:100%;margin-top:8px;background:#fff}.footer{text-align:center;padding:18px 0 4px;font-size:10px;font-weight:800;color:#aaa59b}
+    @media(max-width:360px){.phrase{font-size:30px}.mascotWrap{height:225px}.mascot{width:140px;height:140px}.eye{top:48px}.eye.l{left:42px}.eye.r{right:42px}.mouth{left:52px;top:84px}}
+    @media(prefers-reduced-motion:reduce){.mascot.listening,.recording .wave i{animation:none}}
+  </style>
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <div class="logo">사투링고</div>
+    <div class="progress" aria-label="진행 단계"><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div>
+    <div class="brand">낭만공작소</div>
+  </header>
+
+  <section class="stage" id="stage">
+    <div class="eyebrow">
+      <span class="tag" id="from">🎙️ 오늘의 한마디</span>
+      <button class="btn" id="example" type="button">▶ 예시</button>
+    </div>
+
+    <div class="phrase" id="phrase">이마트 에브리데이</div>
+    <div class="hint" id="meaning">억양이 잘 드러나는 말</div>
+
+    <div class="mascotWrap" id="mascotWrap" aria-live="polite">
+      <div class="halo"></div>
+      <div class="mascot" id="mascot">
+        <span class="ear l"></span><span class="ear r"></span>
+        <span class="eye l"></span><span class="eye r"></span><span class="mouth"></span>
+        <div class="mic"><span class="micHead"></span><span class="micStem"></span><span class="micBase"></span></div>
+      </div>
+      <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+
+    <button class="recordBtn" id="record" type="button">🎙️ 한마디 녹음</button>
+    <div class="status" id="status">마이크를 누르고 자연스럽게 말해보세요.</div>
+
+    <div class="kakao" id="kakaoGate">
+      <b>카카오톡 안에서는 녹음이 제한될 수 있어요.</b>
+      <p>Safari 또는 Chrome으로 열면 바로 녹음할 수 있습니다.</p>
+      <div class="subactions">
+        <button class="btn dark grow" id="openExternal" type="button">브라우저로 열기</button>
+        <button class="btn grow" id="copyExternal" type="button">링크 복사</button>
+      </div>
+    </div>
+
+    <div class="review" id="review">
+      <div class="reviewTitle">내 한마디 🎧</div>
+      <audio id="audio" controls></audio>
+      <div class="subactions">
+        <button class="btn grow" id="retryRecord" type="button">↻ 다시 녹음</button>
+        <button class="btn lime grow" id="confirmRecord" type="button">이대로 보내기</button>
+      </div>
+    </div>
+
+    <div class="invite" id="invite">
+      <b>😈 친구한테 던지기</b>
+      <div class="small" id="inviteText">링크 하나만 보내면 됩니다.</div>
+      <div class="subactions">
+        <button class="btn lime grow" id="shareInvite" type="button">공유하기</button>
+        <button class="btn grow" id="copy" type="button">링크 복사</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="social" id="social">
+    <div class="socialHead"><h3>익명 친구 녹음</h3><span class="tiny" id="socialCount">0/3</span></div>
+    <div class="small">최대 3명 · 이름 비공개 · 자기 녹음 투표 불가</div>
+    <div id="friendList"></div>
+    <div class="result" id="result">
+      <h3 id="resultTitle">투표 시작 😂</h3>
+      <p id="resultText">들어보고 제일 어울리는 반응을 눌러주세요.</p>
+      <div class="subactions">
+        <button class="btn grow" id="share" type="button">📤 결과 공유</button>
+        <button class="btn lime grow" id="counter" type="button">😈 니도 해봐라</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="chooser" id="chooser">
+    <div class="subactions">
+      <button class="btn grow" id="another" type="button">🎲 다른 한마디</button>
+      <button class="btn dark grow" id="custom" type="button">✏️ 직접 던지기</button>
+    </div>
+    <button class="btn suggest" id="suggest" type="button">📍 로컬인 도전 문장 제보</button>
+  </section>
+
+  <div class="footer">사투링고 · 낭만공작소</div>
+</main>
+
 <script>
-var lessons=[["이마트 에브리데이","억양이 잘 드러나는 말"],["블루베리 스무디","억양이 잘 드러나는 말"],["어디까지 올라가는거에요","억양이 잘 드러나는 문장"],["e의 2승 이마트","발음과 억양 도전"]],n=0,rec,chunks=[],done=false,audioBlob=null,missionId=null,pollTimer=null;
-var anonId=localStorage.getItem("satulinggo_anon_id")||crypto.randomUUID();localStorage.setItem("satulinggo_anon_id",anonId);
-function $(x){return document.querySelector(x)}
-function speak(t){var u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";u.rate=.78;speechSynthesis.cancel();speechSynthesis.speak(u)}
-function currentPhrase(){return $("#phrase").textContent.trim()}var isKakao=/KAKAOTALK/i.test(navigator.userAgent),isAndroid=/Android/i.test(navigator.userAgent);function showKakaoGate(){$("#kakaoGate").style.display="block";$("#status").textContent="카카오톡에서 열었다면 외부 브라우저로 열어주세요."}
-function load(x){$("#phrase").textContent=x[0];$("#meaning").textContent=x[1];$("#friends").style.display="none";$("#result").style.display="none";$("#invite").style.display="none";$("#mine").style.display="none";$("#record").style.display="block";$("#record").disabled=false;$("#record").textContent="🎙️ 녹음하기";$("#status").textContent="녹음 후 들어보고 다시 할 수 있습니다.";$("#confirmRecord").disabled=false;$("#confirmRecord").textContent="이대로 보내기";done=false;audioBlob=null;missionId=null}
-async function createMission(){if(missionId)return missionId;$("#status").textContent="미션 만드는 중…";var r=await fetch("/api/satulinggo/create",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({phrase:currentPhrase(),senderId:anonId})});var j=await r.json();if(!r.ok)throw new Error(j.error||"미션 생성 실패");missionId=j.id;$("#invite").style.display="block";$("#friends").style.display="block";$("#inviteText").textContent="친구 녹음이 들어오면 이 화면에 자동으로 나타납니다.";$("#status").textContent="미션 생성 완료. 친구에게 링크를 보내세요.";startPolling();return missionId}
+var lessons=[["이마트 에브리데이","억양이 잘 드러나는 말"],["블루베리 스무디","억양이 잘 드러나는 말"],["어디까지 올라가는거에요","억양이 잘 드러나는 문장"],["e의 2승 이마트","발음과 억양 도전"]];
+var n=0,rec=null,chunks=[],audioBlob=null,done=false,missionId=null,pollTimer=null,recordTimer=null;
+var rid=(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random().toString(16).slice(2));
+var anonId=localStorage.getItem("satulinggo_anon_id")||rid;localStorage.setItem("satulinggo_anon_id",anonId);
+var isKakao=/KAKAOTALK/i.test(navigator.userAgent),isAndroid=/Android/i.test(navigator.userAgent);
+function $(s){return document.querySelector(s)}
+function currentPhrase(){return $("#phrase").textContent.trim()}
+function setProgress(step){document.querySelectorAll(".dot").forEach(function(d,i){d.classList.toggle("on",i===step)})}
+function setRecordingUI(on){$("#mascot").classList.toggle("listening",on);$("#mascotWrap").classList.toggle("recording",on);$("#record").classList.toggle("rec",on)}
+function speak(t){if(!("speechSynthesis" in window))return;var u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";u.rate=.82;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function copyText(t){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);var x=document.createElement("textarea");x.value=t;x.style.position="fixed";x.style.opacity="0";document.body.appendChild(x);x.select();document.execCommand("copy");x.remove();return Promise.resolve()}
+function load(x){$("#phrase").textContent=x[0];$("#meaning").textContent=x[1];$("#review").style.display="none";$("#invite").style.display="none";$("#social").style.display="none";$("#result").style.display="none";$("#record").style.display="flex";$("#record").disabled=false;$("#record").textContent="🎙️ 한마디 녹음";$("#status").textContent="마이크를 누르고 자연스럽게 말해보세요.";$("#confirmRecord").disabled=false;$("#confirmRecord").textContent="이대로 보내기";audioBlob=null;done=false;missionId=null;setProgress(0)}
+async function createMission(){if(missionId)return missionId;$("#status").textContent="미션 만드는 중…";var r=await fetch("/api/satulinggo/create",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({phrase:currentPhrase(),senderId:anonId})});var j=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(j.error||"미션 생성 실패");missionId=j.id;$("#invite").style.display="block";$("#inviteText").textContent="친구 녹음이 들어오면 여기서 자동으로 보여요.";startPolling();return missionId}
 function missionUrl(){return location.origin+"/satulinggo/?m="+encodeURIComponent(missionId)}
-async function shareText(t,title,url){if(navigator.share){try{await navigator.share({title:title,text:t,url:url})}catch(e){}}else{await navigator.clipboard.writeText((t+" "+url).trim());alert("공유 문구를 복사했습니다.")}}
+async function shareText(text,title,url){if(navigator.share){try{await navigator.share({title:title,text:text,url:url});return}catch(e){if(e.name==="AbortError")return}}await copyText((text+" "+url).trim());alert("공유 문구를 복사했습니다.")}
 async function refreshMission(){if(!missionId)return;var r=await fetch("/api/satulinggo/mission/"+encodeURIComponent(missionId),{cache:"no-store"});if(!r.ok)return;var j=await r.json();renderRecordings(j.recordings||[])}
 function startPolling(){if(pollTimer)clearInterval(pollTimer);refreshMission();pollTimer=setInterval(refreshMission,3000)}
-function renderRecordings(list){$("#friends").style.display="block";var box=$("#friendList"),others=list.filter(function(x){return x.participantId!==anonId}),mine=list.find(function(x){return x.participantId===anonId});box.className="";box.innerHTML="";if(mine){var mineNote=document.createElement("div");mineNote.className="slot";mineNote.textContent="✓ 내 녹음은 전송됐습니다. 다른 사람에게는 익명으로 보입니다.";box.appendChild(mineNote)}if(!others.length){var wait=document.createElement("div");wait.className="waiting";wait.textContent="다른 친구 녹음 기다리는 중…";box.appendChild(wait)}var totalVotes=0;others.forEach(function(x,i){totalVotes+=Number(x.votes.laugh||0)+Number(x.votes.fire||0)+Number(x.votes.good||0);var d=document.createElement("div");d.className="person";d.innerHTML='<div class="personHead"><div>🎙️</div><div class="info"><div class="name">익명 친구 '+["①","②","③"][i]+'</div><div class="small">이름 비공개</div></div></div><audio controls preload="none" src="'+x.audioUrl+'"></audio><div class="votes"><button class="vote" data-id="'+x.id+'" data-v="😂">😂 <span class="count">'+x.votes.laugh+'</span></button><button class="vote" data-id="'+x.id+'" data-v="🔥">🔥 <span class="count">'+x.votes.fire+'</span></button><button class="vote" data-id="'+x.id+'" data-v="👍">👍 <span class="count">'+x.votes.good+'</span></button></div>';box.appendChild(d)});box.querySelectorAll(".vote").forEach(function(b){b.onclick=vote});var openSlots=Math.max(0,3-list.length);for(var s=0;s<openSlots;s++){var slot=document.createElement("div");slot.className="slot";slot.textContent="친구 녹음 기다리는 중…";box.appendChild(slot)}if(list.length===3||totalVotes>0){$("#result").style.display="block";$("#resultTitle").textContent=list.length===3?"세 명 다 왔다 😂":"투표가 시작됐다 😂";$("#resultText").textContent="익명으로 듣고 😂 🔥 👍 중 하나를 눌러주세요."}else{$("#result").style.display="none"}}
-async function vote(e){var b=e.currentTarget,id=b.dataset.id,reaction=b.dataset.v;b.disabled=true;var r=await fetch("/api/satulinggo/vote/"+encodeURIComponent(id),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({voterId:anonId,reaction:reaction})});var j=await r.json().catch(function(){return{}});if(!r.ok){alert(j.error||"투표 실패");b.disabled=false;return}await refreshMission()}
-$("#example").onclick=function(){speak(currentPhrase())};$("#another").onclick=function(){n=(n+1)%lessons.length;load(lessons[n])};$("#send").onclick=async function(){try{await createMission();$("#invite").scrollIntoView({behavior:"smooth",block:"nearest"})}catch(e){$("#status").textContent=e.message}};
-$("#record").onclick=async function(){if(done)return;if(isKakao){showKakaoGate();return}try{var s=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];rec=new MediaRecorder(s);rec.ondataavailable=function(e){if(e.data.size)chunks.push(e.data)};rec.onstop=function(){s.getTracks().forEach(function(t){t.stop()});audioBlob=new Blob(chunks,{type:rec.mimeType||"audio/webm"});$("#audio").src=URL.createObjectURL(audioBlob);$("#mine").style.display="block";$("#record").style.display="none";$("#status").textContent="먼저 들어보세요. 마음에 안 들면 다시 녹음할 수 있습니다."};rec.start();$("#record").textContent="■ 녹음 중…";setTimeout(function(){if(rec.state==="recording")rec.stop()},7000)}catch(e){$("#status").textContent="마이크 권한을 허용해주세요."}};
-$("#openExternal").onclick=function(){var u=location.href;if(isAndroid){var noProto=u.replace(/^https?:\/\//,"");location.href="intent://"+noProto+"#Intent;scheme=https;package=com.android.chrome;end"}else{navigator.clipboard&&navigator.clipboard.writeText(u);alert("링크를 복사했습니다. 카카오톡의 ⋯ 메뉴에서 ‘다른 브라우저로 열기’ 또는 Safari로 열기를 선택해주세요.")}};$("#copyExternal").onclick=async function(){await navigator.clipboard.writeText(location.href);alert("링크를 복사했습니다.")};if(isKakao){showKakaoGate()}$("#retryRecord").onclick=function(){if(done)return;audioBlob=null;$("#audio").removeAttribute("src");$("#audio").load();$("#mine").style.display="none";$("#record").style.display="block";$("#record").disabled=false;$("#record").textContent="🎙️ 다시 녹음";$("#status").textContent="다시 녹음해보세요."};
-$("#confirmRecord").onclick=async function(){if(!audioBlob||done)return;try{$("#confirmRecord").disabled=true;$("#status").textContent="녹음 보내는 중…";if(!missionId)await createMission();var f=new FormData();f.append("participantId",anonId);f.append("audio",audioBlob,"voice.webm");var r=await fetch("/api/satulinggo/upload/"+encodeURIComponent(missionId),{method:"POST",body:f});var j=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(j.error||"전송 실패");done=true;$("#retryRecord").disabled=true;$("#confirmRecord").textContent="✓ 전송 완료";$("#mine").style.display="none";$("#record").style.display="none";$("#playPhase").style.display="block";$("#from").textContent="🎧 익명 듣기 · 투표";$("#status").textContent="다른 친구 목소리를 기다리는 중…";$("#invite").style.display="block";$("#friends").style.display="block";await refreshMission();$("#friends").scrollIntoView({behavior:"smooth",block:"start"})}catch(e){$("#confirmRecord").disabled=false;$("#status").textContent=e.message}};
-$("#shareInvite").onclick=async function(){try{await createMission();shareText("😈 사투링고 미션 “"+currentPhrase()+"” 한번 해봐라!","사투링고 미션",missionUrl())}catch(e){$("#status").textContent=e.message}};
-$("#copy").onclick=async function(){try{await createMission();await navigator.clipboard.writeText(missionUrl());alert("미션 링크를 복사했습니다.")}catch(e){$("#status").textContent=e.message}};
-$("#share").onclick=function(){shareText("😂 사투링고 결과 “"+currentPhrase()+"” 익명 친구들 투표 중!","사투링고 결과",missionUrl())};$("#counter").onclick=function(){$("#send").click()};$("#custom").onclick=function(){var x=prompt("친구에게 시킬 한마디");if(x){lessons.push([x,"직접 만든 미션"]);n=lessons.length-1;load(lessons[n])}};$("#suggest").onclick=async function(){var region=prompt("어느 지역 말투예요?\n예: 부산, 대구, 광주, 충청");if(!region)return;var phrase=prompt("로컬인이 알 만한 도전 문장을 적어주세요.");if(!phrase)return;var r=await fetch("/api/satulinggo/suggest",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({region:region,phrase:phrase,submitterId:anonId})});var j=await r.json().catch(function(){return{}});if(r.ok)alert("제보 완료! 로컬 문장 후보로 모아둘게요 🙌");else alert(j.error||"제보에 실패했습니다.")};
-(async function(){var q=new URLSearchParams(location.search),m=q.get("m");if(!m)return;missionId=m;$("#from").textContent="😈 친구가 던짐";$("#meaning").textContent="친구가 시킨 한마디입니다.";$("#send").style.display="none";$("#chooser").style.display="none";$("#invite").style.display="none";$("#friends").style.display="block";try{var r=await fetch("/api/satulinggo/mission/"+encodeURIComponent(m));var j=await r.json();if(!r.ok)throw new Error(j.error||"미션을 찾을 수 없습니다.");$("#phrase").textContent=j.mission.phrase;renderRecordings(j.recordings||[]);var mine=(j.recordings||[]).find(function(x){return x.participantId===anonId});if(mine){done=true;$("#record").style.display="none";$("#mine").style.display="none";$("#playPhase").style.display="block";$("#from").textContent="🎧 익명 듣기 · 투표";$("#status").textContent="다른 익명 친구 녹음을 듣고 투표해보세요."}else if((j.recordings||[]).length>=3){$("#record").disabled=true;$("#record").textContent="고마! 이미 3명 완료 😂";$("#status").textContent="녹음은 마감됐지만 듣기와 투표는 가능합니다."}else{$("#status").textContent="녹음 후 먼저 들어보고, 괜찮으면 보내세요."}startPolling()}catch(e){$("#status").textContent=e.message}})();
-</script></body></html>
+function renderRecordings(list){$("#social").style.display="block";$("#socialCount").textContent=list.length+"/3";var box=$("#friendList"),others=list.filter(function(x){return x.participantId!==anonId}),mine=list.find(function(x){return x.participantId===anonId});box.innerHTML="";if(mine){var note=document.createElement("div");note.className="slot";note.textContent="✓ 내 녹음 전송 완료 · 다른 사람에게는 익명";box.appendChild(note)}if(!others.length){var w=document.createElement("div");w.className="slot";w.textContent="다른 친구 녹음 기다리는 중…";box.appendChild(w)}var totalVotes=0;others.forEach(function(x,i){totalVotes+=Number(x.votes.laugh||0)+Number(x.votes.fire||0)+Number(x.votes.good||0);var d=document.createElement("div");d.className="person";d.innerHTML='<div class="personHead"><span class="avatar">🎙️</span><div class="info"><div class="name">익명 친구 '+["①","②","③"][i]+'</div><div class="small">이름 비공개</div></div></div><audio controls preload="none" src="'+x.audioUrl+'"></audio><div class="votes"><button class="vote" data-id="'+x.id+'" data-v="😂">😂 '+x.votes.laugh+'</button><button class="vote" data-id="'+x.id+'" data-v="🔥">🔥 '+x.votes.fire+'</button><button class="vote" data-id="'+x.id+'" data-v="👍">👍 '+x.votes.good+'</button></div>';box.appendChild(d)});box.querySelectorAll(".vote").forEach(function(b){b.onclick=vote});for(var s=list.length;s<3;s++){var slot=document.createElement("div");slot.className="slot";slot.textContent="친구 녹음 기다리는 중…";box.appendChild(slot)}if(list.length===3||totalVotes>0){$("#result").style.display="block";$("#resultTitle").textContent=list.length===3?"세 명 다 왔다 😂":"투표가 시작됐다 😂"}else $("#result").style.display="none"}
+async function vote(e){var b=e.currentTarget;b.disabled=true;var r=await fetch("/api/satulinggo/vote/"+encodeURIComponent(b.dataset.id),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({voterId:anonId,reaction:b.dataset.v})});var j=await r.json().catch(function(){return{}});if(!r.ok){alert(j.error||"투표 실패");b.disabled=false;return}await refreshMission()}
+function showKakaoGate(){$("#kakaoGate").style.display="block";$("#status").textContent="카카오톡에서는 외부 브라우저로 열어주세요."}
+async function beginRecording(){if(done)return;if(isKakao){showKakaoGate();return}if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!("MediaRecorder" in window)){$("#status").textContent="이 브라우저에서는 녹음을 지원하지 않습니다. Safari/Chrome에서 열어주세요.";return}try{var stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];var opts={};if(MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported("audio/mp4"))opts.mimeType="audio/mp4";else if(MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported("audio/webm"))opts.mimeType="audio/webm";rec=new MediaRecorder(stream,opts);rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};rec.onstop=function(){stream.getTracks().forEach(function(t){t.stop()});clearTimeout(recordTimer);setRecordingUI(false);audioBlob=new Blob(chunks,{type:rec.mimeType||"audio/mp4"});$("#audio").src=URL.createObjectURL(audioBlob);$("#review").style.display="block";$("#record").style.display="none";$("#status").textContent="먼저 들어보고 마음에 안 들면 다시 녹음하세요.";setProgress(1)};rec.start();setRecordingUI(true);$("#record").textContent="■ 녹음 중 · 누르면 멈춤";$("#status").textContent="듣고 있어요… 최대 7초";recordTimer=setTimeout(function(){if(rec&&rec.state==="recording")rec.stop()},7000)}catch(e){setRecordingUI(false);$("#status").textContent="마이크 권한을 허용해주세요."}}
+$("#record").onclick=function(){if(rec&&rec.state==="recording"){rec.stop();return}beginRecording()};
+$("#example").onclick=function(){speak(currentPhrase())};
+$("#another").onclick=function(){n=(n+1)%lessons.length;load(lessons[n])};
+$("#retryRecord").onclick=function(){if(done)return;audioBlob=null;$("#audio").removeAttribute("src");$("#audio").load();$("#review").style.display="none";$("#record").style.display="flex";$("#record").textContent="🎙️ 다시 녹음";$("#status").textContent="다시 한번 해보세요.";setProgress(0)};
+$("#confirmRecord").onclick=async function(){if(!audioBlob||done)return;try{$("#confirmRecord").disabled=true;$("#status").textContent="익명으로 보내는 중…";if(!missionId)await createMission();var f=new FormData(),ext=(audioBlob.type||"").includes("mp4")?"m4a":"webm";f.append("participantId",anonId);f.append("audio",audioBlob,"voice."+ext);var r=await fetch("/api/satulinggo/upload/"+encodeURIComponent(missionId),{method:"POST",body:f});var j=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(j.error||"전송 실패");done=true;$("#review").style.display="none";$("#record").style.display="none";$("#from").textContent="🎧 익명 듣기 · 투표";$("#meaning").textContent="친구들 목소리가 들어오면 바로 나타나요.";$("#status").textContent="전송 완료! 이제 친구에게 던져보세요.";$("#invite").style.display="block";$("#social").style.display="block";setProgress(2);await refreshMission();$("#social").scrollIntoView({behavior:"smooth",block:"start"})}catch(e){$("#confirmRecord").disabled=false;$("#status").textContent=e.message}};
+$("#send").onclick=async function(){try{await createMission()}catch(e){$("#status").textContent=e.message}};
+$("#shareInvite").onclick=async function(){try{await createMission();await shareText("😈 사투링고 미션 ‘"+currentPhrase()+"’ 한번 해봐라!","사투링고 미션",missionUrl())}catch(e){$("#status").textContent=e.message}};
+$("#copy").onclick=async function(){try{await createMission();await copyText(missionUrl());alert("미션 링크를 복사했습니다.")}catch(e){$("#status").textContent=e.message}};
+$("#share").onclick=function(){shareText("😂 사투링고 결과 ‘"+currentPhrase()+"’ 익명 친구들 투표 중!","사투링고 결과",missionUrl())};
+$("#counter").onclick=function(){location.href="/satulinggo/"};
+$("#custom").onclick=function(){var x=prompt("친구에게 시킬 한마디");if(x&&x.trim()){lessons.push([x.trim(),"직접 만든 도전 문장"]);n=lessons.length-1;load(lessons[n])}};
+$("#suggest").onclick=async function(){var region=prompt("어느 지역 말투예요?\n예: 부산, 대구, 광주, 충청");if(!region)return;var phrase=prompt("로컬인이 알 만한 도전 문장을 적어주세요.");if(!phrase)return;var r=await fetch("/api/satulinggo/suggest",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({region:region,phrase:phrase,submitterId:anonId})});var j=await r.json().catch(function(){return{}});if(r.ok)alert("제보 완료! 로컬 문장 후보로 모아둘게요 🙌");else alert(j.error||"제보에 실패했습니다.")};
+$("#openExternal").onclick=function(){var u=location.href;if(isAndroid){location.href="intent://"+u.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end"}else{copyText(u);alert("링크를 복사했습니다. 카카오톡의 ⋯ 메뉴에서 ‘다른 브라우저로 열기’ 또는 Safari로 열어주세요.")}};
+$("#copyExternal").onclick=async function(){await copyText(location.href);alert("링크를 복사했습니다.")};
+if(isKakao)showKakaoGate();
+(async function(){var m=new URLSearchParams(location.search).get("m");if(!m)return;missionId=m;$("#from").textContent="😈 친구가 던진 한마디";$("#meaning").textContent="친구가 이 한마디를 시켰어요.";$("#chooser").style.display="none";try{var r=await fetch("/api/satulinggo/mission/"+encodeURIComponent(m),{cache:"no-store"}),j=await r.json();if(!r.ok)throw new Error(j.error||"미션을 찾을 수 없습니다.");$("#phrase").textContent=j.mission.phrase;renderRecordings(j.recordings||[]);var mine=(j.recordings||[]).find(function(x){return x.participantId===anonId});if(mine){done=true;$("#record").style.display="none";$("#review").style.display="none";$("#invite").style.display="block";$("#from").textContent="🎧 익명 듣기 · 투표";$("#meaning").textContent="이미 녹음했어요. 다른 친구 목소리를 들어보세요.";$("#status").textContent="다른 익명 친구 녹음을 듣고 투표해보세요.";setProgress(2)}else if((j.recordings||[]).length>=3){$("#record").disabled=true;$("#record").textContent="고마! 이미 3명 완료 😂";$("#status").textContent="녹음은 마감됐지만 듣기와 투표는 가능합니다.";setProgress(2)}else{$("#status").textContent="마이크를 누르고 한마디 해보세요."}startPolling()}catch(e){$("#status").textContent=e.message}})();
+</script>
+</body>
+</html>
