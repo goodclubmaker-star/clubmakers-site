@@ -1,0 +1,13 @@
+{
+  "name":"사투링고",
+  "short_name":"사투링고",
+  "description":"한마디 던지고 친구 목소리 들어보는 사투리 게임",
+  "start_url":"/satulinggo/",
+  "scope":"/satulinggo/",
+  "display":"standalone",
+  "background_color":"#f6f3eb",
+  "theme_color":"#c7ff3d",
+  "icons":[
+    {"src":"/satulinggo-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
