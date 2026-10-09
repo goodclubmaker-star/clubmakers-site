@@ -18,30 +18,30 @@ const projects = [
   ['THE LOOK','따뜻하게, 거칠게,\n때로는 몽환적으로.','CINEMA, DREAM, 빈티지 필름 계열의 룩과 세밀한 촬영 후 편집 기능을 제공합니다.','◌'],
   ['THE CAMERA','찍을 때부터\n분위기를 결정합니다.','24fps 촬영, 필름 룩 프리뷰, 렌즈와 프레임 연출을 담았습니다.','▣'],
   ['APP STORE','영화 같은 하루는\n지금부터 시작됩니다.','채CINE은 App Store에서 다운로드할 수 있습니다. 필름 룩과 24fps 촬영으로 매일의 풍경을 영화처럼 기록하세요.','✶']]},
- {id:'sinaloa',name:'시날로아',sub:'당신의 선택에는 대가가 있다.',category:'play',type:'인터랙티브 · 이야기',status:'웹 체험 가능',palette:['#232b21','#e9c685'],symbol:'♠',url:'https://sinaloa-the-ladder.vercel.app',slides:[
+ {id:'nangmanpage',name:'낭만페이지',sub:'사진과 영상, 글이 만나는 카드뉴스.',category:'mobile',type:'에디터 · iOS',status:'출시 준비 · 최종 마무리',palette:['#fbd9ba','#4b383d'],symbol:'Aa',featured:true,slides:[
+  ['COVER','한 장의 사진에\n한 줄의 마음.','지나쳐 버릴 문장을 근사한 페이지로 만드는 앱.','Aa'],
+  ['THE PROBLEM','좋은 문장도\n모양이 필요합니다.','사진과 글을 올리는 일은 쉬워도, 마음에 드는 배치를 찾는 건 의외로 어렵습니다.','✎'],
+  ['THE IDEA','템플릿부터 고르고\n글과 장면을 담아요.','사진·영상 위에 문장을 얹고, 템플릿부터 액자·프레임·글자 배치를 고르는 편집 기능을 마무리하고 있습니다.','▥'],
+  ['THE RESULT','카드뉴스도,\n짧은 영화 같은 글도.','글과 사진, 영상을 여러 페이지로 편집하고 카드뉴스 형태로 저장하는 iOS 앱입니다.','▧'],
+  ['COMING SOON','거의 다 만들었습니다.\n곧 선보입니다.','낭만페이지는 iOS 출시 직전 마무리 단계입니다. 정식 App Store 다운로드 링크는 실제 공개가 확인된 뒤 연결합니다.','♥']]},
+ {id:'sinaloa',name:'시날로아',sub:'당신의 선택에는 대가가 있다.',category:'play',type:'인터랙티브 · 이야기',status:'웹 체험 가능',palette:['#232b21','#e9c685'],symbol:'♠',url:'https://sinaloa-the-ladder.vercel.app',featured:true,slides:[
   ['COVER','무더운 여름,\n이곳은 멕시코.','단 한 번의 선택이 모든 것을 바꿉니다. 당신이라면 살아남을 수 있을까요?','☀'],
   ['THE WORLD','아무것도\n되돌릴 수 없다.','그곳에서 믿음은 사치이고, 선택은 기록됩니다. 위험한 거래와 돌이킬 수 없는 결과 사이를 걷습니다.','✕'],
   ['THE MECHANIC','읽는 이야기에서\n결정하는 이야기로.','장면을 읽고 선택하세요. 다음 장면과 관계가 달라집니다. 어떤 비극은 되돌릴 수 없습니다.','↗'],
   ['THE EXPERIENCE','영화의 한 장면처럼\n몰입하는 게임.','크고 작은 글자, 긴장감 있는 전개, 화면을 가득 채우는 연출로 체험하는 인터랙티브 드라마.','◈'],
   ['PLAY','당신은 어디까지\n올라갈 수 있습니까?','웹 브라우저에서 바로 시작할 수 있습니다. 선택의 결과는 플레이어의 몫입니다.','♠']]},
- {id:'satulingo',name:'사투링고',sub:'친구에게 던지는 말투 미션.',category:'play',type:'목소리 · 챌린지',status:'기획·구현 중',palette:['#e9ee8a','#344c34'],symbol:'♪',slides:[
+ {id:'satulingo',name:'사투링고',sub:'친구에게 던지는 말투 미션.',category:'play',type:'목소리 · 챌린지',status:'웹 버전 · 녹음 개선 중',palette:['#e9ee8a','#344c34'],symbol:'♪',featured:true,slides:[
   ['COVER','이마트\n에브리데이.','이 한마디, 당신은 어떻게 발음하나요?','♫'],
   ['THE HOOK','지역마다 달라지는\n그 미묘한 억양.','블루베리 스무디, 어디까지 올라가는 거예요? 듣기만 해도 웃음이 나는 말투 미션.','?'],
-  ['THE GAME','친구에게\n도전장을 던지세요.','한마디를 정해 링크로 보내고, 친구는 녹음으로 답하는 방식의 소셜 게임을 구상하고 있습니다.','↗'],
+  ['THE GAME','친구에게\n도전장을 던지세요.','친구에게 문장을 보내고, 받은 사람은 자기 말투로 녹음하는 웹앱입니다. 모바일 녹음 호환성을 개선하고 있습니다.','↗'],
   ['THE REACTION','말투가 달라지면\n대화가 시작됩니다.','예시를 듣고 따라 말하고 서로의 발음에 반응하는 가벼운 놀이.','☺'],
-  ['COMING SOON','세상에 똑같은\n말투는 없으니까.','마이크 권한과 모바일 브라우저 녹음 호환성을 검증하면서 개발하고 있습니다.','♪']]},
- {id:'memotella',name:'메모텔라',sub:'말하면, 한 권의 인생이 됩니다.',category:'web',type:'기록 · 웹앱',status:'웹 프로토타입',palette:['#e8b99a','#54392d'],symbol:'✺',featured:true,slides:[
+  ['COMING SOON','세상에 똑같은\n말투는 없으니까.','웹 버전이 구현되어 있으며, 모바일과 카카오톡 내부 브라우저에서 녹음을 더 안정적으로 만들고 있습니다.','♪']]},
+ {id:'memotella',name:'메모텔라',sub:'말하면, 한 권의 인생이 됩니다.',category:'web',type:'기록 · 웹앱',status:'웹 프로토타입',palette:['#e8b99a','#54392d'],symbol:'✺',slides:[
   ['COVER','사라지는 이야기에\n한 권의 자리를.','누구에게나 한 편의 인생이 있습니다. 아직 글이 되지 않았을 뿐.','✳'],
   ['THE QUESTION','부모님의 젊은 날,\n얼마나 알고 있나요?','늘 곁에 있었지만 제대로 묻지 못한 이야기. 기억은 시간이 지나면 조금씩 흐려집니다.','?'],
   ['THE IDEA','말을 하면,\n기억이 문장이 됩니다.','AI의 질문에 말하거나 직접 입력하면 이야기를 모으고 다듬습니다. 사진과 함께 장별로 엮을 수 있도록 설계했습니다.','✎'],
   ['HOW IT WORKS','묻고. 듣고.\n그리고 남깁니다.','01 이야기를 시작해요\n02 질문에 답하거나 입력해요\n03 내용을 살피고 고쳐요\n04 한 권의 책을 준비해요','▤'],
   ['FOR SOMEONE','언젠가가 아니라,\n오늘의 목소리로.','메모텔라는 소중한 사람의 시간을 오래 보관하기 위한 기록 도구입니다. 현재 웹 프로토타입을 다듬고 있습니다.','♥']]},
- {id:'nangmanpage',name:'낭만페이지',sub:'사진과 글을, 장면처럼.',category:'mobile',type:'에디터 · iOS',status:'iOS 개발 중',palette:['#fbd9ba','#4b383d'],symbol:'Aa',slides:[
-  ['COVER','한 장의 사진에\n한 줄의 마음.','지나쳐 버릴 문장을 근사한 페이지로 만드는 앱.','Aa'],
-  ['THE PROBLEM','좋은 문장도\n모양이 필요합니다.','사진과 글을 올리는 일은 쉬워도, 마음에 드는 배치를 찾는 건 의외로 어렵습니다.','✎'],
-  ['THE IDEA','템플릿부터 고르고\n글과 장면을 담아요.','사진·영상 위에 글을 올리고 페이지마다 다른 여백, 프레임, 글자 배치를 선택하도록 발전시키고 있습니다.','▥'],
-  ['THE RESULT','카드뉴스도,\n짧은 영화 같은 글도.','여러 페이지로 이어지는 글과 영상 카드 디자인을 목표로 한 iOS 편집 앱입니다.','▧'],
-  ['NEXT','누구나 쉽게\n자기 이야기를.','iOS 개발 및 사용성 개선 중. Android 버전은 공통 편집 구조를 정리한 뒤 검토합니다.','♥']]},
  {id:'iyagi',name:'아버지 이야기 노트',sub:'잊히기 전에, 목소리를 남깁니다.',category:'web',type:'가족 · 웹앱',status:'웹 프로토타입',palette:['#ecd1a4','#2d5139'],symbol:'☷',slides:[
   ['COVER','아버지는\n어떤 아이였을까.','가족이 되기 전, 한 사람의 이야기.','✻'],
   ['THE QUESTION','우리는 부모님의\n인생을 얼마나 알까요?','질문 한 번이 평생 듣지 못했던 장면을 꺼내기도 합니다.','?'],
@@ -50,10 +50,29 @@ const projects = [
   ['CLOSING','더 많은 이야기를\n듣고 싶은 마음.','메모텔라로 이어진 초기 웹 실험작입니다. 현재 프로토타입으로 관리합니다.','♥']]}
 ];
 const $=(s)=>document.querySelector(s);
-const grid=$('#projectGrid'),detail=$('#detail');let current=null,slideIndex=0,lastFocus=null,filter='all',installPrompt=null,toastTimer;
+const grid=$('#projectGrid'),secondaryGrid=$('#secondaryGrid'),detail=$('#detail');let current=null,slideIndex=0,lastFocus=null,filter='all',installPrompt=null,toastTimer;
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function visibleFor(p){return filter==='all'||p.category===filter||(filter==='web'&&p.category==='web');}
-function renderGrid(){let shown=projects.filter(visibleFor);grid.innerHTML=shown.map((p,i)=>'<article class="project-card" role="button" tabindex="0" aria-label="'+escapeHtml(p.name)+' 자세히 보기" data-id="'+p.id+'"><div class="card-art" style="background:'+p.palette[0]+';color:'+p.palette[1]+'"><div class="card-mini"><span>낭만공작소 · '+String(i+1).padStart(2,'0')+'</span><span>✳ 2026</span></div><div class="card-main"><div class="card-symbol">'+escapeHtml(p.symbol)+'</div><div class="card-name">'+escapeHtml(p.name)+'</div><div class="card-sub">'+escapeHtml(p.sub)+'</div></div><div class="card-bottom"><span>SWIPE INTO THE STORY</span><span class="card-arrow">↗</span></div></div><div class="card-tag"><span>'+escapeHtml(p.type)+'</span><span><i class="status-dot"></i>'+escapeHtml(p.status)+'</span></div></article>').join('');grid.querySelectorAll('.project-card').forEach(el=>{el.addEventListener('click',()=>openProject(el.dataset.id));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProject(el.dataset.id)}})});$('#countAll').textContent=projects.length;}
+function makeCard(p,i){
+  const statusLabel=p.status.includes('App Store')?'RELEASED':p.id==='nangmanpage'?'ALMOST READY':p.id==='satulingo'?'IN TESTING':'WEB PROJECT';
+  return '<article class="project-card" role="button" tabindex="0" aria-label="'+escapeHtml(p.name)+' 자세히 보기" data-id="'+p.id+'"><div class="card-art" style="background:'+p.palette[0]+';color:'+p.palette[1]+'"><div class="card-mini"><span>낭만공작소 · '+String(i+1).padStart(2,'0')+'</span><span>✳ 2026</span></div><div class="card-main"><div class="card-symbol">'+escapeHtml(p.symbol)+'</div><div class="card-name">'+escapeHtml(p.name)+'</div><div class="card-sub">'+escapeHtml(p.sub)+'</div></div><div class="card-bottom"><span>'+statusLabel+'</span><span class="card-arrow">↗</span></div></div><div class="card-tag"><span>'+escapeHtml(p.type)+'</span><span><i class="status-dot"></i>'+escapeHtml(p.status)+'</span></div></article>';
+}
+function bindCards(scope){
+  scope.querySelectorAll('.project-card').forEach(el=>{
+    el.addEventListener('click',()=>openProject(el.dataset.id));
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProject(el.dataset.id)}});
+  });
+}
+function renderGrid(){
+  const highlighted=projects.filter(p=>p.featured&&visibleFor(p));
+  const other=projects.filter(p=>!p.featured&&visibleFor(p));
+  grid.innerHTML=highlighted.map((p,i)=>makeCard(p,projects.indexOf(p))).join('');
+  secondaryGrid.innerHTML=other.map((p,i)=>makeCard(p,projects.indexOf(p))).join('');
+  $('#featuredEmpty').hidden=highlighted.length>0;
+  $('#secondaryWorks').hidden=other.length===0;
+  $('#countAll').textContent=projects.length;
+  bindCards(grid);bindCards(secondaryGrid);
+}
 $('#filters').addEventListener('click',e=>{const btn=e.target.closest('button[data-filter]');if(!btn)return;filter=btn.dataset.filter;$('#filters').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b===btn));renderGrid();});
 function openProject(id,fromHash=false){const p=projects.find(x=>x.id===id);if(!p)return;current=p;slideIndex=0;lastFocus=document.activeElement;detail.hidden=false;document.body.classList.add('locked');$('#detailIndex').textContent='COLLECTION / '+String(projects.indexOf(p)+1).padStart(2,'0');$('#detailCategory').textContent=p.type+' · '+p.status;$('#detailName').textContent=p.name;$('#detailTagline').textContent=p.sub;$('#launchProject').hidden=!p.url;$('#launchPending').hidden=!!p.url;if(p.url)$('#launchProject').href=p.url;$('#launchProject').textContent=p.url?.includes('apps.apple.com')?'App Store 다운로드 ↗':'웹앱 체험 ↗';renderSlide();$('#detailClose').focus();if(!fromHash)history.replaceState(null,'','#/project/'+p.id);}
 function closeDetail(fromHash=false){if(detail.hidden)return;detail.hidden=true;document.body.classList.remove('locked');current=null;if(!fromHash)history.replaceState(null,'','#works');if(lastFocus&&typeof lastFocus.focus==='function')lastFocus.focus();}
