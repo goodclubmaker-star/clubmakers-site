@@ -102,7 +102,7 @@ $('#saveSlide').onclick=async()=>{
    try{
      const img=new Image();img.src=src;await img.decode();
      const cover=exportIdx===0,size=p.art?430:380,left=p.art?560:610,top=p.art?410:420;
-     x.save();x.globalAlpha=cover?.83:.20;
+     x.save();x.globalAlpha=cover?0.83:0.20;
      const crop=Math.min(img.naturalWidth,img.naturalHeight),sx=(img.naturalWidth-crop)/2,sy=(img.naturalHeight-crop)/2;
      x.drawImage(img,sx,sy,crop,crop,left,top,size,size);x.restore();drawn=true;
    }catch(e){console.warn('Original app art unavailable for card image',e);}
