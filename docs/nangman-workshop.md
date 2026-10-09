@@ -20,3 +20,10 @@
 - 개별 제품 상세페이지(`/nangman/products/{id}/`)는 그대로 유지. Ctrl/Meta+클릭 및 JS 불가 시 기존 `<a href>` 상세페이지 접근 가능.
 - 주입 파일: `public/nangman/story.js`, `public/nangman/story.css`; 본문 `app.js`에서 카드뉴스 보기 안내, `index.html`에서 스크립트/스타일 로드.
 - PWA cache v6에서 두 신규 파일 precache. UI 이동·스크롤·iPhone Safari 모달 스와이프·링크 검증 필요.
+
+## 실제 iPhone 갤러리 무표시·캐시 긴급 수정 (2026-10-10)
+- 기존 Cloudflare `public/_headers`는 CSS·JS를 `Cache-Control: public, max-age=31536000, immutable`로 설정했는데 `style.css`, `app.js` 이름이 고정이라 새로운 HTML에 구버전 코드가 섞일 가능성이 매우 높았음. 사용자의 스크린샷에서 카드 9개와 그리드 스타일이 모두 사라짐.
+- 해결: `gallery-20261010-a.css`, `gallery-20261010-a.js`, `cardnews-20261010-a.css`, `cardnews-20261010-a.js` 및 `sw-20261010-a.js` 새 경로 사용. 다음에 CSS/JS 변경 시 파일명을 다시 바꿔야 함. 기존 파일은 보존.
+- 페이지 HTML 자체에 9개 카드의 이미지·제품명·상태·실제 상세페이지 링크를 사전 렌더링. 스크립트가 실패해도 카드는 없어지지 않음.
+- CSS는 최초 카드뉴스의 네온·다크 포스터 스타일을 복원. 5장 오버레이 스와이프/PNG/공유 코드는 독립 파일로 분리하여 이용.
+- 신형 SW `sw-20261010-a.js`는 `updateViaCache:'none'`으로 등록하며 네트워크 재검증. Cloudflare Pages 사전 빌드뿐 아니라 iOS Safari 실기기 확인 필요.
