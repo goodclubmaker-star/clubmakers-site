@@ -46,7 +46,7 @@
 
   <section class="stage" id="stage">
     <div class="eyebrow">
-      <span class="tag" id="from">🎙️ 오늘의 한마디</span>
+      <span class="tag" id="from">🌎 오늘의 공용방</span>
       <button class="btn" id="example" type="button">▶ 예시</button>
     </div>
 
@@ -111,11 +111,10 @@
   </section>
 
   <section class="chooser" id="chooser">
-    <div class="subactions">
-      <button class="btn grow" id="another" type="button">🎲 다른 한마디</button>
-      <button class="btn dark grow" id="custom" type="button">✏️ 직접 던지기</button>
-    </div>
+    <div class="small" style="text-align:center;margin-bottom:8px">오늘 접속한 사람은 모두 같은 방 · 자정에 새 문장으로 바뀝니다.</div>
     <button class="btn suggest" id="suggest" type="button">📍 로컬인 도전 문장 제보</button>
+    <button id="another" type="button" style="display:none"></button>
+    <button id="custom" type="button" style="display:none"></button>
   </section>
 
   <div class="footer">사투링고 · 낭만공작소</div>
@@ -134,8 +133,8 @@ function setRecordingUI(on){$("#mascot").classList.toggle("listening",on);$("#ma
 function speak(t){if(!("speechSynthesis" in window))return;var u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";u.rate=.82;speechSynthesis.cancel();speechSynthesis.speak(u)}
 function copyText(t){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);var x=document.createElement("textarea");x.value=t;x.style.position="fixed";x.style.opacity="0";document.body.appendChild(x);x.select();document.execCommand("copy");x.remove();return Promise.resolve()}
 function load(x){$("#phrase").textContent=x[0];$("#meaning").textContent=x[1];$("#review").style.display="none";$("#invite").style.display="none";$("#social").style.display="none";$("#result").style.display="none";$("#record").style.display="flex";$("#record").disabled=false;$("#record").textContent="🎙️ 한마디 녹음";$("#status").textContent="마이크를 누르고 자연스럽게 말해보세요.";$("#confirmRecord").disabled=false;$("#confirmRecord").textContent="이대로 보내기";audioBlob=null;done=false;missionId=null;setProgress(0)}
-async function createMission(){if(missionId)return missionId;$("#status").textContent="미션 만드는 중…";var r=await fetch("/api/satulinggo/create",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({phrase:currentPhrase(),senderId:anonId})});var j=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(j.error||"미션 생성 실패");missionId=j.id;var u=new URL(location.href);u.searchParams.set("m",missionId);history.replaceState({missionId:missionId},"",u.pathname+u.search);localStorage.setItem("satulinggo_last_mission",missionId);$("#invite").style.display="block";$("#inviteText").textContent="이 링크로 들어온 친구는 이름 없이 녹음하고, 들어온 녹음은 여기서 함께 들을 수 있어요.";startPolling();return missionId}
-function missionUrl(){return location.origin+"/satulinggo/?m="+encodeURIComponent(missionId)}
+async function createMission(){if(missionId)return missionId;$("#status").textContent="오늘의 공용방 들어가는 중…";var r=await fetch("/api/satulinggo/today",{cache:"no-store"});var j=await r.json().catch(function(){return{}});if(!r.ok||!j.mission)throw new Error(j.error||"공용방 연결 실패");missionId=j.mission.id;$("#phrase").textContent=j.mission.phrase;history.replaceState({missionId:missionId},"","/satulinggo/");$("#invite").style.display="block";$("#inviteText").textContent="누가 이 주소로 들어와도 오늘 같은 방에서 녹음하고 들을 수 있어요.";startPolling();return missionId}
+function missionUrl(){return missionId&&missionId.indexOf("daily-")===0?location.origin+"/satulinggo/":location.origin+"/satulinggo/?m="+encodeURIComponent(missionId)}
 async function shareText(text,title,url){if(navigator.share){try{await navigator.share({title:title,text:text,url:url});return}catch(e){if(e.name==="AbortError")return}}await copyText((text+" "+url).trim());alert("공유 문구를 복사했습니다.")}
 async function refreshMission(){if(!missionId)return;var r=await fetch("/api/satulinggo/mission/"+encodeURIComponent(missionId),{cache:"no-store"});if(!r.ok)return;var j=await r.json();renderRecordings(j.recordings||[])}
 function startPolling(){if(pollTimer)clearInterval(pollTimer);refreshMission();pollTimer=setInterval(refreshMission,3000)}
@@ -199,7 +198,50 @@ $("#suggest").onclick=async function(){var region=prompt("어느 지역 말투�
 $("#openExternal").onclick=function(){var u=location.href;if(isAndroid){location.href="intent://"+u.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end"}else{copyText(u);alert("링크를 복사했습니다. 카카오톡의 ⋯ 메뉴에서 ‘다른 브라우저로 열기’ 또는 Safari로 열어주세요.")}};
 $("#copyExternal").onclick=async function(){await copyText(location.href);alert("링크를 복사했습니다.")};
 if(isKakao)showKakaoGate();
-(async function(){var m=new URLSearchParams(location.search).get("m");if(!m)return;missionId=m;$("#from").textContent="😈 친구가 던진 한마디";$("#meaning").textContent="친구가 이 한마디를 시켰어요.";$("#chooser").style.display="none";try{var r=await fetch("/api/satulinggo/mission/"+encodeURIComponent(m),{cache:"no-store"}),j=await r.json();if(!r.ok)throw new Error(j.error||"미션을 찾을 수 없습니다.");$("#phrase").textContent=j.mission.phrase;renderRecordings(j.recordings||[]);var mine=(j.recordings||[]).find(function(x){return x.participantId===anonId});if(mine){done=true;$("#record").style.display="none";$("#review").style.display="none";$("#invite").style.display="block";$("#from").textContent="🎧 익명 듣기 · 투표";$("#meaning").textContent="이미 녹음했어요. 다른 친구 목소리를 들어보세요.";$("#status").textContent="다른 익명 친구 녹음을 듣고 투표해보세요.";setProgress(2)}else{$("#status").textContent="마이크를 누르고 한마디 해보세요."}startPolling()}catch(e){$("#status").textContent=e.message}})();
+(async function(){
+  var m=new URLSearchParams(location.search).get("m");
+  try{
+    if(m){
+      missionId=m;
+      $("#from").textContent="😈 친구가 던진 한마디";
+      $("#meaning").textContent="친구가 이 한마디를 시켰어요.";
+      var r=await fetch("/api/satulinggo/mission/"+encodeURIComponent(m),{cache:"no-store"}),j=await r.json();
+      if(!r.ok)throw new Error(j.error||"미션을 찾을 수 없습니다.");
+      $("#phrase").textContent=j.mission.phrase;
+      renderRecordings(j.recordings||[]);
+      var mine=(j.recordings||[]).find(function(x){return x.participantId===anonId});
+      if(mine){
+        done=true;$("#record").style.display="none";$("#review").style.display="none";$("#invite").style.display="block";
+        $("#from").textContent="🎧 익명 듣기 · 투표";$("#meaning").textContent="이미 녹음했어요. 다른 친구 목소리를 들어보세요.";
+        $("#status").textContent="다른 익명 친구 녹음을 듣고 투표해보세요.";setProgress(2)
+      }else{$("#status").textContent="마이크를 누르고 한마디 해보세요."}
+      startPolling();
+      return;
+    }
+
+    var tr=await fetch("/api/satulinggo/today",{cache:"no-store"}),tj=await tr.json();
+    if(!tr.ok||!tj.mission)throw new Error(tj.error||"오늘의 공용방을 열 수 없습니다.");
+    missionId=tj.mission.id;
+    $("#phrase").textContent=tj.mission.phrase;
+    $("#from").textContent="🌎 오늘의 공용방";
+    $("#meaning").textContent="오늘 접속한 모두가 같은 한마디에 도전합니다.";
+    $("#invite").style.display="block";
+    $("#inviteText").textContent="이 주소 하나만 공유하면 모두 오늘 같은 방으로 들어옵니다.";
+
+    var rr=await fetch("/api/satulinggo/mission/"+encodeURIComponent(missionId),{cache:"no-store"}),rj=await rr.json();
+    if(rr.ok){
+      renderRecordings(rj.recordings||[]);
+      var my=(rj.recordings||[]).find(function(x){return x.participantId===anonId});
+      if(my){
+        done=true;$("#record").style.display="none";$("#review").style.display="none";
+        $("#status").textContent="오늘은 이미 녹음했어요. 다른 사람 목소리를 듣고 투표해보세요.";setProgress(2)
+      }else{
+        $("#status").textContent="마이크를 누르고 오늘의 한마디를 남겨보세요."
+      }
+    }
+    startPolling();
+  }catch(e){$("#status").textContent=e.message}
+})();
 </script>
 </body>
 </html>
