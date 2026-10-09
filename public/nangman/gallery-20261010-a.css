@@ -37,3 +37,17 @@
 .poster-label{position:absolute;left:18px;right:15px;bottom:16%;font-size:clamp(26px,2.85vw,44px);line-height:1.1;letter-spacing:-.06em;z-index:2;font-weight:950}
 .art-foot{font-size:10px}.work-info{padding-top:13px}
 @media(max-width:600px){.work-art{aspect-ratio:4/5;padding:10px}.work-art .art-center{inset:17% 6% 30%}.work-art .art-center img{width:min(65%,98px)}.work-art.is-scene .art-center{inset:12% 6% 31%}.poster-label{left:10px;right:8px;bottom:17%;font-size:clamp(16px,5vw,25px)}.art-foot{font-size:7px}}
+
+/* First-screen editorial hierarchy: posters, not repeated introduction */
+.intro{padding:42px 0 20px}
+.intro-grid{display:flex;align-items:end;justify-content:space-between;gap:36px}
+.intro h1{font-size:clamp(34px,4.2vw,57px);margin:12px 0 0;line-height:1.18;letter-spacing:-.065em;white-space:normal}
+.intro h1 span{color:#6d766b}
+.intro p{font-size:15px;max-width:390px}
+.portfolio{padding-top:10px}
+.section-line{padding:13px 0 18px}
+.section-line h2{font-size:21px;margin-top:8px}
+.filters{margin-bottom:24px}
+.collection-label{margin-bottom:18px}
+@media(max-width:900px){.intro-grid{display:block}.intro p{margin-top:12px}}
+@media(max-width:600px){.intro{padding:24px 0 10px}.intro h1{font-size:clamp(28px,7.3vw,36px)}.intro p{font-size:12px;line-height:1.65;margin:8px 0 0}.portfolio{padding-top:8px}.section-line{padding:10px 0 12px}.section-line h2{font-size:17px}.section-aside{font-size:11px;margin-top:6px}.filters{margin-bottom:18px}.collection-label{margin-bottom:13px}}
