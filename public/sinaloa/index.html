@@ -150,27 +150,19 @@ body{background:#0b0c0e}
 }
 
 
-/* V5: readable progressive narrative focus and production credit */
+/* V6: no information slides or card containers. Decision cards are the only cards. */
 [hidden]{display:none!important}
-.attention{margin:23px 0 11px;background:linear-gradient(150deg,#171b20,#151417);border:1px solid #635344;border-radius:12px;overflow:hidden;box-shadow:0 10px 26px #0005}
-.attention-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid #554332;background:#211d1b;color:#e7b990;font-size:10px;letter-spacing:.14em;font-weight:850}
-.attention-top #attentionCounter{font-variant-numeric:tabular-nums;color:#efddc9}
-.attention-beats{padding:2px 18px}
-.attention-beat{padding:17px 0 18px;border-bottom:1px solid #4b4541;animation:focus-enter .55s ease both}
-.attention-beat:last-child{border-bottom:none}
-.attention-label{display:block;font-size:11px;font-weight:850;letter-spacing:.14em;color:#cdb39e;margin:0 0 8px}
-.attention-beat p{padding:0;margin:0;word-break:keep-all}
-.attention-signal p{font-family:var(--serif);font-weight:900;font-size:clamp(24px,3.1vw,34px);line-height:1.48;letter-spacing:-.055em;color:#ffe7cd;text-wrap:balance}
-.attention-meaning p{font-size:clamp(15px,1.65vw,17px);line-height:1.86;color:#f0e1d7}
-.attention-decision{border-left:3px solid #c76d50;padding-left:14px;margin:4px 0 10px}
-.attention-decision .attention-label{color:#f0ad8f}
-.attention-decision p{font-size:clamp(18px,2.15vw,23px);line-height:1.65;font-weight:800;color:#ffe4d6}
-.attention-controls{padding:0 16px 15px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.attention-next{flex:1;min-width:170px;display:flex;justify-content:space-between;align-items:center;border:1px solid #a16f52;border-radius:7px;background:#99512b;color:#fff2e8;padding:13px 17px;cursor:pointer;font-weight:850;font-size:14px}
-.attention-next span{font-size:21px;line-height:1}
-.attention-skip{border:0;background:transparent;color:#baa797;font-size:12px;text-decoration:underline;text-underline-offset:3px;padding:10px 4px;cursor:pointer}
-.decision-zone{margin-top:12px;animation:focus-enter .45s ease both}
-.decision-zone .decision-head{color:#f0b48b;font-weight:900;letter-spacing:.035em}
+.decision-brief{margin:26px 0 8px;padding:0 0 8px;position:relative;animation:focus-enter .5s ease both}
+.decision-brief::before{content:'';display:block;width:32px;height:2px;background:#dc9169;margin-bottom:17px}
+.decision-brief .brief-kicker{display:block;color:#caac93;font-size:10px;font-weight:800;letter-spacing:.17em;margin:0 0 8px}
+.decision-brief p{font-size:clamp(16px,1.8vw,19px);line-height:1.75;margin:0;color:#f2dfce;word-break:keep-all}
+.decision-brief strong{color:#ffddbe;font-weight:850}
+.decision-zone{margin-top:12px;animation:focus-enter .4s ease both}
+.decision-zone .decision-head{color:#efc09b;font-weight:850;letter-spacing:.045em;margin-top:24px}
+.scene-stage .decision-brief + .decision-zone .choices{animation-delay:.22s}
+@keyframes focus-enter {from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.decision-brief{margin:22px 0 4px}.decision-brief p{font-size:16px;line-height:1.69}.decision-zone .decision-head{margin-top:19px}}
+@media(prefers-reduced-motion:reduce){.decision-brief,.decision-zone{animation:none!important}}
 .production-credit{margin:22px 0 0;color:#e4d0c0;font-size:13px;font-weight:600;letter-spacing:.05em}
 .production-credit strong{font-size:17px;color:#ffe1bb;margin-left:6px}
 .production-credit span{display:block;color:#9b8881;font-size:9px;letter-spacing:.19em;margin-top:2px}
@@ -242,78 +234,45 @@ const clamp=(x)=>Math.max(0,Math.min(100,x));
 const fx=(power=0,danger=0,bond=0,proof=0)=>({power,danger,bond,proof});
 const choice=(title,sub,delta,consequence,opts={})=>({title,sub,delta,consequence,...opts});
 
-// V5: scene-specific information staging. The same three-beat grammar is applied
-// to all eighteen primary scenes and eight follow-up scenes, without changing outcomes.
-const attentionPrimary = {
-  "0:0": [`평범한 거리 너머로, 군용 차량이 나타났다.`, `더위와 학교 앞의 소란은 일상이지만, 이 호송대는 네가 기다리던 위험 신호다. 주변에는 집으로 돌아가는 학생들도 있다.`, `조직에 알리면 그들의 대응이 시작될 수 있다. 침묵하거나 사람들을 대피시키면 네가 의심받는다.`],
-  "0:1": [`루시아의 오빠가 사라졌다.`, `아무도 행방을 설명하지 않는다. 그런데 루시아는 네 손의 새 휴대폰을 유심히 보고 있다.`, `지금의 대답이 그녀가 앞으로 네 말을 믿을 수 있는지를 결정한다.`],
-  "1:0": [`농산물 트레일러. 그런데 보수는 터무니없이 높다.`, `남자는 짐의 실체를 설명하지 않는다. 밀린 병원비와 아버지의 죽음까지 알고 제안한 일이다.`, `돈을 받는 일과 거절하는 일, 어느 쪽에도 지금까지와 같은 평온은 보장되지 않는다.`],
-  "1:1": [`사촌이 체포됐다. 조직은 아무도 보내지 않았다.`, `수익을 나누던 사람들은 하루 만에 그를 잊었다. 그러나 가족에게는 그 시간이 끝나지 않는다.`, `사촌의 어머니가 바로 네 앞에 있다. 진실을 말할 것인가, 침묵할 것인가.`],
-  "2:0": [`식당 주인은 돈 대신 딸의 치료비 내역을 내민다.`, `뒤에 서 있는 동료들은 네 답을 기다리고 있다. 이 봉투의 액수보다 한 가족의 생계가 걸렸다.`, `규칙을 강요할 것인가. 시간을 줄 것인가. 네가 대신 책임질 것인가.`],
-  "2:1": [`어머니는 새집의 열쇠를 보고도 웃지 않았다.`, `돈이 어디서 왔는지 알고 있다. 아버지를 잃은 기억은 집 한 채로 지워지지 않는다.`, `어머니에게 진실을 말하고 관계를 지킬지, 또 한 번 숨길지 결정해야 한다.`],
-  "3:0": [`네 앞의 토마스는 열다섯 살이다.`, `몇 년 전 편의점 의자에 앉아 있던 너와 똑같은 나이다. 이번에는 네가 그의 미래를 결정하는 어른이다.`, `소년에게 같은 사다리를 내밀 것인가. 조직 밖의 길을 찾을 것인가.`],
-  "3:1": [`보복을 요구하는 명단 옆에 주민 대피 요청서가 놓였다.`, `예상되는 충돌 장소에는 그 일과 무관한 가족과 손님도 있다. 조직은 이를 숫자로만 본다.`, `보복을 허락할 것인가. 막을 것인가. 더 큰 피해를 줄일 다른 길을 찾을 것인가.`],
-  "4:0": [`조직 간 싸움 때문에 병원이 문을 닫으려 한다.`, `병원에는 스스로 피할 수 없는 환자들이 남아 있다. 루시아가 오랜만에 너에게 연락한 이유다.`, `한 도시의 책임자라는 말이 사람들의 생명 앞에서 어떤 뜻인지 선택해야 한다.`],
-  "4:1": [`사라진 회계 담당자가 장부 한 권을 남겼다.`, `누가 돈을 받고 어떤 사건이 묻혔는지가 적혀 있다. 다만 기록의 진위는 아직 검증되지 않았다.`, `장부를 어떻게 다룰지에 따라 네 위치와 피해자들의 진실이 동시에 달라진다.`],
-  "5:0": [`배신의 소문이 돌았다. 증거는 없다.`, `사람들은 네 표정만 본다. 의심이 명령으로 바뀌는 순간 경호 책임자의 생사는 달라질 수 있다.`, `소문만으로 벌할 것인가. 사실을 확인할 것인가. 권한을 내려놓을 것인가.`],
-  "5:1": [`어머니의 음성 메시지가 도착했다.`, `병세가 나빠졌다. 곁에 가면 위치가 알려질 수 있지만, 기다려줄 시간도 많지 않다.`, `위험을 감수하고 갈 것인가. 다른 방식으로 작별을 준비할 것인가.`],
-  "6:0": [`지도에는 하나가 아니라 여러 조직의 이름이 겹쳐 있다.`, `네 자리가 최고인 것처럼 보이지만 파벌은 서로 다른 명령을 내린다. 이미 내부에서 폭력이 시작됐다.`, `권력을 지키려는 선택이 도시 전체에 돌아갈 수 있다. 어느 길을 택하겠는가.`],
-  "6:1": [`변호사가 처음으로 법적 절차를 이야기한다.`, `증언은 안전을 보장하지도, 네 책임을 없애주지도 않는다. 그러나 다른 미래의 가능성을 연다.`, `여기서 더 버틸 것인가. 도망칠 것인가. 자신이 한 일을 기록할 것인가.`],
-  "7:0": [`네가 떠난 자리에, 피해자들의 얼굴이 나타난다.`, `재판이든 도주든 구금이든, 네 지위는 이제 네 이야기를 지켜주지 못한다.`, `책임을 인정할 것인가. 자신을 보호할 것인가. 어떤 이름으로 남을 것인가.`],
-  "7:1": [`왕좌는 사라졌다. 남은 것은 작은 방이다.`, `감옥 밖에 있더라도 고립될 수 있다. 갇혀 있다면 오래전 자신의 선택과 마주해야 한다.`, `권력의 기억 대신 누구의 이름을 떠올릴 것인지 선택해야 한다.`],
-  "8:0": [`그 편의점 앞에 다시 의자가 놓였다.`, `토마스의 운명은 너의 과거 선택에 따라 달라졌지만, 거리의 유혹은 아직 사라지지 않았다.`, `마지막 기록을 누구에게 남길 것인가. 피해자에게인가, 네 이름에게인가.`],
-  "8:1": [`새로운 열다섯 살 아이가 길 건너편을 보고 있다.`, `처음의 너와 닮았다. 그러나 이번 이야기는 새로운 아이에게 같은 역할을 강요해야 끝나는 것이 아니다.`, `다음 세대에 남길 마지막 메시지를 선택하라.`]
+// Compact, scene-specific decision cues. No slides, counters or gating.
+const decisionBriefs = {
+  "0:0": ["군용 호송대가 거리에 나타났다.", "보고하면 조직이 움직인다. 침묵하면 네가 의심받는다."],
+  "0:1": ["루시아의 오빠가 실종됐다.", "네 손의 휴대폰을 본 루시아가 진실을 묻는다."],
+  "1:0": ["트레일러의 보수는 비정상적으로 높다.", "집에는 병원비가 밀려 있고, 제안한 남자는 그것을 안다."],
+  "1:1": ["사촌이 붙잡혔다. 조직은 그를 버렸다.", "그의 어머니가 네 앞에서 대답을 기다린다."],
+  "2:0": ["식당 주인은 돈 대신 치료비 내역을 내밀었다.", "뒤에 선 동료들은 네 결정을 기다리고 있다."],
+  "2:1": ["어머니는 새집 열쇠를 보고도 웃지 않았다.", "그녀는 돈의 출처를 알고 있다."],
+  "3:0": ["열다섯 살 토마스가 네 앞에 앉아 있다.", "이번에는 네가 그 아이에게 일을 주는 사람이다."],
+  "3:1": ["보복 대상 명단에 민간인의 이름도 있다.", "명령 한마디에 무관한 사람들이 다칠 수 있다."],
+  "4:0": ["충돌 때문에 병원이 문을 닫으려 한다.", "떠날 수 없는 환자들이 남아 있다."],
+  "4:1": ["실종된 회계사의 장부가 발견됐다.", "장부에는 감춰졌던 사건과 이름들이 적혀 있다."],
+  "5:0": ["경호 책임자가 배신했다는 소문이 돈다.", "증거는 아직 하나도 없다."],
+  "5:1": ["어머니의 병세가 악화됐다.", "직접 가면 네 위치가 드러날 수 있다."],
+  "6:0": ["조직 내부가 갈라지기 시작했다.", "네 결정의 피해는 거리의 주민들에게까지 번진다."],
+  "6:1": ["변호사가 법적 책임을 이야기한다.", "증언도 도주도 안전을 보장하지 않는다."],
+  "7:0": ["지위가 사라지고 피해자의 얼굴이 남았다.", "이제 누군가는 네 이름으로 책임을 물을 것이다."],
+  "7:1": ["왕좌 대신 작은 방이 남았다.", "권력을 잃어도 과거는 사라지지 않는다."],
+  "8:0": ["편의점 앞에 다시 의자가 놓였다.", "다음 아이의 운명은 아직 정해지지 않았다."],
+  "8:1": ["새로운 열다섯 살 아이가 거리를 바라본다.", "네가 떠난 자리에 무엇을 남길 것인가." ]
 };
-const attentionEvent = {
-  "owner_reckoning": [`며칠 전의 식당이 다시 네 앞에 나타났다.`, `며칠 전 봉투 앞에서 내린 결정이 이 가족의 오늘을 바꿨다. 그 결과는 되돌릴 수 없다.`, `사과를 요구받거나 도움을 청할 수도 있다. 네 영향력을 어떻게 사용할 것인가.`],
-  "tomas_choice": [`토마스의 흔적이 다시 네 앞에 놓였다.`, `그 아이가 있는 자리에는 네가 내린 예전 결정이 있다. 이제 단순한 승진 문제가 아니다.`, `소년의 안전과 그의 미래가 걸린 다음 결정을 해야 한다.`],
-  "memorial": [`광장에는 돌아오지 못한 사람들의 이름이 남았다.`, `보복의 결말이든 위협의 여파든, 피해를 겪은 주민들은 숫자가 아닌 한 사람씩이다.`, `그 사람들 앞에서 어떤 책임을 질 것인가. 또 다른 위험을 만들 것인가.`],
-  "lucia_hospital": [`루시아가 다시 위험에 놓였다.`, `병원에 관한 네 결정이 끝난 뒤에도 환자와 의료진의 삶은 계속된다. 모두가 떠날 수 있는 것은 아니다.`, `그녀의 선택을 존중하면서 무엇을 책임질 수 있는가.`],
-  "guard_price": [`경호 책임자의 자리가 비었다. 하지만 갈등은 끝나지 않았다.`, `지난 판단을 믿는 사람과 원망하는 사람 모두가 너를 지켜보고 있다.`, `지금 더 많은 사람을 다치게 할 것인가. 책임과 안전을 다른 방식으로 감당할 것인가.`],
-  "mother_last": [`어머니에게서 더는 답장이 오지 않는다.`, `돈과 경호원은 시간을 되돌리지 못한다. 기다림이 끝난 다음에야 상실을 받아들이게 된다.`, `남겨진 관계와 자신의 안전 사이에서 마지막 인사를 어떻게 할 것인가.`],
-  "faction_blast": [`내부 충돌의 여파가 거리에 남았다.`, `네 결정은 조직의 회의실을 넘어 주민과 아이들의 삶까지 영향을 준다.`, `폭력의 고리를 멈출 것인가. 통제할 수 있다고 믿으며 계속할 것인가.`],
-  "succession_trial": [`빈 의자 하나를 모두가 바라본다.`, `권력을 택했든 도주를 택했든 증언을 택했든, 네 선택이 다른 이들에게 새로운 위험을 남겼다.`, `이제 누구를 지킬 것인가. 어떤 책임을 공개할 것인가.`]
+const eventBriefs = {
+  owner_reckoning:["식당 주인의 가족이 다시 나타났다.", "그들이 겪은 일에는 네 지난 선택이 있다."],
+  tomas_choice:["토마스에게서 소식이 왔다.", "지금은 그의 생사가 걸린 문제다."],
+  memorial:["광장에 희생자들의 이름이 걸렸다.", "사람들이 네가 어떻게 행동할지 지켜본다."],
+  lucia_hospital:["루시아의 병원이 다시 위험에 처했다.", "네 결정의 여파는 아직 끝나지 않았다."],
+  guard_price:["경호 책임자를 둘러싼 갈등이 남았다.", "의심과 복수가 또 다른 위험을 만들고 있다."],
+  mother_last:["어머니에게서 연락이 끊겼다.", "네가 번 돈으로는 시간을 되돌릴 수 없다."],
+  faction_blast:["파벌 충돌의 여파가 거리로 번졌다.", "네 선택이 다른 사람들의 생사를 바꾼다."],
+  succession_trial:["빈 의자 하나를 모두가 바라보고 있다.", "지금 네가 고르는 사람도 대가를 치를 것이다."]
 };
-function attentionData(scene){
-  const key=`${scene.ch}:${scene.seq}`;
-  return s.activeEvent ? attentionEvent[s.activeEvent] : attentionPrimary[key];
-}
 function attentionUI(scene, choices) {
-  const beats=attentionData(scene);
-  // All current authored scenes have bespoke copy; a defensive fallback
-  // prevents a later scene addition from blocking play.
-  if(!beats) return `<div class="decision-head">지금 무엇을 할 것인가</div><div class="choices">${choiceMarkup(choices)}</div>`;
-  const labels=['이상한 신호','그것이 뜻하는 것','지금, 선택의 대가'];
-  const classes=['signal','meaning','decision'];
-  return `<section class="attention" data-attention aria-label="선택에 필요한 상황 정보">
-    <div class="attention-top"><span class="attention-topline">SCENE FOCUS · 상황을 읽어라</span><span id="attentionCounter">01 / 03</span></div>
-    <div class="attention-beats" aria-live="polite">${beats.map((text,i)=>`<div class="attention-beat attention-${classes[i]}" data-attention-beat="${i+1}" ${i?'hidden':''}><span class="attention-label">${String(i+1).padStart(2,'0')} · ${labels[i]}</span><p>${E(text)}</p></div>`).join('')}</div>
-    <div class="attention-controls" data-attention-controls><button class="attention-next" type="button" data-attention-next>왜 위험한가? <span aria-hidden="true">→</span></button><button class="attention-skip" type="button" data-attention-all>한 번에 읽고 선택하기</button></div>
-   </section>
-   <div class="decision-zone" data-decision-zone hidden><div class="decision-head">당신의 선택 · 이제 결정해야 한다</div><div class="choices">${choiceMarkup(choices)}</div></div>`;
+  const key=`${scene.ch}:${scene.seq}`;
+  const lines=s.activeEvent?eventBriefs[s.activeEvent]:decisionBriefs[key];
+  const cue=lines ? `<div class="decision-brief" aria-label="선택 전 확인할 정보"><span class="brief-kicker">지금 확인할 사실</span><p><strong>${E(lines[0])}</strong> ${E(lines[1])}</p></div>` : '';
+  return `${cue}<div class="decision-zone"><div class="decision-head">당신의 선택</div><div class="choices">${choiceMarkup(choices)}</div></div>`;
 }
 function choiceMarkup(choices){
   return choices.map((c,i)=>`<button class="choice" data-choice="${i}"><span class="key">${i+1}</span><span style="flex:1"><span class="main">${E(c.title)}</span><span class="desc">${E(c.sub)}</span>${c.risk?`<span class="risk-note">⚠ ${c.risk==='death'?'치명적인 결과 가능':'영구적인 장애 가능'} · 선택 후 되돌릴 수 없음</span>`:''}</span><span class="arrow">↗</span></button>`).join('');
-}
-let attentionVisible=1;
-function revealAttention(target){
-  const section=document.querySelector('[data-attention]');
-  if(!section)return;
-  attentionVisible=Math.max(1,Math.min(3,target));
-  section.querySelectorAll('[data-attention-beat]').forEach(el=>{el.hidden=Number(el.dataset.attentionBeat)>attentionVisible;});
-  const count=section.querySelector('#attentionCounter'); if(count)count.textContent=`0${attentionVisible} / 03`;
-  const controls=section.querySelector('[data-attention-controls]');
-  if(controls)controls.hidden=attentionVisible>=3;
-  const next=section.querySelector('[data-attention-next]');
-  if(next)next.innerHTML=attentionVisible===1?'왜 위험한가? <span aria-hidden="true">→</span>':'결정의 순간 <span aria-hidden="true">→</span>';
-  const zone=document.querySelector('[data-decision-zone]');if(zone)zone.hidden=attentionVisible<3;
-  const focus=attentionVisible<3?section.querySelector(`[data-attention-beat="${attentionVisible}"]`):zone;
-  if(focus && typeof focus.scrollIntoView==='function')focus.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
-}
-function wireAttention(){
-  attentionVisible=1;
-  document.querySelector('[data-attention-next]')?.addEventListener('click',()=>revealAttention(attentionVisible+1));
-  document.querySelector('[data-attention-all]')?.addEventListener('click',()=>revealAttention(3));
 }
 
 const scenes=[
@@ -626,13 +585,13 @@ function endingPhoto(e){
  return photoBlock(fake,'마지막 장면',true);
 }
 
-function render(){const scene=currentScene();const ch=s.phase==='end'?8:scene.ch;document.getElementById('progressFill').style.width=`${(s.phase==='end'?100:((s.index+(s.phase==='consequence'?1:0))/scenes.length*100))}%`;renderAside(ch);if(s.phase==='end'){renderEnd();return;}const choices=scene.options();const context=addContext(scene);const story=modifyMainStory(scene,scene.body());const scenePlace=typeof scene.place==='function'?scene.place():scene.place;document.getElementById('play').innerHTML=`<section class="scene-stage ${s.activeEvent||scene.ch>=4?'scene-tense':''}">${photoBlock(scene,scenePlace)}<div class="cinema-panel"><div class="scene-subline">${E(scene.age)} · ${E(scene.year)} · ${s.activeEvent?'후폭풍 · 돌이킬 수 없는 순간':`MOMENT ${scene.seq+1}`}</div><div class="story-card">${cinematicProse(story,scene)}<div class="quote">${E(scene.quote)}</div>${context?`<div class="echo"><strong>이전 선택의 그림자</strong><br>${E(context)}</div>`:''}</div>${s.phase==='story'?`${attentionUI(scene,choices)}`:`<div class="aftermath"><div class="label">${choices[s.chosen]?.end||choices[s.chosen]?.fates?'IRREVERSIBLE · 돌이킬 수 없는 결과':'THE PRICE OF YOUR CHOICE'}</div><h3>${E(choices[s.chosen]?.title||'그 선택')}</h3>${cinematicResult(choices[s.chosen]?.consequence||'')}<div class="delta-line">${getDeltas(choices[s.chosen])}</div><button id="nextBtn" class="primary">${s.end?'결말 확인하기':s.index===scenes.length-1?'마지막 결말 보기':'다음 장면으로 →'}</button></div>`}</div></section>`;document.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>applyChoice(Number(b.dataset.choice))));document.getElementById('nextBtn')?.addEventListener('click',next);if(s.phase==='story')wireAttention();}
+function render(){const scene=currentScene();const ch=s.phase==='end'?8:scene.ch;document.getElementById('progressFill').style.width=`${(s.phase==='end'?100:((s.index+(s.phase==='consequence'?1:0))/scenes.length*100))}%`;renderAside(ch);if(s.phase==='end'){renderEnd();return;}const choices=scene.options();const context=addContext(scene);const story=modifyMainStory(scene,scene.body());const scenePlace=typeof scene.place==='function'?scene.place():scene.place;document.getElementById('play').innerHTML=`<section class="scene-stage ${s.activeEvent||scene.ch>=4?'scene-tense':''}">${photoBlock(scene,scenePlace)}<div class="cinema-panel"><div class="scene-subline">${E(scene.age)} · ${E(scene.year)} · ${s.activeEvent?'후폭풍 · 돌이킬 수 없는 순간':`MOMENT ${scene.seq+1}`}</div><div class="story-card">${cinematicProse(story,scene)}<div class="quote">${E(scene.quote)}</div>${context?`<div class="echo"><strong>이전 선택의 그림자</strong><br>${E(context)}</div>`:''}</div>${s.phase==='story'?`${attentionUI(scene,choices)}`:`<div class="aftermath"><div class="label">${choices[s.chosen]?.end||choices[s.chosen]?.fates?'IRREVERSIBLE · 돌이킬 수 없는 결과':'THE PRICE OF YOUR CHOICE'}</div><h3>${E(choices[s.chosen]?.title||'그 선택')}</h3>${cinematicResult(choices[s.chosen]?.consequence||'')}<div class="delta-line">${getDeltas(choices[s.chosen])}</div><button id="nextBtn" class="primary">${s.end?'결말 확인하기':s.index===scenes.length-1?'마지막 결말 보기':'다음 장면으로 →'}</button></div>`}</div></section>`;document.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>applyChoice(Number(b.dataset.choice))));document.getElementById('nextBtn')?.addEventListener('click',next);}
 function renderAside(ch){let stats=[['power','조직 내 입지'],['danger','노출 위험'],['bond','남은 관계'],['proof','증언의 무게']];const marks=chapterNames.map((n,i)=>`<div class="step ${ch===i?'active':ch>i?'done':''}"><span class="dot"></span><span>${String(i+1).padStart(2,'0')}. ${E(n)}</span></div>`).join('');document.getElementById('sidebar').innerHTML=`<div class="stats-block"><div class="aside-title">당신이 쌓은 것 <span>선택에 따라 변화</span></div>${stats.map(([key,n])=>`<div class="stat"><div class="statline"><span>${n}</span><b>${s.stats[key]}</b></div><div class="bar stat-${key}"><span style="width:${s.stats[key]}%"></span></div></div>`).join('')}<p class="stats-note">높은 수치가 항상 좋은 결과를 뜻하지는 않습니다. 수치는 이야기의 분기에 사용됩니다.</p></div><div><div class="track-title">9단계 · 18개의 기본 장면 + 운명 분기</div><div class="steps">${marks}</div></div><div class="fate-ledger"><div class="track-title">인물의 운명 <span class="fate-note">회복할 수 없는 사건은 유지됩니다</span></div>${[["lucia","루시아"],["tomas","토마스"],["owner","식당 주인"],["mother","어머니"],["guard","경호 책임자"],["hero","나"]].map(([k,v])=>`<div class="fate-row"><span>${v}</span><b class="fate-${s.fates[k]}">${E(fateText[s.fates[k]]||s.fates[k]||"미확인")}</b></div>`).join("")}</div><div class="journal"><details><summary>내가 내린 선택들 (${s.log.length})</summary><div class="journal-list">${s.log.length?s.log.map(l=>`<div class="journal-entry"><strong>${E(l.chapter)}단계 · ${E(l.title)}</strong>${E(l.choice)}</div>`).reverse().join(''):'아직 기록이 없습니다.'}</div></details></div><div class="archive"><details><summary>엔딩 도감 (${Object.keys(seenEndings()).filter(x=>endingCatalogue.some(y=>y[0]===x)).length} / ${endingCatalogue.length})</summary><div class="archive-list">${endingCatalogue.map(([id,title],i)=>`<div class="archive-entry">${seenEndings()[id]?`<span class="unlocked">✓ ${E(title)}</span>`:`<span>🔒 ${String(i+1).padStart(2,'0')} · 미발견 엔딩</span>`}</div>`).join('')}</div></details></div>`}
 function renderEnd(){const e=getEnding();rememberEnding(e.id||'prison');document.getElementById('play').innerHTML=`<section class="scene-stage ending">${endingPhoto(e)}<div class="cinema-panel"><div class="end-panel"><div class="end-tag">${E(e.tag)} · ${Object.keys(seenEndings()).length}/${endingCatalogue.length} DISCOVERED</div><h2>${E(e.title)}</h2>${endingProse(e.text)}<div class="ending-quote">${E(e.line)}</div><div class="end-stats"><div class="end-stat">조직 내 입지<b>${s.stats.power}</b></div><div class="end-stat">노출 위험<b>${s.stats.danger}</b></div><div class="end-stat">남은 관계<b>${s.stats.bond}</b></div><div class="end-stat">증언의 무게<b>${s.stats.proof}</b></div></div><p class="muted" style="font-size:12px">${E(s.log.length)}번의 선택 · 선택은 되돌릴 수 없습니다 · 기록된 민간 피해 위험 ${E(s.harm)}점(게임 내부 서사 지표이며 실제 피해자 수가 아닙니다)</p><div class="end-buttons"><button class="primary" id="replayBtn">다른 선택으로 다시 시작 ↻</button><button class="secondary" id="shareBtn">내 결말 복사</button></div></div></div></section>`;document.getElementById('replayBtn').addEventListener('click',reset);document.getElementById('shareBtn').addEventListener('click',async()=>{let txt=`시날로아: 사다리의 끝\n나의 결말: ${e.title}\n${e.line}\n선택 ${s.log.length}회
 제작 낭만공작소`;try{await navigator.clipboard.writeText(txt);toast('결말을 복사했습니다.')}catch(x){toast('복사할 수 없는 환경입니다.')}})}
 function showCover(){const canResume=s.log.length>0;document.getElementById('cover').innerHTML=`<div class="cover-inner"><div class="cover-kicker">BRANCHING CRIME DRAMA · 9 CHAPTERS · 22 ENDINGS</div><h1 class="cover-title">시날로아<br><i>사다리의 끝.</i></h1><div class="cover-copy">골목에서 시작된 일은 어느새 네 삶의 주인이 되었다.<br><br>열다섯 살. 편의점 앞 의자 하나.<br>한 번의 선택이 당신의 남은 생애와 타인의 운명을 바꾼다.<br>당신은 어디까지 올라가고, 누구를 남겨둘 것인가?</div><div class="origin-credit" aria-label="원안 출처"><span class="origin-label">ORIGINAL STORY REFERENCE · 원안 출처</span><strong>The Life Outline — Your Life as Every Mexican Cartel Rank</strong>2026년 1월 29일 공개된 유튜브 영상의 2인칭 범죄 계급 서사를 참고했습니다.<br><a href="https://www.youtube.com/watch?v=IuQBOpDCsKQ" target="_blank" rel="noopener noreferrer">원안 영상 보기 ↗</a><span class="origin-note">이 게임의 등장인물·선택·결말은 독립적인 창작이며, 원영상 제작자와 공식적인 제휴 또는 승인을 받은 작품이 아닙니다.</span></div><p class="cover-warning">선택으로 사망·영구적 장애·실종·관계 파탄이 확정될 수 있습니다. 게임 중 선택을 취소할 수 없고, 새로운 플레이로만 다른 삶을 시작할 수 있습니다. 실제 범죄 구조에서 영감을 얻은 허구의 이야기입니다. 폭력·강압·청소년 착취 등 성인 주제가 등장합니다. 선택은 영웅적 성공이 아니라 책임과 결과를 다룹니다. 예상 플레이 20~30분.</p><div class="cover-actions"><button class="primary" id="startGame">${canResume?'이어하기 →':'이야기 시작하기 →'}</button>${canResume?'<button class="secondary" id="newGame">새 이야기 시작</button>':''}</div><p class="muted" style="font-size:11px;margin:22px 0 0">진행과 발견한 결말이 브라우저에 자동 저장됩니다. 숫자 1·2·3으로도 선택할 수 있습니다.</p><p class="production-credit">제작 <strong>낭만공작소</strong><span>AN INTERACTIVE STORY BY NANGMAN WORKSHOP</span></p></div>`;document.getElementById('cover').hidden=false;document.getElementById('cover').style.display='flex';document.getElementById('startGame').onclick=()=>hideCover();document.getElementById('newGame')?.addEventListener('click',()=>{if(window.confirm('기존 선택을 지우고 새로 시작하시겠습니까?')){s=defaults();save();render();hideCover();}})}
 function hideCover(){const cover=document.getElementById('cover');cover.hidden=true;cover.style.display='none';render()}
-window.addEventListener('keydown',e=>{if(document.getElementById('cover').hidden===false)return;if(s.phase==='story'&&['1','2','3'].includes(e.key)){if(attentionVisible>=3)applyChoice(Number(e.key)-1);else toast('상황을 확인한 뒤 선택할 수 있습니다.')}else if(s.phase==='consequence'&&e.key==='Enter'){next()}});
+window.addEventListener('keydown',e=>{if(document.getElementById('cover').hidden===false)return;if(s.phase==='story'&&['1','2','3'].includes(e.key)){applyChoice(Number(e.key)-1)}else if(s.phase==='consequence'&&e.key==='Enter'){next()}});
 document.getElementById('resetBtn').addEventListener('click',reset);load();render();showCover();
 })();
 </script>
