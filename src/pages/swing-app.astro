@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Actual App Store URL is intentionally not guessed.
+// Set PUBLIC_SWING_APP_STORE_URL to the verified swing-ios App Store listing.
+// Do not use WOONGTO's app id (a different app).
+const rawStore = import.meta.env.PUBLIC_SWING_APP_STORE_URL || '';
+const storeUrl = /^https:\/\/apps\.apple\.com\/[a-z-]+\/app\/[^\s?#]*id\d+(?:[?][^\s#]*)?$/.test(rawStore)
+  ? rawStore
+  : null;
+---
+
+<BaseLayout
+  title="스윙공작소 — 내 스윙도 무료로 분석해 보기"
+  description="친구가 보낸 스윙 분석 카드가 궁금하다면? 내 스윙 영상을 올리고 결점·교정 포인트·CLUB LAB·변화 기록까지 확인하세요. 스윙공작소 앱 소개와 설치 안내."
+  ogImage="/og-default.jpg"
+  keywords="스윙공작소, 골프 스윙 분석 앱, 골프 스윙 동영상 분석, 골프 스윙 무료 분석"
+>
+  <main class="swing-app">
+    <section class="invite-hero">
+      <div class="inner hero-grid">
+        <div>
+          <p class="eyebrow">SWING WORKSHOP · 스윙공작소</p>
+          <h1>너의 스윙은<br /><em>어떨까?</em></h1>
+          <p class="lead">친구가 받은 스윙 분석 카드처럼, 내 스윙도 영상 하나로 시작하세요. 어떤 동작을 확인했고 어떻게 연습할지까지 한눈에 보여줍니다.</p>
+          <div class="cta-row">
+            {storeUrl ? (
+              <a class="store-link" href={storeUrl} rel="noopener noreferrer" target="_blank" aria-label="스윙공작소 App Store에서 다운로드">App Store에서 무료로 시작하기 <span aria-hidden="true">↗</span></a>
+            ) : (
+              <div class="coming" role="status">
+                <strong>App Store 다운로드 링크 준비 중</strong>
+                <span>정확한 앱 등록 주소가 확인되면 여기에서 설치할 수 있도록 연결합니다.</span>
+              </div>
+            )}
+            <a href="#how" class="secondary-link">어떻게 분석하나요? ↓</a>
+          </div>
+          <p class="privacy-note">스윙 분석의 핵심 기능은 무료로 이용할 수 있습니다. 영상 기반 분석은 참고용이며 확정 진단이 아닙니다.</p>
+        </div>
+        <div class="preview" aria-label="스윙공작소 공유 카드 예시">
+          <div class="preview-brand">스윙공작소 <span>SWING WORKSHOP</span></div>
+          <div class="preview-eyebrow">오늘 가장 먼저 볼 것</div>
+          <h2>자세 무너짐</h2>
+          <div class="frames">
+            <div class="frame"><div class="stick"><i></i><b></b><u></u></div><small>어드레스</small></div>
+            <div class="frame"><div class="stick tilted"><i></i><b></b><u></u></div><small>백스윙 톱</small></div>
+          </div>
+          <p>고치는 순서</p>
+          <div class="tags"><span>MOTOR SKILL</span><span>BODY PREP</span><span>CLUB LAB</span></div>
+          <div class="preview-footer">너의 스윙도 무료로 분석해봐 →</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="how">
+      <div class="inner">
+        <p class="eyebrow">HOW IT WORKS</p>
+        <h2>영상을 올리고,<br />이유를 확인하고,<br />기록으로 남깁니다.</h2>
+        <div class="steps">
+          <article><span>01</span><h3>스윙 영상 선택</h3><p>측면 또는 정면 영상을 선택합니다. 가능하면 고정 카메라로 촬영하세요.</p></article>
+          <article><span>02</span><h3>결점과 근거 확인</h3><p>주요 프레임을 확인하고, 영상만으로 판별하기 어려운 사항은 직접 확인 항목으로 구분합니다.</p></article>
+          <article><span>03</span><h3>처방과 CLUB LAB</h3><p>운동·바디프렙·클럽 점검 방향을 보고, 사용 클럽과 실제 스피드·탄도 메모를 남깁니다.</p></article>
+          <article><span>04</span><h3>친구 공유와 성장 기록</h3><p>세로 카드로 요약해 공유하고, 같은 각도에서 찍은 다음 스윙과 변화를 비교합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="pro">
+      <div class="inner split">
+        <div><p class="eyebrow">FOR PROS</p><h2>레슨프로와 피터에게는<br />전문가 워크스페이스</h2></div>
+        <div><p>분석 결과는 일반 사용자와 같습니다. PRO는 그리기, 고객관리, 리포트 발송, GoodFitting 연동으로 전문 작업을 편하게 만드는 도구입니다.</p><a href="/partners/">전국 전문가·파트너 안내 →</a></div>
+      </div>
+    </section>
+
+    <section class="end">
+      <div class="inner">
+        <h2>이번엔 친구의 스윙.<br />다음은 너의 스윙.</h2>
+        {storeUrl ? (
+          <a class="store-link" href={storeUrl} target="_blank" rel="noopener noreferrer">스윙공작소 앱 설치하기 ↗</a>
+        ) : (
+          <p class="coming-footer">앱스토어 링크가 등록되면 여기서 다운로드할 수 있습니다.</p>
+        )}
+        <p>스윙공작소 · 골프채공작소 CLUBMAKERS</p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .swing-app{background:#F7F5F0;color:#171A1F;overflow:hidden}
+  .inner{width:min(1140px,calc(100% - 40px));margin:auto}
+  .eyebrow{font:800 12px/1.3 system-ui,sans-serif;letter-spacing:.14em;color:#0F6B4A}
+  h1,h2,h3{word-break:keep-all;letter-spacing:-.055em}
+  .invite-hero{padding:92px 0 90px;background:#F2F3ED}
+  .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(32px,6vw,90px);align-items:center}
+  .invite-hero h1{font-size:clamp(46px,6vw,86px);line-height:1.08;margin:17px 0 26px}
+  .invite-hero h1 em{font-style:normal;color:#0F6B4A}
+  .lead{font-size:clamp(16px,1.7vw,21px);line-height:1.7;color:#555D58;max-width:570px}
+  .cta-row{display:flex;flex-direction:column;align-items:flex-start;gap:15px;margin-top:28px}
+  .store-link{display:inline-flex;align-items:center;justify-content:center;gap:14px;background:#0F6B4A;color:white!important;padding:18px 26px;border-radius:16px;text-decoration:none;font-weight:850;font-size:17px;box-shadow:0 8px 22px #0F6B4A24}
+  .store-link:hover{background:#0B5239}
+  .secondary-link{color:#0F6B4A;font-size:14px;font-weight:800;text-decoration:none}
+  .coming{border:1px solid #B8CDBF;border-radius:14px;background:#E5F0E9;padding:14px 18px;max-width:465px}
+  .coming strong,.coming span{display:block}.coming strong{font-size:16px;color:#0F6B4A}.coming span{margin-top:6px;font-size:13px;line-height:1.5;color:#456454}
+  .privacy-note{font-size:12.5px;color:#69726C;max-width:510px;line-height:1.6;margin-top:22px}
+  .preview{background:#fff;border-radius:28px;aspect-ratio:4/5;max-width:425px;margin:auto;padding:30px 28px;box-shadow:0 25px 65px #171A1F17;box-sizing:border-box}
+  .preview-brand{font-size:21px;font-weight:900}.preview-brand span{display:block;font-size:11px;color:#0F6B4A;letter-spacing:.15em;margin-top:2px}
+  .preview-eyebrow{font-size:12px;color:#0F6B4A;font-weight:900;margin-top:25px}.preview h2{font-size:29px;margin:6px 0 18px}
+  .frames{display:grid;grid-template-columns:1fr 1fr;gap:9px}.frame{position:relative;background:linear-gradient(150deg,#DFE7E3,#B7CCC1);border-radius:12px;height:165px;display:flex;justify-content:center;align-items:center;overflow:hidden}
+  .frame small{position:absolute;bottom:7px;left:7px;background:#1C2822;color:white;padding:5px 8px;border-radius:6px;font-size:11px}
+  .stick{position:relative;width:4px;height:65px;background:#233D32;transform:rotate(7deg)}.stick i{position:absolute;width:21px;height:21px;top:-24px;left:-9px;background:#233D32;border-radius:50%}.stick b{position:absolute;height:34px;width:3px;top:12px;left:-14px;background:#233D32;transform:rotate(51deg)}.stick u{position:absolute;height:48px;width:4px;left:10px;top:57px;background:#233D32;transform:rotate(-16deg)}.stick.tilted{transform:rotate(-27deg)}
+  .preview>p{font-weight:850;margin:20px 0 11px}.tags{display:flex;gap:5px;flex-wrap:wrap}.tags span{background:#E7F2EA;color:#0F6B4A;border-radius:6px;padding:7px 8px;font-size:10px;font-weight:800}
+  .preview-footer{background:#0F6B4A;color:white;padding:15px;border-radius:10px;text-align:center;font-size:15px;font-weight:850;margin-top:22px}
+  .how{padding:90px 0 100px}.how h2{font-size:clamp(32px,4.2vw,54px);line-height:1.23;margin:15px 0 34px}
+  .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.steps article{border:1px solid #DDDCD4;background:white;padding:25px;border-radius:16px}.steps article span{font-size:13px;color:#0F6B4A;font-weight:900}.steps h3{font-size:20px;margin:25px 0 9px}.steps p{font-size:14px;line-height:1.7;color:#616661}
+  .pro{background:#182520;color:white;padding:75px 0}.split{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}.pro .eyebrow{color:#A9D7BD}.pro h2{font-size:clamp(30px,3.6vw,44px);line-height:1.25}.pro p{font-size:16px;color:#C8D7CC;line-height:1.8}.pro a{color:#B8F3D1;text-decoration:none;font-weight:800}
+  .end{text-align:center;padding:100px 0 110px}.end h2{font-size:clamp(31px,4vw,53px);line-height:1.28;margin:0 auto 30px}.end>div{display:flex;align-items:center;flex-direction:column}.end p{color:#667269;font-size:13px;margin-top:26px}.end .coming-footer{font-size:16px;color:#0F6B4A;font-weight:750}
+  @media(max-width:800px){.invite-hero{padding:55px 0 65px}.hero-grid,.split{grid-template-columns:1fr}.hero-grid{gap:35px}.preview{width:min(100%,400px)}.steps{grid-template-columns:1fr 1fr}.how{padding:60px 0}.pro{padding:55px 0}}
+  @media(max-width:520px){.inner{width:min(100% - 30px,1140px)}.steps{grid-template-columns:1fr}.invite-hero h1{font-size:50px}.lead{font-size:16px}.preview{padding:20px;max-width:350px}.frame{height:125px}.preview-footer{margin-top:10px}.store-link{font-size:15px;padding:16px 17px}}
+</style>
