@@ -5,7 +5,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;
 let filter='all';
 function card(p){
  const media=p.image?'<img src="'+esc(p.image)+'" alt="'+esc(p.name)+' '+(p.kind==='scene'?'작품의 실제 장면':'앱 아이콘')+'" loading="lazy" decoding="async">':'<span class="monogram" aria-hidden="true">'+esc(p.monogram)+'</span>';
- return '<a class="work-card" href="./products/'+encodeURIComponent(p.id)+'/" aria-label="'+esc(p.name)+' 상세 기능 및 이용 안내"><div class="work-art '+(p.kind==='scene'?'is-scene':'')+'"><div class="card-top"><span>'+p.mark+' / NANGMAN</span><span>↗</span></div><div class="art-center">'+media+'</div><div class="art-foot">'+esc(p.eyebrow)+'</div></div><div class="work-info"><div class="name-row"><h4>'+esc(p.name)+'</h4><span class="right-arrow">↗</span></div><p>'+esc(p.short)+'</p><div class="chips">'+p.chips.map(c=>'<span>'+esc(c)+'</span>').join('')+'</div><div class="availability">'+esc(p.status)+'</div></div></a>';
+ return '<a class="work-card" href="./products/'+encodeURIComponent(p.id)+'/" aria-label="'+esc(p.name)+' 카드뉴스 소개 보기"><div class="work-art '+(p.kind==='scene'?'is-scene':'')+'"><div class="card-top"><span>'+p.mark+' / NANGMAN</span><span>↗</span></div><div class="art-center">'+media+'</div><div class="art-foot">'+esc(p.eyebrow)+'</div></div><div class="work-info"><div class="name-row"><h4>'+esc(p.name)+'</h4><span class="right-arrow">↗</span></div><p>'+esc(p.short)+'</p><div class="chips">'+p.chips.map(c=>'<span>'+esc(c)+'</span>').join('')+'</div><div class="availability">'+esc(p.status)+'</div><div class="story-hint">카드뉴스 5장으로 먼저 보기 <span aria-hidden="true">↗</span></div></div></a>';
 }
 function show(){
  const visible=p=>filter==='all'||p.group===filter;
