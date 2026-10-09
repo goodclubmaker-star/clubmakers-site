@@ -9,6 +9,16 @@ export async function onRequestGet({params,env}){
     COALESCE(SUM(CASE WHEN v.reaction='🔥' THEN 1 ELSE 0 END),0) fire,
     COALESCE(SUM(CASE WHEN v.reaction='👍' THEN 1 ELSE 0 END),0) good
     FROM recordings r LEFT JOIN votes v ON v.recording_id=r.id
-    WHERE r.mission_id=? GROUP BY r.id ORDER BY r.created_at ASC LIMIT 3`).bind(id).all();
-  return json({mission:m,recordings:(r.results||[]).map((x,i)=>({id:x.id,participantId:x.participant_id,index:i+1,audioUrl:`/api/satulinggo/audio/${id}/${x.id}`,votes:{laugh:x.laugh,fire:x.fire,good:x.good}}))});
+    WHERE r.mission_id=? GROUP BY r.id ORDER BY r.created_at ASC`).bind(id).all();
+  return json({
+    mission:m,
+    recordings:(r.results||[]).map((x,i)=>({
+      id:x.id,
+      participantId:x.participant_id,
+      index:i+1,
+      createdAt:x.created_at,
+      audioUrl:`/api/satulinggo/audio/${id}/${x.id}`,
+      votes:{laugh:x.laugh,fire:x.fire,good:x.good}
+    }))
+  });
 }
