@@ -30,3 +30,12 @@
 
 ## 안전한 공개 순서
 PR 검토 → `npm run build` → Preview URL 수동 확인 → main 병합 → `https://myclubmakers.com/nangman/` 접근 확인.
+
+## 실제 아이콘 출처 — 2026-10-10
+- WOONGTO: trailreplay-ios/main/TrailReplay/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png → public/nangman/icons/woongto.png
+- 인생4초: life4sec-ios/main/Life4Sec/Assets.xcassets/AppIcon.appiconset/Icon-1024.png → public/nangman/icons/life4sec.png
+- 채CINE: cinecam-ios/phase0-dev/CineCam/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png → public/nangman/icons/chaecine.png (main 브랜치엔 앱 소스 없음)
+- 낭만페이지: nangman-page-ios/gpt/video-caption/NangmanPage/Resources/Assets.xcassets/AppIcon.appiconset/Icon-1024.png → public/nangman/icons/nangmanpage.png
+- 사투링고: public/satulinggo-icon.svg → public/nangman/icons/satulingo.svg
+- 시날로아: 별도 앱 아이콘 미확인. public/sinaloa/index.html의 인게임 첫 장면 WebP를 가져와 public/nangman/icons/sinaloa-scene.webp에 저장. **실제 게임 장면이지 공식 앱 아이콘은 아니다.**
+- 갤러리 카드와 카드뉴스 첫 표지, 이미지 PNG 내보내기에 원본 이미지를 표시한다. 외부 CDN 의존성 없음. 원래 프로젝트의 파일은 수정하지 않는다.

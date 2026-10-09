@@ -9,3 +9,14 @@
 .secondary-works .card-art{aspect-ratio:4/4.2}
 .featured-empty{color:var(--muted);padding:36px 0;font-size:14px}
 @media(max-width:680px){.featured-head{align-items:start}.featured-head strong{font-size:15px}.featured-head span{font-size:10px;max-width:145px}.secondary-works{margin-top:52px}}
+
+/* Authentic project artwork. Only Sinaloa is an in-game still, not an app icon. */
+.card-visual{width:min(58%,188px);aspect-ratio:1/1;margin:3px auto 16px;position:relative;display:grid;place-items:center}
+.card-visual img{display:block;width:100%;height:100%;object-fit:cover}
+.actual-app-icon{border-radius:22%;box-shadow:0 10px 26px rgba(0,0,0,.17);border:1px solid rgba(0,0,0,.12)}
+.actual-scene-art{border-radius:12px;border:2px solid currentColor;box-shadow:8px 8px 0 rgba(0,0,0,.18)}
+.slide-art-image{width:min(46%,270px);height:auto;aspect-ratio:1;right:9%;bottom:25%;transform:rotate(-8deg);opacity:.58}
+.slide-art-image img{display:block;width:100%;height:100%;object-fit:cover}
+.slide-art-image .app-icon-image{border-radius:22%;box-shadow:0 16px 35px rgba(0,0,0,.12)}
+.slide-art-image .scene-image{border-radius:10px}
+@media(max-width:680px){.card-visual{width:62%;max-width:100px;margin:2px auto 9px}.actual-scene-art{border-radius:7px}.slide-art-image{width:min(40%,145px);right:8%;bottom:28%}}
