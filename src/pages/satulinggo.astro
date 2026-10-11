@@ -70,7 +70,7 @@
       <b>카카오톡 안에서는 녹음이 제한될 수 있어요.</b>
       <p>Safari 또는 Chrome으로 열면 바로 녹음할 수 있습니다.</p>
       <div class="subactions">
-        <button class="btn dark grow" id="openExternal" type="button">브라우저로 열기</button>
+        <button class="btn dark grow" id="openExternal" type="button">Safari로 여는 방법</button>
         <button class="btn grow" id="copyExternal" type="button">링크 복사</button>
       </div>
     </div>
@@ -195,7 +195,7 @@ $("#share").onclick=function(){shareText("😂 사투링고 결과 ‘"+currentP
 $("#counter").onclick=function(){location.href="/satulinggo/"};
 $("#custom").onclick=function(){var x=prompt("친구에게 시킬 한마디");if(x&&x.trim()){lessons.push([x.trim(),"직접 만든 도전 문장"]);n=lessons.length-1;load(lessons[n])}};
 $("#suggest").onclick=async function(){var region=prompt("어느 지역 말투예요?\n예: 부산, 대구, 광주, 충청");if(!region)return;var phrase=prompt("로컬인이 알 만한 도전 문장을 적어주세요.");if(!phrase)return;var r=await fetch("/api/satulinggo/suggest",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({region:region,phrase:phrase,submitterId:anonId})});var j=await r.json().catch(function(){return{}});if(r.ok)alert("제보 완료! 로컬 문장 후보로 모아둘게요 🙌");else alert(j.error||"제보에 실패했습니다.")};
-$("#openExternal").onclick=function(){var u=location.href;if(isAndroid){location.href="intent://"+u.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end"}else{copyText(u);alert("링크를 복사했습니다. 카카오톡의 ⋯ 메뉴에서 ‘다른 브라우저로 열기’ 또는 Safari로 열어주세요.")}};
+$("#openExternal").onclick=function(){if(isAndroid){alert("카카오톡 오른쪽 위 ⋮ 메뉴에서 ‘다른 브라우저로 열기’를 선택해주세요. 버튼만으로 외부 브라우저 실행을 보장할 수 없습니다.")}else{alert("카카오톡 화면 오른쪽 아래 또는 위의 ⋯ 메뉴를 누른 다음 ‘Safari로 열기’ 또는 ‘다른 브라우저로 열기’를 선택해주세요. 메뉴가 없으면 링크 복사 후 Safari 주소창에 붙여넣으세요.")}};
 $("#copyExternal").onclick=async function(){await copyText(location.href);alert("링크를 복사했습니다.")};
 if(isKakao)showKakaoGate();
 (async function(){
