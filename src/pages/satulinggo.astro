@@ -212,7 +212,7 @@ if(isKakao)showKakaoGate();
       var mine=(j.recordings||[]).find(function(x){return x.participantId===anonId});
       if(mine){
         done=false;$("#record").style.display="flex";$("#record").textContent="🎙️ 또 녹음하기";$("#review").style.display="none";$("#invite").style.display="block";
-        $("#from").textContent="🎧 익명 듣기 · 투표";$("#meaning").textContent="이미 녹음했어요. 다른 친구 목소리를 들어보세요.";
+        $("#from").textContent="🎧 익명 듣기 · 투표";$("#meaning").textContent="또 녹음하거나 다른 친구 목소리를 들어보세요.";
         $("#status").textContent="다른 익명 친구 녹음을 듣고 투표해보세요.";setProgress(2)
       }else{$("#status").textContent="마이크를 누르고 한마디 해보세요."}
       startPolling();
@@ -234,13 +234,14 @@ if(isKakao)showKakaoGate();
       var my=(rj.recordings||[]).find(function(x){return x.participantId===anonId});
       if(my){
         done=false;$("#record").style.display="flex";$("#record").textContent="🎙️ 또 녹음하기";$("#review").style.display="none";
-        $("#status").textContent="오늘은 이미 녹음했어요. 다른 사람 목소리를 듣고 투표해보세요.";setProgress(2)
+        $("#status").textContent="다시 녹음할 수 있어요. 다른 사람 목소리도 들어보세요.";setProgress(2)
       }else{
         $("#status").textContent="마이크를 누르고 오늘의 한마디를 남겨보세요."
       }
     }
     startPolling();
   }catch(e){$("#status").textContent=e.message}
+  finally { if(!isKakao){done=false;$("#record").style.display="flex";$("#record").disabled=false;if(!$("#record").textContent.includes("또 녹음"))$("#record").textContent="🎙️ 또 녹음하기";} }
 })();
 </script>
 </body>
