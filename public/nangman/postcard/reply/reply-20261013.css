@@ -1,0 +1,11 @@
+:root{--sky-top:#8fb8e8;--sky-mid:#b9b3e0;--sky-bottom:#f6cdb4;--ink:#2b2f45;--soft:#4d5372;--paper:#fbfaf6;--serif:"AppleMyungjo","Nanum Myeongjo",serif;--sans:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{min-height:100dvh;background:linear-gradient(180deg,var(--sky-top),var(--sky-mid) 48%,var(--sky-bottom)) fixed;color:var(--ink);font-family:var(--sans)}
+.reply-page{width:min(100% - 36px,460px);min-height:100dvh;margin:0 auto;padding:62px 0 38px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.mail-mark{width:94px;height:94px;display:grid;place-items:center;background:var(--paper);font:65px var(--serif);border-radius:24px;transform:rotate(-6deg);box-shadow:0 12px 30px #555a8e40}
+.eyebrow{margin:30px 0 6px;font-size:.75rem;letter-spacing:.3em;font-weight:700;color:var(--soft)}
+h1{margin:12px 0;font:700 clamp(1.65rem,7vw,2.35rem)/1.45 var(--serif);word-break:keep-all}.intro{color:var(--soft);line-height:1.85;margin:8px 0 18px}
+.feature-pills{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}.feature-pills span{padding:7px 11px;background:#ffffff85;border:1px solid #ffffff77;border-radius:999px;font-size:.78rem}
+.install-card{width:100%;margin:34px 0 12px;padding:24px 20px 18px;border-radius:24px;background:#fffdf6ed;box-shadow:0 14px 36px #555a8e24}.install-card h2{font-size:1.1rem;margin:0 0 10px}.install-card p{font-size:.92rem;line-height:1.7;color:var(--soft)}
+.appstore{display:block;margin:20px auto 0;padding:16px;border-radius:15px;background:var(--ink);color:white;text-decoration:none;font-weight:700;font-size:1rem}
+.install-card .install-note{font-size:.78rem;margin:15px 0 0}.back{margin-top:auto;padding-top:23px;color:var(--ink);font-size:.86rem;text-underline-offset:4px}
+a:focus-visible{outline:3px solid #567cc4;outline-offset:4px}

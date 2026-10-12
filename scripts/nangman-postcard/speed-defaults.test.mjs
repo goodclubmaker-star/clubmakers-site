@@ -1,0 +1,20 @@
+import assert from "node:assert/strict";
+import { adaptiveTimeline, timeline } from "../../public/nangman/postcard/stroke-playback-20261013-b.js";
+const stroke=(mode,start,duration)=>({mode,start,tool:"pen",color:"#000000FF",points:[[0,0,0,3],[10,10,duration,3]]});
+const mixed={version:1,strokes:[stroke("direct",0,2),stroke("pad",3,4),stroke("direct",8,2)]};
+const auto=adaptiveTimeline(mixed);
+const close=(x,y)=>assert.ok(Math.abs(x-y)<1e-9,`${x} != ${y}`);
+close(auto.strokes[0].points.at(-1).at,2);
+close(auto.strokes[1].points[0].at,2.3);
+close(auto.strokes[1].points.at(-1).at,4.3);
+close(auto.strokes[2].points[0].at,4.9);
+close(auto.duration,6.9);
+close(adaptiveTimeline(mixed,"1").duration,9.2);
+close(adaptiveTimeline(mixed,"2").duration,4.6);
+close(adaptiveTimeline(mixed,"3").duration,9.2/3);
+close(adaptiveTimeline({strokes:[stroke("pad",0,4)]}).duration,2);
+close(adaptiveTimeline({strokes:[stroke("direct",0,4)]}).duration,4);
+assert.deepEqual(mixed.strokes,JSON.parse(JSON.stringify(mixed.strokes)));
+assert.ok(adaptiveTimeline(mixed).strokes[2].points[0].at>=auto.strokes[1].points.at(-1).at);
+assert.equal(timeline(mixed).duration,9.2); // original v1 untouched
+console.log("PASS: A 1x / B 2x default, 1/2/3x overrides, mixed timing, v1 compatibility");
