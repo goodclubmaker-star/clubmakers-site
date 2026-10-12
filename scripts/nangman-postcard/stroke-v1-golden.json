@@ -1,0 +1,35 @@
+{
+  "description": "stroke-format v1 golden case. A normal, B long pause, C overlapping start + negative/backward t, D out-of-order start, E normal pause after the out-of-order stroke.",
+  "document": {
+    "version": 1,
+    "canvas": { "width": 1080, "height": 1350 },
+    "strokes": [
+      { "mode": "direct", "group": null, "tool": "pen", "color": "#000000FF", "start": 0,
+        "points": [[100, 100, 0, 6], [110, 104, 0.25, 6.2], [120, 108, 0.5, 6.4]] },
+      { "mode": "direct", "group": null, "tool": "pen", "color": "#000000FF", "start": 3.0,
+        "points": [[200, 100, 0, 6], [210, 120, 0.4, 6]] },
+      { "mode": "pad", "group": 0, "tool": "pen", "color": "#1E66F5FF", "start": 3.2,
+        "points": [[300, 100, 0, 5], [305, 110, -0.1, 5], [310, 120, 0.2, 5]] },
+      { "mode": "pad", "group": 1, "tool": "pencil", "color": "#1E66F5FF", "start": 1.0,
+        "points": [[400, 100, 0, 4], [405, 104, 0.1, 4]] },
+      { "mode": "direct", "group": null, "tool": "marker", "color": "#E64553CC", "start": 4.0,
+        "points": [[500, 100, 0, 8], [520, 100, 0.3, 8]] }
+    ]
+  },
+  "fitCases": {
+    "phone_360x450": [360, 450],
+    "wide_500x450": [500, 450],
+    "tall_360x600": [360, 600]
+  },
+  "expected": {
+    "sanitizedPointTimes": [[0, 0.25, 0.5], [0, 0.4], [0, 0, 0.2], [0, 0.1], [0, 0.3]],
+    "playbackStarts": [0.0, 1.1, 1.5, 1.7, 2.4],
+    "playbackDuration": 2.7,
+    "playbackStartsSpeed2": [0.0, 0.55, 0.75, 0.85, 1.2],
+    "fit": {
+      "phone_360x450": [3.0, 0.0, 0.0],
+      "wide_500x450": [3.0, 70.0, 0.0],
+      "tall_360x600": [3.0, 0.0, 75.0]
+    }
+  }
+}
