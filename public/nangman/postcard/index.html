@@ -18,8 +18,8 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#8FB8E8">
-<link rel="stylesheet" href="./postcard-20261012-a.css">
-<script type="module" src="./player-20261012-a.js"></script>
+<link rel="stylesheet" href="./postcard-20261013-b.css">
+<script type="module" src="./player-20261013-b.js"></script>
 </head>
 <body data-view="loading">
 <main>
@@ -48,10 +48,22 @@
     <div class="controls" id="controls">
       <button type="button" class="control control-main" id="playButton">일시정지</button>
       <button type="button" class="control" id="restartButton">처음부터</button>
-      <button type="button" class="control" id="speedButton" aria-pressed="false">2배속</button>
       <button type="button" class="control" id="finishButton">완성본 보기</button>
     </div>
+    <div class="speed-row">
+      <label for="speedSelect">재생 속도</label>
+      <select id="speedSelect" class="control speed-select" aria-label="손글씨 재생 속도">
+        <option value="auto" selected>기본 · 직접 1배속 / 확대 2배속</option>
+        <option value="1">전체 1배속</option>
+        <option value="2">전체 2배속</option>
+        <option value="3">전체 3배속</option>
+      </select>
+    </div>
     <p class="note" id="note"></p>
+    <a class="reply-cta" href="/nangman/postcard/reply/" id="replyButton" aria-label="낭만엽서 앱으로 답장하기">
+      <span class="reply-title">💌 답장하기</span>
+      <span class="reply-subtitle">나도 손글씨 엽서 보내기</span>
+    </a>
     <p class="footer"><a href="/nangman/">낭만공작소 둘러보기</a></p>
   </section>
 
