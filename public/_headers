@@ -20,3 +20,9 @@
   Cache-Control: public, max-age=86400
 /*.png
   Cache-Control: public, max-age=86400
+
+# 낭만엽서 받은 엽서 페이지 — 검색 제외, 토큰이 다른 사이트로 새지 않게, 외부 스크립트 차단
+/nangman/postcard/*
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex, nofollow
+  Content-Security-Policy: default-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; connect-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'

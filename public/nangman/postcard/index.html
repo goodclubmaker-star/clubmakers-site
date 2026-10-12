@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>낭만엽서가 도착했어요</title>
+<meta name="description" content="손글씨 엽서를 열어 보세요.">
+<!-- 링크 미리보기는 모든 엽서가 같은 봉투 그림과 문구다. 이름·본문·사진·손글씨를 넣지 않는다.
+     og:url은 일부러 넣지 않는다(미리보기 카드가 토큰 없는 주소로 연결되지 않게). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="낭만엽서">
+<meta property="og:title" content="낭만엽서가 도착했어요">
+<meta property="og:description" content="손글씨 엽서를 열어 보세요.">
+<meta property="og:image" content="https://myclubmakers.com/nangman/postcard/og-envelope-20261012.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#8FB8E8">
+<link rel="stylesheet" href="./postcard-20261012-a.css">
+<script type="module" src="./player-20261012-a.js"></script>
+</head>
+<body data-view="loading">
+<main>
+  <section class="view view-loading" aria-live="polite">
+    <p class="loading-text">엽서를 가져오고 있어요</p>
+  </section>
+
+  <section class="view view-envelope">
+    <h1 class="greeting" id="greeting">엽서가 도착했어요</h1>
+    <button type="button" class="envelope" id="openEnvelope" aria-label="봉투 열기">
+      <span class="env-back"></span>
+      <span class="env-letter"></span>
+      <span class="env-pocket"></span>
+      <span class="env-flap"><span class="env-seal"></span></span>
+      <img class="env-stamp" src="./stamp-dove-20261012.png" alt="" width="340" height="340">
+    </button>
+    <p class="hint">봉투를 눌러 열어 보세요</p>
+  </section>
+
+  <section class="view view-player">
+    <p class="from-line" id="fromLine"></p>
+    <figure class="card">
+      <canvas id="card" aria-label="손글씨 엽서"></canvas>
+    </figure>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+    <div class="controls" id="controls">
+      <button type="button" class="control control-main" id="playButton">일시정지</button>
+      <button type="button" class="control" id="restartButton">처음부터</button>
+      <button type="button" class="control" id="speedButton" aria-pressed="false">2배속</button>
+      <button type="button" class="control" id="finishButton">완성본 보기</button>
+    </div>
+    <p class="note" id="note"></p>
+    <p class="footer"><a href="/nangman/">낭만공작소 둘러보기</a></p>
+  </section>
+
+  <section class="view view-error" aria-live="polite">
+    <div class="empty-envelope" aria-hidden="true"></div>
+    <h1 class="error-title" id="errorTitle"></h1>
+    <p class="error-body" id="errorBody"></p>
+    <button type="button" class="control control-main" id="retryButton" hidden>다시 불러오기</button>
+  </section>
+</main>
+</body>
+</html>
