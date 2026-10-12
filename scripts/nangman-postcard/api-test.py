@@ -1,11 +1,12 @@
 # 로컬 API 통합 테스트: wrangler pages dev public --d1=DB --r2=AUDIO --port 8788 실행 후
 # python3 scripts/nangman-postcard/api-test.py  (Pillow 필요)
-import json, io, sys, urllib.request, urllib.error, uuid
+import json, io, sys, urllib.request, urllib.error, uuid, http.client, concurrent.futures
 from PIL import Image
 B="http://localhost:8788/api/nangman/postcard"
-def jpeg():
-    b=io.BytesIO(); Image.new("RGB",(1080,1350),(255,240,212)).save(b,"JPEG",quality=80); return b.getvalue()
+def jpeg(size=(1080,1350)):
+    b=io.BytesIO(); Image.new("RGB",size,(255,240,212)).save(b,"JPEG",quality=80); return b.getvalue()
 def req(method,url,body=None,headers={}):
+    headers=dict(headers)
     r=urllib.request.Request(url,data=body,method=method,headers=headers)
     try:
         with urllib.request.urlopen(r) as resp: return resp.status, resp.headers, resp.read()
@@ -60,5 +61,25 @@ codes=[]
 for i in range(20):
     body,h=multipart(json.dumps(meta),jpeg()); st,_,_=req("POST",B,body,h); codes.append(st)
 check("rate limit 429 at 21st",codes[:19]==[201]*19 and codes[19]==429,codes)
+
+# --- review fixes ---
+good=jpeg()
+body,h=multipart(json.dumps(meta),good[:len(good)//2]); st,_,raw=req("POST",B,body,h); check("truncated jpeg 400",st==400,raw)
+body,h=multipart(json.dumps(meta),jpeg((100,100))); st,_,raw=req("POST",B,body,h); check("wrong-size jpeg 400",st==400,raw)
+# chunked upload without Content-Length, 5 MB
+conn=http.client.HTTPConnection("localhost",8788)
+bd=uuid.uuid4().hex
+def chunks():
+    yield f'--{bd}\r\nContent-Disposition: form-data; name="background"; filename="b.jpg"\r\nContent-Type: image/jpeg\r\n\r\n'.encode()
+    for _ in range(80): yield b"\0"*65536
+    yield f"\r\n--{bd}--\r\n".encode()
+conn.request("POST","/api/nangman/postcard",body=chunks(),headers={"Content-Type":f"multipart/form-data; boundary={bd}","Transfer-Encoding":"chunked"},encode_chunked=True)
+r=conn.getresponse(); check("chunked 5MB without Content-Length 413",r.status==413,r.status); conn.close()
+# concurrent flood from one fresh IP: exactly 20 accepted
+def one(_):
+    b,hh=multipart(json.dumps(meta),good); hh["CF-Connecting-IP"]="203.0.113.77"
+    return req("POST",B,b,hh)[0]
+with concurrent.futures.ThreadPoolExecutor(30) as ex: codes=list(ex.map(one,range(30)))
+check("30 concurrent -> exactly 20 created",codes.count(201)==20 and codes.count(429)==10,sorted(codes))
 print(f"\n{ok} passed, {len(fails)} failed", fails)
 sys.exit(1 if fails else 0)

@@ -2,13 +2,15 @@
 // DELETE /api/nangman/postcard/<token> — 공유 취소 (§3.4)
 import {
   MANAGE_RE, SHARE_RE, error, json, keys, sha256Hex,
-  findActive, purge, ensureSchema, hasBindings,
+  findActive, purge, ensureSchema, hasBindings, sweepExpired,
 } from "../../../../lib/nangman-postcard.js";
 
 export async function onRequestGet({ params, env }) {
   if (!hasBindings(env)) return error(503, "unavailable");
   const token = params.token;
   const found = await findActive(env, token);
+  // Opportunistic cleanup of other expired postcards (does not delay the answer much: max 25).
+  await sweepExpired(env).catch(() => 0);
   if (found.response) return found.response;
 
   const object = await env.AUDIO.get(keys(found.idHash).meta);
