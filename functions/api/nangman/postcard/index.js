@@ -52,7 +52,7 @@ export async function onRequestPost({ request, env }) {
   const now = Date.now();
   if (account?.hash) {
     await ensureStampSchema(env.DB);
-    await grantMonthly(env.DB, account.hash, now);
+    await grantMonthly(env.DB, account.hash, now, env);
   }
   // Delete expired content as we go (the R2 lifecycle rule is the backstop).
   await sweepExpired(env, now).catch(() => 0);
@@ -76,7 +76,7 @@ export async function onRequestPost({ request, env }) {
     ? await reserveStamped(env, row, account.hash, now)
     : await reserve(env, row, now);
   if (!reserved) {
-    if (account?.hash && (await stampBalance(env.DB, account.hash, now)).balance === 0) {
+    if (account?.hash && (await stampBalance(env.DB, account.hash, now, env)).balance === 0) {
       return json({ code: "out_of_stamps", error: "무료 우표를 다 사용했어요. 우표함에서 출시 기념 우표를 더 받아 주세요." }, 409);
     }
     const reason = await refusalReason(env, ipHash, now);
