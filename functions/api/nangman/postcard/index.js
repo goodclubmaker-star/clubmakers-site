@@ -76,8 +76,13 @@ export async function onRequestPost({ request, env }) {
     ? await reserveStamped(env, row, account.hash, now)
     : await reserve(env, row, now);
   if (!reserved) {
-    if (account?.hash && (await stampBalance(env.DB, account.hash, now, env)).balance === 0) {
-      return json({ code: "out_of_stamps", error: "무료 우표를 다 사용했어요. 우표함에서 출시 기념 우표를 더 받아 주세요." }, 409);
+    const wallet = account?.hash ? await stampBalance(env.DB, account.hash, now, env) : null;
+    if (wallet && wallet.balance === 0) {
+      // The hint must match what the wallet can actually offer right now.
+      const error = wallet.canGetBonus
+        ? "무료 우표를 다 사용했어요. 우표함에서 출시 기념 우표를 더 받아 주세요."
+        : "우표를 다 사용했어요. 다음 달 1일에 무료 우표가 다시 들어와요.";
+      return json({ code: "out_of_stamps", error }, 409);
     }
     const reason = await refusalReason(env, ipHash, now);
     return error(reason === "rate_limited" ? 429 : 507, reason);
