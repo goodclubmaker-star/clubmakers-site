@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import { createPrivateKey, sign, createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import { verifyAppleJWS, APPLE_ROOT_CA_G3_SHA256 } from "../../lib/apple-jws.js";
-import { checkTransaction, grantPurchase, applyRefund, BUNDLE_ID } from "../../lib/nangman-iap.js";
+import { checkTransaction, grantPurchase, applyRefund, reverseRefund, BUNDLE_ID } from "../../lib/nangman-iap.js";
 import { ensureSchema } from "../../lib/nangman-postcard.js";
 import {
   ensureStampSchema, grantMonthly, stampBalance, reserveStamped,
@@ -88,7 +88,7 @@ test("transaction checks", () => {
   assert.equal(checkTransaction(tx()), null);
   assert.equal(checkTransaction(tx({ bundleId: "com.other" })), "wrong_app");
   assert.equal(checkTransaction(tx({ productId: "x" })), "unknown_product");
-  assert.equal(checkTransaction(tx({ appAccountToken: undefined })), "no_account");
+  assert.equal(checkTransaction(tx({ appAccountToken: undefined })), null); // promoted purchase: caller credited
   assert.equal(checkTransaction(tx({ appAccountToken: "not-a-uuid" })), "no_account");
   assert.equal(checkTransaction(tx({ revocationDate: 1 })), "revoked");
   assert.equal(checkTransaction(tx({ type: "Auto-Renewable Subscription" })), "invalid");
@@ -225,4 +225,37 @@ test("forged intermediate with Apple's exact names but another key is refused", 
   const token = withChain([pem("forged-leaf.pem"), pem("forged-inter.pem"), real.root], tx(), forgedKey);
   // Forged certs were issued 2026-10-13; the real root is valid until 2039.
   await assert.rejects(verifyAppleJWS(token, { now: Date.UTC(2027, 0, 1) }), /chain/);
+});
+
+// ---------- review fixes ----------
+
+test("certificates are judged at the signing time, not today", async () => {
+  const signedDate = Date.now();
+  const thirtyYearsLater = signedDate + 30 * 365 * 86400000; // test certs long expired by then
+  const p = await verifyAppleJWS(jws(tx({ signedDate })), { rootSha256: ROOT, now: thirtyYearsLater });
+  assert.equal(p.signedDate, signedDate);
+  await assert.rejects(
+    verifyAppleJWS(jws(tx({ signedDate: Date.now() + 5 * 86400000 })), { rootSha256: ROOT }), /expired/);
+});
+
+test("refund arriving before the purchase blocks a later credit; reversal unblocks", async () => {
+  const DB = await freshDB();
+  assert.deepEqual(await applyRefund(DB, tx({ transactionId: "77" })), { refunded: false });
+  const blocked = await grantPurchase(DB, "acc", tx({ transactionId: "77" }));
+  assert.equal(blocked.granted, false);
+  assert.equal(blocked.refunded, true);
+  assert.equal((await stampBalance(DB, "acc")).paidBalance, 0);
+  assert.deepEqual(await reverseRefund(DB, tx({ transactionId: "77" })), { restored: true });
+  assert.equal((await grantPurchase(DB, "acc", tx({ transactionId: "77" }))).granted, true);
+  assert.equal((await stampBalance(DB, "acc")).paidBalance, 10);
+});
+
+test("refund reversed after credit gives the stamps back once", async () => {
+  const DB = await freshDB();
+  await grantPurchase(DB, "acc", tx({ transactionId: "88" }));
+  await applyRefund(DB, tx({ transactionId: "88" }));
+  assert.equal((await stampBalance(DB, "acc")).paidBalance, 0);
+  assert.deepEqual(await reverseRefund(DB, tx({ transactionId: "88" })), { restored: true });
+  assert.deepEqual(await reverseRefund(DB, tx({ transactionId: "88" })), { restored: false });
+  assert.equal((await stampBalance(DB, "acc")).paidBalance, 10);
 });

@@ -14,6 +14,7 @@ export async function onRequestPost({ request, env }) {
   if (!env?.DB) return error(503, "unavailable");
   const caller = await stampAccount(request);
   if (caller?.invalid) return error(400, "invalid");
+  if (Number(request.headers.get("content-length") || 0) > 30000) return error(413, "too_large");
 
   const text = await request.text();
   if (text.length > 30000) return error(413, "too_large");
@@ -33,12 +34,17 @@ export async function onRequestPost({ request, env }) {
   const problem = checkTransaction(tx, env);
   if (problem) return json({ code: problem }, STATUS[problem] || 400);
 
-  // Same hashing as stampAccount(): the buyer's ledger account.
-  const buyer = await sha256Hex("nangman:stamps:v1:" + tx.appAccountToken.toLowerCase());
+  // Same hashing as stampAccount(): the buyer's ledger account. Without a
+  // signed token (promoted purchase, offer code) the caller's account is used.
+  const buyer = tx.appAccountToken
+    ? await sha256Hex("nangman:stamps:v1:" + tx.appAccountToken.toLowerCase())
+    : caller?.hash;
+  if (!buyer) return json({ code: "no_account" }, 400);
   await ensureStampSchema(env.DB);
   const now = Date.now();
   const result = await grantPurchase(env.DB, buyer, tx, now);
   if (result.conflict) return json({ code: "conflict" }, 409);
+  if (result.refunded) return json({ code: "revoked" }, 400);
   const own = caller?.hash === buyer;
   if (own) await grantMonthly(env.DB, buyer, now, env);
   return json({

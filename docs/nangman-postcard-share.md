@@ -150,22 +150,24 @@ D1의 메타 행(토큰 해시·시각·크기만, 편지 내용 없음)은 "만
 `{month, freeBalance, paidBalance, balance, sent, bonus, monthlyAllowance, price, canGetBonus, purchaseEnabled}` — `purchaseEnabled`는 실결제 지급이 켜졌는지(앱이 실제 사용자에게 구매 화면을 보일지 판단)
 
 ### `POST /api/nangman/stamps/purchase`
-본문 `{"signedTransaction": "<StoreKit 2 Transaction.jwsRepresentation>"}`. 우표는 **애플이 서명한 `appAccountToken` 계정**에 들어감(키체인 계정이 바뀌어도 결제가 공중에 뜨지 않음). 계정 헤더가 같은 계정이면 응답에 `wallet` 포함.
+본문 `{"signedTransaction": "<StoreKit 2 Transaction.jwsRepresentation>"}`. 우표는 **애플이 서명한 `appAccountToken` 계정**에 들어감(키체인 계정이 바뀌어도 결제가 공중에 뜨지 않음). 토큰이 없는 거래(App Store 프로모션 구매·오퍼 코드)는 요청한 계정에 지급. 계정 헤더가 같은 계정이면 응답에 `wallet` 포함.
 
-1. `lib/apple-jws.js`: ES256, x5c 3장, 마지막 인증서 = Apple Root CA - G3(SHA-256 고정), 발급자·서명 체인, 유효기간, 리프 `1.2.840.113635.100.6.11.1`·중간 `1.2.840.113635.100.6.2.1` 표식, JWS 서명
+1. `lib/apple-jws.js`: ES256, x5c 3장, 마지막 인증서 = Apple Root CA - G3(SHA-256 고정), 발급자·서명 체인, 리프 `1.2.840.113635.100.6.11.1`·중간 `1.2.840.113635.100.6.2.1` 표식, JWS 서명, 유효기간은 **서명 시각(signedDate) 기준**(애플 라이브러리와 같음 — 인증서가 바뀐 뒤에도 그 전 결제를 지급 가능)
 2. `lib/nangman-iap.js`: bundleId, 상품 3종, `Consumable`, `appAccountToken`이 UUIDv4, 환불 안 됨, 수량 1–10
 3. 환경: `Sandbox`(App Review·TestFlight)는 항상 지급. `Production`은 **`STAMPS_PAID_ENABLED=true`일 때만** — 그 전엔 403 `not_for_sale`, 앱은 거래를 끝내지 않고 나중에 재시도
 4. 원장 `iap:<환경>:<transactionId>` 고유 키로 **1회만** 지급
 
 응답 `{granted, credits, transactionId, wallet?}`. 앱은 200을 받은 뒤에만 `transaction.finish()`.
 
-오류 코드: 400 `unverified`(서명·체인 실패) / `wrong_app` / `unknown_product` / `no_account` / `invalid` / `revoked`, 403 `not_for_sale`.
+오류 코드: 400 `unverified`(서명·체인 실패) / `wrong_app` / `unknown_product` / `no_account` / `invalid` / `revoked`(환불된 거래), 403 `not_for_sale`.
 
 ### `POST /api/nangman/stamps/apple-notifications`
 App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App Store 서버 알림에 Production·Sandbox 모두 이 URL 등록:
 `https://myclubmakers.com/api/nangman/stamps/apple-notifications`
 
-`REFUND`만 원장을 바꿈: 해당 거래가 준 만큼 `iap_refund:<환경>:<transactionId>`로 1회 회수. 이미 써 버렸으면 paid 잔액이 음수가 되고(화면엔 0), 양수가 될 때까지 유료 차감 불가. 나머지 알림은 200으로 확인만.
+- `REFUND`: 해당 거래가 준 만큼 `iap_refund:<환경>:<transactionId>`로 1회 회수. 이미 써 버렸으면 paid 잔액이 음수가 되고(화면엔 0), 양수가 될 때까지 유료 차감 불가. 지급 **전에** 환불이 오면 0장짜리 기록을 남겨 그 거래가 나중에 지급되지 않게 막음
+- `REFUND_REVERSED`: 환불이 가져간 만큼 1회 되돌림(지급 전 환불이었다면 다시 지급 가능해짐)
+- 나머지(데이터 없는 요약 알림 포함)는 200으로 확인만
 
 ### 설정값 (Cloudflare Pages 환경변수)
 | 이름 | 기본 | 의미 |
