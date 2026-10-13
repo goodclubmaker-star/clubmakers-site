@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import { createPrivateKey, sign, createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import { verifyAppleJWS, APPLE_ROOT_CA_G3_SHA256 } from "../../lib/apple-jws.js";
-import { checkTransaction, grantPurchase, applyRefund, reverseRefund, BUNDLE_ID } from "../../lib/nangman-iap.js";
+import { checkTransaction, grantPurchase, applyRefund, reverseRefund, poolFor, BUNDLE_ID } from "../../lib/nangman-iap.js";
 import { ensureSchema } from "../../lib/nangman-postcard.js";
 import {
   ensureStampSchema, grantMonthly, stampBalance, reserveStamped,
@@ -36,7 +36,7 @@ const tx = (over = {}) => ({
   type: "Consumable",
   transactionId: "2000000123456789",
   appAccountToken: ACCOUNT.toUpperCase(),
-  environment: "Sandbox",
+  environment: "Production",
   quantity: 1,
   ...over,
 });
@@ -86,16 +86,15 @@ test("only ES256 with exactly three certificates", async () => {
 
 test("transaction checks", () => {
   assert.equal(checkTransaction(tx()), null);
+  assert.equal(checkTransaction(tx({ environment: "Sandbox" })), null);
   assert.equal(checkTransaction(tx({ bundleId: "com.other" })), "wrong_app");
   assert.equal(checkTransaction(tx({ productId: "x" })), "unknown_product");
-  assert.equal(checkTransaction(tx({ appAccountToken: undefined })), null); // promoted purchase: caller credited
+  assert.equal(checkTransaction(tx({ appAccountToken: undefined })), "no_account"); // required
   assert.equal(checkTransaction(tx({ appAccountToken: "not-a-uuid" })), "no_account");
   assert.equal(checkTransaction(tx({ revocationDate: 1 })), "revoked");
   assert.equal(checkTransaction(tx({ type: "Auto-Renewable Subscription" })), "invalid");
   assert.equal(checkTransaction(tx({ quantity: 0 })), "invalid");
-  assert.equal(checkTransaction(tx({ environment: "Xcode" })), "not_for_sale");
-  assert.equal(checkTransaction(tx({ environment: "Production" })), "not_for_sale");
-  assert.equal(checkTransaction(tx({ environment: "Production" }), { STAMPS_PAID_ENABLED: "true" }), null);
+  assert.equal(checkTransaction(tx({ environment: "Xcode" })), "unsupported_environment");
 });
 
 // ---------- ledger ----------
@@ -133,7 +132,7 @@ test("purchase credits the paid pool exactly once", async () => {
   const DB = await freshDB();
   const now = Date.UTC(2026, 9, 13);
   await grantMonthly(DB, "acc", now);
-  assert.deepEqual(await grantPurchase(DB, "acc", tx(), now), { granted: true, credits: 10 });
+  assert.deepEqual(await grantPurchase(DB, "acc", tx(), now), { granted: true, credits: 10, pool: "paid" });
   assert.deepEqual(await grantPurchase(DB, "acc", tx(), now), { granted: false, credits: 0 });
   const w = await stampBalance(DB, "acc", now);
   assert.equal(w.paidBalance, 10);
@@ -258,4 +257,65 @@ test("refund reversed after credit gives the stamps back once", async () => {
   assert.deepEqual(await reverseRefund(DB, tx({ transactionId: "88" })), { restored: true });
   assert.deepEqual(await reverseRefund(DB, tx({ transactionId: "88" })), { restored: false });
   assert.equal((await stampBalance(DB, "acc")).paidBalance, 10);
+});
+
+// ---------- Sandbox (TestFlight / App Review) isolation ----------
+
+const post = (i, now) => ({ idHash: "s" + i, manageHash: "t" + i, ipHash: "ip" + i, bytes: 1, expiresAt: now + 1e9 });
+const lastSpendPool = (DB) => DB.sqlite.prepare("SELECT pool FROM nangman_stamp_ledger WHERE kind='spend' ORDER BY created_at DESC, rowid DESC LIMIT 1").get().pool;
+
+test("Sandbox purchases are test stamps, never real paid stamps", async () => {
+  assert.equal(poolFor("Production"), "paid");
+  assert.equal(poolFor("Sandbox"), "test");
+  const DB = await freshDB();
+  const r = await grantPurchase(DB, "acc", tx({ environment: "Sandbox" }));
+  assert.equal(r.pool, "test");
+  const w = await stampBalance(DB, "acc");
+  assert.equal(w.paidBalance, 0);
+  assert.equal(w.testBalance, 10);
+  assert.equal(w.balance, 0);
+});
+
+test("the App Store app can never spend test stamps; a Sandbox app can", async () => {
+  const DB = await freshDB();
+  const env = { DB };
+  const now = Date.UTC(2026, 9, 13);
+  await grantPurchase(DB, "acc", tx({ environment: "Sandbox" }), now); // only test stamps, no free grant
+  assert.equal(await reserveStamped(env, post(1, now), "acc", now), false);
+  assert.equal(await reserveStamped(env, post(2, now), "acc", now, { sandbox: true }), true);
+  assert.equal(lastSpendPool(DB), "test");
+});
+
+test("Sandbox app order: free, then test, then real paid", async () => {
+  const DB = await freshDB();
+  const env = { DB };
+  const now = Date.UTC(2026, 9, 13);
+  await grantMonthly(DB, "acc", now, { STAMPS_MONTHLY_FREE_COUNT: "1" });
+  await grantPurchase(DB, "acc", tx({ environment: "Sandbox", transactionId: "1" }), now);
+  await grantPurchase(DB, "acc", tx({ environment: "Production", transactionId: "2" }), now);
+  assert.equal(await reserveStamped(env, post(1, now), "acc", now + 1, { sandbox: true }), true);
+  assert.equal(lastSpendPool(DB), "free");
+  assert.equal(await reserveStamped(env, post(2, now), "acc", now + 2, { sandbox: true }), true);
+  assert.equal(lastSpendPool(DB), "test");
+  assert.equal(await reserveStamped(env, post(3, now), "acc", now + 3), true); // App Store app
+  assert.equal(lastSpendPool(DB), "paid");
+});
+
+test("Sandbox refund takes back test stamps only", async () => {
+  const DB = await freshDB();
+  await grantPurchase(DB, "acc", tx({ environment: "Production", transactionId: "5" }));
+  await grantPurchase(DB, "acc", tx({ environment: "Sandbox", transactionId: "5" })); // same id, other env
+  assert.deepEqual(await applyRefund(DB, tx({ environment: "Sandbox", transactionId: "5" })), { refunded: true });
+  const w = await stampBalance(DB, "acc");
+  assert.equal(w.testBalance, 0);
+  assert.equal(w.paidBalance, 10);
+});
+
+test("real-money purchase is credited immediately even while the shop is closed", async () => {
+  assert.equal(checkTransaction(tx({ environment: "Production" })), null);
+  const DB = await freshDB();
+  const r = await grantPurchase(DB, "acc", tx({ transactionId: "900" }));
+  assert.equal(r.granted, true);
+  assert.equal((await stampBalance(DB, "acc", Date.now(), {})).paidBalance, 10);
+  assert.equal((await stampBalance(DB, "acc", Date.now(), {})).purchaseEnabled, false);
 });

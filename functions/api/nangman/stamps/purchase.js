@@ -1,14 +1,15 @@
 // POST /api/nangman/stamps/purchase — credit paid stamps for an Apple-signed
 // StoreKit 2 transaction. Body: {"signedTransaction": "<JWS>"}.
 // The app finishes the StoreKit transaction only after a 200 from here.
-// Stamps go to the account in Apple's signed appAccountToken; the caller's own
-// account header only decides whether its wallet is returned.
+// Stamps go to the account in Apple's signed appAccountToken (required); the
+// caller's own account header only decides whether its wallet is returned.
+// Production purchases go to 'paid' immediately, Sandbox ones to 'test'.
 import { json, error, sha256Hex } from "../../../../lib/nangman-postcard.js";
 import { stampAccount, ensureStampSchema, grantMonthly, stampBalance } from "../../../../lib/nangman-stamps.js";
 import { verifyAppleJWS } from "../../../../lib/apple-jws.js";
 import { checkTransaction, grantPurchase } from "../../../../lib/nangman-iap.js";
 
-const STATUS = { not_for_sale: 403, conflict: 409 };
+const STATUS = { conflict: 409 };
 
 export async function onRequestPost({ request, env }) {
   if (!env?.DB) return error(503, "unavailable");
@@ -31,15 +32,11 @@ export async function onRequestPost({ request, env }) {
   } catch {
     return json({ code: "unverified" }, 400);
   }
-  const problem = checkTransaction(tx, env);
+  const problem = checkTransaction(tx);
   if (problem) return json({ code: problem }, STATUS[problem] || 400);
 
-  // Same hashing as stampAccount(): the buyer's ledger account. Without a
-  // signed token (promoted purchase, offer code) the caller's account is used.
-  const buyer = tx.appAccountToken
-    ? await sha256Hex("nangman:stamps:v1:" + tx.appAccountToken.toLowerCase())
-    : caller?.hash;
-  if (!buyer) return json({ code: "no_account" }, 400);
+  // Same hashing as stampAccount(): the buyer's ledger account.
+  const buyer = await sha256Hex("nangman:stamps:v1:" + tx.appAccountToken.toLowerCase());
   await ensureStampSchema(env.DB);
   const now = Date.now();
   const result = await grantPurchase(env.DB, buyer, tx, now);
@@ -50,6 +47,7 @@ export async function onRequestPost({ request, env }) {
   return json({
     granted: result.granted,
     credits: result.credits,
+    test: tx.environment === "Sandbox",
     transactionId: tx.transactionId,
     ...(own ? { wallet: await stampBalance(env.DB, buyer, now, env) } : {}),
   });

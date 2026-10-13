@@ -137,37 +137,46 @@ D1의 메타 행(토큰 해시·시각·크기만, 편지 내용 없음)은 "만
 - 재생 규칙은 stroke-format v1의 규칙 S·P·F와 같다. 골든 테스트로 앱과 같은 숫자를 낸다.
 - 취소·만료는 **링크를 새로 열 때** 적용된다. 이미 열어 둔 화면에 내려받은 엽서는 그 화면을 닫을 때까지 보인다.
 
-## 7. 우표 (무료·유료) 원장과 구매 검증
+## 7. 우표 (무료·유료·테스트) 원장과 구매 검증
 
 계정: 앱이 키체인에 보관한 UUIDv4를 `x-nangman-stamp-account` 헤더로 보냄. 서버에는 SHA-256 해시만 저장.
+Sandbox에서 도는 앱(TestFlight·App Review)은 `x-nangman-app-env: sandbox`를 보냄.
 
-| pool | 지급 | 만료 | 차감 순서 |
+| pool | 들어오는 경로 | 만료 | 쓰는 곳 |
 | --- | --- | --- | --- |
-| `free` | 매월 `STAMPS_MONTHLY_FREE_COUNT`(기본 20), 잔액 0이면 보너스(`STAMPS_FREE_BONUS_ENABLED`, 기본 켜짐) | 그 달(UTC) | 먼저 |
-| `paid` | Apple 구매 검증 후 | 없음 | 무료가 0일 때 |
+| `free` | 매월 `STAMPS_MONTHLY_FREE_COUNT`(기본 20), 잔액 0이면 보너스(`STAMPS_FREE_BONUS_ENABLED`) | 그 달(UTC) | 모든 앱, 가장 먼저 |
+| `paid` | **Production(실결제)** 구매 검증 즉시 | 없음 | 모든 앱, 무료 다음 |
+| `test` | **Sandbox(TestFlight·App Review, 무료 결제)** 구매 검증 | 없음 | **Sandbox 앱만**(무료 다음, 유료 전). App Store 앱은 절대 못 씀 |
+
+`balance` = free + paid (실제 우표). `testBalance`는 따로 표시.
 
 ### `GET /api/nangman/stamps`
-`{month, freeBalance, paidBalance, balance, sent, bonus, monthlyAllowance, price, canGetBonus, purchaseEnabled}` — `purchaseEnabled`는 실결제 지급이 켜졌는지(앱이 실제 사용자에게 구매 화면을 보일지 판단)
+`{month, freeBalance, paidBalance, testBalance, balance, sent, bonus, monthlyAllowance, price, canGetBonus, purchaseEnabled}`
+`purchaseEnabled`: App Store 앱에 "우표 사기" 버튼을 보일지(`STAMPS_PAID_ENABLED`). **지급 여부와는 무관**.
+
+### `POST /api/nangman/postcard` (우표 관련)
+- 계정 헤더가 있으면 원장에서 1장 차감(무료 → [Sandbox 앱이면 test] → 유료), 업로드 실패 시 원래 pool로 1회 환불
+- 계정 헤더가 없는 구버전 앱: 무료 출시 동안은 그대로 허용. `STAMPS_REQUIRE_ACCOUNT=true`면 **426 `update_required`** "낭만엽서를 최신 버전으로 업데이트한 뒤 다시 보내 주세요." — **유료 판매 전에 반드시 켬**
+- 우표가 없으면 409 `out_of_stamps` (보너스 가능 여부에 맞춘 안내문)
 
 ### `POST /api/nangman/stamps/purchase`
-본문 `{"signedTransaction": "<StoreKit 2 Transaction.jwsRepresentation>"}`. 우표는 **애플이 서명한 `appAccountToken` 계정**에 들어감(키체인 계정이 바뀌어도 결제가 공중에 뜨지 않음). 토큰이 없는 거래(App Store 프로모션 구매·오퍼 코드)는 요청한 계정에 지급. 계정 헤더가 같은 계정이면 응답에 `wallet` 포함.
+본문 `{"signedTransaction": "<StoreKit 2 Transaction.jwsRepresentation>"}`.
 
-1. `lib/apple-jws.js`: ES256, x5c 3장, 마지막 인증서 = Apple Root CA - G3(SHA-256 고정), 발급자·서명 체인, 리프 `1.2.840.113635.100.6.11.1`·중간 `1.2.840.113635.100.6.2.1` 표식, JWS 서명, 유효기간은 **서명 시각(signedDate) 기준**(애플 라이브러리와 같음 — 인증서가 바뀐 뒤에도 그 전 결제를 지급 가능)
-2. `lib/nangman-iap.js`: bundleId, 상품 3종, `Consumable`, `appAccountToken`이 UUIDv4, 환불 안 됨, 수량 1–10
-3. 환경: `Sandbox`(App Review·TestFlight)는 항상 지급. `Production`은 **`STAMPS_PAID_ENABLED=true`일 때만** — 그 전엔 403 `not_for_sale`, 앱은 거래를 끝내지 않고 나중에 재시도
-4. 원장 `iap:<환경>:<transactionId>` 고유 키로 **1회만** 지급
+1. `lib/apple-jws.js`: ES256, x5c 3장, 마지막 인증서 = Apple Root CA - G3(SHA-256 고정), 발급자·서명 체인, 리프 `1.2.840.113635.100.6.11.1`·중간 `1.2.840.113635.100.6.2.1` 표식, JWS 서명, 유효기간은 서명 시각(signedDate) 기준(애플 라이브러리와 같음)
+2. `lib/nangman-iap.js`: bundleId, 상품 3종, `Consumable`, **`appAccountToken` 필수(UUIDv4)**, 환불 안 됨, 수량 1–10, 환경 Production/Sandbox(Xcode 로컬 테스트 거래는 거부)
+3. 우표는 **애플이 서명한 `appAccountToken` 계정**에 들어감(요청 헤더와 무관). 토큰 없는 거래(프로모션 구매·오퍼 코드 — 설정하지 않음)는 400 `no_account`, 고객지원 처리
+4. Production → `paid` **즉시 지급**(판매 버튼이 닫혀 있어도 돈을 낸 고객은 기다리지 않음). Sandbox → `test`
+5. 원장 `iap:<환경>:<transactionId>` 고유 키로 **1회만**
 
-응답 `{granted, credits, transactionId, wallet?}`. 앱은 200을 받은 뒤에만 `transaction.finish()`.
-
-오류 코드: 400 `unverified`(서명·체인 실패) / `wrong_app` / `unknown_product` / `no_account` / `invalid` / `revoked`(환불된 거래), 403 `not_for_sale`.
+응답 `{granted, credits, test, transactionId, wallet?}` — `wallet`은 요청 계정이 구매 계정일 때만. 앱은 200 후에만 `transaction.finish()`.
+오류: 400 `unverified` / `wrong_app` / `unknown_product` / `no_account` / `invalid` / `revoked` / `unsupported_environment`.
 
 ### `POST /api/nangman/stamps/apple-notifications`
-App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App Store 서버 알림에 Production·Sandbox 모두 이 URL 등록:
+App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App Store 서버 알림에 Production·Sandbox 모두:
 `https://myclubmakers.com/api/nangman/stamps/apple-notifications`
-
-- `REFUND`: 해당 거래가 준 만큼 `iap_refund:<환경>:<transactionId>`로 1회 회수. 이미 써 버렸으면 paid 잔액이 음수가 되고(화면엔 0), 양수가 될 때까지 유료 차감 불가. 지급 **전에** 환불이 오면 0장짜리 기록을 남겨 그 거래가 나중에 지급되지 않게 막음
-- `REFUND_REVERSED`: 환불이 가져간 만큼 1회 되돌림(지급 전 환불이었다면 다시 지급 가능해짐)
-- 나머지(데이터 없는 요약 알림 포함)는 200으로 확인만
+- `REFUND`: 그 거래가 준 만큼 같은 pool에서 1회 회수. 이미 써 버렸으면 잔액이 음수(화면엔 0)가 되고 양수가 될 때까지 그 pool로는 못 보냄. 지급 **전에** 환불이 오면 0장 기록으로 이후 지급 차단
+- `REFUND_REVERSED`: 환불분 1회 복원
+- 나머지는 200으로 확인만
 
 ### 설정값 (Cloudflare Pages 환경변수)
 | 이름 | 기본 | 의미 |
@@ -175,6 +184,11 @@ App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App 
 | `STAMPS_MONTHLY_FREE_COUNT` | 20 | 매월 무료 |
 | `STAMPS_FREE_BONUS_ENABLED` | (켜짐) | `false`면 잔액 0 보너스 중단 |
 | `STAMPS_FREE_BONUS_COUNT` | 20 | 보너스 장수 |
-| `STAMPS_PAID_ENABLED` | (꺼짐) | `true`면 실제 결제(Production) 지급 시작 |
+| `STAMPS_PAID_ENABLED` | (꺼짐) | `true`면 App Store 앱에 "우표 사기" 버튼 표시 |
+| `STAMPS_REQUIRE_ACCOUNT` | (꺼짐) | `true`면 계정 없는 구버전 앱 발송 차단(426) |
+
+### 유료 판매 전 남은 위험 (기록)
+- 익명 계정이라 앱을 지우고 키체인까지 지우면(또는 위조 요청으로) 새 UUID = 새 무료 20장. 지금은 IP당 시간 20건 제한만 있음. 유료 전환 시 Apple **DeviceCheck/App Attest**로 기기당 무료 지급 제한 검토
+- 키체인을 잃으면 산 우표가 새 계정에 보이지 않음 → 고객지원 절차(iOS `docs/appstore/stamp-iap-review.md` §8)
 
 테스트: `node --test scripts/nangman-postcard/*.test.mjs` (Node 22+). `fixtures/real-apple-chain.json`은 애플 공개 인증서, `test-apple-chain/`·`forged-*`는 테스트 전용.
