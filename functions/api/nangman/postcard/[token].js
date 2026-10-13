@@ -2,7 +2,7 @@
 // DELETE /api/nangman/postcard/<token> — 공유 취소 (§3.4)
 import {
   MANAGE_RE, SHARE_RE, error, json, keys, sha256Hex,
-  findActive, purge, ensureSchema, hasBindings, sweepExpired,
+  findActive, purge, ensureSchema, hasBindings, sweepExpired, effectiveExpiry,
 } from "../../../../lib/nangman-postcard.js";
 
 export async function onRequestGet({ params, env }) {
@@ -24,7 +24,7 @@ export async function onRequestGet({ params, env }) {
     strokes: meta.strokes,
     background: `/api/nangman/postcard/${token}/background`,
     createdAt: new Date(found.row.created_at).toISOString(),
-    expiresAt: new Date(found.row.expires_at).toISOString(),
+    expiresAt: new Date(effectiveExpiry(found.row)).toISOString(),
   });
 }
 
