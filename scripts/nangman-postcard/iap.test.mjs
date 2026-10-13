@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import { createPrivateKey, sign, createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import { verifyAppleJWS, APPLE_ROOT_CA_G3_SHA256 } from "../../lib/apple-jws.js";
-import { checkTransaction, grantPurchase, applyRefund, reverseRefund, poolFor, BUNDLE_ID } from "../../lib/nangman-iap.js";
+import { checkTransaction, grantPurchase, applyRefund, reverseRefund, poolFor, mayUseTestStamps, APP_TRANSACTION_HEADER, BUNDLE_ID } from "../../lib/nangman-iap.js";
 import { ensureSchema } from "../../lib/nangman-postcard.js";
 import {
   ensureStampSchema, grantMonthly, stampBalance, reserveStamped,
@@ -318,4 +318,25 @@ test("real-money purchase is credited immediately even while the shop is closed"
   assert.equal(r.granted, true);
   assert.equal((await stampBalance(DB, "acc", Date.now(), {})).paidBalance, 10);
   assert.equal((await stampBalance(DB, "acc", Date.now(), {})).purchaseEnabled, false);
+});
+
+// ---------- who may spend test stamps ----------
+
+test("test stamps: only on a test server AND with Apple-signed Sandbox AppTransaction", async () => {
+  const testVerify = (j) => verifyAppleJWS(j, { rootSha256: ROOT });
+  const req = (headers) => new Request("https://x/", { headers });
+  const appTx = (over = {}) => jws({ bundleId: BUNDLE_ID, receiptType: "Sandbox", signedDate: Date.now(), ...over });
+  const ON = { STAMPS_TEST_SPEND_ENABLED: "true" };
+
+  // Production server (switch absent): never, even with a genuine Sandbox proof.
+  assert.equal(await mayUseTestStamps(req({ [APP_TRANSACTION_HEADER]: appTx() }), {}, testVerify), false);
+  // Test server: a plain header claiming sandbox is not enough.
+  assert.equal(await mayUseTestStamps(req({ "x-nangman-app-env": "sandbox" }), ON, testVerify), false);
+  // Test server with Apple-signed proofs:
+  assert.equal(await mayUseTestStamps(req({ [APP_TRANSACTION_HEADER]: appTx() }), ON, testVerify), true);
+  assert.equal(await mayUseTestStamps(req({ [APP_TRANSACTION_HEADER]: appTx({ receiptType: "Production" }) }), ON, testVerify), false);
+  assert.equal(await mayUseTestStamps(req({ [APP_TRANSACTION_HEADER]: appTx({ bundleId: "com.other" }) }), ON, testVerify), false);
+  // Forged / not Apple-rooted (default pinned verifier rejects the test chain).
+  assert.equal(await mayUseTestStamps(req({ [APP_TRANSACTION_HEADER]: appTx() }), ON), false);
+  assert.equal(await mayUseTestStamps(req({ [APP_TRANSACTION_HEADER]: "a.b.c" }), ON, testVerify), false);
 });

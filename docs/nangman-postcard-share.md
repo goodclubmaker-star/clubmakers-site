@@ -140,13 +140,13 @@ D1의 메타 행(토큰 해시·시각·크기만, 편지 내용 없음)은 "만
 ## 7. 우표 (무료·유료·테스트) 원장과 구매 검증
 
 계정: 앱이 키체인에 보관한 UUIDv4를 `x-nangman-stamp-account` 헤더로 보냄. 서버에는 SHA-256 해시만 저장.
-Sandbox에서 도는 앱(TestFlight·App Review)은 `x-nangman-app-env: sandbox`를 보냄.
+앱은 애플이 서명한 `AppTransaction`(StoreKit 2 `AppTransaction.shared`의 JWS)을 `x-nangman-app-transaction` 헤더로 보냄.
 
 | pool | 들어오는 경로 | 만료 | 쓰는 곳 |
 | --- | --- | --- | --- |
 | `free` | 매월 `STAMPS_MONTHLY_FREE_COUNT`(기본 20), 잔액 0이면 보너스(`STAMPS_FREE_BONUS_ENABLED`) | 그 달(UTC) | 모든 앱, 가장 먼저 |
 | `paid` | **Production(실결제)** 구매 검증 즉시 | 없음 | 모든 앱, 무료 다음 |
-| `test` | **Sandbox(TestFlight·App Review, 무료 결제)** 구매 검증 | 없음 | **Sandbox 앱만**(무료 다음, 유료 전). App Store 앱은 절대 못 씀 |
+| `test` | **Sandbox(TestFlight·App Review, 무료 결제)** 구매 검증 | 없음 | **테스트 서버에서만**: `STAMPS_TEST_SPEND_ENABLED=true` **그리고** 애플 서명 AppTransaction이 Sandbox(`receiptType`)일 때 (무료 다음, 유료 전). 실서비스(Production 배포)에서는 어떤 요청으로도 못 씀 |
 
 `balance` = free + paid (실제 우표). `testBalance`는 따로 표시.
 
@@ -155,7 +155,7 @@ Sandbox에서 도는 앱(TestFlight·App Review)은 `x-nangman-app-env: sandbox`
 `purchaseEnabled`: App Store 앱에 "우표 사기" 버튼을 보일지(`STAMPS_PAID_ENABLED`). **지급 여부와는 무관**.
 
 ### `POST /api/nangman/postcard` (우표 관련)
-- 계정 헤더가 있으면 원장에서 1장 차감(무료 → [Sandbox 앱이면 test] → 유료), 업로드 실패 시 원래 pool로 1회 환불
+- 계정 헤더가 있으면 원장에서 1장 차감(무료 → [테스트 서버 + 서명 확인된 Sandbox 앱이면 test] → 유료), 업로드 실패 시 원래 pool로 1회 환불
 - 계정 헤더가 없는 구버전 앱: 무료 출시 동안은 그대로 허용. `STAMPS_REQUIRE_ACCOUNT=true`면 **426 `update_required`** "낭만엽서를 최신 버전으로 업데이트한 뒤 다시 보내 주세요." — **유료 판매 전에 반드시 켬**
 - 우표가 없으면 409 `out_of_stamps` (보너스 가능 여부에 맞춘 안내문)
 
@@ -186,6 +186,7 @@ App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App 
 | `STAMPS_FREE_BONUS_COUNT` | 20 | 보너스 장수 |
 | `STAMPS_PAID_ENABLED` | (꺼짐) | `true`면 App Store 앱에 "우표 사기" 버튼 표시 |
 | `STAMPS_REQUIRE_ACCOUNT` | (꺼짐) | `true`면 계정 없는 구버전 앱 발송 차단(426) |
+| `STAMPS_TEST_SPEND_ENABLED` | (꺼짐) | **Preview(테스트) 배포에만** `true`. Production 배포에는 절대 설정하지 않음 |
 
 ### 유료 판매 전 남은 위험 (기록)
 - 익명 계정이라 앱을 지우고 키체인까지 지우면(또는 위조 요청으로) 새 UUID = 새 무료 20장. 지금은 IP당 시간 20건 제한만 있음. 유료 전환 시 Apple **DeviceCheck/App Attest**로 기기당 무료 지급 제한 검토

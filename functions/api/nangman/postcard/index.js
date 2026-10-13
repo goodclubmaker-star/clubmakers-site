@@ -5,8 +5,9 @@ import {
   reserve, refusalReason, sweepExpired,
  } from "../../../../lib/nangman-postcard.js";
 import {
-  stampAccount, ensureStampSchema, grantMonthly, stampBalance, reserveStamped, refundStamped, stampPolicy, isSandboxApp,
+  stampAccount, ensureStampSchema, grantMonthly, stampBalance, reserveStamped, refundStamped, stampPolicy,
 } from "../../../../lib/nangman-stamps.js";
+import { mayUseTestStamps } from "../../../../lib/nangman-iap.js";
 
 export async function onRequestPost({ request, env }) {
   if (!hasBindings(env)) return error(503, "unavailable");
@@ -38,7 +39,8 @@ export async function onRequestPost({ request, env }) {
     // Old app versions without a stamp account could otherwise send for free.
     return json({ code: "update_required", error: "낭만엽서를 최신 버전으로 업데이트한 뒤 다시 보내 주세요." }, 426);
   }
-  const sandbox = isSandboxApp(request);
+  // Test stamps: test servers only, and only for Apple-verified Sandbox builds.
+  const sandbox = await mayUseTestStamps(request, env);
 
   // An issued stamp's artwork is already baked into the uploaded background.
   // Keep only a catalog-safe identifier, never arbitrary user HTML or paths.
