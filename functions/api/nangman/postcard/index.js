@@ -3,7 +3,11 @@ import {
   CANVAS, LIMITS, TTL_MS, error, json, randomToken, sha256Hex, keys,
   validateMeta, jpegSize, readLimitedForm, ensureSchema, hasBindings,
   reserve, refusalReason, sweepExpired,
-} from "../../../../lib/nangman-postcard.js";
+ } from "../../../../lib/nangman-postcard.js";
+import {
+  stampAccount, ensureStampSchema, grantMonthly, stampBalance,
+  reserveStamped, refundStamped,
+} from "../../../../lib/nangman-stamps.js";
 
 export async function onRequestPost({ request, env }) {
   if (!hasBindings(env)) return error(503, "unavailable");
@@ -29,6 +33,15 @@ export async function onRequestPost({ request, env }) {
   }
   const result = validateMeta(parsed);
   if (!result.ok) return error(result.code === "too_large" ? 413 : 400, result.code);
+  const account = await stampAccount(request);
+  if (account?.invalid) return error(400, "invalid");
+
+  // An issued stamp's artwork is already baked into the uploaded background.
+  // Keep only a catalog-safe identifier, never arbitrary user HTML or paths.
+  const stamp = parsed.stamp == null ? null : parsed.stamp;
+  if (stamp !== null && (typeof stamp !== "string" || !/^stamp-(0[1-9]|[12][0-9]|3[0-2])$/.test(stamp))) {
+    return error(400, "invalid");
+  }
 
   // Structurally valid JPEG of exactly the postcard size.
   const backgroundBytes = new Uint8Array(await background.arrayBuffer());
@@ -37,12 +50,16 @@ export async function onRequestPost({ request, env }) {
 
   await ensureSchema(env.DB);
   const now = Date.now();
+  if (account?.hash) {
+    await ensureStampSchema(env.DB);
+    await grantMonthly(env.DB, account.hash, now);
+  }
   // Delete expired content as we go (the R2 lifecycle rule is the backstop).
   await sweepExpired(env, now).catch(() => 0);
 
   const ip = request.headers.get("cf-connecting-ip") || "unknown";
   const ipHash = (await sha256Hex(`nangman-postcard:${ip}`)).slice(0, 32);
-  const metaJson = JSON.stringify(result.value);
+  const metaJson = JSON.stringify({ ...result.value, ...(stamp ? { stamp } : {}) });
   const token = randomToken(16);
   const manageToken = randomToken(32);
   const idHash = await sha256Hex(token);
@@ -55,7 +72,13 @@ export async function onRequestPost({ request, env }) {
   };
 
   // Rate limit + global caps checked and reserved in one atomic statement.
-  if (!(await reserve(env, row, now))) {
+  const reserved = account?.hash
+    ? await reserveStamped(env, row, account.hash, now)
+    : await reserve(env, row, now);
+  if (!reserved) {
+    if (account?.hash && (await stampBalance(env.DB, account.hash, now)).balance === 0) {
+      return json({ code: "out_of_stamps", error: "무료 우표를 다 사용했어요. 우표함에서 출시 기념 우표를 더 받아 주세요." }, 409);
+    }
     const reason = await refusalReason(env, ipHash, now);
     return error(reason === "rate_limited" ? 429 : 507, reason);
   }
@@ -67,7 +90,11 @@ export async function onRequestPost({ request, env }) {
   } catch {
     // No orphans: remove whatever was written and release the reservation.
     await env.AUDIO.delete([k.meta, k.background]).catch(() => {});
-    await env.DB.prepare("DELETE FROM nangman_postcards WHERE id_hash = ?1").bind(idHash).run().catch(() => {});
+    if (account?.hash) {
+      await refundStamped(env, idHash, now).catch(() => {});
+    } else {
+      await env.DB.prepare("DELETE FROM nangman_postcards WHERE id_hash = ?1").bind(idHash).run().catch(() => {});
+    }
     return error(503, "unavailable");
   }
 
