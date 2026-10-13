@@ -186,7 +186,7 @@ App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App 
 | `STAMPS_FREE_BONUS_COUNT` | 20 | 보너스 장수 |
 | `STAMPS_PAID_ENABLED` | (꺼짐) | `true`면 App Store 앱에 "우표 사기" 버튼 표시 |
 | `STAMPS_REQUIRE_ACCOUNT` | (꺼짐) | `true`면 계정 없는 구버전 앱 발송 차단(426) |
-| `STAMPS_TEST_SPEND_ENABLED` | (꺼짐) | **Preview(테스트) 배포에만** `true`. Production 배포에는 절대 설정하지 않음 |
+| `STAMPS_TEST_SPEND_ENABLED` | (꺼짐) | **Preview(테스트) 배포에만** `true`, 그리고 Preview가 **별도 D1**을 쓸 때만. Production 배포에는 절대 설정하지 않음(이 값 하나가 테스트 우표 차단의 근거) |
 
 ### 유료 판매 전 남은 위험 (기록)
 - 익명 계정이라 앱을 지우고 키체인까지 지우면(또는 위조 요청으로) 새 UUID = 새 무료 20장. 지금은 IP당 시간 20건 제한만 있음. 유료 전환 시 Apple **DeviceCheck/App Attest**로 기기당 무료 지급 제한 검토
