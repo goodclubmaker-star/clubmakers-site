@@ -85,18 +85,17 @@ test("only ES256 with exactly three certificates", async () => {
 // ---------- what was bought ----------
 
 test("transaction checks", () => {
-  const acc = ACCOUNT;
-  assert.equal(checkTransaction(tx(), acc), null);
-  assert.equal(checkTransaction(tx({ bundleId: "com.other" }), acc), "wrong_app");
-  assert.equal(checkTransaction(tx({ productId: "x" }), acc), "unknown_product");
-  assert.equal(checkTransaction(tx({ appAccountToken: "11111111-1111-4111-8111-111111111111" }), acc), "wrong_account");
-  assert.equal(checkTransaction(tx({ appAccountToken: undefined }), acc), "wrong_account");
-  assert.equal(checkTransaction(tx({ revocationDate: 1 }), acc), "revoked");
-  assert.equal(checkTransaction(tx({ type: "Auto-Renewable Subscription" }), acc), "invalid");
-  assert.equal(checkTransaction(tx({ quantity: 0 }), acc), "invalid");
-  assert.equal(checkTransaction(tx({ environment: "Xcode" }), acc), "not_for_sale");
-  assert.equal(checkTransaction(tx({ environment: "Production" }), acc), "not_for_sale");
-  assert.equal(checkTransaction(tx({ environment: "Production" }), acc, { STAMPS_PAID_ENABLED: "true" }), null);
+  assert.equal(checkTransaction(tx()), null);
+  assert.equal(checkTransaction(tx({ bundleId: "com.other" })), "wrong_app");
+  assert.equal(checkTransaction(tx({ productId: "x" })), "unknown_product");
+  assert.equal(checkTransaction(tx({ appAccountToken: undefined })), "no_account");
+  assert.equal(checkTransaction(tx({ appAccountToken: "not-a-uuid" })), "no_account");
+  assert.equal(checkTransaction(tx({ revocationDate: 1 })), "revoked");
+  assert.equal(checkTransaction(tx({ type: "Auto-Renewable Subscription" })), "invalid");
+  assert.equal(checkTransaction(tx({ quantity: 0 })), "invalid");
+  assert.equal(checkTransaction(tx({ environment: "Xcode" })), "not_for_sale");
+  assert.equal(checkTransaction(tx({ environment: "Production" })), "not_for_sale");
+  assert.equal(checkTransaction(tx({ environment: "Production" }), { STAMPS_PAID_ENABLED: "true" }), null);
 });
 
 // ---------- ledger ----------

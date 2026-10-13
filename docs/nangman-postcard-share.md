@@ -147,19 +147,19 @@ D1의 메타 행(토큰 해시·시각·크기만, 편지 내용 없음)은 "만
 | `paid` | Apple 구매 검증 후 | 없음 | 무료가 0일 때 |
 
 ### `GET /api/nangman/stamps`
-`{month, freeBalance, paidBalance, balance, sent, bonus, monthlyAllowance, price, canGetBonus}`
+`{month, freeBalance, paidBalance, balance, sent, bonus, monthlyAllowance, price, canGetBonus, purchaseEnabled}` — `purchaseEnabled`는 실결제 지급이 켜졌는지(앱이 실제 사용자에게 구매 화면을 보일지 판단)
 
 ### `POST /api/nangman/stamps/purchase`
-본문 `{"signedTransaction": "<StoreKit 2 Transaction.jwsRepresentation>"}`, 계정 헤더 필수.
+본문 `{"signedTransaction": "<StoreKit 2 Transaction.jwsRepresentation>"}`. 우표는 **애플이 서명한 `appAccountToken` 계정**에 들어감(키체인 계정이 바뀌어도 결제가 공중에 뜨지 않음). 계정 헤더가 같은 계정이면 응답에 `wallet` 포함.
 
 1. `lib/apple-jws.js`: ES256, x5c 3장, 마지막 인증서 = Apple Root CA - G3(SHA-256 고정), 발급자·서명 체인, 유효기간, 리프 `1.2.840.113635.100.6.11.1`·중간 `1.2.840.113635.100.6.2.1` 표식, JWS 서명
-2. `lib/nangman-iap.js`: bundleId, 상품 3종, `Consumable`, `appAccountToken` = 계정 UUID, 환불 안 됨, 수량 1–10
+2. `lib/nangman-iap.js`: bundleId, 상품 3종, `Consumable`, `appAccountToken`이 UUIDv4, 환불 안 됨, 수량 1–10
 3. 환경: `Sandbox`(App Review·TestFlight)는 항상 지급. `Production`은 **`STAMPS_PAID_ENABLED=true`일 때만** — 그 전엔 403 `not_for_sale`, 앱은 거래를 끝내지 않고 나중에 재시도
-4. 원장 `iap:<환경>:<transactionId>` 고유 키로 **1회만** 지급. 같은 거래를 다른 계정이 보내면 409 `conflict`
+4. 원장 `iap:<환경>:<transactionId>` 고유 키로 **1회만** 지급
 
-응답 `{granted, credits, transactionId, wallet}`. 앱은 200을 받은 뒤에만 `transaction.finish()`.
+응답 `{granted, credits, transactionId, wallet?}`. 앱은 200을 받은 뒤에만 `transaction.finish()`.
 
-오류 코드: 400 `unverified`(서명·체인 실패) / `wrong_app` / `unknown_product` / `invalid` / `revoked`, 403 `wrong_account` / `not_for_sale`, 409 `conflict`.
+오류 코드: 400 `unverified`(서명·체인 실패) / `wrong_app` / `unknown_product` / `no_account` / `invalid` / `revoked`, 403 `not_for_sale`.
 
 ### `POST /api/nangman/stamps/apple-notifications`
 App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App Store 서버 알림에 Production·Sandbox 모두 이 URL 등록:
