@@ -136,3 +136,43 @@ D1의 메타 행(토큰 해시·시각·크기만, 편지 내용 없음)은 "만
 - `noindex, nofollow`, `Referrer-Policy: no-referrer`, 외부 스크립트·폰트·분석 도구 없음(토큰이 제3자에게 가지 않게).
 - 재생 규칙은 stroke-format v1의 규칙 S·P·F와 같다. 골든 테스트로 앱과 같은 숫자를 낸다.
 - 취소·만료는 **링크를 새로 열 때** 적용된다. 이미 열어 둔 화면에 내려받은 엽서는 그 화면을 닫을 때까지 보인다.
+
+## 7. 우표 (무료·유료) 원장과 구매 검증
+
+계정: 앱이 키체인에 보관한 UUIDv4를 `x-nangman-stamp-account` 헤더로 보냄. 서버에는 SHA-256 해시만 저장.
+
+| pool | 지급 | 만료 | 차감 순서 |
+| --- | --- | --- | --- |
+| `free` | 매월 `STAMPS_MONTHLY_FREE_COUNT`(기본 20), 잔액 0이면 보너스(`STAMPS_FREE_BONUS_ENABLED`, 기본 켜짐) | 그 달(UTC) | 먼저 |
+| `paid` | Apple 구매 검증 후 | 없음 | 무료가 0일 때 |
+
+### `GET /api/nangman/stamps`
+`{month, freeBalance, paidBalance, balance, sent, bonus, monthlyAllowance, price, canGetBonus}`
+
+### `POST /api/nangman/stamps/purchase`
+본문 `{"signedTransaction": "<StoreKit 2 Transaction.jwsRepresentation>"}`, 계정 헤더 필수.
+
+1. `lib/apple-jws.js`: ES256, x5c 3장, 마지막 인증서 = Apple Root CA - G3(SHA-256 고정), 발급자·서명 체인, 유효기간, 리프 `1.2.840.113635.100.6.11.1`·중간 `1.2.840.113635.100.6.2.1` 표식, JWS 서명
+2. `lib/nangman-iap.js`: bundleId, 상품 3종, `Consumable`, `appAccountToken` = 계정 UUID, 환불 안 됨, 수량 1–10
+3. 환경: `Sandbox`(App Review·TestFlight)는 항상 지급. `Production`은 **`STAMPS_PAID_ENABLED=true`일 때만** — 그 전엔 403 `not_for_sale`, 앱은 거래를 끝내지 않고 나중에 재시도
+4. 원장 `iap:<환경>:<transactionId>` 고유 키로 **1회만** 지급. 같은 거래를 다른 계정이 보내면 409 `conflict`
+
+응답 `{granted, credits, transactionId, wallet}`. 앱은 200을 받은 뒤에만 `transaction.finish()`.
+
+오류 코드: 400 `unverified`(서명·체인 실패) / `wrong_app` / `unknown_product` / `invalid` / `revoked`, 403 `wrong_account` / `not_for_sale`, 409 `conflict`.
+
+### `POST /api/nangman/stamps/apple-notifications`
+App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App Store 서버 알림에 Production·Sandbox 모두 이 URL 등록:
+`https://myclubmakers.com/api/nangman/stamps/apple-notifications`
+
+`REFUND`만 원장을 바꿈: 해당 거래가 준 만큼 `iap_refund:<환경>:<transactionId>`로 1회 회수. 이미 써 버렸으면 paid 잔액이 음수가 되고(화면엔 0), 양수가 될 때까지 유료 차감 불가. 나머지 알림은 200으로 확인만.
+
+### 설정값 (Cloudflare Pages 환경변수)
+| 이름 | 기본 | 의미 |
+| --- | --- | --- |
+| `STAMPS_MONTHLY_FREE_COUNT` | 20 | 매월 무료 |
+| `STAMPS_FREE_BONUS_ENABLED` | (켜짐) | `false`면 잔액 0 보너스 중단 |
+| `STAMPS_FREE_BONUS_COUNT` | 20 | 보너스 장수 |
+| `STAMPS_PAID_ENABLED` | (꺼짐) | `true`면 실제 결제(Production) 지급 시작 |
+
+테스트: `node --test scripts/nangman-postcard/*.test.mjs` (Node 22+). `fixtures/real-apple-chain.json`은 애플 공개 인증서, `test-apple-chain/`·`forged-*`는 테스트 전용.
