@@ -5,9 +5,9 @@ import {
   reserve, refusalReason, sweepExpired,
  } from "../../../../lib/nangman-postcard.js";
 import {
-  stampAccount, ensureStampSchema, grantMonthly, stampBalance,
-  reserveStamped, refundStamped,
+  stampAccount, ensureStampSchema, grantMonthly, stampBalance, reserveStamped, refundStamped, stampPolicy,
 } from "../../../../lib/nangman-stamps.js";
+import { mayUseTestStamps } from "../../../../lib/nangman-iap.js";
 
 export async function onRequestPost({ request, env }) {
   if (!hasBindings(env)) return error(503, "unavailable");
@@ -35,6 +35,12 @@ export async function onRequestPost({ request, env }) {
   if (!result.ok) return error(result.code === "too_large" ? 413 : 400, result.code);
   const account = await stampAccount(request);
   if (account?.invalid) return error(400, "invalid");
+  if (!account && stampPolicy(env).requireAccount) {
+    // Old app versions without a stamp account could otherwise send for free.
+    return json({ code: "update_required", error: "낭만엽서를 최신 버전으로 업데이트한 뒤 다시 보내 주세요." }, 426);
+  }
+  // Test stamps: test servers only, and only for Apple-verified Sandbox builds.
+  const sandbox = await mayUseTestStamps(request, env);
 
   // An issued stamp's artwork is already baked into the uploaded background.
   // Keep only a catalog-safe identifier, never arbitrary user HTML or paths.
@@ -73,11 +79,11 @@ export async function onRequestPost({ request, env }) {
 
   // Rate limit + global caps checked and reserved in one atomic statement.
   const reserved = account?.hash
-    ? await reserveStamped(env, row, account.hash, now)
+    ? await reserveStamped(env, row, account.hash, now, { sandbox })
     : await reserve(env, row, now);
   if (!reserved) {
     const wallet = account?.hash ? await stampBalance(env.DB, account.hash, now, env) : null;
-    if (wallet && wallet.balance === 0) {
+    if (wallet && wallet.balance + (sandbox ? wallet.testBalance : 0) === 0) {
       // The hint must match what the wallet can actually offer right now.
       const error = wallet.canGetBonus
         ? "무료 우표를 다 사용했어요. 우표함에서 출시 기념 우표를 더 받아 주세요."
