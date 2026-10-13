@@ -8,6 +8,6 @@ export async function onRequestGet({ request, env }) {
   if (!account?.hash) return error(400, "invalid");
   await ensureStampSchema(env.DB);
   const now = Date.now();
-  await grantMonthly(env.DB, account.hash, now);
-  return json(await stampBalance(env.DB, account.hash, now));
+  await grantMonthly(env.DB, account.hash, now, env);
+  return json(await stampBalance(env.DB, account.hash, now, env));
 }

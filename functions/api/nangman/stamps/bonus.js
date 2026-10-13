@@ -9,6 +9,6 @@ export async function onRequestPost({ request, env }) {
   if (!account?.hash) return error(400, "invalid");
   const now = Date.now();
   await ensureStampSchema(env.DB);
-  await grantMonthly(env.DB, account.hash, now);
-  return json(await grantBonus(env.DB, account.hash, now));
+  await grantMonthly(env.DB, account.hash, now, env);
+  return json(await grantBonus(env.DB, account.hash, now, env));
 }
