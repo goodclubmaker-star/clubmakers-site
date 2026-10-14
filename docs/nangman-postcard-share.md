@@ -124,6 +124,7 @@ iOS 앱(`nangman-postcard-ios`), 서버(이 저장소 `functions/api/nangman/pos
 2. **만료 정리**: 만들기·조회 요청이 올 때마다 만료된 엽서를 최대 25개씩 찾아 R2 내용을 삭제한다(아무도 다시 열지 않은 엽서 포함).
 3. **최종 보장 — R2 수명 주기 규칙 (Cloudflare 대시보드 설정 필요)**: 요청이 전혀 없어도 지워지도록, `AUDIO` 바인딩 버킷에 다음 규칙을 둔다.
    - 대상 접두사 `nangman-postcard/`, **업로드 후 11일이 지나면 객체 삭제** (만료 10일 + 하루 여유. 기존 31일 규칙이 있으면 11일로 수정)
+   - 대상 접두사 `nangman-postcard-sealed/`(특별 우표, §8), **업로드 후 377일이 지나면 객체 삭제** (최대 1년 잠금 + 개봉 후 10일 + 하루 여유)
    - 설정 위치: Cloudflare 대시보드 → R2 → (AUDIO에 연결된 버킷) → 설정 → 객체 수명 주기 규칙 → 규칙 추가
    - 이 규칙이 있어야 "10일 뒤 자동 삭제" 안내가 사실이 된다. **배포 전 필수.**
 
@@ -193,3 +194,20 @@ App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App 
 - 키체인을 잃으면 산 우표가 새 계정에 보이지 않음 → 고객지원 절차(iOS `docs/appstore/stamp-iap-review.md` §8)
 
 테스트: `node --test scripts/nangman-postcard/*.test.mjs` (Node 22+). `fixtures/real-apple-chain.json`은 애플 공개 인증서, `test-apple-chain/`·`forged-*`는 테스트 전용.
+
+## 8. 특별 우표 — 예약 개봉 "시간을 담아 보내는 편지"
+
+- 만들기: `meta.opensAt`(ms 또는 ISO 8601)를 넣으면 예약 엽서. **보낸 시각 + 1시간 ~ + 366일**(앱 시계 차이 5분 허용), 범위 밖이면 400 `invalid_open_time` "도착 시간은 1시간 뒤부터 1년 안으로 정해 주세요."
+  - `opensAt`은 D1 `nangman_postcards.opens_at`에만 저장(meta.json에 넣지 않음). 응답에 `opensAt` 추가
+  - 우표는 일반과 같이 1장(무료 출시 기간). 여러 장 차감은 결정 후
+  - R2 경로 `nangman-postcard-sealed/<id>/…` — 11일 수명 규칙의 영향을 받지 않음
+- 보관: **개봉 시각부터 10일**. 만료·정리·전역 상한 모두 `COALESCE(opens_at, created_at)` 기준. 기존 행은 `opens_at` NULL = 일반
+- 개봉 전 (서버가 강제):
+  - `GET /api/nangman/postcard/<token>` → `{format, version, sealed: true, from, opensAt, calendar, createdAt, expiresAt}` — **손글씨·배경 주소 없음**
+  - `GET …/background` → 423 `sealed`
+  - `GET …/calendar` → `text/calendar`(.ics) 개봉 시각 일정 + 알림(VALARM). **받는 사람 연락처는 받지 않음**. 예약 엽서에만 있음(일반은 404)
+- 개봉 후: 일반 엽서와 같은 응답 + `opensAt`. 웹 재생·영상 저장 그대로
+- 보낸 사람 취소(DELETE): 개봉 전에도 가능, 즉시 삭제
+- 웹(`player-20261014-sealed-a.js`, `postcard-sealed-20261014-a.css`): 잠긴 봉투, "시간을 담아 보내는 편지", 도착 예정(보는 기기 현지 시각), 남은 시간, "📅 도착일 알림 받기". 도착 시각이 되면 자동으로 다시 불러와 봉투가 열림
+- 테스트: `scripts/nangman-postcard/sealed.test.mjs`
+
