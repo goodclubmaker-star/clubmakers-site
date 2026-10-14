@@ -31,6 +31,11 @@ export async function onRequestPost({ request, env }) {
   } catch {
     return error(400, "invalid");
   }
+  // Fail closed until scheduled storage, lifecycle and recipient gating ship.
+  // Never silently deliver a requested future-dated postcard immediately.
+  if (parsed && Object.prototype.hasOwnProperty.call(parsed, "unlockAt")) {
+    return json({ code: "scheduled_not_ready", error: "예약 개봉 기능은 준비 중이에요. 지금은 일반 우표로 보내 주세요." }, 409);
+  }
   const result = validateMeta(parsed);
   if (!result.ok) return error(result.code === "too_large" ? 413 : 400, result.code);
   const account = await stampAccount(request);
