@@ -20,7 +20,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#8FB8E8">
 <link rel="stylesheet" href="./postcard-20261014-video-a.css">
-<script type="module" src="./player-20261014-default3x-a.js"></script>
+<link rel="stylesheet" href="./postcard-sealed-20261014-a.css">
+<script type="module" src="./player-20261014-sealed-a.js"></script>
 </head>
 <body data-view="loading">
 <main>
@@ -73,6 +74,25 @@
     </button>
     <p class="reply-notice" id="replyNotice" role="status" hidden>낭만엽서 앱은 출시 준비 중이에요. 출시되면 여기에서 바로 답장할 수 있도록 연결할게요.</p>
     <p class="footer"><a href="/nangman/">낭만공작소 둘러보기</a></p>
+  </section>
+
+  <section class="view view-sealed" aria-live="polite">
+    <p class="sealed-kicker">특별 우표</p>
+    <h1 class="sealed-title">시간을 담아 보내는 편지</h1>
+    <p class="sealed-from" id="sealedFrom">엽서가 오고 있어요</p>
+    <div class="envelope is-sealed" aria-hidden="true">
+      <span class="env-back"></span>
+      <span class="env-letter"></span>
+      <span class="env-pocket"></span>
+      <span class="env-flap"><span class="env-seal"></span></span>
+      <img class="env-stamp" src="./stamp-dove-20261012.png" alt="" width="340" height="340">
+      <span class="sealed-lock">🔒</span>
+    </div>
+    <p class="sealed-label">도착 예정</p>
+    <p class="sealed-date" id="sealedDate"></p>
+    <p class="sealed-countdown" id="sealedCountdown"></p>
+    <a class="control control-main sealed-calendar" id="sealedCalendar" href="#">📅 도착일 알림 받기</a>
+    <p class="sealed-note">캘린더에 도착 시간이 저장되고, 그때 알림이 와요. 연락처는 받지 않아요.<br>이 링크를 간직해 두세요. 도착하면 여기서 바로 열 수 있어요.</p>
   </section>
 
   <section class="view view-error" aria-live="polite">

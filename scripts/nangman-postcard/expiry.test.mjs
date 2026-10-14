@@ -2,6 +2,7 @@ import { findActive, sha256Hex, keys, TTL_MS } from "../../lib/nangman-postcard.
 const rows = new Map(); const deleted = [];
 const DB = { prepare(sql){ return { _a:[], bind(...a){ this._a=a; return this; },
   async run(){ if(sql.startsWith("UPDATE")){ const [now,id]=this._a; const r=rows.get(id); r.purged_at=now; if(sql.includes("revoked_at")) r.revoked_at=now; } return {}; },
+  async all(){ return { results: [{ name: "opens_at" }] }; },
   async first(){ return rows.get(this._a[0]) ?? null; } }; } };
 const AUDIO = { async delete(k){ deleted.push(...k); } };
 const token = "A".repeat(22), id = await sha256Hex(token), t0 = 1_000_000;
@@ -11,8 +12,8 @@ const exp = await findActive({DB,AUDIO}, token, t0+TTL_MS);
 const again = await findActive({DB,AUDIO}, token, t0+TTL_MS+5);
 const body = await exp.response.json();
 const ok = !live.response && exp.response.status===410 && body.code==="expired"
-  && deleted.length===2 && deleted.includes(keys(id).meta) && rows.get(id).purged_at===t0+TTL_MS
-  && again.response.status===410 && deleted.length===2;
+  && deleted.length===4 && deleted.includes(keys(id).meta) && rows.get(id).purged_at===t0+TTL_MS
+  && again.response.status===410 && deleted.length===4;
 console.log(ok ? "PASS expiry purges content once and returns 410 expired" : "FAIL", {deleted, row: rows.get(id)});
 if (!ok) process.exit(1);
 
@@ -30,7 +31,7 @@ import { sweepExpired } from "../../lib/nangman-postcard.js";
   const second = await sweepExpired({ DB: DB2, AUDIO: AUDIO2 }, 500);  // remaining 2
   const third = await sweepExpired({ DB: DB2, AUDIO: AUDIO2 }, 500);   // nothing left
   const live = [...rows2.values()].filter((r) => r.purged_at === null).length;
-  const ok2 = first === 25 && second === 2 && third === 0 && live === 3 && deleted2.length === 54;
+  const ok2 = first === 25 && second === 2 && third === 0 && live === 3 && deleted2.length === 108;
   console.log(ok2 ? "PASS sweep deletes unopened expired postcards in batches, keeps live ones" : "FAIL sweep", { first, second, third, live, deleted: deleted2.length });
   if (!ok2) process.exit(1);
 }
@@ -52,10 +53,11 @@ import { TTL_MS as TTL10, effectiveExpiry, MESSAGES } from "../../lib/nangman-po
   rows3.set(id, { id_hash: id, created_at: 0, expires_at: 30 * day, revoked_at: null, purged_at: null });
   const DB3 = { prepare(sql) { return { _a: [], bind(...a) { this._a = a; return this; },
     async run() { if (sql.startsWith("UPDATE")) rows3.get(this._a[1]).purged_at = this._a[0]; return {}; },
+    async all() { return { results: [{ name: "opens_at" }] }; },
     async first() { return rows3.get(this._a[0]) ?? null; } }; } };
   const r9 = await findActive({ DB: DB3, AUDIO: { async delete(k) { del3.push(...k); } } }, tok, 10 * day - 1);
   const r10 = await findActive({ DB: DB3, AUDIO: { async delete(k) { del3.push(...k); } } }, tok, 10 * day);
-  const ok4 = !r9.response && r10.response.status === 410 && del3.length === 2;
+  const ok4 = !r9.response && r10.response.status === 410 && del3.length === 4;
   console.log(ok4 ? "PASS old link readable on day 9.99, blocked and purged at day 10" : "FAIL old-link cut", { del: del3.length });
   if (!ok4) process.exit(1);
 

@@ -2,7 +2,7 @@
 import {
   CANVAS, LIMITS, TTL_MS, error, json, randomToken, sha256Hex, keys,
   validateMeta, jpegSize, readLimitedForm, ensureSchema, hasBindings,
-  reserve, refusalReason, sweepExpired,
+  reserve, refusalReason, sweepExpired, parseOpensAt,
  } from "../../../../lib/nangman-postcard.js";
 import {
   stampAccount, ensureStampSchema, grantMonthly, stampBalance, reserveStamped, refundStamped, stampPolicy,
@@ -49,6 +49,11 @@ export async function onRequestPost({ request, env }) {
     return error(400, "invalid");
   }
 
+  // Special stamp: sealed until opensAt (1 hour .. 1 year). Kept in D1 only,
+  // never in the served meta, so a sealed postcard reveals nothing early.
+  const opensAt = parseOpensAt(parsed.opensAt);
+  if (opensAt?.error) return error(400, opensAt.error);
+
   // Structurally valid JPEG of exactly the postcard size.
   const backgroundBytes = new Uint8Array(await background.arrayBuffer());
   const size = jpegSize(backgroundBytes);
@@ -74,7 +79,9 @@ export async function onRequestPost({ request, env }) {
     manageHash: await sha256Hex(manageToken),
     ipHash,
     bytes: new TextEncoder().encode(metaJson).length + backgroundBytes.length,
-    expiresAt: now + TTL_MS,
+    opensAt,
+    // Viewable for TTL from the moment it opens.
+    expiresAt: (opensAt ?? now) + TTL_MS,
   };
 
   // Rate limit + global caps checked and reserved in one atomic statement.
@@ -94,7 +101,7 @@ export async function onRequestPost({ request, env }) {
     return error(reason === "rate_limited" ? 429 : 507, reason);
   }
 
-  const k = keys(idHash);
+  const k = keys(idHash, opensAt != null);
   try {
     await env.AUDIO.put(k.meta, metaJson, { httpMetadata: { contentType: "application/json" } });
     await env.AUDIO.put(k.background, backgroundBytes, { httpMetadata: { contentType: "image/jpeg" } });
@@ -116,6 +123,7 @@ export async function onRequestPost({ request, env }) {
       manageToken,
       url: `${origin}/nangman/postcard/?p=${token}`,
       expiresAt: new Date(row.expiresAt).toISOString(),
+      ...(opensAt != null ? { opensAt: new Date(opensAt).toISOString() } : {}),
     },
     201
   );
