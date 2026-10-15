@@ -208,6 +208,7 @@ App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App 
   - `GET …/calendar` → `text/calendar`(.ics) 개봉 시각 일정 + 알림(VALARM). **받는 사람 연락처는 받지 않음**. 예약 엽서에만 있음(일반은 404)
 - 개봉 후: 일반 엽서와 같은 응답 + `opensAt`. 웹 재생·영상 저장 그대로
 - 보낸 사람 취소(DELETE): 개봉 전에도 가능, 즉시 삭제
-- 웹(`player-20261014-sealed-a.js`, `postcard-sealed-20261014-a.css`): 잠긴 봉투, "시간을 담아 보내는 편지", 도착 예정(보는 기기 현지 시각), 남은 시간, "📅 도착일 알림 받기". 도착 시각이 되면 자동으로 다시 불러와 봉투가 열림
-- 테스트: `scripts/nangman-postcard/sealed.test.mjs`
+- 웹(`player-20261015-fixed3x-a.js`, `postcard-sealed-20261014-a.css`): 잠긴 봉투, "시간을 담아 보내는 편지", 도착 예정(보는 기기 현지 시각), 남은 시간, "📅 도착일 알림 받기". 도착 시각이 되면 자동으로 다시 불러와 봉투가 열림
+- 수신자의 손글씨 재생은 항상 **전체 3배속**이며 재생 속도 선택창은 표시하지 않음(기존에 발송한 공유 링크에도 동일 적용). 영상 저장도 같은 3배속 타임라인 사용
+- 테스트: `scripts/nangman-postcard/sealed.test.mjs`, `scripts/nangman-postcard/fixed-3x-player.test.mjs`
 
