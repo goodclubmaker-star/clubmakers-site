@@ -4,8 +4,8 @@ import { adaptiveTimeline } from "../../public/nangman/postcard/stroke-playback-
 
 // The recipient page must always use one, non-editable 3x timeline.
 const page = readFileSync(new URL("../../public/nangman/postcard/index.html", import.meta.url), "utf8");
-const player = readFileSync(new URL("../../public/nangman/postcard/player-20261015-fixed3x-a.js", import.meta.url), "utf8");
-assert.match(page, /player-20261015-fixed3x-a\.js/);
+const player = readFileSync(new URL("../../public/nangman/postcard/player-20261016-aftertap-autoplay-a.js", import.meta.url), "utf8");
+assert.match(page, /player-20261016-aftertap-autoplay-a\.js/);
 assert.doesNotMatch(page, /speedSelect|speed-row|speed-select|재생 속도/);
 assert.match(player, /const PLAYBACK_SPEED = "3"/);
 assert.match(player, /adaptiveTimeline\(data\.strokes, PLAYBACK_SPEED\)/);
