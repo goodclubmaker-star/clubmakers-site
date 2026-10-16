@@ -212,3 +212,15 @@ App Store Server Notifications **V2**. App Store Connect → 앱 정보 → App 
 - 수신자의 손글씨 재생은 항상 **전체 3배속**이며 재생 속도 선택창은 표시하지 않음(기존에 발송한 공유 링크에도 동일 적용). 영상 저장도 같은 3배속 타임라인 사용
 - 테스트: `scripts/nangman-postcard/sealed.test.mjs`, `scripts/nangman-postcard/fixed-3x-player.test.mjs`
 
+
+
+## 9. 출시 운영 용량·사용량 관찰 (2026-10-16, 아직 배포 미확인)
+
+- **사용량 API(관리 전용)** `GET /api/nangman/usage` — Cloudflare Pages `NANGMAN_USAGE_ADMIN_TOKEN` 환경변수에 32자 이상 임의 비밀을 설정해야 활성화. `Authorization: Bearer <token>` 헤더 필요. 사용자 개인정보는 반환하지 않음.
+- **지표:** 지난 24시간/7일/30일 발송 수, 현재 활성 엽서 수·바이트, 예약 엽서 보관량, 상한 사용률, 10일 보수적 증가 예측, 경고 70/85/95%.
+- **경고 표시는 API 조회 결과에 한정됨.** 자동 알림/비용 청구 조회는 아직 연결되지 않았음. Cloudflare 계정의 Billing/Notifications에서 비용 알림을 별도로 켜야 한다. 이 기능을 자동 결제, R2 할당 예약, 24시간 감시라고 표시하지 말 것.
+- **서버 상한 원격 조정:** `NANGMAN_ACTIVE_BYTES_CAP` (최대 100000000000 = 100GB), `NANGMAN_ACTIVE_COUNT_CAP` (최대 200000). 미설정이면 기존 안전 기본값 2GB·2만 개 유지. 값을 올리기 전에 실기기/부하 검증, R2 보관 정책과 Cloudflare 비용 알림 확인.
+- **규모 경고:** 현재 발송 SQL은 활성 행의 `COUNT/SUM`을 매번 읽는다. 하루 1만 건, 10만 활성 엽서를 운영하기 전에 원자적 요약 카운터 및 청소 배치, 성능 시험이 선행돼야 한다. 이 API 추가만으로 그 규모가 검증되지는 않음.
+- **필수 설정:** 일반 `nangman-postcard/` 11일, 예약 `nangman-postcard-sealed/` 377일 R2 lifecycle를 대시보드에서 실제 적용·확인.
+- **운영 확인 예제(로컬에서 실행):** `curl -H "Authorization: Bearer <ADMIN_TOKEN>" https://myclubmakers.com/api/nangman/usage` (실제 비밀 값을 코드/이슈/로그에 남기지 말 것).
+- **타임캡슐 작업 충돌 방지:** 이 용량/관찰 PR은 예약 개봉·1년 보관의 서버 구현과 병합 순서를 맞춰 QA 후 반영한다.
