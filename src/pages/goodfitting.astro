@@ -121,6 +121,11 @@ const faqSchema = {
       <blockquote class="gf-hero-quote">
         피팅은 <em>기억이 아니라 기록</em>으로 합니다.
       </blockquote>
+
+      <div class="gf-hero-cta">
+        <a href="https://goodfitting.myclubmakers.com/start" class="btn-primary" target="_blank" rel="noopener"><span>30일 무료체험 신청</span><span>→</span></a>
+        <span class="gf-hero-cta-note">피터·레슨프로·피팅샵이라면 내 샵에서 바로 써볼 수 있습니다</span>
+      </div>
     </div>
   </section>
 
@@ -285,8 +290,10 @@ const faqSchema = {
         굿피팅으로 기록되는 피팅은 골프채공작소 현장에서 진행됩니다.
         굿피팅 시스템이나 피팅 상담이 궁금하시면 문의해 주세요.
       </p>
+      <p class="gf-cta-pro">피터·레슨프로라면 — 굿피팅을 <strong>30일 무료</strong>로 내 샵에서 써보세요.</p>
       <div class="gf-cta-btns">
-        <a href="https://goodfitting.myclubmakers.com" class="btn-primary" target="_blank" rel="noopener"><span>굿피팅 바로가기</span><span>→</span></a>
+        <a href="https://goodfitting.myclubmakers.com/start" class="btn-primary" target="_blank" rel="noopener"><span>30일 무료체험 신청</span><span>→</span></a>
+        <a href="https://goodfitting.myclubmakers.com" class="btn-ghost" target="_blank" rel="noopener"><span>굿피팅 둘러보기</span><span>↗</span></a>
         <a href="/fitting" class="btn-ghost"><span>클럽 피팅 과정</span><span>→</span></a>
         <a href="/contact" class="btn-ghost"><span>문의하기</span><span>→</span></a>
       </div>
@@ -545,6 +552,10 @@ const faqSchema = {
   .gf-cta-btns {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
   }
+  .gf-hero-cta { margin-top: 2.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.25rem; }
+  .gf-hero-cta-note { font-family: var(--sans); font-size: .9375rem; color: rgba(255,255,255,.68); }
+  .gf-cta-pro { font-family: var(--sans); font-size: 1.0625rem; color: rgba(255,255,255,.88); margin: 0 auto 1.75rem; }
+  .gf-cta-pro strong { color: var(--accent-2); }
   .btn-primary, .btn-ghost {
     font-family: var(--sans); font-size: 1rem; font-weight: 600;
     padding: 15px 30px; border-radius: 2px; text-decoration: none;
