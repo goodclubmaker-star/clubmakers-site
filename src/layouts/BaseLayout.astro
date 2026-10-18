@@ -13,6 +13,8 @@ interface Props {
   extraSchema?: Record<string, unknown> | Record<string, unknown>[];
   /** 키워드 (영문/한글 혼용 가능, 콤마 구분) */
   keywords?: string;
+  /** 404 등 색인하지 않을 페이지 */
+  noindex?: boolean;
 }
 
 const {
@@ -22,6 +24,7 @@ const {
   schemaType = 'WebSite',
   extraSchema,
   keywords,
+  noindex = false,
 } = Astro.props;
 
 const fullTitle = title === '클럽메이커스'
@@ -76,7 +79,7 @@ const showKakaoChat = !hideChatPaths.some((p) => Astro.url.pathname.startsWith(p
     <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
 
     <!-- AI 검색 최적화 (GEO/AEO) -->
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-snippet:-1, max-image-preview:large"} />
     {keywords && <meta name="keywords" content={keywords} />}
     <meta name="author" content="채기웅 (골프채공작소 클럽메이커스 공작소장)" />
     <meta name="article:author" content="채기웅" />

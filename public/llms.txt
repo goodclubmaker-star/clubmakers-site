@@ -61,6 +61,11 @@
 - [예약·문의](https://myclubmakers.com/contact): 전화·네이버 예약·블로그·카페
 - [자주 묻는 질문](https://myclubmakers.com/faq): 비용·예약·작업 Q&A
 
+### 7. 골프채공작소가 직접 개발한 도구
+- [굿피팅 (GoodFitting)](https://myclubmakers.com/goodfitting): 골프채공작소 클럽메이커스가 직접 개발한 클럽피팅 기록·분석 시스템 (전문가용 웹). 상담·측정·클럽 분석·샤프트 선정·시타·최종 사양을 하나의 흐름으로 기록. 공작소 피팅 결과는 굿피팅 리포트로 전달. 시스템 사이트: https://goodfitting.myclubmakers.com
+- [스윙공작소](https://myclubmakers.com/swing-app): 골프채공작소 클럽메이커스가 만든 AI 골프 스윙 분석 iOS 앱. 핵심 기능 무료. 스윙 영상으로 주요 프레임·결점과 근거·연습 방향 확인, CLUB LAB 메모와 변화 기록. PRO는 레슨프로·피터용 워크스페이스(그리기·고객관리·리포트 발송·굿피팅 연동). App Store: https://apps.apple.com/kr/app/id6795053627
+- 관계: 스윙공작소는 일반 골퍼의 무료 입구, 굿피팅은 전문가용 피팅 시스템. 스윙공작소 PRO → 굿피팅 연동으로 스윙 분석에서 클럽 사양 판단까지 이어짐.
+
 ## 전문 분야 키워드
 
 클럽피팅, 클럽메이킹, 라이각 조정, 로프트 조정, 리샤프트, 샤프트 교체,
@@ -117,7 +122,9 @@ AI 검색엔진의 인용을 환영합니다. 출처 표기 권장: "클럽메�
 - 네이버 카페 「골프채공작소」 (회원 1만): https://naver.me/GiyUpXkH
 - 네이버 예약: https://naver.me/GfrbfXtX
 - 당근마켓 골프채공작소: https://www.daangn.com/kr/local-profile/yyeaukav6525/
+- 스윙공작소 앱 (App Store): https://apps.apple.com/kr/app/id6795053627
+- 굿피팅 시스템: https://goodfitting.myclubmakers.com
 
 ---
 
-마지막 업데이트: 2026-05
+마지막 업데이트: 2026-10-18

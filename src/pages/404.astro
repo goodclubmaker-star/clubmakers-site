@@ -1,0 +1,47 @@
+---
+// 404 — 없는 주소는 홈이 아니라 404로 응답 (Cloudflare Pages가 404.html을 404 상태로 서빙)
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const links = [
+  { href: '/', label: '홈', note: '골프채공작소 클럽메이커스' },
+  { href: '/fitting', label: '클럽 피팅', note: '진단 → 측정 → 처방' },
+  { href: '/workshop', label: '공임 안내', note: '수리·작업 공임표' },
+  { href: '/price', label: '가격표', note: '그립·샤프트·헤드' },
+  { href: '/topics', label: '증상별 진단', note: '슬라이스·훅·탄도 등' },
+  { href: '/contact', label: '예약·문의', note: '전화·네이버 예약' },
+];
+---
+
+<BaseLayout
+  title="페이지를 찾을 수 없습니다"
+  description="요청하신 페이지를 찾을 수 없습니다. 골프채공작소 클럽메이커스 홈이나 주요 페이지에서 원하시는 내용을 찾아보세요."
+  noindex
+>
+  <section class="nf">
+    <div class="nf-inner">
+      <p class="nf-eyebrow">404 · NOT FOUND</p>
+      <h1>찾으시는 페이지가<br /><em>없습니다</em></h1>
+      <p class="nf-lead">주소가 바뀌었거나 잘못 입력되었을 수 있습니다. 아래에서 원하시는 곳으로 이동해 주세요.</p>
+      <ul class="nf-links">
+        {links.map((l) => (
+          <li><a href={l.href}><strong>{l.label}</strong><span>{l.note}</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf { background: #F8F5EE; padding: 96px 0 104px; }
+  .nf-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .nf-eyebrow { font-family: "Pretendard", system-ui, sans-serif; font-size: .75rem; font-weight: 600; letter-spacing: .15em; color: #2C5F4F; margin: 0 0 1.25rem; }
+  .nf h1 { font-family: "Noto Serif KR", serif; font-size: clamp(2rem, 5.5vw, 3.25rem); font-weight: 500; line-height: 1.2; letter-spacing: -.02em; color: #1F1B16; margin: 0 0 1.25rem; }
+  .nf h1 em { font-style: normal; color: #2C5F4F; }
+  .nf-lead { font-family: "Pretendard", system-ui, sans-serif; font-size: 1.0625rem; line-height: 1.8; color: #3A332A; margin: 0 0 2.5rem; }
+  .nf-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 600px) { .nf-links { grid-template-columns: 1fr 1fr; } }
+  .nf-links a { display: flex; flex-direction: column; gap: 4px; background: #fff; border: 1px solid #E2DACA; border-radius: 2px; padding: 18px 20px; text-decoration: none; transition: border-color .2s; }
+  .nf-links a:hover { border-color: #2C5F4F; }
+  .nf-links strong { font-family: "Noto Serif KR", serif; font-weight: 500; font-size: 1.125rem; color: #1F1B16; }
+  .nf-links span { font-family: "Pretendard", system-ui, sans-serif; font-size: .875rem; color: #6B6358; }
+</style>
