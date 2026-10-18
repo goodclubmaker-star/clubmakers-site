@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Actual App Store URL is intentionally not guessed.
-// Set PUBLIC_SWING_APP_STORE_URL to the verified swing-ios App Store listing.
+// Verified swing-ios App Store listing (id6795053627).
+// PUBLIC_SWING_APP_STORE_URL overrides it when set.
 // Do not use WOONGTO's app id (a different app).
-const rawStore = import.meta.env.PUBLIC_SWING_APP_STORE_URL || '';
+const DEFAULT_STORE_URL = 'https://apps.apple.com/kr/app/%EC%8A%A4%EC%9C%99%EA%B3%B5%EC%9E%91%EC%86%8C-ai-%EA%B3%A8%ED%94%84%EC%8A%A4%EC%9C%99-%EB%B6%84%EC%84%9D/id6795053627';
+const rawStore = import.meta.env.PUBLIC_SWING_APP_STORE_URL || DEFAULT_STORE_URL;
 const storeUrl = /^https:\/\/apps\.apple\.com\/[a-z-]+\/app\/[^\s?#]*id\d+(?:[?][^\s#]*)?$/.test(rawStore)
   ? rawStore
   : null;

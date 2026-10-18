@@ -1,0 +1,565 @@
+---
+// /src/pages/goodfitting.astro
+// 굿피팅(GoodFitting) 시스템 소개 — 정의 → 배경 → 흐름 → 차이 → 실제 화면 → 연동·교육 → FAQ → CTA
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "굿피팅 GoodFitting — 골프채공작소가 만든 클럽피팅 기록·분석 시스템";
+const pageDescription = "굿피팅(GoodFitting)은 골프채공작소 클럽메이커스가 직접 개발한 클럽피팅 기록·분석 시스템입니다. 상담·측정·클럽 분석·샤프트 선정·시타·최종 사양을 하나의 흐름으로 기록합니다. 피팅은 기억이 아니라 기록으로 합니다.";
+const pageKeywords = "굿피팅, GoodFitting, 클럽피팅 프로그램, 골프 피팅 기록, 피팅 분석 시스템, 샤프트 선정, 피팅 워크시트, 골프채공작소, 클럽메이커스, 채기웅";
+
+// 작동 흐름 6단계
+const steps = [
+  { step: "01", name: "상담",          note: "골퍼의 목표·이력·현재 불편을 구조화된 질문으로 기록합니다." },
+  { step: "02", name: "측정",          note: "스윙과 볼 데이터를 측정 조건(장비·환경·볼)과 함께 남깁니다." },
+  { step: "03", name: "클럽 분석",     note: "현재 클럽의 길이·라이/로프트·헤드무게·SW·MOI·CPM을 실측합니다." },
+  { step: "04", name: "샤프트 선정",   note: "측정과 분석을 근거로 후보 사양을 좁히고, 선정 이유를 기록합니다." },
+  { step: "05", name: "시타",          note: "후보 사양의 시타 결과와 골퍼의 반응을 같은 기준으로 비교합니다." },
+  { step: "06", name: "최종 사양",     note: "확정 사양과 작업 값을 남겨, 다음 방문과 재현의 기준으로 씁니다." },
+];
+
+// 일반 피팅 프로그램과의 차이
+const diffs = [
+  { title: "숫자가 아니라 판단 과정을 기록",   desc: "론치모니터 수치만 저장하지 않습니다. 그 숫자를 보고 무엇을 판단했고 왜 그 사양을 골랐는지까지 남깁니다." },
+  { title: "측정 조건을 함께 기록",             desc: "같은 숫자도 장비·환경·볼에 따라 의미가 달라집니다. 측정 조건을 데이터와 함께 저장해 비교 가능한 기록을 만듭니다." },
+  { title: "상담부터 최종 사양까지 한 흐름",   desc: "상담·측정·클럽 분석·샤프트 선정·시타·최종 사양이 따로 흩어지지 않고 하나의 피팅 기록으로 이어집니다." },
+  { title: "현장에서 만든 시스템",             desc: "기능부터 만든 소프트웨어가 아니라, 공작소장 채기웅의 25년 피팅 경험과 KIPO 특허 3종을 바탕으로 실제 피팅 현장에서 만들었습니다." },
+];
+
+// 실제 화면
+const screens = [
+  {
+    img: "/images/worksheet-grid.png",
+    tag: "클럽 분석 · 작업 기록",
+    title: "세트 그리드 — 헤드무게 · SW · MOI · CPM",
+    desc: "한 세트의 클럽별 값을 한 화면에서 입력하고, 스윙웨이트와 MOI의 세트 흐름을 그래프로 확인합니다.",
+  },
+  {
+    img: "/images/worksheet-lieloft-chart.png",
+    tag: "최종 사양",
+    title: "Loft / Lie Chart — 조정 결과 기록",
+    desc: "원래 값·목표 값·실제 조정 값이 차트로 정리되어 고객에게 전달되고, 다음 방문의 기준이 됩니다.",
+  },
+];
+
+// FAQ — 화면과 FAQPage 구조화 데이터가 같은 내용을 쓰도록 한 곳에서 관리
+const faqs = [
+  {
+    q: "굿피팅(GoodFitting)은 무엇인가요?",
+    a: "굿피팅은 골프채공작소 클럽메이커스가 직접 개발한 클럽피팅 기록·분석 시스템입니다. 상담·측정·클럽 분석·샤프트 선정·시타·최종 사양을 하나의 흐름으로 기록합니다.",
+  },
+  {
+    q: "굿피팅은 누가 개발했나요?",
+    a: "골프채공작소 클럽메이커스가 개발했습니다. 공작소장 채기웅의 25년 클럽피팅 경험과 KIPO 특허 3종을 바탕으로, 실제 피팅 현장의 업무 흐름을 시스템으로 옮겼습니다.",
+  },
+  {
+    q: "일반 피팅 프로그램과 무엇이 다른가요?",
+    a: "론치모니터 숫자는 출력값일 뿐입니다. 굿피팅은 숫자와 함께 측정 조건과 판단 과정, 사양 선정 이유까지 기록해, 피팅 결과를 나중에 다시 검토하고 재현할 수 있게 합니다.",
+  },
+  {
+    q: "개인 골퍼도 굿피팅을 사용할 수 있나요?",
+    a: "굿피팅은 피팅 전문가가 피팅 과정을 기록·분석하는 도구입니다. 개인 골퍼는 골프채공작소에서 피팅을 받으면 굿피팅으로 정리된 피팅 기록을 받아 보실 수 있습니다. 전문가 이용은 문의해 주세요.",
+  },
+  {
+    q: "스윙공작소 앱과는 어떤 관계인가요?",
+    a: "스윙공작소는 클럽메이커스의 AI 골프 스윙 분석 앱입니다. 전문가용 스윙공작소 PRO는 굿피팅과 연동되어, 스윙 분석 결과를 피팅 기록과 함께 관리할 수 있습니다.",
+  },
+  {
+    q: "교육 과정과도 연결되나요?",
+    a: "네. 굿피팅은 채기웅 전문가 과정에서 교육 실습 도구로 사용됩니다. 수강생은 실제 피팅 흐름을 굿피팅으로 기록하며 배웁니다.",
+  },
+];
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  '@id': 'https://myclubmakers.com/goodfitting#software',
+  name: '굿피팅 (GoodFitting)',
+  alternateName: 'GoodFitting',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description: '굿피팅(GoodFitting)은 골프채공작소 클럽메이커스가 직접 개발한 클럽피팅 기록·분석 시스템이다. 상담·측정·클럽 분석·샤프트 선정·시타·최종 사양을 하나의 흐름으로 기록한다.',
+  url: 'https://myclubmakers.com/goodfitting',
+  sameAs: 'https://goodfitting.myclubmakers.com',
+  inLanguage: 'ko',
+  creator: { '@id': 'https://myclubmakers.com/#organization' },
+  author: { '@id': 'https://myclubmakers.com/about#person' },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': 'https://myclubmakers.com/goodfitting#faq',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemaType="Service"
+  keywords={pageKeywords}
+  extraSchema={[softwareSchema, faqSchema]}
+>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="gf-hero">
+    <div class="container narrow">
+      <p class="eyebrow">GOODFITTING · 굿피팅 시스템</p>
+
+      <h1 class="gf-title">
+        굿피팅,<br />
+        <em>기록하는 피팅 시스템</em>
+      </h1>
+
+      <p class="gf-source">골프채공작소 클럽메이커스 자체 개발 · 공작소장 채기웅</p>
+
+      <blockquote class="gf-hero-quote">
+        피팅은 <em>기억이 아니라 기록</em>으로 합니다.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ==================== DEFINITION ==================== -->
+  <section class="gf-lead-section">
+    <div class="container narrow">
+      <div class="gf-callout">
+        <p class="gf-callout-label">굿피팅이란</p>
+        <p class="gf-callout-text">
+          <strong>굿피팅(GoodFitting)은 골프채공작소 클럽메이커스가 직접 개발한 클럽피팅 기록·분석 시스템입니다.</strong>
+          상담·측정·클럽 분석·샤프트 선정·시타·최종 사양을 하나의 흐름으로 기록합니다.
+        </p>
+      </div>
+
+      <p class="gf-para">
+        공작소장 채기웅의 25년 클럽피팅 경험과 <strong>KIPO 특허 3종</strong>을 바탕으로,
+        실제 피팅 현장의 업무 흐름을 그대로 시스템으로 옮겼습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== WHY ==================== -->
+  <section class="gf-principle">
+    <div class="container narrow">
+      <p class="eyebrow">WHY · 왜 만들었나</p>
+      <p class="gf-principle-text">
+        론치모니터의 숫자는 <em>출력값</em>일 뿐입니다.
+      </p>
+      <p class="gf-para gf-para-center">
+        같은 볼스피드와 스핀도 어떤 장비로, 어떤 환경에서, 어떤 볼로 쟀는지에 따라 의미가 달라집니다.
+        그리고 그 숫자를 보고 어떤 판단을 내렸는지는 숫자 어디에도 남지 않습니다.
+        굿피팅은 <strong>측정 조건과 판단 과정을 데이터와 함께 기록</strong>해,
+        다음 방문에서도 같은 근거로 이어서 판단할 수 있게 하려고 만들었습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== FLOW ==================== -->
+  <section class="gf-list-section">
+    <div class="container">
+      <div class="gf-head">
+        <p class="eyebrow">FLOW · 작동 흐름</p>
+        <h2 class="section-title">
+          한 번의 피팅을 <em>여섯 단계</em>로
+        </h2>
+      </div>
+
+      <div class="gf-grid">
+        {steps.map((s) => (
+          <div class="gf-card">
+            <p class="gf-card-step">{s.step}</p>
+            <h3 class="gf-card-name">{s.name}</h3>
+            <p class="gf-card-note">{s.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DIFFERENCE ==================== -->
+  <section class="gf-diff-section">
+    <div class="container narrow">
+      <p class="eyebrow">DIFFERENCE · 무엇이 다른가</p>
+      <h2 class="section-title">
+        일반 피팅 프로그램과의 <em>네 가지 차이</em>
+      </h2>
+      <ol class="gf-diff-list">
+        {diffs.map((d, i) => (
+          <li>
+            <span class="gf-diff-n">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="gf-diff-title">{d.title}</h3>
+              <p class="gf-diff-desc">{d.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ==================== SCREENS ==================== -->
+  <section class="gf-screens-section">
+    <div class="container">
+      <div class="gf-head">
+        <p class="eyebrow">IN PRACTICE · 실제 화면</p>
+        <h2 class="section-title">
+          기록이 곧 <em>리포트</em>가 됩니다
+        </h2>
+        <p class="section-lead">
+          입력한 기록이 그대로 고객용 리포트가 되고, 다음 방문의 기준이 됩니다.
+        </p>
+      </div>
+
+      <div class="gf-screens">
+        {screens.map((s) => (
+          <figure class="gf-screen">
+            <div class="gf-screen-img">
+              <img src={s.img} alt={s.title} loading="lazy" />
+            </div>
+            <figcaption class="gf-screen-cap">
+              <span class="gf-screen-tag">{s.tag}</span>
+              <h3 class="gf-screen-title">{s.title}</h3>
+              <p class="gf-screen-desc">{s.desc}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <p class="gf-more">
+        <a href="/worksheet-system">워크시트와 완성 리포트 화면 더 보기 →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== PRO & EDUCATION ==================== -->
+  <section class="gf-ref-section">
+    <div class="container narrow">
+      <p class="eyebrow">CONNECT · 전문가 연동 · 교육</p>
+      <ul class="gf-ref-list">
+        <li>
+          <span class="gf-ref-part">스윙공작소 PRO</span>
+          <span class="gf-ref-desc">레슨프로·피터용 스윙공작소 PRO는 굿피팅과 연동되어, 스윙 분석 결과를 피팅 기록과 함께 관리합니다. <a href="/swing-app">스윙공작소 앱 →</a></span>
+        </li>
+        <li>
+          <span class="gf-ref-part">전문가 과정</span>
+          <span class="gf-ref-desc">채기웅 전문가 과정에서 굿피팅을 교육 실습 도구로 사용합니다. 실제 피팅 흐름을 기록하며 배웁니다. <a href="/education">교육 과정 →</a></span>
+        </li>
+        <li>
+          <span class="gf-ref-part">파트너</span>
+          <span class="gf-ref-desc">굿피팅과 스윙공작소 PRO를 함께 쓰는 전국 전문가·파트너를 안내합니다. <a href="/partners">파트너 안내 →</a></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section class="gf-faq-section">
+    <div class="container narrow">
+      <p class="eyebrow">FAQ · 자주 묻는 질문</p>
+      <h2 class="section-title">
+        굿피팅에 대해 <em>자주 묻는 질문</em>
+      </h2>
+      <div class="gf-faq">
+        {faqs.map((f) => (
+          <details class="gf-faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="gf-cta">
+    <div class="container narrow">
+      <p class="eyebrow">NEXT STEP</p>
+      <h2 class="gf-cta-title">
+        기록으로 남는 <em>피팅</em>
+      </h2>
+      <p class="gf-cta-lead">
+        굿피팅으로 기록되는 피팅은 골프채공작소 현장에서 진행됩니다.
+        굿피팅 시스템이나 피팅 상담이 궁금하시면 문의해 주세요.
+      </p>
+      <div class="gf-cta-btns">
+        <a href="https://goodfitting.myclubmakers.com" class="btn-primary" target="_blank" rel="noopener"><span>굿피팅 바로가기</span><span>→</span></a>
+        <a href="/fitting" class="btn-ghost"><span>클럽 피팅 과정</span><span>→</span></a>
+        <a href="/contact" class="btn-ghost"><span>문의하기</span><span>→</span></a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  :root {
+    --bg: #F8F5EE; --bg-elev: #FFFFFF; --bg-soft: #F1ECE0;
+    --text: #1F1B16; --text-2: #3A332A; --muted: #6B6358;
+    --rule: #E2DACA; --rule-2: #D2C9B5;
+    --accent: #2C5F4F; --accent-2: #87A99B; --accent-soft: #E6EDE7;
+    --serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --sans:  "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  }
+
+  .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: .75rem; font-weight: 600; letter-spacing: .15em;
+    color: var(--accent); text-transform: uppercase; margin: 0 0 1.25rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.875rem, 4.5vw, 2.875rem);
+    font-weight: 500; line-height: 1.2; letter-spacing: -.02em;
+    color: var(--text); margin: 0 0 1.25rem;
+  }
+  .section-title em { font-style: normal; color: var(--accent); }
+  .section-lead {
+    font-family: var(--sans); font-size: 1.0625rem; line-height: 1.8;
+    color: var(--text-2); max-width: 620px; margin: 0;
+  }
+
+  /* HERO */
+  .gf-hero {
+    background: var(--text); color: var(--bg);
+    padding: 104px 0 88px;
+  }
+  .gf-hero .eyebrow { color: var(--accent-2); }
+  .gf-title {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 500; line-height: 1.12; letter-spacing: -.025em;
+    color: #fff; margin: 0 0 1.5rem;
+  }
+  .gf-title em { font-style: normal; color: var(--accent-2); font-weight: 600; }
+  .gf-source {
+    font-family: var(--sans); font-size: .9375rem;
+    color: rgba(255,255,255,.6); margin: 0 0 2.5rem;
+    letter-spacing: .02em;
+  }
+  .gf-hero-quote {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 500; line-height: 1.4; color: #fff;
+    margin: 0; padding: 1.75rem 0 0; border-top: 1px solid rgba(255,255,255,.18);
+    max-width: 620px;
+  }
+  .gf-hero-quote em { font-style: normal; color: var(--accent-2); font-weight: 600; }
+
+  /* DEFINITION */
+  .gf-lead-section { padding: 80px 0; background: var(--bg); }
+  .gf-callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 1.5rem 1.75rem; margin: 0 0 2.5rem;
+  }
+  .gf-callout-label {
+    font-family: var(--sans); font-size: .6875rem; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase; color: var(--accent);
+    margin: 0 0 .6rem;
+  }
+  .gf-callout-text {
+    font-family: var(--sans); font-size: 1.0625rem; line-height: 1.8;
+    color: var(--text-2); margin: 0;
+  }
+  .gf-callout-text strong { color: var(--accent); font-weight: 700; }
+  .gf-para {
+    font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85;
+    color: var(--text-2); margin: 0;
+  }
+  .gf-para strong { color: var(--text); font-weight: 600; }
+  .gf-para-center { max-width: 640px; margin: 1.75rem auto 0; }
+
+  /* WHY */
+  .gf-principle {
+    padding: 80px 0; background: var(--bg-soft);
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    text-align: center;
+  }
+  .gf-principle-text {
+    font-family: var(--serif);
+    font-size: clamp(1.375rem, 3vw, 1.875rem);
+    font-weight: 500; line-height: 1.5; color: var(--text);
+    margin: 1rem auto 0; max-width: 640px;
+  }
+  .gf-principle-text em { font-style: normal; color: var(--accent); font-weight: 600; }
+
+  /* FLOW */
+  .gf-list-section { padding: 80px 0; background: var(--bg); }
+  .gf-head { max-width: 760px; margin: 0 auto 3rem; padding: 0 24px; }
+  .gf-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1.25rem;
+  }
+  @media (min-width: 600px) { .gf-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 960px) { .gf-grid { grid-template-columns: repeat(3, 1fr); } }
+  .gf-card {
+    background: var(--bg-elev); border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent-2);
+    border-radius: 2px; padding: 28px 26px;
+  }
+  .gf-card-step {
+    font-family: var(--serif); font-size: 1.5rem; font-weight: 500;
+    color: var(--accent); opacity: .5; margin: 0 0 1rem; line-height: 1;
+  }
+  .gf-card-name {
+    font-family: var(--serif); font-size: 1.1875rem; font-weight: 500;
+    color: var(--text); margin: 0 0 .6rem; line-height: 1.4;
+  }
+  .gf-card-note {
+    font-family: var(--sans); font-size: .9375rem; line-height: 1.65;
+    color: var(--text-2); margin: 0;
+  }
+
+  /* DIFFERENCE */
+  .gf-diff-section {
+    padding: 80px 0; background: var(--bg-soft);
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .gf-diff-list { list-style: none; padding: 0; margin: 2rem 0 0; }
+  .gf-diff-list li {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    padding: 1.4rem 0; border-bottom: 1px solid var(--rule);
+  }
+  .gf-diff-list li:last-child { border-bottom: none; }
+  .gf-diff-n {
+    flex-shrink: 0; font-family: var(--serif); font-size: 1.25rem; font-weight: 500;
+    color: var(--accent); opacity: .6; line-height: 1.4; width: 2rem;
+  }
+  .gf-diff-title {
+    font-family: var(--serif); font-size: 1.1875rem; font-weight: 500;
+    color: var(--text); margin: 0 0 .4rem; line-height: 1.4;
+  }
+  .gf-diff-desc {
+    font-family: var(--sans); font-size: .9375rem; line-height: 1.7;
+    color: var(--text-2); margin: 0;
+  }
+
+  /* SCREENS */
+  .gf-screens-section { padding: 88px 0; background: var(--bg); }
+  .gf-screens {
+    display: grid; grid-template-columns: 1fr; gap: 2.5rem;
+  }
+  @media (min-width: 860px) {
+    .gf-screens { grid-template-columns: 1fr 1fr; gap: 2.5rem 2rem; }
+  }
+  .gf-screen {
+    margin: 0; background: var(--bg-elev);
+    border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .gf-screen-img {
+    background: var(--bg-soft); border-bottom: 1px solid var(--rule);
+    padding: 14px;
+  }
+  .gf-screen-img img {
+    display: block; width: 100%; height: auto; border-radius: 2px;
+  }
+  .gf-screen-cap { padding: 22px 24px 26px; }
+  .gf-screen-tag {
+    display: inline-block; font-family: var(--sans);
+    font-size: .6875rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: #fff; background: var(--accent);
+    padding: .3rem .5rem; border-radius: 3px; margin-bottom: .85rem;
+  }
+  .gf-screen-title {
+    font-family: var(--serif); font-size: 1.1875rem; font-weight: 500;
+    color: var(--text); margin: 0 0 .6rem; line-height: 1.4;
+  }
+  .gf-screen-desc {
+    font-family: var(--sans); font-size: .9375rem; line-height: 1.7;
+    color: var(--text-2); margin: 0;
+  }
+  .gf-more { text-align: center; margin: 2.5rem 0 0; font-family: var(--sans); }
+  .gf-more a, .gf-ref-desc a {
+    color: var(--accent); font-weight: 600; text-decoration: none;
+    border-bottom: 1px solid var(--accent-2);
+  }
+  .gf-more a:hover, .gf-ref-desc a:hover { border-color: var(--accent); }
+
+  /* PRO & EDUCATION */
+  .gf-ref-section {
+    padding: 72px 0; background: var(--bg-soft);
+    border-top: 1px solid var(--rule);
+  }
+  .gf-ref-list { list-style: none; padding: 0; margin: 0; }
+  .gf-ref-list li {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem;
+    padding: 1.1rem 0; border-bottom: 1px solid var(--rule);
+  }
+  .gf-ref-list li:last-child { border-bottom: none; }
+  .gf-ref-part {
+    font-family: var(--sans); font-size: .8125rem; font-weight: 700;
+    letter-spacing: .05em; color: var(--accent);
+    background: var(--accent-soft); padding: .3rem .6rem; border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .gf-ref-desc {
+    font-family: var(--sans); font-size: 1rem; line-height: 1.7; color: var(--text-2);
+    flex: 1 1 320px;
+  }
+
+  /* FAQ */
+  .gf-faq-section { padding: 80px 0; background: var(--bg); }
+  .gf-faq { margin-top: 2rem; border-top: 1px solid var(--rule); }
+  .gf-faq-item { border-bottom: 1px solid var(--rule); }
+  .gf-faq-item summary {
+    cursor: pointer; list-style: none;
+    font-family: var(--serif); font-size: 1.125rem; font-weight: 500;
+    color: var(--text); padding: 1.25rem 2rem 1.25rem 0; position: relative;
+  }
+  .gf-faq-item summary::-webkit-details-marker { display: none; }
+  .gf-faq-item summary::after {
+    content: "+"; position: absolute; right: 0; top: 1.15rem;
+    font-family: var(--sans); color: var(--accent); font-size: 1.25rem;
+  }
+  .gf-faq-item[open] summary::after { content: "−"; }
+  .gf-faq-item p {
+    font-family: var(--sans); font-size: 1rem; line-height: 1.8;
+    color: var(--text-2); margin: 0 0 1.4rem;
+  }
+
+  /* CTA */
+  .gf-cta {
+    padding: 96px 0; background: var(--text); color: var(--bg);
+    text-align: center;
+  }
+  .gf-cta .eyebrow { color: var(--accent-2); }
+  .gf-cta-title {
+    font-family: var(--serif);
+    font-size: clamp(1.875rem, 4.5vw, 2.75rem);
+    font-weight: 500; line-height: 1.25; color: #fff; margin: 0 0 1.25rem;
+  }
+  .gf-cta-title em { font-style: normal; color: var(--accent-2); font-weight: 600; }
+  .gf-cta-lead {
+    font-family: var(--sans); font-size: 1.0625rem; line-height: 1.85;
+    color: rgba(255,255,255,.78); margin: 0 auto 2.5rem; max-width: 560px;
+  }
+  .gf-cta-btns {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+  }
+  .btn-primary, .btn-ghost {
+    font-family: var(--sans); font-size: 1rem; font-weight: 600;
+    padding: 15px 30px; border-radius: 2px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: .75rem;
+    transition: background .25s, border-color .25s, transform .25s, color .25s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+  .btn-primary:hover { background: var(--accent-2); border-color: var(--accent-2); transform: translateX(2px); }
+  .btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35); }
+  .btn-ghost:hover { border-color: #fff; transform: translateX(2px); }
+
+  @media (max-width: 480px) {
+    .gf-hero { padding: 72px 0 56px; }
+    .gf-lead-section, .gf-list-section, .gf-screens-section { padding: 56px 0; }
+    .gf-principle, .gf-diff-section, .gf-ref-section, .gf-faq-section { padding: 56px 0; }
+    .gf-cta { padding: 72px 0; }
+  }
+</style>
