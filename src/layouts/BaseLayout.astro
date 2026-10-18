@@ -33,6 +33,23 @@ const fullTitle = title === '클럽메이커스'
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
+// BreadcrumbList — 홈 > (상위 섹션) > 현재 페이지
+const crumbLabels: Record<string, string> = {
+  journal: '공작소 일지', topics: '증상·처방', glossary: '용어사전', book: '책 『실제적인 클럽피팅』',
+  'equipment-rules': '장비 규정', woongto: '웅토',
+};
+const segs = Astro.url.pathname.split('/').filter(Boolean);
+const crumbs = [{ name: '홈', url: new URL('/', Astro.site).toString() }];
+if (segs.length > 1 && crumbLabels[segs[0]]) {
+  crumbs.push({ name: crumbLabels[segs[0]], url: new URL(`/${segs[0]}/`, Astro.site).toString() });
+}
+if (segs.length > 0) crumbs.push({ name: title === '클럽메이커스' ? fullTitle : title, url: canonicalUrl });
+const breadcrumbSchema = segs.length > 0 && !noindex ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.url })),
+} : null;
+
 // 플로팅 카카오 챗봇 버튼: 가격표 등 '도착지' 페이지에선 숨김
 // (챗봇은 콘텐츠 페이지 → 사이트로 유입시키는 입구 역할이므로)
 const hideChatPaths = ['/price'];
@@ -88,6 +105,8 @@ const showKakaoChat = !hideChatPaths.some((p) => Astro.url.pathname.startsWith(p
     <meta name="geo.placename" content="서울 서초구 양재동" />
     <meta name="geo.position" content="37.4707;127.0388" />
     <meta name="ICBM" content="37.4707, 127.0388" />
+
+    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 
     <!-- schema.org JSON-LD : 페이지 메타 -->
     <script type="application/ld+json" set:html={JSON.stringify({

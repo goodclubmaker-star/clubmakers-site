@@ -1,0 +1,55 @@
+# IndexNow — main에 push되면 바뀐 페이지 주소를 검색엔진에 바로 알림
+# (네이버·Bing·Yandex 등 IndexNow 참여 엔진이 공유. 구글은 sitemap으로 반영)
+name: IndexNow ping
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Wait for Cloudflare Pages deploy
+        run: sleep 240
+      - name: Collect changed URLs and ping
+        env:
+          KEY: "aa576c2b5b1ff9075c606e8fb0dcb8b0"
+          SITE: https://myclubmakers.com
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess, urllib.request
+          site, key = os.environ['SITE'], os.environ['KEY']
+          files = subprocess.run(['git', 'diff', '--name-only', 'HEAD~1', 'HEAD'], capture_output=True, text=True).stdout.split()
+          urls = set()
+          for f in files:
+              m = re.match(r'src/pages/(.+)\.astro$', f)
+              if m and '[' not in m.group(1) and m.group(1) != '404':
+                  p = m.group(1)
+                  p = '' if p == 'index' else re.sub(r'/index$', '', p)
+                  urls.add(f'{site}/{p}/' if p else f'{site}/')
+              m = re.match(r'src/content/(journal|glossary)/(.+)\.mdx?$', f)
+              if m:
+                  urls.add(f'{site}/{m.group(1)}/{m.group(2)}/')
+                  urls.add(f'{site}/{m.group(1)}/')
+              m = re.match(r'public/(.+)$', f)
+              if m and (f.endswith('.html') or f.endswith('llms.txt')):
+                  p = m.group(1)
+                  urls.add(f'{site}/' + (p[:-len('index.html')] if p.endswith('index.html') else p))
+              if f.startswith('src/layouts/') or f.startswith('src/components/'):
+                  urls.add(f'{site}/')
+          if not urls:
+              print('no page changes'); raise SystemExit
+          body = json.dumps({'host': 'myclubmakers.com', 'key': key, 'keyLocation': f'{site}/{key}.txt', 'urlList': sorted(urls)[:10000]}).encode()
+          for ep in ['https://api.indexnow.org/indexnow', 'https://searchadvisor.naver.com/indexnow']:
+              req = urllib.request.Request(ep, data=body, headers={'Content-Type': 'application/json; charset=utf-8'})
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      print(ep, r.status, len(urls), 'urls')
+              except Exception as e:
+                  print(ep, 'error', e)
+          print('\n'.join(sorted(urls)))
+          PY
