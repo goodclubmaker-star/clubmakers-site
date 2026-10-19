@@ -26,6 +26,17 @@ window.studyEvidence={
     highDiscrimination:'수학Ⅰ 지수·로그함수 그래프(22번), 수학Ⅱ 함수의 극한(21번), 선택 확률과 통계 30번',
     caveat:'선택과목 체제의 수치는 2028 수능의 확률과 통계 8문항 비율을 보장하지 않음'
   },
+  pastExamExamples:{
+    // Only directly described past-exam examples; NOT a full frequency census.
+    1:[{year:2026,item:'공통 22',kind:'지수·로그함수의 그래프와 대칭'}],
+    3:[{year:2024,item:'공통 15',kind:'수열의 귀납적 정의'},{year:2025,item:'공통 22',kind:'수열의 귀납적 정의'},{year:2026,item:'공통 20',kind:'수열의 부분합'}],
+    4:[{year:2024,item:'공통 14',kind:'극한 조건'},{year:2025,item:'공통 21',kind:'함수의 극한'},{year:2026,item:'공통 21',kind:'함수의 극한 조건'}],
+    6:[{year:2026,item:'공통 15',kind:'미분·접선과 부호 분석'}],
+    8:[{year:2026,item:'선택 확통 30',kind:'공 배분 경우의 수'}],
+    9:[{year:2026,item:'선택 확통 28',kind:'확률 사건의 조건 해석'}],
+    10:[{year:2026,item:'선택 확통 29',kind:'이항분포와 정규근사'}]
+  },
+  pastExamWarnings:'2024~2026은 수학Ⅰ/Ⅱ 공통 22문항 + 선택과목 8문항 체제. 표에 있는 번호는 출제가 확인된 대표 사례이지 단원별 전체 출제횟수가 아닙니다. 해당 연도 선택 확률과 통계 응시자만 풀었던 문항을 2028 필수확통과 동일시하지 않습니다.',
   sampleKorean:{
     meta:'2028 국어 예시문항 45문항 1회 · 대영역별 집계이며 현 앱의 10개 학습분류별 출제횟수가 아님',
     areas:{독서:15,문학:15,화법:5,언어:5,작문:5},
@@ -49,6 +60,7 @@ window.studyEvidence={
     {label:'2028 국어 예시문항 영역별(화법/언어/독서/작문/문학) 분석',url:'https://commonkorean.tistory.com/113'},
     {label:'2026 실제 수능 · EBS 수학 영역 출제 경향',url:'https://www.ebsi.co.kr/ebs/ent/enta/retrieveEntAnlyStrdDataVw.ebs?bbsCd=B114&datNo=127090'},
     {label:'2025 실제 수능 · 공통 수학 변별 문항 설명',url:'https://www.newsis.com/view/NISX20241114_0002959264'},
+    {label:'2026 실제 수능 · 단원별 공통·확통 풀이 사례',url:'https://mathlab.kr/2026/csat/'},
     {label:'교육부 · 2028 수능 통합형 개편 확정',url:'https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=97551&lev=0'}
   ]
 };
