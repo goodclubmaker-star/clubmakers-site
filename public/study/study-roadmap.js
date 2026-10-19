@@ -46,19 +46,26 @@ function baseImportance(x){
 }
 function score(x){const c=confidenceFor(x);return baseImportance(x)*(1+Math.min(.55,c.weak*.11+c.unsure*.045))}
 function groups(s,pass=phaseNow().target){
- const units=all.filter(x=>x.s===s).map(x=>({...x,stage:unitProgress(x),priority:score(x)}));
- const todo=units.filter(x=>x.stage<pass);
- return (todo.length?todo:units).sort((a,b)=>b.priority-a.priority);
+ const original=all.filter(x=>x.s===s).map(x=>({...x,stage:unitProgress(x),priority:score(x)}));
+ const pending=original.filter(x=>x.stage<pass);
+ // On the first pass, prerequisites lead; later passes emphasize exam relevance and weakness.
+ return (pending.length?pending:original).sort((a,b)=>
+    pass===1 ? (+a.id.split('_').pop())-(+b.id.split('_').pop()) : b.priority-a.priority);
 }
 function suggest(s,seed=0,pass=phaseNow().target){
- const group=groups(s,pass);
- if(!group.length)return null;
- const x=group[(Math.abs(Math.floor(Number(seed)||0)))%Math.min(group.length,3)];
- const conf=read(confidenceKey);
- const raw=partsFor(x),ranked=raw.map((t,j)=>({text:t,k:x.id+'__'+j,state:conf[x.id+'__'+j]}));
- ranked.sort((a,b)=>({weak:0,unsure:1,undefined:2,strong:3}[a.state]??2)-({weak:0,unsure:1,undefined:2,strong:3}[b.state]??2));
- const focus=ranked.length?ranked[(seed>=0?Math.floor(seed/3):0)%Math.min(3,ranked.length)].text:'단원 핵심 개념';
- return {subject:s,unit:x.t,unitId:x.id,topic:focus,title:x.t+' · '+focus,priority:x.priority,stage:x.stage,pass};
+ const ordered=groups(s,pass);if(!ordered.length)return null;
+ const pending=ordered.filter(x=>x.stage<pass);
+ const group=pending.length?pending:ordered;
+ // Revisit the CURRENT unit with different subtopics until its stage is recorded complete.
+ const x=pass===1?group[0]:group[Math.abs(Math.floor(seed||0))%Math.min(group.length,3)];
+ const conf=read(confidenceKey),raw=partsFor(x);
+ const ranked=raw.map((t,j)=>({text:t,index:j,state:conf[x.id+'__'+j]}));
+ ranked.sort((a,b)=>
+   ({weak:0,unsure:1,undefined:2,strong:3}[a.state]??2)-({weak:0,unsure:1,undefined:2,strong:3}[b.state]??2));
+ const index=Math.abs(Math.floor(seed||0))%Math.max(1,ranked.length);
+ const focus=ranked[index]?.text||'대표 개념과 예제';
+ return {subject:s,unit:x.t,unitId:x.id,topic:focus,title:x.t+' · '+focus,
+  priority:x.priority,stage:x.stage,pass,ready: x.stage>=pass};
 }
 function getPlan(){
  const w=window.studyManager?.weights()||{},weekly=window.studyManager?.settings.weeklyMinutes||1800;
@@ -186,12 +193,17 @@ function longTarget(dateKey){
  }last=n}
  return all.length*3;
 }
-function ensureBaseline(){
+function ensureBaseline(override){
  if(read(baselineKey).at)return;
- localStorage.setItem(baselineKey,JSON.stringify({at:Date.now(),stages:read(progressKey)}));
+ localStorage.setItem(baselineKey,JSON.stringify({at:Date.now(),stages:override||read(progressKey)}));
+}
+function prepareProgressEvent(id,oldLevel){
+ const before={...read(progressKey)};
+ if(id!=='reset')before[id]=Number(oldLevel)||0;
+ ensureBaseline(before);
 }
 function logProgress(id,oldLevel,newLevel){
- ensureBaseline();
+ prepareProgressEvent(id,oldLevel);
  const events=read(recordKey);const arr=Array.isArray(events.items)?events.items:[];
  arr.push({at:Date.now(),id,from:Number(oldLevel)||0,to:Number(newLevel)||0});
  localStorage.setItem(recordKey,JSON.stringify({items:arr.slice(-2000)}));
@@ -260,7 +272,7 @@ $('roundSave').onclick=()=>{
  deadline=d;localStorage.setItem(settingKey,JSON.stringify({firstDeadline:d}));
  $('roundFeedback').textContent='1회독 기한을 변경했습니다. 목표·시간 배분·그래프에 반영됩니다.';refresh();document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'roadmap'}}));
 };
-window.studyRoadmap={refresh,suggest,score,groups,phase:phaseNow,passPlan:phases,logProgress,get firstDeadline(){return deadline}};
+window.studyRoadmap={refresh,suggest,score,groups,phase:phaseNow,passPlan:phases,logProgress,prepareProgressEvent,get firstDeadline(){return deadline}};
 document.addEventListener('study:change',()=>refresh());
 ensureBaseline();
 refresh();
