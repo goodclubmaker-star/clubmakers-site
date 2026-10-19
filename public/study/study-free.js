@@ -199,8 +199,21 @@ $('freeMemorize').addEventListener('click',e=>{if(e.target.closest('#freeTransla
 const normalize=s=>String(s).toLowerCase().replace(/[\s·\-—.,()·]/g,'');
 const choices=()=>subjectsAll.flatMap(s=>subjects[s].flatMap((name,i)=>(window.studyChecklistTopics?.[s]?.[i]||[]).map((topic,j)=>({s,name,i,topic,j}))));const choiceList=choices();
 $('freeSearch').oninput=()=>{
- const q=normalize($('freeSearch').value);if(q.length<2){$('freeSearchResults').hidden=true;return}
- const terms=q.split(/\s+/);const matches=choiceList.filter(x=>normalize(x.s+x.name+x.topic).includes(q)||(q.length>=3&&normalize(x.topic).includes(q.slice(0,Math.min(q.length,3))))).slice(0,10);
+ const raw=$('freeSearch').value.trim(),q=normalize(raw);
+ if(q.length<2){$('freeSearchResults').hidden=true;return}
+ const terms=raw.split(/\s+/).map(normalize).filter(Boolean);
+ const rank=x=>{
+  const unit=normalize(x.s+x.name),topic=normalize(x.topic),full=unit+topic;
+  if(topic===q)return 100;
+  if(unit.includes(q))return 85;
+  if(topic.includes(q))return 80;
+  if(full.includes(q))return 65;
+  if(terms.every(t=>full.includes(t)))return 45;
+  if(q.length>=3&&topic.includes(q.slice(0,3)))return 20;
+  return 0;
+ };
+ const matches=choiceList.map(x=>({...x,rank:rank(x)})).filter(x=>x.rank>0)
+  .sort((a,b)=>b.rank-a.rank||a.i-b.i).slice(0,12);
  $('freeSearchResults').hidden=!matches.length;
  $('freeSearchResults').innerHTML=matches.length?matches.map(x=>'<button type="button" class="free-search-result" data-free-select="'+esc(x.s)+'_'+x.i+'__'+x.j+'"><b>'+esc(x.s)+' · '+esc(x.name)+'</b><small>'+esc(x.topic)+'</small></button>').join(''):'';
 };
