@@ -245,12 +245,14 @@ function renderGraphs(){
  $('longChartLabel').textContent='현재 3회독 누적 진도 '+score+'/'+(all.length*3)+' ('+Math.round(score/(all.length*3)*100)+'%). 회색 점선=단계별 목표, 파란색=이 브라우저에서 기록을 시작한 '+short(startAt)+' 이후 실제 기록. 이전 날짜의 진도는 추정하지 않습니다.';
  const days14=[...Array(14)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-13+i);return iso(d)});
  const focus=read('eunseong-focus-v1'),rest={school:[1,3,5,7],weekend:[1,3,5,7,9,11],sunday:[1,3,5,7,9,11],full:[1,3,5,7,9,11,13]};
+ const freeTasks=read('eunseong-free-study-v1').tasks||[];
  const daily=days14.map(d=>{
   let seconds=0;
   for(const mode of Object.keys(rest))for(const [i,r] of Object.entries(focus[d+'-'+mode]?.records||{})){
    if(!rest[mode].includes(+i))seconds+=Math.max(0,Number(r.seconds)||0);
   }
-  return Math.round(seconds/60);
+  const extra=Array.isArray(freeTasks)?freeTasks.filter(t=>t.status==='done'&&t.doneDate===d).reduce((m,t)=>m+Math.max(0,Math.min(300,Number(t.actualMinutes)||0)),0):0;
+  return Math.round(seconds/60+extra);
  });
  const dailyGoal=Math.ceil((window.studyManager?.settings.weeklyMinutes||1800)/7),max=Math.max(dailyGoal,...daily,60);
  const bw=(iw-13*7)/14;
@@ -263,7 +265,7 @@ function renderGraphs(){
  '<line x1="'+left+'" y1="'+(top+ih)+'" x2="'+(w-right)+'" y2="'+(top+ih)+'" stroke="#bfc9d8"/>'+
  '<line x1="'+left+'" y1="'+(top+ih-ih*dailyGoal/max)+'" x2="'+(w-right)+'" y2="'+(top+ih-ih*dailyGoal/max)+'" stroke="#a4aebb" stroke-dasharray="5 4"/>'+
  bars+'</svg>';
- $('shortChartLabel').textContent='최근 14일간 타이머에서 완료·기록한 순학습 시간. 회색 점선은 주간 목표를 7일로 나눈 참고선('+fmt(dailyGoal)+')입니다. 학습 시간을 별도로 기록하지 않았다면 0으로 표시됩니다.';
+ $('shortChartLabel').textContent='최근 14일간 정규 타이머와 자유 학습에서 완료·기록한 순학습 시간. 회색 점선은 주간 목표를 7일로 나눈 참고선('+fmt(dailyGoal)+')입니다. 학습 시간을 별도로 기록하지 않았다면 0으로 표시됩니다.';
 }
 function refresh(){longGoals();priorityGoals();sticky();evidencePanel();renderGraphs()}
 $('roundSave').onclick=()=>{
