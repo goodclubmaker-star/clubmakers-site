@@ -38,25 +38,25 @@ function drawerOpen(open){
 trigger.addEventListener('click',()=>drawerOpen(drawer.hidden));
 $('drawerClose').addEventListener('click',()=>drawerOpen(false));
 shade.addEventListener('click',()=>drawerOpen(false));
-$('studyHome').addEventListener('click',()=>{drawerOpen(false);show('overview',{push:true})});
+$('studyHome').addEventListener('click',()=>{drawerOpen(false);show('today',{push:true})});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!drawer.hidden)drawerOpen(false)});
 function show(name,opts={}){
- if(!valid.has(name))name='overview';
- if(opts.push&&name!==active){history.pushState({studyTab:name},'',location.pathname+location.search+(name==='overview'?'':'#'+name));navDepth++}
+ if(!valid.has(name))name='today';
+ if(opts.push&&name!==active){history.pushState({studyTab:name},'',location.pathname+location.search+(name==='today'?'':'#'+name));navDepth++}
  active=name;
  tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===name)));
  panels.forEach(p=>p.hidden=p.dataset.panel!==name);
- $('studyBack').hidden=name==='overview';
+ $('studyBack').hidden=name==='today';
  if(opts.refresh!==false){window.studyManager?.refresh();window.studyRoadmap?.refresh();summary()}
  if(opts.scroll!==false)window.scrollTo({top:0,behavior:'instant'});
 }
 for(const tab of tabs)tab.addEventListener('click',()=>{drawerOpen(false);show(tab.dataset.tab,{push:true})});
 for(const btn of document.querySelectorAll('[data-go]'))btn.addEventListener('click',()=>show(btn.dataset.go,{push:true}));
-$('studyBack').addEventListener('click',()=>{drawerOpen(false);if(navDepth>0){history.back()}else{history.replaceState({studyTab:'overview'},'',location.pathname+location.search);show('overview')}});
-window.addEventListener('popstate',e=>{navDepth=Math.max(0,navDepth-1);show(e.state?.studyTab||'overview',{push:false})});
+$('studyBack').addEventListener('click',()=>{drawerOpen(false);if(navDepth>0){history.back()}else{history.replaceState({studyTab:'today'},'',location.pathname+location.search);show('today')}});
+window.addEventListener('popstate',e=>{navDepth=Math.max(0,navDepth-1);show(e.state?.studyTab||'today',{push:false})});
 document.addEventListener('study:change',()=>{summary()});
 document.addEventListener('click',e=>{if(e.target.closest('#interviewSave,#focusDone,#focusReset,#reset,#flowSave,#subjects button'))setTimeout(()=>{window.studyManager?.refresh();window.studyRoadmap?.refresh();summary()},100)});
-const requested=location.hash.slice(1);const initial=valid.has(requested)?requested:'overview';
-history.replaceState({studyTab:initial},'',location.pathname+location.search+(initial==='overview'?'':'#'+initial));
+const requested=location.hash.slice(1);const initial=valid.has(requested)?requested:'today';
+history.replaceState({studyTab:initial},'',location.pathname+location.search+(initial==='today'?'':'#'+initial));
 show(initial,{push:false,scroll:false});
 })();
