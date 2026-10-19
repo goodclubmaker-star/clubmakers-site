@@ -92,21 +92,22 @@ function evidencePanel(){
  const table=['수학','국어','영어','통합과학','통합사회','한국사'].map(s=>{
   const units=byUnit(s);
   return '<details class="allocation-subject" '+(s==='수학'?'open':'')+'><summary><strong>'+s+'</strong><span>'+fmt(units.reduce((n,x)=>n+x.weeklyMin,0))+'/주 · '+units.length+'개 단원</span></summary>'+
-  '<div class="wide-scroll"><table class="priority-table"><thead><tr><th>단원</th><th>2028 공개 예시 / 근거</th><th>중요도</th><th>이번 주 권장</th><th>학습 상태</th></tr></thead><tbody>'+
+  '<div class="wide-scroll"><table class="priority-table"><thead><tr><th>단원</th><th>2028 공개 예시 / 근거</th><th>2024~2026 실제 수능 대표 사례</th><th>학습 우선도</th><th>이번 주 권장</th><th>학습 상태</th></tr></thead><tbody>'+
   units.map(x=>{
     const idx=Number(x.id.split('_').pop()),sample=x.s==='수학'?E.sampleMath[idx]:null,korean=x.s==='국어'?E.sampleKorean.byUnit[idx]:null,english=x.s==='영어'?(idx===6||idx===7?'영어 듣기 17문항 범주':'영어 독해·어법 등 28문항 범주'):null;
     const maxImportance=scope.includes(x.s)?Math.max(...all.filter(z=>z.s===x.s).map(z=>baseImportance(z))):1;
     const p=Math.min(100,Math.round(baseImportance(x)/maxImportance*100));
-    const level=['미시작','1회독','2회독','3회독','심화'][x.stage];
+    const level=['미시작','1회독','2회독','3회독','심화'][x.stage],past=x.s==='수학'?E.pastExamExamples[idx]||[]:[];
     return '<tr><td><strong>'+safe(x.t)+'</strong>'+(sample?'<br><small>'+safe(sample.focus)+'</small>':'')+'</td>'+
      '<td><strong>'+(sample?sample.numbers.length+'문항 · '+sample.numbers.join('·')+'번':korean?safe(korean)+' (대영역 기준)':english?safe(english)+' (유형 기준)':'비교 가능한 단원별 횟수 미확인')+'</strong>'+(sample?'<br><small>'+safe(sample.note)+'</small>':korean?'<br><small>내부 단원에 문항 수를 임의 배분하지 않음</small>':english?'<br><small>17문항 듣기·28문항 기타를 학습 범위에 나눈 계획용 비율</small>':'<br><small>개념 난이도·범위에 따른 전략적 판단</small>')+'</td>'+
+     '<td>'+(past.length?past.map(e=>'<small><b>'+e.year+' '+safe(e.item)+'</b> · '+safe(e.kind)+'</small>').join('<br>'):'<small>검증된 대표 사례 미등록<br>출제되지 않았다는 뜻 아님</small>')+'</td>'+ 
      '<td><div class="tiny-bar"><i style="width:'+p+'%"></i></div><small>학습 우선 '+p+'점*</small></td>'+
      '<td><strong>'+fmt(x.weeklyMin)+'</strong></td><td>'+level+'</td></tr>';
   }).join('')+'</tbody></table></div></details>';
  }).join('');
- $('evidenceInfo').innerHTML='<p class="summary-note"><b>숫자의 의미:</b> 수학의 문항 수는 실제 2028 수능의 역대 빈도가 아니라 평가원이 공개한 <b>2028 예시문항 1회(30문항)</b>의 단원별 분석입니다. 2026 이전 실제 수능은 선택과목 방식이 달라 단원별 출제 빈도를 그대로 예측값에 사용하지 않았습니다. 국어는 같은 예시문항의 대영역 기준 문항 수(독서·문학 각 15, 화법·언어·작문 각 5)를 사용하며, 중단원별 횟수로 오인하지 않게 구분했습니다. 영어는 공식 듣기 17/45문항을 반영하지만 세부 유형별 횟수는 임의로 단정하지 않습니다. 통합사회·통합과학·한국사는 검증된 동일 기준의 단원별 출제횟수 자료가 없어 시간을 꾸며 계산하지 않고, <b>학습 범위·개념 부담·취약도에 따른 권장안</b>으로 표시합니다.</p>'+
+ $('evidenceInfo').innerHTML='<p class="summary-note"><b>숫자의 의미:</b> 수학의 문항 수는 실제 2028 수능의 역대 빈도가 아니라 평가원이 공개한 <b>2028 예시문항 1회(30문항)</b>의 단원별 분석입니다. 2024~2026 실제 수능은 선택과목 방식이 달라 당시 대표 사례만 별도 열에 두었습니다. 사례가 없는 단원도 출제 가능성을 0으로 가정하지 않습니다. 국어는 같은 예시문항의 대영역 기준 문항 수(독서·문학 각 15, 화법·언어·작문 각 5)를 사용하며, 중단원별 횟수로 오인하지 않게 구분했습니다. 영어는 공식 듣기 17/45문항을 반영하지만 세부 유형별 횟수는 임의로 단정하지 않습니다. 통합사회·통합과학·한국사는 검증된 동일 기준의 단원별 출제횟수 자료가 없어 시간을 꾸며 계산하지 않고, <b>학습 범위·개념 부담·취약도에 따른 권장안</b>으로 표시합니다.</p>'+
  '<p><b>기존 실제 수능 변별형:</b> 2025학년도 수학Ⅰ 수열 귀납적 정의(22번), 수학Ⅱ 함수의 극한(21번); 2026학년도 수학Ⅰ 지수·로그함수 그래프(22번), 수학Ⅱ 함수의 극한(21번), 선택 확률과 통계(30번) 등. <b>2028 예시에서 강조된 유형:</b> 지수·로그함수 그래프 30번, 미분가능성 28번, 경우의 수 21번, 조건부확률 29번. 예시문항 출제 비율은 확정 출제 계획이 아닙니다.</p>'+
- '<p class="sub">* 중요도 점수는 공식 통계가 아닌 앱 내부 상대 학습 우선지표입니다. 한두 문항이 적게 나온 단원도 생략하지 않습니다.</p><p class="sub">'+source+'</p>';
+ '<p class="sub">* 실제 수능 열의 과거 번호는 검증된 일부 대표 사례만 등록한 것이며, 전수조사를 통해 계산한 출제 빈도는 아닙니다. 중요도 점수는 공식 통계가 아닌 앱 내부 상대 학습 우선지표입니다. 한두 문항이 적게 나온 단원도 생략하지 않습니다.</p><p class="sub">'+source+'</p>';
  $('evidenceUnitTable').innerHTML=table;
 }
 function dateMetrics(){
