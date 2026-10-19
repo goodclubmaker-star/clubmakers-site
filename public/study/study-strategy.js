@@ -35,12 +35,12 @@ const fmt=m=>{const x=Math.round(m);return (Math.floor(x/60)?Math.floor(x/60)+'ì
 const percent=(a,b)=>b?Math.round(a/b*100):0;
 const monday=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return d};
 const today=()=>new Date().toLocaleDateString('en-CA');
-const focusRest={school:[1,3,5,7],weekend:[1,3,5,7,9,11],full:[1,3,5,7,9,11,13]};
+const focusRest={school:[1,3,5,7],weekend:[1,3,5,7,9,11],sunday:[1,3,5,7,9,11],full:[1,3,5,7,9,11,13]};
 function timeStats(){
  const focus=read(focusKey),begin=monday(),end=new Date(begin);end.setDate(begin.getDate()+7);
  let weekly=0,daily=0,blocks=0;
  for(const [key,entry] of Object.entries(focus)){
-  const m=/^(\d{4}-\d{2}-\d{2})-(school|weekend|full)$/.exec(key);
+  const m=/^(\d{4}-\d{2}-\d{2})-(school|weekend|sunday|full)$/.exec(key);
   if(!m)continue;
   const day=new Date(m[1]+'T12:00:00');if(!Number.isFinite(+day))continue;
   let total=0;
@@ -55,7 +55,7 @@ function timeStats(){
  weekday=full?360:Math.round(weeklyMinutes/1800*240),
  weekend=full?360:Math.round(weeklyMinutes/1800*360);
  const day=new Date().getDay();
- const dailyGoal=day===6?weekend:weekday;
+ const dailyGoal=full?360:day===6?weekend:day===0?Math.round(weeklyMinutes/1800*240):weekday;
  return {weekly:Math.round(weekly),daily:Math.round(daily),weeklyGoal:weeklyMinutes,dailyGoal,blocks};
 }
 function card(label,value,pct,desc){
