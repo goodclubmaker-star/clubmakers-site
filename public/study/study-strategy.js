@@ -51,12 +51,23 @@ function timeStats(){
   if(day>=begin&&day<end)weekly+=total/60;
   if(m[1]===today())daily+=total/60;
  }
+ const extra=read('eunseong-free-study-v1').tasks||[];
+ let extraWeekly=0,extraDaily=0;
+ if(Array.isArray(extra))for(const task of extra){
+  if(task.status!=='done'||!task.doneDate)continue;
+  const date=new Date(task.doneDate+'T12:00:00');
+  const minutes=Math.max(0,Math.min(300,Number(task.actualMinutes)||0));
+  if(Number.isNaN(+date))continue;
+  if(date>=begin&&date<end)extraWeekly+=minutes;
+  if(task.doneDate===today())extraDaily+=minutes;
+ }
+ weekly+=extraWeekly;daily+=extraDaily;
  const weeklyMinutes=settings.weeklyMinutes,full=weeklyMinutes>=2400,
  weekday=full?360:Math.round(weeklyMinutes/1800*240),
  weekend=full?360:Math.round(weeklyMinutes/1800*360);
  const day=new Date().getDay();
  const dailyGoal=full?360:day===6?weekend:day===0?Math.round(weeklyMinutes/1800*240):weekday;
- return {weekly:Math.round(weekly),daily:Math.round(daily),weeklyGoal:weeklyMinutes,dailyGoal,blocks};
+ return {weekly:Math.round(weekly),daily:Math.round(daily),freeWeekly:Math.round(extraWeekly),freeDaily:Math.round(extraDaily),weeklyGoal:weeklyMinutes,dailyGoal,blocks};
 }
 function card(label,value,pct,desc){
  return '<div class="summary-mini"><small>'+label+'</small><strong>'+value+'</strong>'+
@@ -67,7 +78,7 @@ function renderGoals(){
  const x=timeStats(),p=percent(x.weekly,x.weeklyGoal),d=percent(x.daily,x.dailyGoal);
  $('goalOverview').innerHTML=card('이번 주 순학습',fmt(x.weekly)+' / '+fmt(x.weeklyGoal),p,'달성 '+p+'%')+
  card('오늘 순학습',fmt(x.daily)+' / '+fmt(x.dailyGoal),d,'달성 '+d+'%')+
- card('오늘 남은 학습',fmt(Math.max(0,x.dailyGoal-x.daily)),null,'완료한 타이머 블록 기준 · 미기록 학습은 제외');
+ card('오늘 남은 학습',fmt(Math.max(0,x.dailyGoal-x.daily)),null,'타이머+자유 학습 실제기록 기준 · 중복 입력 주의');
 }
 function renderDashboard(){
  const stats=currentStats(),w=weights(),total=checklist.length,checked=Object.values(stats).reduce((n,k)=>n+k.checked,0),
