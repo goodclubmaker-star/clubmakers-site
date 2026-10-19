@@ -244,7 +244,7 @@ function renderGraphs(){
  const score=Object.values(read(progressKey)).reduce((a,v)=>a+Math.min(3,Math.max(0,Number(v)||0)),0);
  $('longChartLabel').textContent='현재 3회독 누적 진도 '+score+'/'+(all.length*3)+' ('+Math.round(score/(all.length*3)*100)+'%). 회색 점선=단계별 목표, 파란색=이 브라우저에서 기록을 시작한 '+short(startAt)+' 이후 실제 기록. 이전 날짜의 진도는 추정하지 않습니다.';
  const days14=[...Array(14)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-13+i);return iso(d)});
- const focus=read('eunseong-focus-v1'),rest={school:[1,3,5,7],weekend:[1,3,5,7,9,11],full:[1,3,5,7,9,11,13]};
+ const focus=read('eunseong-focus-v1'),rest={school:[1,3,5,7],weekend:[1,3,5,7,9,11],sunday:[1,3,5,7,9,11],full:[1,3,5,7,9,11,13]};
  const daily=days14.map(d=>{
   let seconds=0;
   for(const mode of Object.keys(rest))for(const [i,r] of Object.entries(focus[d+'-'+mode]?.records||{})){
