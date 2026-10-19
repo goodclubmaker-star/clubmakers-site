@@ -128,7 +128,7 @@ function activeSubjectDay(dayOffset=0){
  return pairs[dayOf]||pairs[1];
 }
 function sticky(){
- const m=dateMetrics(),duration=(m.todayStat?.dailyGoal||220),w=Math.round(m.todayStat?.weekly||0),dp=Math.round(m.todayStat?.daily||0);
+ const m=dateMetrics(),morning=window.studyDailyGoals?.get?.(today()),duration=morning?.targetMinutes??m.todayStat?.dailyGoal??220,original=morning?.baselineMinutes??duration,w=Math.round(m.todayStat?.weekly||0),dp=morning?.actualMinutes??Math.round(m.todayStat?.daily||0);
  const phase=m.p;
  const mo=new Date(),last=new Date(mo.getFullYear(),mo.getMonth()+1,0);
  const mEnd=iso(last)>phase.end?phase.end:iso(last);
@@ -140,7 +140,7 @@ function sticky(){
    '<div class="goal-item"><small>장기 · 3회독+심화</small><b>1회독 '+short(deadline)+' 완료 목표</b><span>'+phase.name+' '+m.counts[phase.target-1]+'/'+all.length+' · D-'+m.d+'</span></div>',
    '<div class="goal-item"><small>월간 · '+(mo.getMonth()+1)+'월</small><b>'+phase.name+' '+monthTarget+'단원 목표</b><span>1회독 이후에도 단계별로 재계산</span></div>',
    '<div class="goal-item"><small>주간 목표</small><b>'+weekTarget+'단원 · '+fmt(w)+'/'+fmt(m.weekly)+'</b><span>월~일 · 실제 기록과 비교</span></div>',
-   '<div class="goal-item"><small>오늘 목표</small><b>'+safe(unit?.unit||'단원 선택')+'</b><span>'+safe(unit?.topic||'단원 학습')+' · '+fmt(dp)+'/'+fmt(duration)+'</span></div>'
+   '<div class="goal-item"><small>오늘 · 원래/조정/실제</small><b>실제 '+fmt(dp)+' / 목표 '+fmt(duration)+'</b><span>원래 '+fmt(original)+' · '+safe(unit?.unit||'단원 선택')+'</span></div>'
  ].join('');
  $('goalRail').querySelectorAll('.goal-item').forEach((x,i)=>x.onclick=()=>{const tab=document.querySelector('[data-tab="'+(i===3?'today':i===2?'plan':'overview')+'"]');tab?.click()});
 }
@@ -180,9 +180,9 @@ function priorityGoals(){
  '<p class="sub">목표 달성 판정은 학습 완료 단계 기록으로 확인합니다. 아래는 우선 학습 후보이며, 실제 시간표는 설정된 과목별 비율에 따라 배치합니다.</p>'+
  '<div class="goal-tasks">'+recommended.map(t=>'<div><strong>'+t.subject+'</strong> · '+safe(t.unit)+'<br><span>'+safe(t.topic)+'</span><br><button type="button" class="secondary task-done" data-task-done="'+safe(t.unitId)+'" data-task-pass="'+p.target+'">'+p.name+' 완료 표시</button></div>').join('')+'</div>';
  const expanded=todayList.map((s,i)=>suggest(s,now.getDate()+i,p.target)).filter(Boolean);
- const available=time.todayStat?.dailyGoal||220,raw=expanded.map(x=>x.subject==='수학'?.46:x.subject==='국어'?.29:.25);
+ const available=time.todayStat?.dailyGoal??220,raw=expanded.map(x=>x.subject==='수학'?.46:x.subject==='국어'?.29:.25);
  const total=raw.reduce((a,b)=>a+b,0);
- $('todayTaskList').innerHTML='<strong>오늘 학습 주제 · '+fmt(available)+' 권장</strong>'+
+ $('todayTaskList').innerHTML=(available===0?'<div class="summary-note">오늘의 개인 목표를 0분으로 설정했습니다. 휴식·회복을 우선하고 원래 계획은 별도 기록으로 남깁니다.</div>':'<strong>오늘 학습 주제 · '+fmt(available)+' 권장</strong>')+
  '<div class="goal-tasks">'+expanded.map((x,i)=>'<div><strong>'+x.subject+' · '+safe(x.unit)+'</strong><br><span>'+safe(x.topic)+'</span><br><small>권장 약 '+fmt(available*raw[i]/total)+'</small><br><button type="button" class="secondary task-done" data-task-done="'+safe(x.unitId)+'" data-task-pass="'+p.target+'">'+p.name+' 완료 표시</button></div>').join('')+'</div>'+
  '<p class="sub">세부 학습 시간은 권장 분배입니다. 타이머 완료 기록이 자동으로 단원 성취를 인증하지는 않습니다.</p>';
  $('monthTaskList').innerHTML='<b>'+(now.getMonth()+1)+'월 · '+p.name+'</b> · 계획 '+monthCount+'단원. 우선순위 '+recommended.slice(0,4).map(x=>x.subject+' '+x.unit).join(' / ');
@@ -248,6 +248,7 @@ function renderGraphs(){
  const focus=read('eunseong-focus-v1'),rest={school:[1,3,5,7],weekend:[1,3,5,7,9,11],sunday:[1,3,5,7,9,11],full:[1,3,5,7,9,11,13]};
  const freeTasks=read('eunseong-free-study-v1').tasks||[];
  const daily=days14.map(d=>{
+  if(window.studyDailyGoals)return window.studyDailyGoals.actualFor(d).total;
   let seconds=0;
   for(const mode of Object.keys(rest))for(const [i,r] of Object.entries(focus[d+'-'+mode]?.records||{})){
    if(!rest[mode].includes(+i))seconds+=Math.max(0,Number(r.seconds)||0);
@@ -266,7 +267,7 @@ function renderGraphs(){
  '<line x1="'+left+'" y1="'+(top+ih)+'" x2="'+(w-right)+'" y2="'+(top+ih)+'" stroke="#bfc9d8"/>'+
  '<line x1="'+left+'" y1="'+(top+ih-ih*dailyGoal/max)+'" x2="'+(w-right)+'" y2="'+(top+ih-ih*dailyGoal/max)+'" stroke="#a4aebb" stroke-dasharray="5 4"/>'+
  bars+'</svg>';
- $('shortChartLabel').textContent='최근 14일간 정규 타이머와 자유 학습에서 완료·기록한 순학습 시간. 회색 점선은 주간 목표를 7일로 나눈 참고선('+fmt(dailyGoal)+')입니다. 학습 시간을 별도로 기록하지 않았다면 0으로 표시됩니다.';
+ $('shortChartLabel').textContent='최근 14일간 기존·새 정규 타이머와 자유 학습에서 완료·기록한 순학습 시간. 회색 점선은 주간 목표를 7일로 나눈 참고선('+fmt(dailyGoal)+')입니다. 학습 시간을 별도로 기록하지 않았다면 0으로 표시됩니다.';
 }
 function refresh(){longGoals();priorityGoals();sticky();evidencePanel();renderGraphs()}
 $('roundSave').onclick=()=>{
