@@ -115,7 +115,7 @@ const kindOptions=Object.entries(KIND).map(([v,label])=>'<option value="'+v+'">'
 function renderRows(){
  $('dayWake').value=draft.wake;$('daySleep').value=draft.sleep;
  $('dayPlanEditorRows').innerHTML=draft.items.map((x,i)=>'<div class="day-editor-row" data-row="'+i+'">'+
- '<label class="day-type">유형 <select data-field="kind" data-index="'+i+'">'+kindOptions.map(([v])=>v).join('')+'</select></label>'+
+ '<label class="day-type">유형 <select data-field="kind" data-index="'+i+'">'+kindOptions.join('')+'</select></label>'+
  '<label class="day-subject">과목 <select data-field="subject" data-index="'+i+'">'+
  ['<option value="">-</option>',...SUBJECTS.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>')].join('')+'</select></label>'+
  '<label class="day-title">활동/학습 목표 <input type="text" maxlength="80" data-field="title" data-index="'+i+'" value="'+esc(x.title)+'"></label>'+
