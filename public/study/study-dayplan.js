@@ -142,6 +142,7 @@ function renderRows(){
  ['<option value="">-</option>',...SUBJECTS.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>')].join('')+'</select></label>'+
  '<label class="day-title">활동/학습 목표 <input type="text" maxlength="80" data-field="title" data-index="'+i+'" value="'+esc(x.title)+'"></label>'+
  '<label class="day-length">시간(분) <input type="number" inputmode="numeric" min="5" max="600" step="5" data-field="duration" data-index="'+i+'" value="'+x.duration+'"></label>'+
+ '<div class="day-move"><button type="button" class="secondary" data-move="up" data-index="'+i+'" '+(i===0?'disabled':'')+' aria-label="'+esc(x.title)+' 앞으로 이동">↑</button><button type="button" class="secondary" data-move="down" data-index="'+i+'" '+(i===draft.items.length-1?'disabled':'')+' aria-label="'+esc(x.title)+' 뒤로 이동">↓</button></div>'+ 
  '<button type="button" class="secondary day-remove" data-remove="'+i+'" aria-label="'+esc(x.title)+' 삭제">삭제</button></div>').join('');
  for(let i=0;i<draft.items.length;i++){
   const item=draft.items[i];
@@ -171,14 +172,19 @@ $('daySleep').onchange=()=>{draft.sleep=$('daySleep').value;rowStatus()};
 $('dayPlanEditorRows').addEventListener('change',e=>{
  const field=e.target.dataset.field,index=Number(e.target.dataset.index);
  if(!['kind','subject','title','duration'].includes(field)||!Number.isInteger(index)||!draft.items[index])return;
- const item=draft.items[index];
+ const item=draft.items[index],previousSubject=item.subject;
  if(field==='duration')item.duration=Number(e.target.value);
  else item[field]=e.target.value;
+ if(field==='subject'&&(item.title===previousSubject||item.title==='공부'))item.title=item.subject;
  if(field==='kind'&&item.kind==='study'&&!SUBJECTS.includes(item.subject)){item.subject='수학';item.title='수학'}
  if(field==='kind'&&item.kind!=='study')item.subject='';
- if(field==='kind')renderRows();else rowStatus();
+ if(field==='kind'||field==='subject')renderRows();else rowStatus();
 });
 $('dayPlanEditorRows').addEventListener('click',e=>{
+ const move=e.target.closest('[data-move]');
+ if(move){const from=Number(move.dataset.index),to=from+(move.dataset.move==='up'?-1:1);
+  if(from>=0&&from<draft.items.length&&to>=0&&to<draft.items.length){const item=draft.items.splice(from,1)[0];draft.items.splice(to,0,item);renderRows()}return;
+ }
  const rm=e.target.closest('[data-remove]');if(!rm)return;
  if(draft.items.length<=1){$('dayPlanFeedback').textContent='일과 활동을 최소 한 개는 남겨야 합니다.';return}
  draft.items.splice(Number(rm.dataset.remove),1);renderRows();
