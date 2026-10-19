@@ -1,3 +1,0 @@
-/study /study/ 301
-/study/ https://eunseong-study-planner.vercel.app/curriculum.html 200
-/study/* https://eunseong-study-planner.vercel.app/:splat 200
