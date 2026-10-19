@@ -90,7 +90,7 @@ $('focusReset').onclick=()=>{
  delete state[localDate()];save();draw();
 };
 document.addEventListener('study:change',e=>{
- if(e.detail?.source==='dayplan'){$('focusMode').value=window.studyDayPlan.weekdayMode(localDate());}
+ if(e.detail?.source==='dayplan'||e.detail?.source==='schedule'){$('focusMode').value=window.studyDayPlan.weekdayMode(localDate());}
  if(e.detail?.source==='timer')return;draw();
 });
 setInterval(()=>{
