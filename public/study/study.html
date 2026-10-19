@@ -206,16 +206,185 @@ html{scroll-behavior:smooth}body{background:#f4f6fb;color:#17233d;line-height:1.
 .daily-target-form .wide{grid-column:span 2}
 .day-week-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-</style></head><body><main class="wrap"><header><div><div class="sub">2028학년도 대학수학능력시험 · 전 범위 학습 설계</div><h1>은성이 수능 범위 관제판</h1></div><span id="dday" class="pill"></span></header><p class="sub">2027년 11월 18일을 목표로 학습 범위·회독·취약점·남은 시간을 함께 관리합니다. 아래 단원 목록은 초기 설계용 분류이며, 확정 교육과정·교재 목차와 대조해 보완해야 합니다.</p><section id="goalRailWrap" aria-label="항상 보이는 학습 목표">
- <div class="rail-top"><strong>은성이 학습 목표 · 장기 / 월간 / 주간 / 오늘</strong><button id="menuToggle" type="button" aria-expanded="false" aria-controls="appDrawer">☰ 메뉴 · 홈</button></div>
- <div id="goalRail" aria-live="polite"></div>
- </section>
+</style><style>
+/* 2026 UX refresh: simple first-run guide and daily workflow */
+:root{--study-blue:#284c94;--study-ink:#1f3151;--study-muted:#63738c}
+body{background:#f5f7fb;color:var(--study-ink)}
+.wrap{max-width:1060px;padding:16px 18px 40px}
+.card{margin:11px 0;padding:19px 21px;box-shadow:none;border-radius:17px;border-color:#e5ebf3}
+.card h2{font-size:18px;margin-bottom:9px}
+header.study-header{display:flex;gap:15px;align-items:center;justify-content:space-between;padding:8px 0 16px}
+.study-brand{display:flex;align-items:center;gap:11px;min-width:0}
+.study-brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#294e99;color:white;font-size:24px;font-weight:800}
+.study-brand strong{display:block;font-size:18px;line-height:1.25;letter-spacing:-.6px}
+.study-brand small{font-size:11px;color:#718098}
+.study-header-actions{display:flex;align-items:center;gap:7px}
+.study-header-actions button{background:transparent;border:1px solid #dce4f0;color:#36527f;font-size:12px;min-height:36px}
+.study-header-actions .pill{font-size:12px;padding:7px 10px}
+#primaryNav{position:sticky;top:0;z-index:64;display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;align-items:stretch;gap:4px;padding:6px;background:#fffdfbf8;border:1px solid #e1e8f2;border-radius:14px;box-shadow:0 5px 20px #1e335713;backdrop-filter:blur(14px);margin-bottom:7px}
+#primaryNav button{padding:11px 8px;min-height:44px;white-space:nowrap;color:#4b6080;background:transparent;border-radius:9px;font-weight:750;font-size:14px;border:0}
+#primaryNav button[aria-selected=true]{background:#244985;color:white}
+#primaryNav #menuToggle{background:#eff2f8;font-size:13px;color:#38527a;min-width:64px}
+#goalRailWrap{top:62px;z-index:55;border-radius:12px;padding:6px 9px;margin:0 0 10px;box-shadow:none}
+#goalRailWrap .rail-top{margin:0 0 4px;padding:0 3px}
+#goalRailWrap .rail-top strong{font-size:11px;color:#587092}
+#goalRail{gap:5px}
+.goal-item{padding:7px 9px;border:1px solid #e4e9f3}
+.goal-item b{font-weight:750}
+.summary-hero{padding:16px 18px;border-radius:15px;background:#2b4f97}
+.summary-hero h2{font-size:20px;margin:2px 0 5px}
+.summary-hero p{font-size:12px;margin:3px 0}
+.summary-hero .quick{margin-top:11px}
+.summary-hero .quick button{font-size:12px;min-height:37px}
+#appDrawer .tabs{display:grid;grid-template-columns:1fr;position:static}
+#appDrawer .tabs button{white-space:normal}
+.live-hero{background:#fff;border:1px solid #dce5f3;border-radius:20px;padding:18px 19px;margin:12px 0}
+.live-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:11px;flex-wrap:wrap}
+.live-head h2{margin:0;font-size:17px}
+#liveClock{font-variant-numeric:tabular-nums;font-size:17px;color:#355587;font-weight:850}
+.live-status{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:13px 0;border-top:1px solid #eef2f7;border-bottom:1px solid #eef2f7}
+#liveActivity{font-weight:800;font-size:clamp(19px,3vw,26px);line-height:1.35}
+#liveActivityTime,#liveNext{font-size:12px;color:#657891;margin-top:4px}
+.live-badge{background:#edf3fd;color:#34578f;padding:6px 10px;border-radius:20px;font-weight:650;font-size:12px}
+.live-timer{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding-top:14px}
+.live-timer-label{font-size:12px;color:#627493}
+.live-timer .big{font-size:clamp(27px,6vw,39px);margin:3px 0;color:#203c75;line-height:1.15}
+.live-timer .flex{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:6px}
+.live-timer .flex button{min-height:43px;padding:8px 12px}
+#liveSelectCurrent{font-size:12px;min-height:38px;margin-top:8px}
+.today-top-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.today-top-actions label{font-size:12px;color:#5a6d88}
+.today-top-actions select{font-size:13px;padding:7px}
+#todayScheduleRows{display:flex;flex-direction:column;gap:0}
+.today-schedule-row{display:grid;grid-template-columns:100px minmax(0,1fr) 66px;gap:10px;align-items:center;padding:10px 4px;border-top:1px solid #edf0f5;min-width:0}
+.today-schedule-row time{font-size:12px;font-variant-numeric:tabular-nums;color:#596f8b}
+.today-schedule-row b{font-size:13px;display:block}
+.today-schedule-row small{font-size:11px;color:#697a95;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.today-schedule-row button{font-size:12px;min-height:34px;padding:6px 9px;white-space:nowrap}
+.today-schedule-row.is-now{background:#edf4ff;border-radius:10px;padding-left:8px;padding-right:8px}
+.today-schedule-row.is-past{opacity:.72}
+.today-schedule-row.is-life{background:#fafbfe}
+.today-schedule-row.is-life b{font-weight:550;color:#617187}
+.today-details{border-top:1px solid #edf0f5;margin-top:11px;padding-top:10px}
+.today-details summary{cursor:pointer;color:#385887;font-size:13px;font-weight:650;padding:6px 0}
+.today-goal-summary{margin-bottom:9px}
+.today-goal-summary .daily-compare-summary{margin:0}
+.intro-wrap{display:none;max-width:900px;margin:0 auto;padding:26px 20px 45px}
+html.study-welcome .wrap{display:none!important}
+html.study-welcome .intro-wrap{display:block}
+.intro-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:19px}
+.intro-brand{font-size:14px;font-weight:800;color:#344e84}
+.intro-steps{display:flex;gap:5px}
+.intro-step-dot{width:23px;height:5px;border-radius:5px;background:#d9e2f1}
+.intro-step-dot.active{background:#335caa}
+.intro-slide[hidden]{display:none!important}
+.intro-slide{background:white;border:1px solid #e4ebf5;border-radius:23px;padding:clamp(18px,4vw,35px)}
+.intro-slide .eyebrow{font-size:12px;color:#5472ab;font-weight:800}
+.intro-slide h1{font-size:clamp(24px,4vw,34px);line-height:1.25;letter-spacing:-1.1px;margin:10px 0}
+.intro-slide .lead{font-size:14px;color:#66778c;margin:6px 0 18px;line-height:1.65}
+.intro-rounds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 14px}
+.intro-round{padding:14px;border-radius:14px;background:#f2f6fc;border:1px solid #e2e9f4}
+.intro-round strong{display:block;font-size:15px;color:#294b87}
+.intro-round span{font-size:12px;color:#617591;display:block;margin:8px 0}
+.intro-round small{color:#627187;line-height:1.4}
+.intro-units{display:grid;grid-template-columns:180px minmax(0,1fr);gap:13px;margin-top:14px}
+.intro-subjects{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;align-content:start}
+.intro-subjects button,.intro-unit-list button{font-size:12px;text-align:left;min-height:42px;border:1px solid #dae4f1;background:white;color:#3c5578}
+.intro-subjects button[aria-pressed=true],.intro-unit-list button[aria-pressed=true]{background:#ecf3ff;border-color:#426baa;color:#234d94;font-weight:750}
+.intro-unit-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.intro-unit-list button{white-space:normal;line-height:1.3}
+#introUnitTitle{font-size:17px;font-weight:800}
+#introUnitDetail{font-size:13px;line-height:1.6;color:#435979;background:#f6f9fd;border-radius:12px;padding:13px;margin-top:12px}
+.intro-hour-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:20px 0 14px}
+.intro-hour-grid button{min-height:98px;background:#f4f7fc;color:#38527a;border:1px solid #dfe7f2;display:flex;flex-direction:column;align-items:start;justify-content:center;padding:14px;gap:4px}
+.intro-hour-grid button[aria-pressed=true]{border:2px solid #3b65b3;background:#eaf2ff}
+.intro-hour-grid b{font-size:20px}.intro-hour-grid small{font-size:11px;color:#64738a}
+.intro-slide input[type=number]{width:128px;font-size:17px;font-weight:800}
+.intro-use-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+.intro-use-grid>div{border:1px solid #e2e9f3;border-radius:14px;padding:16px}
+.intro-use-grid b{color:#274a85;font-size:16px;display:block}
+.intro-use-grid p{font-size:12px;color:#66758a;line-height:1.6}
+.intro-bottom{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:17px}
+.intro-bottom .intro-control{display:flex;gap:7px}
+.intro-bottom button{min-height:45px;padding:10px 21px}
+#introNotice{font-size:12px;color:#5674a4;min-height:20px;margin-top:8px}
+@media(max-width:640px){
+.wrap{padding:12px 11px 26px}
+.study-header-actions .pill{padding:5px 8px}
+#primaryNav{grid-template-columns:repeat(4,minmax(0,1fr)) 44px;padding:4px;gap:2px}
+#primaryNav button{font-size:12px;padding:9px 3px}
+#primaryNav #menuToggle{font-size:17px;min-width:0;padding:7px 4px}
+#goalRailWrap{top:56px;padding:4px 6px}
+#goalRailWrap .rail-top{display:none}
+#goalRail{grid-template-columns:repeat(2,minmax(0,1fr))}
+.goal-item{padding:5px 7px}
+.live-hero{padding:14px 12px}
+.live-timer{grid-template-columns:1fr}
+.live-timer .flex{justify-content:flex-start}
+.live-timer .flex button{flex:1 0 auto}
+.today-schedule-row{grid-template-columns:89px minmax(0,1fr) 50px;gap:5px}
+.today-schedule-row time{font-size:11px}
+.today-schedule-row button{font-size:11px;padding:5px}
+.intro-wrap{padding:15px 10px 24px}
+.intro-slide{border-radius:16px;padding:17px 13px}
+.intro-rounds{grid-template-columns:1fr;gap:7px}
+.intro-round{display:grid;grid-template-columns:90px 1fr;gap:2px 10px;padding:11px}
+.intro-round span{margin:0}.intro-round small{grid-column:span 2}
+.intro-units{grid-template-columns:1fr}
+.intro-subjects{grid-template-columns:repeat(3,minmax(0,1fr))}
+.intro-unit-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+.intro-hour-grid{gap:5px}
+.intro-hour-grid button{min-height:89px;padding:8px}
+.intro-hour-grid b{font-size:16px}
+.intro-use-grid{grid-template-columns:1fr;gap:7px}
+.intro-use-grid>div{padding:11px}
+.intro-use-grid p{margin:4px 0}
+.intro-bottom button{padding:9px 12px}
+}
+</style><script>try{if(!localStorage.getItem('eunseong-intro-v1'))document.documentElement.classList.add('study-welcome')}catch{document.documentElement.classList.add('study-welcome')}</script></head><body><section id="introSlides" class="intro-wrap" aria-label="첫 사용 학습 안내">
+ <div class="intro-top"><strong class="intro-brand">은성이 · 2028 수능 학습</strong><div id="introSteps" class="intro-steps" aria-label="안내 진행"></div></div>
+ <div class="intro-slide" data-intro-step="0"><span class="eyebrow">01 · 목표</span><h1>목표는 3회독입니다.</h1>
+ <p class="lead">전 범위를 1·2·3회독으로 배우고, 마지막에는 실전 심화로 마무리합니다. <strong>각 회독의 기한</strong>에 맞춰 학습량을 배분합니다.</p>
+ <div id="introPasses" class="intro-rounds"></div><p class="sub">계획은 학습 결과와 남은 시간에 맞춰 조정할 수 있습니다.</p></div>
+ <div class="intro-slide" data-intro-step="1" hidden><span class="eyebrow">02 · 과목과 단원</span><h1>무엇을 공부할까요?</h1>
+ <p class="lead">과목을 선택하고 단원을 누르면 <strong>핵심 목표·심화 범위</strong>가 보입니다.</p>
+ <div class="intro-units"><div id="introSubjects" class="intro-subjects" aria-label="과목 선택"></div><div><div id="introUnitButtons" class="intro-unit-list" aria-label="단원 선택"></div><div id="introUnitDetail" aria-live="polite"></div></div></div>
+ <p class="sub">현재 단원표는 수능 학습용 점검 초안이며, 공식 성취기준과 계속 대조·보완합니다.</p></div>
+ <div class="intro-slide" data-intro-step="2" hidden><span class="eyebrow">03 · 하루 학습량</span><h1>하루 몇 시간 공부할까요?</h1>
+ <p class="lead">식사·휴식·학교 수업을 제외한 <strong>순공부 시간</strong>입니다. 아픈 날이나 특별한 일정이 생기면 매일 아침 조정할 수 있습니다.</p>
+ <div id="introHourChoices" class="intro-hour-grid">
+ <button type="button" data-intro-hours="4" data-intro-mode="school"><b>4시간</b><small>학교 병행 기본</small></button>
+ <button type="button" data-intro-hours="10" data-intro-mode="full"><b>10시간</b><small>전일 학습 기본</small></button>
+ <button type="button" data-intro-hours="custom" data-intro-mode="custom"><b>직접 입력</b><small>오늘의 개인 목표</small></button>
+ </div><label for="introHoursInput">오늘의 순공부 목표(시간)</label> <input type="number" id="introHoursInput" min="0" max="20" step="0.5" value="4" inputmode="decimal">
+ <div id="introHourNote" class="sub" style="margin-top:13px"></div></div>
+ <div class="intro-slide" data-intro-step="3" hidden><span class="eyebrow">04 · 사용 방법</span><h1>이제 오늘 공부를 시작해요.</h1>
+ <p class="lead">평소에는 아래 3개 화면만 확인하면 됩니다. 단원 공략과 진단은 ‘단원’ 또는 ‘더보기’에서 열 수 있습니다.</p>
+ <div class="intro-use-grid"><div><b>오늘</b><p>현재 시각·진행할 활동·타이머와 오늘 시간표</p></div>
+ <div><b>대시보드</b><p>회독 진도, 주간 성과, 목표 대비 실제 기록</p></div>
+ <div><b>전체 계획</b><p>기상부터 취침, 과목별 시간과 단원 일정 수정</p></div></div>
+ <p class="sub">학습 기록은 현재 기기에 저장됩니다. 로그인·기기 간 동기화는 커리큘럼 검토 후 연결할 예정입니다.</p></div>
+ <div class="intro-bottom"><button class="secondary" type="button" id="introSkip">건너뛰기</button>
+ <div class="intro-control"><button class="secondary" type="button" id="introPrevious" hidden>이전</button><button type="button" id="introNext">다음 →</button></div></div>
+ <div id="introNotice" aria-live="polite"></div>
+ </section><main class="wrap"><header class="study-header"><div class="study-brand"><span class="study-brand-mark" aria-hidden="true">3</span>
+ <div><strong>은성이 학습</strong><small>2028 수능 · 3회독 계획</small></div></div>
+ <div class="study-header-actions"><button type="button" id="introReopen">사용법</button><span id="dday" class="pill"></span></div></header>
+ <nav id="primaryNav" aria-label="주요 학습 메뉴">
+ <button type="button" data-tab="today" aria-selected="true">오늘</button>
+ <button type="button" data-tab="overview" aria-selected="false">대시보드</button>
+ <button type="button" data-tab="plan" aria-selected="false">전체 계획</button>
+ <button type="button" data-tab="curriculum" aria-selected="false">단원</button>
+ <button id="menuToggle" type="button" aria-expanded="false" aria-controls="appDrawer" aria-label="추가 메뉴 열기">☰</button>
+ </nav>
+ <section id="goalRailWrap" aria-label="현재 목표"><div class="rail-top"><strong>장기 · 월간 · 주간 · 오늘</strong></div>
+ <div id="goalRail" aria-live="polite"></div></section>
  <div id="drawerShade" hidden></div><aside id="appDrawer" aria-label="학습 메뉴" hidden>
  <div class="drawer-heading"><strong>학습 메뉴</strong><button id="drawerClose" class="secondary" type="button" aria-label="메뉴 닫기">✕ 닫기</button></div>
- <button id="studyHome" type="button">⌂ 홈으로 · 전체 학습 상황</button>
+ <button id="studyHome" type="button">⌂ 대시보드로</button>
  <button class="secondary" id="studyBack" type="button" hidden>← 이전 화면</button>
  <nav class="tabs" aria-label="학습 화면"><button data-tab="overview" aria-selected="true">한눈에 보기</button><button data-tab="today" aria-selected="false">오늘 학습</button><button data-tab="plan" aria-selected="false">시간표</button><button data-tab="diagnostic" aria-selected="false">진단·문제</button><button data-tab="curriculum" aria-selected="false">전체 진도</button><button data-tab="guides" aria-selected="false">단원 학습법</button><button data-tab="free" aria-selected="false">＋ 자유 학습 · 단원 공략</button><button data-tab="review" aria-selected="false">오답·복습</button></nav>
- <p class="drawer-help">우측 상단 메뉴를 접거나 펼칠 수 있습니다. 홈에서 전체 목표·실적을 확인하고, 시간표에서 과목별·단원별 배분을 살펴보세요.</p></aside><section id="overviewPanel" class="panel" data-panel="overview"><div class="summary-hero"><div class="sub">2028 수능 · 3회독 + 심화</div><h2>전체 과정과 우선 학습 단원을 확인하세요</h2><p>과목별 4단계 진도·223개 세부 주제 자신감 점검·수학 우선 학습 시간을 한곳에서 관리합니다.</p><div class="quick"><button data-go="today">집중 타이머 시작 →</button><button data-go="diagnostic">단원 진단하기 →</button><button data-go="plan">주간 계획 보기 →</button><button data-go="free">＋ 원하는 단원 자유 학습 →</button></div></div><div class="card"><div class="row"><h2>오늘의 목표 · 원래 계획 vs 실제</h2><button class="secondary" data-go="today">아침 목표 설정 →</button></div><div id="dailyGoalOverview"></div></div><div class="card"><h2>주간·오늘·시간 목표</h2><div id="goalOverview" class="goal-grid"></div><p class="sub" style="margin-top:12px">순학습 목표는 주간 계획 기준이며 정규 타이머 완료 기록과 자유 학습의 실제 입력 시간을 합산합니다. 같은 공부 시간을 중복 입력하지 마세요. 과목별 시간은 시간표에서 조정할 수 있습니다.</p><button class="secondary" data-go="plan">주간 목표·과목 배분 수정 →</button></div><div class="card"><div class="row"><h2>전체 과목 학습 상황</h2><button class="secondary" data-go="diagnostic">세부 주제 빠른 체크 →</button></div><p class="sub" id="overallSubjectNote"></p><div id="subjectDashboard" class="subject-dashboard"></div><p class="sub">단원별 회독 단계는 ‘전체 진도’에서, 세부 개념별 자신감은 ‘진단·문제’에서 관리합니다. 두 지표는 서로 별개입니다.</p></div>
+ <p class="drawer-help">오늘은 타이머, 대시보드는 성과, 전체 계획은 시간표를 관리합니다.</p></aside><section id="overviewPanel" class="panel" data-panel="overview"><div class="summary-hero"><div class="sub">2028 수능 · 3회독 + 심화</div><h2>전체 진도와 성과</h2><div class="quick"><button data-go="today">오늘 학습 →</button><button data-go="diagnostic">취약 단원 확인 →</button></div></div><div class="card"><div class="row"><h2>오늘의 목표 · 원래 계획 vs 실제</h2><button class="secondary" data-go="today">아침 목표 설정 →</button></div><div id="dailyGoalOverview"></div></div><div class="card"><h2>주간·오늘·시간 목표</h2><div id="goalOverview" class="goal-grid"></div><p class="sub" style="margin-top:12px">순학습 목표는 주간 계획 기준이며 정규 타이머 완료 기록과 자유 학습의 실제 입력 시간을 합산합니다. 같은 공부 시간을 중복 입력하지 마세요. 과목별 시간은 시간표에서 조정할 수 있습니다.</p><button class="secondary" data-go="plan">주간 목표·과목 배분 수정 →</button></div><div class="card"><div class="row"><h2>전체 과목 학습 상황</h2><button class="secondary" data-go="diagnostic">세부 주제 빠른 체크 →</button></div><p class="sub" id="overallSubjectNote"></p><div id="subjectDashboard" class="subject-dashboard"></div><p class="sub">단원별 회독 단계는 ‘전체 진도’에서, 세부 개념별 자신감은 ‘진단·문제’에서 관리합니다. 두 지표는 서로 별개입니다.</p></div>
 <div class="card"><div class="row"><h2>자유 학습 · 원하는 단원 보충하기</h2><button class="secondary" data-go="free">직접 추가 →</button></div><div id="freeOverviewList"></div></div><div class="card"><h2>자신 없는 주제 · 우선 보강</h2><div id="overviewWeakness"></div></div>
 <div class="card"><h2>학습 현황 요약</h2><div id="overviewStats" class="summary-grid"></div><div class="summary-note" style="margin-top:12px">현재 시제품 데이터는 이 기기에 저장됩니다. 가족 간 실시간 공유와 공식 수능 세부 범위 검증은 아직 완료되지 않았습니다.</div></div><section class="card" id="roadmapPanel"><div class="row"><h2>장기 목표 · 3회독 + 심화 계획</h2><span class="tag">기준 2028.11.18</span></div>
 <p class="sub">1회독은 기본 개념, 2회독은 유형, 3회독은 기출·응용으로 구분합니다. 마지막 심화·실전 단계에서 취약점과 시간 관리를 완성합니다.</p>
@@ -231,23 +400,46 @@ html{scroll-behavior:smooth}body{background:#f4f6fb;color:#17233d;line-height:1.
 <section class="card" id="performancePanel"><h2>학습 성과 그래프</h2>
 <div class="analytics-graphs"><div class="chart-card"><h3>전체 성과 · 3회독 누적 진도</h3><div id="longChart"></div><p id="longChartLabel"></p></div>
 <div class="chart-card"><h3>단기 성과 · 최근 14일 순학습</h3><div id="shortChart"></div><p id="shortChartLabel"></p></div></div>
-</section><div class="card"><h2>다음 학습 추천</h2><div id="overviewNext"></div></div></section><section class="grid panel" data-panel="overview"><div class="card"><div class="sub">시험까지</div><div class="big" id="days">-</div><div class="sub">남은 일수</div></div><div class="card"><div class="sub">전 범위 1회독</div><div class="big" id="coverage">0%</div><div class="bar"><div class="fill" id="coverageBar"></div></div></div><div class="card"><div class="sub">복습 완료율</div><div class="big" id="review">0%</div><div class="bar"><div class="fill" id="reviewBar"></div></div></div><div class="card"><div class="sub">목표 속도 대비</div><div class="big" id="pace">-</div><div class="sub" id="paceDesc">목표일 설정 중</div></div></section><section class="card panel" data-panel="today" hidden><h2>분 단위 학습 테이블 · 집중 타이머</h2><p class="sub">시간표에서 설정한 공부 블록이 이곳에 표시됩니다. 휴식·식사·취침 시간은 시간표에서 확인하고, 학습 블록의 실제 완료시간만 기록합니다.</p><div class="flex"><label>시간표 유형 <select id="focusMode"><option value="school">평일 저녁 · 19:00~23:20 (순학습 4시간)</option><option value="weekend">토요일 · 09:00 시작 (순학습 6시간)</option><option value="sunday">일요일 · 10:00 시작 (순학습 4시간)</option><option value="full">전일 학습 · 기상~취침 계획 (순학습 10시간)</option></select></label><button class="secondary" data-go="plan" type="button">기상~취침 시간표 수정 →</button><button id="focusReset" class="secondary">오늘 기록 초기화</button></div><div class="card" id="dailyGoalCard">
-<div class="row"><h2>아침에 정하는 오늘의 학습 목표</h2><span class="tag">컨디션·일정에 따라 조정 가능</span></div>
-<p class="sub">아프거나 피할 수 없는 일정이 있는 날에는 목표를 줄여도 됩니다. 원래 계획과 비교한 기록은 남기되, 회독 완료 여부를 자동으로 변경하지 않습니다.</p>
-<div id="dailyTargetSummary" aria-label="원래 계획, 개인 목표, 실제 학습시간 비교"></div>
-<div class="daily-target-form">
-<label>목표 날짜<input type="date" id="dailyTargetDate"></label>
-<label>오늘의 순공부 목표(분)<input type="number" id="dailyTargetMinutes" inputmode="numeric" min="0" max="1200" step="10"></label>
-<label>조정 이유<select id="dailyTargetReason"></select></label>
-<label class="wide">특별 일정·컨디션 메모<textarea id="dailyTargetNote" maxlength="240" placeholder="예: 병원 방문, 컨디션 저하, 수행평가, 가족 일정 등 (선택)"></textarea></label>
-</div>
-<div id="dailyTargetSource" class="sub"></div>
-<div class="day-actions"><button id="dailyTargetSave" type="button">오늘 목표 저장</button>
-<button id="dailyTargetReset" type="button" class="secondary">원래 목표로 복귀</button>
-<button id="dailyTargetJumpSchedule" type="button" class="secondary">이 날짜의 일과표 수정 →</button></div>
-<div id="dailyTargetFeedback" role="status" class="daily-target-notice"></div>
-<p class="sub" id="dailyTargetWeeklyInfo"></p>
-</div><div id="focusStats" class="notice" style="margin-top:12px"></div><div id="focusTable" style="overflow-x:auto;margin-top:12px"></div><div class="card"><div class="row"><h2>오늘 직접 추가한 자유 학습</h2><button class="secondary" data-go="free">＋ 학습 추가 →</button></div><p class="sub">계획표 외에 추가로 공부하거나 보충할 단원입니다. 이 과제는 별도로 완료·시간을 기록합니다.</p><div id="freeTodayList"></div></div><div class="card" style="background:#f3f6ff"><div class="sub" id="focusNow">블록을 선택하세요</div><div class="big" id="focusClock" style="font-variant-numeric:tabular-nums">00:00</div><div class="flex"><button id="focusStart">시작 / 재개</button><button id="focusPause" class="secondary">일시정지</button><button id="focusDone" class="secondary">완료·기록</button><button id="focusSkip" class="secondary">다음 블록</button></div><p class="sub">타이머는 브라우저 시간 기준으로 작동하며, 다른 기기와 실시간 동기화되지는 않습니다.</p></div></section><section class="card panel" data-panel="plan" hidden>
+</section><div class="card"><h2>다음 학습 추천</h2><div id="overviewNext"></div></div></section><section class="grid panel" data-panel="overview"><div class="card"><div class="sub">시험까지</div><div class="big" id="days">-</div><div class="sub">남은 일수</div></div><div class="card"><div class="sub">전 범위 1회독</div><div class="big" id="coverage">0%</div><div class="bar"><div class="fill" id="coverageBar"></div></div></div><div class="card"><div class="sub">복습 완료율</div><div class="big" id="review">0%</div><div class="bar"><div class="fill" id="reviewBar"></div></div></div><div class="card"><div class="sub">목표 속도 대비</div><div class="big" id="pace">-</div><div class="sub" id="paceDesc">목표일 설정 중</div></div></section><section class="panel" data-panel="today" hidden>
+ <div class="live-hero" id="liveStudyHero">
+  <div class="live-head"><h2>지금</h2><time id="liveClock" aria-live="off">--:--</time></div>
+  <div class="live-status"><div><div id="liveActivity">오늘 일정을 확인하고 있습니다</div>
+  <div id="liveActivityTime"></div><div id="liveNext"></div></div><span id="liveType" class="live-badge">현재 일정</span></div>
+  <div class="live-timer"><div><small class="live-timer-label">집중 타이머 · 선택한 학습 블록</small>
+  <div class="big" id="focusClock" aria-label="타이머 남은 시간">00:00</div>
+  <div id="focusNow" class="sub">학습 블록을 선택하세요</div>
+  <button id="liveSelectCurrent" class="secondary" type="button" hidden>지금 공부 타이머 선택</button></div>
+  <div class="flex"><button id="focusStart" type="button">시작</button><button id="focusPause" class="secondary" type="button">일시정지</button>
+  <button id="focusDone" class="secondary" type="button">완료·기록</button><button id="focusSkip" class="secondary" type="button">다음</button></div></div></div>
+ <div class="card" id="todaySchedule">
+  <div class="row"><h2>오늘 일정</h2><button class="secondary" data-go="plan" type="button">시간표 편집 →</button></div>
+  <div class="today-top-actions"><label>학습 유형 <select id="focusMode"><option value="school">학교 병행</option><option value="weekend">토요일</option><option value="sunday">일요일</option><option value="full">전일 10시간</option></select></label></div>
+  <div id="todayScheduleRows" aria-label="오늘의 주요 시간표"></div>
+  <details class="today-details"><summary>전체 시간표 · 블록 선택</summary>
+    <div id="focusStats" class="notice" style="margin-top:9px"></div>
+    <div id="focusTable" style="overflow-x:auto;margin-top:9px"></div>
+    <button id="focusReset" class="secondary" type="button" style="margin-top:10px">오늘 타이머 기록 초기화</button>
+  </details>
+ </div>
+ <div class="card" id="dailyGoalCard">
+  <div class="row"><h2>오늘의 공부 목표</h2><button type="button" class="secondary" id="todayGoalEditOpen">목표 수정 →</button></div>
+  <div id="dailyTargetSummary" class="today-goal-summary" aria-label="원래 계획, 개인 목표, 실제 학습 비교"></div>
+  <details class="today-details" id="todayTargetEditor"><summary>컨디션·일정에 맞게 바꾸기</summary>
+   <div class="daily-target-form">
+   <label>날짜<input type="date" id="dailyTargetDate"></label>
+   <label>오늘 순공부(분)<input type="number" id="dailyTargetMinutes" inputmode="numeric" min="0" max="1200" step="10"></label>
+   <label>사유<select id="dailyTargetReason"></select></label>
+   <label class="wide">한 줄 메모<textarea id="dailyTargetNote" maxlength="240" placeholder="병원, 시험, 외출, 휴식 등"></textarea></label>
+   </div><div id="dailyTargetSource" class="sub"></div>
+   <div class="day-actions"><button id="dailyTargetSave" type="button">오늘 목표 저장</button>
+   <button id="dailyTargetReset" type="button" class="secondary">원래 목표</button>
+   <button id="dailyTargetJumpSchedule" type="button" class="secondary">일과표 수정</button></div>
+   <div id="dailyTargetFeedback" role="status" class="daily-target-notice"></div><p class="sub" id="dailyTargetWeeklyInfo"></p>
+  </details>
+ </div>
+ <div class="card"><div class="row"><h2>자유 학습</h2><button class="secondary" data-go="free" type="button">＋ 보충 학습</button></div>
+ <div id="freeTodayList"></div></div>
+ </section><section class="card panel" data-panel="plan" hidden>
 <h2>주간 학습 목표와 과목 우선순위</h2>
 <p class="sub">2028 수능의 국어·수학·탐구는 표준점수·등급, 영어·한국사는 절대평가입니다. 아래 비율은 확정된 입시 가중치가 아니라 <strong>수학 변별력에 대비한 전략적 출발점</strong>입니다. 점수와 취약도에 따라 직접 바꿀 수 있습니다.</p>
 <div class="flex"><label>일주일 순학습 목표(분) <input type="number" min="300" max="4200" step="30" id="planWeeklyMinutes" value="1800" style="width:120px"></label><button id="allocationSave">목표·비중 저장</button><button id="allocationReset" class="secondary">기본안 복원</button></div>
@@ -274,8 +466,7 @@ html{scroll-behavior:smooth}body{background:#f4f6fb;color:#17233d;line-height:1.
 <div class="day-actions"><button id="daySaveDate" type="button">선택한 날짜만 저장</button><button id="daySaveTemplate" class="secondary" type="button">이 유형의 기본안 저장</button><button id="dayRemoveOverride" class="secondary" type="button">날짜별 변경 초기화</button></div>
 <p id="dayPlanFeedback" role="status" class="sub"></p>
 <p class="sub">학습 시간은 공부 블록만 합산합니다. 식사·학교 수업·운동·휴식은 제외합니다. 날짜별 저장은 그 날짜에만 적용하며, 유형 기본안 저장은 같은 유형의 다른 날짜에 적용됩니다.</p>
-</section><hr style="border:0;border-top:1px solid #e9edf4;margin:22px 0"><h2>실행 시간표 · 주간 학습 블록</h2><p class="sub">학교 병행 기준: 평일 4시간, 토요일 6시간, 일요일 4시간. 순공부 시간이며 휴식·식사·학교 수업은 제외합니다.</p><div class="flex"><label>학습 유형 <select id="scheduleMode"><option value="school">학교 병행 · 주 30시간</option><option value="full">전일 학습 · 매일 10시간 (주 70시간)</option></select></label><label>주 시작일 <input id="scheduleStart" type="date"></label><button id="scheduleBuild">시간표 다시 계산</button></div><div id="scheduleSummary" class="notice" style="margin-top:12px"></div><div id="scheduleDailySummary" class="day-week-summary"></div><div id="scheduleTable" style="overflow-x:auto;margin-top:12px"></div><h2 style="margin-top:20px">과목별 주간 배분</h2><div id="scheduleAllocation"></div><h2 style="margin-top:24px">기존 수능·2028 예시문항 분석에 따른 단원별 시간표</h2>
-<div id="evidenceInfo"></div><div id="evidenceUnitTable"></div><p class="sub">진단 인터뷰의 집중 보강 단원을 우선 배치합니다. 시간표는 권장안이며 실제 완료 기록과 가족 공유 서버에는 아직 연결되지 않았습니다.</p></section><section class="card panel" data-panel="diagnostic" hidden>
+</section><hr style="border:0;border-top:1px solid #e9edf4;margin:22px 0"><h2>실행 시간표 · 주간 학습 블록</h2><p class="sub">학교 병행 기준: 평일 4시간, 토요일 6시간, 일요일 4시간. 순공부 시간이며 휴식·식사·학교 수업은 제외합니다.</p><div class="flex"><label>학습 유형 <select id="scheduleMode"><option value="school">학교 병행 · 주 30시간</option><option value="full">전일 학습 · 매일 10시간 (주 70시간)</option></select></label><label>주 시작일 <input id="scheduleStart" type="date"></label><button id="scheduleBuild">시간표 다시 계산</button></div><div id="scheduleSummary" class="notice" style="margin-top:12px"></div><div id="scheduleDailySummary" class="day-week-summary"></div><div id="scheduleTable" style="overflow-x:auto;margin-top:12px"></div><h2 style="margin-top:20px">과목별 주간 배분</h2><div id="scheduleAllocation"></div><details class="today-details" style="margin-top:20px"><summary>출제 분석 · 단원별 중요도 보기</summary><div id="evidenceInfo"></div><div id="evidenceUnitTable"></div></details><p class="sub">진단 인터뷰의 집중 보강 단원을 우선 배치합니다. 시간표는 권장안이며 실제 완료 기록과 가족 공유 서버에는 아직 연결되지 않았습니다.</p></section><section class="card panel" data-panel="diagnostic" hidden>
 <h2>전체 과목 · 단원별 빠른 자기진단</h2>
 <p class="sub">문제를 풀기 전에 전체 주제를 펼쳐 보고 <strong>자신 있음 / 애매함 / 자신 없음</strong>을 누르세요. 같은 버튼을 다시 누르면 체크가 해제됩니다. 이 표시는 정답률이나 단원 통과 판정이 아닌 본인의 느낌입니다.</p>
 <div id="confidenceStats"></div>
