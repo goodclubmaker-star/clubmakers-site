@@ -1,1 +1,52 @@
-(()=>{'use strict';const $=id=>document.getElementById(id);const tabs=[...document.querySelectorAll('[data-tab]')],panels=[...document.querySelectorAll('[data-panel]')];function read(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch{return {}}}function today(){return new Date().toLocaleDateString('en-CA')}function summary(){const progress=read('eunseong-curriculum-demo-v1'),diagnostics=read('eunseong-interviews-v1'),focus=read('eunseong-focus-v1'),reviews=read('eunseong-study-flow-v1');const total=all.length,first=all.filter(x=>(Number(progress[x.id])||0)>=1).length,advanced=all.filter(x=>Number(progress[x.id])===4).length,graded=Object.values(diagnostics).filter(x=>x.version===2),needMore=graded.filter(x=>x.path==='추가 진단 필요').length,weak=graded.filter(x=>x.path==='집중 보강').length;const todayFocus=Object.entries(focus).filter(([k])=>k.startsWith(today()+'-'));const done=todayFocus.reduce((n,[,s])=>n+Object.keys(s.records||{}).length,0),seconds=todayFocus.reduce((n,[,s])=>n+Object.values(s.records||{}).reduce((sum,r)=>sum+(r.seconds||0),0),0),due=Object.values(reviews).filter(r=>r.next&&r.next<=today()).length;const weekStart=new Date();weekStart.setDate(weekStart.getDate()-((weekStart.getDay()+6)%7));weekStart.setHours(0,0,0,0);let weekMinutes=0,todayMinutes=0;for(const [key,session] of Object.entries(focus)){const day=key.slice(0,10);if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(day))continue;const date=new Date(day+'T12:00:00');const items=key.endsWith('-school')?[45,10,30,10,45,10,30,10,30,20]:key.endsWith('-weekend')?[50,10,40,10,50,15,45,60,40,10,45,10,30]:[50,10,40,10,50,15,45,60,45,10,50,10,45,10,35];const breaks=key.endsWith('-school')?[1,3,5,7]:key.endsWith('-weekend')?[1,3,5,7,9,11]:[1,3,5,7,9,11,13];const seconds=Object.entries(session.records||{}).reduce((sum,[i,r])=>sum+(breaks.includes(Number(i))?0:r.seconds||0),0);if(date>=weekStart)weekMinutes+=seconds/60;if(day===today())todayMinutes+=seconds/60}const weekTarget=1800,dayTarget=220;const goals=[['이번 주 목표',Math.round(weekMinutes)+' / '+weekTarget+'분',Math.min(100,Math.round(weekMinutes/weekTarget*100))],['오늘 순학습',Math.round(todayMinutes)+' / '+dayTarget+'분',Math.min(100,Math.round(todayMinutes/dayTarget*100))],['오늘 남은 시간',Math.max(0,Math.round(dayTarget-todayMinutes))+'분',null]];$('goalOverview').innerHTML=goals.map(([name,val,pct])=>'<div class="summary-mini"><small>'+name+'</small><strong>'+val+'</strong>'+(pct===null?'':'<div class="bar"><div class="fill" style="width:'+pct+'%"></div></div><small>달성 '+pct+'%</small>')+'</div>').join('');const cards=[['진단한 단원',graded.length+' / '+total],['1회독 진도',Math.round(first/total*100)+'%'],['심화 완료',advanced+' / '+total],['오늘 완료 블록',done+'개'],['기록한 시간',Math.floor(seconds/3600)+'시간 '+Math.floor(seconds%3600/60)+'분'],['오늘 복습 예정',due+'개']];$('overviewStats').innerHTML=cards.map(([label,val])=>'<div class="summary-mini"><small>'+label+'</small><strong>'+val+'</strong></div>').join('');const priorities=all.filter(x=>(Number(progress[x.id])||0)===0).slice(0,3);$('overviewNext').innerHTML='<p><strong>진단 보완:</strong> '+needMore+'개 단원 추가 문항 필요 · 집중 보강 '+weak+'개</p><p><strong>미시작 우선 단원:</strong> '+(priorities.map(x=>x.s+' '+x.t).join(' / ')||'1회독 개념 단계 완료')+'</p><p class="sub">이 추천은 초기 규칙 기반이며 실전 성적을 반영한 정밀 처방은 아닙니다.</p>'}const history=[];function show(name,back=false){const active=tabs.find(t=>t.getAttribute('aria-selected')==='true')?.dataset.tab;if(!back&&active&&active!==name)history.push(active);$('studyBack').hidden=history.length===0;tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===name)));panels.forEach(p=>{p.hidden=p.dataset.panel!==name});summary();window.scrollTo({top:0,behavior:'smooth'});try{sessionStorage.setItem('eunseong-active-tab',name)}catch{}}$('studyBack').onclick=()=>{const previous=history.pop()||'overview';show(previous,true)};tabs.forEach(t=>t.onclick=()=>show(t.dataset.tab));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));document.addEventListener('click',e=>{if(e.target.closest('#interviewSave,#focusDone,#focusReset,#reset,#flowSave,#scheduleBuild,#subjects button'))setTimeout(summary,60)});const valid=tabs.map(t=>t.dataset.tab);let initial='overview';try{const p=sessionStorage.getItem('eunseong-active-tab');if(valid.includes(p))initial=p}catch{}show(initial);})();
+(()=>{'use strict';
+const $=id=>document.getElementById(id),tabs=[...document.querySelectorAll('[data-tab]')],panels=[...document.querySelectorAll('[data-panel]')];
+const read=k=>{try{return JSON.parse(localStorage.getItem(k))||{}}catch{return {}}};
+const today=()=>new Date().toLocaleDateString('en-CA');
+const fmt=m=>{m=Math.max(0,Math.round(m));return (m>=60?Math.floor(m/60)+'시간 ':'')+(m%60||m<60?m%60+'분':'')};
+function summary(){
+ const progress=read('eunseong-curriculum-demo-v1'),exam=read('eunseong-interviews-v1'),reviews=read('eunseong-study-flow-v1');
+ const stats=window.studyManager?.stats(),focus=window.studyManager?.focus();
+ const first=all.filter(x=>(+progress[x.id]||0)>=1).length,second=all.filter(x=>(+progress[x.id]||0)>=2).length,
+ third=all.filter(x=>(+progress[x.id]||0)>=3).length,advanced=all.filter(x=>(+progress[x.id]||0)>=4).length;
+ const assessed=Object.values(exam).filter(x=>x.version===2);
+ const insufficient=assessed.filter(x=>x.path==='추가 진단 필요').length;
+ const due=Object.values(reviews).filter(x=>x.next&&x.next<=today()).length;
+ const confidence=stats?Object.values(stats).reduce((a,x)=>a+x.checked,0):0;
+ const weak=stats?Object.values(stats).reduce((a,x)=>a+x.weak+x.unsure,0):0;
+ const cards=[
+ ['1회독 · 개념',first+' / '+all.length],
+ ['2회독 · 유형',second+' / '+all.length],
+ ['3회독 · 기출',third+' / '+all.length],
+ ['심화 · 실전',advanced+' / '+all.length],
+ ['자가진단 체크',confidence+' / '+(stats?Object.values(stats).reduce((a,x)=>a+x.parts,0):0)],
+ ['문제 진단',assessed.length+'개 (추가 문항 필요 '+insufficient+')'],
+ ['이번 주 타이머 기록',focus?fmt(focus.weekly):'0분'],
+ ['예정 복습',due+'개']
+ ];
+ $('overviewStats').innerHTML=cards.map(([label,val])=>'<div class="summary-mini"><small>'+label+'</small><strong>'+val+'</strong></div>').join('');
+ const priority=all.filter(x=>(+progress[x.id]||0)===0).sort((a,b)=>(a.s==='수학'?-1:0)-(b.s==='수학'?-1:0)).slice(0,4);
+ $('overviewNext').innerHTML='<p><b>자가진단에서 확인한 애매·취약 주제:</b> '+weak+'개</p>'+
+ '<p><b>미시작 주요 단원:</b> '+(priority.map(x=>x.s+' · '+x.t).join(' / ')||'모든 학습 분류의 1회독을 완료했습니다.')+'</p>'+
+ '<p class="sub">문제은행의 초기 확인 문항은 단원별로 충분하지 않아 점수만으로 통과 판정을 하지 않습니다. 자가진단도 본인 판단이므로 문제 진단·오답 분석과 함께 확인하세요.</p>';
+}
+const valid=new Set(tabs.map(t=>t.dataset.tab));let active='overview',navDepth=0;
+function show(name,opts={}){
+ if(!valid.has(name))name='overview';
+ if(opts.push&&name!==active){history.pushState({studyTab:name},'',location.pathname+location.search+(name==='overview'?'':'#'+name));navDepth++}
+ active=name;
+ tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===name)));
+ panels.forEach(p=>p.hidden=p.dataset.panel!==name);
+ $('studyBack').hidden=name==='overview';
+ if(opts.refresh!==false){window.studyManager?.refresh();summary()}
+ if(opts.scroll!==false)window.scrollTo({top:0,behavior:'instant'});
+}
+for(const tab of tabs)tab.addEventListener('click',()=>show(tab.dataset.tab,{push:true}));
+for(const btn of document.querySelectorAll('[data-go]'))btn.addEventListener('click',()=>show(btn.dataset.go,{push:true}));
+$('studyBack').addEventListener('click',()=>{if(navDepth>0){history.back()}else{history.replaceState({studyTab:'overview'},'',location.pathname+location.search);show('overview')}});
+window.addEventListener('popstate',e=>{navDepth=Math.max(0,navDepth-1);show(e.state?.studyTab||'overview',{push:false})});
+document.addEventListener('study:change',()=>{summary()});
+document.addEventListener('click',e=>{if(e.target.closest('#interviewSave,#focusDone,#focusReset,#reset,#flowSave,#subjects button'))setTimeout(()=>{window.studyManager?.refresh();summary()},100)});
+const requested=location.hash.slice(1);const initial=valid.has(requested)?requested:'overview';
+history.replaceState({studyTab:initial},'',location.pathname+location.search+(initial==='overview'?'':'#'+initial));
+show(initial,{push:false,scroll:false});
+})();
