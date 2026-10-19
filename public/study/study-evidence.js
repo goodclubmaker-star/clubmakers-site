@@ -44,6 +44,11 @@ window.studyEvidence={
     byUnit:['독서 15문항 범주','독서 15문항 범주','문학 15문항 범주','문학 15문항 범주','문학 15문항 범주','문학 15문항 범주','문학 15문항 범주','화법 5문항 + 언어 5문항','작문 5문항','독서·작문 통합 4문항(중복포함)']
   },
   koreanUnitProxy:[7.5,7.5,3,3,3,3,3,10,5,3],
+  integration2028:{
+   social:'2028 통합사회 예시(25문항)에서 지리·일반사회 관련 개념, 표·지도·복합 자료 해석이 중요하게 관찰됨. 영역 간 융합 문항도 존재.',
+   science:'2028 통합과학 예시(25문항)에서 단일 공식 계산보다 실험 해석·자료 추론·동일 과목 안의 단원 연계가 강조됨.',
+   caveat:'학원·전문가의 출제 경향 분석이며 미래 실제 수능의 단원별 출제확률이나 고정 문항수로 보장하지 않음.'
+  },
   sampleEnglish:{total:45,listening:17,other:28,note:'영어 45문항 중 듣기 17문항은 공식 고정 형식. 세부 유형별 문항 수는 확정값이 아님'},
   englishProxy:[4,4,4,4,4,4,8.5,8.5,4],
   importanceModifiers:[1.00,1.27,1.12,1.23,1.13,1.10,1.30,1.20,1.30,1.23,1.12],
@@ -61,6 +66,7 @@ window.studyEvidence={
     {label:'2026 실제 수능 · EBS 수학 영역 출제 경향',url:'https://www.ebsi.co.kr/ebs/ent/enta/retrieveEntAnlyStrdDataVw.ebs?bbsCd=B114&datNo=127090'},
     {label:'2025 실제 수능 · 공통 수학 변별 문항 설명',url:'https://www.newsis.com/view/NISX20241114_0002959264'},
     {label:'2026 실제 수능 · 단원별 공통·확통 풀이 사례',url:'https://mathlab.kr/2026/csat/'},
-    {label:'교육부 · 2028 수능 통합형 개편 확정',url:'https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=97551&lev=0'}
+    {label:'교육부 · 2028 수능 통합형 개편 확정',url:'https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=97551&lev=0'},
+    {label:'2028 통합사회·통합과학 예시문항 전문가 분석',url:'https://www.localnaeil.com/News/View/652907'}
   ]
 };
