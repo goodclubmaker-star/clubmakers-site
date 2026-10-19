@@ -65,8 +65,10 @@ function suggest(s,seed=0,pass=phaseNow().target){
    ({weak:0,unsure:1,undefined:2,strong:3}[a.state]??2)-({weak:0,unsure:1,undefined:2,strong:3}[b.state]??2));
  const index=Math.abs(Math.floor(seed||0))%Math.max(1,ranked.length);
  const focus=ranked[index]?.text||'대표 개념과 예제';
- return {subject:s,unit:x.t,unitId:x.id,topic:focus,title:x.t+' · '+focus,
-  priority:x.priority,stage:x.stage,pass,ready: x.stage>=pass};
+ const lesson=window.studyConcrete?.fromId(x.id);
+ return {subject:s,unit:lesson?.name||x.t,unitId:x.id,topic:focus,action:lesson?.task||focus,
+  title:(lesson?.name||x.t)+' · '+focus,
+  priority:x.priority,stage:x.stage,pass,ready:x.stage>=pass};
 }
 function getPlan(){
  const w=window.studyManager?.weights()||{},weekly=window.studyManager?.settings.weeklyMinutes||1800;
