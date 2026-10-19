@@ -156,10 +156,11 @@ html{scroll-behavior:smooth}body{background:#f4f6fb;color:#17233d;line-height:1.
 .day-timeline-row strong{font-size:13px;display:block}
 .day-timeline-row small{font-size:11px;color:#647691;display:block}
 .day-timeline-row>span{font-size:12px;text-align:right;color:#586b84}
-.day-editor-row{display:grid;grid-template-columns:minmax(105px,1fr) minmax(108px,1fr) minmax(145px,2fr) 92px 54px;gap:8px;padding:10px 0;border-top:1px solid #e5ebf5;align-items:end}
+.day-editor-row{display:grid;grid-template-columns:minmax(105px,1fr) minmax(108px,1fr) minmax(145px,2fr) 86px 86px 54px;gap:8px;padding:10px 0;border-top:1px solid #e5ebf5;align-items:end}
 .day-editor-row label{display:flex;flex-direction:column;gap:4px;min-width:0;font-size:11px;font-weight:650;color:#445875}
 .day-editor-row input,.day-editor-row select{width:100%;max-width:100%;min-width:0;min-height:40px;padding:7px;font-size:14px}
 .day-remove{min-height:40px;padding:7px}
+.day-move{display:flex;gap:4px;align-items:end}.day-move button{padding:7px;min-width:37px;min-height:40px}.day-move button:disabled{opacity:.4;cursor:default}
 #dayPlanEditor details{margin-top:12px}
 .day-editor-summary{padding:13px;background:#edf3fd;border:1px solid #d6e2f5;border-radius:12px;line-height:1.7}
 #dayPlanFeedback{min-height:24px;color:#43618f;margin:10px 0}
@@ -171,6 +172,7 @@ html{scroll-behavior:smooth}body{background:#f4f6fb;color:#17233d;line-height:1.
 .day-editor-row .day-title{grid-column:span 2}
 .day-editor-row .day-length{grid-column:span 1}
 .day-editor-row .day-remove{justify-self:start}
+.day-editor-row .day-move{justify-self:start}
 .day-timeline-row{grid-template-columns:90px minmax(0,1fr) 42px;gap:6px;padding:8px 7px}
 .day-timeline-row time{font-size:11px}.day-timeline-row strong{font-size:12px}
 }
@@ -254,7 +256,7 @@ html{scroll-behavior:smooth}body{background:#f4f6fb;color:#17233d;line-height:1.
 <p class="summary-note">권장 기본안: 수학 42%, 국어 20%, 영어 16%, 통합과학 10%, 통합사회 8%, 한국사 4%. 2028 출제과목 기준으로 설계한 초기 배분이며 학생의 진단 결과에 따라 수정해야 합니다. 학교 병행 기본형은 주 30시간, 전일 학습 기본형은 하루 순공부 10시간(7일 운영 시 주 70시간)입니다. 기상·취침과 각 활동 시간은 아래에서 변경할 수 있습니다.</p>
 <section class="card" id="dayPlanEditor">
 <div class="row"><h2>기상부터 취침까지 · 하루 일과표</h2><span class="tag">전일 학습 기본 순공부 10시간</span></div>
-<p class="sub">기상·세면, 식사, 학교 수업, 공부, 휴식, 운동, 취침 준비를 모두 배치합니다. 활동의 길이를 바꾸면 다음 일정의 시작·종료 시각이 자동으로 이어집니다.</p>
+<p class="sub">기상·세면, 식사, 학교 수업, 공부, 휴식, 운동, 취침 준비를 모두 배치합니다. 활동의 길이를 바꾸면 다음 일정의 시작·종료 시각이 자동으로 이어집니다. 활동의 ↑↓ 버튼으로 순서를 바꿀 수 있습니다.</p>
 <div class="day-controls">
 <label>설정 날짜<input type="date" id="dayPlanDate"></label>
 <label>기본 일정 유형<select id="dayPlanMode"></select></label>
@@ -265,7 +267,7 @@ html{scroll-behavior:smooth}body{background:#f4f6fb;color:#17233d;line-height:1.
 <div id="dayPlanPreview" aria-label="기상부터 취침까지의 시간표 미리보기"></div>
 <details style="margin-top:12px" id="dayPlanEditDetails">
 <summary style="cursor:pointer;padding:12px 0;font-weight:750">✎ 세부 일정 편집 · 과목·식사·휴식 시간 변경</summary>
-<p class="sub">활동 길이(분), 유형, 과목, 이름을 자유롭게 바꿀 수 있습니다. 일정은 위에서부터 순서대로 진행되며 남은 시간은 취침 준비로 자동 채워집니다.</p>
+<p class="sub">활동 길이(분), 유형, 과목, 이름을 바꾸거나 ↑↓로 순서를 재배치할 수 있습니다. 남은 시간은 취침 준비로 자동 채워집니다.</p>
 <div id="dayPlanEditorRows"></div>
 <div class="day-actions"><button class="secondary" id="dayAddStudy" type="button">＋ 공부 블록 추가</button><button class="secondary" id="dayAddRest" type="button">＋ 휴식 추가</button><button class="secondary" id="dayResetDraft" type="button">기본안 불러오기</button></div>
 </details>
