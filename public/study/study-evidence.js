@@ -20,7 +20,8 @@ window.studyEvidence={
     {numbers:[6,13,26],focus:'모비율·정규분포·확률변수',note:'2022 개정 모비율 단원 포함'}
   ],
   priorMath:{
-    year:'2026학년도 실제 수능, 2025년 11월 시행',
+    year:'2025·2026학년도 실제 수능 (기존 공통+선택 체제)',
+    examples2025:'2025학년도 공통 수학Ⅰ 수열 귀납적 정의 22번, 수학Ⅱ 함수의 극한 21번',
     publicBreakdown:'수학Ⅰ 11문항, 수학Ⅱ 11문항, 선택과목별 8문항',
     highDiscrimination:'수학Ⅰ 지수·로그함수 그래프(22번), 수학Ⅱ 함수의 극한(21번), 선택 확률과 통계 30번',
     caveat:'선택과목 체제의 수치는 2028 수능의 확률과 통계 8문항 비율을 보장하지 않음'
@@ -37,6 +38,7 @@ window.studyEvidence={
     {label:'교육부 · 2028학년도 수능 예시문항 공개',url:'https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=103113&lev=0'},
     {label:'2028 수학 예시문항 1~30번 단원별 분석',url:'https://snu-potato.tistory.com/84'},
     {label:'2026 실제 수능 · EBS 수학 영역 출제 경향',url:'https://www.ebsi.co.kr/ebs/ent/enta/retrieveEntAnlyStrdDataVw.ebs?bbsCd=B114&datNo=127090'},
+    {label:'2025 실제 수능 · 공통 수학 변별 문항 설명',url:'https://www.newsis.com/view/NISX20241114_0002959264'},
     {label:'교육부 · 2028 수능 통합형 개편 확정',url:'https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=97551&lev=0'}
   ]
 };
