@@ -16,7 +16,7 @@ const defaultRows={
  ]},
  school:{wake:'07:00',sleep:'23:30',items:[
  ['routine','기상·세면',30],['meal','아침 식사',30],['class','학교·수업',480],
- ['routine','귀가·정리',60],['meal','저녁 식사',60],['exercise','운동·자율시간',60],
+ ['routine','귀가·정리',60],['meal','저녁 식사',60],['exercise','운동·자율시간',50],
  ['study','수학',70],['break','휴식',5],['study','영어',40],['break','휴식',5],
  ['study','국어',45],['break','휴식',5],['study','통합과학',30],['break','휴식',5],
  ['study','수학',35],['study','통합사회',20]
@@ -61,6 +61,18 @@ function dayMode(date,weeklyMode){
  if((weeklyMode||state.weeklyMode)==='full')return 'full';
  const weekday=new Date(date+'T12:00:00').getDay();
  return weekday===6?'weekend':weekday===0?'sunday':'school';
+}
+function regularMode(date,weeklyMode){
+ if((weeklyMode||state.weeklyMode)==='full')return 'full';
+ const weekday=new Date(date+'T12:00:00').getDay();
+ return weekday===6?'weekend':weekday===0?'sunday':'school';
+}
+function baselineFor(date){
+ const mode=regularMode(date);
+ const template=templateFor(mode);
+ template.mode=mode;
+ const result=analyze(template);
+ return result.error?null:{mode,study:result.study,span:result.span,rows:result.rows};
 }
 function planFor(date,mode){
  const custom=state.dates[date];
@@ -209,7 +221,7 @@ function setWeeklyMode(mode){if(!['full','school'].includes(mode))return;state.w
 window.studyDayPlan={
  get:(date,mode)=>{const d=date||localDate();return planFor(d,mode||dayMode(d))},
  timeline:(date,mode)=>analyze(planFor(date||localDate(),mode||dayMode(date||localDate()))),
- weekdayMode:dayMode,getWeeklyMode,setWeeklyMode,
+ weekdayMode:dayMode,regularMode,baselineFor,getWeeklyMode,setWeeklyMode,
  summaryFor:(date,mode)=>{const x=analyze(planFor(date,mode));return x.error?null:{study:x.study,other:x.other,rows:x.rows}},
  defaults:()=>clone(defaultRows),
  currentDate:localDate,
