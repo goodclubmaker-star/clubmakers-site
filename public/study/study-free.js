@@ -189,7 +189,7 @@ $('freeForm').onsubmit=e=>{e.preventDefault();const task=readForm();if(!task)ret
  if(!save())return;formReset();dispatch();$('freeNotice').textContent='과제를 저장했습니다. 날짜에 맞춰 오늘 학습 영역에도 표시됩니다.';
 };
 $('freeCancel').onclick=formReset;$('freeFilter').onchange=redraw;
-$('freeTranslateToggle'); // This button is dynamically rendered.
+// The translation toggle is delegated because memory cards are rerendered.
 $('freeMemorize').addEventListener('change',e=>{
  const box=e.target.closest('input[data-memorize]');if(!box)return;
  if(box.checked)memory[box.dataset.memorize]=true;else delete memory[box.dataset.memorize];
@@ -225,7 +225,7 @@ document.addEventListener('click',e=>{
  if(target){
   e.preventDefault(); // Parents of focus timer rows skip normal selection in their own handlers.
   const match=target.dataset.freeUnit.match(/^(.+)_(\d+)$/);
-  if(match)window.openFreeStudy(match[1],Number(match[2]),Number(target.dataset.free-focus||0));
+  if(match)window.openFreeStudy(match[1],Number(match[2]),Number(target.dataset.freeFocus||0));
   return;
  }
  const action=e.target.closest('[data-free-edit],[data-free-complete],[data-free-reopen],[data-free-postpone],[data-free-delete]');
