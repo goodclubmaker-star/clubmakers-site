@@ -440,12 +440,8 @@ html.study-welcome .intro-wrap{display:block}
  <div class="card"><div class="row"><h2>자유 학습</h2><button class="secondary" data-go="free" type="button">＋ 보충 학습</button></div>
  <div id="freeTodayList"></div></div>
  </section><section class="card panel" data-panel="plan" hidden>
-<h2>주간 학습 목표와 과목 우선순위</h2>
-<p class="sub">2028 수능의 국어·수학·탐구는 표준점수·등급, 영어·한국사는 절대평가입니다. 아래 비율은 확정된 입시 가중치가 아니라 <strong>수학 변별력에 대비한 전략적 출발점</strong>입니다. 점수와 취약도에 따라 직접 바꿀 수 있습니다.</p>
-<div class="flex"><label>일주일 순학습 목표(분) <input type="number" min="300" max="4200" step="30" id="planWeeklyMinutes" value="1800" style="width:120px"></label><button id="allocationSave">목표·비중 저장</button><button id="allocationReset" class="secondary">기본안 복원</button></div>
-<div id="allocationInputs" aria-label="과목별 기본 시간 비중"></div><div id="allocationFeedback" class="sub" role="status"></div>
-<p id="allocationHelp" class="sub"></p><div id="allocationPreview"></div>
-<p class="summary-note">권장 기본안: 수학 42%, 국어 20%, 영어 16%, 통합과학 10%, 통합사회 8%, 한국사 4%. 2028 출제과목 기준으로 설계한 초기 배분이며 학생의 진단 결과에 따라 수정해야 합니다. 학교 병행 기본형은 주 30시간, 전일 학습 기본형은 하루 순공부 10시간(7일 운영 시 주 70시간)입니다. 기상·취침과 각 활동 시간은 아래에서 변경할 수 있습니다.</p>
+<h2>전체 계획</h2>
+<p class="sub">기상·취침과 공부할 과목을 먼저 정하고, 필요한 경우 주간 배분을 조절하세요.</p>
 <section class="card" id="dayPlanEditor">
 <div class="row"><h2>기상부터 취침까지 · 하루 일과표</h2><span class="tag">전일 학습 기본 순공부 10시간</span></div>
 <p class="sub">기상·세면, 식사, 학교 수업, 공부, 휴식, 운동, 취침 준비를 모두 배치합니다. 활동의 길이를 바꾸면 다음 일정의 시작·종료 시각이 자동으로 이어집니다. 활동의 ↑↓ 버튼으로 순서를 바꿀 수 있습니다.</p>
@@ -466,7 +462,16 @@ html.study-welcome .intro-wrap{display:block}
 <div class="day-actions"><button id="daySaveDate" type="button">선택한 날짜만 저장</button><button id="daySaveTemplate" class="secondary" type="button">이 유형의 기본안 저장</button><button id="dayRemoveOverride" class="secondary" type="button">날짜별 변경 초기화</button></div>
 <p id="dayPlanFeedback" role="status" class="sub"></p>
 <p class="sub">학습 시간은 공부 블록만 합산합니다. 식사·학교 수업·운동·휴식은 제외합니다. 날짜별 저장은 그 날짜에만 적용하며, 유형 기본안 저장은 같은 유형의 다른 날짜에 적용됩니다.</p>
-</section><hr style="border:0;border-top:1px solid #e9edf4;margin:22px 0"><h2>실행 시간표 · 주간 학습 블록</h2><p class="sub">학교 병행 기준: 평일 4시간, 토요일 6시간, 일요일 4시간. 순공부 시간이며 휴식·식사·학교 수업은 제외합니다.</p><div class="flex"><label>학습 유형 <select id="scheduleMode"><option value="school">학교 병행 · 주 30시간</option><option value="full">전일 학습 · 매일 10시간 (주 70시간)</option></select></label><label>주 시작일 <input id="scheduleStart" type="date"></label><button id="scheduleBuild">시간표 다시 계산</button></div><div id="scheduleSummary" class="notice" style="margin-top:12px"></div><div id="scheduleDailySummary" class="day-week-summary"></div><div id="scheduleTable" style="overflow-x:auto;margin-top:12px"></div><h2 style="margin-top:20px">과목별 주간 배분</h2><div id="scheduleAllocation"></div><details class="today-details" style="margin-top:20px"><summary>출제 분석 · 단원별 중요도 보기</summary><div id="evidenceInfo"></div><div id="evidenceUnitTable"></div></details><p class="sub">진단 인터뷰의 집중 보강 단원을 우선 배치합니다. 시간표는 권장안이며 실제 완료 기록과 가족 공유 서버에는 아직 연결되지 않았습니다.</p></section><section class="card panel" data-panel="diagnostic" hidden>
+</section>
+<details class="card today-details" id="allocationSettings"><summary style="font-weight:750;font-size:15px;color:#2e4c82">과목별 주간 시간 비율 변경</summary>
+<h3>과목별 주간 학습 목표</h3>
+<p class="sub">수학 42%를 시작 비중으로 적용합니다. 조정하면 과목별 시간이 달라집니다.</p>
+<div class="flex"><label>일주일 순학습 목표(분) <input type="number" min="300" max="4200" step="30" id="planWeeklyMinutes" value="1800" style="width:120px"></label><button id="allocationSave">목표·비중 저장</button><button id="allocationReset" class="secondary">기본안 복원</button></div>
+<div id="allocationInputs" aria-label="과목별 기본 시간 비중"></div><div id="allocationFeedback" class="sub" role="status"></div>
+<p id="allocationHelp" class="sub"></p><div id="allocationPreview"></div>
+<p class="sub">학교 병행 주 30시간 · 전일 학습 10시간/일은 기본 예시입니다. 조정 가능한 실제 시간표는 위에 표시됩니다.</p>
+</details>
+<hr style="border:0;border-top:1px solid #e9edf4;margin:22px 0"><h2>실행 시간표 · 주간 학습 블록</h2><p class="sub">학교 병행 기준: 평일 4시간, 토요일 6시간, 일요일 4시간. 순공부 시간이며 휴식·식사·학교 수업은 제외합니다.</p><div class="flex"><label>학습 유형 <select id="scheduleMode"><option value="school">학교 병행 · 주 30시간</option><option value="full">전일 학습 · 매일 10시간 (주 70시간)</option></select></label><label>주 시작일 <input id="scheduleStart" type="date"></label><button id="scheduleBuild">시간표 다시 계산</button></div><div id="scheduleSummary" class="notice" style="margin-top:12px"></div><div id="scheduleDailySummary" class="day-week-summary"></div><div id="scheduleTable" style="overflow-x:auto;margin-top:12px"></div><h2 style="margin-top:20px">과목별 주간 배분</h2><div id="scheduleAllocation"></div><details class="today-details" style="margin-top:20px"><summary>출제 분석 · 단원별 중요도 보기</summary><div id="evidenceInfo"></div><div id="evidenceUnitTable"></div></details><p class="sub">진단 인터뷰의 집중 보강 단원을 우선 배치합니다. 시간표는 권장안이며 실제 완료 기록과 가족 공유 서버에는 아직 연결되지 않았습니다.</p></section><section class="card panel" data-panel="diagnostic" hidden>
 <h2>전체 과목 · 단원별 빠른 자기진단</h2>
 <p class="sub">문제를 풀기 전에 전체 주제를 펼쳐 보고 <strong>자신 있음 / 애매함 / 자신 없음</strong>을 누르세요. 같은 버튼을 다시 누르면 체크가 해제됩니다. 이 표시는 정답률이나 단원 통과 판정이 아닌 본인의 느낌입니다.</p>
 <div id="confidenceStats"></div>
