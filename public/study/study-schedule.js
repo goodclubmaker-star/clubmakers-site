@@ -71,5 +71,6 @@ $('scheduleMode').onchange=()=>{
  document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'schedule'}}));
 };
 window.studyWeekSchedule={build};
+if($('scheduleMode').value==='full'&&window.studyManager?.settings.weeklyMinutes===1800){window.studyManager?.setWeeklyMinutes?.(4200)}
 build();
 })();
