@@ -130,7 +130,6 @@ function saveChoice(key,value){
  localStorage.setItem(sourceKey,JSON.stringify(confidence));
  const row=document.querySelector('[data-confidence-row="'+CSS.escape(key)+'"]');
  if(row)row.querySelectorAll('[data-choice]').forEach(b=>b.setAttribute('aria-pressed',String(confidence[key]===b.dataset.choice)));
- const opens=[...document.querySelectorAll('.confidence-subject,.confidence-unit')].filter(d=>d.open).map(d=>d.querySelector('summary')?.textContent);
  renderConfidence();
  // Keep the currently selected branch visible even after updating counts.
  const r=document.querySelector('[data-confidence-row="'+CSS.escape(key)+'"]');
@@ -155,7 +154,7 @@ $('allocationReset').onclick=()=>{
  settings=validSettings({weeklyMinutes:1800,shares:defaultShares});
  localStorage.setItem(planKey,JSON.stringify(settings));$('allocationFeedback').textContent='기본 비중으로 되돌렸습니다.';rerender();document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'plan'}}));
 };
-document.querySelectorAll('[data-open-subject]').forEach(btn=>btn.onclick=()=>openSubject(btn.dataset.openSubject));
+$('subjectDashboard').addEventListener('click',e=>{const btn=e.target.closest('[data-open-subject]');if(btn)openSubject(btn.dataset.openSubject)});
 function openSubject(s){
  const tab=document.querySelector('[data-tab="diagnostic"]');if(tab)tab.click();
  const detail=document.querySelector('.confidence-subject[data-subject="'+CSS.escape(s)+'"]');
