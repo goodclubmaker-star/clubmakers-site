@@ -202,6 +202,7 @@ html{scroll-behavior:smooth}body{background:#f4f6fb;color:#17233d;line-height:1.
 </div>
 <label for="freeGoal" class="free-goal-label">나만의 학습 목표 · 보충할 내용 (선택)</label>
 <textarea id="freeGoal" maxlength="600" placeholder="예: 지수의 유리수 확장 개념 이해, 음수 밑 조건 정리, 기본 15문제 중 12문제 맞히기"></textarea>
+<div class="flex" style="align-items:center;margin:11px 0"><button type="button" class="secondary" id="freeDefer">이 단원 정규 일정에서 잠시 건너뛰기</button><span id="freeDeferState" class="sub">보류해도 단원 완료로 처리하지 않습니다.</span></div>
 <p class="sub">아래 단원 공략은 과목·단원·세부 주제를 바꾸면 즉시 달라집니다. 직접 적은 목표도 공략과 저장된 과제에 표시합니다.</p>
 <div class="flex"><button id="freeSave" type="submit">자유 학습 과제 추가</button><button id="freeCancel" type="button" class="secondary" hidden>수정 취소</button></div>
 <p class="free-notice" id="freeNotice" role="status">공부하고 싶은 단원을 직접 골라 보세요.</p>
