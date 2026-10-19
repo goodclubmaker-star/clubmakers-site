@@ -99,6 +99,10 @@ setInterval(()=>{
  const rest=Math.max(0,b.minutes*60-elapsed(s));
  if(rest===0){pause();draw()}else $('focusClock').textContent=fmtSecs(rest);
 },1000);
-window.studyFocusTimer={refresh:draw,storeKey:KEY};
+window.studyFocusTimer={refresh:draw,storeKey:KEY,
+ selectIndex(index){select(Number(index));return getCurrent().current},
+ current(){const d=getCurrent();return {selected:d.current?.id||null,index:d.index,started:!!d.session.startedAt,elapsed:elapsed(d.session),mode:focusMode()}},
+ getTimeline:todayRows
+};
 draw();
 })();
