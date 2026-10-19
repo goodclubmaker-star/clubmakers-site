@@ -46,7 +46,8 @@ function baseImportance(x){
 }
 function score(x){const c=confidenceFor(x);return baseImportance(x)*(1+Math.min(.55,c.weak*.11+c.unsure*.045))}
 function groups(s,pass=phaseNow().target){
- const original=all.filter(x=>x.s===s).map(x=>({...x,stage:unitProgress(x),priority:score(x)}));
+ const deferred=read('eunseong-unit-defer-v1');
+ const original=all.filter(x=>x.s===s&&!deferred[x.id]).map(x=>({...x,stage:unitProgress(x),priority:score(x)}));
  const pending=original.filter(x=>x.stage<pass);
  // On the first pass, prerequisites lead; later passes emphasize exam relevance and weakness.
  return (pending.length?pending:original).sort((a,b)=>
