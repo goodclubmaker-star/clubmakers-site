@@ -2,14 +2,14 @@
 (()=>{
 'use strict';
 const $=id=>document.getElementById(id);
-const STORE='eunseong-free-study-v1', MEMORY='eunseong-free-memory-v1';
+const STORE='eunseong-free-study-v1', MEMORY='eunseong-free-memory-v1', DEFER='eunseong-unit-defer-v1';
 const playbooks=window.studyFreePlaybooks||{},rounds=window.studyFreeRoundGuides||{};
 const subjectsAll=['수학','국어','영어','통합과학','통합사회','한국사'];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
 const read=k=>{try{const x=JSON.parse(localStorage.getItem(k));return x&&typeof x==='object'&&!Array.isArray(x)?x:{}}catch{return {}}};
 const localDate=d=>{const date=d||new Date();return new Date(date.getTime()-date.getTimezoneOffset()*60000).toISOString().slice(0,10)};
 let saved=read(STORE),tasks=Array.isArray(saved.tasks)?saved.tasks.filter(x=>x&&x.id&&subjectsAll.includes(x.subject)&&Number.isInteger(x.unitIndex)):[],editing=null,showTranslations=true;
-let memory=read(MEMORY);
+let memory=read(MEMORY),deferred=read(DEFER);
 const unitId=(s,i)=>s+'_'+i;
 const selected=()=>{
  const s=$('freeSubject').value,i=Number($('freeUnit').value),j=Number($('freeFocus').value);
@@ -70,7 +70,13 @@ function lesson(){
  '<div class="flex" style="margin-top:15px"><a href="https://www.google.com/search?q='+refQ+'+EBS+개념" target="_blank" rel="noopener">EBS 개념·강의 검색 ↗</a>'+
  '<a href="https://www.google.com/search?q='+refQ+'+평가원+기출+문제" target="_blank" rel="noopener">평가원·기출 자료 검색 ↗</a></div>'+
  '<p class="sub">교과 개념·학습 방법을 바탕으로 만든 공략 초안입니다. 공식 교육과정 목차와 대조한 완성형 교재가 아닙니다. '+(reason==='reinforce'?'부족한 부분은 오류 원인 기록과 다음 날 재검증을 우선하세요.':'')+'</p>';
- memoryPreview();
+ renderDefer();memoryPreview();
+}
+function renderDefer(){
+ const x=selected(),flag=!!deferred[x.id];
+ $('freeDefer').textContent=flag?'보류 취소 · 정규 시간표로 복귀':'이 단원 정규 일정에서 잠시 건너뛰기';
+ $('freeDefer').setAttribute('aria-pressed',String(flag));
+ $('freeDeferState').textContent=flag?'현재 정규 추천에서 보류 중 · 진도는 미완료 그대로 유지됩니다.':'선택하면 정규 시간표 추천에서 제외합니다. 자유 학습 과제는 계속 만들 수 있습니다.';
 }
 function memoryPreview(){
  const s=$('freeSubject').value,unit=Number($('freeUnit').value);
@@ -189,6 +195,14 @@ $('freeForm').onsubmit=e=>{e.preventDefault();const task=readForm();if(!task)ret
  if(!save())return;formReset();dispatch();$('freeNotice').textContent='과제를 저장했습니다. 날짜에 맞춰 오늘 학습 영역에도 표시됩니다.';
 };
 $('freeCancel').onclick=formReset;$('freeFilter').onchange=redraw;
+$('freeDefer').onclick=()=>{
+ const x=selected(),flag=!!deferred[x.id];
+ if(!flag&&!confirm('선택한 단원을 정규 추천 시간표에서 잠시 제외할까요? 단원 진도는 완료되지 않으며 언제든 복귀할 수 있습니다.'))return;
+ if(flag)delete deferred[x.id];else deferred[x.id]=true;
+ try{localStorage.setItem(DEFER,JSON.stringify(deferred))}catch(e){$('freeNotice').textContent='단원 보류 설정을 저장하지 못했습니다: '+e.message;return}
+ renderDefer();$('freeNotice').textContent=flag?'정규 추천에 다시 포함했습니다.':'정규 추천에서 보류했습니다. 학습 완료로 계산하지 않습니다.';
+ document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'defer'}}));
+};
 // The translation toggle is delegated because memory cards are rerendered.
 $('freeMemorize').addEventListener('change',e=>{
  const box=e.target.closest('input[data-memorize]');if(!box)return;
