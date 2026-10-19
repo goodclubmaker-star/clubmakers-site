@@ -37,37 +37,35 @@ const monday=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-(
 const today=()=>new Date().toLocaleDateString('en-CA');
 const focusRest={school:[1,3,5,7],weekend:[1,3,5,7,9,11],sunday:[1,3,5,7,9,11],full:[1,3,5,7,9,11,13]};
 function timeStats(){
- const focus=read(focusKey),begin=monday(),end=new Date(begin);end.setDate(begin.getDate()+7);
- let weekly=0,daily=0,blocks=0;
- for(const [key,entry] of Object.entries(focus)){
-  const m=/^(\d{4}-\d{2}-\d{2})-(school|weekend|sunday|full)$/.exec(key);
-  if(!m)continue;
-  const day=new Date(m[1]+'T12:00:00');if(!Number.isFinite(+day))continue;
-  let total=0;
-  for(const [i,r] of Object.entries(entry.records||{})){
-   if(focusRest[m[2]].includes(+i))continue;
-   total+=Math.max(0,+r.seconds||0);blocks++;
+ const begin=monday(),todayKey=today();
+ let weekly=0,daily=0,blocks=0,extraWeekly=0,extraDaily=0;
+ if(window.studyDailyGoals){
+  for(let i=0;i<7;i++){
+   const date=new Date(begin);date.setDate(begin.getDate()+i);
+   const key=new Date(date.getTime()-date.getTimezoneOffset()*60000).toISOString().slice(0,10);
+   const a=window.studyDailyGoals.actualFor(key);weekly+=a.total;extraWeekly+=a.free;
+   if(key===todayKey){daily=a.total;extraDaily=a.free}
   }
-  if(day>=begin&&day<end)weekly+=total/60;
-  if(m[1]===today())daily+=total/60;
+ }else{
+  const focus=read(focusKey),end=new Date(begin);end.setDate(end.getDate()+7);
+  for(const [key,entry] of Object.entries(focus)){
+   const m=/^(\d{4}-\d{2}-\d{2})-(school|weekend|sunday|full)$/.exec(key);
+   if(!m)continue;
+   const date=new Date(m[1]+'T12:00:00');if(!Number.isFinite(+date))continue;
+   let count=0;
+   for(const [i,r] of Object.entries(entry.records||{})){
+    if(focusRest[m[2]].includes(+i))continue;
+    count+=Math.max(0,+r.seconds||0);blocks++;
+   }
+   if(date>=begin&&date<end)weekly+=count/60;
+   if(m[1]===todayKey)daily+=count/60;
+  }
  }
- const extra=read('eunseong-free-study-v1').tasks||[];
- let extraWeekly=0,extraDaily=0;
- if(Array.isArray(extra))for(const task of extra){
-  if(task.status!=='done'||!task.doneDate)continue;
-  const date=new Date(task.doneDate+'T12:00:00');
-  const minutes=Math.max(0,Math.min(300,Number(task.actualMinutes)||0));
-  if(Number.isNaN(+date))continue;
-  if(date>=begin&&date<end)extraWeekly+=minutes;
-  if(task.doneDate===today())extraDaily+=minutes;
- }
- weekly+=extraWeekly;daily+=extraDaily;
- const weeklyMinutes=settings.weeklyMinutes,full=weeklyMinutes>=2400,
- weekday=full?360:Math.round(weeklyMinutes/1800*240),
- weekend=full?360:Math.round(weeklyMinutes/1800*360);
- const day=new Date().getDay();
- const dailyGoal=full?360:day===6?weekend:day===0?Math.round(weeklyMinutes/1800*240):weekday;
- return {weekly:Math.round(weekly),daily:Math.round(daily),freeWeekly:Math.round(extraWeekly),freeDaily:Math.round(extraDaily),weeklyGoal:weeklyMinutes,dailyGoal,blocks};
+ const original=window.studyDayPlan?.baselineFor?.(todayKey)?.study??240;
+ const info=window.studyDailyGoals?.get?.(todayKey);
+ const dailyGoal=info?.targetMinutes??original;
+ return {weekly:Math.round(weekly),daily:Math.round(daily),freeWeekly:Math.round(extraWeekly),freeDaily:Math.round(extraDaily),
+  weeklyGoal:settings.weeklyMinutes,dailyGoal,originalDailyGoal:info?.baselineMinutes??original,blocks};
 }
 function card(label,value,pct,desc){
  return '<div class="summary-mini"><small>'+label+'</small><strong>'+value+'</strong>'+
@@ -78,7 +76,7 @@ function renderGoals(){
  const x=timeStats(),p=percent(x.weekly,x.weeklyGoal),d=percent(x.daily,x.dailyGoal);
  $('goalOverview').innerHTML=card('이번 주 순학습',fmt(x.weekly)+' / '+fmt(x.weeklyGoal),p,'달성 '+p+'%')+
  card('오늘 순학습',fmt(x.daily)+' / '+fmt(x.dailyGoal),d,'달성 '+d+'%')+
- card('오늘 남은 학습',fmt(Math.max(0,x.dailyGoal-x.daily)),null,'타이머+자유 학습 실제기록 기준 · 중복 입력 주의');
+ card('오늘 남은 학습',fmt(Math.max(0,x.dailyGoal-x.daily)),null,'정규 타이머+자유 학습 실제 기록 기준 · 중복 입력 주의');
 }
 function renderDashboard(){
  const stats=currentStats(),w=weights(),total=checklist.length,checked=Object.values(stats).reduce((n,k)=>n+k.checked,0),
@@ -172,7 +170,16 @@ function openSubject(s){
  if(detail){detail.open=true;detail.scrollIntoView({behavior:'smooth',block:'start'})}
 }
 function rerender(){renderGoals();renderDashboard();renderPlan();renderConfidence()}
-window.studyManager={get settings(){return settings},weights,stats:currentStats,focus:timeStats,refresh:rerender,openSubject};
+function setWeeklyMinutes(next){
+ const m=Number(next);if(!Number.isInteger(m)||m<300||m>4200)return false;
+ if(settings.weeklyMinutes===m)return true;
+ settings.weeklyMinutes=m;
+ try{localStorage.setItem(planKey,JSON.stringify(settings))}catch{return false}
+ rerender();
+ document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'plan'}}));
+ return true;
+}
+window.studyManager={get settings(){return settings},weights,stats:currentStats,focus:timeStats,refresh:rerender,openSubject,setWeeklyMinutes};
 rerender();
 document.addEventListener('study:change',e=>{if(e.detail?.source==='confidence'||e.detail?.source==='plan')return;renderGoals();renderDashboard()});
 })();
