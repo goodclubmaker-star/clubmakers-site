@@ -175,12 +175,12 @@ function priorityGoals(){
  const monthWeeks=Math.max(1,(diff(today(),monthEnd)+1)/7),monthCount=Math.min(time.remaining,Math.ceil(time.speed*monthWeeks));
  $('weekTaskList').innerHTML='<strong>이번 주 '+p.name+' 목표: 약 '+wRate+'단원 완료</strong>'+
  '<p class="sub">목표 달성 판정은 학습 완료 단계 기록으로 확인합니다. 아래는 우선 학습 후보이며, 실제 시간표는 설정된 과목별 비율에 따라 배치합니다.</p>'+
- '<div class="goal-tasks">'+recommended.map(t=>'<div><strong>'+t.subject+'</strong> · '+safe(t.unit)+'<br><span>'+safe(t.topic)+'</span></div>').join('')+'</div>';
+ '<div class="goal-tasks">'+recommended.map(t=>'<div><strong>'+t.subject+'</strong> · '+safe(t.unit)+'<br><span>'+safe(t.topic)+'</span><br><button type="button" class="secondary task-done" data-task-done="'+safe(t.unitId)+'" data-task-pass="'+p.target+'">'+p.name+' 완료 표시</button></div>').join('')+'</div>';
  const expanded=todayList.map((s,i)=>suggest(s,now.getDate()+i,p.target)).filter(Boolean);
  const available=time.todayStat?.dailyGoal||220,raw=expanded.map(x=>x.subject==='수학'?.46:x.subject==='국어'?.29:.25);
  const total=raw.reduce((a,b)=>a+b,0);
  $('todayTaskList').innerHTML='<strong>오늘 학습 주제 · '+fmt(available)+' 권장</strong>'+
- '<div class="goal-tasks">'+expanded.map((x,i)=>'<div><strong>'+x.subject+' · '+safe(x.unit)+'</strong><br><span>'+safe(x.topic)+'</span><br><small>권장 약 '+fmt(available*raw[i]/total)+'</small></div>').join('')+'</div>'+
+ '<div class="goal-tasks">'+expanded.map((x,i)=>'<div><strong>'+x.subject+' · '+safe(x.unit)+'</strong><br><span>'+safe(x.topic)+'</span><br><small>권장 약 '+fmt(available*raw[i]/total)+'</small><br><button type="button" class="secondary task-done" data-task-done="'+safe(x.unitId)+'" data-task-pass="'+p.target+'">'+p.name+' 완료 표시</button></div>').join('')+'</div>'+
  '<p class="sub">세부 학습 시간은 권장 분배입니다. 타이머 완료 기록이 자동으로 단원 성취를 인증하지는 않습니다.</p>';
  $('monthTaskList').innerHTML='<b>'+(now.getMonth()+1)+'월 · '+p.name+'</b> · 계획 '+monthCount+'단원. 우선순위 '+recommended.slice(0,4).map(x=>x.subject+' '+x.unit).join(' / ');
 }
@@ -272,6 +272,17 @@ $('roundSave').onclick=()=>{
  deadline=d;localStorage.setItem(settingKey,JSON.stringify({firstDeadline:d}));
  $('roundFeedback').textContent='1회독 기한을 변경했습니다. 목표·시간 배분·그래프에 반영됩니다.';refresh();document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'roadmap'}}));
 };
+document.addEventListener('click',e=>{
+ const target=e.target.closest?.('[data-task-done]');
+ if(!target)return;
+ const id=target.dataset.taskDone,pass=Number(target.dataset.taskPass);
+ const x=all.find(unit=>unit.id===id);
+ if(!x||!Number.isInteger(pass)||pass<1||pass>4)return;
+ const progress=unitProgress(x);
+ if(progress>=pass){target.textContent='이미 '+pass+'회독 이상 완료';return}
+ if(!confirm('해당 단원의 '+pass+'회독 학습을 완료 처리할까요? 개념·대표 문제까지 확인한 경우에만 완료하세요.'))return;
+ window.studyProgressSet?.(id,pass);
+});
 window.studyRoadmap={refresh,suggest,score,groups,phase:phaseNow,passPlan:phases,logProgress,prepareProgressEvent,get firstDeadline(){return deadline}};
 document.addEventListener('study:change',()=>refresh());
 ensureBaseline();
