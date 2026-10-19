@@ -20,7 +20,7 @@ function summary(){
  ['심화 · 실전',advanced+' / '+all.length],
  ['자가진단 체크',confidence+' / '+(stats?Object.values(stats).reduce((a,x)=>a+x.parts,0):0)],
  ['문제 진단',assessed.length+'개 (추가 문항 필요 '+insufficient+')'],
- ['이번 주 타이머 기록',focus?fmt(focus.weekly):'0분'],
+ ['이번 주 실제 기록 (타이머·자유)',focus?fmt(focus.weekly):'0분'],
  ['예정 복습',due+'개']
  ];
  $('overviewStats').innerHTML=cards.map(([label,val])=>'<div class="summary-mini"><small>'+label+'</small><strong>'+val+'</strong></div>').join('');
