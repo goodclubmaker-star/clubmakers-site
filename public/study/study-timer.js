@@ -1,14 +1,104 @@
-(()=>{'use strict';const $=id=>document.getElementById(id),store='eunseong-focus-v1';const templates={
- school:{start:'19:00',items:[['수학','사고·개념/문제',70],['휴식','회복',5],['영어','암기·어휘/구문',40],['휴식','회복',5],['국어','사고·독해/문학',45],['휴식','회복',5],['통합사회·통합과학','자료 이해·적용',30],['휴식','회복',5],['수학·취약 단원','응용·오답',35],['오늘 학습 평가','평가·복습 예약',20]]},
- weekend:{start:'09:00',items:[['수학','사고·개념/문제',70],['휴식','회복',10],['영어','암기·어휘/구문',50],['휴식','회복',10],['국어','사고·독해/문학',60],['휴식','회복',15],['통합과학','자료 해석',55],['점심·긴 휴식','회복',60],['통합사회·한국사','암기·정리',40],['휴식','회복',10],['수학·취약 단원','응용·오답',55],['휴식','회복',10],['오답·주간 평가','평가·복습 예약',30]]},
- sunday:{start:'10:00',items:[['수학','사고·개념/문제',55],['휴식','회복',10],['영어','어휘/구문',30],['휴식','회복',10],['국어','독해/문학',35],['휴식','회복',10],['통합사회·통합과학','자료 정리',30],['점심·긴 휴식','회복',30],['한국사','암기·사료',30],['휴식','회복',10],['수학·취약 단원','응용·오답',40],['휴식','회복',10],['오답·주간 평가','복습 예약',20]]},
- full:{start:'09:00',items:[['수학','사고·개념/문제',50],['휴식','회복',10],['영어','암기·어휘/구문',40],['휴식','회복',10],['국어','사고·독해/문학',50],['휴식','회복',15],['통합과학','이해·자료 해석',45],['점심·긴 휴식','회복',60],['통합사회·한국사','암기·정리',45],['휴식','회복',10],['수학·취약 단원','사고·응용',50],['휴식','회복',10],['영어·국어 기출','사고·적용',45],['휴식','회복',10],['오답·학습 평가','평가·채점',35]]}
-};let state={};try{state=JSON.parse(localStorage.getItem(store))||{}}catch{};const today=()=>new Date().toLocaleDateString('en-CA');function k(){return today()+'-'+$('focusMode').value}function session(){return state[k()]||(state[k()]={selected:0,records:{},elapsed:0,startedAt:null})}function save(){localStorage.setItem(store,JSON.stringify(state));window.studyCloudChanged?.(store)}function blocks(){return templates[$('focusMode').value].items}function mins(s){const [h,m]=s.split(':').map(Number);return h*60+m}function clock(n){return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}function stamp(m){return clock(m%1440)}function elapsed(s){return Math.max(0,Math.floor((s.elapsed||0)+(s.startedAt?(Date.now()-s.startedAt)/1000:0)))}function current(){const s=session();return blocks()[s.selected]||blocks()[0]}function finish(){const s=session();if(s.startedAt){s.elapsed=elapsed(s);s.startedAt=null}save()}function select(i){finish();const s=session();s.selected=i;s.elapsed=s.records[i]?.seconds||0;save();draw()}function unitFor(label,index){
- let subject=label.includes('수학')||label==='취약 단원'?'수학':label.includes('영어')?'영어':
- label.includes('국어')?'국어':label.includes('통합과학')?'통합과학':
- label.includes('통합사회')?'통합사회':label.includes('한국사')?'한국사':null;
- return subject?window.studyRoadmap?.suggest(subject,index):null;
+/* Focus timer for editable wake-to-bed daily plans, with safe independent v2 records. */
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id),KEY='eunseong-focus-v2';
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
+const localDate=()=>new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+const read=()=>{try{const x=JSON.parse(localStorage.getItem(KEY));return x&&typeof x==='object'?x:{}}catch{return {}}};
+let state=read(),activeDate=localDate();
+const fmtSecs=s=>{s=Math.max(0,Math.floor(Number(s)||0));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;return h?String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'):String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0')};
+function focusMode(){return $('focusMode').value||window.studyDayPlan?.weekdayMode(localDate())||'school'}
+function todayRows(){
+ const date=localDate();
+ return window.studyDayPlan?.timeline(date,focusMode());
 }
-function renderTable(){const items=blocks();let time=mins(templates[$('focusMode').value].start);const s=session();$('focusTable').innerHTML='<table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr><th>시간</th><th>과목·활동</th><th>유형</th><th>계획</th><th>실제</th><th>상태</th></tr></thead><tbody>'+items.map(([subject,type,duration],i)=>{const start=time;time+=duration;const rec=s.records[i];return '<tr data-block="'+i+'" style="cursor:pointer;border-top:1px solid #e6eaf2;background:'+(s.selected===i?'#e9efff':'transparent')+'"><td style="padding:10px 4px">'+stamp(start)+'–'+stamp(time)+'</td><td><strong>'+subject+'</strong>'+(unitFor(subject,i)?'<br><small class="sub">'+unitFor(subject,i).title+'</small><br><button type="button" class="secondary" data-free-unit="'+unitFor(subject,i).unitId+'">단원 공략</button>':'')+'</td><td>'+type+'</td><td>'+duration+'분</td><td>'+(rec?Math.round(rec.seconds/60)+'분':'—')+'</td><td>'+(rec?'완료':s.selected===i?'선택':'대기')+'</td></tr>'}).join('')+'</tbody></table>';for(const row of $('focusTable').querySelectorAll('[data-block]'))row.onclick=e=>{if(e.target.closest('[data-free-unit]'))return;select(Number(row.dataset.block))}}
-function draw(){const s=session(),b=current(),secs=elapsed(s),target=b[2]*60,remain=Math.max(0,target-secs);const specific=unitFor(b[0],s.selected);$('focusNow').textContent=b[0]+(specific?' · '+specific.title:'')+' · 목표 '+b[2]+'분'+(s.startedAt?' · 진행 중':' · 대기/일시정지');$('focusClock').textContent=clock(Math.floor(remain/60))+':'+String(remain%60).padStart(2,'0');const entries=Object.entries(s.records),actual=entries.reduce((sum,[i,r])=>sum+(blocks()[i][1]==='회복'?0:r.seconds),0),study=blocks().filter(x=>x[1]!=='회복').reduce((a,x)=>a+x[2],0);$('focusStats').innerHTML='<strong>순학습 계획 '+study+'분 · 기록 '+Math.round(actual/60)+'분 · 완료 '+entries.length+'/'+blocks().length+'블록</strong><p class="sub">휴식은 순학습 합계에서 제외합니다. 과목별 진도·정답률 평가는 별도로 기록해야 합니다.</p>';renderTable()}
-$('focusMode').onchange=()=>{const s=session();s.startedAt=null;save();draw()};$('focusStart').onclick=()=>{const s=session();if(!s.startedAt){s.startedAt=Date.now();save()}draw()};$('focusPause').onclick=()=>{finish();draw()};$('focusDone').onclick=()=>{finish();const s=session();s.records[s.selected]={seconds:s.elapsed,finishedAt:new Date().toISOString()};s.selected=Math.min(blocks().length-1,s.selected+1);s.elapsed=s.records[s.selected]?.seconds||0;save();draw()};$('focusSkip').onclick=()=>{finish();const s=session();s.selected=Math.min(blocks().length-1,s.selected+1);s.elapsed=s.records[s.selected]?.seconds||0;save();draw()};$('focusReset').onclick=()=>{if(confirm('오늘 선택한 시간표의 타이머 기록을 초기화할까요?')){delete state[k()];save();draw()}};document.addEventListener('study:change',draw);setInterval(()=>{const s=session();if(s.startedAt){const b=current();if(elapsed(s)>=b[2]*60){finish();draw()}else{$('focusClock').textContent=clock(Math.floor(Math.max(0,b[2]*60-elapsed(s))/60))+':'+String(Math.max(0,b[2]*60-elapsed(s))%60).padStart(2,'0')}}},1000);draw();})();
+function getSession(){
+ const date=localDate();if(activeDate!==date)activeDate=date;
+ if(!state[date]||typeof state[date]!=='object')state[date]={selected:null,records:{},elapsed:0,startedAt:null};
+ const session=state[date];if(!session.records||typeof session.records!=='object')session.records={};
+ return session;
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){$('focusStats').textContent='기록 저장 오류: '+e.message};window.studyCloudChanged?.(KEY);document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'timer'}}))}
+function getCurrent(){
+ const timeline=todayRows();if(!timeline||timeline.error)return{timeline,rows:[],session:getSession(),current:null,index:-1};
+ const rows=timeline.rows,s=getSession();
+ let index=rows.findIndex(x=>x.id===s.selected);
+ if(index<0){
+  index=rows.findIndex(x=>x.kind==='study');
+  if(index<0)index=0;
+  s.selected=rows[index]?.id||null;s.elapsed=s.records[s.selected]?.seconds||0;s.startedAt=null;
+ }
+ return {timeline,rows,session:s,current:rows[index],index};
+}
+function elapsed(s){return Math.max(0,Math.floor((Number(s.elapsed)||0)+(s.startedAt?(Date.now()-s.startedAt)/1000:0)))}
+function pause(){const s=getSession();if(s.startedAt){s.elapsed=elapsed(s);s.startedAt=null;save()}}
+function select(index){
+ const data=getCurrent();if(!data.rows[index])return;
+ pause();const s=getSession();s.selected=data.rows[index].id;s.elapsed=s.records[s.selected]?.seconds||0;s.startedAt=null;save();draw();
+}
+function unitFor(row,index){
+ const subj=row.subject==='오답·복습'?'수학':row.subject;
+ return row.kind==='study'&&subj?window.studyRoadmap?.suggest(subj,index):null;
+}
+function renderTable(data){
+ const {rows,session,current,timeline}=data;
+ $('focusTable').innerHTML='<div class="sub" style="margin:8px 0">하루 전체 일정: '+esc(rows[0]?.start||'')+' 기상 → '+esc(rows.at(-1)?.end||'')+' 취침 · 순학습 '+Math.round((timeline.study||0)/60*10)/10+'시간</div>'+
+ '<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr><th>시간</th><th>과목·일정</th><th>분류</th><th>계획</th><th>실제</th><th>상태</th></tr></thead><tbody>'+
+ rows.map((row,i)=>{
+  const rec=session.records[row.id],focus=unitFor(row,i);
+  return '<tr data-block="'+i+'" style="cursor:pointer;border-top:1px solid #e6eaf2;background:'+(current?.id===row.id?'#e9efff':'transparent')+'">'+
+  '<td style="padding:10px 4px;white-space:nowrap">'+esc(row.start)+'–'+esc(row.end)+'</td>'+
+  '<td><strong>'+esc(row.title)+'</strong>'+(focus?'<br><small class="sub">'+esc(focus.title)+'</small><br><button type="button" class="secondary" data-free-unit="'+esc(focus.unitId)+'">단원 공략</button>':'')+'</td>'+
+  '<td>'+esc(row.kind==='study'?'순공부':row.title)+'</td><td>'+row.minutes+'분</td>'+
+  '<td>'+(rec?Math.round(rec.seconds/60)+'분':'—')+'</td>'+
+  '<td>'+(rec?'기록 완료':current?.id===row.id?'선택':'대기')+'</td></tr>';
+ }).join('')+'</tbody></table>';
+ for(const row of $('focusTable').querySelectorAll('[data-block]')){
+  row.onclick=e=>{if(e.target.closest('[data-free-unit]'))return;select(Number(row.dataset.block))};
+ }
+}
+function draw(){
+ const data=getCurrent(),{timeline,rows,session:s,current,index}=data;
+ if(!current||timeline?.error){
+  $('focusStats').textContent='일정 오류: '+(timeline?.error||'공부 블록이 없습니다.')+' 시간표에서 일과를 수정하세요.';
+  $('focusTable').innerHTML='';$('focusClock').textContent='00:00';$('focusNow').textContent='시간표를 확인하세요.';return;
+ }
+ const target=current.minutes*60,seconds=elapsed(s),remain=Math.max(0,target-seconds),unit=unitFor(current,index);
+ $('focusClock').textContent=fmtSecs(remain);
+ $('focusNow').textContent=current.title+(unit?' · '+unit.title:'')+' · 목표 '+current.minutes+'분'+
+ (s.startedAt?' · 진행 중':' · 대기/일시정지');
+ const records=Object.values(s.records),actual=records.filter(r=>r?.kind==='study').reduce((sum,r)=>sum+(Number(r.seconds)||0),0);
+ const stats=window.studyDailyGoals?.get?.(localDate());
+ $('focusStats').innerHTML='<strong>현재 일과 순학습 '+(timeline.study||0)+'분 · 타이머 기록 '+Math.round(actual/60)+'분 · 전체 실제 '+(stats?.actualMinutes??Math.round(actual/60))+'분</strong>'+
+ '<p class="sub">기상~취침 전체 계획에서 공부 시간만 집계합니다. 오늘 아침에 정한 목표와 원래 목표는 위에서 비교할 수 있습니다.</p>';
+ renderTable(data);
+}
+$('focusMode').value=window.studyDayPlan?.weekdayMode?.(localDate())||'school';
+$('focusMode').onchange=()=>{pause();draw()};
+$('focusStart').onclick=()=>{const s=getSession();if(!s.startedAt){s.startedAt=Date.now();save()}draw()};
+$('focusPause').onclick=()=>{pause();draw()};
+$('focusDone').onclick=()=>{
+ pause();const data=getCurrent(),s=data.session,row=data.current;
+ if(!row)return;
+ s.records[row.id]={kind:row.kind,seconds:Math.max(0,Math.min(row.minutes*60,elapsed(s))),finishedAt:new Date().toISOString(),title:row.title};
+ const next=Math.min(data.index+1,data.rows.length-1);s.selected=data.rows[next]?.id||null;
+ s.elapsed=s.records[s.selected]?.seconds||0;s.startedAt=null;save();draw();
+};
+$('focusSkip').onclick=()=>{const d=getCurrent();select(Math.min(d.index+1,d.rows.length-1))};
+$('focusReset').onclick=()=>{
+ if(!confirm('오늘의 새 타이머 기록을 초기화할까요? 과거 방식으로 저장된 학습 기록과 자유 학습 기록은 유지됩니다.'))return;
+ delete state[localDate()];save();draw();
+};
+document.addEventListener('study:change',e=>{
+ if(e.detail?.source==='dayplan'){$('focusMode').value=window.studyDayPlan.weekdayMode(localDate());}
+ if(e.detail?.source==='timer')return;draw();
+});
+setInterval(()=>{
+ const data=getCurrent(),s=data.session,b=data.current;
+ if(!s.startedAt||!b)return;
+ const rest=Math.max(0,b.minutes*60-elapsed(s));
+ if(rest===0){pause();draw()}else $('focusClock').textContent=fmtSecs(rest);
+},1000);
+window.studyFocusTimer={refresh:draw,storeKey:KEY};
+draw();
+})();
