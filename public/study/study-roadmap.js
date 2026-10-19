@@ -258,7 +258,7 @@ $('roundSave').onclick=()=>{
   $('roundFeedback').textContent='1회독 마감일은 현재 이후부터 2027년 7월 30일 사이로 입력하세요.';return;
  }
  deadline=d;localStorage.setItem(settingKey,JSON.stringify({firstDeadline:d}));
- $('roundFeedback').textContent='1회독 기한을 변경했습니다. 목표·시간 배분·그래프에 반영됩니다.';refresh();
+ $('roundFeedback').textContent='1회독 기한을 변경했습니다. 목표·시간 배분·그래프에 반영됩니다.';refresh();document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'roadmap'}}));
 };
 window.studyRoadmap={refresh,suggest,score,groups,phase:phaseNow,passPlan:phases,logProgress,get firstDeadline(){return deadline}};
 document.addEventListener('study:change',()=>refresh());
