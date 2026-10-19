@@ -342,7 +342,7 @@ window.studyConcrete={
   return {name:row[0],concept:row[1],task:row[2],advanced:row[3],subject,index:Number(index)};
  },
  fromId(id){
-  const match=String(id).match(/^(.+)_(\\d+)$/);
+  const match=String(id).match(/^(.+)_(\d+)$/);
   return match?this.unit(match[1],Number(match[2])):null;
  },
  label(subject,index){return this.unit(subject,index)?.name||''},
