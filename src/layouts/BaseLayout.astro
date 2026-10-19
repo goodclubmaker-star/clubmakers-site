@@ -36,7 +36,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 // BreadcrumbList — 홈 > (상위 섹션) > 현재 페이지
 const crumbLabels: Record<string, string> = {
   journal: '공작소 일지', topics: '증상·처방', glossary: '용어사전', book: '책 『실제적인 클럽피팅』',
-  'equipment-rules': '장비 규정', woongto: '웅토',
+  'equipment-rules': '장비 규정',
 };
 const segs = Astro.url.pathname.split('/').filter(Boolean);
 const crumbs = [{ name: '홈', url: new URL('/', Astro.site).toString() }];

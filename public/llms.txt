@@ -111,21 +111,6 @@
 - **세트 일관성** — 단일 클럽이 아닌 14개 클럽의 흐름 매칭.
 - **친근한 공작소** — 강요 없이 골퍼의 선택을 존중하는 톤.
 
-## 낭만공작소 (공작소장 채기웅의 디지털 작품 브랜드)
-
-골프와 별개로 채기웅 공작소장이 만드는 앱·카메라·게임·이야기·애니메이션 브랜드. 작품은 계속 추가됨.
-
-- [작품 소개](https://myclubmakers.com/nangman/)
-- [WOONGTO · 웅토](https://myclubmakers.com/nangman/products/woongto/): 걷기와 러닝, 하이킹부터 트레일러닝까지. 이동 경로를 기록하고, 찾고, 입체적으로 다시 보는 아웃도어 앱입니다.
-- [인생4초](https://myclubmakers.com/nangman/products/life4sec/): 셔터 전 2초와 후 2초를 함께 기록하는 카메라. 찍히는 사람과 찍는 사람의 작은 표정까지 특별한 순간으로 남깁니다.
-- [채CINE](https://myclubmakers.com/nangman/products/cinecam/): 24fps 촬영, 필름 룩, 그레인과 누광, 카메라 프레임까지. 복잡한 편집 전에 먼저 영화적인 질감과 움직임을 경험하세요.
-- [낭만엽서](https://myclubmakers.com/nangman/products/nangmanpostcard/): 낭만엽서 - 손글씨를 쓰는 과정까지 전하는 무료 iPhone 디지털 엽서 앱
-- [낭만페이지](https://myclubmakers.com/nangman/products/nangmanpage/): 템플릿을 먼저 고르고 사진이나 영상을 채운 뒤, 글자와 프레임, 여백을 다듬는 카드뉴스·콘텐츠 편집 앱입니다. iOS 버전은 최종 마무리 단계입니다.
-- [에세이텔라](https://myclubmakers.com/nangman/products/essaytella/): 글의 종류와 주제, 원하는 표현 방식을 정하고 글을 생성하거나 다듬는 웹 기반 글쓰기 도구입니다. 글의 중심 생각은 쓰는 사람에게서 시작합니다.
-- [메모텔라](https://myclubmakers.com/nangman/products/memotella/): AI가 질문을 건네고, 사용자가 말하거나 직접 입력한 기억을 문장과 장으로 정리하는 자서전 제작 서비스입니다. 웹과 인쇄 경험을 준비하고 있습니다.
-- [사투링고](https://myclubmakers.com/nangman/products/satulingo/): 친구에게 발음하기 어려운 문장을 보내고 각자의 말투로 녹음하는 소셜 챌린지. 링크 하나로 시작하는 사투리 놀이입니다.
-- [시날로아](https://myclubmakers.com/nangman/products/sinaloa/): 짧은 문장, 정체를 알 수 없는 위협, 그리고 다음 순간을 결정하는 선택. 읽는 이야기와 플레이하는 게임 사이의 시네마틱 스릴러입니다.
-- [우울폭주성탄절](https://myclubmakers.com/nangman/products/blue-christmas/): 시나리오의 흐름을 시각적 장면으로 옮기고, 인물과 공간의 감정선을 컷 단위로 조율하며 제작 중인 애니메이션입니다.
 
 ## 콘텐츠 라이센스
 

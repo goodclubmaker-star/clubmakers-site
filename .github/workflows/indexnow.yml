@@ -41,6 +41,8 @@ jobs:
                   urls.add(f'{site}/' + (p[:-len('index.html')] if p.endswith('index.html') else p))
               if f.startswith('src/layouts/') or f.startswith('src/components/'):
                   urls.add(f'{site}/')
+          personal = ('/nangman', '/blue-christmas', '/sinaloa', '/essaytella', '/satulinggo', '/woongto', '/chaecine', '/life4sec', '/study')
+          urls = {u for u in urls if not u[len(site):].startswith(personal)}
           if not urls:
               print('no page changes'); raise SystemExit
           body = json.dumps({'host': 'myclubmakers.com', 'key': key, 'keyLocation': f'{site}/{key}.txt', 'urlList': sorted(urls)[:10000]}).encode()
