@@ -9,17 +9,17 @@ const defaultRows={
  full:{wake:'07:00',sleep:'23:00',items:[
  ['routine','기상·세면',30],['meal','아침 식사',30],
  ['study','수학',95],['break','휴식',15],['study','국어',75],['break','휴식',15],
- ['study','수학',90],['meal','점심 식사',50],['study','영어',75],['break','간식·휴식',25],
+ ['study','수학',90],['meal','점심 식사',50],['study','영어',95],['break','간식·휴식',25],
  ['study','통합과학',60],['exercise','산책·운동',40],['study','수학',70],['meal','저녁 식사',50],
- ['study','통합사회',60],['break','휴식',15],['study','국어',40],['break','휴식',15],
- ['study','한국사',35]
+ ['study','통합사회',50],['break','휴식',15],['study','국어',40],['break','휴식',15],
+ ['study','한국사',25]
  ]},
  school:{wake:'07:00',sleep:'23:30',items:[
  ['routine','기상·세면',30],['meal','아침 식사',30],['class','학교·수업',480],
  ['routine','귀가·정리',60],['meal','저녁 식사',60],['exercise','운동·자율시간',60],
  ['study','수학',70],['break','휴식',5],['study','영어',40],['break','휴식',5],
  ['study','국어',45],['break','휴식',5],['study','통합과학',30],['break','휴식',5],
- ['study','수학',35],['study','국어',20]
+ ['study','수학',35],['study','통합사회',20]
  ]},
  weekend:{wake:'07:30',sleep:'23:00',items:[
  ['routine','기상·세면',30],['meal','아침 식사',30],['routine','자율 준비',30],
@@ -65,7 +65,17 @@ function dayMode(date,weeklyMode){
 function planFor(date,mode){
  const custom=state.dates[date];
  if(custom&&(!mode||custom.mode===mode))return clone(custom);
- return templateFor(mode||dayMode(date));
+ const picked=mode||dayMode(date);
+ const plan=templateFor(picked);
+ // On school days the science/history block rotates unless the family edited the template.
+ if(picked==='school'&&!state.templates.school){
+  const weekday=new Date(date+'T12:00:00').getDay();
+  if(weekday===2||weekday===4){
+   const item=plan.items.find(x=>x.kind==='study'&&x.subject==='통합과학');
+   if(item){item.subject='한국사';item.title='한국사'}
+  }
+ }
+ return plan;
 }
 function analyze(plan){
  if(!plan||!Array.isArray(plan.items)||plan.items.length>60)return{error:'일정은 1~60개 항목으로 구성해야 합니다.'};
