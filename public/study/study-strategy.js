@@ -146,12 +146,12 @@ $('allocationSave').onclick=()=>{
  const sum=Object.values(values).reduce((a,b)=>a+b,0);
  if(!Number.isInteger(m)||m<300||m>4200){$('allocationFeedback').textContent='주간 순학습 목표는 300~4,200분으로 설정하세요.';return}
  if(Object.values(values).some(v=>!Number.isInteger(v)||v<1||v>70)||sum!==100){$('allocationFeedback').textContent='과목별 배분은 각각 1~70%이며 합계가 정확히 100%여야 합니다. 현재 '+sum+'%입니다.';return}
- settings=validSettings({weeklyMinutes:m,shares:values});localStorage.setItem(planKey,JSON.stringify(settings));
+ settings=validSettings({weeklyMinutes:m,shares:values});localStorage.setItem(planKey,JSON.stringify(settings));if(m===1800)$('scheduleMode').value='school';else if(m===2520)$('scheduleMode').value='full';
  $('allocationFeedback').textContent='목표 저장됨 · 시간표 추천에도 반영됩니다. 이 기기에만 저장됩니다.';
  rerender();document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'plan'}}));
 };
 $('allocationReset').onclick=()=>{
- settings=validSettings({weeklyMinutes:1800,shares:defaultShares});
+ settings=validSettings({weeklyMinutes:1800,shares:defaultShares});$('scheduleMode').value='school';
  localStorage.setItem(planKey,JSON.stringify(settings));$('allocationFeedback').textContent='기본 비중으로 되돌렸습니다.';rerender();document.dispatchEvent(new CustomEvent('study:change',{detail:{source:'plan'}}));
 };
 $('subjectDashboard').addEventListener('click',e=>{const btn=e.target.closest('[data-open-subject]');if(btn)openSubject(btn.dataset.openSubject)});
