@@ -47,8 +47,9 @@ function lesson(){
  const main=unitParts[x.j]||x.topic;
  const custom=$('freeGoal').value.trim();
  const reason=$('freeReason').value;
- let intro=base[0]||'관련 개념과 원리를 정의·사례로 확인합니다.',tactic=base[1]||usage(x.s);
- let tip=base[2]||'정의와 적용 조건을 빠뜨리지 않습니다.',advanced=base[3]||'여러 자료와 조건을 결합해 스스로 풀이 근거를 설명합니다.';
+ const concrete=window.studyConcrete?.unit(x.s,x.i);
+ let intro=concrete?.concept||base[0]||'관련 개념과 원리를 정의·사례로 확인합니다.',tactic=base[1]||usage(x.s);
+ let tip=base[2]||'정의와 적용 조건을 빠뜨리지 않습니다.',advanced=concrete?.advanced||base[3]||'여러 자료와 조건을 결합해 스스로 풀이 근거를 설명합니다.';
  const req=['핵심 용어와 선수 개념 확인','오늘 선택 주제: '+main,'단원 공략: '+tactic,
      '취약한 판단·오답 원인 기록','제한시간 없이 설명 후, 시간 제한으로 다시 검증'];
  const current=stages[level-1]||['학습 후 대표 문제를 풀어 봅니다.','오답을 다시 검증합니다.'];
@@ -58,6 +59,7 @@ function lesson(){
  '<div class="free-guide-summary"><strong>이 단원에서 알아야 할 것</strong><p>'+esc(intro)+'</p>'+
  '<strong>풀이와 공부의 핵심 전략</strong><p>'+esc(tactic)+'</p><strong>자주 틀리는 부분</strong><p>'+esc(tip)+'</p></div>'+
  (custom?'<div class="summary-note"><b>내가 직접 세운 목표:</b> '+esc(custom).replace(/\n/g,'<br>')+'</div>':'')+
+ '<div class="free-stage-detail"><strong>오늘 직접 할 공부</strong><p>'+esc(concrete?.task||'대표 문제를 풀고 오답을 기록합니다.')+'</p></div>'+ 
  '<h4>이번 '+esc(instructions[level-1])+'의 실행 순서</h4>'+
  '<ol class="free-guide-steps">'+req.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ol>'+
  '<div class="free-stage-detail"><strong>현재 단계에서 달성할 것</strong><p>'+esc(current[0])+'</p>'+
