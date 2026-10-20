@@ -5,6 +5,13 @@
   const STORY_STORAGE_KEY = 'blue-christmas-storyboard-edits-v1';
   const DB_NAME = 'blue-christmas-production-board-files-v1';
   const STORE_NAME = 'samples';
+  const AI_JOB_STORAGE_KEY = 'blue-christmas-ai-video-jobs-v1';
+  const AI_VIDEO_API = '/api/blue-christmas/video';
+  const AI_PILOT_CUT_ID = 'S16-C02';
+  const AI_PILOT_MODELS = {
+    gen4_turbo: { name: 'Gen-4 Turbo · 빠른 시험', credits: 25 },
+    'gen4.5': { name: 'Gen-4.5 · 품질 우선', credits: 60 }
+  };
   const STATUSES = [
     ['ready', '준비'],
     ['keyframe', '키프레임 확정'],
@@ -13,7 +20,7 @@
     ['approved', '최종 승인']
   ];
   const LOCATION_DEFS = [
-    { id: 'dept-front', name: '백화점 전면 · 도심 광장', hint: 'S03 · S11 · S16 · S19 / 전광판·연말 군중·백화점 정면' },
+    { id: 'dept-front', name: '백화점 전면 · 도심 광장', hint: 'S03 · S11 · S19 / 전광판·연말 군중·백화점 정면' },
     { id: 'stall', name: '지하도 입구 · 혁의 가판대', hint: 'S05 · S07 · S13 / 가판대·기둥·보행 동선' },
     { id: 'alley', name: '막다른 골목 · 주택가', hint: 'S08 · S13 · S14 / 추격·대치·한적한 골목' },
     { id: 'underpass', name: '잠수교 지하통로', hint: 'S15 · S16 / 기둥 사이 트래킹·울리는 대화' },
@@ -38,14 +45,14 @@
   };
   const PROMPT_OVERRIDES = {
     'S16-C02': `IMAGE-TO-VIDEO PROMPT
-Create a 6-second cinematic image-to-video shot in winter Seoul, 2023, directly in front of the established Christmas department-store exterior from the location reference. Rudolf must keep exactly the same cute, round-bodied character design, face, aviator headgear, bulky winter outfit, colors, and proportions shown in the character reference.
+Create a 5-second cinematic image-to-video shot from this exact first frame: a crowded Gwanghwamun intersection in winter Seoul, 2023. Preserve the high oblique wide composition, the small traffic island, the palace frontage, dense Christmas-season crowds, buses and cars, wet-road reflections, and every established light and color.
 
-Rudolf stands alone near the edge of the busy department-store plaza, holding the same old, worn, repeatedly folded paper street map with both hands. Christmas crowds stream past him without paying attention. He studies the map, turns it slightly as if the orientation is wrong, looks up toward the light-polluted sky but cannot see any stars, compares the department-store facade with the map, tilts his head in confusion, then takes two hesitant steps toward screen-left and stops because he is still lost.
+Rudolf is the same human Korean man in the approved keyframe: large round sturdy body, innocent face, brown vintage aviator trapper cap with large goggles resting on top, olive bulky parka, faded red scarf, dark trousers, winter boots, old backpack, and the same worn folded paper map. He remains safely planted at the center of the small island. He looks down at the map, turns only the top edge a little, glances once toward the flowing city, then returns his eyes to the map with restrained confusion. Keep both hands, map folds, face, costume, and body proportions stable.
 
-Camera: begin in a medium-wide shot and make a slow lateral tracking move through soft foreground pedestrians while keeping Rudolf visually isolated near the center. Preserve screen direction. The department-store display, Christmas lights, wet pavement reflections, and distant traffic move only subtly. Continuous single shot, restrained limited animation, warm Christmas lights against a cold blue night, gently comic but lonely.
+Traffic and pedestrians flow around him in clear lanes without touching him. Headlights and reflections slide naturally across the wet road. Camera movement is a very slow, nearly imperceptible push toward Rudolf while the original high-angle geometry stays locked. One continuous shot, restrained limited animation, lonely gentle comedy inside an overwhelming city.
 
 NEGATIVE PROMPT
-No traffic island, no palace gate, no road-center staging, no cars passing close to Rudolf, no location change, no new character, no character redesign, no thin body, no altered costume, no clean or modern map, no map text becoming readable, no extra fingers, no morphing hands, no duplicated pedestrians, no melting architecture, no camera shake, no fast zoom, no fisheye distortion, no subtitles, no generated letters, no logo, no watermark, no style shift, no photorealistic or 3D CGI conversion.`
+No location change, no empty street, no teleporting vehicles, no vehicle crossing through Rudolf, no collision, no new principal character, no character redesign, no thin body, no antlers, no animal ears, no red nose, no mascot face, no altered costume, no clean or modern map, no readable map text, no extra fingers, no morphing hands, no duplicated pedestrians, no melting palace or buildings, no camera shake, no fast zoom, no fisheye distortion, no subtitles, no generated letters, no logo, no watermark, no style conversion.`
   };
   const CHARACTER_REFERENCES = [
     { id: 'rudolf', name: '루돌프', version: 'FINAL LOCK v001', file: 'production-references/characters/rudolf_final_v001.webp', lock: '30대 초반의 인간 남성. 크고 둥글며 튼튼한 체형, 갈색 빈티지 귀덮개 항공모와 큰 고글, 올리브 패딩, 붉은 목도리, 낡은 지도와 배낭. 뿔·동물 귀·빨간 코 금지.' },
@@ -68,6 +75,9 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
   const objectUrls = new Set();
   let dbPromise;
   let state = loadState();
+  let aiJobs = loadAiJobs();
+  let activePilotCutId = '';
+  const aiPollTimers = new Map();
   let locationFilter = 'all';
   let searchText = '';
 
@@ -76,6 +86,17 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
   }
   function sceneId(sceneNo) { return `S${pad(sceneNo)}`; }
+
+  function loadAiJobs() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(AI_JOB_STORAGE_KEY) || '{}');
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch { return {}; }
+  }
+
+  function saveAiJobs() {
+    localStorage.setItem(AI_JOB_STORAGE_KEY, JSON.stringify(aiJobs));
+  }
 
   function shotProfile(cut) {
     const text = `${cut.id} ${cut.img || ''} ${cut.title || ''} ${cut.action || ''}`.toLowerCase();
@@ -228,13 +249,12 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       });
       target.cutOrders[location.id] = ids;
     });
-    target.version = 3;
+    target.version = 4;
     return target;
   }
 
   function inferLocation(sceneNo, cutId) {
     const numeric = Number((cutId.match(/(?:C|KF|I)(\d+)/i) || [])[1] || 1);
-    if (cutId === 'S16-C02') return 'dept-front';
     if (sceneNo === 1) return numeric <= 3 ? 'rooftop' : 'city';
     if (sceneNo === 2 || sceneNo === 25) return 'space';
     if ([3, 11, 19].includes(sceneNo)) return 'dept-front';
@@ -246,7 +266,7 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     if (sceneNo === 12) return 'breakroom';
     if (sceneNo === 13) return numeric <= 4 ? 'alley' : 'stall';
     if (sceneNo === 15) return 'underpass';
-    if (sceneNo === 16) return /^(S16-C0[13]|S16-C04[ABC]?)$/i.test(cutId) ? 'city' : 'underpass';
+    if (sceneNo === 16) return /^(S16-C0[123]|S16-C04[ABC]?)$/i.test(cutId) ? 'city' : 'underpass';
     if (sceneNo === 18) return 'playground';
     if (sceneNo === 22) return 'rooftop';
     if (sceneNo === 24) return numeric <= 4 ? 'rooftop' : 'space';
@@ -288,7 +308,7 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       cuts[cut.id] = { locationId, status: cut.videoProduced ? 'video' : 'ready', note: '' };
       cutOrders[locationId].push(cut.id);
     });
-    return sortStateForProduction({ version: 3, locationOrder: PRODUCTION_LOCATION_ORDER.slice(), cutOrders, cuts });
+    return sortStateForProduction({ version: 4, locationOrder: PRODUCTION_LOCATION_ORDER.slice(), cutOrders, cuts });
   }
 
   function normalizeState(candidate) {
@@ -315,8 +335,8 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       if (!fresh.cutOrders[locationId].includes(cut.id)) fresh.cutOrders[locationId].push(cut.id);
     }
     fresh.version = Number(candidate.version || 1);
-    if (fresh.version < 3) {
-      if (fresh.cuts['S16-C02']?.locationId === 'city') fresh.cuts['S16-C02'].locationId = 'dept-front';
+    if (fresh.version < 4) {
+      if (fresh.cuts['S16-C02']?.locationId === 'dept-front') fresh.cuts['S16-C02'].locationId = 'city';
       return sortStateForProduction(fresh);
     }
     return fresh;
@@ -401,6 +421,23 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       </header>
       <main class="productionBook" id="productionBook"></main>
       <div class="prodModal" id="prodModal" onclick="this.classList.remove('open')"><button type="button">×</button><img id="prodModalImg" alt="확대 이미지"></div>
+      <div class="aiPilotModal" id="aiPilotModal" aria-hidden="true">
+        <div class="aiPilotDialog">
+          <header><div><b>AI 영상 파일럿</b><span id="aiPilotCutLabel">S16-C02 · 5초 이미지 투 비디오</span></div><button type="button" onclick="productionBoard.closeVideoPilot()">×</button></header>
+          <div class="aiPilotGrid">
+            <div class="aiPilotPreview"><img id="aiPilotImage" alt="파일럿 첫 프레임"><div class="aiPilotLock">첫 프레임 절대 고정 · 루돌프 캐릭터락 유지</div></div>
+            <div class="aiPilotForm">
+              <label>모델<select id="aiPilotModel" onchange="productionBoard.updatePilotCost()"><option value="gen4_turbo">Gen-4 Turbo · 빠른 시험</option><option value="gen4.5">Gen-4.5 · 품질 우선</option></select></label>
+              <div class="aiPilotCost" id="aiPilotCost">5초 · 예상 25 credits</div>
+              <label>영상 프롬프트<textarea id="aiPilotPrompt" spellcheck="false"></textarea></label>
+              <label>제작 암호<input id="aiPilotToken" type="password" autocomplete="current-password" placeholder="Cloudflare에 등록한 제작 암호"></label>
+              <p class="aiPilotHelp">Runway API 키는 브라우저에 입력하지 않습니다. 제작 암호만 서버에 보내며, 결과 URL은 이 브라우저에 임시 저장됩니다.</p>
+              <div class="aiPilotStatus" id="aiPilotStatus">아직 생성하지 않았습니다.</div>
+              <div class="aiPilotActions"><button class="aiGenerateBtn" id="aiPilotGenerate" type="button" onclick="productionBoard.startVideoPilot()">5초 파일럿 생성</button><a id="aiPilotDownload" hidden target="_blank" rel="noopener">완성 영상 다운로드</a><button id="aiPilotApprove" hidden type="button" onclick="productionBoard.approveVideoPilot()">KEEP로 표시</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
       ${referenceLibraryMarkup()}
       <input id="productionImport" type="file" accept="application/json" hidden>
     `;
@@ -410,8 +447,10 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       *{box-sizing:border-box}html{scroll-behavior:smooth}.productionBody{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif}.prodTop{position:sticky;top:0;z-index:40;padding:13px 18px 12px;background:#0d131ceF;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}.prodBrand{display:inline-flex;flex-direction:column;vertical-align:middle}.prodBrand b{font-size:18px}.prodBrand span{margin-top:3px;color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:.12em}.prodActions{float:right;display:flex;align-items:center;gap:7px}.prodActions button,.prodActions a,.filterRow button{border:1px solid #4b5a6c;border-radius:999px;background:#182231;color:#eff3f7;padding:7px 11px;text-decoration:none;cursor:pointer;font-size:12px}.saveFlag{color:#8f9baa;font-size:11px}.saveFlag.saved{color:#8ed0a9}.progressHeader{clear:both;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding-top:12px;font-size:12px}.progressRail,.locationRail{height:7px;border-radius:99px;background:#283341;overflow:hidden}.progressRail i,.locationRail i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--amber),var(--green))}.filterRow{display:grid;grid-template-columns:minmax(200px,320px) minmax(180px,1fr) auto;gap:8px;margin-top:10px}.filterRow select,.filterRow input{min-width:0;border:1px solid #405064;border-radius:7px;background:#111923;color:#e8edf3;padding:8px 10px}.productionBook{max-width:1320px;margin:0 auto;padding:24px 18px 90px}.locationSection{margin-bottom:34px;scroll-margin-top:170px}.locationHead{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin-bottom:12px;padding:13px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}.locationNo{color:var(--amber);font:800 20px ui-monospace,monospace}.locationHead h2{margin:0 0 3px;font-size:21px}.locationHint{color:var(--muted);font-size:12px}.locationStats{min-width:210px;text-align:right}.locationStats b{display:block;margin-bottom:6px;font:800 12px ui-monospace,monospace}.locationControls{display:flex;gap:5px;margin-top:8px;justify-content:flex-end}.iconBtn{width:29px;height:29px;padding:0;border:1px solid #48586a;border-radius:7px;background:#1b2634;color:#fff;cursor:pointer}.iconBtn:disabled{opacity:.25}.cutGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.productionCard{overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:0 10px 28px #0004}.productionCard[data-status="video"],.productionCard[data-status="approved"]{border-color:#4e8367}.keyframe{position:relative;display:flex;align-items:center;justify-content:center;min-height:210px;background:#05080c}.keyframe img{display:block;width:100%;max-height:440px;object-fit:contain;cursor:zoom-in}.keyframe .missing{padding:80px 20px;color:#8491a1}.orderBadge,.statusBadge{position:absolute;top:10px;z-index:2;padding:6px 9px;border-radius:999px;font:800 10px ui-monospace,monospace;box-shadow:0 3px 10px #0008}.orderBadge{left:10px;background:#090d13dd;color:#fff}.statusBadge{right:10px;background:#263444e8;color:#dce4ed}.shotBadge{display:inline-flex;margin-top:6px;padding:4px 7px;border:1px solid #3b4a5d;border-radius:999px;color:#aebccc;background:#101720;font:800 9px ui-monospace,monospace;letter-spacing:.04em}.productionCard[data-status="keyframe"] .statusBadge{background:#7a5d2d}.productionCard[data-status="generating"] .statusBadge{background:#385e82}.productionCard[data-status="video"] .statusBadge{background:#397052}.productionCard[data-status="approved"] .statusBadge{background:#256746}.cardBody{padding:14px}.cardTop{display:flex;justify-content:space-between;gap:10px}.cutIdentity{font:800 13px ui-monospace,monospace;color:var(--amber)}.sceneTitle{margin-top:3px;color:var(--muted);font-size:12px}.moveTools{display:flex;gap:4px}.generatorTools{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.generatorTools a,.generatorTools button{border:1px solid #4a5b6e;border-radius:999px;background:#14202d;color:#edf3f8;padding:6px 9px;text-decoration:none;cursor:pointer;font:800 10px inherit}.generatedClip{margin-top:10px;border:1px solid #35465a;border-radius:7px;overflow:hidden;background:#05080c}.generatedClip video{display:block;width:100%;max-height:360px;background:#000}.generatedClip b{display:block;padding:7px 9px;color:#8ed0a9;font-size:11px}.scenario{margin:13px 0 0;padding:12px 13px;border-radius:7px;background:var(--paper);color:var(--paperInk);white-space:pre-line;font-size:13px;line-height:1.65;max-height:180px;overflow:auto}.scenario:empty{display:none}.productionFields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{color:#9eabba;font-size:10px;font-weight:800;letter-spacing:.06em}.field select,.field textarea{width:100%;border:1px solid #3b4a5b;border-radius:6px;background:#0e151e;color:#edf1f5;padding:8px;font:12px inherit}.field textarea{min-height:66px;resize:vertical}.sampleSection{padding:0 14px 14px}.sampleTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.sampleTop b{font-size:12px}.sampleUpload{border:1px solid #53657a;border-radius:999px;background:#1a2634;color:#fff;padding:6px 9px;cursor:pointer;font-size:11px}.sampleTrack{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px}.sampleCard{position:relative;flex:0 0 170px;overflow:hidden;border:1px solid #3b4959;border-radius:7px;background:#080c11}.sampleCard img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;cursor:zoom-in}.sampleIndex{position:absolute;top:5px;left:5px;padding:3px 6px;border-radius:99px;background:#080c11dd;font:800 9px ui-monospace,monospace}.sampleName{padding:6px 7px;color:#9da9b7;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sampleBtns{display:flex;gap:3px;padding:0 5px 6px}.sampleBtns button{flex:1;border:1px solid #405063;border-radius:5px;background:#17212d;color:#fff;padding:4px;cursor:pointer;font-size:10px}.sampleEmpty{width:100%;padding:14px;border:1px dashed #3f4d5d;border-radius:6px;color:#7f8c9c;text-align:center;font-size:11px}.prodModal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:22px;background:#030507f2}.prodModal.open{display:flex}.prodModal img{max-width:96vw;max-height:94vh;object-fit:contain}.prodModal button{position:absolute;right:16px;top:10px;border:0;background:none;color:#fff;font-size:36px}.emptyResult{padding:80px 20px;text-align:center;color:#8c99a8}
       .promptDetails{margin-top:8px;border:1px solid #33465a;border-radius:7px;background:#0b1119}.promptDetails summary{padding:8px 10px;color:#b8c6d5;cursor:pointer;font-size:11px;font-weight:800}.promptDetails pre{max-height:310px;margin:0;padding:11px;border-top:1px solid #2d3b4a;color:#dce6ef;white-space:pre-wrap;overflow:auto;font:11px/1.55 ui-monospace,"Malgun Gothic",monospace}
       .continuityLine{margin-top:8px;padding:7px 9px;border-left:3px solid #6f9fcd;background:#101923;color:#aebdcd;font:10px/1.45 ui-monospace,"Malgun Gothic",monospace}.continuityLine b{color:#dce8f3}
+      .aiPilotLaunch{border-color:#d3a34b!important;background:#7b5720!important;color:#fff4d8!important}.aiPilotLaunch.running{border-color:#6f9fcd!important;background:#244b70!important}.aiPilotInline{margin-top:9px;padding:9px 10px;border:1px solid #5f4b2b;border-radius:7px;background:#19160f;color:#d8c7a6;font-size:11px;line-height:1.5}.aiPilotInline b{color:#ffd58d}.aiPilotInline.success{border-color:#3d7558;background:#101a15;color:#a9d4ba}
+      .aiPilotModal{position:fixed;inset:0;z-index:100;display:none;padding:24px;background:#030609ed;overflow:auto}.aiPilotModal.open{display:flex;align-items:center;justify-content:center}.aiPilotDialog{width:min(1180px,100%);max-height:calc(100vh - 48px);overflow:auto;border:1px solid #45566a;border-radius:13px;background:#101823;box-shadow:0 24px 90px #000c}.aiPilotDialog>header{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #344355;background:#111a25f2;backdrop-filter:blur(12px)}.aiPilotDialog>header b{display:block;font-size:19px}.aiPilotDialog>header span{display:block;margin-top:3px;color:#9aabba;font:10px ui-monospace,monospace}.aiPilotDialog>header button{border:0;background:none;color:#fff;font-size:30px;cursor:pointer}.aiPilotGrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(360px,.9fr);gap:0}.aiPilotPreview{position:relative;display:flex;align-items:center;justify-content:center;min-height:390px;background:#05080c}.aiPilotPreview img{display:block;width:100%;height:100%;max-height:680px;object-fit:contain}.aiPilotLock{position:absolute;left:12px;bottom:12px;padding:7px 9px;border-radius:6px;background:#070a0edb;color:#f1d198;font-size:11px}.aiPilotForm{display:flex;flex-direction:column;gap:11px;padding:18px}.aiPilotForm label{display:flex;flex-direction:column;gap:6px;color:#b9c5d1;font-size:11px;font-weight:800}.aiPilotForm select,.aiPilotForm textarea,.aiPilotForm input{width:100%;border:1px solid #46576a;border-radius:7px;background:#0b121a;color:#f0f4f7;padding:9px;font:12px/1.5 inherit}.aiPilotForm textarea{min-height:270px;resize:vertical;font-family:ui-monospace,"Malgun Gothic",monospace}.aiPilotCost{padding:8px 10px;border-radius:6px;background:#182334;color:#e7c27a;font:800 11px ui-monospace,monospace}.aiPilotHelp{margin:0;color:#8e9dad;font-size:11px;line-height:1.55}.aiPilotStatus{padding:10px 11px;border:1px solid #3a4a5b;border-radius:7px;background:#0b1118;color:#bac7d4;font-size:12px;line-height:1.55}.aiPilotStatus.error{border-color:#8c4d52;color:#f0b3b6}.aiPilotStatus.success{border-color:#48775c;color:#b7dfc3}.aiPilotActions{display:flex;flex-wrap:wrap;gap:7px}.aiPilotActions button,.aiPilotActions a{border:1px solid #56677a;border-radius:999px;background:#1a2735;color:#f4f7f9;padding:9px 12px;text-decoration:none;cursor:pointer;font-size:12px;font-weight:800}.aiPilotActions .aiGenerateBtn{border-color:#d2a34f;background:#8a6021;color:#fff8e9}.aiPilotActions button:disabled{opacity:.5;cursor:wait}
       .referenceModal{position:fixed;inset:0;z-index:80;display:none;padding:24px;background:#05080deb;overflow:auto}.referenceModal.open{display:block}.referenceDialog{max-width:1280px;margin:auto;border:1px solid #3c4a5b;border-radius:12px;background:#0f1721;box-shadow:0 20px 80px #000b}.referenceDialog>header{position:sticky;top:-24px;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #344253;background:#101923f2;backdrop-filter:blur(12px)}.referenceDialog>header b{display:block;font-size:18px}.referenceDialog>header span{display:block;margin-top:3px;color:#92a2b4;font:10px ui-monospace,monospace;letter-spacing:.08em}.referenceDialog>header button{border:0;background:none;color:#fff;font-size:30px;cursor:pointer}.referenceDialog>nav{display:flex;gap:7px;padding:12px 14px 0}.referenceDialog>nav button,.referenceCardBody button,.referenceCardBody a{border:1px solid #506176;border-radius:999px;background:#172333;color:#f1f5f8;padding:7px 10px;text-decoration:none;cursor:pointer;font-size:11px}.referenceWarning{margin:12px 14px 0;padding:11px 13px;border:1px solid #8a5f45;border-radius:8px;background:#2a1d18;color:#f1d5bc;font-size:12px;line-height:1.6}.referenceWarning b{color:#ffbe83}.referenceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:14px}.referenceCard{overflow:hidden;border:1px solid #334254;border-radius:9px;background:#131d29}.referenceCard.hidden{display:none}.referencePreview{display:block;width:100%;padding:0;border:0;background:#070b10;cursor:zoom-in}.referencePreview img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain}.referenceCardBody{padding:11px}.referenceCardBody>b{font-size:14px}.referenceCardBody>span{margin-left:8px;color:#d9b86f;font:10px ui-monospace,monospace}.referenceCardBody p{min-height:38px;margin:7px 0 10px;color:#aebaca;font-size:11px;line-height:1.55}.referenceCardBody div{display:flex;gap:6px}
-      @media(max-width:820px){.prodTop{padding:10px}.prodBrand b{font-size:15px}.prodActions{float:none;margin-top:9px;overflow-x:auto}.progressHeader{grid-template-columns:auto 1fr}.progressHeader .progressDetail{grid-column:1/-1}.filterRow{grid-template-columns:1fr auto}.filterRow select{grid-column:1/-1}.productionBook{padding:15px 0 60px}.locationSection{margin-bottom:22px}.locationHead{border-radius:0;border-left:0;border-right:0;grid-template-columns:auto 1fr;padding:12px 11px}.locationHead h2{font-size:17px}.locationStats{grid-column:1/-1;min-width:0;text-align:left}.locationControls{justify-content:flex-start}.cutGrid{display:block}.productionCard{border-radius:0;border-left:0;border-right:0;margin-bottom:12px}.keyframe{min-height:0}.keyframe img{max-height:none}.productionFields{grid-template-columns:1fr}.field.full{grid-column:auto}.scenario{max-height:none}.sampleCard{flex-basis:150px}.referenceModal{padding:0}.referenceDialog{border:0;border-radius:0}.referenceDialog>header{top:0}.referenceGrid{grid-template-columns:1fr;padding:10px}.referenceDialog>nav{overflow-x:auto}.referenceWarning{margin:10px}.referenceCardBody p{min-height:0}}
+      @media(max-width:820px){.prodTop{padding:10px}.prodBrand b{font-size:15px}.prodActions{float:none;margin-top:9px;overflow-x:auto}.progressHeader{grid-template-columns:auto 1fr}.progressHeader .progressDetail{grid-column:1/-1}.filterRow{grid-template-columns:1fr auto}.filterRow select{grid-column:1/-1}.productionBook{padding:15px 0 60px}.locationSection{margin-bottom:22px}.locationHead{border-radius:0;border-left:0;border-right:0;grid-template-columns:auto 1fr;padding:12px 11px}.locationHead h2{font-size:17px}.locationStats{grid-column:1/-1;min-width:0;text-align:left}.locationControls{justify-content:flex-start}.cutGrid{display:block}.productionCard{border-radius:0;border-left:0;border-right:0;margin-bottom:12px}.keyframe{min-height:0}.keyframe img{max-height:none}.productionFields{grid-template-columns:1fr}.field.full{grid-column:auto}.scenario{max-height:none}.sampleCard{flex-basis:150px}.referenceModal{padding:0}.referenceDialog{border:0;border-radius:0}.referenceDialog>header{top:0}.referenceGrid{grid-template-columns:1fr;padding:10px}.referenceDialog>nav{overflow-x:auto}.referenceWarning{margin:10px}.referenceCardBody p{min-height:0}.aiPilotModal{padding:0}.aiPilotDialog{min-height:100%;max-height:none;border:0;border-radius:0}.aiPilotGrid{display:block}.aiPilotPreview{min-height:0}.aiPilotPreview img{height:auto;max-height:none}.aiPilotForm{padding:14px}.aiPilotForm textarea{min-height:240px}}
       @media print{.prodTop{position:static}.prodActions,.filterRow,.locationControls,.moveTools,.productionFields,.sampleUpload,.sampleBtns{display:none!important}.productionBook{max-width:none;padding:0}.locationSection{break-before:page}.productionCard{break-inside:avoid}.cutGrid{display:block}.productionCard{margin-bottom:10mm}.keyframe img{max-height:120mm}.sampleSection{display:none}}
     `;
     document.head.appendChild(style);
@@ -425,12 +464,30 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     filter.value = locationFilter;
   }
 
+  function pilotInlineStatus(job) {
+    if (!job) return 'S16-C02에서 5초 이미지 투 비디오를 한 번 시험할 수 있습니다.';
+    if (job.status === 'SUCCEEDED') return `완료 · ${job.model || 'Runway'} · 결과가 만료되기 전에 다운로드하세요.`;
+    if (job.status === 'FAILED') return `실패 · ${job.error || '상세 오류를 확인하세요.'}`;
+    if (job.status === 'SUBMITTING') return 'Runway에 생성 요청을 보내는 중입니다.';
+    const progress = Number.isFinite(Number(job.progress)) ? ` · ${Math.round(Number(job.progress) * 100)}%` : '';
+    return `${job.status || '대기'}${progress} · 창을 닫아도 이 브라우저에서 이어서 확인합니다.`;
+  }
+
   function renderCard(cut, locationId, orderIndex) {
     const cutState = state.cuts[cut.id];
     const shot = shotProfile(cut);
     const locationOptions = state.locationOrder.map((id) => `<option value="${id}"${id === locationId ? ' selected' : ''}>${esc(LOCATION_MAP[id].name)}</option>`).join('');
     const statusOptions = STATUSES.map(([id, name]) => `<option value="${id}"${id === cutState.status ? ' selected' : ''}>${name}</option>`).join('');
-    const clip = GENERATED_CLIPS[cut.id];
+    const aiJob = aiJobs[cut.id] || null;
+    const clip = aiJob?.outputUrl || GENERATED_CLIPS[cut.id];
+    const isPilotCut = cut.id === AI_PILOT_CUT_ID;
+    const isPilotRunning = ['SUBMITTING', 'PENDING', 'THROTTLED', 'RUNNING'].includes(aiJob?.status);
+    const pilotButton = isPilotCut
+      ? `<button class="aiPilotLaunch${isPilotRunning ? ' running' : ''}" type="button" onclick="productionBoard.openVideoPilot('${esc(cut.id)}')">${isPilotRunning ? 'AI 생성 진행 확인' : aiJob?.outputUrl ? 'AI 영상 다시 생성' : 'AI 영상 파일럿'}</button>`
+      : '';
+    const pilotInline = isPilotCut
+      ? `<div class="aiPilotInline${aiJob?.status === 'SUCCEEDED' ? ' success' : ''}"><b>파일럿</b> ${esc(pilotInlineStatus(aiJob))}</div>`
+      : '';
     const extension = (cut.img || '').split('.').pop() || 'png';
     const prompt = videoPrompt(cut);
     const continuity = continuityContext(cut);
@@ -452,10 +509,11 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
       </div>
       <div class="cardBody">
         <div class="cardTop"><div><div class="cutIdentity">${sceneId(cut.sceneNo)} · ${esc(cut.id)}</div><div class="sceneTitle">${esc(cut.sceneTitle)}</div><span class="shotBadge">${esc(shot.label)}</span></div><div class="moveTools"><button class="iconBtn" type="button" title="앞으로" onclick="productionBoard.moveCut('${esc(locationId)}','${esc(cut.id)}',-1)"${orderIndex === 0 ? ' disabled' : ''}>↑</button><button class="iconBtn" type="button" title="뒤로" onclick="productionBoard.moveCut('${esc(locationId)}','${esc(cut.id)}',1)"${orderIndex === state.cutOrders[locationId].length - 1 ? ' disabled' : ''}>↓</button></div></div>
-        <div class="generatorTools">${cut.img ? `<a href="${encodeURI(cut.img)}" download="${esc(cut.id)}_keyframe.${esc(extension)}">키프레임 다운로드</a>` : ''}${characterReferenceButtons}${locationReferenceButton}${previousReference}${nextReference}<button type="button" onclick="productionBoard.copyPrompt('${esc(cut.id)}')">영상 프롬프트 복사</button>${clip ? `<a href="${encodeURI(clip)}" download>생성 영상 다운로드</a>` : ''}</div>
+        <div class="generatorTools">${pilotButton}${cut.img ? `<a href="${encodeURI(cut.img)}" download="${esc(cut.id)}_keyframe.${esc(extension)}">키프레임 다운로드</a>` : ''}${characterReferenceButtons}${locationReferenceButton}${previousReference}${nextReference}<button type="button" onclick="productionBoard.copyPrompt('${esc(cut.id)}')">영상 프롬프트 복사</button>${clip ? `<a href="${encodeURI(clip)}" download target="_blank" rel="noopener">생성 영상 다운로드</a>` : ''}</div>
+        ${pilotInline}
         <div class="continuityLine"><b>연결 기준</b> ${esc(continuityLabel)}</div>
         <details class="promptDetails"><summary>이 컷의 영상 프롬프트 보기</summary><pre>${esc(prompt)}</pre></details>
-        ${clip ? `<div class="generatedClip"><b>AI 생성 영상 · ${esc(cut.id)}</b><video controls playsinline preload="metadata" src="${encodeURI(clip)}"></video></div>` : ''}
+        ${clip ? `<div class="generatedClip"><b>${aiJob?.outputUrl ? 'AI 파일럿 결과' : 'AI 생성 영상'} · ${esc(cut.id)}</b><video controls playsinline preload="metadata" src="${encodeURI(clip)}"></video></div>` : ''}
         <div class="scenario">${esc(cut.action || '')}</div>
         <div class="productionFields">
           <div class="field"><label>제작 단계</label><select onchange="productionBoard.setStatus('${esc(cut.id)}',this.value)">${statusOptions}</select></div>
@@ -697,6 +755,176 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     setTimeout(() => { flag.textContent = '자동 저장'; flag.classList.remove('saved'); }, 1800);
   }
 
+  function updatePilotCost() {
+    const model = document.getElementById('aiPilotModel')?.value || 'gen4_turbo';
+    const config = AI_PILOT_MODELS[model] || AI_PILOT_MODELS.gen4_turbo;
+    const cost = document.getElementById('aiPilotCost');
+    if (cost) cost.textContent = `5초 · 예상 ${config.credits} credits · 실제 과금은 Runway 기준`;
+  }
+
+  function pilotStatusMessage(job) {
+    if (!job) return { text: '아직 생성하지 않았습니다.', kind: '' };
+    if (job.status === 'SUCCEEDED') return { text: '생성이 완료되었습니다. 결과 URL은 영구 보관용이 아니므로 지금 다운로드하세요.', kind: 'success' };
+    if (job.status === 'FAILED') return { text: `생성 실패: ${job.error || 'Runway 작업이 완료되지 않았습니다.'}`, kind: 'error' };
+    if (job.status === 'SUBMITTING') return { text: 'Runway에 작업을 등록하는 중입니다…', kind: '' };
+    const progress = Number.isFinite(Number(job.progress)) ? ` (${Math.round(Number(job.progress) * 100)}%)` : '';
+    return { text: `${job.status || 'PENDING'}${progress} · 약 5초 후 자동으로 다시 확인합니다.`, kind: '' };
+  }
+
+  function updatePilotModal() {
+    if (!activePilotCutId) return;
+    const job = aiJobs[activePilotCutId] || null;
+    const status = document.getElementById('aiPilotStatus');
+    const generate = document.getElementById('aiPilotGenerate');
+    const download = document.getElementById('aiPilotDownload');
+    const approve = document.getElementById('aiPilotApprove');
+    const message = pilotStatusMessage(job);
+    if (status) {
+      status.textContent = message.text;
+      status.className = `aiPilotStatus${message.kind ? ` ${message.kind}` : ''}`;
+    }
+    const running = ['SUBMITTING', 'PENDING', 'THROTTLED', 'RUNNING'].includes(job?.status);
+    if (generate) {
+      generate.disabled = running;
+      generate.textContent = running ? '생성 진행 중…' : job?.outputUrl ? '새 버전 다시 생성' : '5초 파일럿 생성';
+    }
+    if (download) {
+      download.hidden = !job?.outputUrl;
+      if (job?.outputUrl) download.href = job.outputUrl;
+    }
+    if (approve) approve.hidden = !job?.outputUrl || state.cuts[activePilotCutId]?.status === 'approved';
+  }
+
+  function openVideoPilot(cutId) {
+    if (cutId !== AI_PILOT_CUT_ID) return;
+    const cut = visibleStoryCuts().find((item) => item.id === cutId);
+    if (!cut?.img) return;
+    activePilotCutId = cutId;
+    document.getElementById('aiPilotCutLabel').textContent = `${cutId} · 5초 이미지 투 비디오`;
+    document.getElementById('aiPilotImage').src = new URL(cut.img, window.location.href).href;
+    document.getElementById('aiPilotPrompt').value = PROMPT_OVERRIDES[cutId] || videoPrompt(cut);
+    document.getElementById('aiPilotModel').value = aiJobs[cutId]?.model || 'gen4_turbo';
+    document.getElementById('aiPilotToken').value = sessionStorage.getItem('blue-christmas-studio-token-v1') || '';
+    updatePilotCost();
+    updatePilotModal();
+    const modal = document.getElementById('aiPilotModal');
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (['PENDING', 'THROTTLED', 'RUNNING'].includes(aiJobs[cutId]?.status) && document.getElementById('aiPilotToken').value) schedulePilotPoll(cutId, 200);
+  }
+
+  function closeVideoPilot() {
+    const modal = document.getElementById('aiPilotModal');
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    activePilotCutId = '';
+  }
+
+  async function apiJson(response) {
+    const text = await response.text();
+    let payload = {};
+    try { payload = text ? JSON.parse(text) : {}; }
+    catch { payload = { message: text || '서버 응답을 읽지 못했습니다.' }; }
+    if (!response.ok) {
+      const error = new Error(payload.message || payload.error || `요청 실패 (${response.status})`);
+      error.code = payload.code || '';
+      throw error;
+    }
+    return payload;
+  }
+
+  async function startVideoPilot() {
+    const cutId = activePilotCutId;
+    const cut = visibleStoryCuts().find((item) => item.id === cutId);
+    if (!cut || cutId !== AI_PILOT_CUT_ID) return;
+    const token = document.getElementById('aiPilotToken').value.trim();
+    const model = document.getElementById('aiPilotModel').value;
+    const prompt = document.getElementById('aiPilotPrompt').value.trim();
+    if (!token) {
+      const status = document.getElementById('aiPilotStatus');
+      status.textContent = '제작 암호를 입력해야 유료 API 호출을 시작할 수 있습니다.';
+      status.className = 'aiPilotStatus error';
+      return;
+    }
+    if (!prompt) return;
+    const config = AI_PILOT_MODELS[model] || AI_PILOT_MODELS.gen4_turbo;
+    if (!window.confirm(`${config.name}으로 5초 영상을 생성합니다. 예상 ${config.credits} credits를 사용할 수 있습니다. 계속할까요?`)) return;
+    sessionStorage.setItem('blue-christmas-studio-token-v1', token);
+    aiJobs[cutId] = { status: 'SUBMITTING', model, startedAt: new Date().toISOString(), prompt };
+    saveAiJobs();
+    state.cuts[cutId].status = 'generating';
+    saveState();
+    updatePilotModal();
+    render();
+    try {
+      const payload = await apiJson(await fetch(AI_VIDEO_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Blue-Christmas-Token': token },
+        body: JSON.stringify({ cutId, model, duration: 5, prompt })
+      }));
+      aiJobs[cutId] = { ...aiJobs[cutId], taskId: payload.taskId, status: payload.status || 'PENDING', submittedAt: new Date().toISOString() };
+      saveAiJobs();
+      updatePilotModal();
+      render();
+      schedulePilotPoll(cutId, 1500);
+    } catch (error) {
+      aiJobs[cutId] = { ...aiJobs[cutId], status: 'FAILED', error: error.message };
+      state.cuts[cutId].status = 'keyframe';
+      saveAiJobs(); saveState(); render(); updatePilotModal();
+    }
+  }
+
+  function schedulePilotPoll(cutId, delay = 5000) {
+    clearTimeout(aiPollTimers.get(cutId));
+    aiPollTimers.set(cutId, setTimeout(() => pollVideoPilot(cutId), delay));
+  }
+
+  async function pollVideoPilot(cutId) {
+    const job = aiJobs[cutId];
+    if (!job?.taskId || !['PENDING', 'THROTTLED', 'RUNNING'].includes(job.status)) return;
+    const token = sessionStorage.getItem('blue-christmas-studio-token-v1') || document.getElementById('aiPilotToken')?.value.trim();
+    if (!token) return;
+    try {
+      const url = `${AI_VIDEO_API}?id=${encodeURIComponent(job.taskId)}&cutId=${encodeURIComponent(cutId)}`;
+      const payload = await apiJson(await fetch(url, { headers: { 'X-Blue-Christmas-Token': token } }));
+      const outputUrl = Array.isArray(payload.output) ? payload.output.find((item) => typeof item === 'string') : payload.outputUrl;
+      aiJobs[cutId] = {
+        ...job,
+        status: payload.status || job.status,
+        progress: payload.progress,
+        outputUrl: outputUrl || job.outputUrl || '',
+        error: payload.error || '',
+        updatedAt: new Date().toISOString()
+      };
+      if (aiJobs[cutId].status === 'SUCCEEDED' && aiJobs[cutId].outputUrl) state.cuts[cutId].status = 'video';
+      if (['FAILED', 'CANCELED'].includes(aiJobs[cutId].status)) {
+        aiJobs[cutId].status = 'FAILED';
+        state.cuts[cutId].status = 'keyframe';
+      }
+      saveAiJobs(); saveState(); render(); updatePilotModal();
+      if (['PENDING', 'THROTTLED', 'RUNNING'].includes(aiJobs[cutId].status)) schedulePilotPoll(cutId, 5000);
+    } catch (error) {
+      aiJobs[cutId] = { ...job, lastPollError: error.message };
+      saveAiJobs();
+      if (activePilotCutId === cutId) {
+        const status = document.getElementById('aiPilotStatus');
+        const willRetry = !['UNAUTHORIZED', 'CONFIG_REQUIRED'].includes(error.code);
+        status.textContent = `상태 확인 실패: ${error.message}${willRetry ? ' · 잠시 후 다시 확인합니다.' : ''}`;
+        status.className = 'aiPilotStatus error';
+      }
+      if (!['UNAUTHORIZED', 'CONFIG_REQUIRED'].includes(error.code)) schedulePilotPoll(cutId, 8000);
+    }
+  }
+
+  function approveVideoPilot() {
+    const cutId = activePilotCutId;
+    if (!cutId || !aiJobs[cutId]?.outputUrl) return;
+    state.cuts[cutId].status = 'approved';
+    saveState(); render(); updatePilotModal();
+  }
+
   function exportData() {
     const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), state }, null, 2)], { type: 'application/json' });
     const anchor = document.createElement('a');
@@ -718,7 +946,12 @@ No traffic island, no palace gate, no road-center staging, no cars passing close
     catch { alert('제작 콘티 백업 파일을 읽지 못했습니다.'); }
     event.target.value = '';
   });
-  window.addEventListener('beforeunload', () => objectUrls.forEach((url) => URL.revokeObjectURL(url)));
-  window.productionBoard = { moveLocation, moveCut, applyRecommendedOrder, changeLocation, setStatus, setNote, resetFilters, uploadSamples, moveSample, deleteSample, openImage, openReferenceLibrary, closeReferenceLibrary, filterReferences, copyPrompt, exportData, importData };
+  window.addEventListener('keydown', (event) => { if (event.key === 'Escape' && activePilotCutId) closeVideoPilot(); });
+  window.addEventListener('beforeunload', () => {
+    objectUrls.forEach((url) => URL.revokeObjectURL(url));
+    aiPollTimers.forEach((timer) => clearTimeout(timer));
+  });
+  window.productionBoard = { moveLocation, moveCut, applyRecommendedOrder, changeLocation, setStatus, setNote, resetFilters, uploadSamples, moveSample, deleteSample, openImage, openReferenceLibrary, closeReferenceLibrary, filterReferences, copyPrompt, openVideoPilot, closeVideoPilot, startVideoPilot, approveVideoPilot, updatePilotCost, exportData, importData };
   render();
+  if (['PENDING', 'THROTTLED', 'RUNNING'].includes(aiJobs[AI_PILOT_CUT_ID]?.status) && sessionStorage.getItem('blue-christmas-studio-token-v1')) schedulePilotPoll(AI_PILOT_CUT_ID, 800);
 })();
