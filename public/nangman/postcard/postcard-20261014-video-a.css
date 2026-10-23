@@ -311,9 +311,8 @@ body[data-view="error"] .view-error { display: flex; }
   .speed-row { gap: 6px; }
 }
 
-/* Reply CTA stays on the page until the iOS app has a public App Store URL. */
-button.reply-cta {
-  border: 0;
+/* Live App Store reply link, styled as the primary action. */
+a.reply-cta {
   font-family: inherit;
   cursor: pointer;
 }
