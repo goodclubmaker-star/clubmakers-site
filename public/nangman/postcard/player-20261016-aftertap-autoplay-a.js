@@ -290,11 +290,7 @@ function startPlayer() {
 // ---------- events ----------
 
 $("openEnvelope").addEventListener("click", openEnvelope);
-$("replyButton").addEventListener("click", () => {
-  const message = $("replyNotice");
-  message.hidden = !message.hidden;
-  $("replyButton").setAttribute("aria-expanded", String(!message.hidden));
-});
+// Reply is now a regular App Store link rendered in the page markup.
 $("retryButton").addEventListener("click", load);
 $("playButton").addEventListener("click", () => {
   if (ended()) restart();
