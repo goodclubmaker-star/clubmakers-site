@@ -2,6 +2,7 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import MobileCTA from '../components/MobileCTA.astro';
+import SwingAppPromo from '../components/SwingAppPromo.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -273,6 +274,7 @@ const showKakaoChat = !hideChatPaths.some((p) => Astro.url.pathname.startsWith(p
     </main>
     <Footer />
     <MobileCTA />
+    {!noindex && <SwingAppPromo />}
 
     {showKakaoChat && (
       <div class="kfab" id="kfab">

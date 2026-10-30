@@ -1,0 +1,94 @@
+---
+// SwingAppPromo.astro — 스윙공작소 앱 안내 (작은 하단 카드)
+// - 첫 방문 후 8초 또는 화면 40% 스크롤 시 한 번 등장
+// - 닫으면 14일간 다시 안 뜸 (localStorage, 실패해도 페이지 정상)
+// - /swing-app, /contact, /price 등 '도착지' 페이지에선 안 뜸
+// - 데스크톱: 왼쪽 아래 / 모바일: 하단 CTA 바 위, 카카오 버튼 피해서 왼쪽
+const STORE_URL = 'https://apps.apple.com/kr/app/%EC%8A%A4%EC%9C%99%EA%B3%B5%EC%9E%91%EC%86%8C-ai-%EA%B3%A8%ED%94%84%EC%8A%A4%EC%9C%99-%EB%B6%84%EC%84%9D/id6795053627';
+const hidePaths = ['/swing-app', '/contact', '/price', '/404'];
+const show = !hidePaths.some((p) => Astro.url.pathname.startsWith(p));
+---
+
+{show && (
+  <aside class="sap" id="sap" role="dialog" aria-label="스윙공작소 앱 안내" hidden>
+    <button type="button" class="sap-close" id="sap-close" aria-label="닫기">×</button>
+    <p class="sap-eyebrow">골프채공작소가 만든 무료 앱</p>
+    <p class="sap-title">내 스윙, 왜 그런지 영상 하나로</p>
+    <p class="sap-desc">스윙공작소 — AI 골프스윙 분석. 결점과 그 이유, 연습 방향까지 무료로 확인하세요.</p>
+    <div class="sap-btns">
+      <a class="sap-store" href={STORE_URL} target="_blank" rel="noopener noreferrer">App Store에서 받기</a>
+      <a class="sap-more" href="/swing-app">자세히 →</a>
+    </div>
+    <p class="sap-note">iPhone 앱입니다</p>
+  </aside>
+)}
+
+{show && (
+  <script is:inline>
+    (function () {
+      var KEY = 'sapDismissedUntil';
+      var box = document.getElementById('sap');
+      if (!box) return;
+      try {
+        var until = Number(localStorage.getItem(KEY) || 0);
+        if (until > Date.now()) return;
+      } catch (e) {}
+      var shown = false;
+      function open() {
+        if (shown) return; shown = true;
+        box.hidden = false;
+        requestAnimationFrame(function () { box.classList.add('sap-in'); });
+        window.removeEventListener('scroll', onScroll);
+      }
+      function close() {
+        box.classList.remove('sap-in');
+        setTimeout(function () { box.hidden = true; }, 250);
+        try { localStorage.setItem(KEY, String(Date.now() + 14 * 864e5)); } catch (e) {}
+      }
+      function onScroll() {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        if (h > 0 && window.scrollY / h > 0.4) open();
+      }
+      setTimeout(open, 8000);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.getElementById('sap-close').addEventListener('click', close);
+      box.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
+    })();
+  </script>
+)}
+
+<style>
+  .sap {
+    position: fixed; left: 20px; bottom: 20px; z-index: 60;
+    width: 320px; max-width: calc(100vw - 40px);
+    background: #fff; border: 1px solid #E2DACA; border-top: 3px solid #2C5F4F; border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    padding: 18px 18px 14px;
+    font-family: "Pretendard", system-ui, sans-serif;
+    opacity: 0; transform: translateY(12px); transition: opacity .25s, transform .25s;
+  }
+  .sap.sap-in { opacity: 1; transform: none; }
+  .sap[hidden] { display: none; }
+  .sap-close {
+    position: absolute; top: 6px; right: 8px; width: 32px; height: 32px;
+    border: 0; background: none; font-size: 22px; line-height: 1; color: #6B6358; cursor: pointer;
+  }
+  .sap-eyebrow { margin: 0 0 6px; font-size: 11.5px; font-weight: 600; letter-spacing: .04em; color: #2C5F4F; }
+  .sap-title { margin: 0 0 6px; padding-right: 20px; font-family: "Noto Serif KR", serif; font-size: 17px; font-weight: 600; color: #1F1B16; line-height: 1.4; word-break: keep-all; }
+  .sap-desc { margin: 0 0 14px; font-size: 13.5px; line-height: 1.6; color: #3A332A; word-break: keep-all; }
+  .sap-btns { display: flex; align-items: center; gap: 14px; }
+  .sap-store {
+    background: #2C5F4F; color: #fff !important; text-decoration: none;
+    font-size: 14px; font-weight: 700; padding: 10px 14px; border-radius: 3px;
+  }
+  .sap-store:hover { background: #224A3D; }
+  .sap-more { color: #2C5F4F; text-decoration: none; font-size: 13.5px; font-weight: 600; }
+  .sap-note { margin: 10px 0 0; font-size: 11.5px; color: #6B6358; }
+
+  @media (max-width: 720px) {
+    /* 하단 CTA 바(76px) 위, 오른쪽 카카오 버튼(약 64px 폭)은 피해서 */
+    .sap { left: 12px; right: 76px; bottom: 88px; width: auto; max-width: none; padding: 14px 14px 12px; }
+    .sap-title { font-size: 15.5px; }
+    .sap-desc { font-size: 13px; margin-bottom: 12px; }
+  }
+</style>

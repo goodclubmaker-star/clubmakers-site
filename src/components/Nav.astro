@@ -56,6 +56,13 @@ const menuGroups = [
     href: '/education',
   },
   {
+    label: '스윙공작소',
+    mobileLabel: '스윙공작소 — 무료 스윙분석 앱',
+    badge: 'APP',
+    paths: ['/swing-app'],
+    href: '/swing-app',
+  },
+  {
     label: '자료실',
     paths: ['/book', '/glossary', '/equipment-rules', '/journal', '/faq'],
     items: [
@@ -111,6 +118,7 @@ const isActive = (paths: string[]) =>
             class={'nav-link' + (isActive(group.paths) ? ' active' : '')}
           >
             {group.label}
+            {group.badge && <span class="nav-badge">{group.badge}</span>}
           </a>
         )}
       </li>
@@ -145,7 +153,7 @@ const isActive = (paths: string[]) =>
               <li><a href={item.href}>{item.label}</a></li>
             )),
           ]
-        : [<li><a href={group.href} class="nav-mobile-single">{group.label}</a></li>]
+        : [<li><a href={group.href} class="nav-mobile-single">{group.mobileLabel ?? group.label}</a></li>]
     )}
 
     <!-- 하단 보너스: 전화 / 이메일 -->
@@ -212,6 +220,10 @@ const isActive = (paths: string[]) =>
   }
   .nav-item {
     position: relative;
+  }
+  .nav-badge {
+    font-size: 9.5px; font-weight: 700; letter-spacing: .06em; line-height: 1;
+    color: #2C5F4F; border: 1px solid #87A99B; border-radius: 3px; padding: 2px 4px; margin-left: 2px;
   }
   .nav-link {
     display: inline-flex;
