@@ -78,6 +78,12 @@ const faqSchema = {
                 <span>정확한 앱 등록 주소가 확인되면 여기에서 설치할 수 있도록 연결합니다.</span>
               </div>
             )}
+            {storeUrl && (
+              <div class="hero-qr">
+                <img src="/images/swing-app-qr.svg" width="88" height="88" alt="스윙공작소 App Store QR 코드" />
+                <span>PC로 보고 계신다면<br />iPhone 카메라로 찍어 바로 설치하세요</span>
+              </div>
+            )}
             <a href="#how" class="secondary-link">어떻게 분석하나요? ↓</a>
           </div>
           <p class="privacy-note">스윙 분석의 핵심 기능은 무료로 이용할 수 있습니다. 영상 기반 분석은 참고용이며 확정 진단이 아닙니다.</p>
@@ -152,7 +158,9 @@ const faqSchema = {
   .secondary-link{color:#0F6B4A;font-size:14px;font-weight:800;text-decoration:none}
   .coming{border:1px solid #B8CDBF;border-radius:14px;background:#E5F0E9;padding:14px 18px;max-width:465px}
   .coming strong,.coming span{display:block}.coming strong{font-size:16px;color:#0F6B4A}.coming span{margin-top:6px;font-size:13px;line-height:1.5;color:#456454}
-  .privacy-note{font-size:12.5px;color:#69726C;max-width:510px;line-height:1.6;margin-top:22px}
+.hero-qr{display:flex;align-items:center;gap:14px}.hero-qr img{display:block;width:88px;height:88px;border:1px solid #DDDCD4;border-radius:10px;background:#fff;padding:4px}.hero-qr span{font-size:13.5px;line-height:1.55;color:#555D58;font-weight:600}
+  @media(max-width:800px),(hover:none){.hero-qr{display:none}}
+    .privacy-note{font-size:12.5px;color:#69726C;max-width:510px;line-height:1.6;margin-top:22px}
   .how{padding:90px 0 100px}.how h2{font-size:clamp(32px,4.2vw,54px);line-height:1.23;margin:15px 0 34px}
   .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.steps article{border:1px solid #DDDCD4;background:white;padding:25px;border-radius:16px}.steps article span{font-size:13px;color:#0F6B4A;font-weight:900}.steps h3{font-size:20px;margin:25px 0 9px}.steps p{font-size:14px;line-height:1.7;color:#616661}
   .pro{background:#182520;color:white;padding:75px 0}.split{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}.pro .eyebrow{color:#A9D7BD}.pro h2{font-size:clamp(30px,3.6vw,44px);line-height:1.25}.pro p{font-size:16px;color:#C8D7CC;line-height:1.8}.pro a{color:#B8F3D1;text-decoration:none;font-weight:800}

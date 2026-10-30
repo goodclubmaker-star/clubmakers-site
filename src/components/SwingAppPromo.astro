@@ -15,6 +15,15 @@ const show = !hidePaths.some((p) => Astro.url.pathname.startsWith(p));
     <p class="sap-eyebrow">골프채공작소가 만든 무료 앱</p>
     <p class="sap-title">내 스윙, 왜 그런지 영상 하나로</p>
     <p class="sap-desc">스윙공작소 — AI 골프스윙 분석. 결점과 그 이유, 연습 방향까지 무료로 확인하세요.</p>
+    <!-- PC: 휴대폰 카메라로 찍어서 설치 -->
+    <div class="sap-qr">
+      <img src="/images/swing-app-qr.svg" width="96" height="96" alt="스윙공작소 App Store QR 코드" loading="lazy" />
+      <div class="sap-qr-text">
+        <p class="sap-qr-lead">iPhone 카메라로 찍으면<br />바로 설치 화면이 열립니다</p>
+        <a class="sap-more" href="/swing-app">앱 소개 보기 →</a>
+      </div>
+    </div>
+    <!-- 모바일: 바로 설치 -->
     <div class="sap-btns">
       <a class="sap-store" href={STORE_URL} target="_blank" rel="noopener noreferrer">App Store에서 받기</a>
       <a class="sap-more" href="/swing-app">자세히 →</a>
@@ -60,7 +69,7 @@ const show = !hidePaths.some((p) => Astro.url.pathname.startsWith(p));
 <style>
   .sap {
     position: fixed; left: 20px; bottom: 20px; z-index: 60;
-    width: 320px; max-width: calc(100vw - 40px);
+    width: 340px; max-width: calc(100vw - 40px);
     background: #fff; border: 1px solid #E2DACA; border-top: 3px solid #2C5F4F; border-radius: 4px;
     box-shadow: 0 10px 30px rgba(0,0,0,.12);
     padding: 18px 18px 14px;
@@ -84,6 +93,17 @@ const show = !hidePaths.some((p) => Astro.url.pathname.startsWith(p));
   .sap-store:hover { background: #224A3D; }
   .sap-more { color: #2C5F4F; text-decoration: none; font-size: 13.5px; font-weight: 600; }
   .sap-note { margin: 10px 0 0; font-size: 11.5px; color: #6B6358; }
+
+  /* PC(마우스 환경)에선 QR, 터치 환경에선 버튼 */
+  .sap-btns, .sap-note { display: none; }
+  .sap-qr { display: flex; align-items: center; gap: 14px; }
+  .sap-qr img { display: block; width: 96px; height: 96px; border: 1px solid #E2DACA; border-radius: 3px; flex: none; }
+  .sap-qr-lead { margin: 0 0 8px; font-size: 13px; line-height: 1.55; color: #1F1B16; font-weight: 600; word-break: keep-all; }
+  @media (max-width: 720px), (hover: none) {
+    .sap-qr { display: none; }
+    .sap-btns { display: flex; }
+    .sap-note { display: block; }
+  }
 
   @media (max-width: 720px) {
     /* 하단 CTA 바(76px) 위, 오른쪽 카카오 버튼(약 64px 폭)은 피해서 */
