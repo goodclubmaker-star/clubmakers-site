@@ -104,10 +104,10 @@ const audiences = [
       </div>
 
       <p class="book-online-badge">
-        <span class="badge-tag">ONLINE</span>
+        <span class="badge-tag">EBOOK</span>
         <span class="badge-body">
-          이 책은 <strong>전체 내용을 온라인에서 무료로 열람</strong>하실 수 있습니다.
-          <span class="badge-note">별도 인쇄본 판매 계획은 없습니다.</span>
+          <a href="https://kmong.com/gig/834074" target="_blank" rel="noopener">크몽에서 전자책 구입 ↗</a>
+          <span class="badge-note">텍스트판, 그림과 삽화가 없습니다. 아직 수정 중입니다.</span>
         </span>
       </p>
     </div>
@@ -206,10 +206,6 @@ const audiences = [
             <div class="spec-row">
               <dt>발행</dt>
               <dd>클럽메이커스, 2026</dd>
-            </div>
-            <div class="spec-row">
-              <dt>전자책 구입</dt>
-              <dd><a href="https://kmong.com/gig/834074" target="_blank" rel="noopener">크몽에서 구입 ↗</a> <span class="muted">(텍스트판, 그림과 삽화가 없습니다) 아직 수정 중입니다.</span></dd>
             </div>
             <div class="spec-row">
               <dt>저자 약력</dt>
@@ -419,6 +415,8 @@ const audiences = [
     color: var(--text-2);
   }
   .book-online-badge strong { color: var(--accent); font-weight: 700; }
+  .book-online-badge a { color: var(--accent); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--accent-2); }
+  .book-online-badge a:hover { border-bottom-color: var(--accent); }
   .book-online-badge .badge-note {
     display: block;
     margin-top: .25rem;
