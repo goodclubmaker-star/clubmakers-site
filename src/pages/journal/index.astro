@@ -25,6 +25,7 @@ const counts = {
   log: entries.filter(e => e.data.category === 'log').length,
   review: entries.filter(e => e.data.category === 'review').length,
   trends: entries.filter(e => e.data.category === 'trends').length,
+  series: entries.filter(e => e.data.category === 'series').length,
   data: entries.filter(e => e.data.category === 'data').length,
 };
 
@@ -33,6 +34,7 @@ const categoryLabels: Record<string, { ko: string; emoji: string }> = {
   log:    { ko: '작업 일지',     emoji: '🔧' },
   review: { ko: '샤프트·헤드 리뷰', emoji: '📐' },
   trends: { ko: '장비 트렌드',    emoji: '📊' },
+  series: { ko: '연재',          emoji: '📖' },
   data:   { ko: '측정 데이터',    emoji: '📏' },
 };
 
@@ -194,6 +196,7 @@ function formatDate(date: Date) {
           <li><strong>🔧 작업 일지</strong> — 그날의 작업·측정·진단을 짧게. 증상 → 측정 → 진단 → 처방 4단</li>
           <li><strong>📐 샤프트·헤드 리뷰</strong> — 실측 EI 곡선·CPM·무게·시타 소감. 마케팅이 아닌 측정 데이터 우선</li>
           <li><strong>📊 장비 트렌드</strong> — PGA·KLPGA에서 자주 보이는 샤프트, 신제품, 시장 변화 (분기 1회)</li>
+          <li><strong>📖 연재</strong> — 새로 쓰는 『실제적인 클럽피팅』. 원고를 처음부터 다시 읽으며 한 편씩 손보아 올립니다</li>
           <li><strong>📏 측정 데이터</strong> — 샤프트별 CPM/EI, 헤드별 MOI/CG. 시간이 갈수록 가치가 커집니다</li>
         </ul>
       </div>
@@ -344,6 +347,7 @@ function formatDate(date: Date) {
   .journal-cat-log    { background: rgba(15, 41, 34, 0.08); color: var(--green); }
   .journal-cat-review { background: rgba(184, 152, 92, 0.15); color: var(--gold); }
   .journal-cat-trends { background: rgba(70, 110, 200, 0.10); color: #2E5BBA; }
+  .journal-cat-series { background: rgba(184, 152, 92, 0.16); color: #8A6A2E; }
   .journal-cat-data   { background: rgba(120, 60, 60, 0.10); color: #804040; }
 
   .journal-club {

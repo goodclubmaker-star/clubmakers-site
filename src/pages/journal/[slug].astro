@@ -29,6 +29,7 @@ const categoryLabels: Record<string, { ko: string; emoji: string }> = {
   log:    { ko: '작업 일지',     emoji: '🔧' },
   review: { ko: '샤프트·헤드 리뷰', emoji: '📐' },
   trends: { ko: '장비 트렌드',    emoji: '📊' },
+  series: { ko: '연재',          emoji: '📖' },
   data:   { ko: '측정 데이터',    emoji: '📏' },
 };
 
@@ -266,6 +267,7 @@ const related = relatedPosts(entry, allEntries, 4);
   .article-cat-log    { background: rgba(15, 41, 34, 0.08); color: var(--green); }
   .article-cat-review { background: rgba(184, 152, 92, 0.15); color: var(--gold); }
   .article-cat-trends { background: rgba(70, 110, 200, 0.10); color: #2E5BBA; }
+  .article-cat-series { background: rgba(184, 152, 92, 0.16); color: #8A6A2E; }
   .article-cat-data   { background: rgba(120, 60, 60, 0.10); color: #804040; }
 
   .article-club {
@@ -487,6 +489,7 @@ const related = relatedPosts(entry, allEntries, 4);
   .related-cat-log    { background: rgba(15, 41, 34, 0.08); color: var(--green); }
   .related-cat-review { background: rgba(184, 152, 92, 0.15); color: var(--gold); }
   .related-cat-trends { background: rgba(70, 110, 200, 0.10); color: #2E5BBA; }
+  .related-cat-series { background: rgba(184, 152, 92, 0.16); color: #8A6A2E; }
   .related-cat-data   { background: rgba(120, 60, 60, 0.10); color: #804040; }
   .related-title {
     font-family: var(--font-serif);
