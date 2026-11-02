@@ -26,3 +26,8 @@
   Referrer-Policy: no-referrer
   X-Robots-Tag: noindex, nofollow
   Content-Security-Policy: default-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; connect-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'
+
+# 공작소 작업대 (공작소장 전용) — 검색 제외, 주소가 다른 사이트로 새지 않게
+/studio/*
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: no-referrer
