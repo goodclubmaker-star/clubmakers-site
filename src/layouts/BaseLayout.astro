@@ -9,7 +9,7 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
-  schemaType?: 'WebSite' | 'AboutPage' | 'Article' | 'FAQPage' | 'CollectionPage' | 'Course' | 'Person' | 'Book' | 'Service';
+  schemaType?: 'WebSite' | 'WebPage' | 'AboutPage' | 'Article' | 'FAQPage' | 'CollectionPage' | 'Course' | 'Person' | 'Book' | 'Service';
   /** 페이지별 추가 JSON-LD를 BaseLayout이 함께 출력하도록 객체나 배열로 전달 */
   extraSchema?: Record<string, unknown> | Record<string, unknown>[];
   /** 키워드 (영문/한글 혼용 가능, 콤마 구분) */

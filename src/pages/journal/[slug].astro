@@ -60,8 +60,11 @@ const ogImage = entry.data.cover || firstImg || '/og-default.jpg';
 // JSON-LD Article schema
 const articleSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'BlogPosting',
   '@id': `https://myclubmakers.com/journal/${entry.slug}/#article`,
+  mainEntityOfPage: `https://myclubmakers.com/journal/${entry.slug}/`,
+  articleSection: cat.ko,
+  keywords: (entry.data.tags || []).join(', '),
   headline: entry.data.title,
   description: entry.data.description,
   inLanguage: 'ko-KR',
@@ -91,7 +94,7 @@ const related = relatedPosts(entry, allEntries, 4);
 <BaseLayout
   title={entry.data.title}
   description={entry.data.description || `${cat.ko} — 클럽메이커스 공작소 일지`}
-  schemaType="Article"
+  schemaType="WebPage"
   ogImage={ogImage}
   keywords={`골프채공작소, 클럽메이커스, 공작소 일지, ${cat.ko}, ${entry.data.tags?.join(', ') || ''}`}
   extraSchema={[articleSchema]}
