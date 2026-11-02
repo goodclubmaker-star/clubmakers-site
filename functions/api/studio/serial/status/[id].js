@@ -8,7 +8,7 @@ export async function onRequestPost({ request, env, params }) {
   if (error) return error;
   if (!["done", "skipped", "todo"].includes(body?.status)) return fail(400, "invalid", "상태 값이 맞지 않습니다.");
   const list = await resolveMembers(g.db, params.id, body?.members);
-  if (!list) return fail(400, "invalid", "묶을 절은 이어진 순서여야 합니다.");
+  if (!list) return fail(400, "invalid", "묶을 절 목록이 맞지 않습니다.");
   const at = nowKst();
   if (body.status !== "todo") {
     const st = body.status;

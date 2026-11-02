@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { relatedPosts } from '../../lib/related';
+import { SERIES, seriesEntries, seriesNeighbors } from '../../lib/series';
 
 export async function getStaticPaths() {
   // 목록과 동일한 조건을 써야 한다. 여기서 빠뜨리면 목록에는 안 보이는데
@@ -72,6 +73,12 @@ const articleSchema = {
 // 같이 읽으면 좋은 글 — 태그·증상·클럽·공유 용어·같은 PART를 대조해 점수순으로.
 // published()가 예약된 미래 글을 걸러 준다. 이게 없으면 아직 없는 페이지로 링크가 걸린다.
 const allEntries = await getCollection('journal');
+
+// 연재 글이면 이전·다음 편
+const series = entry.data.series ? SERIES[entry.data.series] : null;
+const seriesList = series ? await seriesEntries(entry.data.series!) : [];
+const sn = series ? seriesNeighbors(seriesList, entry.slug) : null;
+const stripBook = (t: string) => t.replace(/^『실제적인 클럽피팅』\s*/, '');
 const related = relatedPosts(entry, allEntries, 4);
 ---
 
@@ -116,10 +123,38 @@ const related = relatedPosts(entry, allEntries, 4);
       )}
     </header>
 
+    {series && sn && (
+      <a href={series.path} class="series-chip">
+        <span>연재 · {series.name}</span>
+        {sn.index >= 0 && <span class="series-chip-no">{sn.index + 1}편 / {seriesList.length}</span>}
+      </a>
+    )}
+
+    {entry.data.cover && (
+      <figure class="article-cover"><img src={entry.data.cover} alt="" loading="eager" /></figure>
+    )}
+
     <!-- 본문 -->
     <div class="article-body">
       <Content />
     </div>
+
+    {series && sn && (sn.prev || sn.next) && (
+      <nav class="series-nav" aria-label="연재 이전·다음 편">
+        {sn.prev ? (
+          <a href={`/journal/${sn.prev.slug}/`} class="series-nav-link">
+            <span class="series-nav-label">← 이전 편</span>
+            <span class="series-nav-title">{stripBook(sn.prev.data.title)}</span>
+          </a>
+        ) : <span />}
+        {sn.next ? (
+          <a href={`/journal/${sn.next.slug}/`} class="series-nav-link series-nav-next">
+            <span class="series-nav-label">다음 편 →</span>
+            <span class="series-nav-title">{stripBook(sn.next.data.title)}</span>
+          </a>
+        ) : <span />}
+      </nav>
+    )}
 
     <!-- 관련 진단 트리 (선택) -->
     {entry.data.relatedSymptom && (
@@ -172,6 +207,26 @@ const related = relatedPosts(entry, allEntries, 4);
 
 
 <style>
+  .series-chip {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px;
+    margin: -24px 0 36px; padding: 12px 16px; border-radius: 8px; text-decoration: none;
+    background: var(--bg-cream); border: 1px solid var(--line); font-size: 13.5px; color: var(--green); font-weight: 600;
+  }
+  .series-chip:hover { border-color: var(--gold); }
+  .series-chip-no { color: var(--gold); font-variant-numeric: tabular-nums; }
+  .article-cover { margin: 0 0 36px; }
+  .article-cover img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .series-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 48px 0 0; }
+  .series-nav-link {
+    display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: 1px solid var(--line);
+    border-radius: 8px; text-decoration: none; color: inherit; min-width: 0;
+  }
+  .series-nav-link:hover { border-color: var(--green); }
+  .series-nav-next { text-align: right; }
+  .series-nav-label { font-size: 12px; color: var(--gold); font-weight: 700; }
+  .series-nav-title { font-size: 14px; color: var(--ink); line-height: 1.5; }
+  @media (max-width: 560px) { .series-nav { grid-template-columns: 1fr; } .series-nav-next { text-align: left; } }
+
   .journal-article {
     max-width: 720px;
     margin: 0 auto;

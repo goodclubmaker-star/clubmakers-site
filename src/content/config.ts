@@ -28,6 +28,11 @@ const journalCollection = defineCollection({
       'mixed',
     ]).optional(),
     relatedSymptom: z.string().optional(),
+    // 연재 (예: 'practical-fitting' = 새로 쓰는 『실제적인 클럽피팅』)
+    series: z.string().optional(),
+    seriesNo: z.number().optional(),     // 원고 순서 (정렬용)
+    seriesPart: z.string().optional(),   // 'PART 1' 등 묶음 이름
+    cover: z.string().optional(),        // 대표 사진 경로 (/images/journal/...)
     draft: z.boolean().default(false),
   }),
 });

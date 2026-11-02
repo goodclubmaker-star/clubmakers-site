@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { SERIES, seriesEntries } from '../../lib/series';
 
 // 모든 일지 가져오기 (draft 제외 + 예약 발행, 최신순 정렬)
 // pubDate가 미래인 글은 빌드 시점에 제외 → 예약 발행.
@@ -13,6 +14,11 @@ const allEntries = await getCollection('journal', ({ data }) => {
 const entries = allEntries.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+// 연재 코너
+const pf = SERIES['practical-fitting'];
+const pfEntries = await seriesEntries('practical-fitting');
+const pfLatest = pfEntries.length ? [...pfEntries].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0] : null;
 
 // 카테고리별 카운트
 const counts = {
@@ -89,6 +95,20 @@ function formatDate(date: Date) {
           )}
         </div>
       )}
+    </div>
+  </section>
+
+  <section class="section series-banner-wrap">
+    <div class="section-content-narrow">
+      <a href={pf.path} class="series-banner">
+        <span class="series-banner-eyebrow">연재</span>
+        <span class="series-banner-title">{pf.name}</span>
+        <span class="series-banner-lead">{pf.lead}</span>
+        <span class="series-banner-foot">
+          {pfEntries.length > 0 ? <>지금까지 {pfEntries.length}편{pfLatest && <> · 최근: {pfLatest.data.title.replace(/^『실제적인 클럽피팅』\s*/, '')}</>}</> : <>첫 편 준비 중</>}
+          <span class="series-banner-go">연재 모아 보기 →</span>
+        </span>
+      </a>
     </div>
   </section>
 
@@ -185,6 +205,20 @@ function formatDate(date: Date) {
 
 <style>
   .journal-hero { background: var(--bg-cream); }
+
+  /* 연재 배너 */
+  .series-banner-wrap { padding-bottom: 0; }
+  .series-banner {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 24px 26px; border-radius: 10px; text-decoration: none; color: inherit;
+    background: var(--green); color: #F4F1E8; transition: transform .2s;
+  }
+  .series-banner:hover { transform: translateY(-2px); }
+  .series-banner-eyebrow { font-size: 11px; letter-spacing: .16em; font-weight: 700; color: var(--gold); }
+  .series-banner-title { font-family: var(--font-serif); font-size: 22px; font-weight: 700; line-height: 1.4; }
+  .series-banner-lead { font-size: 14px; line-height: 1.8; opacity: .85; }
+  .series-banner-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; font-size: 13px; opacity: .9; margin-top: 4px; }
+  .series-banner-go { color: var(--gold); font-weight: 600; }
   .page-hero h1 { margin-bottom: 1.5rem; }
   .page-hero-subtitle { margin-bottom: 2.5rem; }
 

@@ -9,7 +9,7 @@ export async function onRequestPut({ request, env, params }) {
   const draft = String(body?.draft ?? "");
   const meta = cleanMeta(body?.meta);
   const list = await resolveMembers(g.db, params.id, body?.members);
-  if (!list) return fail(400, "invalid", "묶을 절은 이어진 순서여야 합니다.");
+  if (!list) return fail(400, "invalid", "묶을 절 목록이 맞지 않습니다.");
   const at = nowKst();
   const prev = await g.db.prepare("SELECT status FROM studio_progress WHERE book = ? AND id = ?").bind(BOOK, params.id).first();
   const status = prev?.status === "published" ? "published" : "reviewed";

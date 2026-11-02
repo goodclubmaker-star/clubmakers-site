@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { SERIES, seriesEntries } from '../../../lib/series';
+
+const S = SERIES['practical-fitting'];
+const entries = await seriesEntries('practical-fitting');
+
+// PART별로 묶기 (원고 순서 유지)
+const parts: { name: string; items: typeof entries }[] = [];
+for (const e of entries) {
+  const name = e.data.seriesPart || '기타';
+  let g = parts[parts.length - 1];
+  if (!g || g.name !== name) { g = { name, items: [] }; parts.push(g); }
+  g.items.push(e);
+}
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    .replace(/\. /g, '.').replace(/\.$/, '');
+}
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': 'https://myclubmakers.com/journal/series/practical-fitting/#page',
+  name: S.name,
+  description: S.lead,
+  inLanguage: 'ko-KR',
+  author: { '@type': 'Person', name: '채기웅', url: 'https://myclubmakers.com/about' },
+  hasPart: entries.map((e) => ({ '@type': 'Article', headline: e.data.title, url: `https://myclubmakers.com/journal/${e.slug}/` })),
+};
+---
+
+<BaseLayout
+  title={S.name}
+  description={S.lead}
+  schemaType="CollectionPage"
+  keywords="실제적인 클럽피팅, 클럽피팅 교재, 피팅 이론, 공작소 일지 연재, 채기웅"
+  extraSchema={[collectionSchema]}
+>
+  <section class="page-hero series-hero">
+    <div class="page-hero-content">
+      <a href="/journal/" class="series-back">← 공작소 일지</a>
+      <div class="page-hero-eyebrow">SERIES · 공작소 일지 연재</div>
+      <h1>{S.name}</h1>
+      <p class="page-hero-subtitle">{S.lead}</p>
+      {entries.length > 0 && <p class="series-count">지금까지 {entries.length}편</p>}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-content-narrow">
+      {entries.length === 0 ? (
+        <div class="series-empty">
+          <p>첫 편을 준비하고 있습니다.</p>
+        </div>
+      ) : (
+        parts.map((g) => (
+          <div class="series-part">
+            <h2 class="series-part-name">{g.name}</h2>
+            <ol class="series-list">
+              {g.items.map((e) => (
+                <li>
+                  <a href={`/journal/${e.slug}/`} class="series-item">
+                    <span class="series-no">{entries.indexOf(e) + 1}</span>
+                    <span class="series-text">
+                      <span class="series-title">{e.data.title.replace(/^『실제적인 클럽피팅』\s*/, '')}</span>
+                      {e.data.description && <span class="series-desc">{e.data.description}</span>}
+                    </span>
+                    <span class="series-date">{formatDate(e.data.pubDate)}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))
+      )}
+      <p class="series-book">원고 전체는 전자책 『실제적인 클럽피팅』에 실려 있습니다. <a href="https://kmong.com/gig/834074" target="_blank" rel="noopener">전자책 보기</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .series-hero { background: var(--bg-cream); }
+  .series-back { display: inline-block; font-size: 13px; color: var(--grey); text-decoration: none; margin-bottom: 18px; }
+  .series-back:hover { color: var(--green); }
+  .series-count { font-size: 14px; color: var(--green); font-weight: 600; margin: 0; }
+  .series-empty { text-align: center; padding: 48px 20px; border: 1px dashed var(--line); border-radius: 8px; color: var(--ink-2); }
+  .series-part { margin-bottom: 40px; }
+  .series-part-name {
+    font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--ink);
+    margin: 0 0 12px; padding-bottom: 10px; border-bottom: 2px solid var(--green);
+  }
+  .series-list { list-style: none; margin: 0; padding: 0; }
+  .series-item {
+    display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 14px; align-items: baseline;
+    padding: 16px 4px; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit;
+  }
+  .series-item:hover .series-title { color: var(--green); }
+  .series-no { font-family: var(--font-serif); font-size: 18px; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .series-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .series-title { font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1.5; transition: color .2s; }
+  .series-desc { font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+  .series-date { font-size: 12px; color: var(--grey); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .series-book { margin-top: 48px; font-size: 13px; color: var(--grey); }
+  .series-book a { color: var(--grey); }
+  @media (max-width: 560px) {
+    .series-item { grid-template-columns: 32px minmax(0, 1fr); }
+    .series-date { grid-column: 2; }
+  }
+</style>
