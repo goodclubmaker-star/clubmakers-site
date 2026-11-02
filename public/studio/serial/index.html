@@ -166,6 +166,8 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 .catpick label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13.5px;cursor:pointer;background:var(--bg)}
 .catpick label:has(input:checked){border-color:var(--green);background:var(--green-soft);font-weight:600}
 .catpick input{accent-color:var(--green);margin:0}
+.naverrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin:-2px 0 12px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.naverrow .note{grid-column:1/-1;margin:0}
 .sumr{display:flex;align-items:center;gap:8px}
 .grpOpen{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:500;color:var(--green)}
 .grpOpen:hover{border-color:var(--gold)}
@@ -239,6 +241,7 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="/studio/serial/splitter.js?v=1"></script>
+<script src="/studio/serial/html2md.js?v=1"></script>
 <script>
 const API='/api/studio/serial';
 const BOOK='실제적인 클럽피팅';
@@ -487,7 +490,7 @@ async function go(id,push=true,sel=null,keep=null,stay=false){
     <section class="panel">
       <div class="panel-h"><h3>2 · 검수본</h3><span class="note" id="saveState">${p&&p.updatedAt?'저장됨 '+esc(p.updatedAt.slice(5,16)):''}</span></div>
       <div class="drop"><span class="btn filebtn">파일 선택 (.txt · .md · .docx)<input type="file" id="fileIn" accept=".txt,.md,.docx,text/plain"></span><span class="btn filebtn gold">사진 넣기<input type="file" id="photoIn" accept="image/*" multiple></span><span>또는 아래에 붙여 넣기</span></div>
-      <label class="f" for="revText">검수한 본문 <span class="note">## 로 시작하는 줄은 소제목, 표는 | 칸 | 형식이면 사이트에서 그대로 보입니다</span></label>
+      <label class="f" for="revText">검수한 본문 <span class="note">## 로 시작하는 줄은 소제목, 표는 | 칸 | 형식이면 사이트에서 그대로 보입니다. 블로그 글을 복사해 붙여 넣으면 표·사진도 함께 들어옵니다</span></label>
       <textarea class="t" id="revText" placeholder="검수한 원고를 붙여 넣거나 '편집창으로 가져오기'로 원문을 불러와 고치세요."></textarea>
       <div class="photos" id="photoBar" hidden></div>
       <div class="navrow" style="margin-top:10px"><button class="btn gold" type="button" id="saveRev">검수본 저장</button><button class="btn" type="button" id="copyDraft">검수본 복사</button></div>
@@ -645,6 +648,37 @@ async function addPhotos(files){
   toast(`사진 ${list.length}장을 본문에 넣었습니다. '사진'이라고 된 설명은 고쳐 쓰셔도 됩니다`);
   renderPhotos();
 }
+// 붙여넣은/가져온 블로그 글: 표·소제목·굵게는 마크다운으로, 사진은 받아서 작업대 사진으로 바꿔 넣는다
+let importing=false;
+async function importRich(html,{replace=false}={}){
+  if(!window.Html2Md){toast('변환 도구를 불러오는 중입니다. 잠시 뒤 다시 해 주세요');return}
+  const ta=$('#revText');if(!ta||!photoOwner)return;
+  const r=Html2Md.fromHtml(html);
+  if(!r.md){toast('가져올 내용이 없습니다');return}
+  if(r.title&&$('#mTitle')&&!$('#mTitle').value.trim()){$('#mTitle').value=r.title;$('#mTitle').dispatchEvent(new Event('input'))}
+  if(replace||!ta.value.trim()){ta.value=r.md;ta.dispatchEvent(new Event('input'))}else insertAtCursor(ta,r.md);
+  if(!r.images.length){toast('글을 가져왔습니다 (표·소제목 포함)');return}
+  importing=true;let ok=0;
+  for(let i=0;i<r.images.length;i++){
+    toast(`사진 가져오는 중… ${i+1}/${r.images.length}`);
+    let rep2='> 사진을 가져오지 못했습니다';
+    try{
+      const res=await fetch('/api/studio/fetch-image?url='+encodeURIComponent(r.images[i]),{headers:{authorization:'Bearer '+token}});
+      if(!res.ok)throw new Error((await res.json().catch(()=>({}))).message||res.status);
+      const {b64,blob}=await shrinkImage(await res.blob());
+      const up=await api('/api/studio/photo',{method:'POST',body:JSON.stringify({owner:photoOwner,mime:'image/jpeg',data:b64,name:'blog-'+(i+1)+'.jpg'})});
+      photoCache[up.id]=URL.createObjectURL(blob);
+      rep2=`![사진](photo:${up.id})`;ok++;
+      if(!curCover)curCover='photo:'+up.id;
+    }catch(e){}
+    const cur=$('#revText');if(!cur)break;
+    cur.value=cur.value.split(`[[img:${i}]]`).join(rep2);
+  }
+  importing=false;
+  const cur=$('#revText');if(cur)cur.dispatchEvent(new Event('input'));
+  toast(ok===r.images.length?`글과 사진 ${ok}장을 가져왔습니다`:`사진 ${r.images.length}장 중 ${ok}장을 가져왔습니다. 못 가져온 자리는 표시해 두었습니다`);
+  renderPhotos();
+}
 function bindPhotos(owner){
   photoOwner=owner;
   const inp=$('#photoIn');if(inp)inp.onchange=e=>{const f=e.target.files;if(f&&f.length)addPhotos(f);e.target.value=''};
@@ -660,7 +694,14 @@ function bindPhotos(owner){
   };
   const ta=$('#revText');
   if(ta){
-    ta.addEventListener('paste',e=>{const f=[...(e.clipboardData&&e.clipboardData.files||[])];if(f.length){e.preventDefault();addPhotos(f)}});
+    ta.addEventListener('paste',e=>{
+      const cd=e.clipboardData;if(!cd)return;
+      const f=[...(cd.files||[])];
+      const html=cd.getData('text/html');
+      // 블로그·웹 글을 복사해 온 경우: 표·사진·소제목을 살려서 넣는다
+      if(html&&/<table|<img|<h[1-6]|se-component|<strong|<b[ >]/i.test(html)){e.preventDefault();if(importing){toast('사진을 가져오는 중입니다. 끝난 뒤 붙여 넣어 주세요');return}importRich(html);return}
+      if(f.length){e.preventDefault();addPhotos(f)}
+    });
     ta.addEventListener('drop',e=>{const f=[...(e.dataTransfer&&e.dataTransfer.files||[])].filter(x=>/^image\//.test(x.type));if(f.length){e.preventDefault();addPhotos(f)}});
   }
   renderPhotos();
@@ -716,8 +757,13 @@ async function openPost(id){
         <label><input type="radio" name="pcat" value="data">📏 측정 데이터</label>
         <input type="hidden" id="mCat" value="log">
       </div>
-      <div class="drop" style="margin-top:14px"><span class="btn filebtn gold">사진 넣기<input type="file" id="photoIn" accept="image/*" multiple></span><span class="btn filebtn">글 파일 불러오기 (.txt · .md · .docx)<input type="file" id="fileIn" accept=".txt,.md,.docx,text/plain"></span></div>
-      <label class="f" for="revText">본문 <span class="note">## 소제목, **굵게**, | 표 | 를 쓸 수 있습니다. 사진은 커서 위치에 들어갑니다 (붙여넣기·끌어놓기도 됩니다)</span></label>
+      <div class="drop" style="margin-top:14px"><span class="btn filebtn gold">사진 넣기<input type="file" id="photoIn" accept="image/*" multiple></span><button class="btn" type="button" id="naverBtn">네이버 블로그 글 가져오기</button><span class="btn filebtn">글 파일 불러오기 (.txt · .md · .docx)<input type="file" id="fileIn" accept=".txt,.md,.docx,text/plain"></span></div>
+      <div class="naverrow" id="naverRow" hidden>
+        <input class="t" id="naverUrl" type="url" inputmode="url" placeholder="https://blog.naver.com/아이디/글번호">
+        <button class="btn primary" type="button" id="naverGo">가져오기</button>
+        <p class="note">블로그 글 주소를 넣으면 제목·본문·표·사진을 한 번에 가져옵니다. 비공개 글은 블로그에서 전체 복사해 본문 칸에 붙여 넣으세요. 붙여 넣어도 표와 사진이 함께 들어옵니다.</p>
+      </div>
+      <label class="f" for="revText">본문 <span class="note">## 소제목, **굵게**, | 표 | 를 쓸 수 있습니다. 네이버 블로그 글을 복사해 붙여 넣으면 표·사진까지 그대로 들어옵니다</span></label>
       <textarea class="t" id="revText" placeholder="그날의 작업·측정·진단을 적어 주세요."></textarea>
       <div class="photos" id="photoBar" hidden></div>
     </section>
@@ -760,6 +806,19 @@ async function openPost(id){
       msg.className='okmsg';msg.innerHTML=`${r.updated?'수정본을 다시 올렸습니다':'작업일지에 올렸습니다'}. 1~2분 뒤 <a href="${esc(r.journalUrl)}" target="_blank" rel="noopener">일지에서 보기</a>`;
       btn.textContent='수정본 다시 등록';toast('등록했습니다');await loadPosts();$('#mSlug').disabled=true}
     catch(e){msg.className='err';msg.textContent=e.message}finally{btn.classList.remove('busy')}
+  };
+  $('#naverBtn').onclick=()=>{const r=$('#naverRow');r.hidden=!r.hidden;if(!r.hidden)$('#naverUrl').focus()};
+  $('#naverUrl').addEventListener('keydown',e=>{if(e.key==='Enter')$('#naverGo').click()});
+  $('#naverGo').onclick=async()=>{
+    const u=$('#naverUrl').value.trim();if(!u){toast('블로그 글 주소를 넣어 주세요');return}
+    const b=$('#naverGo');b.classList.add('busy');b.textContent='가져오는 중…';
+    try{const r=await api('/api/studio/naver?url='+encodeURIComponent(u));
+      const ta=$('#revText');const replace=!ta.value.trim();
+      await importRich(r.html,{replace});
+      if(!replace)toast('지금 본문 커서 위치에 이어 붙였습니다');
+      $('#naverRow').hidden=true;$('#naverUrl').value='';
+    }catch(e){toast(e.message)}
+    finally{b.classList.remove('busy');b.textContent='가져오기'}
   };
   bindPhotos(id);window.scrollTo({top:0});
 }
