@@ -181,6 +181,8 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 .mdprev th,.mdprev td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
 .mdprev th{background:var(--green-soft)}
 .mdprev blockquote{margin:0 0 1em;padding:8px 14px;border-left:3px solid var(--gold);background:var(--gold-soft)}
+.hdrnew{margin-left:auto;white-space:nowrap}
+@media (max-width:560px){.hdrnew{order:3;flex:1 1 100%}}
 .sumr{display:flex;align-items:center;gap:8px}
 .grpOpen{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:500;color:var(--green)}
 .grpOpen:hover{border-color:var(--gold)}
@@ -192,6 +194,7 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 <body>
 <header class="top">
   <div class="brand"><small>골프채공작소 · 공작소 작업대</small><h1>실제적인 클럽피팅 연재실</h1></div>
+  <button class="btn primary hdrnew" type="button" id="hdrNew" hidden>＋ 새 글 쓰기</button>
   <nav class="modes" aria-label="작업 고르기"><button type="button" data-mode="serial" aria-pressed="true">원고 연재</button><button type="button" data-mode="posts" aria-pressed="false">작업일지 쓰기</button></nav>
   <div class="meter" id="meterBox" hidden>
     <div class="bar" aria-hidden="true"><i class="b-done" id="bDone"></i><i class="b-draft" id="bDraft"></i></div>
@@ -244,7 +247,7 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 </div>
 <div class="wrap" id="postsView" hidden>
   <nav class="toc" aria-label="작업일지 목록">
-    <div class="navrow" style="margin-bottom:12px"><button class="btn primary" type="button" id="newPost">새 일지 쓰기</button></div>
+    <div class="navrow" style="margin-bottom:12px"><button class="btn primary" type="button" id="newPost">＋ 새 글 쓰기</button></div>
     <div id="postList"></div>
   </nav>
   <main class="desk" id="postDesk"></main>
@@ -270,7 +273,7 @@ function store(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(
 function load(k){try{return localStorage.getItem(k)}catch(_){return null}}
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2600)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg||'복사했습니다')}catch(e){toast('복사하지 못했습니다. 길게 눌러 복사해 주세요')}}
-function show(view){['loginView','uploadView','appView','postsView'].forEach(v=>$('#'+v).hidden=v!==view);$('#meterBox').hidden=view!=='appView';document.querySelector('.modes').hidden=view==='loginView'}
+function show(view){['loginView','uploadView','appView','postsView'].forEach(v=>$('#'+v).hidden=v!==view);$('#meterBox').hidden=view!=='appView';document.querySelector('.modes').hidden=view==='loginView';$('#hdrNew').hidden=view==='loginView'}
 
 async function api(path,opt={}){
   const res=await fetch(path.startsWith('/api/')?path:API+path,{...opt,headers:{authorization:'Bearer '+token,...(opt.body?{'content-type':'application/json'}:{})}});
@@ -772,11 +775,22 @@ function renderPostList(){
   $('#postList').innerHTML=posts.length?posts.map(p=>`<button type="button" class="pitem${curPost&&curPost.id===p.id?' cur':''}" data-pid="${p.id}"><span class="tt">${esc(p.title||'제목 없는 글')}</span><span class="pdate">${esc((p.updatedAt||'').slice(5,16))}</span><span class="st ${p.status==='published'?'published':'reviewed'}">${st[p.status]||p.status}</span></button>`).join(''):'<p class="note">아직 쓴 글이 없습니다.</p>';
 }
 $('#postList').addEventListener('click',e=>{const b=e.target.closest('[data-pid]');if(b)openPost(b.dataset.pid)});
-$('#newPost').onclick=async()=>{try{const r=await api('/api/studio/post',{method:'POST'});await loadPosts();openPost(r.id)}catch(e){toast(e.message)}};
+// 새 글 쓰기: 어느 화면에서든 바로 빈 일지를 연다
+async function newPost(){
+  try{
+    curPost={id:'_new'};
+    if(mode!=='posts'){mode='posts';document.querySelectorAll('.modes button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode==='posts'));document.querySelector('.brand h1').textContent='작업일지 쓰기';$('#desk').innerHTML='';range=[];curId=null;show('postsView')}
+    const r=await api('/api/studio/post',{method:'POST'});
+    posts=(await api('/api/studio/post')).posts;renderPostList();
+    await openPost(r.id);setTimeout(()=>{const t=$('#mTitle');if(t)t.focus()},50);
+  }catch(e){curPost=null;toast(e.message)}
+}
+$('#newPost').onclick=newPost;
+$('#hdrNew').onclick=newPost;
 function showPostWelcome(){
   $('#postDesk').innerHTML=`<section class="panel"><div class="panel-h"><h3>작업일지 쓰기</h3></div>
     <p>원고 연재와 별개로, 그날의 작업·측정·리뷰를 바로 써서 사진과 함께 공작소 일지에 올립니다.</p>
-    <div class="navrow" style="margin-top:12px"><button class="btn primary" type="button" id="newPost2">새 일지 쓰기</button></div>
+    <div class="navrow" style="margin-top:12px"><button class="btn primary" type="button" id="newPost2">＋ 새 글 쓰기</button></div>
     <p class="note" style="margin-top:14px">쓰는 동안 자동으로 저장됩니다. 사진은 긴 변 1600px로 줄여 올리니 휴대폰 사진을 그대로 고르셔도 됩니다.</p></section>`;
   $('#newPost2').onclick=()=>$('#newPost').click();
 }
@@ -788,7 +802,7 @@ async function openPost(id){
   $('#postDesk').innerHTML=`
     <div class="deskhead">
       <div class="crumb"><button class="btn back" type="button" id="pBack">글 목록</button><span>작업일지</span><span class="st ${pub?'published':'reviewed'}">${pub?'등록 완료':'쓰는 중'}</span><span class="note" id="saveState">${d.updatedAt?'저장됨 '+esc(d.updatedAt.slice(5,16)):''}</span></div>
-      <div class="navrow"><button class="btn" type="button" id="pSave">저장</button><button class="btn" type="button" id="copyDraftTop">본문 복사</button>${pub?'':'<button class="btn" type="button" id="pDel">이 글 지우기</button>'}</div>
+      <div class="navrow"><button class="btn" type="button" id="pSave">저장</button><button class="btn" type="button" id="pNew">＋ 새 글 쓰기</button><button class="btn" type="button" id="copyDraftTop">본문 복사</button>${pub?'':'<button class="btn" type="button" id="pDel">이 글 지우기</button>'}</div>
     </div>
     <section class="panel">
       <div class="grid2">
@@ -838,6 +852,7 @@ async function openPost(id){
   $('#revText').addEventListener('input',later);
   ['mTitle','mDesc','mDate','mCat','mClub','mTags','mSlug'].forEach(x=>$('#'+x).addEventListener('input',later));
   $('#pSave').onclick=()=>save(false);
+  $('#pNew').onclick=async()=>{clearTimeout(autoT);if(dirty)await save(true);newPost()};
   $('#pBack').onclick=()=>{document.body.className='view-list';window.scrollTo({top:0})};
   $('#copyDraftTop').onclick=()=>{const v=$('#revText').value;v.trim()?copy(v,'본문을 복사했습니다'):toast('본문이 비어 있습니다')};
   const del=$('#pDel');if(del)del.onclick=async()=>{if(del.dataset.confirm!=='1'){del.dataset.confirm='1';del.textContent='한 번 더 누르면 지웁니다';return}try{await api('/api/studio/post/'+id,{method:'DELETE'});curPost=null;toast('지웠습니다');await loadPosts();showPostWelcome()}catch(e){toast(e.message)}};
