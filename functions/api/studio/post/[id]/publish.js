@@ -9,6 +9,7 @@ export async function onRequestPost({ request, env, params }) {
   const draft = String(body?.draft ?? "").trim();
   if (draft.length < 10) return fail(400, "empty", "본문이 비어 있습니다.");
   const meta = cleanMeta({ ...body?.meta, series: "" });
+  if (meta.category === "series") meta.category = "log"; // 연재 분류는 원고 연재 전용
   if (!meta.title) return fail(400, "invalid", "제목을 입력해 주세요.");
   const row = await g.db.prepare("SELECT file FROM studio_posts WHERE id = ?").bind(params.id).first();
   if (!row) return fail(404, "not_found", "글이 없습니다.");

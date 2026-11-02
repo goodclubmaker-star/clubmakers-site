@@ -8,7 +8,7 @@ export async function onRequestPost({ request, env, params }) {
   if (error) return error;
   const draft = String(body?.draft ?? "").trim();
   if (draft.length < 20) return fail(400, "empty", "검수본이 비어 있습니다.");
-  const meta = cleanMeta({ ...body?.meta, series: "practical-fitting" });
+  const meta = cleanMeta({ ...body?.meta, series: "practical-fitting", category: "series" });
   if (!meta.title) return fail(400, "invalid", "제목을 입력해 주세요.");
   const sec = await g.db.prepare("SELECT title FROM studio_sections WHERE book = ? AND id = ?").bind(BOOK, params.id).first();
   if (!sec) return fail(404, "not_found", "해당 원고가 없습니다.");
