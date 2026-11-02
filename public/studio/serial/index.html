@@ -113,6 +113,13 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 .okmsg{color:var(--done);font-size:13.5px}
 .setup{display:flex;flex-direction:column;gap:12px}
 .busy{opacity:.6;pointer-events:none}
+.sumr{display:flex;align-items:center;gap:8px}
+.grpOpen{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:500;color:var(--green)}
+.grpOpen:hover{border-color:var(--gold)}
+.bund{display:block;font-size:11px;color:var(--gold)}
+.bundcount{font-family:var(--sans);font-size:14px;font-weight:500;color:var(--gold)}
+.orig h4.ttl{font-family:var(--serif);font-size:17px;margin:1.6em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+.orig h4.ttl:first-child{margin-top:0;padding-top:0;border-top:0}
 </style>
 </head>
 <body>
@@ -164,7 +171,7 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 const API='/api/studio/serial';
 const BOOK='실제적인 클럽피팅';
 const ST_LABEL={todo:'대기',reviewed:'검수본',published:'등록 완료',skipped:'건너뜀'};
-let token='',sections=[],byId={},progress={},filter='all',curId=null,openGroups=new Set(),cur=null;
+let range=[],token='',sections=[],byId={},progress={},filter='all',curId=null,openGroups=new Set(),cur=null;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const today=()=>new Date(Date.now()+9*3600e3).toISOString().slice(0,10);
@@ -201,8 +208,7 @@ function applyState(st){
   if(!sections.length){show('uploadView');$('#cancelUpload').hidden=true;return}
   const b=st.book;$('#bookInfo').textContent=b?`원고: ${b.source||'-'} · ${b.count}개 · ${b.uploaded_at} 불러옴`:'';
   show('appView');renderToc();renderMeter();
-  const h=location.hash.slice(1);
-  if(byId[h]) go(h,false); else if(!curId){document.body.className='view-list';showWelcome()} else go(curId,false);
+  if(goHash()){} else if(!curId){document.body.className='view-list';showWelcome()} else go(curId,false);
 }
 async function refresh(){try{const st=await api('/state');sections=st.sections;progress=st.progress;renderToc();renderMeter()}catch(_){}}
 
@@ -239,18 +245,25 @@ function renderText(text){
 }
 
 /* ---------- 목차 ---------- */
+const leadOf=id=>(progress[id]&&progress[id].lead)||id;
 function groups(){const g=[];sections.forEach(s=>{let x=g[g.length-1];if(!x||x.name!==s.grp){x={name:s.grp,items:[]};g.push(x)}x.items.push(s)});return g}
 function renderToc(){
   const html=groups().map(g=>{
     const items=g.items.filter(s=>filter==='all'||statusOf(s.id)===filter);if(!items.length)return '';
     const done=g.items.filter(s=>isDone(s.id)).length;
     const open=openGroups.has(g.name)||(curId&&byId[curId]&&byId[curId].grp===g.name)||filter!=='all';
-    return `<details class="grp" ${open?'open':''} data-g="${esc(g.name)}"><summary>${esc(g.name)}<span>${done}/${g.items.length}</span></summary>`+
-      items.map(s=>{const st=statusOf(s.id);return `<button type="button" class="item${s.id===curId?' cur':''}" data-id="${s.id}"><span class="no">${s.id.slice(1)}</span><span class="tt">${esc(s.title)}</span><span class="st ${st}">${ST_LABEL[st]}</span></button>`}).join('')+'</details>';
+    const multi=g.items.length>1;
+    return `<details class="grp" ${open?'open':''} data-g="${esc(g.name)}"><summary>${esc(g.name)}<span class="sumr">${multi?`<button type="button" class="grpOpen" data-g="${esc(g.name)}">묶어 열기</button>`:''}${done}/${g.items.length}</span></summary>`+
+      items.map(s=>{const st=statusOf(s.id);const inCur=range.includes(s.id);const lead=progress[s.id]&&progress[s.id].lead;
+        return `<button type="button" class="item${inCur?' cur':''}" data-id="${s.id}"><span class="no">${s.id.slice(1)}</span><span class="tt">${esc(s.title)}${lead?`<span class="bund">${esc(lead.slice(1))}번과 묶음</span>`:''}</span><span class="st ${st}">${ST_LABEL[st]}</span></button>`}).join('')+'</details>';
   }).join('');
   $('#toc').innerHTML=html||'<p class="note">이 상태의 원고가 없습니다.</p>';
 }
-$('#toc').addEventListener('click',e=>{const b=e.target.closest('.item');if(b)go(b.dataset.id)});
+$('#toc').addEventListener('click',e=>{
+  const gb=e.target.closest('.grpOpen');
+  if(gb){e.preventDefault();e.stopPropagation();openGroup(gb.dataset.g);return}
+  const b=e.target.closest('.item');if(b)go(leadOf(b.dataset.id));
+});
 $('#toc').addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.g){d.open?openGroups.add(d.dataset.g):openGroups.delete(d.dataset.g)}},true);
 document.querySelectorAll('.chipf').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.f;document.querySelectorAll('.chipf').forEach(x=>x.setAttribute('aria-pressed',x===b));renderToc()}));
 function renderMeter(){
@@ -258,44 +271,74 @@ function renderMeter(){
   $('#bDone').style.width=(done/n*100)+'%';$('#bDraft').style.width=(dr/n*100)+'%';
   $('#meterTxt').textContent=`${done} / ${sections.length} 완료`+(dr?` · 검수본 ${dr}`:'');
 }
-function nextTodo(from){const start=from&&byId[from]?byId[from].idx+1:0;for(let i=0;i<sections.length;i++){const s=sections[(start+i)%sections.length];if(!isDone(s.id))return s.id}return null}
+function nextTodo(from){const start=from&&byId[from]?byId[from].idx+1:0;for(let i=0;i<sections.length;i++){const s=sections[(start+i)%sections.length];if(!isDone(s.id))return leadOf(s.id)}return null}
 $('#nextBtn').onclick=()=>{const id=nextTodo(null);id?go(id):toast('모든 원고를 마쳤습니다')};
 
+// 다른 글에 이미 쓰인 절인지 (묶음에 넣으면 안 되는 절)
+function takenElsewhere(id,lead){const p=progress[id];if(!p)return false;if(p.lead&&p.lead!==lead)return true;if(p.members&&id!==lead)return true;if(!p.lead&&id!==lead&&p.status==='published')return true;return false}
+function openGroup(name){
+  const items=sections.filter(s=>s.grp===name);if(!items.length)return;
+  const first=items[0].id,last=items[items.length-1].id;
+  const bad=items.find(s=>takenElsewhere(s.id,first));
+  if(bad){toast(`${bad.id.slice(1)}번은 이미 다른 글로 등록·묶음되어 있어 PART 전체를 묶을 수 없습니다`);return}
+  go(first,true,last);
+}
+
 /* ---------- 일지 정보 ---------- */
-function defaultTitle(s){const t=s.title.replace(/^(\d+)절\.\s*/,'$1절 ');const g=/^(PART|부록)/.test(s.grp)?s.grp+' · ':'';return `『${BOOK}』 ${g}${t}`}
-function guessClub(s){if(/웨지/.test(s.title))return 'wedge';if(/퍼터/.test(s.title))return 'putter';if(/드라이버/.test(s.title))return 'driver';if(/아이언/.test(s.title))return 'iron';return ''}
-function firstSentence(text){const p=text.split(/\n\n/).map(x=>x.trim()).find(x=>x&&!x.startsWith('|')&&!x.startsWith('>')&&x!=='[그림]'&&x.length>25)||'';const m=p.match(/^.+?[다요]\./);let d=(m?m[0]:p).trim();if(d.length>110)d=d.slice(0,108)+'…';return d}
+function stripNo(t){return t.replace(/^(\d+)절\.\s*/,'$1절 ')}
+function defaultTitle(list){
+  const s=list[0],g=/^(PART|부록)/.test(s.grp)?s.grp+' · ':'';
+  if(list.length===1)return `『${BOOK}』 ${g}${stripNo(s.title)}`;
+  if(/들어가며$/.test(s.title)){const sub=(s.text||'').split('\n\n')[0].trim();if(sub&&sub.length<60)return `『${BOOK}』 ${g}${sub}`}
+  return `『${BOOK}』 ${g}${stripNo(s.title)} 외 ${list.length-1}편`;
+}
+function guessClub(t){if(/웨지/.test(t))return 'wedge';if(/퍼터/.test(t))return 'putter';if(/드라이버/.test(t))return 'driver';if(/아이언/.test(t))return 'iron';return ''}
+function firstSentence(text){const p=text.split(/\n\n/).map(x=>x.trim()).find(x=>x&&!x.startsWith('|')&&!x.startsWith('>')&&!x.startsWith('#')&&x!=='[그림]'&&x.length>25)||'';const m=p.match(/^.+?[다요]\./);let d=(m?m[0]:p).trim();if(d.length>110)d=d.slice(0,108)+'…';return d}
 function readMeta(){return{title:$('#mTitle').value.trim(),description:$('#mDesc').value.trim()||firstSentence($('#revText').value),pubDate:$('#mDate').value||today(),category:$('#mCat').value,clubType:$('#mClub').value,tags:$('#mTags').value.split(',').map(x=>x.trim()).filter(Boolean)}}
 function fillMeta(m){$('#mTitle').value=m.title||'';$('#mDesc').value=m.description||'';$('#mDate').value=m.pubDate||today();$('#mCat').value=m.category||'log';$('#mClub').value=m.clubType||'';$('#mTags').value=(m.tags||[]).join(', ')}
+const secBlock=s=>'## '+s.title+'\n\n'+s.text;
+function joinText(list){return list.length===1?list[0].text:list.map(secBlock).join('\n\n')}
 
 /* ---------- 작업대 ---------- */
-async function go(id,push=true){
-  curId=id;const s=byId[id];if(!s)return;
-  if(push){try{history.replaceState(null,'','#'+id)}catch(_){location.hash=id}}
-  document.body.className='view-detail';renderToc();
+// keep: 묶음 범위를 바꿀 때 편집 중인 검수본·일지 정보를 그대로 들고 간다
+async function go(id,push=true,toId=null,keep=null){
+  id=leadOf(id);const s=byId[id];if(!s)return;
+  if(!toId){const m=progress[id]&&progress[id].members;if(m&&m.length>1)toId=m[m.length-1]}
+  curId=id;
+  document.body.className='view-detail';
   $('#desk').innerHTML='<p class="note">원고를 불러오는 중…</p>';
-  let d;try{d=await api('/section/'+id)}catch(e){$('#desk').innerHTML=`<p class="err">${esc(e.message)}</p>`;return}
+  let d;try{d=await api('/section/'+id+(toId&&toId!==id?'?to='+toId:''))}catch(e){$('#desk').innerHTML=`<p class="err">${esc(e.message)}</p>`;return}
   if(curId!==id)return;
-  cur=d;const st=statusOf(id);const p=d.progress;
-  const sec=d.section;
+  const list=d.sections;range=list.map(x=>x.id);
+  const last=list[list.length-1];
+  if(push){const h='#'+id+(list.length>1?'-'+last.id:'');try{history.replaceState(null,'',h)}catch(_){location.hash=h.slice(1)}}
+  renderToc();
+  const st=statusOf(id);const p=d.progress;const lastIdx=byId[last.id].idx;
+  const bundled=list.length>1;
+  const nextSec=sections[lastIdx+1];
+  const canAdd=nextSec&&!takenElsewhere(nextSec.id,id);
+  const allText=joinText(list);
   $('#desk').innerHTML=`
     <div>
-      <div class="crumb"><button class="btn back" type="button" id="backBtn">목차</button><span>${esc(s.grp)} · ${s.idx+1}/${sections.length}번째</span><span class="st ${st}" id="curSt">${ST_LABEL[st]}</span></div>
-      <h2 class="sec">${esc(s.title)}</h2>
+      <div class="crumb"><button class="btn back" type="button" id="backBtn">목차</button><span>${esc(s.grp)} · ${s.idx+1}${bundled?'~'+(lastIdx+1):''}/${sections.length}번째</span><span class="st ${st}" id="curSt">${ST_LABEL[st]}</span></div>
+      <h2 class="sec">${esc(s.title)}${bundled?` <span class="bundcount">외 ${list.length-1}개 절 묶음</span>`:''}</h2>
+      ${bundled?`<p class="note" style="margin:6px 0 0">${list.map(x=>esc(x.title)).join(' · ')}</p>`:''}
     </div>
     <div class="navrow">
       <button class="btn" type="button" id="prevBtn" ${s.idx===0?'disabled':''}>이전</button>
-      <button class="btn" type="button" id="nextSecBtn" ${s.idx===sections.length-1?'disabled':''}>다음</button>
-      <button class="btn" type="button" id="skipBtn">${st==='skipped'?'건너뜀 해제':'이 원고 건너뛰기'}</button>
+      <button class="btn" type="button" id="nextSecBtn" ${!nextSec?'disabled':''}>다음</button>
+      <button class="btn" type="button" id="addBtn" ${canAdd?'':'disabled'} title="${nextSec&&!canAdd?'다음 절은 이미 다른 글로 등록·묶음되어 있습니다':''}">다음 절 붙이기</button>
+      <button class="btn" type="button" id="dropBtn" ${bundled?'':'disabled'}>마지막 절 떼기</button>
+      <button class="btn" type="button" id="skipBtn">${st==='skipped'?'건너뜀 해제':'건너뛰기'}</button>
     </div>
     <section class="panel">
-      <div class="panel-h"><h3>1 · 원문</h3><div class="navrow"><button class="btn" type="button" id="copyOrig">원문 복사</button><button class="btn" type="button" id="toEditor">편집창으로 가져오기</button><button class="btn" type="button" id="expandOrig">전체 보기</button></div></div>
-      <div class="orig collapse" id="orig">${renderText(sec.text)||'<p class="note">본문이 없는 제목 항목입니다.</p>'}</div>
+      <div class="panel-h"><h3>1 · 원문${bundled?` (${list.length}개 절)`:''}</h3><div class="navrow"><button class="btn" type="button" id="copyOrig">원문 복사</button><button class="btn" type="button" id="toEditor">편집창으로 가져오기</button><button class="btn" type="button" id="expandOrig">전체 보기</button></div></div>
+      <div class="orig collapse" id="orig">${list.map(x=>(bundled?`<h4 class="ttl">${esc(x.title)}</h4>`:'')+(renderText(x.text)||'<p class="note">본문이 없는 제목 항목입니다.</p>')).join('')}</div>
     </section>
     <section class="panel">
       <div class="panel-h"><h3>2 · 검수본</h3><span class="note" id="saveState">${p&&p.updatedAt?'저장됨 '+esc(p.updatedAt.slice(5,16)):''}</span></div>
       <div class="drop"><span class="btn filebtn">파일 선택 (.txt · .md · .docx)<input type="file" id="fileIn" accept=".txt,.md,.docx,text/plain"></span><span>또는 아래에 붙여 넣기</span></div>
-      <label class="f" for="revText">검수한 본문 <span class="note">표는 | 칸 | 형식을 유지하면 사이트에서 표로 보입니다</span></label>
+      <label class="f" for="revText">검수한 본문 <span class="note">## 로 시작하는 줄은 소제목, 표는 | 칸 | 형식이면 사이트에서 그대로 보입니다</span></label>
       <textarea class="t" id="revText" placeholder="검수한 원고를 붙여 넣거나 '편집창으로 가져오기'로 원문을 불러와 고치세요."></textarea>
       <div class="navrow" style="margin-top:10px"><button class="btn gold" type="button" id="saveRev">검수본 저장</button></div>
     </section>
@@ -310,47 +353,63 @@ async function go(id,push=true){
         <label class="f" for="mTags" style="grid-column:1/-1">태그 (쉼표로 구분)<input class="t" id="mTags"></label>
       </div>
       <div class="navrow" style="margin-top:16px;align-items:center">
-        <button class="btn primary" type="button" id="pubBtn">${st==='published'?'수정본 다시 등록':'작업일지에 등록'}</button>
+        <button class="btn primary" type="button" id="pubBtn">${st==='published'?'수정본 다시 등록':(bundled?`${list.length}개 절을 한 글로 등록`:'작업일지에 등록')}</button>
         <span class="note" id="pubMsg">${st==='published'&&p&&p.file?`등록됨 · <a href="/journal/${esc(p.file.replace(/\.md$/,''))}/" target="_blank" rel="noopener">일지에서 보기</a>`:'누르면 바로 사이트에 올라갑니다 (반영까지 1~2분).'}</span>
       </div>
     </section>`;
-  fillMeta(p&&p.meta?p.meta:{title:defaultTitle(s),pubDate:today(),category:'log',tags:[BOOK,s.grp],clubType:guessClub(s)});
-  $('#revText').value=p&&p.draft?p.draft:'';
-  bindDesk(s,sec);window.scrollTo({top:0});
+  if(keep){fillMeta({...keep.meta,title:keep.titleTouched?keep.meta.title:defaultTitle(list)});$('#revText').value=keep.draft;if(keep.dirty)markDirty()}
+  else{fillMeta(p&&p.meta?p.meta:{title:defaultTitle(list),pubDate:today(),category:'log',tags:[BOOK,s.grp],clubType:guessClub(list.map(x=>x.title).join(' '))});$('#revText').value=p&&p.draft?p.draft:''}
+  bindDesk(s,list,allText);if(!keep)window.scrollTo({top:0});
 }
-function bindDesk(s,sec){
-  $('#backBtn').onclick=()=>{document.body.className='view-list';curId=null;renderToc();showWelcome();try{history.replaceState(null,'',location.pathname)}catch(_){}};
+let dirty=false,titleTouched=false;
+function bindDesk(s,list,allText){
+  dirty=false;titleTouched=false;
+  const lastId=list[list.length-1].id,lastIdx=byId[lastId].idx;
+  const snapshot=()=>({draft:$('#revText').value,meta:readMeta(),dirty,titleTouched});
+  $('#backBtn').onclick=()=>{document.body.className='view-list';curId=null;range=[];renderToc();showWelcome();try{history.replaceState(null,'',location.pathname)}catch(_){}};
   $('#prevBtn').onclick=()=>go(sections[s.idx-1].id);
-  $('#nextSecBtn').onclick=()=>go(sections[s.idx+1].id);
-  $('#copyOrig').onclick=()=>copy(sec.text,'원문을 복사했습니다');
+  $('#nextSecBtn').onclick=()=>go(sections[lastIdx+1].id);
+  $('#addBtn').onclick=()=>{
+    const nx=sections[lastIdx+1];if(!nx)return;
+    const k=snapshot();
+    // 편집 중인 검수본이 있으면 새 절 원문을 끝에 붙여 준다
+    go(s.id,true,nx.id,k).then(async()=>{
+      if(k.draft.trim()){const added=await api('/section/'+nx.id);const ta=$('#revText');ta.value=ta.value.replace(/\s+$/,'')+'\n\n'+secBlock(added.section);markDirty();toast('다음 절을 붙이고, 편집창 끝에도 원문을 이어 붙였습니다')}
+      else toast('다음 절을 붙였습니다. 저장하거나 등록할 때 묶음이 확정됩니다');
+    });
+  };
+  $('#dropBtn').onclick=()=>{if(list.length<2)return;const k=snapshot();go(s.id,true,list[list.length-2].id,k).then(()=>toast(k.draft.trim()?'마지막 절을 뗐습니다. 편집창의 해당 부분은 직접 지워 주세요':'마지막 절을 뗐습니다'))};
+  $('#copyOrig').onclick=()=>copy(allText,'원문을 복사했습니다');
   $('#expandOrig').onclick=e=>{const o=$('#orig');o.classList.toggle('collapse');e.target.textContent=o.classList.contains('collapse')?'전체 보기':'접기'};
-  $('#toEditor').onclick=()=>{const ta=$('#revText');if(ta.value.trim()&&ta.value!==sec.text&&ta.dataset.confirm!=='1'){ta.dataset.confirm='1';toast('편집창에 글이 있습니다. 한 번 더 누르면 원문으로 바꿉니다');return}ta.value=sec.text;ta.dataset.confirm='';markDirty();ta.focus()};
+  $('#toEditor').onclick=()=>{const ta=$('#revText');if(ta.value.trim()&&ta.value!==allText&&ta.dataset.confirm!=='1'){ta.dataset.confirm='1';toast('편집창에 글이 있습니다. 한 번 더 누르면 원문으로 바꿉니다');return}ta.value=allText;ta.dataset.confirm='';markDirty();ta.focus()};
   $('#revText').addEventListener('input',markDirty);
+  $('#mTitle').addEventListener('input',()=>{titleTouched=true});
   $('#fileIn').onchange=async e=>{
     const f=e.target.files[0];e.target.value='';if(!f)return;
     try{let txt;if(/\.docx$/i.test(f.name)){const r=await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()});txt=r.value.replace(/\n{3,}/g,'\n\n')}else txt=await f.text();
       $('#revText').value=txt.trim();markDirty();toast(f.name+' 불러옴')}catch(err){toast('파일을 읽지 못했습니다. txt로 저장해 다시 올려 주세요')}
   };
   $('#saveRev').onclick=()=>saveDraft(s);
-  $('#skipBtn').onclick=async()=>{const to=statusOf(s.id)==='skipped'?'todo':'skipped';try{await api('/status/'+s.id,{method:'POST',body:JSON.stringify({status:to})});await refresh();const n=to==='skipped'?nextTodo(s.id):null;go(n||s.id)}catch(e){toast(e.message)}};
+  $('#skipBtn').onclick=async()=>{const to=statusOf(s.id)==='skipped'?'todo':'skipped';try{await api('/status/'+s.id,{method:'POST',body:JSON.stringify({status:to,members:range})});await refresh();const n=to==='skipped'?nextTodo(lastId):null;go(n||s.id)}catch(e){toast(e.message)}};
   $('#pubBtn').onclick=()=>publish(s);
 }
-function markDirty(){$('#saveState').textContent='저장 안 됨'}
+function markDirty(){dirty=true;const el=$('#saveState');if(el)el.textContent='저장 안 됨'}
 async function saveDraft(s,quiet){
   const draft=$('#revText').value;if(!draft.trim()){toast('검수본이 비어 있습니다');return false}
-  try{const r=await api('/draft/'+s.id,{method:'PUT',body:JSON.stringify({draft,meta:readMeta()})});$('#saveState').textContent='저장됨 '+r.updatedAt.slice(5,16);
-    if(!quiet)toast('검수본을 저장했습니다');await refresh();const el=$('#curSt');if(el){const st=statusOf(s.id);el.className='st '+st;el.textContent=ST_LABEL[st]}return true}
+  try{const r=await api('/draft/'+s.id,{method:'PUT',body:JSON.stringify({draft,meta:readMeta(),members:range})});dirty=false;$('#saveState').textContent='저장됨 '+r.updatedAt.slice(5,16);
+    if(!quiet)toast(range.length>1?`${range.length}개 절 묶음으로 저장했습니다`:'검수본을 저장했습니다');await refresh();const el=$('#curSt');if(el){const st=statusOf(s.id);el.className='st '+st;el.textContent=ST_LABEL[st]}return true}
   catch(e){toast(e.message);return false}
 }
 async function publish(s){
   const draft=$('#revText').value.trim();if(draft.length<20){toast('검수본을 먼저 올려 주세요');return}
   const btn=$('#pubBtn'),msg=$('#pubMsg');btn.classList.add('busy');msg.className='note';msg.textContent='사이트에 올리는 중…';
   try{
-    const r=await api('/publish/'+s.id,{method:'POST',body:JSON.stringify({draft,meta:readMeta()})});
+    const r=await api('/publish/'+s.id,{method:'POST',body:JSON.stringify({draft,meta:readMeta(),members:range})});
+    dirty=false;
     msg.className='okmsg';msg.innerHTML=`${r.updated?'수정본을 다시 올렸습니다':'작업일지에 올렸습니다'}. 1~2분 뒤 <a href="${esc(r.journalUrl)}" target="_blank" rel="noopener">일지에서 보기</a>`;
     toast('등록했습니다');await refresh();
     btn.textContent='수정본 다시 등록';const el=$('#curSt');if(el){el.className='st published';el.textContent=ST_LABEL.published}
-    const n=nextTodo(s.id);
+    const n=nextTodo(range[range.length-1]);
     if(n){const nb=document.createElement('button');nb.className='btn gold';nb.type='button';nb.textContent='다음 원고로';nb.onclick=()=>go(n);btn.after(nb)}
   }catch(e){msg.className='err';msg.textContent=e.message}
   finally{btn.classList.remove('busy')}
@@ -358,11 +417,13 @@ async function publish(s){
 function showWelcome(){
   const id=nextTodo(null);const s=id&&byId[id];
   $('#desk').innerHTML=`<section class="panel"><div class="panel-h"><h3>오늘 할 원고</h3></div>
-    ${s?`<h2 class="sec" style="margin-bottom:10px">${esc(s.title)}</h2><p class="note">${esc(s.grp)} · ${s.idx+1}번째 / 전체 ${sections.length}개</p><div class="navrow" style="margin-top:12px"><button class="btn primary" type="button" id="startBtn">이 원고 열기</button></div>`:'<p>모든 원고를 마쳤습니다.</p>'}
-    <p class="note" style="margin-top:16px">순서: 원문 확인 → 검수본 올리기 → 작업일지에 등록.</p></section>`;
+    ${s?`<h2 class="sec" style="margin-bottom:10px">${esc(s.title)}</h2><p class="note">${esc(s.grp)} · ${s.idx+1}번째 / 전체 ${sections.length}개</p><div class="navrow" style="margin-top:12px"><button class="btn primary" type="button" id="startBtn">이 원고 열기</button>${s.grp.startsWith('PART')?`<button class="btn" type="button" id="startGrp">${esc(s.grp)} 묶어 열기</button>`:''}</div>`:'<p>모든 원고를 마쳤습니다.</p>'}
+    <p class="note" style="margin-top:16px">순서: 원문 확인 → 검수본 올리기 → 작업일지에 등록. 여러 절을 한 글로 올리려면 「다음 절 붙이기」나 목차의 「묶어 열기」를 쓰세요.</p></section>`;
   const b=$('#startBtn');if(b)b.onclick=()=>go(id);
+  const g=$('#startGrp');if(g)g.onclick=()=>openGroup(s.grp);
 }
-window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(byId[h]&&h!==curId)go(h,false)});
+function goHash(){const m=location.hash.slice(1).match(/^(s\d{3,4})(?:-(s\d{3,4}))?$/);if(!m||!byId[m[1]])return false;go(m[1],false,m[2]||null);return true}
+window.addEventListener('hashchange',()=>{const m=location.hash.slice(1).match(/^(s\d{3,4})/);if(m&&m[1]!==curId)goHash()});
 
 token=load('studioToken')||'';
 if(token)login(token);else show('loginView');
