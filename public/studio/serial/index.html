@@ -250,7 +250,7 @@ function show(view){['loginView','uploadView','appView','postsView'].forEach(v=>
 
 async function api(path,opt={}){
   const res=await fetch(path.startsWith('/api/')?path:API+path,{...opt,headers:{authorization:'Bearer '+token,...(opt.body?{'content-type':'application/json'}:{})}});
-  let data={};try{data=await res.json()}catch(_){}
+  const raw=await res.text();let data={};try{data=JSON.parse(raw)}catch(_){data={message:raw?('요청 실패 ('+res.status+') '+raw.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,200)):''}}
   if(res.status===401){store('studioToken',null);token='';show('loginView');throw new Error(data.message||'비밀번호가 맞지 않습니다.')}
   if(!res.ok) throw new Error(data.message||('요청 실패 ('+res.status+')'));
   return data;
