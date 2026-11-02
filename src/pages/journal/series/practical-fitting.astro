@@ -15,7 +15,7 @@ for (const e of entries) {
 }
 
 function formatDate(date: Date) {
-  return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  return date.toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' })
     .replace(/\. /g, '.').replace(/\.$/, '');
 }
 
