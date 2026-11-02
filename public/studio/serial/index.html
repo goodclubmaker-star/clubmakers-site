@@ -168,6 +168,19 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 .catpick input{accent-color:var(--green);margin:0}
 .naverrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin:-2px 0 12px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
 .naverrow .note{grid-column:1/-1;margin:0}
+.edtabs{display:flex;gap:4px;align-items:center;margin:6px 0 6px;flex-wrap:wrap}
+.edtabs button{border:1px solid var(--line);background:var(--paper);border-radius:7px;padding:4px 12px;font-size:13px}
+.edtabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.edtabs .note{margin-left:8px}
+.mdprev{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:18px 20px;min-height:340px;font-size:15.5px;line-height:1.85;max-width:100%;overflow-wrap:anywhere}
+.mdprev h2,.mdprev h3{font-family:var(--serif);margin:1.4em 0 .5em;line-height:1.4}
+.mdprev h2{font-size:21px}.mdprev h3{font-size:18px}
+.mdprev p{margin:0 0 1em}
+.mdprev img{max-width:100%;height:auto;border-radius:6px;display:block;margin:.4em 0}
+.mdprev table{border-collapse:collapse;font-size:14px;min-width:100%}
+.mdprev th,.mdprev td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+.mdprev th{background:var(--green-soft)}
+.mdprev blockquote{margin:0 0 1em;padding:8px 14px;border-left:3px solid var(--gold);background:var(--gold-soft)}
 .sumr{display:flex;align-items:center;gap:8px}
 .grpOpen{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:500;color:var(--green)}
 .grpOpen:hover{border-color:var(--gold)}
@@ -241,7 +254,8 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="/studio/serial/splitter.js?v=1"></script>
-<script src="/studio/serial/html2md.js?v=1"></script>
+<script src="/studio/serial/html2md.js?v=2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script>
 const API='/api/studio/serial';
 const BOOK='실제적인 클럽피팅';
@@ -648,6 +662,36 @@ async function addPhotos(files){
   toast(`사진 ${list.length}장을 본문에 넣었습니다. '사진'이라고 된 설명은 고쳐 쓰셔도 됩니다`);
   renderPhotos();
 }
+// 미리보기: 사이트에 올라갈 모습(표·사진·소제목)을 그대로 보여 준다
+function setupPreview(){
+  const ta=$('#revText');if(!ta||$('#edTabs'))return;
+  const tabs=document.createElement('div');tabs.className='edtabs';tabs.id='edTabs';
+  tabs.innerHTML='<button type="button" data-ed="edit" aria-pressed="true">편집</button><button type="button" data-ed="preview" aria-pressed="false">미리보기</button><span class="note" id="edInfo"></span>';
+  ta.before(tabs);
+  const pv=document.createElement('div');pv.className='mdprev article-like';pv.id='mdPrev';pv.hidden=true;ta.after(pv);
+  tabs.onclick=e=>{const b=e.target.closest('[data-ed]');if(b)setEdMode(b.dataset.ed)};
+  ta.addEventListener('input',()=>{if(!$('#mdPrev').hidden){clearTimeout(setupPreview.t);setupPreview.t=setTimeout(renderPreview,400)}updateEdInfo()});
+  updateEdInfo();
+}
+function updateEdInfo(){
+  const ta=$('#revText'),el=$('#edInfo');if(!ta||!el)return;
+  const v=ta.value,t=(v.match(/^\|(\s*:?-{3,}:?\s*\|)+\s*$/gm)||[]).length,p=(v.match(/!\[[^\]]*\]\([^)]+\)/g)||[]).length,miss=(v.match(/사진을 가져오지 못했습니다/g)||[]).length;
+  el.textContent=(t||p||miss)?`표 ${t}개 · 사진 ${p}장`+(miss?` · 못 가져온 사진 ${miss}장`:''):'';
+}
+function setEdMode(m){
+  const ta=$('#revText'),pv=$('#mdPrev');if(!ta||!pv)return;
+  document.querySelectorAll('#edTabs [data-ed]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.ed===m));
+  const prev=m==='preview';ta.hidden=prev;pv.hidden=!prev;if(prev)renderPreview();
+}
+async function renderPreview(){
+  const pv=$('#mdPrev'),ta=$('#revText');if(!pv||!ta)return;
+  if(!window.marked){pv.innerHTML='<p class="note">미리보기 도구를 불러오는 중입니다.</p>';return}
+  pv.innerHTML=marked.parse(ta.value||'',{gfm:true,breaks:false})||'<p class="note">본문이 비어 있습니다.</p>';
+  pv.querySelectorAll('script,iframe,object').forEach(n=>n.remove());
+  for(const im of pv.querySelectorAll('img')){const m=(im.getAttribute('src')||'').match(/^photo:([a-z0-9]+)/);if(m){im.src=await photoUrl(m[1])}}
+  pv.querySelectorAll('table').forEach(t=>{if(!t.parentElement.classList.contains('tbl')){const w=document.createElement('div');w.className='tbl';t.before(w);w.appendChild(t)}});
+}
+
 // 붙여넣은/가져온 블로그 글: 표·소제목·굵게는 마크다운으로, 사진은 받아서 작업대 사진으로 바꿔 넣는다
 let importing=false;
 async function importRich(html,{replace=false}={}){
@@ -657,30 +701,31 @@ async function importRich(html,{replace=false}={}){
   if(!r.md){toast('가져올 내용이 없습니다');return}
   if(r.title&&$('#mTitle')&&!$('#mTitle').value.trim()){$('#mTitle').value=r.title;$('#mTitle').dispatchEvent(new Event('input'))}
   if(replace||!ta.value.trim()){ta.value=r.md;ta.dispatchEvent(new Event('input'))}else insertAtCursor(ta,r.md);
-  if(!r.images.length){toast('글을 가져왔습니다 (표·소제목 포함)');return}
-  importing=true;let ok=0;
+  const nt=(r.md.match(/^\|(-{3}\|)+$/gm)||[]).length;
+  if(!r.images.length){toast(nt?`글과 표 ${nt}개를 가져왔습니다`:'글을 가져왔습니다');setEdMode('preview');return}
+  importing=true;let ok=0,firstErr='';
   for(let i=0;i<r.images.length;i++){
     toast(`사진 가져오는 중… ${i+1}/${r.images.length}`);
     let rep2='> 사진을 가져오지 못했습니다';
     try{
       const res=await fetch('/api/studio/fetch-image?url='+encodeURIComponent(r.images[i]),{headers:{authorization:'Bearer '+token}});
-      if(!res.ok)throw new Error((await res.json().catch(()=>({}))).message||res.status);
+      if(!res.ok)throw new Error((await res.json().catch(()=>({}))).message||('사진 받기 실패 '+res.status));
       const {b64,blob}=await shrinkImage(await res.blob());
       const up=await api('/api/studio/photo',{method:'POST',body:JSON.stringify({owner:photoOwner,mime:'image/jpeg',data:b64,name:'blog-'+(i+1)+'.jpg'})});
       photoCache[up.id]=URL.createObjectURL(blob);
       rep2=`![사진](photo:${up.id})`;ok++;
       if(!curCover)curCover='photo:'+up.id;
-    }catch(e){}
+    }catch(e){if(!firstErr)firstErr=e.message||String(e)}
     const cur=$('#revText');if(!cur)break;
     cur.value=cur.value.split(`[[img:${i}]]`).join(rep2);
   }
   importing=false;
   const cur=$('#revText');if(cur)cur.dispatchEvent(new Event('input'));
-  toast(ok===r.images.length?`글과 사진 ${ok}장을 가져왔습니다`:`사진 ${r.images.length}장 중 ${ok}장을 가져왔습니다. 못 가져온 자리는 표시해 두었습니다`);
-  renderPhotos();
+  toast(`표 ${nt}개 · 사진 ${ok}/${r.images.length}장을 가져왔습니다`+(ok<r.images.length&&firstErr?` (못 가져온 이유: ${firstErr})`:''));
+  renderPhotos();setEdMode('preview');
 }
 function bindPhotos(owner){
-  photoOwner=owner;
+  photoOwner=owner;setupPreview();
   const inp=$('#photoIn');if(inp)inp.onchange=e=>{const f=e.target.files;if(f&&f.length)addPhotos(f);e.target.value=''};
   const box=$('#photoBar');
   if(box)box.onclick=async e=>{
