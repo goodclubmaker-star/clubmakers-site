@@ -214,6 +214,14 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 .nvprev{margin-top:10px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#222;max-height:420px;overflow:auto;font-size:15px;line-height:1.8}
 .nvprev img{max-width:100%;height:auto}
 .nvprev table{border-collapse:collapse;font-size:14px}
+.fixpanel{margin-top:12px;padding:14px;border:1.5px solid var(--gold);border-radius:10px;background:var(--gold-soft)}
+.fixhead{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.fixlist{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.fixlist label{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;align-items:start;cursor:pointer;font-size:13.5px}
+.fixlist input{margin-top:3px;accent-color:var(--green)}
+.fixlist span{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}
+.fxb{color:var(--muted);text-decoration:line-through}
+.fxa{color:var(--green);font-weight:600}
 .sumr{display:flex;align-items:center;gap:8px}
 .grpOpen{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:500;color:var(--green)}
 .grpOpen:hover{border-color:var(--gold)}
@@ -601,7 +609,7 @@ function bindDesk(s,list,allText){
   };
   $('#saveRev').onclick=()=>saveDraft(s);
   $('#pubBtn').onclick=()=>publish(s);
-  bindPhotos('sec:'+s.id);mountSeo();mountNaver();
+  bindPhotos('sec:'+s.id);mountSeo();guardPublish();mountNaver();
 }
 function markDirty(){dirty=true;const el=$('#saveState');if(el)el.textContent='저장 안 됨'}
 async function saveDraft(s,quiet){
@@ -847,6 +855,99 @@ function mountSeo(){
   let t=null;['mTitle','mDesc','mTags','revText'].forEach(x=>{const el=$('#'+x);if(el)el.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(run,300)})});run();
 }
 
+// 올리기 전 자동 정리: 제목 말머리·요약·태그·사진 설명을 규칙에 맞게 고칠 안을 만든다
+// 본문 문장은 건드리지 않는다. 요약은 본문 문장을 그대로 가져온다.
+function cleanTitle(t){
+  let x=String(t||'').trim();
+  x=x.replace(/^(골프채\s*공작소(\s*클럽메이커스)?|클럽메이커스)\s*[-–—:|｜·]?\s*/,'');
+  x=x.replace(/^(작업\s*스케치|신제품\s*안내|입고\s*안내|작업\s*일지)\s*[-–—:|｜·]?\s*/,'');
+  return x.replace(/\s{2,}/g,' ').trim();
+}
+function bodySummary(body,title){
+  // 소제목·표·사진·굵은 말머리 줄은 빼고, 본문 문장만 이어 붙인다
+  const lines=String(body).split('\n').map(l=>l.trim()).filter(l=>l&&!/^(#|\||>|!\[|-{3}|\*\*[^*]+\*\*$|__[^_]+__$)/.test(l))
+    .map(l=>l.replace(/\*\*|__|`/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/\s+/g,' ').trim())
+    .filter(l=>l.length>=8&&!/^(골프채\s*공작소|클럽메이커스)/.test(l));
+  const text=lines.join(' ');
+  const sents=(text.match(/[^.!?。]+[.!?。]+/g)||[]).map(x=>x.trim()).filter(x=>x.length>=10);
+  const tflat=String(title).replace(/\s/g,'');
+  let out='';
+  for(const x of sents){
+    if(x.replace(/\s/g,'')===tflat)continue;
+    if(!out)out=x;else if((out+' '+x).length<=120)out+=' '+x;else break;
+    if(out.length>=40)break;
+  }
+  if(!out&&lines[0])out=lines[0];
+  if(out.length>120)out=out.slice(0,118).replace(/\s\S*$/,'')+'…';
+  return out;
+}
+function proposeFixes(){
+  const title=$('#mTitle').value.trim(),desc=$('#mDesc').value.trim(),body=$('#revText').value;
+  const tags=$('#mTags').value.split(',').map(x=>x.trim()).filter(Boolean);
+  const out=[];
+  if(mode!=='serial'){
+    const t=cleanTitle(title);
+    if(t&&t!==title)out.push({key:'title',label:'제목 앞 상호·말머리 빼기',before:title,after:t});
+  }
+  const t2=out.find(x=>x.key==='title')?.after||title;
+  const r=SeoCheck.check({title:t2,description:desc,tags,body,published:false});
+  const sugg=AutoTag.suggestTitles(t2,body);
+  const keyItem=r.items.find(i=>i.msg.startsWith('제목에 핵심어')&&!i.ok);
+  if(mode!=='serial'&&keyItem&&sugg[0]&&sugg[0]!==t2)out.push({key:'title2',label:'제목에 핵심어 넣기 (추천 제목)',before:t2,after:sugg[0],off:true});
+  const descBad=!(desc.length>=40&&desc.length<=120)||desc.replace(/\s/g,'')===t2.replace(/\s/g,'')||t2.includes(desc);
+  if(descBad){const d=bodySummary(body,t2);if(d&&d!==desc)out.push({key:'desc',label:'요약을 본문 첫 문장으로',before:desc||'(비어 있음)',after:d})}
+  if(tags.length<3||tags.length>8){
+    const a=AutoTag.analyze(t2,body).tags;const merged=[...new Set([...tags,...a])].slice(0,8);
+    if(merged.join(',')!==tags.join(','))out.push({key:'tags',label:'태그 채우기 (본문에서 찾음)',before:tags.join(', ')||'(없음)',after:merged.join(', ')});
+  }
+  const noAlt=(body.match(/!\[(사진)?\]\(/g)||[]).length;
+  if(noAlt)out.push({key:'alt',label:`사진 설명 ${noAlt}장`,before:'![사진]',after:`![${t2.replace(/[\[\]()]/g,'')} 사진 N]`});
+  // 자동으로 못 고치는 것 (안내만)
+  const manual=r.items.filter(i=>!i.ok&&!/^(제목이 검색어로 시작|제목 띄어쓰기|요약|태그|설명 없는 사진|사진 설명|제목에 핵심어)/.test(i.msg)).map(i=>i.msg+' — '+i.fix);
+  return{fixes:out,manual,score:r.score};
+}
+function applyFixes(list){
+  const get=k=>list.find(x=>x.key===k);
+  let title=$('#mTitle').value.trim();
+  if(get('title2'))title=get('title2').after;else if(get('title'))title=get('title').after;
+  if(title!==$('#mTitle').value.trim()){$('#mTitle').value=title;$('#mTitle').dispatchEvent(new Event('input'))}
+  if(get('desc')){$('#mDesc').value=get('desc').after;$('#mDesc').dispatchEvent(new Event('input'))}
+  if(get('tags')){$('#mTags').value=get('tags').after;$('#mTags').dispatchEvent(new Event('input'))}
+  if(get('alt')){let n=0;const alt=title.replace(/[\[\]()]/g,'');const ta=$('#revText');ta.value=ta.value.replace(/!\[(사진)?\]\(/g,()=>`![${alt} 사진 ${++n}](`);ta.dispatchEvent(new Event('input'))}
+}
+// 정리 안 보여 주기. onPublish가 있으면 '정리하고 올리기' 단추가 붙는다
+function showFixPanel(onPublish){
+  const host=$('#seoBox');if(!host)return false;
+  const {fixes,manual,score}=proposeFixes();
+  const old=$('#fixPanel');if(old)old.remove();
+  if(!fixes.length&&!onPublish){toast(manual.length?'자동으로 고칠 곳은 없습니다. 아래 안내를 직접 봐 주세요':'고칠 곳이 없습니다');return false}
+  if(!fixes.length)return false;
+  const p=document.createElement('div');p.className='fixpanel';p.id='fixPanel';
+  p.innerHTML=`<div class="fixhead"><b>${onPublish?'올리기 전에 정리할 곳이 있습니다':'자동 정리 안'}</b><span class="note">체크한 것만 바꿉니다 · 본문 문장은 그대로</span></div>
+    <ul class="fixlist">${fixes.map((f,i)=>`<li><label><input type="checkbox" data-fx="${i}" ${f.off?'':'checked'}><span><b>${esc(f.label)}</b><span class="fxb">${esc(f.before)}</span><span class="fxa">→ ${esc(f.after)}</span></span></label></li>`).join('')}</ul>
+    ${manual.length?`<p class="note" style="margin:8px 0 0">직접 볼 곳: ${manual.map(esc).join(' / ')}</p>`:''}
+    <div class="navrow" style="margin-top:10px">${onPublish?'<button class="btn primary" type="button" id="fxGo">정리하고 올리기</button><button class="btn" type="button" id="fxRaw">그대로 올리기</button>':'<button class="btn primary" type="button" id="fxApply">정리하기</button>'}<button class="btn" type="button" id="fxClose">닫기</button></div>`;
+  host.after(p);
+  // 추천 제목과 말머리 빼기는 둘 중 하나만
+  p.addEventListener('change',e=>{const i=e.target.dataset.fx;if(i==null||!e.target.checked)return;const k=fixes[+i].key;const other=k==='title'?'title2':k==='title2'?'title':null;if(other){const j=fixes.findIndex(f=>f.key===other);if(j>=0)p.querySelector(`[data-fx="${j}"]`).checked=false}});
+  const chosen=()=>fixes.filter((f,i)=>p.querySelector(`[data-fx="${i}"]`).checked);
+  const done=()=>{p.remove()};
+  if($('#fxApply'))$('#fxApply').onclick=()=>{applyFixes(chosen());done();toast('정리했습니다. 확인하고 올려 주세요')};
+  if($('#fxGo'))$('#fxGo').onclick=()=>{applyFixes(chosen());done();onPublish()};
+  if($('#fxRaw'))$('#fxRaw').onclick=()=>{done();onPublish()};
+  $('#fxClose').onclick=done;
+  p.scrollIntoView({block:'center',behavior:'smooth'});
+  return true;
+}
+// 등록 단추를 감싸서, 고칠 곳이 있으면 먼저 정리 안을 보여 준다
+function guardPublish(){
+  const btn=$('#pubBtn');if(!btn||btn.dataset.guarded)return;btn.dataset.guarded='1';
+  const orig=btn.onclick;
+  btn.onclick=e=>{if($('#fixPanel'))return;if(!showFixPanel(()=>orig.call(btn,e)))orig.call(btn,e)};
+  const tools=document.createElement('button');tools.className='btn';tools.type='button';tools.textContent='자동 정리';tools.id='fixBtn';
+  tools.onclick=()=>showFixPanel(null);btn.after(tools);
+}
+
 // 미리보기: 사이트에 올라갈 모습(표·사진·소제목)을 그대로 보여 준다
 function setupPreview(){
   const ta=$('#revText');if(!ta||$('#edTabs'))return;
@@ -986,10 +1087,15 @@ async function runAudit(){
   v.innerHTML=`<div class="auditsum"><div><span class="seoscore ${avg>=85?'good':avg>=65?'mid':'low'}">${avg}</span><b>평균 점수</b></div><div><b>${rows.length}</b> 편 점검</div><div><b>${need}</b> 편 보완 필요</div><span class="note">사이트에 올라간 글 기준 · ${esc(d.builtAt?new Date(d.builtAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'')} 빌드</span><button class="btn" type="button" id="auditRe">다시 점검</button></div>`+
     rows.map(({p,r,src})=>`<article class="auditrow">
       <div class="audithead"><span class="seoscore ${r.score>=85?'good':r.score>=65?'mid':'low'}">${r.score}</span><div class="audittitle"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)}</a><span class="note">${esc(p.pubDate.slice(0,10))} · ${esc(p.category)}${p.series?' · 연재':''} · 본문 ${r.stats.chars}자 · 사진 ${r.stats.imgs}장 · 태그 ${p.tags.length}개</span></div>
-      ${src?`<button class="btn primary" type="button" data-fix="${src.kind}:${src.id}">작업대에서 고치기</button>`:`<a class="btn" href="https://app.pagescms.org" target="_blank" rel="noopener">PagesCMS에서 고치기</a>`}</div>
+      ${src?`<div class="navrow"><button class="btn primary" type="button" data-autofix="${src.kind}:${src.id}">자동 정리해서 다시 올리기</button><button class="btn" type="button" data-fix="${src.kind}:${src.id}">열어서 고치기</button></div>`:`<a class="btn" href="https://app.pagescms.org" target="_blank" rel="noopener">PagesCMS에서 고치기</a>`}</div>
       ${seoHtml(r,true)}</article>`).join('');
   $('#auditRe').onclick=runAudit;
-  v.onclick=e=>{const b=e.target.closest('[data-fix]');if(!b)return;const [k,id]=b.dataset.fix.split(':');
+  v.onclick=async e=>{
+    const af=e.target.closest('[data-autofix]');
+    if(af){const [k,id]=af.dataset.autofix.split(':');
+      if(k==='post'){setMode('posts');await openPost(id)}else{setMode('serial');await go(id)}
+      setTimeout(()=>{const b=$('#pubBtn');if(b)b.click()},300);return}
+    const b=e.target.closest('[data-fix]');if(!b)return;const [k,id]=b.dataset.fix.split(':');
     if(k==='post'){setMode('posts');openPost(id)}else{setMode('serial');go(id)}};
 }
 $('#hdrNew').onclick=newPost;
@@ -1088,7 +1194,7 @@ async function openPost(id){
     }catch(e){toast(e.message)}
     finally{b.classList.remove('busy');b.textContent='가져오기'}
   };
-  mountSeo();mountNaver();
+  mountSeo();guardPublish();mountNaver();
   // ---- 양식 ----
   const tr=$('#tplRow');
   tr.insertAdjacentHTML('beforeend',Object.entries(AutoTag.TEMPLATES).map(([k,t])=>`<button type="button" class="mini" data-tpl="${k}">${esc(t.name)}</button>`).join(''));
