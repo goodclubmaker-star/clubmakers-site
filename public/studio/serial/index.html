@@ -190,6 +190,23 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 .sugg{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .sugg .tsugg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;width:100%;margin-top:4px}
 .sugg .chip{max-width:100%;white-space:normal;text-align:left}
+.seobox{margin:16px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.seohead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.seoscore{display:inline-grid;place-items:center;min-width:40px;height:40px;border-radius:50%;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums;color:#fff}
+.seoscore.good{background:var(--done)} .seoscore.mid{background:var(--draft)} .seoscore.low{background:#B3261E}
+.seolist{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;font-size:13.5px;line-height:1.6}
+.seolist .no{color:var(--ink)} .seolist .no b{color:#B3261E;font-weight:600} .seolist .ok{color:var(--done)}
+.seook{margin-top:6px;font-size:12.5px;color:var(--muted)}
+.auditwrap{display:flex;flex-direction:column;gap:12px;margin-top:20px;max-width:980px}
+.auditsum{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.auditsum>div{display:flex;align-items:center;gap:8px}
+.auditrow{padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.audithead{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center}
+.audittitle{display:flex;flex-direction:column;gap:2px;min-width:0}
+.audittitle a{color:var(--ink);font-weight:600;text-decoration:none;overflow-wrap:anywhere}
+.audittitle a:hover{color:var(--green)}
+.auditrow .seohead{display:none}
+@media (max-width:640px){.audithead{grid-template-columns:auto minmax(0,1fr)}.audithead .btn{grid-column:1/-1}}
 .sumr{display:flex;align-items:center;gap:8px}
 .grpOpen{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:500;color:var(--green)}
 .grpOpen:hover{border-color:var(--gold)}
@@ -202,7 +219,7 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 <header class="top">
   <div class="brand"><small>골프채공작소 · 공작소 작업대</small><h1>실제적인 클럽피팅 연재실</h1></div>
   <button class="btn primary hdrnew" type="button" id="hdrNew" hidden>＋ 새 글 쓰기</button>
-  <nav class="modes" aria-label="작업 고르기"><button type="button" data-mode="serial" aria-pressed="true">원고 연재</button><button type="button" data-mode="posts" aria-pressed="false">작업일지 쓰기</button></nav>
+  <nav class="modes" aria-label="작업 고르기"><button type="button" data-mode="serial" aria-pressed="true">원고 연재</button><button type="button" data-mode="posts" aria-pressed="false">작업일지 쓰기</button><button type="button" data-mode="audit" aria-pressed="false">SEO 점검</button></nav>
   <div class="meter" id="meterBox" hidden>
     <div class="bar" aria-hidden="true"><i class="b-done" id="bDone"></i><i class="b-draft" id="bDraft"></i></div>
     <b id="meterTxt">0 / 0</b>
@@ -259,6 +276,7 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
   </nav>
   <main class="desk" id="postDesk"></main>
 </div>
+<section class="auditwrap" id="auditView" hidden></section>
 <div class="toast" id="toast" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -266,6 +284,7 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 <script src="/studio/serial/splitter.js?v=1"></script>
 <script src="/studio/serial/html2md.js?v=2"></script>
 <script src="/studio/serial/autotag.js?v=1"></script>
+<script src="/studio/serial/seocheck.js?v=1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script>
 const API='/api/studio/serial';
@@ -281,7 +300,7 @@ function store(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(
 function load(k){try{return localStorage.getItem(k)}catch(_){return null}}
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2600)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg||'복사했습니다')}catch(e){toast('복사하지 못했습니다. 길게 눌러 복사해 주세요')}}
-function show(view){['loginView','uploadView','appView','postsView'].forEach(v=>$('#'+v).hidden=v!==view);$('#meterBox').hidden=view!=='appView';document.querySelector('.modes').hidden=view==='loginView';$('#hdrNew').hidden=view==='loginView'}
+function show(view){['loginView','uploadView','appView','postsView','auditView'].forEach(v=>$('#'+v).hidden=v!==view);$('#meterBox').hidden=view!=='appView';document.querySelector('.modes').hidden=view==='loginView';$('#hdrNew').hidden=view==='loginView'}
 
 async function api(path,opt={}){
   const res=await fetch(path.startsWith('/api/')?path:API+path,{...opt,headers:{authorization:'Bearer '+token,...(opt.body?{'content-type':'application/json'}:{})}});
@@ -575,7 +594,7 @@ function bindDesk(s,list,allText){
   };
   $('#saveRev').onclick=()=>saveDraft(s);
   $('#pubBtn').onclick=()=>publish(s);
-  bindPhotos('sec:'+s.id);
+  bindPhotos('sec:'+s.id);mountSeo();
 }
 function markDirty(){dirty=true;const el=$('#saveState');if(el)el.textContent='저장 안 됨'}
 async function saveDraft(s,quiet){
@@ -674,6 +693,24 @@ async function addPhotos(files){
   toast(`사진 ${list.length}장을 본문에 넣었습니다. '사진'이라고 된 설명은 고쳐 쓰셔도 됩니다`);
   renderPhotos();
 }
+// SEO 자동 검수 (편집 화면 등록 버튼 위)
+let auditCache=null;
+async function auditTitles(){if(auditCache)return auditCache;try{const r=await fetch('/studio/journal-audit.json',{cache:'no-store'});auditCache=r.ok?await r.json():{posts:[]}}catch(_){auditCache={posts:[]}}return auditCache}
+function seoHtml(r,compact){
+  const cls=r.score>=85?'good':r.score>=65?'mid':'low';
+  const bad=r.items.filter(i=>!i.ok),good=r.items.filter(i=>i.ok);
+  return `<div class="seohead"><span class="seoscore ${cls}">${r.score}</span><b>SEO ${r.grade}</b><span class="note">${bad.length?`고칠 곳 ${bad.length}개`:'모두 통과'}</span></div>`+
+    (bad.length?'<ul class="seolist">'+bad.map(i=>`<li class="no"><b>${esc(i.msg)}</b> — ${esc(i.fix)}</li>`).join('')+'</ul>':'')+
+    (compact?'':'<details class="seook"><summary>통과한 항목 '+good.length+'개</summary><ul class="seolist">'+good.map(i=>`<li class="ok">✓ ${esc(i.msg)}</li>`).join('')+'</ul></details>');
+}
+function mountSeo(){
+  const btn=$('#pubBtn');if(!btn||$('#seoBox'))return;
+  const box=document.createElement('div');box.className='seobox';box.id='seoBox';btn.closest('.navrow').before(box);
+  let others=[];auditTitles().then(d=>{const mine=(curPost&&curPost.file)||'';others=d.posts.filter(p=>p.file!==mine&&p.slug+'.md'!==mine).map(p=>p.title);run()});
+  const run=()=>{if(!$('#seoBox'))return;const r=SeoCheck.check({title:$('#mTitle').value,description:$('#mDesc').value,tags:$('#mTags').value.split(',').map(x=>x.trim()).filter(Boolean),body:$('#revText').value,published:false},{titles:others});box.innerHTML=seoHtml(r)};
+  let t=null;['mTitle','mDesc','mTags','revText'].forEach(x=>{const el=$('#'+x);if(el)el.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(run,300)})});run();
+}
+
 // 미리보기: 사이트에 올라갈 모습(표·사진·소제목)을 그대로 보여 준다
 function setupPreview(){
   const ta=$('#revText');if(!ta||$('#edTabs'))return;
@@ -768,12 +805,13 @@ function bindPhotos(owner){
 let mode='serial',posts=[],curPost=null,autoT=null;
 function setMode(m){
   mode=m;
-  document.querySelector('.brand h1').textContent=m==='posts'?'작업일지 쓰기':'실제적인 클럽피팅 연재실';
+  document.querySelector('.brand h1').textContent=m==='posts'?'작업일지 쓰기':m==='audit'?'일지 SEO 점검':'실제적인 클럽피팅 연재실';
   document.querySelectorAll('.modes button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+  if(m==='audit'){$('#desk').innerHTML='';$('#postDesk').innerHTML='';range=[];curId=null;curPost=null;show('auditView');runAudit();return}
   if(m==='posts'){$('#desk').innerHTML='';range=[];curId=null;show('postsView');loadPosts()}
   else{$('#postDesk').innerHTML='';curPost=null;show(sections.length?'appView':'uploadView');if(sections.length){renderToc();renderMeter();showWelcome()}}
 }
-document.querySelectorAll('.modes button').forEach(b=>b.onclick=()=>{setMode(b.dataset.mode);try{history.replaceState(null,'',b.dataset.mode==='posts'?'#posts':location.pathname)}catch(_){}});
+document.querySelectorAll('.modes button').forEach(b=>b.onclick=()=>{setMode(b.dataset.mode);try{history.replaceState(null,'',b.dataset.mode==='serial'?location.pathname:'#'+b.dataset.mode)}catch(_){}});
 async function loadPosts(){
   try{posts=(await api('/api/studio/post')).posts}catch(e){toast(e.message);return}
   renderPostList();
@@ -795,6 +833,29 @@ async function newPost(){
   }catch(e){curPost=null;toast(e.message)}
 }
 $('#newPost').onclick=newPost;
+
+/* ---------- SEO 점검 (발행된 일지 전체) ---------- */
+async function runAudit(){
+  const v=$('#auditView');v.innerHTML='<p class="note">발행된 일지를 점검하는 중…</p>';
+  auditCache=null;const d=await auditTitles();
+  let mine=[],prog={};
+  try{mine=(await api('/api/studio/post')).posts}catch(_){}
+  try{prog=(await api('/state')).progress||{}}catch(_){}
+  const byFile={};mine.forEach(p=>{if(p.file)byFile[p.file]={kind:'post',id:p.id}});
+  Object.entries(prog).forEach(([id,p])=>{if(p.file)byFile[p.file]={kind:'serial',id}});
+  const titles=d.posts.map(p=>p.title);
+  const rows=d.posts.map(p=>{const r=SeoCheck.check({...p,published:true},{titles:titles.filter((t,i)=>d.posts[i]!==p)});return{p,r,src:byFile[p.file]||byFile[p.slug+'.md']||null}}).sort((a,b)=>a.r.score-b.r.score);
+  const avg=rows.length?Math.round(rows.reduce((s,x)=>s+x.r.score,0)/rows.length):0;
+  const need=rows.filter(x=>x.r.score<65).length;
+  v.innerHTML=`<div class="auditsum"><div><span class="seoscore ${avg>=85?'good':avg>=65?'mid':'low'}">${avg}</span><b>평균 점수</b></div><div><b>${rows.length}</b> 편 점검</div><div><b>${need}</b> 편 보완 필요</div><span class="note">사이트에 올라간 글 기준 · ${esc(d.builtAt?new Date(d.builtAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'')} 빌드</span><button class="btn" type="button" id="auditRe">다시 점검</button></div>`+
+    rows.map(({p,r,src})=>`<article class="auditrow">
+      <div class="audithead"><span class="seoscore ${r.score>=85?'good':r.score>=65?'mid':'low'}">${r.score}</span><div class="audittitle"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)}</a><span class="note">${esc(p.pubDate.slice(0,10))} · ${esc(p.category)}${p.series?' · 연재':''} · 본문 ${r.stats.chars}자 · 사진 ${r.stats.imgs}장 · 태그 ${p.tags.length}개</span></div>
+      ${src?`<button class="btn primary" type="button" data-fix="${src.kind}:${src.id}">작업대에서 고치기</button>`:`<a class="btn" href="https://app.pagescms.org" target="_blank" rel="noopener">PagesCMS에서 고치기</a>`}</div>
+      ${seoHtml(r,true)}</article>`).join('');
+  $('#auditRe').onclick=runAudit;
+  v.onclick=e=>{const b=e.target.closest('[data-fix]');if(!b)return;const [k,id]=b.dataset.fix.split(':');
+    if(k==='post'){setMode('posts');openPost(id)}else{setMode('serial');go(id)}};
+}
 $('#hdrNew').onclick=newPost;
 function showPostWelcome(){
   $('#postDesk').innerHTML=`<section class="panel"><div class="panel-h"><h3>작업일지 쓰기</h3></div>
@@ -891,18 +952,7 @@ async function openPost(id){
     }catch(e){toast(e.message)}
     finally{b.classList.remove('busy');b.textContent='가져오기'}
   };
-  const seo=document.createElement('ul');seo.className='seochk';seo.id='seoChk';$('#pubBtn').closest('.navrow').before(seo);
-  const chk=()=>{const t=$('#mTitle').value.trim(),dsc=$('#mDesc').value.trim(),body=$('#revText').value,tg=$('#mTags').value.split(',').map(x=>x.trim()).filter(Boolean);
-    const items=[
-      [t.length>=10&&t.length<=45,`제목 ${t.length}자 — 검색 결과에 다 보이려면 10~45자, 손님이 찾을 말(클럽·증상·제품명)을 앞쪽에`],
-      [dsc.length>=40,dsc?`요약 ${dsc.length}자 — 40~120자 권장`:'요약이 비어 있습니다 — 본문 첫 문장이 대신 쓰입니다. 검색 결과에 보일 한두 문장을 직접 써 주세요'],
-      [tg.length>=3,`태그 ${tg.length}개 — 3~6개 (예: 샤프트교체, 후지쿠라, 양재 골프피팅)`],
-      [/!\[[^\]]*\]\(/.test(body),'사진 — 한 장 이상 (첫 사진이 검색·공유 썸네일)'],
-      [!/!\[사진\]\(/.test(body),'사진 설명 — ![사진] 대신 무엇을 찍었는지 적으면 이미지 검색에 잡힙니다'],
-      [body.replace(/!\[[^\]]*\]\([^)]*\)/g,'').replace(/\s+/g,'').length>=600,'본문 길이 — 공백 빼고 600자 이상이면 검색에 유리합니다'],
-    ];
-    seo.innerHTML='<li class="h">검색 점검</li>'+items.map(([ok,m])=>`<li class="${ok?'ok':'no'}">${ok?'✓':'·'} ${esc(m)}</li>`).join('');};
-  ['mTitle','mDesc','mTags','revText'].forEach(x=>$('#'+x).addEventListener('input',chk));chk();
+  mountSeo();
   // ---- 양식 ----
   const tr=$('#tplRow');
   tr.insertAdjacentHTML('beforeend',Object.entries(AutoTag.TEMPLATES).map(([k,t])=>`<button type="button" class="mini" data-tpl="${k}">${esc(t.name)}</button>`).join(''));
@@ -937,7 +987,7 @@ async function openPost(id){
 
 function setTopH(){const h=document.querySelector('header.top');if(h)document.documentElement.style.setProperty('--toph',h.offsetHeight+'px')}
 window.addEventListener('resize',setTopH);setTopH();
-function routePosts(){const h=location.hash.slice(1);if(h==='posts'||h.startsWith('post-')){setMode('posts');if(h.startsWith('post-'))openPost(h.slice(5));return true}return false}
+function routePosts(){const h=location.hash.slice(1);if(h==='audit'){setMode('audit');return true}if(h==='posts'||h.startsWith('post-')){setMode('posts');if(h.startsWith('post-'))openPost(h.slice(5));return true}return false}
 token=load('studioToken')||'';
 if(token)login(token);else show('loginView');
 </script>
