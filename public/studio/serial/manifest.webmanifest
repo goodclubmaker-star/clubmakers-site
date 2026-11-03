@@ -1,0 +1,10 @@
+{
+  "name": "골프채공작소 작업대",
+  "short_name": "공작소 작업대",
+  "start_url": "/studio/serial/#posts",
+  "scope": "/studio/",
+  "display": "standalone",
+  "background_color": "#FAFAF6",
+  "theme_color": "#0F2922",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
