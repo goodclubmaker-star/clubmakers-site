@@ -9,7 +9,7 @@ export async function onRequestGet({ request, env }) {
   return json({ posts: rows.map(r => {
     let meta = {};
     try { meta = JSON.parse(r.meta || "{}"); } catch {}
-    return { id: r.id, status: r.status, title: meta.title || "", pubDate: meta.pubDate || "", file: r.file, updatedAt: r.updated_at };
+    return { id: r.id, status: r.status, title: meta.title || "", pubDate: meta.pubDate || "", naver: !!meta.naverUrl, file: r.file, updatedAt: r.updated_at };
   }) });
 }
 export async function onRequestPost({ request, env }) {

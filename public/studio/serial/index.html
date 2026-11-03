@@ -207,6 +207,13 @@ pre.md{background:var(--bg);border:1px solid var(--line);border-radius:8px;paddi
 .audittitle a:hover{color:var(--green)}
 .auditrow .seohead{display:none}
 @media (max-width:640px){.audithead{grid-template-columns:auto minmax(0,1fr)}.audithead .btn{grid-column:1/-1}}
+.nvsteps{display:grid;gap:14px}
+.nvstep{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start;font-size:14px}
+.nvstep .n{width:26px;height:26px;border-radius:50%;background:#03C75A;color:#fff;display:grid;place-items:center;font-size:12.5px;font-weight:700}
+.nvval{margin:6px 0;padding:8px 10px;border:1px dashed var(--line);border-radius:6px;background:var(--bg);font-size:14px;overflow-wrap:anywhere}
+.nvprev{margin-top:10px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#222;max-height:420px;overflow:auto;font-size:15px;line-height:1.8}
+.nvprev img{max-width:100%;height:auto}
+.nvprev table{border-collapse:collapse;font-size:14px}
 .sumr{display:flex;align-items:center;gap:8px}
 .grpOpen{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:500;color:var(--green)}
 .grpOpen:hover{border-color:var(--gold)}
@@ -483,8 +490,8 @@ function defaultTitle(list){
 function guessClub(t){if(/웨지/.test(t))return 'wedge';if(/퍼터/.test(t))return 'putter';if(/드라이버/.test(t))return 'driver';if(/아이언/.test(t))return 'iron';return ''}
 function firstSentence(text){text=String(text).replace(/!\[[^\]]*\]\([^)]*\)/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/\*\*|__|`/g,'');const p=text.split(/\n\n/).map(x=>x.trim()).find(x=>x&&!x.startsWith('|')&&!x.startsWith('>')&&!x.startsWith('#')&&x!=='[그림]'&&x.length>25)||'';const m=p.match(/^.+?[다요]\./);let d=(m?m[0]:p).trim();if(d.length>110)d=d.slice(0,108)+'…';return d}
 function autoSlug(t){const w=(String(t).match(/[A-Za-z0-9]+/g)||[]).map(x=>x.toLowerCase()).filter(x=>x.length>1||/\d/.test(x));return w.slice(0,6).join('-').slice(0,60)}
-function readMeta(){return{title:$('#mTitle').value.trim(),description:$('#mDesc').value.trim()||firstSentence($('#revText').value.replace(/!\[[^\]]*\]\([^)]*\)/g,'')),pubDate:$('#mDate').value||today(),category:$('#mCat').value,clubType:$('#mClub').value,tags:$('#mTags').value.split(',').map(x=>x.trim()).filter(Boolean),cover:curCover,slug:$('#mSlug')?($('#mSlug').value.trim()||autoSlug($('#mTitle').value)):''}}
-function fillMeta(m){curCover=m.cover||'';if(mode==='serial')m={...m,category:'series'};$('#mTitle').value=m.title||'';$('#mDesc').value=m.description||'';$('#mDate').value=m.pubDate||today();$('#mCat').value=m.category||'log';$('#mClub').value=m.clubType||'';$('#mTags').value=(m.tags||[]).join(', ')}
+function readMeta(){return{title:$('#mTitle').value.trim(),description:$('#mDesc').value.trim()||firstSentence($('#revText').value.replace(/!\[[^\]]*\]\([^)]*\)/g,'')),pubDate:$('#mDate').value||today(),category:$('#mCat').value,clubType:$('#mClub').value,tags:$('#mTags').value.split(',').map(x=>x.trim()).filter(Boolean),cover:curCover,naverUrl:$('#nvUrl')?$('#nvUrl').value.trim():(window._nvUrl||''),slug:$('#mSlug')?($('#mSlug').value.trim()||autoSlug($('#mTitle').value)):''}}
+function fillMeta(m){curCover=m.cover||'';window._nvUrl=m.naverUrl||'';if(mode==='serial')m={...m,category:'series'};$('#mTitle').value=m.title||'';$('#mDesc').value=m.description||'';$('#mDate').value=m.pubDate||today();$('#mCat').value=m.category||'log';$('#mClub').value=m.clubType||'';$('#mTags').value=(m.tags||[]).join(', ')}
 const secBlock=s=>'## '+s.title+'\n\n'+s.text;
 function joinText(list){return list.length===1?list[0].text:list.map(secBlock).join('\n\n')}
 
@@ -594,7 +601,7 @@ function bindDesk(s,list,allText){
   };
   $('#saveRev').onclick=()=>saveDraft(s);
   $('#pubBtn').onclick=()=>publish(s);
-  bindPhotos('sec:'+s.id);mountSeo();
+  bindPhotos('sec:'+s.id);mountSeo();mountNaver();
 }
 function markDirty(){dirty=true;const el=$('#saveState');if(el)el.textContent='저장 안 됨'}
 async function saveDraft(s,quiet){
@@ -611,7 +618,7 @@ async function publish(s){
     dirty=false;
     msg.className='okmsg';msg.innerHTML=`${r.updated?'수정본을 다시 올렸습니다':'작업일지에 올렸습니다'}. 1~2분 뒤 <a href="${esc(r.journalUrl)}" target="_blank" rel="noopener">일지에서 보기</a>`;
     toast('등록했습니다');await refresh();
-    btn.textContent='수정본 다시 등록';const el=$('#curSt');if(el){el.className='st published';el.textContent=ST_LABEL.published}
+    btn.textContent='수정본 다시 등록';const el=$('#curSt');if(el){el.className='st published';el.textContent=ST_LABEL.published}if(mountNaver.refresh)mountNaver.refresh();
     const n=nextTodo(range[range.length-1]);
     if(n){const nb=document.createElement('button');nb.className='btn gold';nb.type='button';nb.textContent='다음 원고로';nb.onclick=()=>{range=[];go(n)};btn.after(nb)}
   }catch(e){msg.className='err';msg.textContent=e.message}
@@ -693,6 +700,135 @@ async function addPhotos(files){
   toast(`사진 ${list.length}장을 본문에 넣었습니다. '사진'이라고 된 설명은 고쳐 쓰셔도 됩니다`);
   renderPhotos();
 }
+/* ---------- 네이버 블로그용 ---------- */
+// 네이버 블로그는 바깥에서 글을 바로 올리는 길(API)을 2020년에 닫았다.
+// 그래서 여기서 네이버 에디터에 붙여 넣을 '서식째 본문'과 사진 묶음, 해시태그, 원문 링크를 만들어 준다.
+const NAVER_BLOG_ID='clubmakers';
+const NAVER_WRITE='https://blog.naver.com/'+NAVER_BLOG_ID+'/postwrite';
+const NAVER_BASE_TAGS=['골프채공작소','양재골프피팅','클럽메이커스'];
+let naverFooterTouched=false;
+function publishedFile(){
+  if(mode==='posts')return curPost&&curPost.status==='published'&&curPost.file?curPost.file:'';
+  const p=curId&&progress[curId];return p&&p.status==='published'&&p.file?p.file:'';
+}
+// 등록 때 서버가 사진에 매기는 주소와 같은 규칙 (본문 순서 → 대표 사진)
+function photoSitePaths(file,body,cover){
+  const ids=[];[...String(body).matchAll(/photo:([a-z0-9]{6,40})/g),...String(cover||'').matchAll(/photo:([a-z0-9]{6,40})/g)].forEach(m=>{if(!ids.includes(m[1]))ids.push(m[1])});
+  const base=file.replace(/\.md$/,'');const map={};
+  ids.forEach((id,i)=>map[id]=`https://myclubmakers.com/images/journal/${base}/${String(i+1).padStart(2,'0')}-${id.slice(0,6)}.jpg`);
+  return{ids,map};
+}
+function naverTags(){
+  const tg=$('#mTags').value.split(',').map(x=>x.trim().replace(/\s+/g,'')).filter(Boolean);
+  return [...new Set([...tg.filter(t=>t!=='골프채공작소'),...NAVER_BASE_TAGS])].slice(0,30);
+}
+function naverFooterDefault(url){return url?`측정 수치와 작업 사양은 공작소 일지에 정리해 두었습니다.\n${url}`:''}
+// 마크다운 → 네이버 에디터가 받아들이는 단순한 HTML
+function naverHtml(md,photoMap){
+  let n=0;
+  const html=window.marked?marked.parse(md,{gfm:true,breaks:true}):'<p>'+esc(md).replace(/\n/g,'<br>')+'</p>';
+  const d=document.createElement('div');d.innerHTML=html;
+  d.querySelectorAll('script,iframe,object').forEach(x=>x.remove());
+  d.querySelectorAll('img').forEach(im=>{
+    n++;const m=(im.getAttribute('src')||'').match(/^photo:([a-z0-9]+)/);
+    const url=m?photoMap[m[1]]:(/^https?:/.test(im.getAttribute('src')||'')?im.getAttribute('src'):'');
+    const p=document.createElement('p');
+    if(url){const i=document.createElement('img');i.src=url;i.alt=im.alt||'';i.style.maxWidth='100%';p.appendChild(i)}
+    else{p.textContent=`[사진 ${n}]`;p.style.color='#888'}
+    (im.closest('p')||im).replaceWith(p);
+  });
+  d.querySelectorAll('h1,h2,h3,h4').forEach(h=>{const p=document.createElement('p');const b=document.createElement('b');b.textContent=h.textContent;b.style.fontSize=h.tagName==='H2'?'19px':'16px';p.appendChild(b);h.replaceWith(p)});
+  d.querySelectorAll('table').forEach(t=>{t.setAttribute('border','1');t.style.borderCollapse='collapse';t.querySelectorAll('th,td').forEach(c=>c.style.padding='6px 10px');t.querySelectorAll('th').forEach(c=>c.style.background='#f1f4f2')});
+  d.querySelectorAll('blockquote').forEach(q=>{q.style.borderLeft='3px solid #B8985C';q.style.paddingLeft='12px';q.style.color='#555'});
+  return{html:d.innerHTML,count:n};
+}
+function naverPlain(md){
+  let n=0;
+  return md.replace(/!\[[^\]]*\]\([^)]*\)/g,()=>`[사진 ${++n}]`)
+    .replace(/^#{1,4}\s+(.+)$/gm,'$1')
+    .replace(/^\|(\s*:?-{3,}:?\s*\|)+\s*$/gm,'')
+    .replace(/^\|(.+)\|\s*$/gm,(_,r)=>r.split('|').map(x=>x.trim()).filter(Boolean).join(' · '))
+    .replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\[([^\]]+)\]\(([^)]+)\)/g,'$1 $2')
+    .replace(/\n{3,}/g,'\n\n').trim();
+}
+async function copyRich(html,plain,msg){
+  try{
+    await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([plain],{type:'text/plain'})})]);
+    toast(msg);return;
+  }catch(_){}
+  // 대체: 미리보기를 선택해서 복사
+  const box=$('#nvPrev');const r=document.createRange();r.selectNodeContents(box);const sel=getSelection();sel.removeAllRanges();sel.addRange(r);
+  let ok=false;try{ok=document.execCommand('copy')}catch(_){}sel.removeAllRanges();
+  toast(ok?msg:'복사가 막혔습니다. 아래 미리보기를 길게 눌러 전체 선택 후 복사해 주세요');
+}
+async function downloadPhotos(){
+  const body=$('#revText').value;const ids=[];[...body.matchAll(/photo:([a-z0-9]{6,40})/g)].forEach(m=>{if(!ids.includes(m[1]))ids.push(m[1])});
+  if(!ids.length){toast('본문에 사진이 없습니다');return}
+  if(!window.JSZip){toast('압축 도구를 불러오는 중입니다. 잠시 뒤 다시 눌러 주세요');return}
+  const zip=new JSZip();
+  for(let i=0;i<ids.length;i++){
+    toast(`사진 묶는 중… ${i+1}/${ids.length}`);
+    const res=await fetch('/api/studio/photo/'+ids[i],{headers:{authorization:'Bearer '+token}});
+    if(res.ok)zip.file(String(i+1).padStart(2,'0')+'.jpg',await res.blob());
+  }
+  const blob=await zip.generateAsync({type:'blob'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(autoSlug($('#mTitle').value)||'photos')+'-naver.zip';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+  toast(`사진 ${ids.length}장을 받았습니다. 네이버 에디터의 사진 버튼으로 한 번에 올리세요`);
+}
+function mountNaver(){
+  const pubSec=$('#pubBtn')&&$('#pubBtn').closest('section');if(!pubSec||$('#nvSec'))return;
+  const sec=document.createElement('section');sec.className='panel';sec.id='nvSec';
+  sec.innerHTML=`<div class="panel-h"><h3>${mode==='posts'?'4':'4'} · 네이버 블로그</h3><span class="note" id="nvState"></span></div>
+    <p class="note" style="margin:0 0 12px">네이버 블로그는 바깥에서 바로 올릴 수 없어서, 붙여 넣기만 하면 되도록 준비해 드립니다. 사이트에 먼저 등록하면 사진이 그대로 따라가고 원문 링크도 붙습니다.</p>
+    <div class="nvsteps">
+      <div class="nvstep"><span class="n">1</span><div><b>제목</b><div class="nvval" id="nvTitle"></div><button class="btn" type="button" id="nvCopyTitle">제목 복사</button></div></div>
+      <div class="nvstep"><span class="n">2</span><div><b>본문</b> <span class="note" id="nvBodyNote"></span>
+        <div class="navrow" style="margin-top:6px"><button class="btn primary" type="button" id="nvCopyRich">서식째 복사 (표·굵게·사진)</button><button class="btn" type="button" id="nvCopyPlain">글자만 복사</button><button class="btn" type="button" id="nvShow">미리보기</button></div>
+        <div class="nvprev" id="nvPrev" hidden></div></div></div>
+      <div class="nvstep"><span class="n">3</span><div><b>사진</b> <span class="note" id="nvPhotoNote"></span><div class="navrow" style="margin-top:6px"><button class="btn" type="button" id="nvZip">사진 모두 받기 (zip)</button></div></div></div>
+      <div class="nvstep"><span class="n">4</span><div><b>끝 문단 · 해시태그</b>
+        <textarea class="t" id="nvFooter" rows="2" style="min-height:0;margin-top:6px" placeholder="사이트에 등록하면 원문 링크가 들어갑니다"></textarea>
+        <div class="nvval" id="nvTags"></div>
+        <div class="navrow"><button class="btn" type="button" id="nvCopyFoot">끝 문단+해시태그 복사</button></div></div></div>
+      <div class="nvstep"><span class="n">5</span><div><b>네이버에 올리기</b>
+        <div class="navrow" style="margin-top:6px"><a class="btn gold" href="${NAVER_WRITE}" target="_blank" rel="noopener">네이버 블로그 글쓰기 열기 ↗</a></div>
+        <label class="f" for="nvUrl" style="margin-top:10px">올린 네이버 글 주소 (기록용)<input class="t" id="nvUrl" type="url" placeholder="https://blog.naver.com/${NAVER_BLOG_ID}/글번호"></label></div></div>
+    </div>`;
+  pubSec.after(sec);
+  const refresh=()=>{
+    const file=publishedFile();const url=file?'https://myclubmakers.com/journal/'+file.replace(/\.md$/,'')+'/':'';
+    $('#nvTitle').textContent=$('#mTitle').value||'(제목 없음)';
+    const body=$('#revText').value;const imgs=(body.match(/!\[[^\]]*\]\(photo:/g)||[]).length;
+    $('#nvBodyNote').textContent=file?'사이트 등록됨 — 사진 주소가 함께 복사됩니다':'아직 사이트 등록 전 — 사진 자리는 [사진 N]으로 표시됩니다';
+    $('#nvPhotoNote').textContent=imgs?`${imgs}장 · 서식째 붙여 넣었는데 사진이 안 보이면 zip으로 받아 올리세요`:'본문에 사진이 없습니다';
+    if(!naverFooterTouched)$('#nvFooter').value=naverFooterDefault(url);
+    $('#nvTags').textContent=naverTags().map(t=>'#'+t).join(' ');
+    const nv=$('#nvUrl').value.trim();$('#nvState').innerHTML=nv?`<a href="${esc(nv)}" target="_blank" rel="noopener">네이버에 올림 ✓</a>`:'';
+    if(!$('#nvPrev').hidden)$('#nvPrev').innerHTML=build().html;
+  };
+  const build=()=>{
+    const file=publishedFile();const body=$('#revText').value;
+    const map=file?photoSitePaths(file,body,curCover).map:{};
+    const r=naverHtml(body,map);
+    const foot=$('#nvFooter').value.trim();
+    const tags=naverTags().map(t=>'#'+t).join(' ');
+    const html=r.html+(foot?'<p><br></p>'+foot.split('\n').map(l=>/^https?:\/\//.test(l)?`<p><a href="${esc(l)}">${esc(l)}</a></p>`:`<p>${esc(l)}</p>`).join(''):'')+`<p><br></p><p>${esc(tags)}</p>`;
+    const plain=naverPlain(body)+(foot?'\n\n'+foot:'')+'\n\n'+tags;
+    return{html,plain};
+  };
+  $('#nvCopyTitle').onclick=()=>copy($('#mTitle').value,'제목을 복사했습니다');
+  $('#nvCopyRich').onclick=()=>{const b=build();$('#nvPrev').innerHTML=b.html;copyRich(b.html,b.plain,'서식째 복사했습니다. 네이버 에디터 본문에 붙여 넣으세요')};
+  $('#nvCopyPlain').onclick=()=>copy(build().plain,'글자만 복사했습니다');
+  $('#nvShow').onclick=()=>{const p=$('#nvPrev');p.hidden=!p.hidden;if(!p.hidden)p.innerHTML=build().html;$('#nvShow').textContent=p.hidden?'미리보기':'미리보기 닫기'};
+  $('#nvZip').onclick=downloadPhotos;
+  $('#nvCopyFoot').onclick=()=>{const f=$('#nvFooter').value.trim();copy((f?f+'\n\n':'')+naverTags().map(t=>'#'+t).join(' '),'끝 문단과 해시태그를 복사했습니다')};
+  $('#nvFooter').addEventListener('input',e=>{if(e.isTrusted)naverFooterTouched=true});
+  $('#nvUrl').addEventListener('input',()=>{refresh();if(mode==='posts'){$('#mTitle').dispatchEvent(new Event('input'))}});
+  ['mTitle','mTags','revText'].forEach(x=>$('#'+x).addEventListener('input',()=>{clearTimeout(mountNaver.t);mountNaver.t=setTimeout(refresh,500)}));
+  $('#nvUrl').value=window._nvUrl||'';naverFooterTouched=false;refresh();mountNaver.refresh=refresh;
+}
+
 // SEO 자동 검수 (편집 화면 등록 버튼 위)
 let auditCache=null;
 async function auditTitles(){if(auditCache)return auditCache;try{const r=await fetch('/studio/journal-audit.json',{cache:'no-store'});auditCache=r.ok?await r.json():{posts:[]}}catch(_){auditCache={posts:[]}}return auditCache}
@@ -819,7 +955,7 @@ async function loadPosts(){
 }
 function renderPostList(){
   const st={draft:'쓰는 중',published:'등록 완료'};
-  $('#postList').innerHTML=posts.length?posts.map(p=>`<button type="button" class="pitem${curPost&&curPost.id===p.id?' cur':''}" data-pid="${p.id}"><span class="tt">${esc(p.title||'제목 없는 글')}</span><span class="pdate">${esc((p.updatedAt||'').slice(5,16))}</span><span class="st ${p.status==='published'?'published':'reviewed'}">${st[p.status]||p.status}</span></button>`).join(''):'<p class="note">아직 쓴 글이 없습니다.</p>';
+  $('#postList').innerHTML=posts.length?posts.map(p=>`<button type="button" class="pitem${curPost&&curPost.id===p.id?' cur':''}" data-pid="${p.id}"><span class="tt">${esc(p.title||'제목 없는 글')}</span><span class="pdate">${esc((p.updatedAt||'').slice(5,16))}</span><span class="st ${p.status==='published'?'published':'reviewed'}">${st[p.status]||p.status}${p.naver?' · 네이버':''}</span></button>`).join(''):'<p class="note">아직 쓴 글이 없습니다.</p>';
 }
 $('#postList').addEventListener('click',e=>{const b=e.target.closest('[data-pid]');if(b)openPost(b.dataset.pid)});
 // 새 글 쓰기: 어느 화면에서든 바로 빈 일지를 연다
@@ -918,7 +1054,7 @@ async function openPost(id){
   dirty=false;
   const save=async quiet=>{
     if(!curPost||curPost.id!==id)return;
-    try{const r=await api('/api/studio/post/'+id,{method:'PUT',body:JSON.stringify({draft:$('#revText').value,meta:readMeta()})});dirty=false;$('#saveState').textContent='저장됨 '+r.updatedAt.slice(5,16);if(!quiet)toast('저장했습니다');const p=posts.find(x=>x.id===id);if(p){p.title=$('#mTitle').value;p.updatedAt=r.updatedAt;renderPostList()}}catch(e){if(!quiet)toast(e.message)}
+    try{const r=await api('/api/studio/post/'+id,{method:'PUT',body:JSON.stringify({draft:$('#revText').value,meta:readMeta()})});dirty=false;$('#saveState').textContent='저장됨 '+r.updatedAt.slice(5,16);if(!quiet)toast('저장했습니다');const p=posts.find(x=>x.id===id);if(p){p.title=$('#mTitle').value;p.updatedAt=r.updatedAt;p.naver=!!($('#nvUrl')&&$('#nvUrl').value.trim());renderPostList()}}catch(e){if(!quiet)toast(e.message)}
   };
   const later=()=>{markDirty();clearTimeout(autoT);autoT=setTimeout(()=>save(true),2500)};
   $('#revText').addEventListener('input',later);
@@ -936,7 +1072,7 @@ async function openPost(id){
     const btn=$('#pubBtn'),msg=$('#pubMsg');btn.classList.add('busy');msg.className='note';msg.textContent='사진과 함께 올리는 중…';
     try{const r=await api('/api/studio/post/'+id+'/publish',{method:'POST',body:JSON.stringify({draft,meta:readMeta()})});dirty=false;
       msg.className='okmsg';msg.innerHTML=`${r.updated?'수정본을 다시 올렸습니다':'작업일지에 올렸습니다'}. 1~2분 뒤 <a href="${esc(r.journalUrl)}" target="_blank" rel="noopener">일지에서 보기</a>`;
-      btn.textContent='수정본 다시 등록';toast('등록했습니다');await loadPosts();$('#mSlug').disabled=true}
+      btn.textContent='수정본 다시 등록';toast('등록했습니다');curPost.status='published';curPost.file=r.file;await loadPosts();$('#mSlug').disabled=true;if(mountNaver.refresh)mountNaver.refresh()}
     catch(e){msg.className='err';msg.textContent=e.message}finally{btn.classList.remove('busy')}
   };
   $('#naverBtn').onclick=()=>{const r=$('#naverRow');r.hidden=!r.hidden;if(!r.hidden)$('#naverUrl').focus()};
@@ -952,7 +1088,7 @@ async function openPost(id){
     }catch(e){toast(e.message)}
     finally{b.classList.remove('busy');b.textContent='가져오기'}
   };
-  mountSeo();
+  mountSeo();mountNaver();
   // ---- 양식 ----
   const tr=$('#tplRow');
   tr.insertAdjacentHTML('beforeend',Object.entries(AutoTag.TEMPLATES).map(([k,t])=>`<button type="button" class="mini" data-tpl="${k}">${esc(t.name)}</button>`).join(''));
