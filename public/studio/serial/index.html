@@ -1123,6 +1123,7 @@ async function openPost(id){
       <div class="catpick" role="radiogroup" aria-label="분류">
         <span class="catlab">분류</span>
         <label><input type="radio" name="pcat" value="log">🔧 작업 일지</label>
+        <label><input type="radio" name="pcat" value="column">✍️ 컬럼</label>
         <label><input type="radio" name="pcat" value="review">📐 샤프트·헤드 리뷰</label>
         <label><input type="radio" name="pcat" value="trends">📊 장비 트렌드</label>
         <label><input type="radio" name="pcat" value="data">📏 측정 데이터</label>
@@ -1155,7 +1156,7 @@ async function openPost(id){
       </div>
     </section>`;
   fillMeta(d.meta||{});$('#mSlug').value=(d.meta&&d.meta.slug)||'';
-  {const c=['log','review','trends','data'].includes($('#mCat').value)?$('#mCat').value:'log';$('#mCat').value=c;
+  {const c=['log','review','trends','data','column'].includes($('#mCat').value)?$('#mCat').value:'log';$('#mCat').value=c;
    document.querySelectorAll('input[name=pcat]').forEach(r=>{r.checked=r.value===c;r.onchange=()=>{$('#mCat').value=r.value;$('#mCat').dispatchEvent(new Event('input'))}})}$('#revText').value=d.draft||'';
   dirty=false;
   const save=async quiet=>{

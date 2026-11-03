@@ -16,6 +16,7 @@ const journalCollection = defineCollection({
       'review',
       'trends',
       'series',
+      'column',
       'data',
     ]).default('log'),
     tags: z.array(z.string()).default([]),

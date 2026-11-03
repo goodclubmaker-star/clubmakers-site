@@ -1,69 +1,33 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import JournalList from '../../components/JournalList.astro';
 import { SERIES, seriesEntries } from '../../lib/series';
+import { GROUPS, groupOf, publishedJournal } from '../../lib/journalGroups';
 
-// 모든 일지 가져오기 (draft 제외 + 예약 발행, 최신순 정렬)
-// pubDate가 미래인 글은 빌드 시점에 제외 → 예약 발행.
-// 시각이 지난 뒤 재빌드되면 자동으로 나타난다 (.github/workflows/scheduled-publish.yml)
-const now = new Date();
-const allEntries = await getCollection('journal', ({ data }) => {
-  return data.draft !== true && data.pubDate <= now;
-});
+// 발행된 일지 (draft 제외 + 예약 발행, 최신순)
+// pubDate가 미래인 글은 빌드 시점에 제외 → 시각이 지난 뒤 재빌드되면 나타난다 (.github/workflows/scheduled-publish.yml)
+const entries = await publishedJournal();
+const logEntries = entries.filter((e) => groupOf(e) === 'log');
+const columnEntries = entries.filter((e) => groupOf(e) === 'column');
 
-const entries = allEntries.sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
-
-// 연재 코너
+// 연재
 const pf = SERIES['practical-fitting'];
 const pfEntries = await seriesEntries('practical-fitting');
-const pfLatest = pfEntries.length ? [...pfEntries].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0] : null;
+const pfRecent = [...pfEntries].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 3);
 
-// 카테고리별 카운트
-const counts = {
-  log: entries.filter(e => e.data.category === 'log').length,
-  review: entries.filter(e => e.data.category === 'review').length,
-  trends: entries.filter(e => e.data.category === 'trends').length,
-  series: entries.filter(e => e.data.category === 'series').length,
-  data: entries.filter(e => e.data.category === 'data').length,
-};
-
-// 카테고리 라벨
-const categoryLabels: Record<string, { ko: string; emoji: string }> = {
-  log:    { ko: '작업 일지',     emoji: '🔧' },
-  review: { ko: '샤프트·헤드 리뷰', emoji: '📐' },
-  trends: { ko: '장비 트렌드',    emoji: '📊' },
-  series: { ko: '연재',          emoji: '📖' },
-  data:   { ko: '측정 데이터',    emoji: '📏' },
-};
-
-// 클럽 라벨
-const clubLabels: Record<string, string> = {
-  driver: '드라이버',
-  fairway: '페어웨이우드',
-  hybrid: '하이브리드',
-  iron: '아이언',
-  wedge: '웨지',
-  putter: '퍼터',
-  mixed: '복합',
-};
-
-// 날짜 포맷터
-function formatDate(date: Date) {
-  return date.toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).replace(/\. /g, '.').replace(/\.$/, '');
-}
+const SHOW = 6;
+const tabs = [
+  { key: 'log', ...GROUPS.log, count: logEntries.length, anchor: '#log' },
+  { key: 'column', ...GROUPS.column, count: columnEntries.length, anchor: '#column' },
+  { key: 'series', ...GROUPS.series, count: pfEntries.length, anchor: '#series' },
+];
 ---
 
 <BaseLayout
   title="공작소 일지"
-  description="골프채공작소가 접하는 제품 소개, 생각, 시행착오, 칼럼 등을 함께 올립니다. 1985년부터 25년 클럽메이커스 채기웅 공작소장의 글."
+  description="골프채공작소의 작업일지·컬럼·연재. 리샤프팅과 피팅 작업 기록, 샤프트·헤드 이야기, 새로 쓰는 『실제적인 클럽피팅』을 올립니다."
   schemaType="CollectionPage"
-  keywords="공작소 일지, 클럽피팅 일지, 샤프트 리뷰, 헤드 리뷰, 골프 장비 트렌드, 클럽 측정 데이터, 채기웅 일지"
+  keywords="공작소 일지, 골프채공작소 작업일지, 클럽피팅 일지, 샤프트 교체 사례, 샤프트 리뷰, 실제적인 클럽피팅 연재, 채기웅"
 >
 
   <section class="page-hero journal-hero">
@@ -71,46 +35,18 @@ function formatDate(date: Date) {
       <div class="page-hero-eyebrow">JOURNAL · 공작소 일지</div>
       <h1>공작소 일지</h1>
       <p class="page-hero-subtitle">
-        골프채공작소가 접하는 제품 소개, 생각, 시행착오, 칼럼 등을
-        함께 올립니다.
+        골프채공작소의 작업 기록과 생각, 그리고 연재를 함께 올립니다.
       </p>
 
-      {entries.length > 0 && (
-        <div class="journal-stats">
-          <div class="stat">
-            <p class="stat-num">{entries.length}</p>
-            <p class="stat-label">개<br/>전체 글</p>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <p class="stat-num">{counts.log}</p>
-            <p class="stat-label">개<br/>작업 일지</p>
-          </div>
-          {counts.review > 0 && (
-            <>
-              <div class="stat-divider"></div>
-              <div class="stat">
-                <p class="stat-num">{counts.review}</p>
-                <p class="stat-label">개<br/>리뷰</p>
-              </div>
-            </>
-          )}
-        </div>
-      )}
-    </div>
-  </section>
-
-  <section class="section series-banner-wrap">
-    <div class="section-content-narrow">
-      <a href={pf.path} class="series-banner">
-        <span class="series-banner-eyebrow">연재</span>
-        <span class="series-banner-title">{pf.name}</span>
-        <span class="series-banner-lead">{pf.lead}</span>
-        <span class="series-banner-foot">
-          {pfEntries.length > 0 ? <>지금까지 {pfEntries.length}편{pfLatest && <> · 최근: {pfLatest.data.title.replace(/^『실제적인 클럽피팅』\s*/, '')}</>}</> : <>첫 편 준비 중</>}
-          <span class="series-banner-go">연재 모아 보기 →</span>
-        </span>
-      </a>
+      <nav class="jgroups" aria-label="일지 묶음">
+        {tabs.map((t) => (
+          <a href={t.anchor} class="jgroup">
+            <span class="jgroup-en">{t.en}</span>
+            <span class="jgroup-name">{t.name}</span>
+            <span class="jgroup-count">{t.count}편</span>
+          </a>
+        ))}
+      </nav>
     </div>
   </section>
 
@@ -121,10 +57,6 @@ function formatDate(date: Date) {
           <p class="empty-icon">📝</p>
           <h2>곧 첫 글이 올라옵니다</h2>
           <p class="empty-text">
-            공작소장이 매주 1~2개씩 짧은 글을 올릴 예정입니다.
-            그날의 작업·측정·진단을 기록합니다.
-          </p>
-          <p class="empty-text">
             <strong>네이버 블로그</strong>에서 그동안의 작업 기록을 먼저 보실 수 있습니다.
           </p>
           <a href="https://blog.naver.com/clubmakers" target="_blank" rel="noopener noreferrer" class="empty-cta">
@@ -134,46 +66,58 @@ function formatDate(date: Date) {
       </div>
     </section>
   ) : (
-    <section class="section">
-      <div class="section-content-narrow">
-        <p class="section-eyebrow">RECENT · 최근 글</p>
-
-        <div class="journal-list">
-          {entries.map((entry) => {
-            const cat = categoryLabels[entry.data.category];
-            return (
-              <a href={`/journal/${entry.slug}`} class="journal-card">
-                <div class="journal-meta">
-                  <span class={`journal-cat journal-cat-${entry.data.category}`}>
-                    {cat.emoji} {cat.ko}
-                  </span>
-                  {entry.data.clubType && (
-                    <span class="journal-club">{clubLabels[entry.data.clubType]}</span>
-                  )}
-                  <span class="journal-date">{formatDate(entry.data.pubDate)}</span>
-                </div>
-
-                <h2 class="journal-title">{entry.data.title}</h2>
-
-                {entry.data.description && (
-                  <p class="journal-desc">{entry.data.description}</p>
-                )}
-
-                {entry.data.tags && entry.data.tags.length > 0 && (
-                  <div class="journal-tags">
-                    {entry.data.tags.map((tag) => (
-                      <span class="journal-tag">#{tag}</span>
-                    ))}
-                  </div>
-                )}
-
-                <span class="journal-arrow">읽기 →</span>
-              </a>
-            );
-          })}
+    <>
+      <!-- 작업일지 -->
+      <section class="section jsec" id="log">
+        <div class="section-content-narrow">
+          <div class="jsec-head">
+            <div>
+              <p class="section-eyebrow">{GROUPS.log.en} · {GROUPS.log.name}</p>
+              <h2 class="jsec-title">작업일지</h2>
+              <p class="jsec-lead">{GROUPS.log.lead}</p>
+            </div>
+            {logEntries.length > SHOW && <a class="jsec-more" href={GROUPS.log.path}>전체 {logEntries.length}편 보기 →</a>}
+          </div>
+          {logEntries.length ? <JournalList entries={logEntries.slice(0, SHOW)} headingTag="h3" /> : <p class="jsec-empty">첫 작업일지를 준비하고 있습니다.</p>}
+          {logEntries.length > SHOW && <a class="jsec-more jsec-more-bottom" href={GROUPS.log.path}>작업일지 전체 보기 →</a>}
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- 컬럼 -->
+      <section class="section jsec jsec-alt" id="column">
+        <div class="section-content-narrow">
+          <div class="jsec-head">
+            <div>
+              <p class="section-eyebrow">{GROUPS.column.en} · {GROUPS.column.name}</p>
+              <h2 class="jsec-title">컬럼</h2>
+              <p class="jsec-lead">{GROUPS.column.lead}</p>
+            </div>
+            {columnEntries.length > SHOW && <a class="jsec-more" href={GROUPS.column.path}>전체 {columnEntries.length}편 보기 →</a>}
+          </div>
+          {columnEntries.length ? <JournalList entries={columnEntries.slice(0, SHOW)} headingTag="h3" /> : <p class="jsec-empty">첫 컬럼을 준비하고 있습니다.</p>}
+          {columnEntries.length > SHOW && <a class="jsec-more jsec-more-bottom" href={GROUPS.column.path}>컬럼 전체 보기 →</a>}
+        </div>
+      </section>
+
+      <!-- 연재 -->
+      <section class="section jsec" id="series">
+        <div class="section-content-narrow">
+          <p class="section-eyebrow">{GROUPS.series.en} · {GROUPS.series.name}</p>
+          <a href={pf.path} class="series-banner">
+            <span class="series-banner-eyebrow">연재</span>
+            <span class="series-banner-title">{pf.name}</span>
+            <span class="series-banner-lead">{pf.lead}</span>
+            <span class="series-banner-foot">
+              {pfEntries.length > 0 ? <>지금까지 {pfEntries.length}편</> : <>첫 편 준비 중</>}
+              <span class="series-banner-go">연재 모아 보기 →</span>
+            </span>
+          </a>
+          {pfRecent.length > 0 && (
+            <div style="margin-top:20px"><JournalList entries={pfRecent} headingTag="h3" /></div>
+          )}
+        </div>
+      </section>
+    </>
   )}
 
   <section class="section section-bg-cream">
@@ -196,6 +140,7 @@ function formatDate(date: Date) {
           <li><strong>🔧 작업 일지</strong> — 그날의 작업·측정·진단을 짧게. 증상 → 측정 → 진단 → 처방 4단</li>
           <li><strong>📐 샤프트·헤드 리뷰</strong> — 실측 EI 곡선·CPM·무게·시타 소감. 마케팅이 아닌 측정 데이터 우선</li>
           <li><strong>📊 장비 트렌드</strong> — PGA·KLPGA에서 자주 보이는 샤프트, 신제품, 시장 변화 (분기 1회)</li>
+          <li><strong>✍️ 컬럼</strong> — 공작소장의 생각, 제품 이야기, 장비 흐름</li>
           <li><strong>📖 연재</strong> — 새로 쓰는 『실제적인 클럽피팅』. 원고를 처음부터 다시 읽으며 한 편씩 손보아 올립니다</li>
           <li><strong>📏 측정 데이터</strong> — 샤프트별 CPM/EI, 헤드별 MOI/CG. 시간이 갈수록 가치가 커집니다</li>
         </ul>
@@ -208,6 +153,29 @@ function formatDate(date: Date) {
 
 <style>
   .journal-hero { background: var(--bg-cream); }
+
+  /* 묶음 바로가기 */
+  .jgroups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 620px; margin-top: .5rem; }
+  .jgroup {
+    display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border-radius: 8px;
+    background: var(--bg); border: 1px solid var(--line); text-decoration: none; color: var(--ink); transition: border-color .2s, transform .2s;
+  }
+  .jgroup:hover { border-color: var(--green); transform: translateY(-2px); }
+  .jgroup-en { font-size: 10.5px; letter-spacing: .14em; color: var(--gold); font-weight: 700; }
+  .jgroup-name { font-family: var(--font-serif); font-size: 19px; font-weight: 700; }
+  .jgroup-count { font-size: 12.5px; color: var(--grey); font-variant-numeric: tabular-nums; }
+
+  /* 묶음 섹션 */
+  .jsec { scroll-margin-top: 80px; }
+  .jsec-alt { background: var(--bg-soft); }
+  .jsec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 24px; margin-bottom: 20px; }
+  .jsec-title { font-family: var(--font-serif); font-size: 26px; font-weight: 700; color: var(--ink); margin: 0 0 8px; }
+  .jsec-lead { font-size: 14.5px; line-height: 1.8; color: var(--ink-2); margin: 0; max-width: 560px; }
+  .jsec-more { font-size: 14px; font-weight: 600; color: var(--green); text-decoration: none; white-space: nowrap; }
+  .jsec-more:hover { text-decoration: underline; }
+  .jsec-more-bottom { display: inline-block; margin-top: 18px; }
+  .jsec-empty { padding: 28px 20px; text-align: center; border: 1px dashed var(--line); border-radius: 8px; color: var(--grey); font-size: 14px; margin: 0; }
+  @media (max-width: 560px) { .jgroups { gap: 6px; } .jgroup { padding: 10px 10px; } .jgroup-name { font-size: 16px; } }
 
   /* 연재 배너 */
   .series-banner-wrap { padding-bottom: 0; }

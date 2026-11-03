@@ -55,6 +55,7 @@ content:
             - { value: log, label: "🔨 일지 (작업 사례)" }
             - { value: review, label: "⭐ 리뷰 (제품·장비)" }
             - { value: trends, label: "📰 트렌드 (업계 동향)" }
+            - { value: column, label: "✍️ 컬럼 (생각·제품 이야기)" }
             - { value: series, label: "📖 연재 (실제적인 클럽피팅)" }
             - { value: data, label: "📊 데이터 (측정·분석)" }
 

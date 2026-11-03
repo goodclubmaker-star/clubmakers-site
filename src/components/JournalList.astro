@@ -1,0 +1,134 @@
+---
+// 공작소 일지 카드 목록 — /journal, /journal/log, /journal/column 공용
+import type { CollectionEntry } from 'astro:content';
+import { CATEGORY_LABELS, CLUB_LABELS, formatDateKst } from '../lib/journalGroups';
+interface Props { entries: CollectionEntry<'journal'>[]; headingTag?: 'h2' | 'h3' }
+const { entries, headingTag = 'h2' } = Astro.props;
+const H = headingTag;
+---
+<div class="journal-list">
+  {entries.map((entry) => {
+    const cat = CATEGORY_LABELS[entry.data.category] || CATEGORY_LABELS.log;
+    return (
+      <a href={`/journal/${entry.slug}/`} class="journal-card">
+        <div class="journal-meta">
+          <span class={`journal-cat journal-cat-${entry.data.category}`}>{cat.emoji} {cat.ko}</span>
+          {entry.data.clubType && <span class="journal-club">{CLUB_LABELS[entry.data.clubType]}</span>}
+          <span class="journal-date">{formatDateKst(entry.data.pubDate)}</span>
+        </div>
+        <H class="journal-title">{entry.data.title}</H>
+        {entry.data.description && <p class="journal-desc">{entry.data.description}</p>}
+        {entry.data.tags && entry.data.tags.length > 0 && (
+          <div class="journal-tags">{entry.data.tags.map((tag) => <span class="journal-tag">#{tag}</span>)}</div>
+        )}
+        <span class="journal-arrow">읽기 →</span>
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  .journal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .journal-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px 28px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    display: block;
+  }
+  .journal-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(15, 41, 34, 0.08);
+    border-color: var(--green);
+  }
+
+  .journal-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .journal-cat {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  .journal-cat-log    { background: rgba(15, 41, 34, 0.08); color: var(--green); }
+  .journal-cat-review { background: rgba(184, 152, 92, 0.15); color: var(--gold); }
+  .journal-cat-trends { background: rgba(70, 110, 200, 0.10); color: #2E5BBA; }
+  .journal-cat-series { background: rgba(184, 152, 92, 0.16); color: #8A6A2E; }
+  .journal-cat-column { background: rgba(60, 90, 140, 0.10); color: #34507A; }
+  .journal-cat-data   { background: rgba(120, 60, 60, 0.10); color: #804040; }
+
+  .journal-club {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--grey);
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+  }
+  .journal-date {
+    font-size: 12px;
+    color: var(--grey);
+    margin-left: auto;
+  }
+
+  .journal-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin: 0 0 8px;
+  }
+  .journal-desc {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0 0 12px;
+  }
+  .journal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 12px;
+  }
+  .journal-tag {
+    font-size: 11.5px;
+    color: var(--grey);
+    padding: 3px 8px;
+    background: var(--bg-soft);
+    border-radius: 100px;
+  }
+  .journal-arrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: 0.03em;
+  }
+  .journal-card:hover .journal-arrow {
+    color: var(--gold);
+  }
+
+  /* About 섹션 */
+  @media (max-width: 640px) {
+    .journal-card { padding: 20px 22px; }
+    .journal-title { font-size: 18px; }
+    .journal-meta { gap: 6px; }
+    .journal-date { width: 100%; margin-left: 0; }
+  }
+</style>

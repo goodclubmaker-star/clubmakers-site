@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JournalList from '../../components/JournalList.astro';
+import { GROUPS, groupOf, publishedJournal } from '../../lib/journalGroups';
+const G = GROUPS['column'];
+const entries = (await publishedJournal()).filter((e) => groupOf(e) === 'column');
+const schema = {
+  '@context': 'https://schema.org', '@type': 'CollectionPage',
+  name: `${G.name} | 공작소 일지`, description: G.lead, inLanguage: 'ko-KR',
+  hasPart: entries.slice(0, 50).map((e) => ({ '@type': 'BlogPosting', headline: e.data.title, url: `https://myclubmakers.com/journal/${e.slug}/` })),
+};
+---
+<BaseLayout title={`${G.name} | 공작소 일지`} description={G.lead} schemaType="CollectionPage" extraSchema={[schema]}
+  keywords={`골프채공작소 ${G.name}, 공작소 일지, ${G.name === '작업일지' ? '샤프트 교체 사례, 리샤프팅, 그립 교체, 클럽 수리' : '샤프트 리뷰, 헤드 리뷰, 골프 장비'}`}>
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <a href="/journal/" class="back">← 공작소 일지</a>
+      <div class="page-hero-eyebrow">{G.en} · 공작소 일지</div>
+      <h1>{G.name}</h1>
+      <p class="page-hero-subtitle">{G.lead}</p>
+      <p class="count">{entries.length}편</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="section-content-narrow">
+      {entries.length ? <JournalList entries={entries} /> : <p class="empty">아직 글이 없습니다.</p>}
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .page-hero { background: var(--bg-cream); }
+  .back { display: inline-block; font-size: 13px; color: var(--grey); text-decoration: none; margin-bottom: 18px; }
+  .back:hover { color: var(--green); }
+  .count { font-size: 14px; color: var(--green); font-weight: 600; margin: 0; }
+  .empty { padding: 40px 20px; text-align: center; border: 1px dashed var(--line); border-radius: 8px; color: var(--grey); }
+</style>
