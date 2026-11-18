@@ -11,6 +11,10 @@ export async function onRequestPost({ request, env, params }) {
   if (!list) return fail(400, "invalid", "묶을 절 목록이 맞지 않습니다.");
   const at = nowKst();
   if (body.status !== "todo") {
+    const pub = await g.db.prepare("SELECT COUNT(*) AS n FROM studio_progress WHERE book = ? AND status = 'published' AND id IN (SELECT value FROM json_each(?))").bind(BOOK, JSON.stringify(list)).first();
+    if (pub?.n) return fail(400, "published", "이미 작업일지에 등록한 절은 완료·패스로 바꾸지 않습니다.");
+  }
+  if (body.status !== "todo") {
     const st = body.status;
     await g.db.batch([
       g.db.prepare("INSERT INTO studio_progress (book, id, status, members, updated_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(book, id) DO UPDATE SET status = excluded.status, members = excluded.members, lead = NULL, updated_at = excluded.updated_at")

@@ -340,12 +340,31 @@ $('#loginBtn').onclick=()=>{const v=$('#pw').value.trim();if(v)login(v)};
 $('#pw').addEventListener('keydown',e=>{if(e.key==='Enter')$('#loginBtn').click()});
 $('#logoutBtn').onclick=()=>{store('studioToken',null);token='';$('#pw').value='';show('loginView')};
 
+// 사이트에 올라간 연재 글과 진행표를 맞춘다 (진행 상태가 풀려도 등록한 글은 다시 '등록 완료'로)
+let reconciled=false;
+async function reconcilePublished(){
+  if(reconciled||!sections.length)return;reconciled=true;
+  try{
+    const r=await fetch('/studio/journal-audit.json',{cache:'no-store'});if(!r.ok)return;
+    const d=await r.json();const items=[];
+    for(const p of d.posts||[]){
+      const m=String(p.file||'').match(/practical-fitting-(s\d{3,4})\.md$/);if(!m||!byId[m[1]])continue;
+      const id=m[1];if(statusOf(id)==='published')continue;
+      const extra=+((String(p.title).match(/외\s*(\d+)\s*편/)||[])[1]||0);
+      const members=[id];for(let k=1;k<=extra&&byId[id].idx+k<sections.length;k++)members.push(sections[byId[id].idx+k].id);
+      items.push({id,members,file:p.file});
+    }
+    if(!items.length)return;
+    const res=await api('/restore',{method:'POST',body:JSON.stringify({items})});
+    if(res.restored){await refresh();toast(`사이트에 올라간 연재 ${res.restored}편을 진행표에 다시 표시했습니다`);if(!curId)showWelcome()}
+  }catch(_){}
+}
 function applyState(st){
   sections=st.sections||[];progress=st.progress||{};
   byId=Object.fromEntries(sections.map((s,i)=>[s.id,{...s,idx:i}]));
   if(!sections.length){show('uploadView');$('#cancelUpload').hidden=true;return}
   const b=st.book;$('#bookInfo').textContent=b?`원고: ${b.source||'-'} · ${b.count}개 · ${b.uploaded_at} 불러옴`:'';
-  show('appView');renderToc();renderMeter();
+  show('appView');renderToc();renderMeter();reconcilePublished();
   if(routePosts()){}
   else if(goHash()){} else if(!curId){document.body.className='view-list';showWelcome()} else go(curId,false);
 }
@@ -478,6 +497,7 @@ function trimSection(text,title){
 /* ---------- 선택 막대 ---------- */
 async function setGroupStatus(st){
   if(!range.length)return;const lead=range[0];
+  if(range.some(id=>statusOf(id)==='published')){toast('이미 작업일지에 등록한 절이 들어 있습니다. 등록한 글은 완료·패스로 바꾸지 않습니다');return}
   const cur=statusOf(lead);const to=cur===st?'todo':st;
   try{await api('/status/'+lead,{method:'POST',body:JSON.stringify({status:to,members:range})});await refresh();
     toast(to==='todo'?'되돌렸습니다':(to==='done'?`${range.length}개 절을 완료로 표시했습니다`:`${range.length}개 절을 패스했습니다`));
