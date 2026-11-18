@@ -53,7 +53,7 @@ const breadcrumbSchema = segs.length > 0 && !noindex ? {
 
 // 플로팅 카카오 챗봇 버튼: 가격표 등 '도착지' 페이지에선 숨김
 // (챗봇은 콘텐츠 페이지 → 사이트로 유입시키는 입구 역할이므로)
-const hideChatPaths = ['/price'];
+const hideChatPaths = ['/price', '/swing-care'];
 const showKakaoChat = !hideChatPaths.some((p) => Astro.url.pathname.startsWith(p));
 ---
 

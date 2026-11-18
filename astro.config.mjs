@@ -39,7 +39,7 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [sitemap({
     customPages: staticPages(),
-    filter: (page) => !isPersonal(new URL(page).pathname),
+    filter: (page) => { const p = new URL(page).pathname; return !isPersonal(p) && !p.startsWith('/swing-care'); },
   })],
   build: {
     format: 'directory',

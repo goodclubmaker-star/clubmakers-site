@@ -1,0 +1,264 @@
+---
+// 스윙공작소 앱 → 골프채공작소 안내 페이지 (앱 안의 "더 알아보기" 링크 하나가 여기로 온다)
+// - 앱은 빠른 문의, 이 페이지는 자세한 안내. 가격·택배·진단처럼 자주 바뀌는 건 여기서만 고친다
+// - ?from=app-result / app-settings 같은 꼬리표가 오면 복사 문구 앞에 [스윙공작소 앱]을 붙인다
+// - 앱 심사 규정 때문에 전자책·스토어 등 판매 링크는 넣지 않는다
+// - 검색 제외(noindex) · sitemap 제외 · 앱 홍보 카드와 떠 있는 카카오 단추는 이 페이지에서 숨김
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const KAKAO = 'https://pf.kakao.com/_JSVDn/chat';
+const TEL = '010-4363-5555';
+
+// 앱에서 많이 보는 증상 6가지 → 사이트의 증상별 진단 페이지
+const symptoms = [
+  { href: '/topics/slice-hook/', title: '슬라이스 · 훅', club: '샤프트 강도·킥포인트, 라이각, 헤드 무게중심' },
+  { href: '/topics/direction/', title: '출발이 한쪽으로', club: '라이각, 길이, 그립 굵기' },
+  { href: '/topics/launch-spin/', title: '탄도가 너무 높거나 낮음', club: '로프트, 샤프트 팁 강도, 헤드 설계' },
+  { href: '/topics/impact-location/', title: '힐 · 토우 타점', club: '길이, 라이각, 스윙웨이트' },
+  { href: '/topics/rhythm-timing/', title: '좌우 · 거리 편차가 큼', club: '샤프트 무게·토크, 클럽 간 MOI 차이' },
+  { href: '/topics/by-club/', title: '특정 클럽만 안 맞음', club: '세트 안 길이·무게 흐름, 로프트 간격' },
+];
+
+// 작업 문의 5종 — 누르면 문구가 복사되고 카카오톡 채팅이 열린다
+const asks = [
+  { key: 'shaft', label: '샤프트 교체', msg: '샤프트 교체 문의드립니다. 클럽(드라이버/우드/아이언): , 지금 샤프트: , 원하는 방향: ' },
+  { key: 'broken', label: '샤프트 파손', msg: '샤프트가 부러졌습니다. 클럽 종류와 헤드 모델: , 부러진 위치(헤드 쪽/중간/그립 쪽): ' },
+  { key: 'repair', label: '헤드·연결부 수리', msg: '수리 문의드립니다. 증상(헐거움/소리/페룰 빠짐 등): , 클럽: ' },
+  { key: 'grip', label: '그립 교체', msg: '그립 교체 문의드립니다. 개수: , 원하는 그립(있으면): , 손 크기/굵기 희망: ' },
+  { key: 'etc', label: '기타 · 피팅 상담', msg: '문의드립니다. 앱에서 본 내 스윙 결과: , 궁금한 점: ' },
+];
+
+// 대표 공임 (전체는 /workshop) — workshop.astro와 같은 금액
+const prices = [
+  { label: '스윙·클럽 분석 프로그램', price: '80,000원', note: '평일 낮 10~14시 70,000원' },
+  { label: '그립 장착', price: '5,000원', note: '1개 · 그립 가격 별도' },
+  { label: '샤프트 교체', price: '18,000원', note: '1개 · 샤프트 가격 별도' },
+  { label: '라이 · 로프트 조정', price: '10,000원', note: '1개' },
+  { label: '헤드·샤프트 연결부 수리', price: '18,000원', note: '1개' },
+  { label: '스윙웨이트 조정', price: '5,000원', note: '1개' },
+];
+---
+
+<BaseLayout
+  title="스윙공작소 앱 손님 안내"
+  description="스윙공작소 앱에서 본 스윙 결과를 클럽으로 확인하고 싶을 때 — 골프채공작소 클럽메이커스의 증상별 진단, 작업 문의, 공임, 방문·택배 안내."
+  noindex
+>
+  <section class="sc-hero">
+    <div class="sc-wrap">
+      <p class="sc-from" id="scFrom" hidden>스윙공작소 앱에서 오셨습니다</p>
+      <p class="sc-eyebrow">SWING WORKSHOP × CLUBMAKERS</p>
+      <h1>스윙은 앱에서 봤습니다.<br /><em>클럽은 공작소에서 봅니다.</em></h1>
+      <p class="sc-lead">
+        같은 결점이 반복된다면 스윙만의 문제가 아닐 수 있습니다.
+        길이·라이각·샤프트가 몸에 맞지 않으면 연습으로 고쳐도 다시 돌아옵니다.
+        스윙공작소를 만든 골프채공작소가 클럽 쪽을 확인해 드립니다.
+      </p>
+      <div class="sc-cta">
+        <a class="sc-btn sc-btn-kakao" href={KAKAO} data-ask="etc" rel="noopener">카카오톡으로 문의</a>
+        <a class="sc-btn sc-btn-line" href={`tel:${TEL}`}>전화 {TEL}</a>
+      </div>
+      <p class="sc-note">영업시간 안에 공작소장이 직접 답합니다 · 평일 10~20시, 토 10~17시</p>
+    </div>
+  </section>
+
+  <nav class="sc-jump" aria-label="이 페이지 바로가기">
+    <div class="sc-wrap">
+      <a href="#symptom">증상별</a><a href="#ask">작업 문의</a><a href="#price">공임</a><a href="#visit">방문·택배</a><a href="#about">공작소</a>
+    </div>
+  </nav>
+
+  <section class="sc-sec" id="symptom">
+    <div class="sc-wrap">
+      <p class="sc-eyebrow">01 · 증상별 진단</p>
+      <h2>앱 결과에서 이 증상이 나왔다면</h2>
+      <p class="sc-sub">증상마다 클럽에서 먼저 확인할 곳이 다릅니다. 누르면 자세한 설명으로 갑니다.</p>
+      <div class="sc-sym">
+        {symptoms.map((s) => (
+          <a class="sc-sym-card" href={s.href}>
+            <b>{s.title}</b>
+            <span>클럽에서 볼 곳 · {s.club}</span>
+            <i aria-hidden="true">→</i>
+          </a>
+        ))}
+      </div>
+      <p class="sc-more"><a href="/topics/">증상별 진단 전체 보기 →</a></p>
+    </div>
+  </section>
+
+  <section class="sc-sec sc-soft" id="ask">
+    <div class="sc-wrap">
+      <p class="sc-eyebrow">02 · 작업 문의</p>
+      <h2>무엇을 맡기실지 고르세요</h2>
+      <p class="sc-sub">누르면 문의 문구가 복사되고 카카오톡이 열립니다. 채팅창에 붙여 넣고 빈칸만 채워 보내 주세요.</p>
+      <div class="sc-asks">
+        {asks.map((a) => (
+          <a class="sc-ask" href={KAKAO} data-ask={a.key} rel="noopener">{a.label}</a>
+        ))}
+      </div>
+      <p class="sc-tip">사진 한 장(헤드·샤프트 글씨, 부러진 곳)을 같이 보내 주시면 답이 빨라집니다.</p>
+    </div>
+  </section>
+
+  <section class="sc-sec" id="price">
+    <div class="sc-wrap">
+      <p class="sc-eyebrow">03 · 공임</p>
+      <h2>자주 맡기시는 작업</h2>
+      <table class="sc-price">
+        <tbody>
+          {prices.map((p) => (
+            <tr><th>{p.label}<small>{p.note}</small></th><td>{p.price}</td></tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="sc-sub">부품(그립·샤프트) 가격은 별도입니다. 무리한 교체는 권하지 않습니다 — 고칠 수 있으면 고쳐 드립니다.</p>
+      <p class="sc-more"><a href="/workshop/">전체 공임표 →</a> &nbsp; <a href="/price/">그립·샤프트 가격 →</a></p>
+    </div>
+  </section>
+
+  <section class="sc-sec sc-soft" id="visit">
+    <div class="sc-wrap">
+      <p class="sc-eyebrow">04 · 방문 · 택배</p>
+      <h2>오시거나, 보내시거나</h2>
+      <div class="sc-two">
+        <div class="sc-box">
+          <h3>방문</h3>
+          <p>서울 서초구 동산로2길 50, 가보빌딩 지하층 (양재동)</p>
+          <p>평일 10~20시 · 토요일 10~17시 · 일요일·공휴일은 사전 문의</p>
+          <p>작업 중에는 응대가 어려울 수 있어 예약을 권합니다.</p>
+          <a class="sc-link" href="/contact/">지도 · 예약 →</a>
+        </div>
+        <div class="sc-box">
+          <h3>택배 (전국)</h3>
+          <ol>
+            <li>전화나 카카오톡으로 먼저 작업 내용을 알려 주세요.</li>
+            <li>클럽을 한 자루씩 감싸 택배로 보내 주세요.</li>
+            <li>도착하면 상태를 확인하고 정확한 비용을 안내합니다.</li>
+            <li>작업 후 입금이 확인되면 다시 보내 드립니다.</li>
+          </ol>
+          <a class="sc-link" href="/shipping/">포장 방법 · 받는 주소 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sc-sec" id="about">
+    <div class="sc-wrap">
+      <p class="sc-eyebrow">05 · 골프채공작소 클럽메이커스</p>
+      <h2>스윙공작소를 만든 곳</h2>
+      <p class="sc-body">
+        양재동에서 클럽피팅과 클럽 제작을 하는 공방입니다. 채기웅 공작소장이 25년 넘게 직접 손님을 보고 클럽을 만듭니다.
+        TPI·K-Vest 인증으로 몸과 스윙을 먼저 보고, 그다음 클럽 사양을 정합니다.
+        스윙공작소는 그 과정에서 쓰던 기준을 손님이 혼자서도 볼 수 있게 옮긴 앱입니다.
+      </p>
+      <p class="sc-more"><a href="/about/">공작소 소개 →</a> &nbsp; <a href="/fitting/">클럽 피팅은 어떻게 하나 →</a></p>
+    </div>
+  </section>
+
+  <div class="sc-toast" id="scToast" role="status" aria-live="polite"></div>
+</BaseLayout>
+
+<script is:inline define:vars={{ asks }}>
+(function () {
+  var from = '';
+  try {
+    from = new URLSearchParams(location.search).get('from') || sessionStorage.getItem('sc_from') || '';
+    if (from) sessionStorage.setItem('sc_from', from);
+  } catch (e) {}
+  var isApp = /^app/.test(from);
+  if (isApp) { var f = document.getElementById('scFrom'); if (f) f.hidden = false; }
+
+  var toast = document.getElementById('scToast');
+  function show(t) { toast.textContent = t; toast.classList.add('on'); setTimeout(function () { toast.classList.remove('on'); }, 2200); }
+
+  function copy(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return fallback(text); });
+    return Promise.resolve(fallback(text));
+  }
+  function fallback(text) {
+    try {
+      var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand('copy'); document.body.removeChild(ta); return ok;
+    } catch (e) { return false; }
+  }
+
+  document.querySelectorAll('[data-ask]').forEach(function (el) {
+    el.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      var a = asks.find(function (x) { return x.key === el.dataset.ask; });
+      var msg = (isApp ? '[스윙공작소 앱] ' : '') + (a ? a.msg : '');
+      var href = el.getAttribute('href');
+      copy(msg).then(function (ok) {
+        show(ok ? '문의 문구를 복사했습니다. 채팅창에 붙여 넣어 주세요' : '카카오톡을 엽니다');
+        setTimeout(function () { location.href = href; }, 650);
+      });
+    });
+  });
+})();
+</script>
+
+<style>
+  .sc-wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+  .sc-hero { background: var(--ink, #14231c); color: #f4efe3; padding: 64px 0 52px; }
+  .sc-from { display: inline-block; font-size: 12.5px; background: rgba(201, 162, 39, .18); color: var(--gold, #c9a227); padding: 4px 10px; border-radius: 999px; margin: 0 0 14px; }
+  .sc-eyebrow { font-size: 12px; letter-spacing: .12em; color: var(--gold, #c9a227); font-weight: 700; margin: 0 0 10px; }
+  .sc-hero h1 { font-family: var(--font-serif); font-size: clamp(26px, 6vw, 38px); line-height: 1.35; margin: 0 0 18px; color: #fff; }
+  .sc-hero h1 em { font-style: normal; color: var(--gold, #c9a227); }
+  .sc-lead { font-size: 15.5px; line-height: 1.8; color: rgba(244, 239, 227, .86); margin: 0 0 26px; }
+  .sc-cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .sc-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 22px; border-radius: 8px; font-weight: 700; font-size: 15.5px; text-decoration: none; }
+  .sc-btn-kakao { background: #fee500; color: #191919; flex: 1 1 220px; }
+  .sc-btn-line { border: 1px solid rgba(244, 239, 227, .4); color: #f4efe3; flex: 1 1 180px; }
+  .sc-note { font-size: 12.5px; color: rgba(244, 239, 227, .6); margin: 14px 0 0; }
+
+  .sc-jump { position: sticky; top: 64px; z-index: 5; background: rgba(255, 255, 255, .96); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
+  .sc-jump .sc-wrap { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .sc-jump .sc-wrap::-webkit-scrollbar { display: none; }
+  .sc-jump a { flex: none; font-size: 13.5px; padding: 12px 10px; color: var(--ink); text-decoration: none; white-space: nowrap; }
+  .sc-jump a:hover { color: var(--green); }
+
+  .sc-sec { padding: 52px 0; scroll-margin-top: 110px; }
+  .sc-soft { background: var(--bg-soft, #f6f3ec); }
+  .sc-sec h2 { font-family: var(--font-serif); font-size: clamp(21px, 4.6vw, 27px); margin: 0 0 8px; color: var(--ink); }
+  .sc-sub { font-size: 14.5px; color: var(--grey); line-height: 1.7; margin: 0 0 20px; }
+  .sc-body { font-size: 15px; line-height: 1.85; color: var(--ink); margin: 14px 0 18px; }
+  .sc-more { font-size: 14px; margin: 18px 0 0; }
+  .sc-more a, .sc-link { color: var(--green); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
+
+  .sc-sym { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sc-sym-card { position: relative; display: block; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px 36px 16px 16px; text-decoration: none; color: var(--ink); transition: border-color .15s; }
+  .sc-sym-card:hover { border-color: var(--green); }
+  .sc-sym-card b { display: block; font-size: 15.5px; margin-bottom: 6px; }
+  .sc-sym-card span { display: block; font-size: 12.5px; color: var(--grey); line-height: 1.55; }
+  .sc-sym-card i { position: absolute; right: 14px; top: 16px; font-style: normal; color: var(--gold, #c9a227); }
+
+  .sc-asks { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .sc-ask { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 12px; background: #fff; border: 1px solid var(--line); border-radius: 8px; font-weight: 700; font-size: 14.5px; color: var(--ink); text-decoration: none; text-align: center; }
+  .sc-ask:hover { border-color: #e6cf00; background: #fffbe0; }
+  .sc-tip { font-size: 13px; color: var(--grey); margin: 14px 0 0; }
+
+  .sc-price { width: 100%; border-collapse: collapse; margin: 6px 0 16px; background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .sc-price th, .sc-price td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .sc-price tr:last-child th, .sc-price tr:last-child td { border-bottom: 0; }
+  .sc-price th { font-weight: 600; font-size: 14.5px; color: var(--ink); }
+  .sc-price th small { display: block; font-weight: 400; font-size: 12px; color: var(--grey); margin-top: 3px; }
+  .sc-price td { text-align: right; font-weight: 700; color: var(--green); white-space: nowrap; font-size: 15px; }
+
+  .sc-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sc-box { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 20px; font-size: 14px; line-height: 1.7; color: var(--ink); }
+  .sc-box h3 { font-size: 16px; margin: 0 0 10px; color: var(--green); }
+  .sc-box p { margin: 0 0 6px; }
+  .sc-box ol { margin: 0 0 12px; padding-left: 18px; }
+  .sc-box .sc-link { display: inline-block; margin-top: 8px; font-size: 13.5px; }
+
+  .sc-toast { position: fixed; left: 50%; bottom: 96px; transform: translate(-50%, 20px); background: rgba(20, 35, 28, .94); color: #fff; font-size: 13.5px; padding: 11px 16px; border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 50; max-width: calc(100% - 32px); text-align: center; }
+  .sc-toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 640px) {
+    .sc-hero { padding: 44px 0 40px; }
+    .sc-sym, .sc-two { grid-template-columns: 1fr; }
+    .sc-jump { top: 56px; }
+    .sc-sec { padding: 42px 0; }
+  }
+</style>
