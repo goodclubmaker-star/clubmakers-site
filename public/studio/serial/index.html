@@ -451,7 +451,17 @@ function renderMeter(){
   $('#bDone').style.width=(done/n*100)+'%';$('#bDraft').style.width=(dr/n*100)+'%';
   $('#meterTxt').textContent=`${done} / ${sections.length} 완료`+(dr?` · 검수본 ${dr}`:'');
 }
-function nextTodo(from){const start=from&&byId[from]?byId[from].idx+1:0;for(let i=0;i<sections.length;i++){const s=sections[(start+i)%sections.length];if(!isDone(s.id))return leadOf(s.id)}return null}
+// 다음 할 원고: 기준 절(없으면 지금 열린 묶음의 끝 → 가장 최근에 작업한 절) 바로 다음부터 찾는다
+function lastWorked(){
+  if(range.length)return range[range.length-1];
+  let best=null,bt='';
+  for(const [id,p] of Object.entries(progress)){if(!byId[id]||!p.updatedAt)continue;const t=p.updatedAt;if(t>bt||(t===bt&&best&&byId[id].idx>byId[best].idx)){bt=t;best=id}}
+  if(!best)return null;
+  // 묶음이면 묶음의 마지막 절 기준
+  const lead=(progress[best]&&progress[best].lead)||best;const m=progress[lead]&&progress[lead].members;
+  return m&&m.length?m[m.length-1]:best;
+}
+function nextTodo(from){const anchor=from||lastWorked();const start=anchor&&byId[anchor]?byId[anchor].idx+1:0;for(let i=0;i<sections.length;i++){const s=sections[(start+i)%sections.length];if(!isDone(s.id))return leadOf(s.id)}return null}
 $('#nextBtn').onclick=()=>{const id=nextTodo(null);id?go(id):toast('모든 원고를 마쳤습니다')};
 
 // 다른 글에 이미 쓰인 절인지 (지금 묶음에 넣으면 안 되는 절)
