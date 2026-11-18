@@ -773,7 +773,7 @@ function naverTags(){
 function naverFooterDefault(url){return url?`측정 수치와 작업 사양은 공작소 일지에 정리해 두었습니다.\n${url}`:''}
 // 마크다운 → 네이버 에디터가 받아들이는 단순한 HTML
 // 네이버 모바일 양식 설정 (이 기기에 기억)
-const NV_DEFAULT={align:'center',sentence:true,gap:1,head:'bold',table:'auto'};
+const NV_DEFAULT={align:'center',sentence:true,gap:1,head:'bold',table:'list',size:15,wrap:20};
 // 이모지·장식 기호 빼기 (소제목용)
 const EMOJI_RE=/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{20E3}\u{E0020}-\u{E007F}]/gu;
 const cleanHead=t=>String(t).replace(EMOJI_RE,'').replace(/^[\s▍■□●○◆◇▶▷►✔✅☑︎·\-–—#*]+/,'').replace(/\*\*/g,'').replace(/\s{2,}/g,' ').trim();
@@ -781,7 +781,39 @@ const cleanHead=t=>String(t).replace(EMOJI_RE,'').replace(/^[\s▍■□●○�
 function boldLinesToHeads(md){return String(md).replace(/^[ \t]*\*\*([^*\n]{2,80})\*\*[ \t]*$/gm,(_,t)=>'## '+cleanHead(t)).replace(/^(#{2,4})\s+(.+)$/gm,(_,h,t)=>h+' '+cleanHead(t))}
 function nvOpts(){try{return{...NV_DEFAULT,...JSON.parse(localStorage.getItem('nvOpts')||'{}')}}catch(_){return{...NV_DEFAULT}}}
 function nvSave(o){try{localStorage.setItem('nvOpts',JSON.stringify(o))}catch(_){}}
-const NV_SENT=/([.!?。])(\s+)(?=\S)/g;
+const NV_SENT=/(?<=[가-힣a-z)\]"'%”’])([.!?。])(\s+)(?=\S)/g;
+// 모바일 한 줄 글자 수에 맞춰 낱말 사이에서 줄을 바꾼다 (태그는 건드리지 않음)
+function wrapLineHtml(html,max){
+  if(!max)return html;
+  let out='',count=0,lastSp=-1,i=0;
+  while(i<html.length){
+    if(html[i]==='<'){const j=html.indexOf('>',i);const tag=html.slice(i,j+1);out+=tag;i=j+1;continue}
+    let ch=html[i];if(ch==='&'){const j=html.indexOf(';',i);if(j>i&&j-i<10){ch=html.slice(i,j+1)}}
+    if(ch===' '){lastSp=out.length}
+    out+=ch;count+=1;i+=ch.length;
+    if(count>max&&lastSp>=0){out=out.slice(0,lastSp)+'<br>'+out.slice(lastSp+1);count=out.length-lastSp-4;count=out.slice(lastSp+4).replace(/<[^>]*>/g,'').replace(/&[^;]+;/g,'x').length;lastSp=-1}
+  }
+  return out;
+}
+function wrapParaHtml(html,max){return max?html.split(/<br\s*\/?>/i).map(l=>wrapLineHtml(l,max)).join('<br>'):html}
+// 표를 그림(PNG)으로 — 네이버 모바일에서 표가 깨지지 않게
+function tableToCanvas(rows){
+  const W=900,pad=14,font=26,lh=36;const cols=Math.max(...rows.map(r=>r.length));
+  const FONT=`${font}px "Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif`;
+  const c=document.createElement('canvas');const x=c.getContext('2d');x.font=FONT;
+  // 칸 너비: 내용 길이 비례
+  const need=Array.from({length:cols},(_,j)=>Math.max(60,...rows.map(r=>x.measureText(r[j]||'').width+pad*2)));
+  const sum=need.reduce((a,b)=>a+b,0);const cw=need.map(v=>Math.max(90,v/sum*W));const cs=cw.reduce((a,b)=>a+b,0);const scale=W/cs;for(let j=0;j<cols;j++)cw[j]*=scale;
+  const wrap=(t,w)=>{const out=[];let line='';for(const ch of String(t)){if(x.measureText(line+ch).width>w-pad*2&&line){out.push(line);line=ch}else line+=ch}if(line)out.push(line);return out.length?out:['']};
+  const cells=rows.map(r=>Array.from({length:cols},(_,j)=>wrap(r[j]||'',cw[j])));
+  const rh=cells.map(r=>Math.max(...r.map(l=>l.length))*lh+pad*2);
+  c.width=W+2;c.height=rh.reduce((a,b)=>a+b,0)+2;const g=c.getContext('2d');
+  g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.font=FONT;g.textBaseline='top';
+  let y=1;cells.forEach((r,i)=>{let xx=1;if(i===0){g.fillStyle='#E9EFEC';g.fillRect(1,y,W,rh[i])}
+    r.forEach((lines,j)=>{g.fillStyle=i===0||j===0?'#0F2922':'#222';g.font=(i===0||j===0?'bold ':'')+FONT;lines.forEach((l,k)=>g.fillText(l,xx+pad,y+pad+k*lh+4));g.strokeStyle='#C9D3CE';g.lineWidth=2;g.strokeRect(xx,y,cw[j],rh[i]);xx+=cw[j]});y+=rh[i]});
+  return c;
+}
+function mdTables(md){return (String(md).match(/(^\|.*\|[ \t]*\n?)+/gm)||[]).map(b=>b.trim().split('\n').filter(l=>!/^\|(\s*:?-{3,}:?\s*\|)+\s*$/.test(l)).map(l=>l.replace(/^\|\s?|\s?\|$/g,'').split('|').map(v=>v.trim().replace(/\*\*/g,''))))}
 // 마크다운 → 네이버 에디터용 HTML (모바일에서 다시 손보지 않도록 정렬·줄바꿈·빈 줄·소제목·표를 미리 맞춘다)
 function naverHtml(md,photoMap,o=nvOpts()){
   let n=0;
@@ -806,10 +838,12 @@ function naverHtml(md,photoMap,o=nvOpts()){
     h.replaceWith(p);
     if(o.head==='line'){const l=document.createElement('p');l.dataset.k='line';l.textContent='────────────';l.style.color='#B8985C';p.after(l)}
   });
-  // 표: 모바일에서 넘치는 표는 '항목 / 값' 목록으로
+  // 표: 모바일에서 넘치는 표는 '항목 / 값' 목록으로 (또는 그림으로)
+  let tIdx=0;
   d.querySelectorAll('table').forEach(t=>{
     const rows=[...t.querySelectorAll('tr')].map(tr=>[...tr.children].map(c=>c.textContent.trim()));
     const cols=Math.max(...rows.map(r=>r.length));
+    if(o.table==='image'){tIdx++;const ph=document.createElement('p');ph.dataset.k='img';ph.textContent=`[표 ${tIdx} — 사진 묶음의 table-${String(tIdx).padStart(2,'0')}.png]`;ph.style.color='#888';t.replaceWith(ph);return}
     const toList=o.table==='list'||(o.table==='auto'&&cols>=4);
     if(!toList){t.setAttribute('border','1');t.style.borderCollapse='collapse';t.style.width='100%';t.querySelectorAll('th,td').forEach(c=>{c.style.padding='6px 8px';c.style.fontSize='14px'});t.querySelectorAll('th').forEach(c=>c.style.background='#f1f4f2');return}
     const [head,...body]=rows;const frag=document.createDocumentFragment();
@@ -823,7 +857,7 @@ function naverHtml(md,photoMap,o=nvOpts()){
     t.replaceWith(frag);
   });
   d.querySelectorAll('blockquote').forEach(q=>{const p=document.createElement('p');p.innerHTML=q.innerHTML.replace(/<\/?p>/g,'');p.style.color='#555';p.dataset.k='quote';p.prepend(document.createTextNode('“ '));p.append(document.createTextNode(' ”'));q.replaceWith(p)});
-  d.querySelectorAll('ul,ol').forEach(l=>{const ord=l.tagName==='OL';const p=document.createElement('p');[...l.children].forEach((li,i)=>{if(i)p.appendChild(document.createElement('br'));p.appendChild(document.createTextNode((ord?(i+1)+'. ':'· ')+li.textContent.trim()))});l.replaceWith(p)});
+  d.querySelectorAll('ul,ol').forEach(l=>{const ord=l.tagName==='OL';const p=document.createElement('p');p.dataset.k='list';[...l.children].forEach((li,i)=>{if(i)p.appendChild(document.createElement('br'));p.appendChild(document.createTextNode((ord?(i+1)+'. ':'· ')+li.textContent.trim()))});l.replaceWith(p)});
   // 문장마다 줄바꿈 (본문 문단만)
   if(o.sentence)d.querySelectorAll('p').forEach(p=>{
     if(p.dataset.k)return;
@@ -835,6 +869,10 @@ function naverHtml(md,photoMap,o=nvOpts()){
   const blocks=[...d.children];const out=document.createElement('div');
   blocks.forEach((el,i)=>{
     if(el.tagName==='P'||el.tagName==='TABLE')el.style.textAlign=el.tagName==='TABLE'?'':o.align;
+    if(el.tagName==='P'&&el.dataset.k!=='img'&&el.dataset.k!=='line'){
+      if(el.dataset.k!=='head')el.style.fontSize=o.size+'px';
+      if(o.wrap)el.innerHTML=wrapParaHtml(el.innerHTML,el.dataset.k==='head'?Math.round(o.wrap*0.8):o.wrap);
+    }
     if(i&&el.dataset.k!=='line'){const g=el.dataset.k==='head'?Math.max(o.gap,1)+1:o.gap;for(let k=0;k<g;k++){const e=document.createElement('p');e.innerHTML='<br>';out.appendChild(e)}}
     delete el.dataset.k;out.appendChild(el);
   });
@@ -847,7 +885,8 @@ function naverPlain(md,o=nvOpts()){
     if(/^#{1,4}\s/.test(b))return (o.head==='bar'?'▍':'')+cleanHead(b.replace(/^#{1,4}\s+/,''))+(o.head==='line'?'\n────────────':'');
     if(/^\|/.test(b)){const rows=b.split('\n').filter(l=>!/^\|(\s*:?-{3,}:?\s*\|)+\s*$/.test(l)).map(l=>l.replace(/^\|\s?|\s?\|$/g,'').split('|').map(x=>x.trim()));const [h,...r]=rows;return r.map(x=>x[0]+'\n'+x.slice(1).map((v,i)=>v?`${h[i+1]||''} ${v}`.trim():'').filter(Boolean).join('\n')).join(gap)}
     let t=b.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\[([^\]]+)\]\(([^)]+)\)/g,'$1 $2');
-    if(o.sentence)t=t.replace(NV_SENT,'$1\n');
+    if(o.sentence&&!/^(\d+\.|[-·*])\s/.test(t))t=t.replace(NV_SENT,'$1\n');
+    if(o.wrap)t=t.split('\n').map(l=>wrapLineHtml(esc(l),o.wrap).replace(/<br>/g,'\n').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')).join('\n');
     return t;
   });
   return blocks.join(gap);
@@ -864,7 +903,8 @@ async function copyRich(html,plain,msg){
 }
 async function downloadPhotos(){
   const body=$('#revText').value;const ids=[];[...body.matchAll(/photo:([a-z0-9]{6,40})/g)].forEach(m=>{if(!ids.includes(m[1]))ids.push(m[1])});
-  if(!ids.length){toast('본문에 사진이 없습니다');return}
+  const tables=nvOpts().table==='image'?mdTables(body):[];
+  if(!ids.length&&!tables.length){toast('본문에 사진이나 표가 없습니다');return}
   if(!window.JSZip){toast('압축 도구를 불러오는 중입니다. 잠시 뒤 다시 눌러 주세요');return}
   const zip=new JSZip();
   for(let i=0;i<ids.length;i++){
@@ -872,10 +912,14 @@ async function downloadPhotos(){
     const res=await fetch('/api/studio/photo/'+ids[i],{headers:{authorization:'Bearer '+token}});
     if(res.ok)zip.file(String(i+1).padStart(2,'0')+'.jpg',await res.blob());
   }
+  for(let i=0;i<tables.length;i++){
+    const c=tableToCanvas(tables[i]);const blob=await new Promise(r=>c.toBlob(r,'image/png'));
+    zip.file(`table-${String(i+1).padStart(2,'0')}.png`,blob);
+  }
   const blob=await zip.generateAsync({type:'blob'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(autoSlug($('#mTitle').value)||'photos')+'-naver.zip';document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),5000);
-  toast(`사진 ${ids.length}장을 받았습니다. 네이버 에디터의 사진 버튼으로 한 번에 올리세요`);
+  toast(`사진 ${ids.length}장${tables.length?` · 표 그림 ${tables.length}장`:''}을 받았습니다. 네이버 에디터의 사진 버튼으로 올리세요`);
 }
 function mountNaver(){
   const pubSec=$('#pubBtn')&&$('#pubBtn').closest('section');if(!pubSec||$('#nvSec'))return;
@@ -889,12 +933,14 @@ function mountNaver(){
           <label>정렬<select id="nvAlign"><option value="center">가운데</option><option value="left">왼쪽</option></select></label>
           <label>문단 사이<select id="nvGap"><option value="0">빈 줄 없음</option><option value="1">빈 줄 1</option><option value="2">빈 줄 2</option></select></label>
           <label>소제목<select id="nvHead"><option value="bold">굵게</option><option value="bar">▍굵게</option><option value="line">굵게 + 밑줄선</option></select></label>
-          <label>표<select id="nvTable"><option value="auto">넓은 표만 목록으로</option><option value="list">모두 목록으로</option><option value="keep">표 그대로</option></select></label>
+          <label>글자<select id="nvSize"><option value="13">작게 13</option><option value="15">보통 15</option><option value="16">크게 16</option></select></label>
+          <label>한 줄<select id="nvWrap"><option value="0">자동 (안 바꿈)</option><option value="16">16자</option><option value="18">18자</option><option value="20">20자</option><option value="24">24자</option></select></label>
+          <label>표<select id="nvTable"><option value="list">목록으로</option><option value="image">그림으로 (사진 묶음에 포함)</option><option value="auto">넓은 표만 목록</option><option value="keep">표 그대로</option></select></label>
           <label class="nvck"><input type="checkbox" id="nvSent">문장마다 줄바꿈</label>
         </div>
         <div class="navrow" style="margin-top:8px"><button class="btn primary" type="button" id="nvCopyRich">모바일 양식으로 복사</button><button class="btn" type="button" id="nvCopyPlain">글자만 복사</button><button class="btn" type="button" id="nvShow">휴대폰 미리보기 닫기</button></div>
         <div class="nvphone" id="nvPhoneWrap"><div class="nvprev" id="nvPrev"></div></div></div></div>
-      <div class="nvstep"><span class="n">3</span><div><b>사진</b> <span class="note" id="nvPhotoNote"></span><div class="navrow" style="margin-top:6px"><button class="btn" type="button" id="nvZip">사진 모두 받기 (zip)</button></div></div></div>
+      <div class="nvstep"><span class="n">3</span><div><b>사진</b> <span class="note" id="nvPhotoNote"></span><div class="navrow" style="margin-top:6px"><button class="btn" type="button" id="nvZip">사진·표 그림 모두 받기 (zip)</button></div></div></div>
       <div class="nvstep"><span class="n">4</span><div><b>끝 문단 · 해시태그</b>
         <textarea class="t" id="nvFooter" rows="2" style="min-height:0;margin-top:6px" placeholder="사이트에 등록하면 원문 링크가 들어갑니다"></textarea>
         <div class="nvval" id="nvTags"></div>
@@ -931,7 +977,8 @@ function mountNaver(){
   $('#nvCopyPlain').onclick=()=>copy(build().plain,'글자만 복사했습니다');
   $('#nvShow').onclick=()=>{const w=$('#nvPhoneWrap');w.hidden=!w.hidden;const p=$('#nvPrev');p.hidden=w.hidden;if(!w.hidden)p.innerHTML=build().html;$('#nvShow').textContent=w.hidden?'휴대폰 미리보기':'휴대폰 미리보기 닫기'};
   {const o=nvOpts();$('#nvAlign').value=o.align;$('#nvGap').value=String(o.gap);$('#nvHead').value=o.head;$('#nvTable').value=o.table;$('#nvSent').checked=!!o.sentence;
-   $('#nvOpts').onchange=()=>{nvSave({align:$('#nvAlign').value,gap:+$('#nvGap').value,head:$('#nvHead').value,table:$('#nvTable').value,sentence:$('#nvSent').checked});refresh()}}
+   $('#nvSize').value=String(o.size);$('#nvWrap').value=String(o.wrap);
+   $('#nvOpts').onchange=()=>{nvSave({align:$('#nvAlign').value,gap:+$('#nvGap').value,head:$('#nvHead').value,table:$('#nvTable').value,sentence:$('#nvSent').checked,size:+$('#nvSize').value,wrap:+$('#nvWrap').value});refresh()}}
   $('#nvZip').onclick=downloadPhotos;
   $('#nvCopyFoot').onclick=()=>{const f=$('#nvFooter').value.trim();copy((f?f+'\n\n':'')+naverTags().map(t=>'#'+t).join(' '),'끝 문단과 해시태그를 복사했습니다')};
   $('#nvFooter').addEventListener('input',e=>{if(e.isTrusted)naverFooterTouched=true});
