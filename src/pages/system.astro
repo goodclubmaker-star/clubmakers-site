@@ -1,21 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// TPI Big12 — 12가지 신체 제한 평가 (개요)
-const tpiBig12 = [
-  { no: '01', name: 'Pelvic Tilt',          ko: '골반 기울기',         hint: '골반 회전 가동범위' },
-  { no: '02', name: 'Pelvic Rotation',       ko: '골반 회전',           hint: '하체 분리 능력' },
-  { no: '03', name: 'Torso Rotation',        ko: '몸통 회전',           hint: '상체 가동범위' },
-  { no: '04', name: 'Overhead Deep Squat',   ko: '오버헤드 딥 스쿼트',   hint: '전신 가동·균형' },
-  { no: '05', name: 'Toe Touch',             ko: '토 터치',             hint: '햄스트링·허리 유연성' },
-  { no: '06', name: '90/90',                 ko: '90/90 어깨 회전',     hint: '어깨 외회전' },
-  { no: '07', name: 'Single Leg Balance',    ko: '한 발 균형',          hint: '코어·발목' },
-  { no: '08', name: 'Lat Test',              ko: '광배근 가동',         hint: '어깨 위 가동' },
-  { no: '09', name: 'Lower Quarter Rotation', ko: '하체 회전',           hint: '고관절 회전' },
-  { no: '10', name: 'Seated Trunk Rotation', ko: '앉은 자세 몸통 회전', hint: '척추 회전' },
-  { no: '11', name: 'Bridge with Leg Ext.',  ko: '브릿지 + 다리 신장',   hint: '둔근·코어' },
-  { no: '12', name: 'Cervical Rotation',     ko: '경추 회전',           hint: '시야 확보' },
-];
+// TPI 신체검사 16항목 — 굿피팅 TPI 매뉴얼(goodfitting /tpi-manual)과 같은 내용
+import tpiScreens from '../data/tpi-screens.json';
+import fs from 'node:fs';
+import path from 'node:path';
+// 그림은 public/images/tpi/01.jpg ~ 16.jpg (png·webp도 됨). 파일이 있는 항목만 그림을 붙인다
+const tpiImgDir = path.join(process.cwd(), 'public', 'images', 'tpi');
+const tpiImg = (no: string) => {
+  for (const ext of ['webp', 'jpg', 'png']) {
+    if (fs.existsSync(path.join(tpiImgDir, `${no}.${ext}`))) return `/images/tpi/${no}.${ext}`;
+  }
+  return '';
+};
+const tpiItems = tpiScreens.map((t) => ({ ...t, img: tpiImg(t.no) }));
 
 // 트랜지션 (전환) — 4가지 다운스윙 스타일
 const transitionTypes = [
@@ -276,28 +274,48 @@ const articleSchema = {
   <!-- 4-3. TPI Big12 -->
   <section class="section section-bg-soft">
     <div class="section-content-narrow">
-      <p class="section-eyebrow">TPI BIG 12 · 신체 평가</p>
-      <h2>TPI 12 평가 항목</h2>
+      <p class="section-eyebrow">TPI PHYSICAL SCREEN · 신체 평가</p>
+      <h2>TPI 신체검사 16항목</h2>
       <p class="section-lead">
-        Titleist Performance Institute가 정리한 <strong>12가지 신체 평가</strong>입니다.
+        Titleist Performance Institute의 <strong>Big12 신체 평가</strong>에 전완·손목 4항목을 더한 16가지 검사입니다.
         이 평가는 골퍼가 "할 수 있는 스윙"과 "하면 안 되는 스윙"을 구분하는 출발점입니다.
         몸이 안 되는 동작을 강요하는 클럽은 부상을 만듭니다.
       </p>
       <p class="section-lead">
         공작소장은 <strong>TPI Certified</strong> (Level 1 · Junior Level 2 · Golf Level 2) 인증을 보유하고 있습니다.
-        모든 분께 12가지를 다 진행하지는 않습니다. 인터뷰 결과에 따라 필요한 평가만 선별해 진행합니다.
+        모든 분께 16가지를 다 진행하지는 않습니다. 인터뷰 결과에 따라 필요한 평가만 선별해 진행합니다.
       </p>
 
-      <div class="tpi-grid">
-        {tpiBig12.map((item) => (
-          <div class="tpi-card">
-            <div class="tpi-no">{item.no}</div>
-            <div>
-              <h3 class="tpi-name">{item.name}</h3>
-              <p class="tpi-ko">{item.ko}</p>
-              <p class="tpi-hint">{item.hint}</p>
+      <nav class="tpi-index" aria-label="TPI 검사 목록">
+        {tpiItems.map((t) => <a href={`#tpi-${t.id}`}><i>{t.no}</i>{t.ko}</a>)}
+      </nav>
+
+      <div class="tpi-list">
+        {tpiItems.map((t) => (
+          <details class="tpi-item" id={`tpi-${t.id}`}>
+            <summary>
+              <span class="tpi-no">{t.no}</span>
+              <span class="tpi-head">
+                <span class="tpi-ko">{t.ko}</span>
+                <span class="tpi-name">{t.en}</span>
+                <span class="tpi-hint">{t.purpose}</span>
+              </span>
+              <span class="tpi-more" aria-hidden="true">+</span>
+            </summary>
+            <div class="tpi-body">
+              {t.img && <img class="tpi-img" src={t.img} alt={`TPI ${t.ko} 검사 자세 (${t.en})`} loading="lazy" decoding="async" />}
+              <h4>검사 방법</h4>
+              <ol>{t.steps.map((x) => <li>{x}</li>)}</ol>
+              <div class="tpi-judge">
+                <div class="ok"><b>{t.okLabel}</b><p>{t.ok}</p></div>
+                <div class="no"><b>{t.badLabel}</b><p>{t.bad}</p></div>
+              </div>
+              <p class="tpi-links">
+                {t.tpi && <a href={t.tpi} target="_blank" rel="noopener">TPI 원문 ↗</a>}
+                {t.video && <a href={t.video} target="_blank" rel="noopener">참고 영상 ↗</a>}
+              </p>
             </div>
-          </div>
+          </details>
         ))}
       </div>
 
@@ -748,46 +766,38 @@ const articleSchema = {
     padding-top: 12px;
   }
 
-  /* ===== TPI Big12 ===== */
-  .tpi-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin: 32px 0;
-  }
-  .tpi-card {
-    background: white;
-    padding: 20px 22px;
-    border-radius: 6px;
-    border: 1px solid var(--line);
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-  }
-  .tpi-no {
-    font-family: var(--font-serif);
-    font-size: 24px;
-    color: var(--gold);
-    font-weight: 700;
-    min-width: 36px;
-  }
-  .tpi-name {
-    font-family: var(--font-serif);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 2px;
-  }
-  .tpi-ko {
-    font-size: 13px;
-    color: var(--green);
-    margin-bottom: 4px;
-    font-weight: 600;
-  }
-  .tpi-hint {
-    font-size: 12px;
-    color: var(--grey);
-  }
+  /* ===== TPI 16항목 ===== */
+  .tpi-index { display: flex; flex-wrap: wrap; gap: 6px; margin: 28px 0 16px; }
+  .tpi-index a { font-size: 12.5px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--ink); }
+  .tpi-index a i { font-style: normal; color: var(--gold); font-weight: 700; margin-right: 4px; }
+  .tpi-index a:hover { border-color: var(--green); }
+  .tpi-list { display: grid; gap: 10px; margin-bottom: 8px; }
+  .tpi-item { background: white; border: 1px solid var(--line); border-radius: 6px; scroll-margin-top: 90px; }
+  .tpi-item[open] { border-color: var(--green); }
+  .tpi-item summary { list-style: none; cursor: pointer; display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; }
+  .tpi-item summary::-webkit-details-marker { display: none; }
+  .tpi-no { font-family: var(--font-serif); font-size: 24px; color: var(--gold); font-weight: 700; min-width: 36px; line-height: 1.1; }
+  .tpi-head { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .tpi-ko { font-family: var(--font-serif); font-size: 17px; font-weight: 700; color: var(--ink); }
+  .tpi-name { font-size: 12.5px; color: var(--green); font-weight: 600; }
+  .tpi-hint { font-size: 13.5px; color: var(--grey); line-height: 1.6; margin-top: 4px; }
+  .tpi-more { font-size: 22px; color: var(--grey); line-height: 1; transition: transform .2s; }
+  .tpi-item[open] .tpi-more { transform: rotate(45deg); color: var(--green); }
+  .tpi-body { padding: 0 20px 20px 72px; font-size: 14px; line-height: 1.7; color: var(--ink); }
+  .tpi-img { display: block; width: 100%; max-width: 520px; height: auto; border-radius: 4px; border: 1px solid var(--line); margin-bottom: 14px; }
+  .tpi-body h4 { font-size: 13px; color: var(--green); margin: 0 0 6px; }
+  .tpi-body ol { margin: 0 0 14px; padding-left: 20px; }
+  .tpi-body li { margin-bottom: 4px; }
+  .tpi-judge { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tpi-judge > div { padding: 12px 14px; border-radius: 4px; font-size: 13px; }
+  .tpi-judge .ok { background: #eef6f0; }
+  .tpi-judge .no { background: #fbf1ec; }
+  .tpi-judge b { display: block; font-size: 12.5px; margin-bottom: 2px; }
+  .tpi-judge .ok b { color: var(--green); }
+  .tpi-judge .no b { color: #b5532a; }
+  .tpi-judge p { margin: 0; }
+  .tpi-links { margin: 12px 0 0; display: flex; gap: 14px; font-size: 13px; }
+  .tpi-links a { color: var(--green); border-bottom: 1px solid var(--green); }
   .tpi-link-note {
     font-size: 13px;
     color: var(--grey);
@@ -945,7 +955,9 @@ const articleSchema = {
   /* ===== 모바일 ===== */
   @media (max-width: 968px) {
     .step-flow { grid-template-columns: 1fr 1fr; }
-    .tpi-grid { grid-template-columns: 1fr; }
+    .tpi-body { padding: 0 16px 18px; }
+    .tpi-judge { grid-template-columns: 1fr; }
+    .tpi-item summary { padding: 16px; gap: 12px; }
     .paths-grid { grid-template-columns: 1fr; }
     .closing-quote { font-size: 20px; }
     .audience-toggle { flex-direction: column; gap: 0; }

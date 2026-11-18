@@ -1,0 +1,303 @@
+[
+ {
+  "id": "pelvic-tilt",
+  "no": "01",
+  "ko": "골반 기울이기",
+  "en": "Pelvic Tilt Test",
+  "purpose": "골프 자세에서 골반을 전방·후방으로 기울이고 그 위치를 조절하는 능력을 봅니다.",
+  "steps": [
+   "평소 5번 아이언 셋업 자세를 취하고 팔은 가슴 위로 교차합니다.",
+   "시작 자세의 요추 곡선(S/N/C 경향)을 관찰합니다.",
+   "골반을 전방으로 기울여 요추 전만을 늘린 뒤, 후방으로 기울여 요추 전만을 줄입니다.",
+   "무릎·상체의 앞뒤 움직임을 최소화한 채 양방향 범위와 부드러움을 봅니다."
+  ],
+  "ok": "양방향 가동범위·분리·움직임의 부드러움이 정성적으로 좋습니다.",
+  "bad": "한 방향의 뚜렷한 제한, 상체/무릎의 큰 보상, 분절되지 않는 움직임.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-pelvic-tilt-test",
+  "video": "https://www.youtube.com/watch?v=q52-FRoK26U"
+ },
+ {
+  "id": "pelvic-rotation",
+  "no": "02",
+  "ko": "골반 회전",
+  "en": "Pelvic Rotation Test",
+  "purpose": "상체를 고정한 채 골반과 하체만 독립적으로 회전시키는 능력을 평가합니다.",
+  "steps": [
+   "5번 아이언 셋업 자세에서 팔을 어깨 위로 교차합니다.",
+   "상체는 움직이지 않게 두고 벨트선 아래만 좌우로 회전합니다.",
+   "어깨·머리 동반 회전, 골반의 과도한 좌우 이동, 무릎 굴신을 관찰합니다.",
+   "어려우면 검사자가 상체를 안정시켜 재검해 이동성 문제와 안정성/조절 문제를 구분합니다."
+  ],
+  "ok": "상체 움직임 없이 골반이 좌우로 부드럽게 독립 회전합니다.",
+  "bad": "어깨가 함께 돌거나 골반이 좌우로 밀림, 과도한 무릎 굴신, 심한 비대칭.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-pelvic-rotation-test",
+  "video": "https://youtu.be/1Cd8AHcMMKQ"
+ },
+ {
+  "id": "torso-rotation",
+  "no": "03",
+  "ko": "상체 회전",
+  "en": "Torso Rotation Test",
+  "purpose": "하체를 고정한 채 흉곽/상체만 독립적으로 회전시키는 능력을 평가합니다.",
+  "steps": [
+   "5번 아이언 셋업 자세에서 팔을 어깨 위로 교차합니다.",
+   "골반과 하체는 고정하고 상체만 좌우로 회전합니다.",
+   "골반 움직임, 흉추 신전·측굴로 대신하는 보상을 관찰합니다.",
+   "검사자가 골반을 고정해 재검 — 고정해도 안 되면 이동성, 고정하면 좋아지면 조절 문제."
+  ],
+  "ok": "허리선 아래 움직임 없이 흉곽과 어깨가 좌우로 분리 회전합니다.",
+  "bad": "골반이 같이 돌거나 상체가 젖혀지거나 옆으로 기웁니다.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-torso-rotation-test",
+  "video": "https://youtu.be/UwzLZFYnAUM"
+ },
+ {
+  "id": "ods",
+  "no": "04",
+  "ko": "오버헤드 딥 스쿼트",
+  "en": "Overhead Deep Squat Test",
+  "purpose": "발목·무릎·고관절의 대칭 가동성, 흉추 신전, 어깨 가동성, 코어 안정성을 한 번에 봅니다.",
+  "steps": [
+   "발은 어깨너비, 발끝 정면. 샤프트를 어깨너비로 잡아 머리 위에 듭니다.",
+   "샤프트를 가능한 높게 유지하며 깊게 스쿼트합니다.",
+   "통증, 뒤꿈치 들림, 샤프트가 앞으로 무너짐, 균형 상실이 나오면 종료합니다.",
+   "제한 시 팔을 가슴에 교차해 재검하고, 필요하면 반무릎 발목 배측굴곡을 확인합니다."
+  ],
+  "ok": "대퇴 수평 아래, 무릎은 발 위, 발끝 정면, 뒤꿈치 유지, 상체는 경골과 평행/더 수직, 샤프트는 발 위 정렬.",
+  "bad": "위 기준 중 하나 이상 무너지거나 통증/균형 상실.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-overhead-deep-squat-test",
+  "video": "https://youtu.be/aeN841QbO_k"
+ },
+ {
+  "id": "s9090",
+  "no": "05",
+  "ko": "90/90 검사",
+  "en": "90/90 Test — Shoulder External Rotation",
+  "purpose": "고관절 검사가 아니라 어깨의 외회전 가동성과 견갑-흉곽 안정성을 보는 검사입니다.",
+  "steps": [
+   "똑바로 서서 한쪽 팔을 옆으로 90° 벌리고 팔꿈치도 90° 굽힙니다.",
+   "허리를 젖히지 말고 손을 위·뒤로 보내며 어깨를 외회전합니다.",
+   "전완이 척추각보다 덜/같이/더 회전하는지 기록하고 반대쪽도 시행합니다.",
+   "같은 동작을 5번 아이언 셋업 자세에서 다시 시행해 선 자세와 비교합니다."
+  ],
+  "ok": "전완과 척추각 관계로 미만 / 같음 / 초과로 등급화합니다.",
+  "bad": "골프 자세에서 외회전이 크게 줄거나, 견갑이 들리고, 허리를 젖혀 보상.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-90-90-test",
+  "video": "https://youtu.be/ZdotbjhKdSs"
+ },
+ {
+  "id": "lat",
+  "no": "06",
+  "ko": "광배근 검사",
+  "en": "Lat Test",
+  "purpose": "광배근 길이, 어깨 굴곡, 견갑 움직임 제한을 확인합니다.",
+  "steps": [
+   "벽에 등을 대고 무릎 90° 직전까지 반쯤 앉습니다. 발은 무릎 아래, 허리는 벽에 밀착.",
+   "양팔을 앞으로 나란히 뻗고 엄지는 위, 팔꿈치는 편 상태를 유지합니다.",
+   "팔꿈치 굽힘·허리 뜸 없이 팔을 머리 위로 올립니다.",
+   "통증·팔꿈치 굽힘·허리 들림 또는 벽 접촉 시 종료하고 각도를 등급화합니다."
+  ],
+  "ok": "분류: <120° / 120° / 121–169° / >169°(벽에 닿음). 좌우 차이도 기록.",
+  "bad": "충분히 올라가기 전 팔꿈치 굽힘·허리 뜸, 통증 또는 뚜렷한 좌우 차이.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-lat-test",
+  "video": "https://www.youtube.com/results?search_query=TPI+Lat+Test"
+ },
+ {
+  "id": "seated-trunk",
+  "no": "07",
+  "ko": "앉아서 몸통 회전",
+  "en": "Seated Trunk Rotation Test",
+  "purpose": "골반/하체 영향을 줄이고 흉요추의 실제 회전 가동성을 확인합니다.",
+  "steps": [
+   "의자에 똑바로 앉아 무릎과 발을 붙입니다.",
+   "팔은 W 자세로, 바/샤프트를 어깨 뒤에 고정합니다.",
+   "바닥에 좌우 45° 기준선을 만들고 흉곽을 좌우로 최대 회전합니다.",
+   "견갑만 뒤로 당겨 가짜 회전을 만드는지 확인합니다."
+  ],
+  "ok": "좌우 모두 45° 기준선을 지나 회전할 수 있습니다.",
+  "bad": "한쪽/양쪽이 45°에 못 미치거나 몸통 정렬이 무너집니다.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-seated-trunk-rotation-test",
+  "video": "https://www.youtube.com/watch?v=nZ_8FkorIgg"
+ },
+ {
+  "id": "lower-quarter",
+  "no": "08",
+  "ko": "하지 회전",
+  "en": "Lower Quarter Rotation Test",
+  "purpose": "고관절·경골·발의 복합 회전 능력을 서서 평가합니다. 엎드린 고관절 내·외회전 검사가 아닙니다.",
+  "steps": [
+   "검사할 한쪽 다리에 체중을 모두 싣습니다.",
+   "반대쪽 무릎을 굽혀 발끝만 검사 다리 옆 바닥에 가볍게 댑니다.",
+   "양손을 골반에 두고 검사 다리 발끝은 정면을 유지한 채 골반을 좌우로 최대 회전합니다.",
+   "반대쪽도 반복하고 좌우 차이를 비교합니다."
+  ],
+  "ok": "양쪽 모두 최소 60°의 골반 회전을 봅니다.",
+  "bad": "60°에 못 미치거나 지지발이 돌아가고 체중이 빠지거나 좌우 차이가 큽니다.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-lower-quarter-rotation-test",
+  "video": "https://youtu.be/f6m7E20_LMw"
+ },
+ {
+  "id": "balance",
+  "no": "09",
+  "ko": "한쪽다리 균형",
+  "en": "Single Leg Balance Test",
+  "purpose": "전체 균형 능력과 발목 고유수용감각, 좌우 안정성 차이를 봅니다.",
+  "steps": [
+   "똑바로 서서 팔은 몸 옆에 두되 붙이지 않습니다.",
+   "한쪽 다리를 들어 대퇴가 바닥과 평행하도록 합니다.",
+   "안정되면 눈을 감고 시간을 측정합니다.",
+   "지지발 위치를 다시 잡는 순간 균형 상실로 기록하고 반대쪽도 시행합니다."
+  ],
+  "ok": "25초까지 유지하면 정상 범위로 처리하고 종료합니다.",
+  "bad": "25초 전에 발을 다시 딛거나 위치를 고치며, 좌우 차이가 큽니다.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-single-leg-balance-test",
+  "video": "https://youtu.be/YFMYuyVsvrY"
+ },
+ {
+  "id": "bridge",
+  "no": "10",
+  "ko": "브릿지 + 다리 펴기",
+  "en": "Bridge with Leg Extension Test",
+  "purpose": "골반·요추·코어, 특히 둔근의 안정성과 햄스트링/허리 보상 여부를 확인합니다.",
+  "steps": [
+   "바로 누워 무릎을 굽히고 발바닥은 바닥, 무릎·발은 붙입니다. 팔은 가슴 위로.",
+   "골반을 들어 브릿지를 만들고 벨트선을 바닥과 평행하게 유지합니다.",
+   "한쪽 무릎을 펴서 다리를 뻗고 10초 유지합니다.",
+   "골반 반대쪽 처짐, 지지 다리 떨림, 햄스트링/허리 경련을 관찰하고 양쪽 반복합니다."
+  ],
+  "ok": "10초 동안 골반이 수평에 가깝고 지지 다리가 안정, 경련이 없습니다.",
+  "bad": "뻗은 다리 쪽 골반이 떨어지거나 지지 다리 떨림, 햄스트링/허리 경련.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-bridge-with-leg-extension-test",
+  "video": "https://youtu.be/p1qEwWhzLo8"
+ },
+ {
+  "id": "toe-touch",
+  "no": "11",
+  "ko": "토 터치",
+  "en": "Toe Touch Test · 발끝 닿기",
+  "purpose": "허리·햄스트링의 전반적 가동성과 고관절 문제 vs 허리/코어 제한을 구분하는 데 씁니다.",
+  "steps": [
+   "발을 모으고 발끝을 정면으로 두고 섭니다.",
+   "무릎을 굽히지 않고 고관절에서 앞으로 숙여 손끝을 발가락 끝에 대려 합니다.",
+   "제한되면 한쪽 발을 낮은 받침 위에 살짝 올려 다시 시행합니다.",
+   "좌우를 번갈아 올려 결과 차이로 일측 고관절 제한 가능성을 확인합니다."
+  ],
+  "ok": "무릎을 편 상태에서 손끝이 발가락 끝에 닿고 통증이 없습니다.",
+  "bad": "무릎을 굽혀야 닿거나 손끝이 못 미침, 통증, 발 높임 재검 시 좌우 차이.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-toe-touch-test",
+  "video": "https://youtu.be/PJLUkOhvaKY"
+ },
+ {
+  "id": "cervical",
+  "no": "12",
+  "ko": "경추 회전",
+  "en": "Cervical Rotation Test",
+  "purpose": "경추 회전과 측굴이 결합된 기능적 움직임을 확인합니다.",
+  "steps": [
+   "발을 모으고 발끝을 정면으로 하여 똑바로 섭니다.",
+   "머리를 오른쪽으로 최대 회전한 뒤 턱을 오른쪽 쇄골 쪽으로 내립니다.",
+   "입은 닫고 견갑의 거상/전인을 허용하지 않습니다.",
+   "왼쪽도 같은 방법으로 시행하고 정면·측면에서 관찰합니다."
+  ],
+  "ok": "통증 없이 턱이 양쪽 모두 쇄골 중앙에 닿습니다.",
+  "bad": "한쪽/양쪽에서 턱이 쇄골 중앙에 닿지 않거나 통증·견갑 보상.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-cervical-rotation-test",
+  "video": "https://youtu.be/O_htDvwdP4M"
+ },
+ {
+  "id": "forearm",
+  "no": "13",
+  "ko": "전완 회전",
+  "en": "Forearm Rotation — Pronation / Supination",
+  "purpose": "전완과 손목의 회내·회외 가동성을 확인합니다.",
+  "steps": [
+   "서서 팔꿈치를 90° 굽혀 몸 옆에 두고 전완은 정면을 향하게 합니다.",
+   "엄지를 위로, 양 손바닥은 서로 마주보게 합니다.",
+   "전완 위치를 유지하며 양손을 바깥쪽으로 돌려 회외합니다.",
+   "중립을 지나 안쪽으로 돌려 회내합니다. 팔꿈치/전완 정렬 보상을 관찰합니다."
+  ],
+  "ok": "특정 각도 컷오프 없이 좌우 가동성·대칭·보상 여부를 관찰합니다.",
+  "bad": "한 방향의 뚜렷한 제한, 좌우 비대칭, 팔꿈치 벌어짐/전완 정렬 무너짐.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-forearm-rotation-pronation-supination-test",
+  "video": "https://youtu.be/syVCC4LDzJY"
+ },
+ {
+  "id": "wrist-flex",
+  "no": "14",
+  "ko": "손목 굴곡",
+  "en": "Wrist Flexion Test",
+  "purpose": "손목을 앞으로/아래로 굽히는 굴곡 가동성을 확인합니다.",
+  "steps": [
+   "서서 양팔을 가슴 높이에서 바닥과 평행하게 앞으로 뻗습니다.",
+   "양손을 주먹 쥐고 손바닥은 아래를 향하게 합니다.",
+   "팔꿈치와 팔 높이를 유지한 채 양 주먹을 아래쪽으로 굽힙니다."
+  ],
+  "ok": "숫자 컷오프보다 좌우 가동성과 보상 없이 수행되는지를 봅니다.",
+  "bad": "한쪽/양쪽의 뚜렷한 제한, 좌우 차이, 팔꿈치·팔 높이로 보상.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-wrist-flexion-test",
+  "video": "https://youtu.be/b-Lf-vfQ4bs"
+ },
+ {
+  "id": "wrist-ext",
+  "no": "15",
+  "ko": "손목 신전",
+  "en": "Wrist Extension Test",
+  "purpose": "손목을 뒤로/위로 젖히는 신전 가동성을 확인합니다.",
+  "steps": [
+   "서서 양팔을 가슴 높이에서 바닥과 평행하게 앞으로 뻗습니다.",
+   "양손을 주먹 쥐고 손바닥은 아래를 향하게 합니다.",
+   "팔꿈치와 팔 높이를 유지한 채 양 주먹을 위쪽으로 젖힙니다."
+  ],
+  "ok": "숫자 컷오프보다 좌우 가동성과 보상 없이 수행되는지를 봅니다.",
+  "bad": "한쪽/양쪽의 뚜렷한 제한, 좌우 차이, 팔꿈치·팔 높이로 보상.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/the-wrist-extension-test",
+  "video": "https://youtu.be/CnZmI4CbExg"
+ },
+ {
+  "id": "wrist-hinge",
+  "no": "16",
+  "ko": "손목 힌지",
+  "en": "Wrist Hinge — Radial / Ulnar Deviation",
+  "purpose": "손목의 요측·척측 편위(골프의 힌지/언힌지와 관련)를 확인합니다.",
+  "steps": [
+   "서서 팔은 몸 옆, 팔꿈치를 90° 굽힙니다.",
+   "주먹을 쥐고 엄지가 천장을 향하며 양 손바닥이 서로 마주보게 합니다.",
+   "팔꿈치 위치와 손바닥 방향을 유지하며 손목을 위·아래로 힌지합니다."
+  ],
+  "ok": "특정 숫자 컷오프 없이 좌우 가동성·대칭·보상 여부를 봅니다.",
+  "bad": "요측/척측 편위 제한, 좌우 비대칭, 팔꿈치·전완이 함께 움직이는 보상.",
+  "okLabel": "양호",
+  "badLabel": "제한/보상",
+  "tpi": "https://www.mytpi.com/articles/screening/wrist-hinge-test-radial-ulnar-deviation",
+  "video": "https://youtu.be/MkBi1GaAXpU"
+ }
+]

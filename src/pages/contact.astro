@@ -93,18 +93,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
       </div>
       <div class="map-area">
-        <!-- 네이버 지도 임베드 (정적 이미지 + 클릭 링크) -->
-        <a href="https://map.naver.com/p/search/서울%20서초구%20동산로2길%2050" target="_blank" rel="noopener" class="map-link-wrap" aria-label="네이버 지도에서 위치 보기">
+        <!-- 지도: 네이버 지도는 다른 사이트 안에 넣을 수 없어 구글 지도로 보여 주고, 아래 단추로 네이버·카카오를 연다 -->
+        <div class="map-frame">
           <iframe
-            class="naver-map-iframe"
-            src="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EC%84%9C%EC%B4%88%EA%B5%AC%20%EB%8F%99%EC%82%B0%EB%A1%9C2%EA%B8%B8%2050?c=15.00,0,0,0,dh"
+            class="map-iframe"
+            src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EC%84%9C%EC%B4%88%EA%B5%AC%20%EB%8F%99%EC%82%B0%EB%A1%9C2%EA%B8%B8%2050&z=17&hl=ko&output=embed"
             width="100%"
-            height="280"
-            frameborder="0"
+            height="300"
+            style="border:0"
             loading="lazy"
-            title="클럽메이커스 위치 - 네이버 지도"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            title="클럽메이커스 위치 - 서울 서초구 동산로2길 50"
           ></iframe>
-        </a>
+        </div>
 
         <div class="map-actions">
           <a href="https://map.naver.com/p/search/서울%20서초구%20동산로2길%2050" target="_blank" rel="noopener" class="map-btn map-btn-naver">
@@ -453,19 +455,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     gap: 14px;
   }
 
-  .map-link-wrap {
+  .map-frame {
     display: block;
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--line);
     background: var(--bg-soft);
-    cursor: pointer;
     line-height: 0;
   }
-  .naver-map-iframe {
+  .map-iframe {
     display: block;
     width: 100%;
-    height: 280px;
+    height: 300px;
     border: 0;
   }
 
