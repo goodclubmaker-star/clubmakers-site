@@ -33,45 +33,16 @@
 @media(prefers-reduced-motion:reduce){.xmas-art.active{transition:none}.xmas-art.active::before,.xmas-art.active .xmas-art-halo,.xmas-art.active .xmas-art-ring,.xmas-art.active .xmas-art-comet,.xmas-art.active .xmas-art-overline,.xmas-art.active .xmas-art-letter,.xmas-art.active .xmas-art-holiday,.xmas-art.active .xmas-art-beam,.xmas-art.active .xmas-art-signature{animation:none;opacity:1;transform:none}.xmas-art.active::before{opacity:.6}.xmas-art.active .xmas-art-ring,.xmas-art.active .xmas-art-halo{opacity:.25}.xmas-art.active .xmas-art-halo,.xmas-art.active .xmas-art-ring{transform:translate(-50%,-50%)}}
 .xmas-fireworks{position:absolute;inset:0;z-index:6;pointer-events:none;width:100%;height:100%;display:block;mix-blend-mode:screen}
 
-/* CSS fireworks are deliberately independent of JS and the network.
-   Tree canvas is transparent, so these fireworks are genuinely BEHIND it. */
-.xmas-fx-backdrop{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
- background:radial-gradient(ellipse 70% 56% at 50% 40%,#123027 0%,#071924 52%,#030913 100%)}
+
+/* Fireworks in a dedicated background canvas, behind tree and labels. */
+.xmas-fx-backdrop{position:absolute;inset:0;z-index:0;pointer-events:none;
+background:radial-gradient(ellipse 76% 57% at 50% 40%,#0b281f 0%,#081c24 57%,#030913 100%)}
+#xmasFireworks{position:absolute;inset:0;z-index:1;pointer-events:none;background:transparent}
 #tree{position:absolute;inset:0;z-index:2;background:transparent}
-.xmas-fireworks{z-index:3}
 .header,.footer,.tip{z-index:5}
 .controls,.music-toggle{z-index:8}
 .toast{z-index:9}
-.xmas-burst{position:absolute;left:var(--x);top:var(--y);width:5px;height:5px;
- transform:translate(-50%,-50%);opacity:0;filter:drop-shadow(0 0 9px var(--color));
- animation:fx-explosion 7.2s var(--delay) ease-out infinite;will-change:transform,opacity}
-.xmas-burst::before{content:"";position:absolute;left:0;top:0;width:5px;height:5px;
- background:#fff;border-radius:100%;box-shadow:48px 0px 0px 1px var(--color),44px 18px 0px 1px var(--color),34px 34px 0px 1px var(--color),18px 44px 0px 1px var(--color),0px 48px 0px 1px var(--color),-18px 44px 0px 1px var(--color),-34px 34px 0px 1px var(--color),-44px 18px 0px 1px var(--color),-48px 0px 0px 1px var(--color),-44px -18px 0px 1px var(--color),-34px -34px 0px 1px var(--color),-18px -44px 0px 1px var(--color),0px -48px 0px 1px var(--color),18px -44px 0px 1px var(--color),34px -34px 0px 1px var(--color),44px -18px 0px 1px var(--color),92px 18px 0px 2px var(--color),78px 52px 0px 2px var(--color),52px 78px 0px 2px var(--color),18px 92px 0px 2px var(--color),-18px 92px 0px 2px var(--color),-52px 78px 0px 2px var(--color),-78px 52px 0px 2px var(--color),-92px 18px 0px 2px var(--color),-92px -18px 0px 2px var(--color),-78px -52px 0px 2px var(--color),-52px -78px 0px 2px var(--color),-18px -92px 0px 2px var(--color),18px -92px 0px 2px var(--color),52px -78px 0px 2px var(--color),78px -52px 0px 2px var(--color),92px -18px 0px 2px var(--color),145px 0px 1px 2px var(--color),134px 55px 1px 2px var(--color),103px 103px 1px 2px var(--color),55px 134px 1px 2px var(--color),0px 145px 1px 2px var(--color),-55px 134px 1px 2px var(--color),-103px 103px 1px 2px var(--color),-134px 55px 1px 2px var(--color),-145px 0px 1px 2px var(--color),-134px -55px 1px 2px var(--color),-103px -103px 1px 2px var(--color),-55px -134px 1px 2px var(--color),0px -145px 1px 2px var(--color),55px -134px 1px 2px var(--color),103px -103px 1px 2px var(--color),134px -55px 1px 2px var(--color);
-}
-.xmas-burst::after{content:"";position:absolute;left:50%;top:50%;width:120px;height:120px;
- transform:translate(-50%,-50%);border:3px solid var(--color);border-radius:50%;
- box-shadow:0 0 30px var(--color),inset 0 0 15px var(--color);opacity:.9}
-@keyframes fx-explosion{
- 0%{transform:translate(-50%,-50%) scale(.015);opacity:0}
- 5%{transform:translate(-50%,-50%) scale(.065);opacity:1}
- 12%{transform:translate(-50%,-50%) scale(.55);opacity:1}
- 21%{transform:translate(-50%,-50%) scale(1.15);opacity:1}
- 32%{transform:translate(-50%,-50%) scale(1.48);opacity:0}
- 100%{transform:translate(-50%,-50%) scale(1.48);opacity:0}
-}
-.xmas-firework-test{position:absolute;top:calc(50px + env(safe-area-inset-top));left:12px;z-index:10;
- border:1px solid #ffd4779e;border-radius:22px;background:#261b25d9;color:#fff2c5;
- padding:9px 12px;min-height:38px;font-size:12px;font-weight:750;cursor:pointer;
- box-shadow:0 0 12px #f4b86c33;backdrop-filter:blur(7px)}
-.xmas-firework-test:active{transform:scale(.95)}
-@media(prefers-reduced-motion:reduce){
- .xmas-burst{animation-duration:12s}
-}
-@media(max-width:430px){
- .xmas-burst{transform-origin:center;filter:drop-shadow(0 0 7px var(--color))}
- .xmas-firework-test{left:8px;font-size:11px;padding:7px 9px}
-}
-</style></head><body><div class="xmas-fx-backdrop" aria-hidden="true"><span class="xmas-burst" style="--x:12%;--y:24%;--color:#ffe7a3;--delay:0s"></span><span class="xmas-burst" style="--x:85%;--y:37%;--color:#9afff0;--delay:1.1s"></span><span class="xmas-burst" style="--x:18%;--y:64%;--color:#ff9dcf;--delay:2.2s"></span><span class="xmas-burst" style="--x:79%;--y:16%;--color:#b3bbff;--delay:3.3s"></span><span class="xmas-burst" style="--x:8%;--y:43%;--color:#ffca8b;--delay:4.4s"></span><span class="xmas-burst" style="--x:91%;--y:59%;--color:#c3ff9f;--delay:5.5s"></span><span class="xmas-burst" style="--x:47%;--y:13%;--color:#fff4c6;--delay:6.5s"></span></div><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">CLUBMAKERS ✦ 2026</div></div><button id="fireworkTest" class="xmas-firework-test" type="button" title="폭죽 효과 확인">🎆 폭죽 테스트 · FX20</button><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div class="footer"><b>골프채공작소</b><small>CLUBMAKERS</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><button type="submit">✨ 이름 달기</button></form><script>
+</style></head><body><div class="xmas-fx-backdrop" aria-hidden="true"></div><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">CLUBMAKERS ✦ 2026</div></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div class="footer"><b>골프채공작소</b><small>CLUBMAKERS</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><button type="submit">✨ 이름 달기</button></form><script>
 (()=>{'use strict';const canvas=document.getElementById('tree'),ctx=canvas.getContext('2d'),fireworkCanvas=document.getElementById('xmasFireworks'),fireworkCtx=fireworkCanvas.getContext('2d'),input=document.getElementById('name'),toast=document.getElementById('toast');let W=0,H=0,dpr=1,rotation=0,drag=false,lastX=0,pointerStartX=0,pointerStartY=0,moved=false,zoom=1,seed=2026,ornaments=[],labels=[],projected=[];const rand=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);const pts=[];for(let i=0;i<1250;i++){const h=rand(),a=rand()*Math.PI*2,r=h*Math.sqrt(rand());pts.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,phase:rand()*6.28,ch:['+','*','o','x','@'][Math.floor(rand()*5)],color:rand()})}for(let i=0;i<85;i++){let h=.1+rand()*.84,a=rand()*Math.PI*2,r=h*.98;ornaments.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,color:['#ffd66b','#ff6b89','#8ebaff','#db9aff','#f6f3d5','#ff9b55'][i%6],phase:rand()*6.28})}const stars=Array.from({length:65},()=>({x:rand(),y:rand(),r:.5+rand()*1.2,p:rand()*6.28}));function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);fireworkCanvas.width=Math.round(W*dpr);fireworkCanvas.height=Math.round(H*dpr);fireworkCtx.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();const API='https://xnxthuwnqipkaylwisfu.supabase.co/rest/v1/christmas_tree_names',KEY='sb_publishable_C9IEZO8H-CCSVeiD-TocCw_rnCgEzTO';let serverRows=[],rowRevision=0,shownKey='',pageEpoch=performance.now();const headers={'apikey':KEY,'Content-Type':'application/json'};
 function visibleCapacity(){return W<430?42:W<800?65:95}
 function refreshVisibleNames(t){
@@ -125,221 +96,149 @@ const artRoot=document.getElementById('christmasArt'),artName=document.getElemen
 const prefersLessMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches||false;
 let artStart=0,artStopTimer=null,artParticles=[],artRun=0;
 
+
 /*
- * Festive silent star fireworks. All pixels are drawn above the greeting veil
- * in a separate transparent canvas. On new name, restart five overlapping bursts.
- * No audio, no extra downloads, no third-party dependencies.
+ * Cinematic fireworks engine. Shells rise from the horizon, then break into
+ * irregular chrysanthemum, willow and peony sparks with velocity, air drag,
+ * gravity and fading trails. No circular outlines, CSS star stamps or emoji.
+ * Painted only to a transparent canvas BEHIND the tree.
  */
-let fireworkJobs=[],fireworkSparks=[];
-const fireworkColors=['#fff4b3','#ffd46c','#fffdf0','#a1fff0','#8fe3ff','#ffc8e5','#ffb0a8'];
-function scheduleChristmasFireworks(){
- fireworkJobs=[
-  {delay:.08,x:.22,y:.235,amount:54,kind:0},
-  {delay:.68,x:.79,y:.30,amount:56,kind:1},
-  {delay:1.28,x:.22,y:.58,amount:49,kind:2},
-  {delay:1.89,x:.78,y:.58,amount:55,kind:3},
-  {delay:2.62,x:.51,y:.21,amount:60,kind:4}
- ].map(j=>({...j,started:false,age:0}));
- fireworkSparks=[];
- fireworkCtx.clearRect(0,0,W,H);
+const fxPalettes=[
+ ['#fff8df','#ffdb90','#d99445'],
+ ['#f1fcff','#b0e5f7','#689dbf'],
+ ['#fff4e3','#ffbdac','#c97d79'],
+ ['#f9f3ff','#d7c6ee','#9d91c6'],
+ ['#fff8cc','#efcd83','#be944a']
+];
+let fxPending=[],fxRockets=[],fxSparks=[],fxFlares=[],fxInitAt=0,fxLast=0,fxNextAmbient=0,fxShowIndex=0;
+const fxRnd=(min,max)=>min+Math.random()*(max-min);
+function queueFirework(seconds,x,y,palette=0,kind=0,power=1,base=performance.now()){
+ fxPending.push({at:base+seconds*1000,x,y,palette,kind,power});
 }
-function activateFirework(job){
- job.started=true;
- job.xPx=job.x*W;job.yPx=job.y*H;
- const scale=Math.max(.55,Math.min(1.25,Math.min(W,H)/600));
- const phase=Math.random()*Math.PI*2;
- for(let i=0;i<job.amount;i++){
-  const a=i*Math.PI*2/job.amount+phase+(Math.random()-.5)*.19;
-  const power=(92+Math.random()*162)*scale;
-  const size=1.1+Math.random()*2.5;
-  const colour=fireworkColors[(i+job.kind*2)%fireworkColors.length];
-  fireworkSparks.push({
-   start:job.delay,x:job.xPx,y:job.yPx,vx:Math.cos(a)*power,
-   vy:Math.sin(a)*power,life:.88+Math.random()*.73,
-   colour,size,phase:Math.random()*Math.PI*2,star:i%6===0,
-   spiral:Math.random()>.7
-  });
- }
-}
-function drawStarCross(gc,x,y,r,rot){
- gc.save();gc.translate(x,y);gc.rotate(rot);
- gc.beginPath();
- for(let i=0;i<8;i++){
-  const angle=i*Math.PI/4-Math.PI/2;
-  const radius=i%2===0?r:r*.2;
-  const px=Math.cos(angle)*radius,py=Math.sin(angle)*radius;
-  if(i===0)gc.moveTo(px,py);else gc.lineTo(px,py);
- }
- gc.closePath();gc.fill();gc.restore();
-}
-function drawChristmasFireworks(t){
- fireworkCtx.clearRect(0,0,W,H);
- if(prefersLessMotion||!artRoot.classList.contains('active'))return;
- const age=(t-artStart)/1000;
- if(age<0||age>4.65)return;
- const fc=fireworkCtx;
- fc.save();fc.globalCompositeOperation='lighter';
- for(const job of fireworkJobs){
-  if(!job.started&&age>=job.delay)activateFirework(job);
-  if(!job.started)continue;
-  const elapsed=age-job.delay;
-  if(elapsed>1.05)continue;
-  const pulse=Math.max(0,1-elapsed/1.05);
-  const ex=job.xPx,ey=job.yPx;
-  fc.globalAlpha=pulse*.8;
-  fc.strokeStyle=job.kind%2?'#bcfff2':'#ffdf93';
-  fc.lineWidth=Math.max(.8,2.5*pulse);
-  fc.shadowBlur=21;fc.shadowColor=fc.strokeStyle;
-  fc.beginPath();fc.arc(ex,ey,18+elapsed*126,0,Math.PI*2);fc.stroke();
-  fc.globalAlpha=pulse*.42;
-  fc.beginPath();fc.arc(ex,ey,10+elapsed*72,0,Math.PI*2);fc.stroke();
-  if(elapsed<.32){
-   const flash=Math.pow(1-elapsed/.32,1.7);
-   fc.globalAlpha=flash;
-   fc.fillStyle='#fffbe6';fc.shadowBlur=25*flash;
-   drawStarCross(fc,ex,ey,(5+25*flash),elapsed*.65);
-  }
- }
- // Particles have tiny trails, bright cores and occasional crisp four-point stars.
- for(const p of fireworkSparks){
-  const lifeAge=age-p.start;
-  if(lifeAge<0||lifeAge>p.life)continue;
-  const fade=Math.pow(Math.max(0,1-lifeAge/p.life),1.32);
-  const drift=lifeAge*(1-.1*lifeAge);
-  const x=p.x+p.vx*drift+Math.sin(p.phase+lifeAge*6)*(p.spiral?11:2);
-  const y=p.y+p.vy*drift+49*lifeAge*lifeAge;
-  if(x<0||x>W||y<0||y>H)continue;
-  const sparkle=.8+.2*Math.cos(lifeAge*21+p.phase);
-  fc.globalAlpha=fade*sparkle;
-  fc.shadowColor=p.colour;fc.shadowBlur=11;
-  fc.strokeStyle=p.colour;fc.lineWidth=Math.max(1,p.size*.8);
-  fc.beginPath();fc.moveTo(x-p.vx*.038,y-p.vy*.038);fc.lineTo(x,y);fc.stroke();
-  fc.fillStyle=lifeAge<.21?'#fffdf8':p.colour;
-  if(p.star){
-   fc.shadowBlur=17;
-   drawStarCross(fc,x,y,p.size*(1.9+.45*sparkle),lifeAge*2+p.phase);
-  }else{
-   fc.beginPath();fc.arc(x,y,Math.max(.6,p.size*.69),0,Math.PI*2);fc.fill();
-  }
- }
- fc.restore();
-}
-
-
-/* Large fireworks BEHIND the tree. Rendered into the main canvas immediately
- * after the backdrop, before tree lights, ornaments and name labels.
- * Celebration fires eight staggering bursts; idle mode pops softly too. */
-const fireworksTestButton=document.getElementById('fireworkTest');
-fireworksTestButton.addEventListener('click',()=>{
- const time=performance.now();
- createBackdropBurst(.17,.27,time,1.40);
- createBackdropBurst(.81,.41,time,1.35);
- createBackdropBurst(.46,.15,time,1.30);
- artStart=time;
- fireworkJobs=[
-  {delay:0,x:.16,y:.26,amount:88,kind:0,started:false},
-  {delay:.17,x:.84,y:.38,amount:90,kind:1,started:false},
-  {delay:.42,x:.48,y:.18,amount:92,kind:2,started:false}
+function queueNameFireworks(base=performance.now()){
+ // Alternating fireworks on either side of the tree, natural varying timing.
+ const plan=[
+  [.05,.17,.27,0,0,1.05],
+  [.44,.84,.37,1,1,1.02],
+  [.86,.10,.44,2,2,1.05],
+  [1.21,.75,.19,0,1,1.08],
+  [1.66,.21,.34,4,0,1.10],
+  [2.03,.88,.53,3,2,1.02],
+  [2.46,.65,.24,0,1,1.12],
+  [2.88,.12,.56,1,0,1.01],
+  [3.30,.85,.25,4,2,1.05]
  ];
- fireworkSparks=[];
-});
-const backdropPalette=['#ffe594','#ff9bc1','#a7fff2','#8dc8ff','#fff7d6','#ecbaff'];
-let backdropSparks=[],backdropRings=[],backdropPlan=[],nextIdleFirework=850,idleEchoAt=0,idleEchoSide=.82,backdropPlanRun=-1;
-let backdropBurstCount=0;
-function createBackdropBurst(xNorm,yNorm,t,intensity=1){
- const x=xNorm*W,y=yNorm*H;
- const scale=Math.max(.55,Math.min(1.26,Math.min(W,H)/540));
- const speed=scale*(112+Math.random()*38)*intensity;
- const colour=backdropPalette[backdropBurstCount++%backdropPalette.length];
- const count=Math.round((W<500?62:82)*Math.min(1.3,intensity)*(prefersLessMotion?.65:1));
- backdropRings.push({x,y,start:t,radius:0,colour,intensity});
- const phase=Math.random()*Math.PI*2;
- for(let i=0;i<count;i++){
-  const angle=i/count*Math.PI*2+phase+(Math.random()-.5)*.10;
-  const spread=.65+Math.random()*.58;
-  backdropSparks.push({
-   x,y,start:t,vx:Math.cos(angle)*speed*spread,
-   vy:Math.sin(angle)*speed*spread,colour,
-   duration:860+Math.random()*680,
-   star:i%7===0,size:1+Math.random()*1.65,phase:Math.random()*6.28
+ fxPending=fxPending.filter(p=>p.at<base-40);
+ for(const [delay,x,y,palette,kind,power] of plan)queueFirework(delay,x,y,palette,kind,power,base);
+}
+function newRocket(job,t){
+ const destX=job.x*W,destY=job.y*H;
+ const launchX=destX+fxRnd(-W*.11,W*.11);
+ fxRockets.push({
+  start:t,duration:fxRnd(560,850),x0:launchX,y0:H+15,x1:destX,y1:destY,
+  color:fxPalettes[job.palette%fxPalettes.length][0],
+  palette:job.palette,kind:job.kind,power:job.power
+ });
+}
+function positionRocket(rocket,p){
+ const q=1-Math.pow(1-p,1.55);
+ return{x:rocket.x0+(rocket.x1-rocket.x0)*p,y:rocket.y0+(rocket.y1-rocket.y0)*q};
+}
+function explodeRocket(rocket,t){
+ const colors=fxPalettes[rocket.palette%fxPalettes.length],kind=rocket.kind;
+ const mobile=W<600,number=mobile?kind===1?62:72:kind===1?84:98;
+ const speed=Math.max(.57,Math.min(1.4,Math.min(W,H)/550))*rocket.power;
+ const angleOffset=fxRnd(0,Math.PI*2);
+ fxFlares.push({x:rocket.x1,y:rocket.y1,t,color:colors[0]});
+ for(let i=0;i<number;i++){
+  const a=i*Math.PI*2/number+angleOffset+fxRnd(-.13,.13);
+  let v=fxRnd(75,179)*speed;
+  if(kind===1)v*=fxRnd(.72,1.05); // willow drapes and drifts
+  if(kind===2)v*=fxRnd(.55,1.0); // softer starry peony
+  const hue=i%7===0?colors[0]:i%3===0?colors[2]:colors[1];
+  fxSparks.push({
+   x:rocket.x1,y:rocket.y1,t,
+   vx:Math.cos(a)*v,vy:Math.sin(a)*v,
+   life:kind===1?fxRnd(1350,2130):fxRnd(940,1530),
+   gravity:kind===1?fxRnd(54,84):fxRnd(38,67),
+   drag:fxRnd(.08,.22),
+   color:hue,size:fxRnd(.7,1.7),
+   shimmer:fxRnd(0,6.28),kind,glitter:i%5===0,
+   brightness:fxRnd(.68,1)
   });
  }
- // Hard limits prevent unbounded memory or excessive drawing on slow phones.
- if(backdropSparks.length>760)backdropSparks.splice(0,backdropSparks.length-760);
- if(backdropRings.length>26)backdropRings.splice(0,backdropRings.length-26);
+ if(fxSparks.length>650)fxSparks.splice(0,fxSparks.length-650);
+ if(fxFlares.length>15)fxFlares.splice(0,fxFlares.length-15);
 }
-function startBackdropFireworkShow(){
- // Fireworks remain visible even when the OS requests reduced motion.
- // Reduced-motion mode lowers particle count and the front greeting animations.
- // Staggered left, right and high-center explosions that remain visible beside the tree.
- backdropPlan=[
-  [.07,.13,.23,1.02],[.39,.86,.33,1.08],[.76,.24,.52,1.11],
-  [1.13,.74,.17,1.14],[1.50,.13,.44,1.06],[1.93,.88,.52,1.13],
-  [2.31,.35,.13,1.18],[2.79,.69,.37,1.19],[3.24,.10,.33,1.08],
-  [3.62,.91,.24,1.08]
- ].map(([delay,x,y,intensity])=>({at:artStart+delay*1000,x,y,intensity,done:false}));
- backdropPlanRun=artRun;
+function paintFireworkDot(x,y,r,color,alpha,glow=3){
+ const c=fireworkCtx;
+ c.globalAlpha=alpha;c.fillStyle=color;c.shadowColor=color;c.shadowBlur=glow;
+ c.beginPath();c.arc(x,y,Math.max(.3,r),0,6.283);c.fill();
 }
-function drawBackdropFireworks(t){
- // Do not silently suppress the entire background show on accessibility settings.
- if(!backdropPlan.length&&artRoot.classList.contains('active')&&backdropPlanRun!==artRun){
-   startBackdropFireworkShow();
+function drawFireworkSky(t){
+ const c=fireworkCtx;
+ c.clearRect(0,0,W,H);
+ if(!fxInitAt){
+  fxInitAt=t;
+  queueFirework(.55,.16,.26,0,0,1.05,t);
+  queueFirework(1.21,.83,.38,1,1,.94,t);
+  fxNextAmbient=t+4300;
  }
- for(const burst of backdropPlan){
-  if(!burst.done&&t>=burst.at){burst.done=true;createBackdropBurst(burst.x,burst.y,t,burst.intensity)}
+ if(t>=fxNextAmbient){
+  const side=fxShowIndex++%2===0;
+  queueFirework(0,side?.15:.85,fxRnd(.18,.48),(fxShowIndex+1)%5,fxShowIndex%3,fxRnd(.85,1.04),t);
+  if(fxShowIndex%3===0)queueFirework(.45,side?.79:.18,fxRnd(.16,.34),0,1,.92,t);
+  fxNextAmbient=t+fxRnd(4400,6200);
  }
- if(backdropPlan.length&&backdropPlan.every(j=>j.done))backdropPlan=[];
- // The first pair is visible immediately after opening the tree.
- // Thereafter two alternating explosions fire every 2.8–4.2 seconds.
- if(!artRoot.classList.contains('active')&&idleEchoAt&&t>=idleEchoAt){
-  createBackdropBurst(idleEchoSide,.25+Math.random()*.24,t,.94);
-  idleEchoAt=0;
+ const due=fxPending.filter(p=>p.at<=t),upcoming=fxPending.filter(p=>p.at>t);
+ fxPending=upcoming;
+ for(const j of due)newRocket(j,t);
+ c.save();c.globalCompositeOperation='lighter';
+ const activeRockets=[];
+ for(const rocket of fxRockets){
+  const progress=Math.min(1,(t-rocket.start)/rocket.duration);
+  if(progress>=1){explodeRocket(rocket,t);continue}
+  const head=positionRocket(rocket,progress);
+  const tail=positionRocket(rocket,Math.max(0,progress-.09));
+  const headAlpha=.75+.2*Math.sin(t*.019);
+  c.globalAlpha=headAlpha;c.strokeStyle=rocket.color;c.lineWidth=1.5;
+  c.shadowColor=rocket.color;c.shadowBlur=10;
+  c.beginPath();c.moveTo(tail.x,tail.y);c.lineTo(head.x,head.y);c.stroke();
+  paintFireworkDot(head.x,head.y,1.8,rocket.color,.96,11);
+  activeRockets.push(rocket);
  }
- if(!artRoot.classList.contains('active')&&t>=nextIdleFirework){
-  const side=backdropBurstCount%2===0;
-  createBackdropBurst(side?.14:.86,.17+Math.random()*.30,t,1.00);
-  idleEchoSide=side?.82:.18;
-  idleEchoAt=t+420;
-  nextIdleFirework=t+2800+Math.random()*1400;
+ fxRockets=activeRockets;
+ fxFlares=fxFlares.filter(f=>t-f.t<270);
+ for(const f of fxFlares){
+  const age=(t-f.t)/270;
+  const alpha=(1-age)*(1-age);
+  paintFireworkDot(f.x,f.y,2+5*(1-age),'#fffdfa',alpha,23);
+  paintFireworkDot(f.x,f.y,8+12*(1-age),f.color,alpha*.1,24);
  }
- backdropSparks=backdropSparks.filter(p=>t-p.start<p.duration);
- backdropRings=backdropRings.filter(p=>t-p.start<980);
- if(!backdropSparks.length&&!backdropRings.length)return;
- ctx.save();ctx.globalCompositeOperation='lighter';
- for(const ring of backdropRings){
-  const age=(t-ring.start)/980;
-  const alpha=Math.pow(Math.max(0,1-age),1.25);
-  const radius=12+age*Math.min(W,H)*.28*ring.intensity;
-  ctx.globalAlpha=alpha*.90;
-  ctx.lineWidth=2.5*alpha+0.5;ctx.strokeStyle=ring.colour;
-  ctx.shadowColor=ring.colour;ctx.shadowBlur=21;
-  ctx.beginPath();ctx.arc(ring.x,ring.y,radius,0,Math.PI*2);ctx.stroke();
-  // Initial blinding flash so burst timing is unmistakable.
-  if(age<.23){
-   const flash=Math.pow(1-age/.23,1.65);
-   ctx.globalAlpha=.92*flash;
-   ctx.fillStyle='#fff9e3';ctx.shadowBlur=30;
-   drawStarCross(ctx,ring.x,ring.y,9+24*flash,age*1.5);
+ const activeSparks=[];
+ for(const p of fxSparks){
+  const elapsed=t-p.t;if(elapsed>=p.life)continue;
+  const age=elapsed/1000,fade=Math.pow(1-elapsed/p.life,p.kind===1?1.10:1.65);
+  const distance=age*(1-p.drag*age*.5);
+  const x=p.x+p.vx*distance,y=p.y+p.vy*distance+p.gravity*age*age*.5;
+  if(x<-15||x>W+15||y>H+20)continue;
+  const older=Math.max(0,age-.085),past=older*(1-p.drag*older*.5);
+  const xx=p.x+p.vx*past,yy=p.y+p.vy*past+p.gravity*older*older*.5;
+  const pulse=p.glitter?(.65+.35*Math.cos(age*37+p.shimmer)):1;
+  const alpha=Math.max(.04,fade*p.brightness*pulse);
+  c.globalAlpha=alpha*.77;
+  c.strokeStyle=p.color;c.lineWidth=p.kind===1?.75:1.0;
+  c.shadowColor=p.color;c.shadowBlur=3.5;
+  c.beginPath();c.moveTo(xx,yy);c.lineTo(x,y);c.stroke();
+  paintFireworkDot(x,y,p.size*(p.kind===2?.83:1),p.color,alpha,p.glitter?8:4);
+  if(p.glitter&&elapsed>p.life*.6&&Math.sin(age*43+p.shimmer)>.7){
+    paintFireworkDot(x+3,y-2,.65,'#fff9ea',alpha*.75,7);
   }
+  activeSparks.push(p);
  }
- for(const p of backdropSparks){
-  const age=t-p.start,progress=Math.max(0,Math.min(1,age/p.duration));
-  const fade=Math.pow(1-progress,1.12);
-  const sec=age/1000;
-  const x=p.x+p.vx*sec,y=p.y+p.vy*sec+53*sec*sec;
-  if(x<-20||x>W+20||y<-20||y>H+20)continue;
-  const glow=.78+.22*Math.sin(sec*28+p.phase);
-  ctx.globalAlpha=fade*glow;
-  ctx.strokeStyle=p.colour;ctx.fillStyle=p.colour;ctx.shadowColor=p.colour;ctx.shadowBlur=11;
-  ctx.lineWidth=Math.max(.7,p.size*.65);
-  ctx.beginPath();ctx.moveTo(x-p.vx*.05,y-p.vy*.05);ctx.lineTo(x,y);ctx.stroke();
-  if(p.star){
-   ctx.shadowBlur=18;drawStarCross(ctx,x,y,p.size*3,sec*2+p.phase);
-  }else{
-   ctx.beginPath();ctx.arc(x,y,p.size,0,Math.PI*2);ctx.fill();
-  }
- }
- ctx.restore();
+ fxSparks=activeSparks;
+ c.restore();
+ fxLast=t;
 }
 
 function showChristmasArt(rawName){
@@ -362,7 +261,7 @@ function showChristmasArt(rawName){
  artRoot.setAttribute('aria-label',display+', 메리 크리스마스!');
  artRoot.setAttribute('aria-hidden','false');
  artRoot.classList.add('active');
- artStart=performance.now();artRun++;scheduleChristmasFireworks();startBackdropFireworkShow();
+ artStart=performance.now();artRun++;queueNameFireworks(artStart);
  if(!prefersLessMotion){
    artParticles=Array.from({length:76},(_,i)=>{
      const a=(i/76)*Math.PI*2+(Math.random()-.5)*.21,speed=24+Math.random()*116;
@@ -375,7 +274,7 @@ function showChristmasArt(rawName){
    if(artRun!==run)return;
    artRoot.classList.remove('active');
    artRoot.setAttribute('aria-hidden','true');
-   artParticles=[];fireworkJobs=[];fireworkSparks=[];fireworkCtx.clearRect(0,0,W,H);
+   artParticles=[];
  },prefersLessMotion?2400:4600);
 }
 function drawChristmasArt(t){
@@ -405,7 +304,7 @@ function drawChristmasArt(t){
  }
  ctx.restore();
 }
-function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();pageEpoch=performance.now();shownKey='';await loadNames();const added=labels.find(l=>l.name===name);if(added)added.born=performance.now();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){showChristmasArt(hit.name);notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){ctx.clearRect(0,0,W,H);drawBackdropFireworks(t);for(const s of stars){ctx.globalAlpha=.15+.5*(.5+.5*Math.sin(t*.001+s.p));ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,7);ctx.fill()}ctx.globalAlpha=1;if(!drag)rotation+=.0024;const usableTop=Math.max(65,H*.12),usableBottom=Math.min(H-190,H*.77),available=Math.max(150,usableBottom-usableTop),scale=Math.min(W*.39,available*.44)*zoom,cx=W/2,cy=(usableTop+usableBottom)/2;const sn=Math.sin(rotation),cs=Math.cos(rotation);function pos(p){const x=p.x*cs-p.z*sn,z=p.x*sn+p.z*cs;const depth=3.5/(3.5+z*.16);return{x:cx+x*scale*depth,y:cy-p.y*scale*depth,z,depth}}const items=pts.map(p=>({p,...pos(p)})).sort((a,b)=>b.z-a.z);ctx.textAlign='center';ctx.textBaseline='middle';for(const v of items){const glow=.55+.45*Math.sin(t*.003+v.p.phase);ctx.globalAlpha=.35+.6*glow;ctx.fillStyle=v.p.color<.1?'#ffdc83':v.p.color<.35?'#c8ffcb':v.p.color<.7?'#6de3a0':'#419c79';ctx.font=Math.max(8,scale*.065*v.depth)+'px monospace';ctx.fillText(v.p.ch,v.x,v.y)}ctx.globalAlpha=1;for(const o of ornaments){const p=pos(o);ctx.globalAlpha=.65+.35*Math.sin(t*.004+o.phase);ctx.fillStyle=o.color;ctx.shadowColor=o.color;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.5,scale*.026)*p.depth,0,7);ctx.fill()}ctx.shadowBlur=0;ctx.globalAlpha=1;
+function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();pageEpoch=performance.now();shownKey='';await loadNames();const added=labels.find(l=>l.name===name);if(added)added.born=performance.now();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){showChristmasArt(hit.name);notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){ctx.clearRect(0,0,W,H);drawFireworkSky(t);for(const s of stars){ctx.globalAlpha=.15+.5*(.5+.5*Math.sin(t*.001+s.p));ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,7);ctx.fill()}ctx.globalAlpha=1;if(!drag)rotation+=.0024;const usableTop=Math.max(65,H*.12),usableBottom=Math.min(H-190,H*.77),available=Math.max(150,usableBottom-usableTop),scale=Math.min(W*.39,available*.44)*zoom,cx=W/2,cy=(usableTop+usableBottom)/2;const sn=Math.sin(rotation),cs=Math.cos(rotation);function pos(p){const x=p.x*cs-p.z*sn,z=p.x*sn+p.z*cs;const depth=3.5/(3.5+z*.16);return{x:cx+x*scale*depth,y:cy-p.y*scale*depth,z,depth}}const items=pts.map(p=>({p,...pos(p)})).sort((a,b)=>b.z-a.z);ctx.textAlign='center';ctx.textBaseline='middle';for(const v of items){const glow=.55+.45*Math.sin(t*.003+v.p.phase);ctx.globalAlpha=.35+.6*glow;ctx.fillStyle=v.p.color<.1?'#ffdc83':v.p.color<.35?'#c8ffcb':v.p.color<.7?'#6de3a0':'#419c79';ctx.font=Math.max(8,scale*.065*v.depth)+'px monospace';ctx.fillText(v.p.ch,v.x,v.y)}ctx.globalAlpha=1;for(const o of ornaments){const p=pos(o);ctx.globalAlpha=.65+.35*Math.sin(t*.004+o.phase);ctx.fillStyle=o.color;ctx.shadowColor=o.color;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.5,scale*.026)*p.depth,0,7);ctx.fill()}ctx.shadowBlur=0;ctx.globalAlpha=1;
 for(let strand=0;strand<3;strand++){ctx.beginPath();for(let j=0;j<=210;j++){const h=.06+j/210*.88,a=h*Math.PI*9+strand*2.094,r=h*.96,p=pos({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r});if(j===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}ctx.strokeStyle=['rgba(255,207,112,.48)','rgba(255,245,195,.4)','rgba(143,225,255,.38)'][strand];ctx.lineWidth=1.7;ctx.shadowColor='#ffd98b';ctx.shadowBlur=7;ctx.stroke();for(let j=0;j<34;j++){const h=.06+j/34*.88,a=h*Math.PI*9+strand*2.094,r=h*.96,p=pos({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r});ctx.fillStyle=['#ffdc82','#fef5bd','#a8e8ff'][strand];ctx.globalAlpha=.6+.4*Math.sin(t*.004+j*1.7+strand);ctx.beginPath();ctx.arc(p.x,p.y,1.6+Math.sin(t*.003+j)**2*1.1,0,7);ctx.fill()}}ctx.globalAlpha=1;ctx.shadowBlur=0;
 const trunk=pos({x:0,y:-1.08,z:0});ctx.fillStyle='#825337';ctx.fillRect(trunk.x-scale*.045,trunk.y-scale*.045,scale*.09,scale*.16);
 for(let i=0;i<4;i++){const bx=cx+(i-1.5)*scale*.37,by=cy+scale*1.17+(i%2)*scale*.045,w=scale*(.24+(i%2)*.04),hh=scale*.19;ctx.fillStyle=['#b83e54','#d6a642','#367f80','#7955a5'][i];ctx.fillRect(bx-w/2,by-hh/2,w,hh);ctx.fillStyle='#f8e5a2';ctx.fillRect(bx-w*.08,by-hh/2,w*.16,hh);ctx.fillRect(bx-w/2,by-hh*.1,w,hh*.2)}
@@ -439,5 +338,5 @@ for(const l of labels.map(p=>({p,...pos(p)})).sort((a,b)=>b.z-a.z)){
     ctx.restore();
   }
   projected.push({x:l.x,y,width,name:l.p.name,id:l.p.id});
-}ctx.shadowBlur=0;ctx.globalAlpha=1;drawChristmasArt(t);drawChristmasFireworks(t);requestAnimationFrame(frame)}requestAnimationFrame(frame)})();
+}ctx.shadowBlur=0;ctx.globalAlpha=1;drawChristmasArt(t);requestAnimationFrame(frame)}requestAnimationFrame(frame)})();
 </script></body></html>
