@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>골프채공작소 크리스마스트리</title><style>*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden;background:#030913;color:white;font-family:system-ui,-apple-system,sans-serif}canvas{width:100%;height:100%;display:block;touch-action:none}.header{position:absolute;top:max(18px,env(safe-area-inset-top));left:0;right:0;text-align:center;color:#f7d99a;font-size:12px;letter-spacing:3px;pointer-events:none}.footer{position:absolute;bottom:calc(105px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;pointer-events:none;text-shadow:0 0 18px #5fd99b}.footer b{font-size:clamp(22px,6vw,32px)}.footer small{display:block;letter-spacing:4px;color:#ebca8a;margin-top:4px;font-size:10px}.controls{position:absolute;bottom:calc(17px + env(safe-area-inset-bottom));left:12px;right:12px;display:flex;justify-content:center;gap:8px;align-items:center}.controls input{min-width:0;max-width:185px;flex:1;padding:12px;border:1px solid #8dba9c;border-radius:24px;background:#101c20;color:white;font-size:16px}.controls button{border:0;border-radius:24px;background:#e8bd65;color:#142117;padding:12px 16px;font-weight:800;font-size:14px}.tip{position:absolute;bottom:calc(76px + env(safe-area-inset-bottom));width:100%;text-align:center;font-size:11px;color:#c2cbbf;pointer-events:none}.toast{position:absolute;top:14%;left:12%;right:12%;text-align:center;color:#ffe9b2;pointer-events:none;font-size:14px;opacity:0;transition:opacity .25s}.toast.show{opacity:1}.music-toggle{position:absolute;right:12px;top:calc(47px + env(safe-area-inset-top));z-index:3;min-height:38px;padding:8px 12px;border:1px solid #ffdfa280;border-radius:24px;background:#10241ecc;color:#ffe6a8;font-size:12px;font-weight:650;cursor:pointer;backdrop-filter:blur(8px)}.music-toggle[aria-pressed="true"]{background:#385c3b;color:#fff;border-color:#dbd28c}.music-toggle:focus-visible,.controls button:focus-visible{outline:2px solid #fff;outline-offset:3px}</style></head><body><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><div class="footer"><b>골프채공작소</b><small>CLUBMAKERS</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><button type="submit">✨ 이름 달기</button></form><script>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>골프채공작소 크리스마스트리</title><style>*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden;background:#030913;color:white;font-family:system-ui,-apple-system,sans-serif}canvas{width:100%;height:100%;display:block;touch-action:none}.header{position:absolute;top:max(18px,env(safe-area-inset-top));left:0;right:0;text-align:center;color:#f7d99a;font-size:12px;letter-spacing:3px;pointer-events:none}.footer{position:absolute;bottom:calc(105px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;pointer-events:none;text-shadow:0 0 18px #5fd99b}.footer b{font-size:clamp(22px,6vw,32px)}.footer small{display:block;letter-spacing:4px;color:#ebca8a;margin-top:4px;font-size:10px}.controls{position:absolute;bottom:calc(17px + env(safe-area-inset-bottom));left:12px;right:12px;display:flex;justify-content:center;gap:8px;align-items:center}.controls input{min-width:0;max-width:185px;flex:1;padding:12px;border:1px solid #8dba9c;border-radius:24px;background:#101c20;color:white;font-size:16px}.controls button{border:0;border-radius:24px;background:#e8bd65;color:#142117;padding:12px 16px;font-weight:800;font-size:14px}.tip{position:absolute;bottom:calc(76px + env(safe-area-inset-bottom));width:100%;text-align:center;font-size:11px;color:#c2cbbf;pointer-events:none}.toast{position:absolute;top:14%;left:12%;right:12%;text-align:center;color:#ffe9b2;pointer-events:none;font-size:14px;opacity:0;transition:opacity .25s}.toast.show{opacity:1}.music-toggle{position:absolute;right:12px;top:calc(47px + env(safe-area-inset-top));z-index:3;min-height:38px;padding:8px 12px;border:1px solid #ffdfa280;border-radius:24px;background:#10241ecc;color:#ffe6a8;font-size:12px;font-weight:650;cursor:pointer;backdrop-filter:blur(8px)}.music-toggle[aria-pressed="true"]{background:#385c3b;color:#fff;border-color:#dbd28c}.music-toggle:focus-visible,.controls button:focus-visible{outline:2px solid #fff;outline-offset:3px}</style></head><body><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div class="footer"><b>골프채공작소</b><small>CLUBMAKERS</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><button type="submit">✨ 이름 달기</button></form><script>
 (()=>{'use strict';const canvas=document.getElementById('tree'),ctx=canvas.getContext('2d'),input=document.getElementById('name'),toast=document.getElementById('toast');let W=0,H=0,dpr=1,rotation=0,drag=false,lastX=0,moved=false,zoom=1,seed=2026,ornaments=[],labels=[],projected=[];const rand=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);const pts=[];for(let i=0;i<1250;i++){const h=rand(),a=rand()*Math.PI*2,r=h*Math.sqrt(rand());pts.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,phase:rand()*6.28,ch:['+','*','o','x','@'][Math.floor(rand()*5)],color:rand()})}for(let i=0;i<85;i++){let h=.1+rand()*.84,a=rand()*Math.PI*2,r=h*.98;ornaments.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,color:['#ffd66b','#ff6b89','#8ebaff','#db9aff','#f6f3d5','#ff9b55'][i%6],phase:rand()*6.28})}const stars=Array.from({length:65},()=>({x:rand(),y:rand(),r:.5+rand()*1.2,p:rand()*6.28}));function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();const API='https://xnxthuwnqipkaylwisfu.supabase.co/rest/v1/christmas_tree_names',KEY='sb_publishable_C9IEZO8H-CCSVeiD-TocCw_rnCgEzTO';let serverRows=[],rowRevision=0,shownKey='',pageEpoch=performance.now();const headers={'apikey':KEY,'Content-Type':'application/json'};
 function visibleCapacity(){return W<430?42:W<800?65:95}
 function refreshVisibleNames(t){
@@ -21,79 +21,60 @@ async function loadNames(){
   }catch(e){notify('이름 목록 연결을 확인해주세요')}
 }
 loadNames();setInterval(loadNames,20000);
-/* Jingle Bells: original synthesized music-box arrangement of a public-domain melody.
-   iOS and other mobile browsers only allow sound after a user gesture. */
+
+/* Visitor-provided recorded carol, compressed for mobile web. No synthesized melody. */
 const musicButton=document.getElementById('musicToggle');
-let audioCtx=null,musicGain=null,musicOn=false,musicTimer=null,noteIndex=0,nextTime=0,accompanimentStep=0;
-const beat=.31; // gentle music-box tempo
-const carol=[
-[76,1],[76,1],[76,2],[76,1],[76,1],[76,2],
-[76,1],[79,1],[72,1],[74,1],[76,4],
-[77,1],[77,1],[77,1],[77,1],[77,1],[76,1],[76,1],[76,.5],[76,.5],[74,1],[74,1],[76,1],[74,2],[79,2],
-[76,1],[76,1],[76,2],[76,1],[76,1],[76,2],
-[76,1],[79,1],[72,1],[74,1],[76,4],
-[77,1],[77,1],[77,1],[77,1],[77,1],[76,1],[76,1],[79,1],[79,1],[77,1],[74,1],[72,4]];
-const hz=midi=>440*Math.pow(2,(midi-69)/12);
-function prepareMusic(){
-  if(audioCtx)return true;
-  const Audio=window.AudioContext||window.webkitAudioContext;
-  if(!Audio){musicButton.textContent='음악 미지원';musicButton.disabled=true;return false;}
-  try{audioCtx=new Audio();musicGain=audioCtx.createGain();musicGain.gain.value=.12;musicGain.connect(audioCtx.destination);return true}
-  catch(e){audioCtx=null;return false}
-}
-function tone(midi,when,seconds,vol=.38){
-  if(!audioCtx||!musicGain)return;
-  const osc=audioCtx.createOscillator(),amp=audioCtx.createGain();
-  osc.type='sine';osc.frequency.value=hz(midi);
-  amp.gain.setValueAtTime(.0001,when);
-  amp.gain.exponentialRampToValueAtTime(Math.max(.0002,vol),when+.012);
-  amp.gain.exponentialRampToValueAtTime(.0001,when+Math.max(.12,seconds));
-  osc.connect(amp);amp.connect(musicGain);osc.start(when);osc.stop(when+Math.max(.12,seconds)+.02);
-}
-function scheduleCarol(){
- if(!musicOn||!audioCtx||audioCtx.state!=='running')return;
- while(nextTime<audioCtx.currentTime+.45){
-   const [note,len]=carol[noteIndex];
-   tone(note,nextTime,Math.min(1.25,beat*len*.9),.40);
-   if(accompanimentStep%4===0){
-     const chord=[48,52,55];for(const pitch of chord)tone(pitch,nextTime,.85,.08);
-   }
-   accompanimentStep+=len;nextTime+=beat*len;noteIndex=(noteIndex+1)%carol.length;
- }
-}
+const carolAudio=document.getElementById('carolAudio');
+let musicOn=false,duckTimer=null;
+carolAudio.volume=.23;
 function stopCarol(){
- musicOn=false;if(musicTimer!==null){clearInterval(musicTimer);musicTimer=null}
- if(audioCtx&&musicGain)musicGain.gain.setTargetAtTime(.0001,audioCtx.currentTime,.09);
+ musicOn=false;carolAudio.pause();
  musicButton.textContent='♫ 캐롤 켜기';musicButton.setAttribute('aria-pressed','false');
 }
 function startCarol(){
- if(!prepareMusic())return;
- musicOn=true;musicButton.textContent='♫ 캐롤 끄기';musicButton.setAttribute('aria-pressed','true');
- musicGain.gain.setTargetAtTime(.12,audioCtx.currentTime,.13);
- Promise.resolve(audioCtx.resume()).then(()=>{
-   if(!musicOn)return;
-   nextTime=audioCtx.currentTime+.06;noteIndex=0;accompanimentStep=0;
-   if(musicTimer!==null)clearInterval(musicTimer);
-   scheduleCarol();musicTimer=setInterval(scheduleCarol,160);
- }).catch(()=>{stopCarol();notify('캐롤을 시작하지 못했습니다')});
+ carolAudio.volume=.23;
+ const p=carolAudio.play();
+ Promise.resolve(p).then(()=>{
+  musicOn=true;musicButton.textContent='♫ 캐롤 끄기';
+  musicButton.setAttribute('aria-pressed','true');
+ }).catch(()=>{
+  musicOn=false;musicButton.textContent='♫ 캐롤 켜기';
+  musicButton.setAttribute('aria-pressed','false');
+  notify('음악을 재생하려면 캐롤 버튼을 눌러주세요');
+ });
 }
 musicButton.addEventListener('click',()=>{if(musicOn)stopCarol();else startCarol()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden && musicOn)stopCarol()});
+carolAudio.addEventListener('error',()=>{if(musicOn)stopCarol();notify('캐롤 음원 연결을 확인해주세요')});
+let currentGreeting=null;
 function greetName(name){
- const spokenName=(String(name).trim()||'친구').replace(/[<>]/g,'');
- const message=(spokenName.endsWith('님')?spokenName:spokenName+'님')+', 메리 크리스마스!';
- if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){notify('이 기기는 음성 안내를 지원하지 않습니다');return}
+ const cleaned=String(name).trim().replace(/[<>]/g,'')||'친구';
+ const message=(cleaned.endsWith('님')?cleaned:cleaned+'님')+'! 메리 크리스마스!';
+ if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){
+   notify('이 기기는 음성 인사를 지원하지 않습니다');return;
+ }
  try{
    const synth=window.speechSynthesis;
    synth.cancel();
-   const utterance=new SpeechSynthesisUtterance(message);
-   utterance.lang='ko-KR';utterance.rate=.94;utterance.pitch=1.1;utterance.volume=1;
-   const korean=synth.getVoices().filter(v=>v.lang&&v.lang.toLowerCase().startsWith('ko'));
-   if(korean.length)utterance.voice=korean.find(v=>/female|yuna|sora|heami|여성|유나/i.test(v.name))||korean[0];
-   function restore(){if(musicOn&&musicGain&&audioCtx)musicGain.gain.setTargetAtTime(.12,audioCtx.currentTime,.12)}
-   utterance.onstart=()=>{if(musicOn&&musicGain&&audioCtx)musicGain.gain.setTargetAtTime(.018,audioCtx.currentTime,.08)};
-   utterance.onend=restore;utterance.onerror=restore;
-   synth.speak(utterance);
- }catch(e){notify('음성 재생을 지원하지 않는 브라우저입니다')}
+   const speech=new SpeechSynthesisUtterance(message);
+   // The most childlike effect available without a paid neural speech service.
+   // This is still device TTS, not a real child recording.
+   speech.lang='ko-KR';speech.rate=1.03;speech.pitch=1.55;speech.volume=1;
+   const voices=synth.getVoices().filter(v=>/^ko(?:-|_)/i.test(v.lang||''));
+   const preferred=voices.find(v=>/Yuna|유나|Seoyeon|서연|Jiyeon|지연|Sora|소라|여성|female/i.test(v.name))
+                ||voices.find(v=>/enhanced|premium/i.test(v.name))
+                ||voices[0];
+   if(preferred)speech.voice=preferred;
+   function restoreVolume(){if(musicOn)carolAudio.volume=.23;currentGreeting=null;}
+   speech.onstart=()=>{carolAudio.volume=musicOn?.065:.23};
+   speech.onend=restoreVolume;
+   speech.onerror=restoreVolume;
+   currentGreeting=speech;
+   synth.speak(speech);
+ }catch(e){notify('이 기기에서 음성 재생이 제한되었습니다')}
+}
+if('speechSynthesis' in window){
+ window.speechSynthesis.addEventListener?.('voiceschanged',()=>{ /* Korean voices loaded */ });
 }
 function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;greetName(name);if(!musicOn)startCarol();input.value='';input.blur();fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);pageEpoch=performance.now();shownKey='';await loadNames();const added=labels.find(l=>l.name===name);if(added)added.born=performance.now();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{drag=true;moved=false;lastX=e.clientX;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.abs(dx)>2)moved=true;rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(22,p.width/2));if(hit){notify('✨ '+hit.name+'님, 메리 크리스마스! ✨');greetName(hit.name)}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){ctx.clearRect(0,0,W,H);const grad=ctx.createRadialGradient(W/2,H*.4,0,W/2,H*.4,Math.max(W,H)*.7);grad.addColorStop(0,'#123027');grad.addColorStop(1,'#030913');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);for(const s of stars){ctx.globalAlpha=.15+.5*(.5+.5*Math.sin(t*.001+s.p));ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,7);ctx.fill()}ctx.globalAlpha=1;if(!drag)rotation+=.0024;const usableTop=Math.max(65,H*.12),usableBottom=Math.min(H-190,H*.77),available=Math.max(150,usableBottom-usableTop),scale=Math.min(W*.39,available*.44)*zoom,cx=W/2,cy=(usableTop+usableBottom)/2;const sn=Math.sin(rotation),cs=Math.cos(rotation);function pos(p){const x=p.x*cs-p.z*sn,z=p.x*sn+p.z*cs;const depth=3.5/(3.5+z*.16);return{x:cx+x*scale*depth,y:cy-p.y*scale*depth,z,depth}}const items=pts.map(p=>({p,...pos(p)})).sort((a,b)=>b.z-a.z);ctx.textAlign='center';ctx.textBaseline='middle';for(const v of items){const glow=.55+.45*Math.sin(t*.003+v.p.phase);ctx.globalAlpha=.35+.6*glow;ctx.fillStyle=v.p.color<.1?'#ffdc83':v.p.color<.35?'#c8ffcb':v.p.color<.7?'#6de3a0':'#419c79';ctx.font=Math.max(8,scale*.065*v.depth)+'px monospace';ctx.fillText(v.p.ch,v.x,v.y)}ctx.globalAlpha=1;for(const o of ornaments){const p=pos(o);ctx.globalAlpha=.65+.35*Math.sin(t*.004+o.phase);ctx.fillStyle=o.color;ctx.shadowColor=o.color;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.5,scale*.026)*p.depth,0,7);ctx.fill()}ctx.shadowBlur=0;ctx.globalAlpha=1;
 for(let strand=0;strand<3;strand++){ctx.beginPath();for(let j=0;j<=210;j++){const h=.06+j/210*.88,a=h*Math.PI*9+strand*2.094,r=h*.96,p=pos({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r});if(j===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}ctx.strokeStyle=['rgba(255,207,112,.48)','rgba(255,245,195,.4)','rgba(143,225,255,.38)'][strand];ctx.lineWidth=1.7;ctx.shadowColor='#ffd98b';ctx.shadowBlur=7;ctx.stroke();for(let j=0;j<34;j++){const h=.06+j/34*.88,a=h*Math.PI*9+strand*2.094,r=h*.96,p=pos({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r});ctx.fillStyle=['#ffdc82','#fef5bd','#a8e8ff'][strand];ctx.globalAlpha=.6+.4*Math.sin(t*.004+j*1.7+strand);ctx.beginPath();ctx.arc(p.x,p.y,1.6+Math.sin(t*.003+j)**2*1.1,0,7);ctx.fill()}}ctx.globalAlpha=1;ctx.shadowBlur=0;
