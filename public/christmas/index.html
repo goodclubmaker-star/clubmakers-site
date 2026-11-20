@@ -100,7 +100,7 @@ async function loadNames(){
     serverRows=newRows;
     if(deepWishId){
       const match=serverRows.find(r=>String(r.id)===String(deepWishId));
-      if(match){deepWishId=null;rememberMyName(match);setTimeout(()=>{if(findNameOnTree(match.id))showChristmasArt(match.name)},900);}
+      if(match){deepWishId=null;sharedWish=match;setTimeout(()=>{if(findNameOnTree(match.id))showChristmasArt(match.name)},900);}
     }
     refreshVisibleNames(performance.now());
   }catch(e){notify('이름 목록 연결을 확인해주세요')}
@@ -140,7 +140,7 @@ const myNameButton=document.getElementById('myNameBtn');
 const shareButton=document.getElementById('shareBtn');
 const saveCardButton=document.getElementById('saveCardBtn');
 const ornamentTypes=new Set(['star','heart','glass']);
-let myRecord=null,focusId=null,focusUntil=0,focusRotation=null,deepWishId=null;
+let myRecord=null,sharedWish=null,focusId=null,focusUntil=0,focusRotation=null,deepWishId=null;
 try{
  const saved=JSON.parse(localStorage.getItem('cm-christmas-own-v2')||'null');
  if(saved && /^\d+$/.test(String(saved.id||'')) && typeof saved.name==='string'){
@@ -162,7 +162,7 @@ function rememberMyName(row){
  if(!row || !row.name)return;
  myRecord={id:row.id,name:String(row.name).slice(0,12),ornament_type:ornamentTypes.has(row.ornament_type)?row.ornament_type:'star'};
  myNameButton.hidden=false;saveCardButton.hidden=false;
- try{localStorage.setItem('cm-christmas-own-v2',JSON.stringify(myRecord))}catch(e){}
+ try{localStorage.setItem('cm-christmas-own-v2',JSON.stringify(myRecord))}catch(e){}setSharingRecord(myRecord);
 }
 function findNameOnTree(id,name){
  const now=performance.now();
@@ -188,9 +188,157 @@ function findNameOnTree(id,name){
 }
 myNameButton.addEventListener('click',()=>{
  if(!myRecord)return;
- if(findNameOnTree(myRecord.id,myRecord.name))showChristmasArt(myRecord.name);
+ if(findNameOnTree(myRecord.id,myRecord.name)){showChristmasArt(myRecord.name);queueShareImagePreparation();}
  else notify('내 이름을 찾는 중입니다. 잠시 후 다시 눌러주세요.');
 });
+
+/* 900x1600 personalised greeting card, native iOS/Android share, download and
+ * fallback link copy. This needs no Kakao SDK and never sends the card to a server. */
+let shareBlob=null,shareBlobFor='',sharePromise=null;
+const cardWidth=900,cardHeight=1600;
+function treeShareURL(){
+ const url=new URL('/christmas/',location.origin);
+ const record=myRecord||sharedWish;
+ if(record&&/^\\d{1,18}$/.test(String(record.id)))url.searchParams.set('wish',String(record.id));
+ return url.href;
+}
+function cleanCardFileName(name){
+ return String(name||'christmas').replace(/[^0-9A-Za-z가-힣_-]/g,'').slice(0,12)||'christmas';
+}
+function drawCardToCanvas(name){
+ const c=document.createElement('canvas');c.width=cardWidth;c.height=cardHeight;
+ const g=c.getContext('2d');if(!g)return null;
+ const bg=g.createLinearGradient(0,0,0,cardHeight);
+ bg.addColorStop(0,'#091723');bg.addColorStop(.5,'#0d2d2d');bg.addColorStop(1,'#07121d');
+ g.fillStyle=bg;g.fillRect(0,0,cardWidth,cardHeight);
+ g.globalAlpha=.88;
+ // Use the exact same scene that visitors see, preserving aspect ratio.
+ g.drawImage(fireworkCanvas,0,0,fireworkCanvas.width,fireworkCanvas.height,80,55,740,1480);
+ g.drawImage(canvas,0,0,canvas.width,canvas.height,80,55,740,1480);
+ g.globalAlpha=1;
+ // Soft cinematic vignette protects readable card copy.
+ const fade=g.createLinearGradient(0,0,0,cardHeight);
+ fade.addColorStop(0,'rgba(3,10,18,.89)');
+ fade.addColorStop(.22,'rgba(3,10,18,.08)');
+ fade.addColorStop(.72,'rgba(3,10,18,.16)');
+ fade.addColorStop(1,'rgba(3,10,18,.94)');
+ g.fillStyle=fade;g.fillRect(0,0,cardWidth,cardHeight);
+ g.strokeStyle='rgba(255,223,157,.46)';g.lineWidth=2;
+ g.strokeRect(44,42,812,1516);
+ g.textAlign='center';g.textBaseline='middle';
+ g.fillStyle='#f5d89e';g.font='600 23px system-ui,-apple-system,sans-serif';
+ g.fillText('CLUBMAKERS  ·  CHRISTMAS 2026',450,114);
+ g.fillStyle='#fff8db';g.shadowColor='#ffce77';g.shadowBlur=15;
+ const greetingName=name?name+(name.endsWith('님')?'':'님'):'우리 모두';
+ let size=60;g.font='800 '+size+'px system-ui,-apple-system,sans-serif';
+ while(size>32&&g.measureText(greetingName).width>780){size-=3;g.font='800 '+size+'px system-ui,-apple-system,sans-serif'}
+ g.fillText(greetingName,450,300);
+ g.shadowBlur=0;
+ g.fillStyle='#e9fff4';g.font='800 56px system-ui,-apple-system,sans-serif';
+ g.fillText('메리 크리스마스!',450,1320);
+ g.strokeStyle='#e9ca86aa';g.lineWidth=2;g.beginPath();g.moveTo(260,1380);g.lineTo(640,1380);g.stroke();
+ g.fillStyle='#ffe4a5';g.font='700 35px system-ui,-apple-system,sans-serif';
+ g.fillText('골프채공작소',450,1455);
+ g.fillStyle='#c5d8ce';g.font='22px system-ui,-apple-system,sans-serif';
+ g.fillText('함께 만드는 크리스마스트리',450,1500);
+ return c;
+}
+async function makeShareBlob(){
+ const record=myRecord||sharedWish;
+ const name=record?.name||'';
+ const key=String(record?.id||'guest')+':'+name;
+ if(shareBlob&&shareBlobFor===key)return shareBlob;
+ if(sharePromise&&shareBlobFor===key)return sharePromise;
+ shareBlobFor=key;
+ const picture=drawCardToCanvas(name);
+ if(!picture)throw new Error('Canvas unavailable');
+ const blobPromise=new Promise((resolve,reject)=>{
+  if(typeof picture.toBlob==='function'){
+   picture.toBlob(blob=>blob?resolve(blob):reject(new Error('PNG conversion failed')),'image/png');
+  }else{
+   try{
+    const url=picture.toDataURL('image/png');
+    const binary=atob(url.split(',')[1]),bytes=new Uint8Array(binary.length);
+    for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+    resolve(new Blob([bytes],{type:'image/png'}));
+   }catch(e){reject(e)}
+  }
+ });
+ sharePromise=blobPromise;
+ try{
+  const blob=await blobPromise;
+  if(shareBlobFor===key)shareBlob=blob;
+  return blob;
+ }finally{if(sharePromise===blobPromise)sharePromise=null}
+}
+function setSharingRecord(record){
+ shareBlob=null;shareBlobFor='';sharePromise=null;
+ if(record)saveCardButton.hidden=false;
+}
+function queueShareImagePreparation(){
+ // Encode when the greeting is over, avoiding frame drops during fireworks.
+ setTimeout(()=>{
+  if(document.hidden)return;
+  const prepare=()=>makeShareBlob().catch(()=>{});
+  if(typeof requestIdleCallback==='function')requestIdleCallback(prepare,{timeout:1600});
+  else setTimeout(prepare,200);
+ },5300);
+}
+async function downloadShareImage(){
+ try{
+  saveCardButton.disabled=true;
+  const blob=await makeShareBlob(),record=myRecord||sharedWish;
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');link.href=url;
+  link.download='clubmakers-christmas-'+cleanCardFileName(record?.name)+'.png';
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+  notify('크리스마스 카드 이미지를 저장했어요');
+ }catch(e){
+  console.warn('Christmas photo save failed',e);
+  notify('이미지 저장에 실패했습니다. 다시 눌러주세요.');
+ }finally{saveCardButton.disabled=false}
+}
+async function shareChristmas(){
+ const url=treeShareURL();
+ const record=myRecord||sharedWish;
+ const name=record?.name||'';
+ const text=name?name+'님의 크리스마스트리를 함께 꾸며주세요!':'골프채공작소 크리스마스트리에 이름을 달아주세요!';
+ const title='골프채공작소 크리스마스트리';
+ const nativeShare=typeof navigator.share==='function';
+ try{
+  shareButton.disabled=true;
+  // When a card was pre-rendered after greeting, the native share sheet can
+  // include a PNG (KakaoTalk, Messages, etc.) with no extra service account.
+  if(nativeShare && shareBlob && shareBlobFor===String(record?.id||'guest')+':'+name && typeof File==='function'){
+   const file=new File([shareBlob],'clubmakers-christmas.png',{type:'image/png'});
+   if(navigator.canShare?.({files:[file]})){
+    await navigator.share({files:[file],title,text,url});
+    return;
+   }
+  }
+  if(nativeShare){await navigator.share({title,text,url});return;}
+  if(navigator.clipboard?.writeText){
+   await navigator.clipboard.writeText(url);
+   notify('공유 링크를 복사했어요. 카카오톡에 붙여넣으세요.');
+   return;
+  }
+  const fallback=document.createElement('textarea');
+  fallback.value=url;document.body.appendChild(fallback);fallback.select();
+  const copied=document.execCommand('copy');fallback.remove();
+  if(copied)notify('공유 링크를 복사했습니다.');
+  else notify('주소창에서 링크를 복사해 공유해 주세요.');
+ }catch(e){
+  if(e?.name==='AbortError')return;
+  console.warn('Native share failed, retrying clipboard',e);
+  try{
+   await navigator.clipboard.writeText(url);
+   notify('공유 링크를 복사했어요.');
+  }catch(err){notify('공유가 제한되었습니다. 주소창에서 링크를 복사해 주세요.')}
+ }finally{shareButton.disabled=false}
+}
+shareButton.addEventListener('click',shareChristmas);
+saveCardButton.addEventListener('click',downloadShareImage);
 const artRoot=document.getElementById('christmasArt'),artName=document.getElementById('christmasArtName');
 const prefersLessMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches||false;
 let artStart=0,artStopTimer=null,artParticles=[],artRun=0;
@@ -468,7 +616,7 @@ function paintSnow(t,front=false){
  }
  ctx.restore();
 }
-function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name,ornament_type:ornamentInput.value})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();const row=(Array.isArray(created)&&created[0])||{name,ornament_type:ornamentInput.value};rememberMyName({...row,name,ornament_type:ornamentInput.value});pageEpoch=performance.now();shownKey='';await loadNames();if(row.id) findNameOnTree(row.id,name);const added=labels.find(l=>l.name===name);if(added)added.born=performance.now()+3900;notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){findNameOnTree(hit.id,hit.name);showChristmasArt(hit.name);notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){requestAnimationFrame(frame);if(document.hidden)return;
+function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name,ornament_type:ornamentInput.value})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();const row=(Array.isArray(created)&&created[0])||{name,ornament_type:ornamentInput.value};rememberMyName({...row,name,ornament_type:ornamentInput.value});pageEpoch=performance.now();shownKey='';await loadNames();if(row.id) findNameOnTree(row.id,name);const added=labels.find(l=>l.name===name);if(added)added.born=performance.now()+3900;queueShareImagePreparation();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){findNameOnTree(hit.id,hit.name);showChristmasArt(hit.name);queueShareImagePreparation();notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){requestAnimationFrame(frame);if(document.hidden)return;
  if(lastDrawAt&&t-lastDrawAt<minFrameInterval)return;
  const frameStartedAt=performance.now();
  const dt=Math.min(80,Math.max(16,t-lastDrawAt||33.3));lastDrawAt=t;
