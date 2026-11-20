@@ -85,11 +85,19 @@ background:radial-gradient(ellipse 76% 57% at 50% 40%,#0b281f 0%,#081c24 57%,#03
 .xmas-art.active.reel-recording .xmas-art-letter{animation:none;opacity:1;transform:none}
 @keyframes reel-name-grow{0%{transform:scale(.13);opacity:.70}76%{transform:scale(1.08);opacity:1}100%{transform:scale(1);opacity:1}}
 @media(prefers-reduced-motion:reduce){.xmas-art.active.reel-recording .xmas-art-name{animation:none;opacity:1;transform:scale(1)}}
-</style></head><body><div class="xmas-fx-backdrop" aria-hidden="true"></div><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">CLUBMAKERS ✦ 2026</div></div><div class="xmas-actions" aria-label="내 크리스마스트리"><button type="button" id="myNameBtn" hidden>★ 내 이름 찾기</button><button type="button" id="saveCardBtn" hidden>▣ 카드 저장</button><button type="button" id="recordReelBtn" hidden>▶ 릴스 영상 만들기</button></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div id="reelModal" class="xmas-reel-modal" role="dialog" aria-modal="true" aria-labelledby="reelModalTitle" hidden>
+
+.xmas-selected{max-width:min(225px,60vw);padding:8px 10px;border-radius:11px;
+ border:1px solid rgba(251,220,145,.4);background:rgba(4,25,24,.92);
+ box-shadow:0 4px 18px #0006;color:#ffecc8;font-size:11px;line-height:1.65}
+.xmas-selected[hidden]{display:none!important}
+.xmas-selected span{display:block;overflow-wrap:anywhere;max-height:62px;overflow-y:auto}
+.xmas-selected button{border:0;background:transparent;color:#bce9db;cursor:pointer;
+ min-height:28px;font-size:11px;padding:4px 0 0;opacity:.92}
+</style></head><body><div class="xmas-fx-backdrop" aria-hidden="true"></div><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">CLUBMAKERS ✦ 2026</div></div><div class="xmas-actions" aria-label="내 크리스마스트리"><button type="button" id="myNameBtn" hidden>★ 내 이름 찾기</button><button type="button" id="saveCardBtn" hidden>▣ 카드 저장</button><button type="button" id="recordReelBtn" hidden>▶ 영상 만들기</button><div id="videoSelection" class="xmas-selected" hidden><span id="videoSelectionText"></span><button id="clearVideoSelection" type="button">선택 해제</button></div></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div id="reelModal" class="xmas-reel-modal" role="dialog" aria-modal="true" aria-labelledby="reelModalTitle" hidden>
 <section class="xmas-reel-dialog"><button id="closeReelBtn" type="button" class="xmas-reel-close" aria-label="영상 미리보기 닫기">닫기 ×</button>
-<h3 id="reelModalTitle">나만의 크리스마스 릴스</h3><video id="reelPreview" controls playsinline preload="metadata" aria-label="이름과 폭죽이 나오는 크리스마스 영상 미리보기"></video>
+<h3 id="reelModalTitle">우리들의 크리스마스 영상</h3><video id="reelPreview" controls playsinline preload="metadata" aria-label="이름과 폭죽이 나오는 크리스마스 영상 미리보기"></video>
 <div id="reelStatus" class="xmas-reel-progress" role="status" aria-live="polite">세로형 축하 영상이 준비됐어요</div>
-<p>6초 · 9:16 세로 영상 · 무음 (인스타그램에서 음악을 추가하세요)</p>
+<p>15~20초 · 9:16 세로 영상 · 캐롤 포함 · 선택한 이름 순서대로</p>
 <div class="xmas-reel-controls"><button id="downloadReelBtn" type="button">영상 저장</button></div>
 </section></div><div class="footer"><b>골프채공작소</b><small>CLUBMAKERS</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><select id="ornamentType" aria-label="이름 장식 선택" title="장식 선택"><option value="star">★ 별</option><option value="heart">♥ 하트</option><option value="glass">● 구슬</option></select><button type="submit">✨ 이름 달기</button></form><script>
 (()=>{'use strict';const canvas=document.getElementById('tree'),ctx=canvas.getContext('2d'),fireworkCanvas=document.getElementById('xmasFireworks'),fireworkCtx=fireworkCanvas.getContext('2d'),input=document.getElementById('name'),toast=document.getElementById('toast');let W=0,H=0,dpr=1,rotation=0,drag=false,lastX=0,pointerStartX=0,pointerStartY=0,moved=false,zoom=1,seed=2026,ornaments=[],labels=[],projected=[];const rand=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);const pts=[];for(let i=0;i<850;i++){const h=rand(),a=rand()*Math.PI*2,r=h*Math.sqrt(rand());pts.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,phase:rand()*6.28,ch:['+','*','o','x','@'][Math.floor(rand()*5)],color:rand()})}for(let i=0;i<69;i++){let h=.1+rand()*.84,a=rand()*Math.PI*2,r=h*.98;ornaments.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,color:['#ffd66b','#ff6b89','#8ebaff','#db9aff','#f6f3d5','#ff9b55'][i%6],phase:rand()*6.28})}
@@ -141,7 +149,7 @@ async function loadNames(){
     if(deepWishId){
       const match=serverRows.find(r=>String(r.id)===String(deepWishId));
       if(match){
-       deepWishId=null;sharedWish=match;setSharingRecord(match);
+       deepWishId=null;sharedWish=match;setSharingRecord(match);selectVideoName(match);
        setTimeout(()=>{if(findNameOnTree(match.id))showChristmasArt(match.name);queueShareImagePreparation()},900);
       }
     }
@@ -245,7 +253,7 @@ myNameButton.addEventListener('click',async()=>{
   }catch(e){console.warn('Own Christmas ornament lookup failed',e)}
  }
  if(findNameOnTree(row.id,row.name)){
-  setSharingRecord(row);showChristmasArt(row.name);queueShareImagePreparation();
+  setSharingRecord(row);selectVideoName(row);showChristmasArt(row.name);queueShareImagePreparation();
  }else notify('내 이름을 찾지 못했습니다.');
 });
 
@@ -331,7 +339,7 @@ async function makeShareBlob(){
 function setSharingRecord(record){
  currentShareRecord=record||null;
  shareBlob=null;shareBlobFor='';sharePromise=null;
- if(record){saveCardButton.hidden=false;document.getElementById('recordReelBtn').hidden=false;}
+ if(record){saveCardButton.hidden=false;document.getElementById('recordReelBtn').hidden=false;}if(typeof updateVideoSelection==='function')updateVideoSelection();
 }
 function queueShareImagePreparation(){
  // Encode when the greeting is over, avoiding frame drops during fireworks.
@@ -371,9 +379,56 @@ const reelVideo=document.getElementById('reelPreview');
 const reelStatus=document.getElementById('reelStatus');
 const downloadReelButton=document.getElementById('downloadReelBtn');
 const closeReelButton=document.getElementById('closeReelBtn');
-const reelDurationMs=6200;
+const reelDurationBaseMs=18000;
+const videoSelectionBar=document.getElementById('videoSelection');
+const videoSelectionText=document.getElementById('videoSelectionText');
+const clearVideoSelection=document.getElementById('clearVideoSelection');
+let selectedVideoNames=[];
+function updateVideoSelection(){
+ const count=selectedVideoNames.length;
+ videoSelectionBar.hidden=count===0;
+ const short=selectedVideoNames.slice(0,5).map(row=>row.name);
+ videoSelectionText.textContent=count+'명 선택 · '+short.join(' · ')+(count>5?' 외 '+(count-5)+'명':'');
+ const previous=currentShareRecord||myRecord||sharedWish;
+ recordReelButton.hidden=!count&&!previous;
+ recordReelButton.textContent=reelBusy?'● 영상 제작 중…':
+  '▶ 영상 만들기'+(count>1?' ('+count+'명)':'');
+}
+function selectVideoName(row){
+ if(!row||!row.name)return;
+ const key=String(row.id??'name:'+row.name);
+ if(!selectedVideoNames.some(r=>String(r.id??'name:'+r.name)===key)){
+  selectedVideoNames.push({id:row.id,name:String(row.name).slice(0,12),
+   ornament_type:ornamentTypes.has(row.ornament_type)?row.ornament_type:'star'});
+ }
+ updateVideoSelection();
+}
+clearVideoSelection.addEventListener('click',()=>{
+ if(reelBusy)return;
+ selectedVideoNames=[];
+ updateVideoSelection();
+});
+function selectedVideoTargets(){
+ const selected=selectedVideoNames.map(row=>({...row}));
+ if(selected.length)return selected;
+ const current=currentShareRecord||myRecord||sharedWish;
+ return current&&current.name?[{...current}]:[];
+}
+function plannedVideoDuration(count){
+ // Always 15–20s, even for a long selection; never silently exclude names.
+ return Math.min(20000,Math.max(15000,reelDurationBaseMs+Math.max(0,count-3)*280));
+}
+function targetAtVideoTime(targets,elapsed,duration){
+ const finale=Math.max(1700,Math.min(2300,duration*.12));
+ const sequence=Math.max(1,duration-finale);
+ const segment=sequence/Math.max(1,targets.length);
+ const index=Math.min(targets.length-1,Math.floor(Math.min(elapsed,sequence-1)/segment));
+ return {index,segment,local:Math.max(0,elapsed-index*segment),finale:elapsed>=sequence,sequence};
+}
+
 let currentReel=null,reelBusy=false,reelObjectURL=null;
 if(myRecord||sharedWish)recordReelButton.hidden=false;
+updateVideoSelection();
 function reelMimeType(){
  if(typeof MediaRecorder==='undefined'||typeof MediaRecorder.isTypeSupported!=='function')return '';
  const types=['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp8','video/webm'];
@@ -549,7 +604,7 @@ async function recordChristmasReel(){
   if(stream)stream.getTracks().forEach(track=>track.stop());
   if(offscreen)offscreen.remove();
   artRoot.classList.remove('reel-recording');
-  reelBusy=false;recordReelButton.disabled=false;recordReelButton.textContent='▶ 릴스 영상 만들기';
+  reelBusy=false;recordReelButton.disabled=false;recordReelButton.textContent='▶ 영상 만들기';
  }
 }
 async function downloadReel(){
@@ -861,7 +916,7 @@ function paintSnow(t,front=false){
  }
  ctx.restore();
 }
-function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name,ornament_type:ornamentInput.value})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();const row=(Array.isArray(created)&&created[0])||{name,ornament_type:ornamentInput.value};rememberMyName({...row,name,ornament_type:ornamentInput.value});pageEpoch=performance.now();shownKey='';await loadNames();if(row.id) findNameOnTree(row.id,name);const added=labels.find(l=>l.name===name);if(added)added.born=performance.now()+3900;queueShareImagePreparation();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{focusRotation=null;drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){findNameOnTree(hit.id,hit.name);const hitRecord=serverRows.find(r=>String(r.id)===String(hit.id));setSharingRecord(hitRecord||{id:hit.id,name:hit.name,ornament_type:hit.ornament_type});showChristmasArt(hit.name);queueShareImagePreparation();notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){requestAnimationFrame(frame);if(document.hidden)return;
+function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name,ornament_type:ornamentInput.value})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();const row=(Array.isArray(created)&&created[0])||{name,ornament_type:ornamentInput.value};rememberMyName({...row,name,ornament_type:ornamentInput.value});selectVideoName({...row,name,ornament_type:ornamentInput.value});pageEpoch=performance.now();shownKey='';await loadNames();if(row.id) findNameOnTree(row.id,name);const added=labels.find(l=>l.name===name);if(added)added.born=performance.now()+3900;queueShareImagePreparation();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{focusRotation=null;drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){findNameOnTree(hit.id,hit.name);const hitRecord=serverRows.find(r=>String(r.id)===String(hit.id));const chosen=hitRecord||{id:hit.id,name:hit.name,ornament_type:hit.ornament_type};setSharingRecord(chosen);selectVideoName(chosen);showChristmasArt(hit.name);queueShareImagePreparation();notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){requestAnimationFrame(frame);if(document.hidden)return;
  if(lastDrawAt&&t-lastDrawAt<minFrameInterval)return;
  const frameStartedAt=performance.now();
  const dt=Math.min(80,Math.max(16,t-lastDrawAt||33.3));lastDrawAt=t;
