@@ -31,8 +31,9 @@
 @keyframes art-holiday{0%{opacity:0;transform:scale(.86)}15%,60%{opacity:1;transform:scale(1)}86%{opacity:.92}100%{opacity:0;transform:scale(1.1)}}
 @keyframes art-beam{0%{opacity:0;transform:scaleX(0)}20%,72%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1.2)}}
 @media(prefers-reduced-motion:reduce){.xmas-art.active{transition:none}.xmas-art.active::before,.xmas-art.active .xmas-art-halo,.xmas-art.active .xmas-art-ring,.xmas-art.active .xmas-art-comet,.xmas-art.active .xmas-art-overline,.xmas-art.active .xmas-art-letter,.xmas-art.active .xmas-art-holiday,.xmas-art.active .xmas-art-beam,.xmas-art.active .xmas-art-signature{animation:none;opacity:1;transform:none}.xmas-art.active::before{opacity:.6}.xmas-art.active .xmas-art-ring,.xmas-art.active .xmas-art-halo{opacity:.25}.xmas-art.active .xmas-art-halo,.xmas-art.active .xmas-art-ring{transform:translate(-50%,-50%)}}
-</style></head><body><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">CLUBMAKERS ✦ 2026</div></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div class="footer"><b>골프채공작소</b><small>CLUBMAKERS</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><button type="submit">✨ 이름 달기</button></form><script>
-(()=>{'use strict';const canvas=document.getElementById('tree'),ctx=canvas.getContext('2d'),input=document.getElementById('name'),toast=document.getElementById('toast');let W=0,H=0,dpr=1,rotation=0,drag=false,lastX=0,pointerStartX=0,pointerStartY=0,moved=false,zoom=1,seed=2026,ornaments=[],labels=[],projected=[];const rand=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);const pts=[];for(let i=0;i<1250;i++){const h=rand(),a=rand()*Math.PI*2,r=h*Math.sqrt(rand());pts.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,phase:rand()*6.28,ch:['+','*','o','x','@'][Math.floor(rand()*5)],color:rand()})}for(let i=0;i<85;i++){let h=.1+rand()*.84,a=rand()*Math.PI*2,r=h*.98;ornaments.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,color:['#ffd66b','#ff6b89','#8ebaff','#db9aff','#f6f3d5','#ff9b55'][i%6],phase:rand()*6.28})}const stars=Array.from({length:65},()=>({x:rand(),y:rand(),r:.5+rand()*1.2,p:rand()*6.28}));function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();const API='https://xnxthuwnqipkaylwisfu.supabase.co/rest/v1/christmas_tree_names',KEY='sb_publishable_C9IEZO8H-CCSVeiD-TocCw_rnCgEzTO';let serverRows=[],rowRevision=0,shownKey='',pageEpoch=performance.now();const headers={'apikey':KEY,'Content-Type':'application/json'};
+.xmas-fireworks{position:absolute;inset:0;z-index:6;pointer-events:none;width:100%;height:100%;display:block;mix-blend-mode:screen}
+</style></head><body><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">CLUBMAKERS ✦ 2026</div></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div class="footer"><b>골프채공작소</b><small>CLUBMAKERS</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><button type="submit">✨ 이름 달기</button></form><script>
+(()=>{'use strict';const canvas=document.getElementById('tree'),ctx=canvas.getContext('2d'),fireworkCanvas=document.getElementById('xmasFireworks'),fireworkCtx=fireworkCanvas.getContext('2d'),input=document.getElementById('name'),toast=document.getElementById('toast');let W=0,H=0,dpr=1,rotation=0,drag=false,lastX=0,pointerStartX=0,pointerStartY=0,moved=false,zoom=1,seed=2026,ornaments=[],labels=[],projected=[];const rand=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);const pts=[];for(let i=0;i<1250;i++){const h=rand(),a=rand()*Math.PI*2,r=h*Math.sqrt(rand());pts.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,phase:rand()*6.28,ch:['+','*','o','x','@'][Math.floor(rand()*5)],color:rand()})}for(let i=0;i<85;i++){let h=.1+rand()*.84,a=rand()*Math.PI*2,r=h*.98;ornaments.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,color:['#ffd66b','#ff6b89','#8ebaff','#db9aff','#f6f3d5','#ff9b55'][i%6],phase:rand()*6.28})}const stars=Array.from({length:65},()=>({x:rand(),y:rand(),r:.5+rand()*1.2,p:rand()*6.28}));function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);fireworkCanvas.width=Math.round(W*dpr);fireworkCanvas.height=Math.round(H*dpr);fireworkCtx.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();const API='https://xnxthuwnqipkaylwisfu.supabase.co/rest/v1/christmas_tree_names',KEY='sb_publishable_C9IEZO8H-CCSVeiD-TocCw_rnCgEzTO';let serverRows=[],rowRevision=0,shownKey='',pageEpoch=performance.now();const headers={'apikey':KEY,'Content-Type':'application/json'};
 function visibleCapacity(){return W<430?42:W<800?65:95}
 function refreshVisibleNames(t){
   const capacity=visibleCapacity(),pages=Math.max(1,Math.ceil(serverRows.length/capacity)),page=Math.floor(Math.max(0,t-pageEpoch)/16000)%pages,key=[page,capacity,rowRevision].join(':');
@@ -84,6 +85,107 @@ carolAudio.addEventListener('error',()=>{if(musicOn)stopCarol();notify('캐롤 �
 const artRoot=document.getElementById('christmasArt'),artName=document.getElementById('christmasArtName');
 const prefersLessMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches||false;
 let artStart=0,artStopTimer=null,artParticles=[],artRun=0;
+
+/*
+ * Festive silent star fireworks. All pixels are drawn above the greeting veil
+ * in a separate transparent canvas. On new name, restart five overlapping bursts.
+ * No audio, no extra downloads, no third-party dependencies.
+ */
+let fireworkJobs=[],fireworkSparks=[];
+const fireworkColors=['#fff4b3','#ffd46c','#fffdf0','#a1fff0','#8fe3ff','#ffc8e5','#ffb0a8'];
+function scheduleChristmasFireworks(){
+ fireworkJobs=[
+  {delay:.08,x:.22,y:.235,amount:54,kind:0},
+  {delay:.68,x:.79,y:.30,amount:56,kind:1},
+  {delay:1.28,x:.22,y:.58,amount:49,kind:2},
+  {delay:1.89,x:.78,y:.58,amount:55,kind:3},
+  {delay:2.62,x:.51,y:.21,amount:60,kind:4}
+ ].map(j=>({...j,started:false,age:0}));
+ fireworkSparks=[];
+ fireworkCtx.clearRect(0,0,W,H);
+}
+function activateFirework(job){
+ job.started=true;
+ job.xPx=job.x*W;job.yPx=job.y*H;
+ const scale=Math.max(.55,Math.min(1.25,Math.min(W,H)/600));
+ const phase=Math.random()*Math.PI*2;
+ for(let i=0;i<job.amount;i++){
+  const a=i*Math.PI*2/job.amount+phase+(Math.random()-.5)*.19;
+  const power=(92+Math.random()*162)*scale;
+  const size=1.1+Math.random()*2.5;
+  const colour=fireworkColors[(i+job.kind*2)%fireworkColors.length];
+  fireworkSparks.push({
+   start:job.delay,x:job.xPx,y:job.yPx,vx:Math.cos(a)*power,
+   vy:Math.sin(a)*power,life:.88+Math.random()*.73,
+   colour,size,phase:Math.random()*Math.PI*2,star:i%6===0,
+   spiral:Math.random()>.7
+  });
+ }
+}
+function drawStarCross(gc,x,y,r,rot){
+ gc.save();gc.translate(x,y);gc.rotate(rot);
+ gc.beginPath();
+ for(let i=0;i<8;i++){
+  const angle=i*Math.PI/4-Math.PI/2;
+  const radius=i%2===0?r:r*.2;
+  const px=Math.cos(angle)*radius,py=Math.sin(angle)*radius;
+  if(i===0)gc.moveTo(px,py);else gc.lineTo(px,py);
+ }
+ gc.closePath();gc.fill();gc.restore();
+}
+function drawChristmasFireworks(t){
+ fireworkCtx.clearRect(0,0,W,H);
+ if(prefersLessMotion||!artRoot.classList.contains('active'))return;
+ const age=(t-artStart)/1000;
+ if(age<0||age>4.65)return;
+ const fc=fireworkCtx;
+ fc.save();fc.globalCompositeOperation='lighter';
+ for(const job of fireworkJobs){
+  if(!job.started&&age>=job.delay)activateFirework(job);
+  if(!job.started)continue;
+  const elapsed=age-job.delay;
+  if(elapsed>1.05)continue;
+  const pulse=Math.max(0,1-elapsed/1.05);
+  const ex=job.xPx,ey=job.yPx;
+  fc.globalAlpha=pulse*.8;
+  fc.strokeStyle=job.kind%2?'#bcfff2':'#ffdf93';
+  fc.lineWidth=Math.max(.8,2.5*pulse);
+  fc.shadowBlur=21;fc.shadowColor=fc.strokeStyle;
+  fc.beginPath();fc.arc(ex,ey,18+elapsed*126,0,Math.PI*2);fc.stroke();
+  fc.globalAlpha=pulse*.42;
+  fc.beginPath();fc.arc(ex,ey,10+elapsed*72,0,Math.PI*2);fc.stroke();
+  if(elapsed<.32){
+   const flash=Math.pow(1-elapsed/.32,1.7);
+   fc.globalAlpha=flash;
+   fc.fillStyle='#fffbe6';fc.shadowBlur=25*flash;
+   drawStarCross(fc,ex,ey,(5+25*flash),elapsed*.65);
+  }
+ }
+ // Particles have tiny trails, bright cores and occasional crisp four-point stars.
+ for(const p of fireworkSparks){
+  const lifeAge=age-p.start;
+  if(lifeAge<0||lifeAge>p.life)continue;
+  const fade=Math.pow(Math.max(0,1-lifeAge/p.life),1.32);
+  const drift=lifeAge*(1-.1*lifeAge);
+  const x=p.x+p.vx*drift+Math.sin(p.phase+lifeAge*6)*(p.spiral?11:2);
+  const y=p.y+p.vy*drift+49*lifeAge*lifeAge;
+  if(x<0||x>W||y<0||y>H)continue;
+  const sparkle=.8+.2*Math.cos(lifeAge*21+p.phase);
+  fc.globalAlpha=fade*sparkle;
+  fc.shadowColor=p.colour;fc.shadowBlur=11;
+  fc.strokeStyle=p.colour;fc.lineWidth=Math.max(1,p.size*.8);
+  fc.beginPath();fc.moveTo(x-p.vx*.038,y-p.vy*.038);fc.lineTo(x,y);fc.stroke();
+  fc.fillStyle=lifeAge<.21?'#fffdf8':p.colour;
+  if(p.star){
+   fc.shadowBlur=17;
+   drawStarCross(fc,x,y,p.size*(1.9+.45*sparkle),lifeAge*2+p.phase);
+  }else{
+   fc.beginPath();fc.arc(x,y,Math.max(.6,p.size*.69),0,Math.PI*2);fc.fill();
+  }
+ }
+ fc.restore();
+}
+
 function showChristmasArt(rawName){
  const clean=String(rawName||'').trim().slice(0,12);
  if(!clean)return;
@@ -104,7 +206,7 @@ function showChristmasArt(rawName){
  artRoot.setAttribute('aria-label',display+', 메리 크리스마스!');
  artRoot.setAttribute('aria-hidden','false');
  artRoot.classList.add('active');
- artStart=performance.now();artRun++;
+ artStart=performance.now();artRun++;scheduleChristmasFireworks();
  if(!prefersLessMotion){
    artParticles=Array.from({length:76},(_,i)=>{
      const a=(i/76)*Math.PI*2+(Math.random()-.5)*.21,speed=24+Math.random()*116;
@@ -117,7 +219,7 @@ function showChristmasArt(rawName){
    if(artRun!==run)return;
    artRoot.classList.remove('active');
    artRoot.setAttribute('aria-hidden','true');
-   artParticles=[];
+   artParticles=[];fireworkJobs=[];fireworkSparks=[];fireworkCtx.clearRect(0,0,W,H);
  },prefersLessMotion?2400:4600);
 }
 function drawChristmasArt(t){
@@ -181,5 +283,5 @@ for(const l of labels.map(p=>({p,...pos(p)})).sort((a,b)=>b.z-a.z)){
     ctx.restore();
   }
   projected.push({x:l.x,y,width,name:l.p.name,id:l.p.id});
-}ctx.shadowBlur=0;ctx.globalAlpha=1;drawChristmasArt(t);requestAnimationFrame(frame)}requestAnimationFrame(frame)})();
+}ctx.shadowBlur=0;ctx.globalAlpha=1;drawChristmasArt(t);drawChristmasFireworks(t);requestAnimationFrame(frame)}requestAnimationFrame(frame)})();
 </script></body></html>
