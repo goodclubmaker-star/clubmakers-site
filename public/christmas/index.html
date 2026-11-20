@@ -331,7 +331,7 @@ function setSharingRecord(record){
 function queueShareImagePreparation(){
  // Encode when the greeting is over, avoiding frame drops during fireworks.
  setTimeout(()=>{
-  if(document.hidden)return;
+  if(document.hidden||reelBusy)return;
   const prepare=()=>makeShareBlob().catch(()=>{});
   if(typeof requestIdleCallback==='function')requestIdleCallback(prepare,{timeout:1600});
   else setTimeout(prepare,200);
@@ -483,8 +483,8 @@ function showReelPreview(blob,name,mime){
  reelVideo.muted=true;
  reelVideo.load();
  const mp4=mime.includes('mp4');
- reelStatus.textContent=mp4?'MP4 영상 완성 · 인스타그램 릴스에 올려보세요':
-   'WebM 영상 완성 · 인스타그램에서 거부하면 MP4 변환이 필요해요';
+ reelStatus.textContent=mp4?'MP4 영상 완성 · 영상 저장 또는 인스타그램으로 공유하세요':
+   'WebM 영상 완성 · 인스타그램 업로드에는 MP4 변환이 필요할 수 있습니다';
  reelModal.hidden=false;downloadReelButton.disabled=false;shareReelButton.disabled=false;
 }
 function getVideoFile(){
@@ -573,14 +573,30 @@ async function recordChristmasReel(){
   reelBusy=false;recordReelButton.disabled=false;recordReelButton.textContent='▶ 릴스 영상 만들기';
  }
 }
-function downloadReel(){
+async function downloadReel(){
  if(!currentReel)return;
- const {blob,fileName}=getVideoFile();
+ const {blob,fileName,mime,mp4}=getVideoFile();
+ // iOS Safari commonly saves files to Files, not Photos. The native sharing
+ // sheet provides the "Save Video" action when the OS supports it.
+ if(mp4&&typeof navigator.share==='function'&&typeof File==='function'){
+  const file=new File([blob],fileName,{type:mime});
+  if(navigator.canShare?.({files:[file]})){
+   try{
+    await navigator.share({files:[file],title:'골프채공작소 크리스마스 릴스'});
+    reelStatus.textContent='공유 메뉴에서 ‘비디오 저장’을 선택하면 사진 앱에 저장할 수 있습니다.';
+    return;
+   }catch(e){
+    if(e?.name==='AbortError')return;
+    console.warn('Native Save Video is unavailable, using download',e);
+   }
+  }
+ }
  const url=URL.createObjectURL(blob);
  const a=document.createElement('a');a.download=fileName;a.href=url;
  document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),5000);
- reelStatus.textContent='영상 파일을 저장했습니다. 인스타그램에서 릴스 또는 스토리로 올려주세요.';
+ reelStatus.textContent=mp4?'MP4 파일을 저장했습니다. 릴스에서 동영상을 가져오세요.':
+  'WebM 파일을 저장했습니다. 인스타그램에 올리려면 MP4로 변환해야 할 수 있습니다.';
 }
 async function shareReel(){
  if(!currentReel)return;
