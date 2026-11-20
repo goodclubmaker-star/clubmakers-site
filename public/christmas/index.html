@@ -716,7 +716,7 @@ async function downloadReel(){
  const a=document.createElement('a');a.download=fileName;a.href=url;
  document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),5000);
- reelStatus.textContent=mp4?'MP4 파일을 저장했습니다. 릴스에서 동영상을 가져오세요.':
+ reelStatus.textContent=mp4?'음악이 담긴 MP4 영상을 저장했습니다. 인스타그램에서 불러오세요.':
   'WebM 파일을 저장했습니다. 인스타그램에 올리려면 MP4로 변환해야 할 수 있습니다.';
 }
 function closeReel(){
