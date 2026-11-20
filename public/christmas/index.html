@@ -459,7 +459,7 @@ function showReelPreview(blob,name,mime){
  const mp4=mime.includes('mp4');
  reelStatus.textContent=mp4?'MP4 영상 완성 · 영상 저장 또는 인스타그램으로 공유하세요':
    'WebM 영상 완성 · 인스타그램 업로드에는 MP4 변환이 필요할 수 있습니다';
- reelModal.hidden=false;downloadReelButton.disabled=false;shareReelButton.disabled=false;
+ reelModal.hidden=false;downloadReelButton.disabled=false;
 }
 function getVideoFile(){
  if(!currentReel)throw new Error('No recorded reel');
