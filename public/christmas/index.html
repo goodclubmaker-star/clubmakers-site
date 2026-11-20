@@ -186,6 +186,105 @@ function drawChristmasFireworks(t){
  fc.restore();
 }
 
+
+/* Large fireworks BEHIND the tree. Rendered into the main canvas immediately
+ * after the backdrop, before tree lights, ornaments and name labels.
+ * Celebration fires eight staggering bursts; idle mode pops softly too. */
+const backdropPalette=['#ffe594','#ff9bc1','#a7fff2','#8dc8ff','#fff7d6','#ecbaff'];
+let backdropSparks=[],backdropRings=[],backdropPlan=[],nextIdleFirework=0,backdropPlanRun=-1;
+let backdropBurstCount=0;
+function createBackdropBurst(xNorm,yNorm,t,intensity=1){
+ const x=xNorm*W,y=yNorm*H;
+ const scale=Math.max(.55,Math.min(1.26,Math.min(W,H)/540));
+ const speed=scale*(112+Math.random()*38)*intensity;
+ const colour=backdropPalette[backdropBurstCount++%backdropPalette.length];
+ const count=Math.round((W<500?62:82)*Math.min(1.3,intensity));
+ backdropRings.push({x,y,start:t,radius:0,colour,intensity});
+ const phase=Math.random()*Math.PI*2;
+ for(let i=0;i<count;i++){
+  const angle=i/count*Math.PI*2+phase+(Math.random()-.5)*.10;
+  const spread=.65+Math.random()*.58;
+  backdropSparks.push({
+   x,y,start:t,vx:Math.cos(angle)*speed*spread,
+   vy:Math.sin(angle)*speed*spread,colour,
+   duration:860+Math.random()*680,
+   star:i%7===0,size:1+Math.random()*1.65,phase:Math.random()*6.28
+  });
+ }
+ // Hard limits prevent unbounded memory or excessive drawing on slow phones.
+ if(backdropSparks.length>760)backdropSparks.splice(0,backdropSparks.length-760);
+ if(backdropRings.length>26)backdropRings.splice(0,backdropRings.length-26);
+}
+function startBackdropFireworkShow(){
+ if(prefersLessMotion)return;
+ // Staggered left, right and high-center explosions that remain visible beside the tree.
+ backdropPlan=[
+  [.07,.13,.23,1.02],[.39,.86,.33,1.08],[.76,.24,.52,1.11],
+  [1.13,.74,.17,1.14],[1.50,.13,.44,1.06],[1.93,.88,.52,1.13],
+  [2.31,.35,.13,1.18],[2.79,.69,.37,1.19],[3.24,.10,.33,1.08],
+  [3.62,.91,.24,1.08]
+ ].map(([delay,x,y,intensity])=>({at:artStart+delay*1000,x,y,intensity,done:false}));
+ backdropPlanRun=artRun;
+}
+function drawBackdropFireworks(t){
+ if(prefersLessMotion)return;
+ if(!backdropPlan.length&&artRoot.classList.contains('active')&&backdropPlanRun!==artRun){
+   startBackdropFireworkShow();
+ }
+ for(const burst of backdropPlan){
+  if(!burst.done&&t>=burst.at){burst.done=true;createBackdropBurst(burst.x,burst.y,t,burst.intensity)}
+ }
+ if(backdropPlan.length&&backdropPlan.every(j=>j.done))backdropPlan=[];
+ // Subtle surprise fireworks even when nobody taps. Every 4–7 seconds,
+ // one or two side bursts explode behind the moving tree.
+ if(!artRoot.classList.contains('active')&&t>=nextIdleFirework){
+  if(nextIdleFirework>0){
+   const side=backdropBurstCount%2===0;
+   createBackdropBurst(side?.16:.84,.16+Math.random()*.35,t,.87);
+   if(backdropBurstCount%3===0)createBackdropBurst(side?.83:.18,.30+Math.random()*.22,t,.8);
+  }
+  nextIdleFirework=t+3700+Math.random()*2400;
+ }
+ backdropSparks=backdropSparks.filter(p=>t-p.start<p.duration);
+ backdropRings=backdropRings.filter(p=>t-p.start<980);
+ if(!backdropSparks.length&&!backdropRings.length)return;
+ ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const ring of backdropRings){
+  const age=(t-ring.start)/980;
+  const alpha=Math.pow(Math.max(0,1-age),1.25);
+  const radius=12+age*Math.min(W,H)*.28*ring.intensity;
+  ctx.globalAlpha=alpha*.90;
+  ctx.lineWidth=2.5*alpha+0.5;ctx.strokeStyle=ring.colour;
+  ctx.shadowColor=ring.colour;ctx.shadowBlur=21;
+  ctx.beginPath();ctx.arc(ring.x,ring.y,radius,0,Math.PI*2);ctx.stroke();
+  // Initial blinding flash so burst timing is unmistakable.
+  if(age<.23){
+   const flash=Math.pow(1-age/.23,1.65);
+   ctx.globalAlpha=.92*flash;
+   ctx.fillStyle='#fff9e3';ctx.shadowBlur=30;
+   drawStarCross(ctx,ring.x,ring.y,9+24*flash,age*1.5);
+  }
+ }
+ for(const p of backdropSparks){
+  const age=t-p.start,progress=Math.max(0,Math.min(1,age/p.duration));
+  const fade=Math.pow(1-progress,1.12);
+  const sec=age/1000;
+  const x=p.x+p.vx*sec,y=p.y+p.vy*sec+53*sec*sec;
+  if(x<-20||x>W+20||y<-20||y>H+20)continue;
+  const glow=.78+.22*Math.sin(sec*28+p.phase);
+  ctx.globalAlpha=fade*glow;
+  ctx.strokeStyle=p.colour;ctx.fillStyle=p.colour;ctx.shadowColor=p.colour;ctx.shadowBlur=11;
+  ctx.lineWidth=Math.max(.7,p.size*.65);
+  ctx.beginPath();ctx.moveTo(x-p.vx*.05,y-p.vy*.05);ctx.lineTo(x,y);ctx.stroke();
+  if(p.star){
+   ctx.shadowBlur=18;drawStarCross(ctx,x,y,p.size*3,sec*2+p.phase);
+  }else{
+   ctx.beginPath();ctx.arc(x,y,p.size,0,Math.PI*2);ctx.fill();
+  }
+ }
+ ctx.restore();
+}
+
 function showChristmasArt(rawName){
  const clean=String(rawName||'').trim().slice(0,12);
  if(!clean)return;
@@ -206,7 +305,7 @@ function showChristmasArt(rawName){
  artRoot.setAttribute('aria-label',display+', 메리 크리스마스!');
  artRoot.setAttribute('aria-hidden','false');
  artRoot.classList.add('active');
- artStart=performance.now();artRun++;scheduleChristmasFireworks();
+ artStart=performance.now();artRun++;scheduleChristmasFireworks();startBackdropFireworkShow();
  if(!prefersLessMotion){
    artParticles=Array.from({length:76},(_,i)=>{
      const a=(i/76)*Math.PI*2+(Math.random()-.5)*.21,speed=24+Math.random()*116;
@@ -249,7 +348,7 @@ function drawChristmasArt(t){
  }
  ctx.restore();
 }
-function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();pageEpoch=performance.now();shownKey='';await loadNames();const added=labels.find(l=>l.name===name);if(added)added.born=performance.now();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){showChristmasArt(hit.name);notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){ctx.clearRect(0,0,W,H);const grad=ctx.createRadialGradient(W/2,H*.4,0,W/2,H*.4,Math.max(W,H)*.7);grad.addColorStop(0,'#123027');grad.addColorStop(1,'#030913');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);for(const s of stars){ctx.globalAlpha=.15+.5*(.5+.5*Math.sin(t*.001+s.p));ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,7);ctx.fill()}ctx.globalAlpha=1;if(!drag)rotation+=.0024;const usableTop=Math.max(65,H*.12),usableBottom=Math.min(H-190,H*.77),available=Math.max(150,usableBottom-usableTop),scale=Math.min(W*.39,available*.44)*zoom,cx=W/2,cy=(usableTop+usableBottom)/2;const sn=Math.sin(rotation),cs=Math.cos(rotation);function pos(p){const x=p.x*cs-p.z*sn,z=p.x*sn+p.z*cs;const depth=3.5/(3.5+z*.16);return{x:cx+x*scale*depth,y:cy-p.y*scale*depth,z,depth}}const items=pts.map(p=>({p,...pos(p)})).sort((a,b)=>b.z-a.z);ctx.textAlign='center';ctx.textBaseline='middle';for(const v of items){const glow=.55+.45*Math.sin(t*.003+v.p.phase);ctx.globalAlpha=.35+.6*glow;ctx.fillStyle=v.p.color<.1?'#ffdc83':v.p.color<.35?'#c8ffcb':v.p.color<.7?'#6de3a0':'#419c79';ctx.font=Math.max(8,scale*.065*v.depth)+'px monospace';ctx.fillText(v.p.ch,v.x,v.y)}ctx.globalAlpha=1;for(const o of ornaments){const p=pos(o);ctx.globalAlpha=.65+.35*Math.sin(t*.004+o.phase);ctx.fillStyle=o.color;ctx.shadowColor=o.color;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.5,scale*.026)*p.depth,0,7);ctx.fill()}ctx.shadowBlur=0;ctx.globalAlpha=1;
+function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();pageEpoch=performance.now();shownKey='';await loadNames();const added=labels.find(l=>l.name===name);if(added)added.born=performance.now();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){showChristmasArt(hit.name);notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){ctx.clearRect(0,0,W,H);const grad=ctx.createRadialGradient(W/2,H*.4,0,W/2,H*.4,Math.max(W,H)*.7);grad.addColorStop(0,'#123027');grad.addColorStop(1,'#030913');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);drawBackdropFireworks(t);for(const s of stars){ctx.globalAlpha=.15+.5*(.5+.5*Math.sin(t*.001+s.p));ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,7);ctx.fill()}ctx.globalAlpha=1;if(!drag)rotation+=.0024;const usableTop=Math.max(65,H*.12),usableBottom=Math.min(H-190,H*.77),available=Math.max(150,usableBottom-usableTop),scale=Math.min(W*.39,available*.44)*zoom,cx=W/2,cy=(usableTop+usableBottom)/2;const sn=Math.sin(rotation),cs=Math.cos(rotation);function pos(p){const x=p.x*cs-p.z*sn,z=p.x*sn+p.z*cs;const depth=3.5/(3.5+z*.16);return{x:cx+x*scale*depth,y:cy-p.y*scale*depth,z,depth}}const items=pts.map(p=>({p,...pos(p)})).sort((a,b)=>b.z-a.z);ctx.textAlign='center';ctx.textBaseline='middle';for(const v of items){const glow=.55+.45*Math.sin(t*.003+v.p.phase);ctx.globalAlpha=.35+.6*glow;ctx.fillStyle=v.p.color<.1?'#ffdc83':v.p.color<.35?'#c8ffcb':v.p.color<.7?'#6de3a0':'#419c79';ctx.font=Math.max(8,scale*.065*v.depth)+'px monospace';ctx.fillText(v.p.ch,v.x,v.y)}ctx.globalAlpha=1;for(const o of ornaments){const p=pos(o);ctx.globalAlpha=.65+.35*Math.sin(t*.004+o.phase);ctx.fillStyle=o.color;ctx.shadowColor=o.color;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.5,scale*.026)*p.depth,0,7);ctx.fill()}ctx.shadowBlur=0;ctx.globalAlpha=1;
 for(let strand=0;strand<3;strand++){ctx.beginPath();for(let j=0;j<=210;j++){const h=.06+j/210*.88,a=h*Math.PI*9+strand*2.094,r=h*.96,p=pos({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r});if(j===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}ctx.strokeStyle=['rgba(255,207,112,.48)','rgba(255,245,195,.4)','rgba(143,225,255,.38)'][strand];ctx.lineWidth=1.7;ctx.shadowColor='#ffd98b';ctx.shadowBlur=7;ctx.stroke();for(let j=0;j<34;j++){const h=.06+j/34*.88,a=h*Math.PI*9+strand*2.094,r=h*.96,p=pos({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r});ctx.fillStyle=['#ffdc82','#fef5bd','#a8e8ff'][strand];ctx.globalAlpha=.6+.4*Math.sin(t*.004+j*1.7+strand);ctx.beginPath();ctx.arc(p.x,p.y,1.6+Math.sin(t*.003+j)**2*1.1,0,7);ctx.fill()}}ctx.globalAlpha=1;ctx.shadowBlur=0;
 const trunk=pos({x:0,y:-1.08,z:0});ctx.fillStyle='#825337';ctx.fillRect(trunk.x-scale*.045,trunk.y-scale*.045,scale*.09,scale*.16);
 for(let i=0;i<4;i++){const bx=cx+(i-1.5)*scale*.37,by=cy+scale*1.17+(i%2)*scale*.045,w=scale*(.24+(i%2)*.04),hh=scale*.19;ctx.fillStyle=['#b83e54','#d6a642','#367f80','#7955a5'][i];ctx.fillRect(bx-w/2,by-hh/2,w,hh);ctx.fillStyle='#f8e5a2';ctx.fillRect(bx-w*.08,by-hh/2,w*.16,hh);ctx.fillRect(bx-w/2,by-hh*.1,w,hh*.2)}
