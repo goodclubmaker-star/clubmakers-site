@@ -52,7 +52,7 @@ Deno.serve(async (req:Request)=>{
   }
   person=person.replace(/[\u0000-\u001f\u007f]/g," ").trim();
   if(!person||[...person].length>24)return respond(400,{error:"invalid_name"},origin);
-  const message=person+(person.endsWith("님")?"":"님")+", 메리 크리스마스!";
+  const message=payload.sample===true?"골프채공작소 친구들, 메리 크리스마스!":person+(person.endsWith("님")?"":"님")+", 메리 크리스마스!";
   const hash=await b64hex("v1|"+voice+"|"+message);
   const prior=await db("christmas_tts_cache?select=object_path&cache_key=eq."+hash+"&limit=1");
   if(prior.ok){const entries=await prior.json();if(entries?.length)return respond(200,{ok:true,cached:true,url:publicAudio(entries[0].object_path)},origin);}
