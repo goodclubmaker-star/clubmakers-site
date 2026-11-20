@@ -15,7 +15,7 @@
 .xmas-art.active .xmas-art-overline{animation:art-detail .5s .34s both}
 .xmas-art-name{max-width:100%;font-weight:850;line-height:1.25;letter-spacing:-.035em;white-space:nowrap;color:#fff4c1;text-shadow:0 0 5px #fff,0 0 22px rgba(255,215,102,.9),0 0 50px rgba(241,176,87,.55);filter:drop-shadow(0 3px 9px rgba(0,0,0,.45))}
 .xmas-art-letter{display:inline-block;opacity:0;transform:translate3d(0,30px,0) rotate(-12deg) scale(.5)}
-.xmas-art.active .xmas-art-letter{animation:art-letter .72s cubic-bezier(.16,1.25,.24,1) both;animation-delay:calc(.55s + var(--char-i) * 75ms)}
+.xmas-art.active .xmas-art-letter{animation:art-letter .72s cubic-bezier(.16,1.25,.24,1) both;animation-delay:.55s}
 .xmas-art-holiday{position:relative;white-space:nowrap;font-size:clamp(21px,5.1vw,35px);font-weight:800;line-height:1.35;letter-spacing:-.02em;color:#e7fff6;text-shadow:0 0 10px rgba(157,255,243,.9),0 0 24px rgba(87,220,201,.85),0 0 55px rgba(72,205,189,.6);opacity:0;transform:scale(.86)}
 .xmas-art.active .xmas-art-holiday{animation:art-holiday 3s .92s both}
 .xmas-art-beam{width:min(200px,48vw);height:1px;transform:scaleX(0);background:linear-gradient(90deg,transparent,#ffe8ac 42%,#aff9f0 58%,transparent);box-shadow:0 0 15px #fdd994;opacity:0}
@@ -99,7 +99,7 @@ function showChristmasArt(rawName){
  for(let i=0;i<chars.length;i++){
    const el=document.createElement('span');
    el.className='xmas-art-letter';
-   el.style.setProperty('--char-i',Math.min(i,12));
+   el.style.animationDelay=(.55+Math.min(i,12)*.075)+'s';
    el.textContent=chars[i]===' '?'\u00a0':chars[i];
    artName.appendChild(el);
  }
