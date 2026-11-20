@@ -63,7 +63,7 @@ function buildGlyphSprites(){
  }
 }
 buildGlyphSprites();
-let mobileQuality=false,minFrameInterval=16,lastDrawAt=0;
+let mobileQuality=false,minFrameInterval=16,lastDrawAt=0,lowPowerMode=false,slowDraws=0;
 const stars=Array.from({length:65},()=>({x:rand(),y:rand(),r:.5+rand()*1.2,p:rand()*6.28}));function resize(){W=innerWidth;H=innerHeight;mobileQuality=Math.min(W,H)<700;minFrameInterval=mobileQuality?31:16;dpr=Math.min(devicePixelRatio||1,mobileQuality?1.5:1.75);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);fireworkCanvas.width=Math.round(W*dpr);fireworkCanvas.height=Math.round(H*dpr);fireworkCtx.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();const API='https://xnxthuwnqipkaylwisfu.supabase.co/rest/v1/christmas_tree_names',KEY='sb_publishable_C9IEZO8H-CCSVeiD-TocCw_rnCgEzTO';let serverRows=[],rowRevision=0,shownKey='',pageEpoch=performance.now();const headers={'apikey':KEY,'Content-Type':'application/json'};
 function visibleCapacity(){return W<430?42:W<800?65:95}
 function refreshVisibleNames(t){
@@ -167,7 +167,7 @@ function positionRocket(rocket,p){
 }
 function explodeRocket(rocket,t){
  const colors=fxPalettes[rocket.palette%fxPalettes.length],kind=rocket.kind;
- const mobile=mobileQuality,number=mobile?kind===1?46:52:kind===1?74:82;
+ const mobile=mobileQuality,number=mobile?(lowPowerMode?(kind===1?34:40):(kind===1?46:52)):(kind===1?74:82);
  const speed=Math.max(.57,Math.min(1.4,Math.min(W,H)/550))*rocket.power;
  const angleOffset=fxRnd(0,Math.PI*2);
  fxFlares.push({x:rocket.x1,y:rocket.y1,t,color:colors[0]});
@@ -188,7 +188,7 @@ function explodeRocket(rocket,t){
    brightness:fxRnd(.68,1)
   });
  }
- const sparkCap=mobileQuality?340:520;if(fxSparks.length>sparkCap)fxSparks.splice(0,fxSparks.length-sparkCap);
+ const sparkCap=mobileQuality?(lowPowerMode?240:340):520;if(fxSparks.length>sparkCap)fxSparks.splice(0,fxSparks.length-sparkCap);
  if(fxFlares.length>15)fxFlares.splice(0,fxFlares.length-15);
 }
 /* One-time glow sprite per color; replaces per-particle shadowBlur
@@ -343,11 +343,12 @@ function drawChristmasArt(t){
 }
 function makeLabel(name,i,total=1){const h=.12+.84*Math.sqrt((i+.5)/Math.max(1,total)),a=i*2.399963229728653+1.3,r=h*1.04;return{name,x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,born:0,phase:i*1.7}}function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1900)}document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();const name=input.value.trim().replace(/[<>]/g,'').slice(0,12);if(!name)return;if(!musicOn)startCarol();input.value='';input.blur();setTimeout(()=>showChristmasArt(name),140);fetch(API,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify({name})}).then(async res=>{if(!res.ok)throw Error('save '+res.status);const created=await res.json();pageEpoch=performance.now();shownKey='';await loadNames();const added=labels.find(l=>l.name===name);if(added)added.born=performance.now();notify(name+'님의 이름이 모두의 트리에 달렸어요 ✨')}).catch(()=>notify('저장에 실패했습니다. 다시 시도해주세요'))});canvas.addEventListener('pointerdown',e=>{drag=true;moved=false;lastX=e.clientX;pointerStartX=e.clientX;pointerStartY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;if(Math.hypot(e.clientX-pointerStartX,e.clientY-pointerStartY)>9)moved=true;if(moved)rotation+=dx*.009;lastX=e.clientX});canvas.addEventListener('pointerup',e=>{drag=false;if(!moved){const hit=projected.slice().reverse().find(p=>Math.hypot(p.x-e.clientX,p.y-e.clientY)<Math.max(30,p.width/2+9));if(hit){showChristmasArt(hit.name);notify('✨ '+hit.name+'님, 메리 크리스마스! ✨')}}});canvas.addEventListener('pointercancel',()=>drag=false);function frame(t){requestAnimationFrame(frame);if(document.hidden)return;
  if(lastDrawAt&&t-lastDrawAt<minFrameInterval)return;
+ const frameStartedAt=performance.now();
  const dt=Math.min(80,Math.max(16,t-lastDrawAt||33.3));lastDrawAt=t;
- ctx.clearRect(0,0,W,H);drawFireworkSky(t);for(const s of stars){ctx.globalAlpha=.15+.5*(.5+.5*Math.sin(t*.001+s.p));ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,7);ctx.fill()}ctx.globalAlpha=1;if(!drag)rotation+=.0024*dt/16.67;const usableTop=Math.max(65,H*.12),usableBottom=Math.min(H-190,H*.77),available=Math.max(150,usableBottom-usableTop),scale=Math.min(W*.39,available*.44)*zoom,cx=W/2,cy=(usableTop+usableBottom)/2;const sn=Math.sin(rotation),cs=Math.cos(rotation);function pos(p){const x=p.x*cs-p.z*sn,z=p.x*sn+p.z*cs;const depth=3.5/(3.5+z*.16);return{x:cx+x*scale*depth,y:cy-p.y*scale*depth,z,depth}}ctx.textAlign='center';ctx.textBaseline='middle';for(let pi=0;pi<pts.length;pi++){if(mobileQuality&&pi%3===0)continue;const p=pts[pi],v=pos(p);const glow=.55+.45*Math.sin(t*.003+p.phase);ctx.globalAlpha=.35+.6*glow;
+ ctx.clearRect(0,0,W,H);drawFireworkSky(t);for(const s of stars){ctx.globalAlpha=.15+.5*(.5+.5*Math.sin(t*.001+s.p));ctx.fillStyle='#d8e8ff';ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,7);ctx.fill()}ctx.globalAlpha=1;if(!drag)rotation+=.0024*dt/16.67;const usableTop=Math.max(65,H*.12),usableBottom=Math.min(H-190,H*.77),available=Math.max(150,usableBottom-usableTop),scale=Math.min(W*.39,available*.44)*zoom,cx=W/2,cy=(usableTop+usableBottom)/2;const sn=Math.sin(rotation),cs=Math.cos(rotation);function pos(p){const x=p.x*cs-p.z*sn,z=p.x*sn+p.z*cs;const depth=3.5/(3.5+z*.16);return{x:cx+x*scale*depth,y:cy-p.y*scale*depth,z,depth}}ctx.textAlign='center';ctx.textBaseline='middle';for(let pi=0;pi<pts.length;pi++){if(mobileQuality&&(lowPowerMode?(pi%2===0):(pi%3===0)))continue;const p=pts[pi],v=pos(p);const glow=.55+.45*Math.sin(t*.003+p.phase);ctx.globalAlpha=.35+.6*glow;
  const sprite=glyphSprites[p.paletteIndex][p.glyphIndex];
  const sz=Math.max(12,scale*.088*v.depth);
- ctx.drawImage(sprite,v.x-sz*.5,v.y-sz*.5,sz,sz)}ctx.globalAlpha=1;for(let oi=0;oi<ornaments.length;oi++){if(mobileQuality&&(oi&3)===0)continue;const o=ornaments[oi],p=pos(o);ctx.globalAlpha=.65+.35*Math.sin(t*.004+o.phase);ctx.fillStyle=o.color;ctx.shadowColor=o.color;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.5,scale*.026)*p.depth,0,7);ctx.fill()}ctx.shadowBlur=0;ctx.globalAlpha=1;
+ ctx.drawImage(sprite,v.x-sz*.5,v.y-sz*.5,sz,sz)}ctx.globalAlpha=1;for(let oi=0;oi<ornaments.length;oi++){if(mobileQuality&&(lowPowerMode?(oi&1)===0:(oi&3)===0))continue;const o=ornaments[oi],p=pos(o);ctx.globalAlpha=.65+.35*Math.sin(t*.004+o.phase);ctx.fillStyle=o.color;ctx.shadowColor=o.color;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.5,scale*.026)*p.depth,0,7);ctx.fill()}ctx.shadowBlur=0;ctx.globalAlpha=1;
 for(let strand=0;strand<3;strand++){ctx.beginPath();for(let j=0,n=mobileQuality?115:160;j<=n;j++){const h=.06+j/n*.88,a=h*Math.PI*9+strand*2.094,r=h*.96,p=pos({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r});if(j===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}ctx.strokeStyle=['rgba(255,207,112,.48)','rgba(255,245,195,.4)','rgba(143,225,255,.38)'][strand];ctx.lineWidth=1.7;ctx.shadowColor='#ffd98b';ctx.shadowBlur=7;ctx.stroke();for(let j=0;j<34;j++){const h=.06+j/34*.88,a=h*Math.PI*9+strand*2.094,r=h*.96,p=pos({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r});ctx.fillStyle=['#ffdc82','#fef5bd','#a8e8ff'][strand];ctx.globalAlpha=.6+.4*Math.sin(t*.004+j*1.7+strand);ctx.beginPath();ctx.arc(p.x,p.y,1.6+Math.sin(t*.003+j)**2*1.1,0,7);ctx.fill()}}ctx.globalAlpha=1;ctx.shadowBlur=0;
 const trunk=pos({x:0,y:-1.08,z:0});ctx.fillStyle='#825337';ctx.fillRect(trunk.x-scale*.045,trunk.y-scale*.045,scale*.09,scale*.16);
 for(let i=0;i<4;i++){const bx=cx+(i-1.5)*scale*.37,by=cy+scale*1.17+(i%2)*scale*.045,w=scale*(.24+(i%2)*.04),hh=scale*.19;ctx.fillStyle=['#b83e54','#d6a642','#367f80','#7955a5'][i];ctx.fillRect(bx-w/2,by-hh/2,w,hh);ctx.fillStyle='#f8e5a2';ctx.fillRect(bx-w*.08,by-hh/2,w*.16,hh);ctx.fillRect(bx-w/2,by-hh*.1,w,hh*.2)}
@@ -381,5 +382,13 @@ for(const l of labels.map(p=>({p,...pos(p)})).sort((a,b)=>b.z-a.z)){
     ctx.restore();
   }
   projected.push({x:l.x,y,width,name:l.p.name,id:l.p.id});
-}ctx.shadowBlur=0;ctx.globalAlpha=1;drawChristmasArt(t)}requestAnimationFrame(frame)})();
+}ctx.shadowBlur=0;ctx.globalAlpha=1;drawChristmasArt(t);
+ // Detect persistently expensive frames and gracefully lower particle density.
+ // One-way fallback avoids oscillating quality during fireworks.
+ if(mobileQuality&&!lowPowerMode){
+  const spent=performance.now()-frameStartedAt;
+  slowDraws=spent>26?slowDraws+1:Math.max(0,slowDraws-1);
+  if(slowDraws>=8)lowPowerMode=true;
+ }
+}requestAnimationFrame(frame)})();
 </script></body></html>
