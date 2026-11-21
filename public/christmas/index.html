@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>골프채공작소 크리스마스트리</title><style>*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden;background:#030913;color:white;font-family:system-ui,-apple-system,sans-serif}canvas{width:100%;height:100%;display:block;touch-action:none}.header{position:absolute;top:max(18px,env(safe-area-inset-top));left:0;right:0;text-align:center;color:#f7d99a;font-size:12px;letter-spacing:3px;pointer-events:none}.footer{position:absolute;bottom:calc(105px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;pointer-events:none;text-shadow:0 0 18px #5fd99b}.footer b{font-size:clamp(22px,6vw,32px)}.footer small{display:block;letter-spacing:4px;color:#ebca8a;margin-top:4px;font-size:10px}.controls{position:absolute;bottom:calc(17px + env(safe-area-inset-bottom));left:12px;right:12px;display:flex;justify-content:center;gap:8px;align-items:center}.controls input{min-width:0;max-width:185px;flex:1;padding:12px;border:1px solid #8dba9c;border-radius:24px;background:#101c20;color:white;font-size:16px}.controls button{border:0;border-radius:24px;background:#e8bd65;color:#142117;padding:12px 16px;font-weight:800;font-size:14px}.tip{position:absolute;bottom:calc(76px + env(safe-area-inset-bottom));width:100%;text-align:center;font-size:11px;color:#c2cbbf;pointer-events:none}.toast{position:absolute;top:14%;left:12%;right:12%;text-align:center;color:#ffe9b2;pointer-events:none;font-size:14px;opacity:0;transition:opacity .25s}.toast.show{opacity:1}.music-toggle{position:absolute;right:12px;top:calc(47px + env(safe-area-inset-top));z-index:3;min-height:38px;padding:8px 12px;border:1px solid #ffdfa280;border-radius:24px;background:#10241ecc;color:#ffe6a8;font-size:12px;font-weight:650;cursor:pointer;backdrop-filter:blur(8px)}.music-toggle[aria-pressed="true"]{background:#385c3b;color:#fff;border-color:#dbd28c}.music-toggle:focus-visible,.controls button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>낭만공작소 크리스마스트리</title><style>*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden;background:#030913;color:white;font-family:system-ui,-apple-system,sans-serif}canvas{width:100%;height:100%;display:block;touch-action:none}.header{position:absolute;top:max(18px,env(safe-area-inset-top));left:0;right:0;text-align:center;color:#f7d99a;font-size:12px;letter-spacing:3px;pointer-events:none}.footer{position:absolute;bottom:calc(105px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;pointer-events:none;text-shadow:0 0 18px #5fd99b}.footer b{font-size:clamp(22px,6vw,32px)}.footer small{display:block;letter-spacing:4px;color:#ebca8a;margin-top:4px;font-size:10px}.controls{position:absolute;bottom:calc(17px + env(safe-area-inset-bottom));left:12px;right:12px;display:flex;justify-content:center;gap:8px;align-items:center}.controls input{min-width:0;max-width:185px;flex:1;padding:12px;border:1px solid #8dba9c;border-radius:24px;background:#101c20;color:white;font-size:16px}.controls button{border:0;border-radius:24px;background:#e8bd65;color:#142117;padding:12px 16px;font-weight:800;font-size:14px}.tip{position:absolute;bottom:calc(76px + env(safe-area-inset-bottom));width:100%;text-align:center;font-size:11px;color:#c2cbbf;pointer-events:none}.toast{position:absolute;top:14%;left:12%;right:12%;text-align:center;color:#ffe9b2;pointer-events:none;font-size:14px;opacity:0;transition:opacity .25s}.toast.show{opacity:1}.music-toggle{position:absolute;right:12px;top:calc(47px + env(safe-area-inset-top));z-index:3;min-height:38px;padding:8px 12px;border:1px solid #ffdfa280;border-radius:24px;background:#10241ecc;color:#ffe6a8;font-size:12px;font-weight:650;cursor:pointer;backdrop-filter:blur(8px)}.music-toggle[aria-pressed="true"]{background:#385c3b;color:#fff;border-color:#dbd28c}.music-toggle:focus-visible,.controls button:focus-visible{outline:2px solid #fff;outline-offset:3px}
 /* A short, silent media-art greeting when a name is hung or tapped. */
 .xmas-art{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;overflow:hidden;isolation:isolate}
 .xmas-art.active{opacity:1;visibility:visible}
@@ -93,13 +93,13 @@ background:radial-gradient(ellipse 76% 57% at 50% 40%,#0b281f 0%,#081c24 57%,#03
 .xmas-selected span{display:block;overflow-wrap:anywhere;max-height:62px;overflow-y:auto}
 .xmas-selected button{border:0;background:transparent;color:#bce9db;cursor:pointer;
  min-height:28px;font-size:11px;padding:4px 0 0;opacity:.92}
-</style></head><body><div class="xmas-fx-backdrop" aria-hidden="true"></div><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">CLUBMAKERS ✦ 2026</div></div><div class="xmas-actions" aria-label="내 크리스마스트리"><button type="button" id="myNameBtn" hidden>★ 내 이름 찾기</button><button type="button" id="saveCardBtn" hidden>▣ 카드 저장</button><button type="button" id="recordReelBtn" hidden>▶ 영상 만들기</button><div id="videoSelection" class="xmas-selected" hidden><span id="videoSelectionText"></span><button id="clearVideoSelection" type="button">선택 해제</button></div></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div id="reelModal" class="xmas-reel-modal" role="dialog" aria-modal="true" aria-labelledby="reelModalTitle" hidden>
+</style></head><body><div class="xmas-fx-backdrop" aria-hidden="true"></div><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">NANGMAN WORKSHOP ✦ 2026</div></div><div class="xmas-actions" aria-label="내 크리스마스트리"><button type="button" id="myNameBtn" hidden>★ 내 이름 찾기</button><button type="button" id="saveCardBtn" hidden>▣ 카드 저장</button><button type="button" id="recordReelBtn" hidden>▶ 영상 만들기</button><div id="videoSelection" class="xmas-selected" hidden><span id="videoSelectionText"></span><button id="clearVideoSelection" type="button">선택 해제</button></div></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div id="reelModal" class="xmas-reel-modal" role="dialog" aria-modal="true" aria-labelledby="reelModalTitle" hidden>
 <section class="xmas-reel-dialog"><button id="closeReelBtn" type="button" class="xmas-reel-close" aria-label="영상 미리보기 닫기">닫기 ×</button>
 <h3 id="reelModalTitle">우리들의 크리스마스 영상</h3><video id="reelPreview" controls playsinline preload="metadata" aria-label="이름과 폭죽이 나오는 크리스마스 영상 미리보기"></video>
 <div id="reelStatus" class="xmas-reel-progress" role="status" aria-live="polite">세로형 축하 영상이 준비됐어요</div>
 <p>15~20초 · 9:16 세로 영상 · 캐롤 포함 · 선택한 이름 순서대로</p>
 <div class="xmas-reel-controls"><button id="downloadReelBtn" type="button">영상 저장</button></div>
-</section></div><div class="footer"><b>골프채공작소</b><small>CLUBMAKERS</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><select id="ornamentType" aria-label="이름 장식 선택" title="장식 선택"><option value="star">★ 별</option><option value="heart">♥ 하트</option><option value="glass">● 구슬</option></select><button type="submit">✨ 이름 달기</button></form><script>
+</section></div><div class="footer"><b>낭만공작소</b><small>NANGMAN WORKSHOP</small></div><div class="tip">↔ 손가락으로 회전 · 이름 장식을 터치해보세요</div><form class="controls" id="form"><input id="name" maxlength="12" placeholder="트리에 달 이름" aria-label="트리에 달 이름" autocomplete="off"><select id="ornamentType" aria-label="이름 장식 선택" title="장식 선택"><option value="star">★ 별</option><option value="heart">♥ 하트</option><option value="glass">● 구슬</option></select><button type="submit">✨ 이름 달기</button></form><script>
 (()=>{'use strict';const canvas=document.getElementById('tree'),ctx=canvas.getContext('2d'),fireworkCanvas=document.getElementById('xmasFireworks'),fireworkCtx=fireworkCanvas.getContext('2d'),input=document.getElementById('name'),toast=document.getElementById('toast');let W=0,H=0,dpr=1,rotation=0,drag=false,lastX=0,pointerStartX=0,pointerStartY=0,moved=false,zoom=1,seed=2026,ornaments=[],labels=[],projected=[];const rand=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);const pts=[];for(let i=0;i<850;i++){const h=rand(),a=rand()*Math.PI*2,r=h*Math.sqrt(rand());pts.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,phase:rand()*6.28,ch:['+','*','o','x','@'][Math.floor(rand()*5)],color:rand()})}for(let i=0;i<69;i++){let h=.1+rand()*.84,a=rand()*Math.PI*2,r=h*.98;ornaments.push({x:Math.cos(a)*r,y:1-2*h,z:Math.sin(a)*r,color:['#ffd66b','#ff6b89','#8ebaff','#db9aff','#f6f3d5','#ff9b55'][i%6],phase:rand()*6.28})}
 /* Prepaint colored glyphs into small offscreen canvases once. A drawImage call
    replaces costly font shaping + fillText at every tree particle, every frame. */
@@ -357,7 +357,7 @@ function drawCardToCanvas(name){
  g.strokeRect(44,42,812,1516);
  g.textAlign='center';g.textBaseline='middle';
  g.fillStyle='#f5d89e';g.font='600 23px system-ui,-apple-system,sans-serif';
- g.fillText('CLUBMAKERS  ·  CHRISTMAS 2026',450,114);
+ g.fillText('NANGMAN WORKSHOP  ·  CHRISTMAS 2026',450,114);
  g.fillStyle='#fff8db';g.shadowColor='#ffce77';g.shadowBlur=15;
  const greetingName=name?name+(name.endsWith('님')?'':'님'):'우리 모두';
  let size=60;g.font='800 '+size+'px system-ui,-apple-system,sans-serif';
@@ -368,7 +368,7 @@ function drawCardToCanvas(name){
  g.fillText('메리 크리스마스!',450,1320);
  g.strokeStyle='#e9ca86aa';g.lineWidth=2;g.beginPath();g.moveTo(260,1380);g.lineTo(640,1380);g.stroke();
  g.fillStyle='#ffe4a5';g.font='700 35px system-ui,-apple-system,sans-serif';
- g.fillText('골프채공작소',450,1455);
+ g.fillText('낭만공작소',450,1455);
  g.fillStyle='#c5d8ce';g.font='22px system-ui,-apple-system,sans-serif';
  g.fillText('함께 만드는 크리스마스트리',450,1500);
  return c;
@@ -421,7 +421,7 @@ async function downloadShareImage(){
   const blob=await makeShareBlob(),record=currentShareRecord||myRecord||sharedWish;
   const url=URL.createObjectURL(blob);
   const link=document.createElement('a');link.href=url;
-  link.download='clubmakers-christmas-'+cleanCardFileName(record?.name)+'.png';
+  link.download='nangman-christmas-'+cleanCardFileName(record?.name)+'.png';
   document.body.appendChild(link);link.click();link.remove();
   setTimeout(()=>URL.revokeObjectURL(url),3000);
   notify('크리스마스 카드 이미지를 저장했어요');
@@ -580,9 +580,9 @@ function drawReelFrame(g,videoWidth,videoHeight,targets,elapsed,duration){
  }
  g.globalAlpha=1;g.fillStyle='#fff0c6';
  g.font=`700 ${Math.round(w*.045)}px system-ui,-apple-system,sans-serif`;
- g.fillText('골프채공작소',w/2,h*.91);
+ g.fillText('낭만공작소',w/2,h*.91);
  g.fillStyle='#d4ded9';g.font=`500 ${Math.round(w*.022)}px system-ui,-apple-system,sans-serif`;
- g.fillText('CLUBMAKERS  ·  CHRISTMAS 2026',w/2,h*.94);
+ g.fillText('NANGMAN WORKSHOP  ·  CHRISTMAS 2026',w/2,h*.94);
 }
 function showReelPreview(blob,name,mime){
  if(reelObjectURL)URL.revokeObjectURL(reelObjectURL);
@@ -601,7 +601,7 @@ function getVideoFile(){
  if(!currentReel)throw new Error('No recorded reel');
  const mp4=currentReel.mime.includes('mp4');
  const ext=mp4?'mp4':'webm';
- const fileName='clubmakers-'+cleanCardFileName(currentReel.name)+'-christmas-video.'+ext;
+ const fileName='nangman-'+cleanCardFileName(currentReel.name)+'-christmas-video.'+ext;
  return {fileName,blob:currentReel.blob,mime:currentReel.mime,mp4};
 }
 /*
@@ -768,7 +768,7 @@ async function downloadReel(){
   const file=new File([blob],fileName,{type:mime});
   if(navigator.canShare?.({files:[file]})){
    try{
-    await navigator.share({files:[file],title:'골프채공작소 크리스마스 영상'});
+    await navigator.share({files:[file],title:'낭만공작소 크리스마스 영상'});
     reelStatus.textContent='공유 메뉴에서 ‘비디오 저장’을 선택하면 사진 앱에 저장할 수 있습니다.';
     return;
    }catch(e){
