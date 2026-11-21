@@ -54,6 +54,9 @@ background:radial-gradient(ellipse 76% 57% at 50% 40%,#0b281f 0%,#081c24 57%,#03
 .xmas-actions button[hidden]{display:none}
 .xmas-actions button:focus-visible,.controls select:focus-visible{outline:2px solid #fff0ba;outline-offset:2px}
 .xmas-actions button:disabled{opacity:.5}
+.xmas-actions .kakao-share{background:#fee500;color:#381f15;border-color:#fee500;box-shadow:0 3px 10px #0003;font-weight:800}
+.xmas-actions .kakao-share:hover{background:#ffe83e}
+.xmas-actions .kakao-share:focus-visible{outline-color:#fff}
 #tree{animation:tree-arrive 1100ms ease-out both}
 @keyframes tree-arrive{from{opacity:0;transform:scale(.87)}to{opacity:1;transform:scale(1)}}
 @media(max-width:380px){.controls{gap:5px;left:8px;right:8px}.controls select{width:59px;flex-basis:59px;font-size:12px}.controls button{padding:12px 9px;font-size:13px}.xmas-actions{left:8px}}
@@ -93,7 +96,7 @@ background:radial-gradient(ellipse 76% 57% at 50% 40%,#0b281f 0%,#081c24 57%,#03
 .xmas-selected span{display:block;overflow-wrap:anywhere;max-height:62px;overflow-y:auto}
 .xmas-selected button{border:0;background:transparent;color:#bce9db;cursor:pointer;
  min-height:28px;font-size:11px;padding:4px 0 0;opacity:.92}
-</style></head><body><div class="xmas-fx-backdrop" aria-hidden="true"></div><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">NANGMAN WORKSHOP ✦ 2026</div></div><div class="xmas-actions" aria-label="내 크리스마스트리"><button type="button" id="myNameBtn" hidden>★ 내 이름 찾기</button><button type="button" id="saveCardBtn" hidden>▣ 카드 저장</button><button type="button" id="recordReelBtn" hidden>▶ 영상 만들기</button><div id="videoSelection" class="xmas-selected" hidden><span id="videoSelectionText"></span><button id="clearVideoSelection" type="button">선택 해제</button></div></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div id="reelModal" class="xmas-reel-modal" role="dialog" aria-modal="true" aria-labelledby="reelModalTitle" hidden>
+</style></head><body><div class="xmas-fx-backdrop" aria-hidden="true"></div><canvas id="xmasFireworks" class="xmas-fireworks" aria-hidden="true"></canvas><canvas id="tree" aria-label="회전하는 크리스마스트리"></canvas><div class="header">✦ MERRY CHRISTMAS ✦</div><div id="toast" class="toast"></div><div id="christmasArt" class="xmas-art" role="status" aria-live="polite" aria-atomic="true" aria-label="" aria-hidden="true"><div class="xmas-art-halo"></div><div class="xmas-art-ring"></div><div class="xmas-art-card"><div class="xmas-art-comet" aria-hidden="true">✦</div><div class="xmas-art-overline" aria-hidden="true">A LITTLE CHRISTMAS MAGIC</div><div id="christmasArtName" class="xmas-art-name" aria-hidden="true"></div><div class="xmas-art-holiday" aria-hidden="true">메리 크리스마스!</div><div class="xmas-art-beam" aria-hidden="true"></div></div><div class="xmas-art-signature" aria-hidden="true">NANGMAN WORKSHOP ✦ 2026</div></div><div class="xmas-actions" aria-label="내 크리스마스트리"><button type="button" id="myNameBtn" hidden>★ 내 이름 찾기</button><button type="button" id="saveCardBtn" hidden>▣ 카드 저장</button><button type="button" id="kakaoTreeShareBtn" class="kakao-share" aria-label="카카오톡으로 크리스마스트리 링크 공유">카톡으로 트리 공유 ↗</button><button type="button" id="recordReelBtn" hidden>▶ 영상 만들기</button><div id="videoSelection" class="xmas-selected" hidden><span id="videoSelectionText"></span><button id="clearVideoSelection" type="button">선택 해제</button></div></div><button id="musicToggle" type="button" class="music-toggle" aria-label="캐롤 재생" aria-pressed="false">♫ 캐롤 켜기</button><audio id="carolAudio" src="/christmas/carol.m4a" preload="none" loop playsinline></audio><div id="reelModal" class="xmas-reel-modal" role="dialog" aria-modal="true" aria-labelledby="reelModalTitle" hidden>
 <section class="xmas-reel-dialog"><button id="closeReelBtn" type="button" class="xmas-reel-close" aria-label="영상 미리보기 닫기">닫기 ×</button>
 <h3 id="reelModalTitle">우리들의 크리스마스 영상</h3><video id="reelPreview" controls playsinline preload="metadata" aria-label="이름과 폭죽이 나오는 크리스마스 영상 미리보기"></video>
 <div id="reelStatus" class="xmas-reel-progress" role="status" aria-live="polite">세로형 축하 영상이 준비됐어요</div>
@@ -164,29 +167,65 @@ loadNames();setInterval(loadNames,20000);
 /* Visitor-provided recorded carol, compressed for mobile web. No synthesized melody. */
 const musicButton=document.getElementById('musicToggle');
 const carolAudio=document.getElementById('carolAudio');
-let musicOn=false,duckTimer=null;
+let musicOn=false,musicWanted=true,carolNeedsGesture=false,carolRequestId=0;
 carolAudio.volume=.23;
-function stopCarol(){
- musicOn=false;carolAudio.pause();
- musicButton.textContent='♫ 캐롤 켜기';musicButton.setAttribute('aria-pressed','false');
+carolAudio.preload='auto';
+carolAudio.autoplay=true;
+function updateCarolToggle(){
+ musicButton.textContent=musicOn?'♫ 캐롤 끄기':carolNeedsGesture&&musicWanted?'♫ 눌러서 캐롤 켜기':'♫ 캐롤 켜기';
+ musicButton.setAttribute('aria-pressed',String(musicOn));
+ musicButton.title=carolNeedsGesture?'브라우저가 자동 재생을 막았습니다. 한 번 터치하면 음악이 나옵니다.':'크리스마스 캐롤 재생 / 끄기';
 }
-function startCarol(){
+function stopCarol(disableAuto=true){
+ carolRequestId++;
+ musicOn=false;
+ if(disableAuto)musicWanted=false;
+ carolNeedsGesture=false;
+ carolAudio.pause();
+ updateCarolToggle();
+}
+function startCarol(silent=false){
+ if(document.hidden)return Promise.resolve(false);
+ musicWanted=true;
+ const ticket=++carolRequestId;
  carolAudio.volume=.23;
- const p=carolAudio.play();
- Promise.resolve(p).then(()=>{
-  musicOn=true;musicButton.textContent='♫ 캐롤 끄기';
-  musicButton.setAttribute('aria-pressed','true');
- }).catch(()=>{
-  musicOn=false;musicButton.textContent='♫ 캐롤 켜기';
-  musicButton.setAttribute('aria-pressed','false');
-  notify('음악을 재생하려면 캐롤 버튼을 눌러주세요');
+ let played;
+ try{played=carolAudio.play()}catch(e){played=Promise.reject(e)}
+ return Promise.resolve(played).then(()=>{
+  if(ticket!==carolRequestId||!musicWanted){carolAudio.pause();return false}
+  musicOn=true;carolNeedsGesture=false;updateCarolToggle();return true;
+ }).catch(error=>{
+  if(ticket!==carolRequestId)return false;
+  musicOn=false;
+  carolNeedsGesture=error?.name==='NotAllowedError';
+  updateCarolToggle();
+  if(!silent&&!carolNeedsGesture)notify('캐롤 음원 연결을 확인해주세요');
+  return false;
  });
 }
 musicButton.addEventListener('click',()=>{if(musicOn)stopCarol();else startCarol()});
-document.addEventListener('visibilitychange',()=>{if(document.hidden && musicOn)stopCarol()});
-carolAudio.addEventListener('error',()=>{if(musicOn)stopCarol();notify('캐롤 음원 연결을 확인해주세요')});
-
-
+// Many browsers prohibit audible autoplay until the visitor's first gesture.
+// Try immediately; if blocked, retry on the first tap/key press anywhere on the tree.
+function retryCarolOnGesture(e){
+ if(!musicWanted||musicOn||!carolNeedsGesture||document.hidden)return;
+ if(e.target===musicButton||musicButton.contains?.(e.target))return;
+ startCarol(true);
+}
+document.addEventListener('pointerdown',retryCarolOnGesture,{capture:true});
+document.addEventListener('keydown',retryCarolOnGesture,{capture:true});
+window.addEventListener('load',()=>{if(musicWanted&&!musicOn)startCarol(true)},{once:true});
+document.addEventListener('visibilitychange',()=>{
+ if(document.hidden){stopCarol(false);carolNeedsGesture=false}
+ else if(musicWanted&&!musicOn)startCarol(true);
+});
+// Nangman modal closes without hiding the iframe document; pause its music.
+window.addEventListener('message',e=>{
+ if(e.origin!==location.origin||e.source!==window.parent)return;
+ if(e.data?.type!=='nangman-christmas-visibility')return;
+ if(e.data.open){if(musicWanted&&!musicOn)startCarol(true)}
+ else stopCarol(false);
+});
+carolAudio.addEventListener('error',()=>{stopCarol(false);notify('캐롤 음원 연결을 확인해주세요')});
 
 /* Shared ornament type, personalised focus and repeat-visit shortcuts. */
 const ornamentInput=document.getElementById('ornamentType');
@@ -332,6 +371,45 @@ function treeShareURL(){
  if(record&&/^\d{1,18}$/.test(String(record.id)))url.searchParams.set('wish',String(record.id));
  return url.href;
 }
+/*
+ * Share the public Christmas TREE link (not a selected person's private
+ * browser state). Native mobile sharing presents KakaoTalk when installed;
+ * desktop/unsupported browsers receive a copyable link instead.
+ */
+const kakaoTreeShareBtn=document.getElementById('kakaoTreeShareBtn');
+async function shareNangmanChristmasTree(){
+ const url=new URL('/christmas/',location.origin).href;
+ const title='낭만공작소 크리스마스트리';
+ const message='🎄 낭만공작소 크리스마스트리에 이름을 달아보세요!';
+ kakaoTreeShareBtn.disabled=true;
+ try{
+  if(typeof navigator.share==='function'){
+   try{
+    await navigator.share({title,text:message,url});
+    return;
+   }catch(error){
+    if(error?.name==='AbortError')return;
+    console.warn('Native tree sharing failed; falling back to link copy',error);
+   }
+  }
+  if(navigator.clipboard?.writeText){
+   await navigator.clipboard.writeText(url);
+   notify('트리 링크를 복사했어요! 카카오톡 대화창에 붙여넣으세요.');
+   return;
+  }
+  const field=document.createElement('textarea');
+  field.value=url;field.setAttribute('readonly','');
+  field.style.cssText='position:fixed;left:-9999px;top:0';
+  document.body.appendChild(field);field.select();
+  const copied=document.execCommand?.('copy')===true;
+  field.remove();
+  notify(copied?'트리 링크를 복사했어요. 카카오톡에 붙여넣으세요.':'공유 링크: '+url);
+ }catch(error){
+  console.warn('Christmas link share/copy unavailable',error);
+  notify('링크를 복사해 보내주세요: '+url);
+ }finally{kakaoTreeShareBtn.disabled=false}
+}
+kakaoTreeShareBtn.addEventListener('click',shareNangmanChristmasTree);
 function cleanCardFileName(name){
  return String(name||'christmas').replace(/[^0-9A-Za-z가-힣_-]/g,'').slice(0,12)||'christmas';
 }
