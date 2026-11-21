@@ -30,7 +30,7 @@
       </header>
       <iframe id="cm-xmas-frame" class="cm-xmas-frame" title="낭만공작소 크리스마스트리" loading="lazy" allow="autoplay; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       <footer class="cm-xmas-bottom">
-        <span>♫ 캐롤은 트리 안에서 직접 켤 수 있어요</span>
+        <span>♫ 캐롤이 안 들리면 트리를 터치하세요</span>
         <a href="/christmas/" target="_blank" rel="noopener noreferrer">전체 화면으로 보기 ↗</a>
       </footer>
     </div>
@@ -71,6 +71,10 @@
  const frame=document.getElementById('cm-xmas-frame');
  if(!root||!overlay||!bubble||!frame)return;
  const key='nangman-christmas-popup-2026-shown';
+ function syncTreeAudio(isOpen){
+  try{frame.contentWindow?.postMessage({type:'nangman-christmas-visibility',open:isOpen},location.origin)}catch(e){}
+ }
+ frame.addEventListener('load',()=>syncTreeAudio(!overlay.hidden));
  let previousFocus=null,previousOverflow='';
  function openPopup(){
   if(!overlay.hidden)return;
@@ -79,11 +83,13 @@
   if(!frame.src || frame.getAttribute('src')===null)frame.src='/christmas/';
   document.body.style.overflow='hidden';
   dialog.focus({preventScroll:true});
+  syncTreeAudio(true);
   try{sessionStorage.setItem(key,'1')}catch(e){}
  }
  function closePopup(){
   if(overlay.hidden)return;
   overlay.hidden=true;root.dataset.state='closed';
+  syncTreeAudio(false);
   document.body.style.overflow=previousOverflow;
   if(previousFocus&&typeof previousFocus.focus==='function')previousFocus.focus({preventScroll:true});
  }
